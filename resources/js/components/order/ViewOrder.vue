@@ -12,6 +12,7 @@ export default {
         const orders  = ref([]);
         const errors  = ref([]);
         const order_id  = ref('');
+        const order_status_id  = ref('');
         const size_id  = ref('');
         const form = reactive({
             progress_detail: [],
@@ -66,7 +67,7 @@ export default {
                 confirmButtonText: 'Yes, Do it!'
                 }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.get(baseUrl+`update/order/status/${order}`).then(
+                    axios.post(baseUrl+`update/order/status`,{'order_status_id':order_status_id,'id':order}).then(
                         response => {
                             // getOrder()
                             notifying(response.data)
