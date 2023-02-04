@@ -13,16 +13,9 @@ export default {
         Multiselect
     },
 
-    setup() {
-            const { notifying } = Mixin;
-            const { allcategories, getCategory } = useAttributes();
-           
-            const allsubcategories = ref([]);
-            const allcolours = ref([]);
-            const allsizes = ref([]);
-            const allfabrics = ref([]);
-            const errors = ref([]);
-            const form = reactive({
+    data(){
+        return {
+            form: {
                 product_name: '',
                 sku: '',
                 category: null,
@@ -47,34 +40,65 @@ export default {
                 max_amount: 0,
                 discount_type: 1,
                 description: '',
-            });
+            },
+            allcategories: [],
+            allsubcategories: [],
+            allfiltersubcategories: [],
+            allcolours: [],
+            allsizes: [],
+            allfabrics: [],
+            errors: [],
+            allcolours: [],
+        }
+    },
 
-            const submitForm = async() => {
-                await axios.post(baseUrl+'product',form).then(response => {
-                    if(response.data.status == 'success'){
-                        clearForm()
-                        notifying(response.data)
+    methods: {
+        submitForm () {
+             axios.post(baseUrl+'product',{'form':this.form,'img':this.uploadimg}).then(response => {
+                if(response.data.status == 'success'){
+                    this.clearForm()
+                    notifying(response.data)
+                }
+                console.log(response.data)
+            }).catch(e => {
+                console.log(e)
+                if(e.response.status == 422){
+                    this.errors = e.response.data.errors;
+                }
+            })
+        },
+
+        openUploadModal() {
+                window.cloudinary.openUploadWidget(
+                    { cloud_name: 'diyc1dizi',
+                        upload_preset: 'webable'
+                    },
+                    (error, result) => {
+                    if (!error && result && result.event === "success") {
+                        console.log('Done uploading..: ', result.info);
+                        this.form.product_image_one = result.info.secure_url;
                     }
-                    console.log(response.data)
-                }).catch(e => {
-                    console.log(e)
-                    if(e.response.status == 422){
-                        errors.value = e.response.data.errors;
-                    }
+                    }).open();
+                },
+
+        getCategory() {
+            axios.get(baseUrl+'category').then(response => {
+                let res = response.data.filter(data => data.parent_category == 0)
+                let subcat = response.data.filter(data => data.parent_category !== 0)
+                    this.allcategories = res
+                    this.allfiltersubcategories = subcat
                 })
-            };
+        },
 
-            
-
-            const getColour = async() => {
+            getColour() {
                 try{
-                    await axios.get(baseUrl+'colour/create?no_paginate=yes').then(response => {
+                     axios.get(baseUrl+'colour/create?no_paginate=yes').then(response => {
                         // allcolours.value = response.data
                         const opt = []
                         response.data.map(data => {
                             opt.push({'value':data.id,'name':data.color_name})
                         })
-                        allcolours.value = opt
+                        this.allcolours = opt
                         // console.log(response.data)
                     }).catch(error => {
                         console.log(error)
@@ -82,92 +106,251 @@ export default {
                 }catch(error){
                     console.log(error)
                 }
-            }
+            },
 
-            const getSize = async() => {
+            getSize() {
                 try{
-                    await axios.get(baseUrl+'sizes/create?no_paginate=yes').then(response => {
+                     axios.get(baseUrl+'sizes/create?no_paginate=yes').then(response => {
                         const opt = []
                         response.data.map(data => {
                             opt.push({'value':data.id,'name':data.size_name})
                         })
-                        allsizes.value = opt
+                        this.allsizes = opt
                     }).catch(error => {
                         console.log(error)
                     })
                 }catch(error){
                     console.log(error)
                 }
-            }
+            },
 
-            const getFabric = async() => {
+             getFabric() {
                 try{
-                    await axios.get(baseUrl+'fabrics/create?no_paginate=yes').then(response => {
+                     axios.get(baseUrl+'fabrics/create?no_paginate=yes').then(response => {
                         const opt = []
                         response.data.map(data => {
                             opt.push({'value':data.id,'name':data.fabric_name})
                         })
-                        allfabrics.value = opt
+                        this.allfabrics = opt
                     }).catch(error => {
                         console.log(error)
                     })
                 }catch(error){
                     console.log(error)
                 }
+            },
+
+            getSubCategories() {
+                const filterData = (this.allfiltersubcategories).filter((data) => data.parent_category == this.form.category)
+                this.allsubcategories = filterData
+            },
+
+            clearForm() {
+                this.form = {
+                    product_name : '',
+                    sku : '',
+                    category : null,
+                    sub_category : null,
+                    product_image_one : '',
+                    product_image_two : '',
+                    design_code : '',
+                    stock : 0,
+                    cost : 0,
+                    price : 0,
+                    dimention : '',
+                    weight : '',
+                    care : '',
+                    is_fabric : true,
+                    selectfabrics : null,
+                    is_color : true,
+                    selectcolours : null,
+                    is_size : true,
+                    selectsize : null,
+                    discount_amount : '',
+                    discount_type : 1,
+                    max_amount : 0,
+                    discount_type : 1,
+                    description : ''
+                }
             }
-
-            const getSubCategories = async() => {
-                const filterData = (allcategories.value).filter((data) => data.parent_category == form.category)
-                allsubcategories.value = filterData
-            }
-
-            const clearForm = () => {
-                form.product_name = '';
-                form.sku = '';
-                form.category = null;
-                form.sub_category = null;
-                form.product_image_one = '';
-                form.product_image_two = '';
-                form.design_code = '';
-                form.stock = 0;
-                form.cost = 0;
-                form.price = 0;
-                form.dimention = '';
-                form.weight = '';
-                form.care = '';
-                form.is_fabric = true;
-                form.selectfabrics = null;
-                form.is_color = true;
-                form.selectcolours = null;
-                form.is_size = true;
-                form.selectsize = null;
-                form.discount_amount = '';
-                form.discount_type = 1;
-                form.max_amount = 0;
-                form.discount_type = 1;
-                form.description = '';
-            }
-
-            onMounted(()=>{
-                getCategory()
-                getColour()
-                getSize()
-                getFabric()
-            });
-
-        return {
-            form,
-            allcategories,
-            allsubcategories,
-            getSubCategories,
-            allcolours,
-            allsizes,
-            allfabrics,
-            errors,
-            submitForm,
-            clearForm
-        }
     },
+
+    mounted(){
+        this.getCategory()
+        this.getColour()
+        this.getSize()
+        this.getFabric()
+    }
+
+    // setup() {
+    //         const { notifying } = Mixin;
+    //         const { allcategories, getCategory } = useAttributes();
+           
+    //         const uploadimg = ref('');
+    //         const allsubcategories = ref([]);
+    //         const allcolours = ref([]);
+    //         const allsizes = ref([]);
+    //         const allfabrics = ref([]);
+    //         const errors = ref([]);
+    //         const form = reactive({
+    //             product_name: '',
+    //             sku: '',
+    //             category: null,
+    //             sub_category: null,
+    //             product_image_one: '',
+    //             product_image_two: '',
+    //             design_code: '',
+    //             stock: 0,
+    //             cost: 0,
+    //             price: 0,
+    //             dimention: '',
+    //             weight: '',
+    //             care: '',
+    //             is_fabric: true,
+    //             selectfabrics : null,
+    //             is_color: true,
+    //             selectcolours : null,
+    //             is_size: true,
+    //             selectsize : null,
+    //             discount_amount: '',
+    //             discount_type: 1,
+    //             max_amount: 0,
+    //             discount_type: 1,
+    //             description: '',
+    //         });
+
+    //         const submitForm = async() => {
+    //             await axios.post(baseUrl+'product',{'form':form,'img':uploadimg}).then(response => {
+    //                 if(response.data.status == 'success'){
+    //                     clearForm()
+    //                     notifying(response.data)
+    //                 }
+    //                 console.log(response.data)
+    //             }).catch(e => {
+    //                 console.log(e)
+    //                 if(e.response.status == 422){
+    //                     errors.value = e.response.data.errors;
+    //                 }
+    //             })
+    //         };
+
+    //         const openUploadModal = ()=> {
+    //             window.cloudinary.openUploadWidget(
+    //                 { cloud_name: 'diyc1dizi',
+    //                     upload_preset: 'webable'
+    //                 },
+    //                 (error, result) => {
+    //                 if (!error && result && result.event === "success") {
+    //                     console.log('Done uploading..: ', result.info);
+    //                     uploadimg.value = result.info.secure_url;
+    //                 }
+    //                 }).open();
+    //             }
+
+    //         const getColour = async() => {
+    //             try{
+    //                 await axios.get(baseUrl+'colour/create?no_paginate=yes').then(response => {
+    //                     // allcolours.value = response.data
+    //                     const opt = []
+    //                     response.data.map(data => {
+    //                         opt.push({'value':data.id,'name':data.color_name})
+    //                     })
+    //                     allcolours.value = opt
+    //                     // console.log(response.data)
+    //                 }).catch(error => {
+    //                     console.log(error)
+    //                 })
+    //             }catch(error){
+    //                 console.log(error)
+    //             }
+    //         }
+
+    //         const getSize = async() => {
+    //             try{
+    //                 await axios.get(baseUrl+'sizes/create?no_paginate=yes').then(response => {
+    //                     const opt = []
+    //                     response.data.map(data => {
+    //                         opt.push({'value':data.id,'name':data.size_name})
+    //                     })
+    //                     allsizes.value = opt
+    //                 }).catch(error => {
+    //                     console.log(error)
+    //                 })
+    //             }catch(error){
+    //                 console.log(error)
+    //             }
+    //         }
+
+    //         const getFabric = async() => {
+    //             try{
+    //                 await axios.get(baseUrl+'fabrics/create?no_paginate=yes').then(response => {
+    //                     const opt = []
+    //                     response.data.map(data => {
+    //                         opt.push({'value':data.id,'name':data.fabric_name})
+    //                     })
+    //                     allfabrics.value = opt
+    //                 }).catch(error => {
+    //                     console.log(error)
+    //                 })
+    //             }catch(error){
+    //                 console.log(error)
+    //             }
+    //         }
+
+    //         const getSubCategories = async() => {
+    //             const filterData = (allcategories.value).filter((data) => data.parent_category == form.category)
+    //             allsubcategories.value = filterData
+    //         }
+
+    //         const clearForm = () => {
+    //             form.product_name = '';
+    //             form.sku = '';
+    //             form.category = null;
+    //             form.sub_category = null;
+    //             form.product_image_one = '';
+    //             form.product_image_two = '';
+    //             form.design_code = '';
+    //             form.stock = 0;
+    //             form.cost = 0;
+    //             form.price = 0;
+    //             form.dimention = '';
+    //             form.weight = '';
+    //             form.care = '';
+    //             form.is_fabric = true;
+    //             form.selectfabrics = null;
+    //             form.is_color = true;
+    //             form.selectcolours = null;
+    //             form.is_size = true;
+    //             form.selectsize = null;
+    //             form.discount_amount = '';
+    //             form.discount_type = 1;
+    //             form.max_amount = 0;
+    //             form.discount_type = 1;
+    //             form.description = '';
+    //         }
+
+    //         onMounted(()=>{
+    //             getCategory()
+    //             getColour()
+    //             getSize()
+    //             getFabric()
+    //         });
+
+    //     return {
+    //         form,
+    //         allcategories,
+    //         allsubcategories,
+    //         getSubCategories,
+    //         allcolours,
+    //         allsizes,
+    //         allfabrics,
+    //         errors,
+    //         submitForm,
+    //         clearForm,
+    //         openUploadModal,
+    //         uploadimg
+    //     }
+    // },
 }
 </script>
 <template>
@@ -236,7 +419,8 @@ export default {
     
                             <div class="col-md-4">
                                 <label for="product-image1">Product Image (1:1)</label>
-                                <input type="file" class="form-control" id="product-image">
+                                <!-- <input type="file" class="form-control" id="product-image"> -->
+                                <button type="button" @click="openUploadModal">Upload files</button>
                             </div>
                             
                         </div>
@@ -244,7 +428,7 @@ export default {
                 </div>
             </div>
         </div>
-    
+        <img class="img-fluid" :src="form.product_image_one" height="50px"/>
         <div class="row">
             <div id="tooltips" class="col-lg-12 layout-spacing col-md-12">
                 <div class="statbox widget box ">

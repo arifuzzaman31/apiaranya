@@ -15,3 +15,4 @@
 <link href="{{ asset('admin-assets/assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="{{ asset('admin-assets/assets/css/forms/switches.css')}}">
 
+<script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>

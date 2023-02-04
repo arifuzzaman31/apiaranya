@@ -55,7 +55,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // return response()->json($request->all());
+        return response()->json($request->all());
         $request->validate([
             'product_name' => 'required',
             'category' => 'required',
