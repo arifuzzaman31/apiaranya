@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Fabric extends Model
 {
     use HasFactory;
+
+    public function order_details()
+    {
+        return $this->hasOne(OrderDetails::class);
+    }
 }

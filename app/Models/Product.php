@@ -32,4 +32,9 @@ class Product extends Model
     {
         return $this->belongsToMany(Size::class,'product_sizes');
     }
+
+    public function order_details()
+    {
+        return $this->hasOne(OrderDetails::class,'product_id');
+    }
 }

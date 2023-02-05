@@ -63,7 +63,9 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     //Order
     Route::get('order',[OrderController::class,'index'])->name('order');
     Route::get('get-order',[OrderController::class,'getOrder'])->name('get-order');
-    Route::post('update/order/status/{id}',[OrderController::class,'updateOrder'])->name('update/order/status');
+    Route::post('update/order/status',[OrderController::class,'updateOrder']);
+    Route::get('orders-details/{id}',[OrderController::class,'orderDetails']);
+    Route::get('order/cancel/{id}',[OrderController::class,'orderCancel']);
     
 
 });
