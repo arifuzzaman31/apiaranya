@@ -9,6 +9,7 @@ use App\Http\Controllers\ColorController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\FabricController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CustomerController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -65,5 +66,9 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     Route::get('get-order',[OrderController::class,'getOrder'])->name('get-order');
     Route::post('update/order/status/{id}',[OrderController::class,'updateOrder'])->name('update/order/status');
     
+    //customer
+    Route::get('customers',[CustomerController::class,'index'])->name('customers');
+    Route::get('get-customer',[CustomerController::class,'getCustomer']);
+
 
 });

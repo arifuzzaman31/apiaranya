@@ -71,7 +71,41 @@ export default {
         openUploadModal() {
                 window.cloudinary.openUploadWidget(
                     { cloud_name: 'diyc1dizi',
-                        upload_preset: 'webable'
+                        upload_preset: 'webable',
+                        sources: [
+                            "local",
+                            "camera",
+                            "google_drive",
+                            "facebook",
+                            "dropbox",
+                            "instagram",
+                            "unsplash"
+                        ],
+                        multiple: true,
+                        styles: {
+                            palette: {
+                                window: "#10173a",
+                                sourceBg: "#20304b",
+                                windowBorder: "#7171D0",
+                                tabIcon: "#79F7FF",
+                                inactiveTabIcon: "#8E9FBF",
+                                menuIcons: "#CCE8FF",
+                                link: "#72F1FF",
+                                action: "#5333FF",
+                                inProgress: "#00ffcc",
+                                complete: "#33ff00",
+                                error: "#cc3333",
+                                textDark: "#000000",
+                                textLight: "#ffffff"
+                            },
+                            fonts: {
+                                default: null,
+                                "sans-serif": {
+                                    url: null,
+                                    active: true
+                                }
+                            }
+                        }
                     },
                     (error, result) => {
                     if (!error && result && result.event === "success") {

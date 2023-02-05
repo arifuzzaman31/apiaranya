@@ -14,125 +14,131 @@ export default {
         QuillEditor,
         Multiselect
     },
-    
-    setup(props) {
-            const { allcategories, getCategory,
-                allColoursForSelect, getColour,
-                allSizeForSelect, getSizes,
-                allFabricsForSelect, getFabric } = useAttributes();
-            
-            const { product, getProduct} = useProduct();
 
-            const { notifying } = Mixin;
-            const allsubcategories = ref([]);
-            const errors = ref([]);
-            const form = reactive({
-                product_name: '',
-                sku: '',
-                category: null,
-                sub_category: null,
-                product_image_one: '',
-                product_image_two: '',
-                design_code: '',
-                stock: 0,
-                cost: 0,
-                price: 0,
-                dimention: '',
-                weight: '',
-                care: '',
-                is_fabric: true,
-                selectfabrics : null,
-                is_color: true,
-                selectcolours : null,
-                is_size: true,
-                selectsize : null,
-                discount_amount: '',
-                discount_type: 1,
-                max_amount: 0,
-                discount_type: 1,
-                description: '',
-            });
-
-            const updateForm = async() => {
-                await axios.post(baseUrl+'product',form).then(response => {
-                    if(response.data.status == 'success'){
-                        clearForm()
-                        notifying(response.data)
-                    }
-                    console.log(response.data)
-                }).catch(e => {
-                    console.log(e)
-                    if(e.response.status == 422){
-                        errors.value = e.response.data.errors;
-                    }
-                })
-            };
-
-            const getSubCategories = async() => {
-                const filterData = (allcategories.value).filter((data) => data.parent_category == form.category)
-                allsubcategories.value = filterData
-            }
-
-            const clearForm = () => {
-                form.product_name = '';
-                form.sku = '';
-                form.category = null;
-                form.sub_category = null;
-                form.product_image_one = '';
-                form.product_image_two = '';
-                form.design_code = '';
-                form.stock = 0;
-                form.cost = 0;
-                form.price = 0;
-                form.dimention = '';
-                form.weight = '';
-                form.care = '';
-                form.is_fabric = true;
-                form.selectfabrics = null;
-                form.is_color = true;
-                form.selectcolours = null;
-                form.is_size = true;
-                form.selectsize = null;
-                form.discount_amount = '';
-                form.discount_type = 1;
-                form.max_amount = 0;
-                form.discount_type = 1;
-                form.description = '';
-            }
-
-            onMounted(()=>{
-                getProduct(props.pr_product.id)
-                getCategory()
-                getColour()
-                getSizes()
-                getFabric()
-            });
-        
-            watch(
-                form,
-                (current, previous) => {
-                    console.log(current)
-                    console.log(previous)
-                    if (!deepEqual(current, previous))
-                    emit('update:product', current)
-                },
-                { deep: true }
-            );
-
+    data(){
         return {
-            form,
-            product,
-            allcategories,
-            allsubcategories,
-            allColoursForSelect,
-            getSubCategories,
-            allSizeForSelect,
-            allFabricsForSelect,
-            errors,
-            updateForm,
-            clearForm
+            
         }
     },
+    
+    // setup(props) {
+    //         const { allcategories, getCategory,
+    //             allColoursForSelect, getColour,
+    //             allSizeForSelect, getSizes,
+    //             allFabricsForSelect, getFabric } = useAttributes();
+            
+    //         const { product, getProduct} = useProduct();
+
+    //         const { notifying } = Mixin;
+    //         const allsubcategories = ref([]);
+    //         const errors = ref([]);
+    //         const form = reactive({
+    //             product_name: '',
+    //             sku: '',
+    //             category: null,
+    //             sub_category: null,
+    //             product_image_one: '',
+    //             product_image_two: '',
+    //             design_code: '',
+    //             stock: 0,
+    //             cost: 0,
+    //             price: 0,
+    //             dimention: '',
+    //             weight: '',
+    //             care: '',
+    //             is_fabric: true,
+    //             selectfabrics : null,
+    //             is_color: true,
+    //             selectcolours : null,
+    //             is_size: true,
+    //             selectsize : null,
+    //             discount_amount: '',
+    //             discount_type: 1,
+    //             max_amount: 0,
+    //             discount_type: 1,
+    //             description: '',
+    //         });
+
+    //         const updateForm = async() => {
+    //             await axios.post(baseUrl+'product',form).then(response => {
+    //                 if(response.data.status == 'success'){
+    //                     clearForm()
+    //                     notifying(response.data)
+    //                 }
+    //                 console.log(response.data)
+    //             }).catch(e => {
+    //                 console.log(e)
+    //                 if(e.response.status == 422){
+    //                     errors.value = e.response.data.errors;
+    //                 }
+    //             })
+    //         };
+
+    //         const getSubCategories = async() => {
+    //             const filterData = (allcategories.value).filter((data) => data.parent_category == form.category)
+    //             allsubcategories.value = filterData
+    //         }
+
+    //         const clearForm = () => {
+    //             form.product_name = '';
+    //             form.sku = '';
+    //             form.category = null;
+    //             form.sub_category = null;
+    //             form.product_image_one = '';
+    //             form.product_image_two = '';
+    //             form.design_code = '';
+    //             form.stock = 0;
+    //             form.cost = 0;
+    //             form.price = 0;
+    //             form.dimention = '';
+    //             form.weight = '';
+    //             form.care = '';
+    //             form.is_fabric = true;
+    //             form.selectfabrics = null;
+    //             form.is_color = true;
+    //             form.selectcolours = null;
+    //             form.is_size = true;
+    //             form.selectsize = null;
+    //             form.discount_amount = '';
+    //             form.discount_type = 1;
+    //             form.max_amount = 0;
+    //             form.discount_type = 1;
+    //             form.description = '';
+    //         }
+
+    //         onMounted(()=>{
+    //             getProduct(props.pr_product.id)
+    //             getCategory()
+    //             getColour()
+    //             getSizes()
+    //             getFabric()
+    //         });
+        
+    //         watch(
+    //             form,
+    //             (current, previous) => {
+    //                 console.log(current)
+    //                 console.log(previous)
+    //                 if (!deepEqual(current, previous))
+    //                 emit('update:product', current)
+    //             },
+    //             { deep: true }
+    //         );
+
+    //     return {
+    //         form,
+    //         product,
+    //         allcategories,
+    //         allsubcategories,
+    //         allColoursForSelect,
+    //         getSubCategories,
+    //         allSizeForSelect,
+    //         allFabricsForSelect,
+    //         errors,
+    //         updateForm,
+    //         clearForm
+    //     }
+    // },
 }
 </script>
 <template>
