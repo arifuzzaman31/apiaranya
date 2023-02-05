@@ -7,14 +7,18 @@ export default {
         Bootstrap4Pagination
     },
 
-    setup() {
-        const customers = ref([])
-        const keyword = reactive('')
-        const getCustomer = async(page = 1) => {
+    data(){
+        return {
+            customers: [],
+            keyword:''
+        }
+    },
+    methods: {
+        getCustomer(page = 1) {
             try{
-                await axios.get(baseUrl+`get-customer?page=${page}&keyword=${keyword}`)
+                 axios.get(baseUrl+`get-customer?page=${page}&keyword=${this.keyword}`)
                 .then(response => {
-                    customers.value = response.data
+                    this.customers = response.data
                 }).catch(error => {
                     console.log(error)
                 })
@@ -22,26 +26,46 @@ export default {
                 console.log(e)
             }
         }
+    },
 
-        const openCustomerOrderModal = (id) => {
-
-        }
-
-        onMounted(()=> getCustomer())
-
-        return {
-            customers,
-            openCustomerOrderModal,
-            keyword
-        }
+    mounted(){
+        this.getCustomer()
     }
+    // setup() {
+    //     const customers = ref([])
+    //     const keyword = reactive('')
+    //     const getCustomer = async(page = 1) => {
+    //         try{
+    //             await axios.get(baseUrl+`get-customer?page=${page}&keyword=${keyword}`)
+    //             .then(response => {
+    //                 customers.value = response.data
+    //             }).catch(error => {
+    //                 console.log(error)
+    //             })
+    //         }catch(e){
+    //             console.log(e)
+    //         }
+    //     }
+
+    //     const openCustomerOrderModal = (id) => {
+
+    //     }
+
+    //     onMounted(()=> getCustomer())
+
+    //     return {
+    //         customers,
+    //         openCustomerOrderModal,
+    //         keyword
+    //     }
+    // }
 }
 </script>
 
 <template>  
 <div class="widget-content widget-content-area">
     <div>
-        <input type="text" class="form-controll"  @keyPress="getCustomer()" v-model="keyword" />
+        <input type="text" class="form-controll"  @keyup="getCustomer()" v-model="keyword" />
     </div>
     <div class="table-responsive">
         <table class="table table-bordered table-hover mb-4">

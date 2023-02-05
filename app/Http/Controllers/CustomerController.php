@@ -18,9 +18,9 @@ class CustomerController extends Controller
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 10;
         $user = User::orderBy('id','desc');
         if($request->keyword != ''){
-            $user = $user->where('first_name','=','%'.$request->keyword.'%');
-            $user = $user->orWhere('email','=','%'.$request->keyword.'%');
-            $user = $user->orWhere('phone','=','%'.$request->keyword.'%');
+            $user = $user->where('first_name','like','%'.$request->keyword.'%');
+            $user = $user->orWhere('email','like','%'.$request->keyword.'%');
+            $user = $user->orWhere('phone','like','%'.$request->keyword.'%');
         }
         if($noPagination != ''){
             $user = $user->get();
