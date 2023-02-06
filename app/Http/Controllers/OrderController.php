@@ -39,6 +39,19 @@ class OrderController extends Controller
     }
 
 
+    public function getUserOrder(Request $request,$id)
+    {
+        $noPagination = $request->get('no_paginate');
+        $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
+        $order = Order::where('user_id',$id)->orderBy('id','desc');
+        if($noPagination != ''){
+            $order = $order->get();
+        } else {
+            $order = $order->paginate($dataQty);
+        }
+        return response()->json($order);
+    }
+
     public function orderDetails($id)
     {
         // $order = Order::find($id)->first();

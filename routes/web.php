@@ -9,6 +9,8 @@ use App\Http\Controllers\ColorController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\FabricController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CampaignController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -66,6 +68,15 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     Route::post('update/order/status',[OrderController::class,'updateOrder']);
     Route::get('orders-details/{id}',[OrderController::class,'orderDetails']);
     Route::get('order/cancel/{id}',[OrderController::class,'orderCancel']);
+    Route::get('get-user-order/{id}',[OrderController::class,'getUserOrder']);
+
+    //customer
+    Route::get('customers',[CustomerController::class,'index'])->name('customers');
+    Route::get('get-customer',[CustomerController::class,'getCustomer']);
+    Route::get('get-user/{id}/orders',[CustomerController::class,'getCustomerOrder']);
+    Route::get('user-order-detail/{order_id}',[CustomerController::class,'getCustomerOrderDetail'])->name('user-order-detail/{id}');
     
+    //Campaign
+    Route::get('campaign',[CampaignController::class,'index'])->name('campaign');
 
 });

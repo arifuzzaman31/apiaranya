@@ -15,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return response()->json(getParentCategory());
+        // return response()->json(getParentCategory());
         return view('pages.category.category');
     }
 
