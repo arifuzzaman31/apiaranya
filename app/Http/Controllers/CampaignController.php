@@ -39,6 +39,20 @@ class CampaignController extends Controller
             'start_at' => 'required',
             'expire_at' => 'required|date|after:start_at',
         ]);
-        return response()->json(['status' => 'success', 'message' => $this->fieldname.' Added Successfully!']);
+
+        try{
+            $camp = new Campaign();
+            $camp->campaign_name = $request->campaign_name;
+            $camp->campaign_banner_default = 'https://pbs.twimg.com/profile_banners/4445589747/1668516575/1500x500';
+            $camp->campaign_start_date = $request->start_at;
+            $camp->campaign_expire_date = $request->expire_at;
+            $camp->status = 1;
+            $camp->save();
+            
+            return response()->json(['status' => 'success', 'message' => $this->fieldname.' Added Successfully!']);
+        }catch (\Throwable $th) {
+            
+            return response()->json(['status' => 'error', 'message' => $th]);
+        }
     }
 }

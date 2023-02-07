@@ -10,10 +10,7 @@ use App\Http\Controllers\SizeController;
 use App\Http\Controllers\FabricController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CustomerController;
-<<<<<<< HEAD
-=======
 use App\Http\Controllers\CampaignController;
->>>>>>> 61aedc59fb98f3e281503131099af59d41062474
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -80,16 +77,9 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     Route::get('get-user/{id}/orders',[CustomerController::class,'getCustomerOrder']);
     Route::get('user-order-detail/{order_id}',[CustomerController::class,'getCustomerOrderDetail'])->name('user-order-detail/{id}');
     
-<<<<<<< HEAD
-    //customer
-    Route::get('customers',[CustomerController::class,'index'])->name('customers');
-    Route::get('get-customer',[CustomerController::class,'getCustomer']);
-
-=======
     //Campaign
     Route::resource('campaign',CampaignController::class);
     Route::get('get-campaign',[CampaignController::class,'getCampaing']);
     // Route::get('create-campaign',[CampaignController::class,'create'])->name('create-campaign');
->>>>>>> 61aedc59fb98f3e281503131099af59d41062474
 
 });

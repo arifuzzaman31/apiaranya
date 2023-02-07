@@ -1,32 +1,12 @@
 <script>
-<<<<<<< HEAD
-import { ref,reactive,onMounted } from 'vue';
-import { Bootstrap4Pagination } from 'laravel-vue-pagination';
-=======
 import { ref,reactive,computed,onMounted } from 'vue';
 import { Bootstrap4Pagination } from 'laravel-vue-pagination';
 // import useOrder from '../../composables/order';
->>>>>>> 61aedc59fb98f3e281503131099af59d41062474
 
 export default {
     components:{
         Bootstrap4Pagination
     },
-<<<<<<< HEAD
-
-    data(){
-        return {
-            customers: [],
-            keyword:''
-        }
-    },
-    methods: {
-        getCustomer(page = 1) {
-            try{
-                 axios.get(baseUrl+`get-customer?page=${page}&keyword=${this.keyword}`)
-                .then(response => {
-                    this.customers = response.data
-=======
     // data(){
     //     return {
     //         customers: [],
@@ -73,7 +53,6 @@ export default {
                 await axios.get(baseUrl+`get-customer?page=${page}&keyword=${keyword.key}&per_page=10`)
                 .then(response => {
                     customers.value = response.data
->>>>>>> 61aedc59fb98f3e281503131099af59d41062474
                 }).catch(error => {
                     console.log(error)
                 })
@@ -81,41 +60,6 @@ export default {
                 console.log(e)
             }
         }
-<<<<<<< HEAD
-    },
-
-    mounted(){
-        this.getCustomer()
-    }
-    // setup() {
-    //     const customers = ref([])
-    //     const keyword = reactive('')
-    //     const getCustomer = async(page = 1) => {
-    //         try{
-    //             await axios.get(baseUrl+`get-customer?page=${page}&keyword=${keyword}`)
-    //             .then(response => {
-    //                 customers.value = response.data
-    //             }).catch(error => {
-    //                 console.log(error)
-    //             })
-    //         }catch(e){
-    //             console.log(e)
-    //         }
-    //     }
-
-    //     const openCustomerOrderModal = (id) => {
-
-    //     }
-
-    //     onMounted(()=> getCustomer())
-
-    //     return {
-    //         customers,
-    //         openCustomerOrderModal,
-    //         keyword
-    //     }
-    // }
-=======
         const getUserOrder = async (id,page) => {
             let response = await axios.get(baseUrl+`get-user-order/${id}?page=${page}&per_page=1`)
             userOrders.value = response.data
@@ -148,23 +92,15 @@ export default {
             keyword
         }
     }
->>>>>>> 61aedc59fb98f3e281503131099af59d41062474
 }
 </script>
 
 <template>  
 <div class="widget-content widget-content-area">
-<<<<<<< HEAD
-    <div>
-        <input type="text" class="form-controll"  @keyup="getCustomer()" v-model="keyword" />
-    </div>
-    <div class="table-responsive">
-=======
     <div class="row col-4">
         <input id="search" placeholder="Search By Name, Email or Phone" type="text" class="form-control"  @keyup.prevent="onPress" v-model="keyword.key" />
     </div>
     <div class="table-responsive mt-4">
->>>>>>> 61aedc59fb98f3e281503131099af59d41062474
         <table class="table table-bordered table-hover mb-4">
             <thead>
                 <tr>
@@ -178,30 +114,7 @@ export default {
                 </tr>
             </thead>
             <tbody>
-<<<<<<< HEAD
                 <template v-for="customer in customers.data">
-                    <tr>
-                        <td>{{ customer.id }}</td>
-                        <td>{{ customer.first_name }}</td>
-                        <td>{{ customer.phone }}</td>
-                        <td>{{ customer.email }}</td>
-                        <td>{{ customer.address }}</td>
-                        <td>{{ customer.status }}</td>
-                        <td>
-                            <div class="dropdown custom-dropdown">
-                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-                                </a>
-
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1" style="will-change: transform;">
-                                    <a type="button" @click="openCustomerOrderModal(customer.id)" class="dropdown-item" href="javascript:void(0);">Progess</a>
-                                    <a class="dropdown-item" href="javascript:void(0);">Share</a>
-                                    <a class="dropdown-item" href="javascript:void(0);">Edit</a>
-                                    <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                                </div>
-                            </div>
-=======
-                <template v-for="customer in customers.data" :key="customer.id">
                     <tr>
                         <td>{{ customer.id }}</td>
                         <td>{{ customer.name }}</td>
@@ -213,7 +126,6 @@ export default {
                             <a :href="keyword.url+'get-user/'+customer.id+'/orders'" type="button">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                             </a>
->>>>>>> 61aedc59fb98f3e281503131099af59d41062474
                         </td>
                     </tr>					
                 </template>
@@ -224,9 +136,6 @@ export default {
                 @pagination-change-page="getCustomer"
             />
     </div>
-<<<<<<< HEAD
-
-=======
     <div id="customerOrderModal" class="modal animated fadeInUp custo-fadeInUp" role="dialog">
         <div class="modal-dialog modal-xl">
             <!-- Modal content-->
@@ -253,7 +162,7 @@ export default {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <template v-for="(order,index) in userOrders.data" :key="index">
+                                    <template v-for="(order,index) in userOrders.data">
                                         <tr>
                                             <td>{{ index+1 }}</td>
                                             <td>{{ order.order_id }}</td>
@@ -357,6 +266,5 @@ export default {
             </div>
         </div>
     </div>
->>>>>>> 61aedc59fb98f3e281503131099af59d41062474
 </div>  
 </template>

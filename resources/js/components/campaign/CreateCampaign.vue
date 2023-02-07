@@ -29,6 +29,8 @@ export default {
                 product: []
             },
 
+            page: 1,
+
             allproduct: [],
 
             validation_error: {},
@@ -42,7 +44,7 @@ export default {
                   response => {
                     this.successMessage(response.data)
                     this.formReset()
-                    this.getCampaign()
+                    this.getCampaignList()
                   }
               ). catch(error => {
                     this.validation_error = error.response.data.errors;
@@ -52,15 +54,23 @@ export default {
               
         },
 
-        getProduct(page = 1) {
+        getProduct() {
             try{
-                 axios.get(baseUrl+`get-product?page=${page}`)
+                 axios.get(baseUrl+`get-product?page=${this.page}&per_page=2`)
                 .then(response => {
-                    const opt = []
+                    // const opt = []
+                    //     response.data.data.map(data => {
+                    //         opt.push({'value':data.id,'name':data.product_name})
+                    //     })
+                    // this.allproduct = opt
+                   
+                    if(response.data.current_page > 1){
                         response.data.data.map(data => {
-                            opt.push({'value':data.id,'name':data.product_name})
+                            this.allproduct.push(data)
                         })
-                    this.allproduct = opt
+                    } else {
+                        this.allproduct = response.data.data
+                    }
                 }).catch(error => {
                     console.log(error)
                 })
@@ -69,11 +79,28 @@ export default {
             }
         },
 
+        getMore(){
+            this.page++
+            this.getProduct()
+        },
+
+        addToCamp(prod){
+            this.addcamp.product.push(prod)
+    
+            this.allproduct = this.allproduct.filter(item => item.id !== prod.id);
+        },
+
+        remToCamp(prod){
+            this.allproduct.push(prod)
+            this.addcamp.product = this.addcamp.product.filter(item => item.id !== prod.id);
+        },
+
         limitText (count) {
             return `and ${count} other products`
         },
         asyncFind (query) {
             // this.isLoading = true
+            if(query.length < 3) return ;
             axios.get(baseUrl+'get-product/search?keyword='+query)
             .then(response => {
                 if(response.data.status === 'not-found')
@@ -82,7 +109,12 @@ export default {
                 }
                 else
                 {
-                    this.allproduct = response.data
+                    // this.allproduct = response.data
+                    const opt = []
+                        response.data.map(data => {
+                            opt.push({'value':data.id,'name':data.product_name,'mrp_price':data.mrp_price})
+                        })
+                    this.allproduct = opt
                 }
             })
         },
@@ -123,6 +155,7 @@ export default {
 
     mounted(){
         this.getCampaignList()
+        this.getProduct()
         window.flatpickr(document.getElementById('basicFlatpickr'));
         window.flatpickr(document.getElementById('basicFlatpickr2'));
     }
@@ -130,6 +163,7 @@ export default {
 </script>
 
 <template>
+<div>
     <div class="row">
         <div id="tooltips" class="col-lg-12 layout-spacing col-md-12">
             <div class="statbox widget box box-shadow">     
@@ -192,7 +226,7 @@ export default {
                     </div>
                 </div>
 
-                    <div class="form-row">
+                    <!-- <div class="form-row">
                         <div class="col-md-12 mb-3">
                             <label for="product">Add Product</label>
                             <Multiselect
@@ -237,49 +271,25 @@ export default {
                             </Multiselect>
                         </div> 
                         
-                    </div>
+                    </div> -->
 
-                    <div class="row" style="margin-top: 20px;">	
+                    <!-- <div class="row" style="margin-top: 20px;">	
 						<div class="col-md-12">
-                            <div class="table-responsive" v-if="addcamp.product.length">
+                            <div class="table-responsive" v-if="addcamp.product.length > 0">
                                 <table class="table table-border table-condensed table-strip">
                                     <thead>
                                         <tr>
-                                        <th>Image</th>
-                                        <th>Product</th>
-                                        <th>Base Price</th>
-                                        <th>Discount</th>
-                                        <th>Discount Type</th>
-                                        <th>Total Discount</th>
-                                        <th>Discount Price</th>
+                                            <th>Image</th>
+                                            <th>Product</th>
+                                            <th>Base Price</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
                                     <tr v-for="(value,index) in addcamp.product" :key="index">
-                                        <td><img style="height: 60px;" v-lazy="value.product_image"></td>
+                                        <td><img style="height: 60px;" :src="value.product_image"></td>
                                         <td>{{ value.product_name }}</td>
                                         <td>{{ value.mrp_price }}</td>
-                                        <td>
-                                            <input v-model="value.discount" class="form-control" type="number" name="">
-                                        </td>
-                                        <td>
-                                            <select class="form-control" v-model="value.discount_type">
-                                                <option value="1">Amount</option>
-                                                <option value="2">%</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                        <input type="hidden"   :value="value.discount_amount = discount(value.discount_type,value.discount,value.selling_price)">
-
-                                        {{ value.discount_amount }}
-
-                                        </td>   
-
-                                        
-                                        <td>
-                                        {{ value.selling_price - value.discount_amount }}
-                                        </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -287,10 +297,60 @@ export default {
                         </div>		
 
                     </div>
-                            
+                             -->
             </div>
         </div>
     </div>
+</div>
+<div class="row">
+    <div id="tooltips" class="col-lg-6 layout-spacing col-md-6">
+        <div class="statbox widget box box-shadow">     
+            <div class="widget-content widget-content-area">
+                <div class="row">
+                    <div class="col-6 mb-2" v-for="prod in allproduct" :key="prod.id">
+                        <div class="card">
+                            <div class="card-img">
+                                <img width="90" :src="prod.product_image" />
+                            </div>
+                            <div class="card-body">
+                                <b>{{prod.product_name}}</b>
+                                <p>{{prod.mrp_price}}</p>
+                            </div>
+                            <div class="card-footer">
+                                <button type="button" @click="addToCamp(prod)" class="btn-default">Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <button type="button" @click="getMore()" class="btn-default">Load More</button>
+            </div>
+        </div>
+    </div>
+    <div id="tooltips" class="col-lg-6 layout-spacing col-md-6">
+        <div class="statbox widget box box-shadow">     
+            <div class="widget-content widget-content-area">
+                <div class="row">
+                    <div class="col-6 mb-2" v-for="prod in addcamp.product" :key="prod.id">
+                        <div class="card">
+                            <div class="card-img">
+                                <img width="90" :src="prod.product_image" />
+                            </div>
+                            <div class="card-body">
+                                <b>{{prod.product_name}}</b>
+                                <p>{{prod.mrp_price}}</p>
+                            </div>
+                            <div class="card-footer">
+                                <button type="button" @click="remToCamp(prod)" class="btn-default">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 </template>
 <style src="@vueform/multiselect/themes/default.css"></style>
