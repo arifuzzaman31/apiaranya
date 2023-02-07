@@ -14,5 +14,8 @@
 <link href="{{ asset('admin-assets/plugins/animate/animate.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('admin-assets/assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="{{ asset('admin-assets/assets/css/forms/switches.css')}}">
+<<<<<<< HEAD
 
+=======
+>>>>>>> 61aedc59fb98f3e281503131099af59d41062474
 <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>

@@ -7,6 +7,7 @@ import Multiselect from '@vueform/multiselect'
 import Mixin from '../../mixin';
 import useAttributes from '../../composables/attributes';
 
+
 export default {
     components: {
         QuillEditor,
@@ -48,10 +49,16 @@ export default {
             allsizes: [],
             allfabrics: [],
             errors: [],
+<<<<<<< HEAD
             allcolours: [],
         }
     },
 
+=======
+            allcolours: []
+        }
+    },
+>>>>>>> 61aedc59fb98f3e281503131099af59d41062474
     methods: {
         submitForm () {
              axios.post(baseUrl+'product',{'form':this.form,'img':this.uploadimg}).then(response => {
@@ -67,6 +74,7 @@ export default {
                 }
             })
         },
+<<<<<<< HEAD
 
         openUploadModal() {
                 window.cloudinary.openUploadWidget(
@@ -115,6 +123,64 @@ export default {
                     }).open();
                 },
 
+=======
+        openUploadModal() {
+            cloudinary.openUploadWidget(
+                { cloud_name: 'diyc1dizi',
+                    upload_preset: 'webable',
+                    sources: [
+                        "local",
+                        "camera",
+                        "google_drive",
+                        "facebook",
+                        "dropbox",
+                        "instagram",
+                        "unsplash"
+                    ],
+                    // cropping: true, //add a cropping step
+                    // showAdvancedOptions: true,  //add advanced options (public_id and tag)
+                    // sources: [ "local", "url"], // restrict the upload sources to URL and local files
+                    // multiple: false,  //restrict upload to a single file
+                    // folder: "user_images", //upload files to the specified folder
+                    // tags: ["users", "profile"], //add the given tags to the uploaded files
+                    // context: {alt: "user_uploaded"}, //add the given context data to the uploaded files
+                    // clientAllowedFormats: ["images"], //restrict uploading to image files only
+                    // maxImageFileSize: 2000000,  //restrict file size to less than 2MB
+                    // maxImageWidth: 2000, //Scales the image down to a width of 2000 pixels before uploading
+                    // theme: "purple", //change to a purple theme
+                    styles: {
+                        palette: {
+                            window: "#10173a",
+                            sourceBg: "#20304b",
+                            windowBorder: "#7171D0",
+                            tabIcon: "#79F7FF",
+                            inactiveTabIcon: "#8E9FBF",
+                            menuIcons: "#CCE8FF",
+                            link: "#72F1FF",
+                            action: "#5333FF",
+                            inProgress: "#00ffcc",
+                            complete: "#33ff00",
+                            error: "#cc3333",
+                            textDark: "#000000",
+                            textLight: "#ffffff"
+                        },
+                        fonts: {
+                            default: null,
+                            "sans-serif": {
+                                url: null,
+                                active: true
+                            }
+                        }
+                    }
+                },
+                (error, result) => {
+                if (!error && result && result.event === "success") {
+                    console.log('Done uploading..: ', result.info);
+                    this.form.product_image_one = result.info.secure_url;
+                }
+                }).open();
+            },
+>>>>>>> 61aedc59fb98f3e281503131099af59d41062474
         getCategory() {
             axios.get(baseUrl+'category').then(response => {
                 let res = response.data.filter(data => data.parent_category == 0)
@@ -123,7 +189,10 @@ export default {
                     this.allfiltersubcategories = subcat
                 })
         },
+<<<<<<< HEAD
 
+=======
+>>>>>>> 61aedc59fb98f3e281503131099af59d41062474
             getColour() {
                 try{
                      axios.get(baseUrl+'colour/create?no_paginate=yes').then(response => {
@@ -141,7 +210,10 @@ export default {
                     console.log(error)
                 }
             },
+<<<<<<< HEAD
 
+=======
+>>>>>>> 61aedc59fb98f3e281503131099af59d41062474
             getSize() {
                 try{
                      axios.get(baseUrl+'sizes/create?no_paginate=yes').then(response => {
@@ -157,7 +229,10 @@ export default {
                     console.log(error)
                 }
             },
+<<<<<<< HEAD
 
+=======
+>>>>>>> 61aedc59fb98f3e281503131099af59d41062474
              getFabric() {
                 try{
                      axios.get(baseUrl+'fabrics/create?no_paginate=yes').then(response => {
@@ -173,12 +248,18 @@ export default {
                     console.log(error)
                 }
             },
+<<<<<<< HEAD
 
+=======
+>>>>>>> 61aedc59fb98f3e281503131099af59d41062474
             getSubCategories() {
                 const filterData = (this.allfiltersubcategories).filter((data) => data.parent_category == this.form.category)
                 this.allsubcategories = filterData
             },
+<<<<<<< HEAD
 
+=======
+>>>>>>> 61aedc59fb98f3e281503131099af59d41062474
             clearForm() {
                 this.form = {
                     product_name : '',
@@ -208,7 +289,10 @@ export default {
                 }
             }
     },
+<<<<<<< HEAD
 
+=======
+>>>>>>> 61aedc59fb98f3e281503131099af59d41062474
     mounted(){
         this.getCategory()
         this.getColour()
@@ -220,7 +304,10 @@ export default {
     //         const { notifying } = Mixin;
     //         const { allcategories, getCategory } = useAttributes();
            
+<<<<<<< HEAD
     //         const uploadimg = ref('');
+=======
+>>>>>>> 61aedc59fb98f3e281503131099af59d41062474
     //         const allsubcategories = ref([]);
     //         const allcolours = ref([]);
     //         const allsizes = ref([]);
@@ -254,7 +341,11 @@ export default {
     //         });
 
     //         const submitForm = async() => {
+<<<<<<< HEAD
     //             await axios.post(baseUrl+'product',{'form':form,'img':uploadimg}).then(response => {
+=======
+    //             await axios.post(baseUrl+'product',form).then(response => {
+>>>>>>> 61aedc59fb98f3e281503131099af59d41062474
     //                 if(response.data.status == 'success'){
     //                     clearForm()
     //                     notifying(response.data)
@@ -268,6 +359,7 @@ export default {
     //             })
     //         };
 
+<<<<<<< HEAD
     //         const openUploadModal = ()=> {
     //             window.cloudinary.openUploadWidget(
     //                 { cloud_name: 'diyc1dizi',
@@ -280,6 +372,9 @@ export default {
     //                 }
     //                 }).open();
     //             }
+=======
+            
+>>>>>>> 61aedc59fb98f3e281503131099af59d41062474
 
     //         const getColour = async() => {
     //             try{
@@ -331,6 +426,56 @@ export default {
     //             }
     //         }
 
+<<<<<<< HEAD
+=======
+    //         const openUploadModal = () => {
+    //             window.cloudinary.openUploadWidget(
+    //                 { cloud_name: 'diyc1dizi',
+    //                     upload_preset: 'webable',
+    //                     sources: [
+    //                         "local",
+    //                         "camera",
+    //                         "google_drive",
+    //                         "facebook",
+    //                         "dropbox",
+    //                         "instagram",
+    //                         "unsplash"
+    //                     ],
+    //                     multiple: true,
+    //                     styles: {
+    //                         palette: {
+    //                             window: "#10173a",
+    //                             sourceBg: "#20304b",
+    //                             windowBorder: "#7171D0",
+    //                             tabIcon: "#79F7FF",
+    //                             inactiveTabIcon: "#8E9FBF",
+    //                             menuIcons: "#CCE8FF",
+    //                             link: "#72F1FF",
+    //                             action: "#5333FF",
+    //                             inProgress: "#00ffcc",
+    //                             complete: "#33ff00",
+    //                             error: "#cc3333",
+    //                             textDark: "#000000",
+    //                             textLight: "#ffffff"
+    //                         },
+    //                         fonts: {
+    //                             default: null,
+    //                             "sans-serif": {
+    //                                 url: null,
+    //                                 active: true
+    //                             }
+    //                         }
+    //                     }
+    //                 },
+    //                 (error, result) => {
+    //                 if (!error && result && result.event === "success") {
+    //                     console.log('Done uploading..: ', result.info);
+    //                     this.form.product_image_one = result.info.secure_url;
+    //                 }
+    //                 }).open();
+    //             }
+
+>>>>>>> 61aedc59fb98f3e281503131099af59d41062474
     //         const getSubCategories = async() => {
     //             const filterData = (allcategories.value).filter((data) => data.parent_category == form.category)
     //             allsubcategories.value = filterData
@@ -380,9 +525,14 @@ export default {
     //         allfabrics,
     //         errors,
     //         submitForm,
+<<<<<<< HEAD
     //         clearForm,
     //         openUploadModal,
     //         uploadimg
+=======
+    //         // openUploadModal,
+    //         clearForm
+>>>>>>> 61aedc59fb98f3e281503131099af59d41062474
     //     }
     // },
 }
@@ -454,9 +604,13 @@ export default {
                             <div class="col-md-4">
                                 <label for="product-image1">Product Image (1:1)</label>
                                 <!-- <input type="file" class="form-control" id="product-image"> -->
+<<<<<<< HEAD
                                 <button type="button" @click="openUploadModal">Upload files</button>
+=======
+                                <button type="button" class="btn btn-sm btn-info" @click="openUploadModal()">Upload files</button>
+>>>>>>> 61aedc59fb98f3e281503131099af59d41062474
                             </div>
-                            
+                            <img :src="form.product_image_one" class="img-fluid"/>
                         </div>
                     </div>
                 </div>
@@ -713,7 +867,7 @@ export default {
     </form>
 </template>
 <style src="@vueform/multiselect/themes/default.css"></style>
-<style>
+<style scoped>
   .multiselect-tag.is-user {
     padding: 5px 8px;
     border-radius: 22px;

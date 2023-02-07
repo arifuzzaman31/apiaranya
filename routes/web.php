@@ -10,6 +10,10 @@ use App\Http\Controllers\SizeController;
 use App\Http\Controllers\FabricController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CustomerController;
+<<<<<<< HEAD
+=======
+use App\Http\Controllers\CampaignController;
+>>>>>>> 61aedc59fb98f3e281503131099af59d41062474
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -60,15 +64,32 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     
     Route::resource('product',ProductController::class);
     Route::get('get-product',[ProductController::class,'getProduct']);
+    Route::get('get-product/search',[ProductController::class,'getProductBySearch']);
     
     //Order
     Route::get('order',[OrderController::class,'index'])->name('order');
     Route::get('get-order',[OrderController::class,'getOrder'])->name('get-order');
-    Route::post('update/order/status/{id}',[OrderController::class,'updateOrder'])->name('update/order/status');
+    Route::post('update/order/status',[OrderController::class,'updateOrder']);
+    Route::get('orders-details/{id}',[OrderController::class,'orderDetails']);
+    Route::get('order/cancel/{id}',[OrderController::class,'orderCancel']);
+    Route::get('get-user-order/{id}',[OrderController::class,'getUserOrder']);
+
+    //customer
+    Route::get('customers',[CustomerController::class,'index'])->name('customers');
+    Route::get('get-customer',[CustomerController::class,'getCustomer']);
+    Route::get('get-user/{id}/orders',[CustomerController::class,'getCustomerOrder']);
+    Route::get('user-order-detail/{order_id}',[CustomerController::class,'getCustomerOrderDetail'])->name('user-order-detail/{id}');
     
+<<<<<<< HEAD
     //customer
     Route::get('customers',[CustomerController::class,'index'])->name('customers');
     Route::get('get-customer',[CustomerController::class,'getCustomer']);
 
+=======
+    //Campaign
+    Route::resource('campaign',CampaignController::class);
+    Route::get('get-campaign',[CampaignController::class,'getCampaing']);
+    // Route::get('create-campaign',[CampaignController::class,'create'])->name('create-campaign');
+>>>>>>> 61aedc59fb98f3e281503131099af59d41062474
 
 });

@@ -13,4 +13,9 @@ class Size extends Model
     {
         return $this->belongsToMany(Product::class);
     }
+
+    public function order_details()
+    {
+        return $this->hasOne(OrderDetails::class);
+    }
 }

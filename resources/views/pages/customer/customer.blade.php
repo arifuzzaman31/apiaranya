@@ -21,4 +21,8 @@
 
 @push('script')
 <script src="{{ asset('js/order.js') }}"></script>
+<<<<<<< HEAD
 @endpush
+=======
+@endpush
+>>>>>>> 61aedc59fb98f3e281503131099af59d41062474

@@ -15,6 +15,7 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/attribute.js', 'public/js')
     .js('resources/js/product.js', 'public/js')
     .js('resources/js/order.js', 'public/js')
+    .js('resources/js/campaign.js', 'public/js')
     .vue()
     .postCss('resources/css/app.css', 'public/css', [
         //

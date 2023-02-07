@@ -5,12 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Fabric extends Model
+class CampaignProduct extends Model
 {
     use HasFactory;
-
-    public function order_details()
-    {
-        return $this->hasOne(OrderDetails::class);
-    }
 }
