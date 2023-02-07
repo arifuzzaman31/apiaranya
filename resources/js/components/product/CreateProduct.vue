@@ -7,22 +7,16 @@ import Multiselect from '@vueform/multiselect'
 import Mixin from '../../mixin';
 import useAttributes from '../../composables/attributes';
 
+
 export default {
     components: {
         QuillEditor,
         Multiselect
     },
 
-    setup() {
-            const { notifying } = Mixin;
-            const { allcategories, getCategory } = useAttributes();
-           
-            const allsubcategories = ref([]);
-            const allcolours = ref([]);
-            const allsizes = ref([]);
-            const allfabrics = ref([]);
-            const errors = ref([]);
-            const form = reactive({
+    data(){
+        return {
+            form: {
                 product_name: '',
                 sku: '',
                 category: null,
@@ -47,34 +41,105 @@ export default {
                 max_amount: 0,
                 discount_type: 1,
                 description: '',
-            });
-
-            const submitForm = async() => {
-                await axios.post(baseUrl+'product',form).then(response => {
-                    if(response.data.status == 'success'){
-                        clearForm()
-                        notifying(response.data)
+            },
+            allcategories: [],
+            allsubcategories: [],
+            allfiltersubcategories: [],
+            allcolours: [],
+            allsizes: [],
+            allfabrics: [],
+            errors: [],
+            allcolours: []
+        }
+    },
+    methods: {
+        submitForm () {
+             axios.post(baseUrl+'product',{'form':this.form,'img':this.uploadimg}).then(response => {
+                if(response.data.status == 'success'){
+                    this.clearForm()
+                    notifying(response.data)
+                }
+                console.log(response.data)
+            }).catch(e => {
+                console.log(e)
+                if(e.response.status == 422){
+                    this.errors = e.response.data.errors;
+                }
+            })
+        },
+        openUploadModal() {
+            cloudinary.openUploadWidget(
+                { cloud_name: 'diyc1dizi',
+                    upload_preset: 'webable',
+                    sources: [
+                        "local",
+                        "camera",
+                        "google_drive",
+                        "facebook",
+                        "dropbox",
+                        "instagram",
+                        "unsplash"
+                    ],
+                    // cropping: true, //add a cropping step
+                    // showAdvancedOptions: true,  //add advanced options (public_id and tag)
+                    // sources: [ "local", "url"], // restrict the upload sources to URL and local files
+                    // multiple: false,  //restrict upload to a single file
+                    // folder: "user_images", //upload files to the specified folder
+                    // tags: ["users", "profile"], //add the given tags to the uploaded files
+                    // context: {alt: "user_uploaded"}, //add the given context data to the uploaded files
+                    // clientAllowedFormats: ["images"], //restrict uploading to image files only
+                    // maxImageFileSize: 2000000,  //restrict file size to less than 2MB
+                    // maxImageWidth: 2000, //Scales the image down to a width of 2000 pixels before uploading
+                    // theme: "purple", //change to a purple theme
+                    styles: {
+                        palette: {
+                            window: "#10173a",
+                            sourceBg: "#20304b",
+                            windowBorder: "#7171D0",
+                            tabIcon: "#79F7FF",
+                            inactiveTabIcon: "#8E9FBF",
+                            menuIcons: "#CCE8FF",
+                            link: "#72F1FF",
+                            action: "#5333FF",
+                            inProgress: "#00ffcc",
+                            complete: "#33ff00",
+                            error: "#cc3333",
+                            textDark: "#000000",
+                            textLight: "#ffffff"
+                        },
+                        fonts: {
+                            default: null,
+                            "sans-serif": {
+                                url: null,
+                                active: true
+                            }
+                        }
                     }
-                    console.log(response.data)
-                }).catch(e => {
-                    console.log(e)
-                    if(e.response.status == 422){
-                        errors.value = e.response.data.errors;
-                    }
+                },
+                (error, result) => {
+                if (!error && result && result.event === "success") {
+                    console.log('Done uploading..: ', result.info);
+                    this.form.product_image_one = result.info.secure_url;
+                }
+                }).open();
+            },
+        getCategory() {
+            axios.get(baseUrl+'category').then(response => {
+                let res = response.data.filter(data => data.parent_category == 0)
+                let subcat = response.data.filter(data => data.parent_category !== 0)
+                    this.allcategories = res
+                    this.allfiltersubcategories = subcat
                 })
-            };
-
-            
-
-            const getColour = async() => {
+        },
+            getColour() {
                 try{
-                    await axios.get(baseUrl+'colour/create?no_paginate=yes').then(response => {
+                     axios.get(baseUrl+'colour/create?no_paginate=yes').then(response => {
                         // allcolours.value = response.data
                         const opt = []
                         response.data.map(data => {
                             opt.push({'value':data.id,'name':data.color_name})
                         })
-                        allcolours.value = opt
+                        this.allcolours = opt
                         // console.log(response.data)
                     }).catch(error => {
                         console.log(error)
@@ -82,92 +147,280 @@ export default {
                 }catch(error){
                     console.log(error)
                 }
-            }
-
-            const getSize = async() => {
+            },
+            getSize() {
                 try{
-                    await axios.get(baseUrl+'sizes/create?no_paginate=yes').then(response => {
+                     axios.get(baseUrl+'sizes/create?no_paginate=yes').then(response => {
                         const opt = []
                         response.data.map(data => {
                             opt.push({'value':data.id,'name':data.size_name})
                         })
-                        allsizes.value = opt
+                        this.allsizes = opt
                     }).catch(error => {
                         console.log(error)
                     })
                 }catch(error){
                     console.log(error)
                 }
-            }
-
-            const getFabric = async() => {
+            },
+             getFabric() {
                 try{
-                    await axios.get(baseUrl+'fabrics/create?no_paginate=yes').then(response => {
+                     axios.get(baseUrl+'fabrics/create?no_paginate=yes').then(response => {
                         const opt = []
                         response.data.map(data => {
                             opt.push({'value':data.id,'name':data.fabric_name})
                         })
-                        allfabrics.value = opt
+                        this.allfabrics = opt
                     }).catch(error => {
                         console.log(error)
                     })
                 }catch(error){
                     console.log(error)
                 }
+            },
+            getSubCategories() {
+                const filterData = (this.allfiltersubcategories).filter((data) => data.parent_category == this.form.category)
+                this.allsubcategories = filterData
+            },
+            clearForm() {
+                this.form = {
+                    product_name : '',
+                    sku : '',
+                    category : null,
+                    sub_category : null,
+                    product_image_one : '',
+                    product_image_two : '',
+                    design_code : '',
+                    stock : 0,
+                    cost : 0,
+                    price : 0,
+                    dimention : '',
+                    weight : '',
+                    care : '',
+                    is_fabric : true,
+                    selectfabrics : null,
+                    is_color : true,
+                    selectcolours : null,
+                    is_size : true,
+                    selectsize : null,
+                    discount_amount : '',
+                    discount_type : 1,
+                    max_amount : 0,
+                    discount_type : 1,
+                    description : ''
+                }
             }
-
-            const getSubCategories = async() => {
-                const filterData = (allcategories.value).filter((data) => data.parent_category == form.category)
-                allsubcategories.value = filterData
-            }
-
-            const clearForm = () => {
-                form.product_name = '';
-                form.sku = '';
-                form.category = null;
-                form.sub_category = null;
-                form.product_image_one = '';
-                form.product_image_two = '';
-                form.design_code = '';
-                form.stock = 0;
-                form.cost = 0;
-                form.price = 0;
-                form.dimention = '';
-                form.weight = '';
-                form.care = '';
-                form.is_fabric = true;
-                form.selectfabrics = null;
-                form.is_color = true;
-                form.selectcolours = null;
-                form.is_size = true;
-                form.selectsize = null;
-                form.discount_amount = '';
-                form.discount_type = 1;
-                form.max_amount = 0;
-                form.discount_type = 1;
-                form.description = '';
-            }
-
-            onMounted(()=>{
-                getCategory()
-                getColour()
-                getSize()
-                getFabric()
-            });
-
-        return {
-            form,
-            allcategories,
-            allsubcategories,
-            getSubCategories,
-            allcolours,
-            allsizes,
-            allfabrics,
-            errors,
-            submitForm,
-            clearForm
-        }
     },
+    mounted(){
+        this.getCategory()
+        this.getColour()
+        this.getSize()
+        this.getFabric()
+    }
+
+    // setup() {
+    //         const { notifying } = Mixin;
+    //         const { allcategories, getCategory } = useAttributes();
+           
+    //         const allsubcategories = ref([]);
+    //         const allcolours = ref([]);
+    //         const allsizes = ref([]);
+    //         const allfabrics = ref([]);
+    //         const errors = ref([]);
+    //         const form = reactive({
+    //             product_name: '',
+    //             sku: '',
+    //             category: null,
+    //             sub_category: null,
+    //             product_image_one: '',
+    //             product_image_two: '',
+    //             design_code: '',
+    //             stock: 0,
+    //             cost: 0,
+    //             price: 0,
+    //             dimention: '',
+    //             weight: '',
+    //             care: '',
+    //             is_fabric: true,
+    //             selectfabrics : null,
+    //             is_color: true,
+    //             selectcolours : null,
+    //             is_size: true,
+    //             selectsize : null,
+    //             discount_amount: '',
+    //             discount_type: 1,
+    //             max_amount: 0,
+    //             discount_type: 1,
+    //             description: '',
+    //         });
+
+    //         const submitForm = async() => {
+    //             await axios.post(baseUrl+'product',form).then(response => {
+    //                 if(response.data.status == 'success'){
+    //                     clearForm()
+    //                     notifying(response.data)
+    //                 }
+    //                 console.log(response.data)
+    //             }).catch(e => {
+    //                 console.log(e)
+    //                 if(e.response.status == 422){
+    //                     errors.value = e.response.data.errors;
+    //                 }
+    //             })
+    //         };
+
+            
+
+    //         const getColour = async() => {
+    //             try{
+    //                 await axios.get(baseUrl+'colour/create?no_paginate=yes').then(response => {
+    //                     // allcolours.value = response.data
+    //                     const opt = []
+    //                     response.data.map(data => {
+    //                         opt.push({'value':data.id,'name':data.color_name})
+    //                     })
+    //                     allcolours.value = opt
+    //                     // console.log(response.data)
+    //                 }).catch(error => {
+    //                     console.log(error)
+    //                 })
+    //             }catch(error){
+    //                 console.log(error)
+    //             }
+    //         }
+
+    //         const getSize = async() => {
+    //             try{
+    //                 await axios.get(baseUrl+'sizes/create?no_paginate=yes').then(response => {
+    //                     const opt = []
+    //                     response.data.map(data => {
+    //                         opt.push({'value':data.id,'name':data.size_name})
+    //                     })
+    //                     allsizes.value = opt
+    //                 }).catch(error => {
+    //                     console.log(error)
+    //                 })
+    //             }catch(error){
+    //                 console.log(error)
+    //             }
+    //         }
+
+    //         const getFabric = async() => {
+    //             try{
+    //                 await axios.get(baseUrl+'fabrics/create?no_paginate=yes').then(response => {
+    //                     const opt = []
+    //                     response.data.map(data => {
+    //                         opt.push({'value':data.id,'name':data.fabric_name})
+    //                     })
+    //                     allfabrics.value = opt
+    //                 }).catch(error => {
+    //                     console.log(error)
+    //                 })
+    //             }catch(error){
+    //                 console.log(error)
+    //             }
+    //         }
+
+    //         const openUploadModal = () => {
+    //             window.cloudinary.openUploadWidget(
+    //                 { cloud_name: 'diyc1dizi',
+    //                     upload_preset: 'webable',
+    //                     sources: [
+    //                         "local",
+    //                         "camera",
+    //                         "google_drive",
+    //                         "facebook",
+    //                         "dropbox",
+    //                         "instagram",
+    //                         "unsplash"
+    //                     ],
+    //                     multiple: true,
+    //                     styles: {
+    //                         palette: {
+    //                             window: "#10173a",
+    //                             sourceBg: "#20304b",
+    //                             windowBorder: "#7171D0",
+    //                             tabIcon: "#79F7FF",
+    //                             inactiveTabIcon: "#8E9FBF",
+    //                             menuIcons: "#CCE8FF",
+    //                             link: "#72F1FF",
+    //                             action: "#5333FF",
+    //                             inProgress: "#00ffcc",
+    //                             complete: "#33ff00",
+    //                             error: "#cc3333",
+    //                             textDark: "#000000",
+    //                             textLight: "#ffffff"
+    //                         },
+    //                         fonts: {
+    //                             default: null,
+    //                             "sans-serif": {
+    //                                 url: null,
+    //                                 active: true
+    //                             }
+    //                         }
+    //                     }
+    //                 },
+    //                 (error, result) => {
+    //                 if (!error && result && result.event === "success") {
+    //                     console.log('Done uploading..: ', result.info);
+    //                     this.form.product_image_one = result.info.secure_url;
+    //                 }
+    //                 }).open();
+    //             }
+
+    //         const getSubCategories = async() => {
+    //             const filterData = (allcategories.value).filter((data) => data.parent_category == form.category)
+    //             allsubcategories.value = filterData
+    //         }
+
+    //         const clearForm = () => {
+    //             form.product_name = '';
+    //             form.sku = '';
+    //             form.category = null;
+    //             form.sub_category = null;
+    //             form.product_image_one = '';
+    //             form.product_image_two = '';
+    //             form.design_code = '';
+    //             form.stock = 0;
+    //             form.cost = 0;
+    //             form.price = 0;
+    //             form.dimention = '';
+    //             form.weight = '';
+    //             form.care = '';
+    //             form.is_fabric = true;
+    //             form.selectfabrics = null;
+    //             form.is_color = true;
+    //             form.selectcolours = null;
+    //             form.is_size = true;
+    //             form.selectsize = null;
+    //             form.discount_amount = '';
+    //             form.discount_type = 1;
+    //             form.max_amount = 0;
+    //             form.discount_type = 1;
+    //             form.description = '';
+    //         }
+
+    //         onMounted(()=>{
+    //             getCategory()
+    //             getColour()
+    //             getSize()
+    //             getFabric()
+    //         });
+
+    //     return {
+    //         form,
+    //         allcategories,
+    //         allsubcategories,
+    //         getSubCategories,
+    //         allcolours,
+    //         allsizes,
+    //         allfabrics,
+    //         errors,
+    //         submitForm,
+    //         // openUploadModal,
+    //         clearForm
+    //     }
+    // },
 }
 </script>
 <template>
@@ -236,9 +489,10 @@ export default {
     
                             <div class="col-md-4">
                                 <label for="product-image1">Product Image (1:1)</label>
-                                <input type="file" class="form-control" id="product-image">
+                                <!-- <input type="file" class="form-control" id="product-image"> -->
+                                <button type="button" class="btn btn-sm btn-info" @click="openUploadModal()">Upload files</button>
                             </div>
-                            
+                            <img :src="form.product_image_one" class="img-fluid"/>
                         </div>
                     </div>
                 </div>
@@ -495,7 +749,7 @@ export default {
     </form>
 </template>
 <style src="@vueform/multiselect/themes/default.css"></style>
-<style>
+<style scoped>
   .multiselect-tag.is-user {
     padding: 5px 8px;
     border-radius: 22px;

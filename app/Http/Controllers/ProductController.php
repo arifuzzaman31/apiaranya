@@ -47,6 +47,18 @@ class ProductController extends Controller
         return response()->json($product);
     }
 
+    public function getProductBySearch(Request $request)
+    {
+        $product = Product::orderBy('id','desc');
+        if($request->keyword != ''){
+            $product = $product->where('product_name','like','%'.$request->keyword.'%');
+        }else{
+            $product = $product->latest(20);
+        }
+        $product = $product->get();
+        return response()->json($product);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

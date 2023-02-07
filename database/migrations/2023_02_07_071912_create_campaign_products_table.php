@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductCampaignsTable extends Migration
+class CreateCampaignProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateProductCampaignsTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_campaigns', function (Blueprint $table) {
+        Schema::create('campaign_products', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id');
             $table->foreignId('campaign_id');
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateProductCampaignsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_campaigns');
+        Schema::dropIfExists('campaign_products');
     }
 }

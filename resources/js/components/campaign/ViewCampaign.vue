@@ -26,7 +26,7 @@ export default {
       const getCampaign = async(page = 1) =>{
           let res = await axios.get(baseUrl+`get-campaign?page=${page}`);
           campaigns.value = res.data;
-          // console.log(fabrics.value)
+          console.log(campaigns.value)
       }
 
       const deleteCampaign = async(id)=>{
@@ -66,7 +66,7 @@ export default {
                   }
               })
               formReset()
-              getFabric()
+              getCampaign()
           }catch(e){
               if(e.response.status == 422){
                   errors.value = e.response.data.errors;
@@ -87,7 +87,7 @@ export default {
                   }
               })
               formReset()
-              getFabric()
+              getCampaign()
           }catch(e){
               if(e.response.status == 422){
                   var data = [];
@@ -120,14 +120,15 @@ export default {
           form.campaign_meta_image = '';
           form.campaign_start_date = '';
           form.campaign_expire_date = '';
-          form.status = campaign.status;
           form.status = true;
       }
       
-      onMounted(getFabric());
+      onMounted(() => {
+            getCampaign()
+      });
 
       return {
-        campaigns,
+          campaigns,
           form,
           campaign_id,
           getCampaign,
@@ -143,61 +144,52 @@ export default {
 </script>
 
 <template>
-<div id="tableHover" class="col-lg-12 col-12 layout-spacing">
-    <div class="statbox widget box box-shadow">
-        <div class="widget-header">
-            <div class="row">
-                <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
-                    <h4>Campaign</h4>
-                    <button class="btn btn-primary mb-2 mr-3" data-toggle="modal" data-target="#campaignModal" @click="formReset">Add New</button>
-                </div>                          
-            </div>
-        </div>       
+    <div class="statbox">     
         <div class="widget-content widget-content-area">
             <div class="table-responsive">
                 <table class="table table-bordered table-hover mb-4">
                     <thead>
                         <tr>
                             <th>SL</th>
-                            <th>Fabric Name</th>
-                            <th>Fabric Code</th>
+                            <th>Campaign Name</th>
+                            <th>Start Date</th>
+                            <th>Expire Date</th>
                             <th class="text-center">Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <template v-for="(fabric,index) in fabrics.data" :key="fabric.id">
+                        <template v-for="(campaign,index) in campaigns.data" :key="campaign.id">
                             <tr>
                                 <td>{{ index+1 }}</td>
-                                <td>{{ fabric.fabric_name }}</td>
-                                <td>{{ fabric.fabric_code }}</td>
+                                <td>{{ campaign.campaign_name }}</td>
+                                <td>{{ campaign.campaign_start_date }}</td>
+                                <td>{{ campaign.campaign_start_date }}</td>
                                 <td class="text-center">
                                     <label class="switch s-success  mb-4 mx-5">
-                                        <input type="checkbox" :checked="fabric.status == 1 ? true : false" disabled>
+                                        <input type="checkbox" :checked="campaign.status == 1 ? true : false" disabled>
                                         <span class="slider round"></span>
-
                                     </label>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#fabricModal" @click="editFabric(fabric)">Edit</button>
-                                    <button type="button" class="btn btn-sm btn-danger ml-2" @click="deleteFabric(fabric.id)">Delete</button>
+                                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#fabricModal">Edit</button>
+                                    <button type="button" class="btn btn-sm btn-danger ml-2">Delete</button>
                                 </td>
                             </tr>					
                         </template>
                     </tbody>
                 </table>
                     <Bootstrap4Pagination
-                        :data="fabrics"
-                        @pagination-change-page="getFabric"
+                        :data="campaigns"
+                        @pagination-change-page="getCampaign"
                     />
             </div>
 
         </div>
     </div>
-</div>
 </template>
 
 
-<style>
+<style scoped>
 
 </style>

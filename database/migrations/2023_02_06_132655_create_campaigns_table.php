@@ -23,7 +23,7 @@ class CreateCampaignsTable extends Migration
             $table->string('campaign_banner_two')->nullable();
             $table->date('campaign_start_date');
             $table->date('campaign_expire_date');
-            $table->tinyIncrements('status')->default(1);
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }

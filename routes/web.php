@@ -61,6 +61,7 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     
     Route::resource('product',ProductController::class);
     Route::get('get-product',[ProductController::class,'getProduct']);
+    Route::get('get-product/search',[ProductController::class,'getProductBySearch']);
     
     //Order
     Route::get('order',[OrderController::class,'index'])->name('order');
@@ -77,6 +78,8 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     Route::get('user-order-detail/{order_id}',[CustomerController::class,'getCustomerOrderDetail'])->name('user-order-detail/{id}');
     
     //Campaign
-    Route::get('campaign',[CampaignController::class,'index'])->name('campaign');
+    Route::resource('campaign',CampaignController::class);
+    Route::get('get-campaign',[CampaignController::class,'getCampaing']);
+    // Route::get('create-campaign',[CampaignController::class,'create'])->name('create-campaign');
 
 });

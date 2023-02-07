@@ -20764,9 +20764,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   playSound: function playSound() {
-    alert('mizin');
-    // var audio = new Audio(sound_url);
-    // audio.play();
+    var audio = new Audio(sound_url);
+    audio.play();
   },
   notifying: function notifying(data) {
     var toastMixin = Swal.mixin({

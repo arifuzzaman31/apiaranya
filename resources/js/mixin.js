@@ -2,9 +2,8 @@
 export default {
    
         playSound() {
-            alert('mizin')
-            // var audio = new Audio(sound_url);
-            // audio.play();
+            var audio = new Audio(sound_url);
+            audio.play();
         },
 
         notifying(data){
