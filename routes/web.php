@@ -45,6 +45,7 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
 
     //Category Route
     Route::resource('category',CategoryController::class);
+    Route::get('get-category',[CategoryController::class,'getCategoryData']);
     Route::get('add-category',[CategoryController::class,'getCategory'])->name('add-category');
 
     Route::resource('colour',ColorController::class);

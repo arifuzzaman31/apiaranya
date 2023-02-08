@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\AllStatic;
+use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Validator;
@@ -23,6 +25,12 @@ class CategoryController extends Controller
     public function getCategory()
     {
         return view('pages.category.category_add');
+    }
+
+    public function getCategoryData(Request $request)
+    {
+        $data = Category::where('status',AllStatic::$active)->get();
+        return CategoryResource::collection($data);
     }
 
     /**

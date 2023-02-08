@@ -1,13 +1,8 @@
 @extends('layout.app')
 @section('title', 'Product | Aranya')
-@push('style')
-<link href="{{ asset('admin-assets/plugins/animate/animate.css')}}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('admin-assets/assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="{{ asset('admin-assets/assets/css/forms/switches.css')}}">
-<link rel="stylesheet" type="text/css" href="{{ asset('admin-assets/assets/css/components/cards/card.css')}}">
-@endpush
+
 @section('content')
-<div class="col-lg-12 col-12 layout-spacing" style="padding: 25px 0;">
+<div id="tableCheckbox" class="col-lg-12 col-12 layout-spacing" style="padding: 25px 0;">
     <div class="statbox widget box box-shadow">
         <div class="widget-header">
             <div class="row">
@@ -32,5 +27,4 @@
 
 @push('script')
 <script src="{{ asset('js/product.js') }}"></script>
-
 @endpush

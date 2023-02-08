@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ProductResource;
+use App\Models\CampaignProduct;
 use App\Models\Product;
 use App\Models\ProductColour;
 use App\Models\ProductFabric;
@@ -37,14 +39,32 @@ class ProductController extends Controller
     public function getProduct(Request $request)
     {
         $noPagination = $request->get('no_paginate');
+        $discount   = $request->get('discount');
+        $keyword   = $request->get('keyword');
+        $camp_id   = $request->get('camp_id');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 2;
-        $product = Product::with(['category:id,category_name','inventory:id,product_id,stock'])->orderBy('id','desc');
+        $product = Product::with(['category:id,category_name','inventory:id,product_id,stock','product_size','product_colour'])
+                    ->orderBy('id','desc');
+
+        if($camp_id != ''){
+            $camp_prod = CampaignProduct::where('campaign_id',$camp_id)->pluck('product_id');
+            $product = $product->whereIn('id',$camp_prod);
+        }
+
+        if($discount != ''){
+            $product = $product->where('is_discount',0);
+        }
+
+        if($keyword != ''){
+            $product = $product->where('product_name','like','%'.$keyword.'%');
+            $product = $product->orWhere('sku','like','%'.$keyword.'%');
+        }
         if($noPagination != ''){
             $product = $product->get();
         } else {
             $product = $product->paginate($dataQty);
         }
-        return response()->json($product);
+        return ProductResource::collection($product);
     }
 
     public function getProductBySearch(Request $request)

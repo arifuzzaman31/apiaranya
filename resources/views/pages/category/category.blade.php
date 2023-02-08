@@ -9,7 +9,7 @@
                     <h4>Category</h4>
                     <!-- <a class="btn btn-outline-primary" href="{{ route('add-category') }}">Add New</a> -->
                     <div class="text-center">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#rotateleftModal">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createCampModal">
                         Add New
                         </button>
                     </div>

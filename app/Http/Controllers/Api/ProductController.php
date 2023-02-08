@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductResource;
+use App\Models\CampaignProduct;
 use App\Models\Product;
 
 class ProductController extends Controller
@@ -11,17 +13,50 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $noPagination = $request->get('no_paginate');
-        $takeen = $request->get('take');
-        $dataQty = $request->get('per_page') ? $request->get('per_page') : 2;
-        $product = Product::with(['category:id,category_name','inventory:id,product_id,stock'])->orderBy('id','desc');
-        if($noPagination != ''){
-            if($takeen){
-                $product = $product->take($takeen);
+        $byProduct = $request->get('by_product');
+        $discount   = $request->get('discount');
+        $keyword   = $request->get('keyword');
+        $q_category   = $request->get('category');
+        $q_sub_category   = $request->get('sub_category');
+        $camp_id   = $request->get('camp_id');
+        $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
+        $product = Product::with(['category:id,category_name','inventory:id,product_id,stock','product_size','product_colour'])
+                    ->orderBy('id','desc');
+
+        if($camp_id != ''){
+            $camp_prod = CampaignProduct::where('campaign_id',$camp_id)->pluck('product_id');
+            $product = $product->whereIn('id',$camp_prod);
+        }
+
+        if($q_category != ''){
+            if($q_sub_category != ''){
+                $product =  $product->where(['category_id' => $q_category, 'sub_category_id' => $q_sub_category]);
+            }else{
+                $product =  $product->where('category_id',$q_category);
             }
-            $product = $product->get();
+        }
+
+        if($discount != ''){
+            $product = $product->where('is_discount',0);
+        }
+
+        if($keyword != ''){
+            $product = $product->where('product_name','like','%'.$keyword.'%');
+            $product = $product->orWhere('sku','like','%'.$keyword.'%');
+        }
+
+        
+        if($noPagination != ''){
+            if($byProduct != ''){
+                $product = Product::where('id',$byProduct)->with(['category:id,category_name','inventory:id,product_id,stock','product_size','product_colour'])->first();
+                return response()->json($product);
+            } else {
+
+                $product = $product->get();
+            }
         } else {
             $product = $product->paginate($dataQty);
         }
-        return response()->json($product);
+        return ProductResource::collection($product);
     }
 }

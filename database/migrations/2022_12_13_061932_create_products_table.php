@@ -34,6 +34,7 @@ class CreateProductsTable extends Migration
             $table->string('care')->nullable();
             $table->string('design_code')->nullable();
             $table->tinyInteger('status')->default(1)->comment("0 for down the product");
+            $table->tinyInteger('is_discount')->default(0);
             $table->timestamps();
         });
     }
