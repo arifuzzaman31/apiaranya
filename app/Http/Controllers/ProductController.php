@@ -73,7 +73,7 @@ class ProductController extends Controller
         if($request->keyword != ''){
             $product = $product->where('product_name','like','%'.$request->keyword.'%');
         }else{
-            $product = $product->latest(20);
+            $product = $product->latest()->take(20);
         }
         $product = $product->get();
         return response()->json($product);

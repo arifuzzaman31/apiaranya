@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 02, 2023 at 02:38 PM
+-- Generation Time: Feb 09, 2023 at 03:30 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 7.4.30
 
@@ -82,6 +82,66 @@ CREATE TABLE `attribute_values` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `campaigns`
+--
+
+CREATE TABLE `campaigns` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `campaign_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `campaign_title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `campaign_banner_default` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `campaign_meta_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `campaign_banner_one` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `campaign_banner_two` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `campaign_start_date` date NOT NULL,
+  `campaign_expire_date` date NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `campaigns`
+--
+
+INSERT INTO `campaigns` (`id`, `campaign_name`, `campaign_title`, `campaign_banner_default`, `campaign_meta_image`, `campaign_banner_one`, `campaign_banner_two`, `campaign_start_date`, `campaign_expire_date`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Eid-2022', 'Enjoy Eid', 'https://www.shutterstock.com/shutterstock/photos/1432421069/display_1500/stock-vector-photo-or-graphic-editor-on-computer-vector-illustration-flat-cartoon-laptop-screen-with-design-or-1432421069.jpg', 'https://www.shutterstock.com/shutterstock/photos/1432421069/display_1500/stock-vector-photo-or-graphic-editor-on-computer-vector-illustration-flat-cartoon-laptop-screen-with-design-or-1432421069.jpg', NULL, NULL, '2023-02-07', '2023-02-26', 1, '2023-02-07 11:51:46', '2023-02-07 11:51:47'),
+(2, 'Adrian Vasquez', NULL, 'https://res.cloudinary.com/diyc1dizi/image/upload/v1675867456/pjcuaraszf9jesnuecdr.jpg', NULL, NULL, NULL, '2007-05-19', '2007-05-30', 1, '2023-02-08 09:01:22', '2023-02-08 09:01:22'),
+(3, 'Nash Oneil', NULL, 'https://res.cloudinary.com/diyc1dizi/image/upload/v1675867456/pjcuaraszf9jesnuecdr.jpg', NULL, NULL, NULL, '2023-02-12', '2023-03-03', 1, '2023-02-08 09:03:44', '2023-02-08 09:03:44'),
+(4, 'Zia Palmer', NULL, 'https://res.cloudinary.com/diyc1dizi/image/upload/v1675867456/pjcuaraszf9jesnuecdr.jpg', NULL, NULL, NULL, '2018-07-25', '2018-07-31', 1, '2023-02-08 09:05:05', '2023-02-08 09:05:05'),
+(5, 'test', NULL, 'https://res.cloudinary.com/diyc1dizi/image/upload/v1675867456/pjcuaraszf9jesnuecdr.jpg', NULL, NULL, NULL, '2023-02-09', '2023-02-15', 1, '2023-02-08 09:17:03', '2023-02-08 09:17:03');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `campaign_products`
+--
+
+CREATE TABLE `campaign_products` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` bigint(20) UNSIGNED NOT NULL,
+  `campaign_id` bigint(20) UNSIGNED NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `campaign_products`
+--
+
+INSERT INTO `campaign_products` (`id`, `product_id`, `campaign_id`, `status`, `created_at`, `updated_at`) VALUES
+(1, 5, 1, 1, '2023-02-08 11:57:38', '2023-02-08 11:57:39'),
+(2, 6, 1, 1, '2023-02-08 11:57:47', '2023-02-08 11:57:49'),
+(3, 7, 1, 1, '2023-02-08 11:58:00', '2023-02-08 11:58:01'),
+(4, 7, 3, 1, NULL, NULL),
+(5, 8, 3, 1, NULL, NULL),
+(6, 5, 2, 1, NULL, NULL),
+(7, 6, 2, 1, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `categories`
 --
 
@@ -90,9 +150,12 @@ CREATE TABLE `categories` (
   `category_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `parent_category` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `category_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `category_image_one` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `category_image_two` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `category_image_three` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `category_video` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '0 for down the category',
+  `precedence` tinyint(4) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -101,14 +164,25 @@ CREATE TABLE `categories` (
 -- Dumping data for table `categories`
 --
 
-INSERT INTO `categories` (`id`, `category_name`, `description`, `parent_category`, `category_image`, `category_video`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'women', NULL, '0', NULL, NULL, 1, '2023-01-29 13:53:24', '2023-01-29 13:53:25'),
-(2, 'men', NULL, '0', NULL, NULL, 1, '2023-01-29 13:53:41', '2023-01-29 13:53:42'),
-(3, 'kids', NULL, '0', NULL, NULL, 1, '2023-01-29 13:54:08', '2023-01-29 13:54:09'),
-(4, 'accessories', NULL, '3', NULL, NULL, 1, '2023-01-29 13:54:26', '2023-01-29 13:54:27'),
-(5, 'home furnishings', NULL, '2', NULL, NULL, 1, '2023-01-29 13:54:43', '2023-01-29 13:54:44'),
-(6, 'beauty', NULL, '0', NULL, NULL, 1, '2023-01-29 13:55:00', '2023-01-29 13:55:01'),
-(7, 'food', NULL, '2', NULL, NULL, 1, '2023-01-29 13:55:20', '2023-01-29 13:55:22');
+INSERT INTO `categories` (`id`, `category_name`, `description`, `parent_category`, `category_image_one`, `category_image_two`, `category_image_three`, `category_video`, `status`, `precedence`, `created_at`, `updated_at`) VALUES
+(1, 'Women', NULL, '0', NULL, NULL, NULL, NULL, 1, 1, '2023-01-29 13:53:24', '2023-01-29 13:53:25'),
+(2, 'Men', NULL, '0', NULL, NULL, NULL, NULL, 1, 2, '2023-01-29 13:53:41', '2023-01-29 13:53:42'),
+(3, 'Kids', NULL, '0', NULL, NULL, NULL, NULL, 1, 3, '2023-01-29 13:54:08', '2023-01-29 13:54:09'),
+(4, 'Saree', NULL, '1', NULL, NULL, NULL, NULL, 1, 1, '2023-01-29 13:54:26', '2023-01-29 13:54:27'),
+(5, 'Kurti & Fatua', NULL, '1', NULL, NULL, NULL, NULL, 1, 3, '2023-01-29 13:54:43', '2023-01-29 13:54:44'),
+(6, 'Tops & Shirts', NULL, '1', NULL, NULL, NULL, NULL, 1, 4, '2023-01-29 13:55:00', '2023-01-29 13:55:01'),
+(7, 'Kimono', NULL, '1', NULL, NULL, NULL, NULL, 1, 5, '2023-01-29 13:55:20', '2023-01-29 13:55:22'),
+(8, 'Home Furnishings', NULL, '0', NULL, NULL, NULL, NULL, 1, 4, '2023-02-06 11:28:32', '2023-02-06 11:28:33'),
+(9, 'Beauty Collection', NULL, '0', NULL, NULL, NULL, NULL, 1, 5, '2023-02-06 11:29:31', '2023-02-06 11:29:32'),
+(10, 'Accessories', NULL, '0', NULL, NULL, NULL, NULL, 1, 6, '2023-02-06 11:30:49', '2023-02-06 11:30:51'),
+(11, 'Salwar Kameez', NULL, '1', NULL, NULL, NULL, NULL, 1, 2, '2023-02-06 11:36:21', '2023-02-06 11:36:22'),
+(12, 'Kaftan', NULL, '1', NULL, NULL, NULL, NULL, 1, 6, '2023-02-06 11:39:11', '2023-02-06 11:39:12'),
+(13, 'Panjabi', NULL, '2', NULL, NULL, NULL, NULL, 1, 1, '2023-02-06 11:39:48', '2023-02-06 11:39:50'),
+(14, 'Vest', NULL, '2', NULL, NULL, NULL, NULL, 1, 2, '2023-02-06 11:40:17', '2023-02-06 11:40:18'),
+(15, 'T-Shirt', NULL, '2', NULL, NULL, NULL, NULL, 1, 3, '2023-02-06 11:40:40', '2023-02-06 11:40:41'),
+(16, 'Fatua', NULL, '2', NULL, NULL, NULL, NULL, 1, 4, '2023-02-06 11:41:24', '2023-02-06 11:41:26'),
+(17, 'Shirts', NULL, '2', NULL, NULL, NULL, NULL, 1, 5, '2023-02-06 11:41:54', '2023-02-06 11:41:55'),
+(18, 'Jackets', NULL, '2', NULL, NULL, NULL, NULL, 1, 6, '2023-02-06 11:42:21', '2023-02-06 11:42:22');
 
 -- --------------------------------------------------------
 
@@ -147,7 +221,7 @@ INSERT INTO `colours` (`id`, `color_name`, `color_code`, `slug`, `precedence`, `
 CREATE TABLE `deliveries` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `order_id` bigint(20) UNSIGNED NOT NULL,
-  `tracking_id` int(11) NOT NULL,
+  `tracking_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `shipping_date` date NOT NULL,
   `delivered_by` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `position_status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -161,10 +235,12 @@ CREATE TABLE `deliveries` (
 --
 
 INSERT INTO `deliveries` (`id`, `order_id`, `tracking_id`, `shipping_date`, `delivered_by`, `position_status`, `position_number`, `created_at`, `updated_at`) VALUES
-(1, 2, 123456, '2023-02-02', NULL, 'panding', 0, '2023-02-02 10:18:59', '2023-02-02 10:19:01'),
-(2, 2, 123456, '2023-02-02', NULL, 'process', 1, '2023-02-02 10:19:52', '2023-02-02 10:19:53'),
-(3, 2, 123456, '2023-02-02', NULL, 'delivered', 2, '2023-02-02 10:20:52', '2023-02-02 10:20:53'),
-(4, 2, 123456, '0000-00-00', NULL, 'cancel', 3, '2023-02-02 10:21:41', '2023-02-02 10:21:42');
+(1, 2, 'AXD754456', '2023-02-02', NULL, 'panding', 0, '2023-02-02 10:18:59', '2023-02-02 10:19:01'),
+(2, 2, 'AXD754456', '2023-02-02', NULL, 'process', 1, '2023-02-02 10:19:52', '2023-02-02 10:19:53'),
+(3, 2, 'AXD754456', '2023-02-02', NULL, 'delivered', 2, '2023-02-02 10:20:52', '2023-02-02 10:20:53'),
+(6, 2, 'AXD754456', '2023-02-05', NULL, 'Pending', 4, '2023-02-05 08:15:12', '2023-02-05 08:15:12'),
+(7, 1, 'ACD232', '2023-02-05', NULL, 'On Delivery', 2, '2023-02-05 08:22:32', '2023-02-05 08:22:32'),
+(8, 1, 'ACD232', '2023-02-05', NULL, 'Delivered', 3, '2023-02-05 08:23:22', '2023-02-05 08:23:22');
 
 -- --------------------------------------------------------
 
@@ -177,7 +253,7 @@ CREATE TABLE `discounts` (
   `product_id` bigint(20) UNSIGNED NOT NULL,
   `discount_amount` double NOT NULL,
   `discount_type` enum('percentage','flat') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `max_amount` double NOT NULL,
+  `max_amount` double DEFAULT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -191,7 +267,11 @@ INSERT INTO `discounts` (`id`, `product_id`, `discount_amount`, `discount_type`,
 (1, 5, 6, 'percentage', 34, 1, '2023-01-31 00:58:12', '2023-01-31 00:58:12'),
 (2, 6, 4, 'flat', 0, 1, '2023-01-31 01:45:12', '2023-01-31 01:45:12'),
 (3, 7, 4, 'flat', 0, 1, '2023-01-31 01:48:15', '2023-01-31 01:48:15'),
-(4, 8, 5, 'flat', 0, 1, '2023-01-31 01:54:49', '2023-01-31 01:54:49');
+(4, 8, 5, 'flat', 0, 1, '2023-01-31 01:54:49', '2023-01-31 01:54:49'),
+(5, 7, 4, 'percentage', 50, 1, '2023-02-09 08:24:01', '2023-02-09 08:24:01'),
+(6, 8, 4, 'percentage', 50, 1, '2023-02-09 08:24:01', '2023-02-09 08:24:01'),
+(7, 5, 4, 'flat', NULL, 1, '2023-02-09 08:29:36', '2023-02-09 08:29:36'),
+(8, 6, 4, 'flat', NULL, 1, '2023-02-09 08:29:36', '2023-02-09 08:29:36');
 
 -- --------------------------------------------------------
 
@@ -308,7 +388,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (18, '2023_01_24_121418_create_fabrics_table', 3),
 (19, '2023_01_30_124951_create_product_colours_table', 4),
 (20, '2023_01_30_125118_create_product_sizes_table', 4),
-(21, '2023_01_30_125155_create_product_fabrics_table', 4);
+(21, '2023_01_30_125155_create_product_fabrics_table', 4),
+(23, '2023_02_05_052839_create_order_details_table', 6),
+(24, '2023_02_06_132655_create_campaigns_table', 7),
+(25, '2023_02_07_071912_create_campaign_products_table', 7);
 
 -- --------------------------------------------------------
 
@@ -324,21 +407,58 @@ CREATE TABLE `orders` (
   `total_price` double(8,2) NOT NULL,
   `shipping_method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `payment_method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `order_data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`order_data`)),
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `order_data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1 order active , 0 cancel',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `order_position` int(11) DEFAULT 0
+  `order_position` int(11) DEFAULT 0,
+  `tracking_id` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `product_id`, `order_id`, `user_id`, `total_price`, `shipping_method`, `payment_method`, `order_data`, `status`, `created_at`, `updated_at`, `order_position`) VALUES
-(1, 2, 'AD124', 1, 364.00, 'Cash On', 'Bank', '\"{dhfghfd: dgdghdfg}\"', 1, '2023-02-02 09:44:25', '2023-02-02 09:44:27', 0),
-(2, 3, 'AS1245', 2, 867.00, 'Point', 'Bkash', '\"{taka:1245,prod:2}\"', 1, '2023-02-02 09:48:35', '2023-02-02 09:48:36', 1),
-(3, 5, 'AE5456', 2, 7897.00, 'Cash', 'Nagad', '\"{dfdg:gdgd}\"', 1, '2023-02-02 10:07:15', '2023-02-02 10:07:16', 2);
+INSERT INTO `orders` (`id`, `product_id`, `order_id`, `user_id`, `total_price`, `shipping_method`, `payment_method`, `order_data`, `status`, `created_at`, `updated_at`, `order_position`, `tracking_id`) VALUES
+(1, 2, 'AD124', 1, 364.00, 'Cash On', 'Bank', '\"{dhfghfd: dgdghdfg}\"', 0, '2023-02-02 09:44:25', '2023-02-05 08:45:53', 3, 'ACD232'),
+(2, 3, 'AS1245', 2, 210.00, 'Point', 'Bkash', '\"{taka:1245,prod:2}\"', 1, '2023-02-02 09:48:35', '2023-02-05 08:15:12', 3, 'AXD754456'),
+(3, 5, 'AE5456', 2, 7897.00, 'Cash', 'Nagad', '\"{dfdg:gdgd}\"', 0, '2023-02-02 10:07:15', '2023-02-02 10:07:16', 2, 'SF45566');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_details`
+--
+
+CREATE TABLE `order_details` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `order_id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` bigint(20) UNSIGNED NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `sub_category_id` bigint(20) UNSIGNED NOT NULL,
+  `colour_id` bigint(20) UNSIGNED DEFAULT 0,
+  `size_id` bigint(20) UNSIGNED DEFAULT 0,
+  `fabric_id` bigint(20) UNSIGNED DEFAULT 0,
+  `user_id` bigint(20) UNSIGNED NOT NULL COMMENT 'customer_id',
+  `quantity` int(11) NOT NULL,
+  `selling_price` double(8,4) NOT NULL,
+  `buying_price` double(8,4) NOT NULL,
+  `total_buying_price` double(8,4) NOT NULL,
+  `total_selling_price` double(8,4) NOT NULL,
+  `unit_discount` double NOT NULL DEFAULT 0,
+  `total_discount` double NOT NULL DEFAULT 0,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `order_details`
+--
+
+INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `category_id`, `sub_category_id`, `colour_id`, `size_id`, `fabric_id`, `user_id`, `quantity`, `selling_price`, `buying_price`, `total_buying_price`, `total_selling_price`, `unit_discount`, `total_discount`, `status`, `created_at`, `updated_at`) VALUES
+(1, 2, 5, 2, 5, 4, 2, 2, 0, 2, 45.0000, 42.0000, 82.0000, 90.0000, 0, 0, 1, '2023-02-05 07:34:25', '2023-02-05 07:34:26'),
+(2, 2, 8, 4, 5, 3, 6, 3, 0, 2, 60.0000, 50.0000, 100.0000, 120.0000, 0, 0, 1, '2023-02-05 07:47:27', '2023-02-05 07:47:28');
 
 -- --------------------------------------------------------
 
@@ -387,6 +507,14 @@ CREATE TABLE `personal_access_tokens` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `personal_access_tokens`
+--
+
+INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `name`, `token`, `abilities`, `last_used_at`, `created_at`, `updated_at`) VALUES
+(1, 'App\\Models\\User', 2, 'selim@mailc.com', 'ec1f8da02f39f52a49b64f44084e534ae5e7f38f1016d40077fbcbd3bed34672', '[\"*\"]', NULL, '2023-02-05 03:28:40', '2023-02-05 03:28:40'),
+(2, 'App\\Models\\User', 3, 'API TOKEN', 'bce74b084da245bbe1fa9c765bdcd0b89b2edf8b1d6791ba5e000a71c9c4d22e', '[\"*\"]', NULL, '2023-02-05 03:34:10', '2023-02-05 03:34:10');
+
 -- --------------------------------------------------------
 
 --
@@ -415,19 +543,20 @@ CREATE TABLE `products` (
   `country_of_origin` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '0 for down the product',
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `is_discount` tinyint(4) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `product_name`, `category_id`, `sub_category_id`, `description`, `sku`, `product_image`, `image_one`, `image_two`, `image_three`, `image_four`, `image_five`, `cost`, `mrp_price`, `dimension`, `weight`, `care`, `design_code`, `country_of_origin`, `status`, `created_at`, `updated_at`) VALUES
-(3, 'Zena Gordon', 2, 7, NULL, 'Veniam quia deserun', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvvOu_xVVRCcdwutaWwCQ0Jp0zsPv4v1liyQ&usqp=CAU', NULL, NULL, NULL, NULL, NULL, 32, 849, 'Sint et voluptas fac', 'Error fugit odio li', 'Perspiciatis culpa', 'Delectus nostrud as', NULL, 0, '2023-01-31 00:30:05', '2023-01-31 00:30:05'),
-(5, 'Heidi Goff', 2, 5, '<p><strong style=\"color: rgb(0, 0, 0);\">Lorem Ipsum</strong><span style=\"color: rgb(0, 0, 0);\">&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span></p>', 'Dolorum facere optio', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvvOu_xVVRCcdwutaWwCQ0Jp0zsPv4v1liyQ&usqp=CAU', NULL, NULL, NULL, NULL, NULL, 100, 625, 'Velit incidunt nobi', 'Est voluptatum iste', 'Qui nemo sapiente am', 'Aspernatur dolorem n', 'Qui nemo sapiente am', 0, '2023-01-31 00:58:12', '2023-01-31 00:58:12'),
-(6, 'Gregory Berg', 3, 5, '<p>Deserunt eos volupta.</p>', 'Consequatur sunt cil', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvvOu_xVVRCcdwutaWwCQ0Jp0zsPv4v1liyQ&usqp=CAU', NULL, NULL, NULL, NULL, NULL, 67, 111, 'Aut exercitationem v', 'Quis provident non', 'In in voluptas optio', 'Doloribus doloremque', 'In in voluptas optio', 0, '2023-01-31 01:45:12', '2023-01-31 01:45:12'),
-(7, 'Kalia Mcintosh', 2, 5, '<p>Esse proident, id, m.</p>', 'Rerum molestiae aliq', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvvOu_xVVRCcdwutaWwCQ0Jp0zsPv4v1liyQ&usqp=CAU', NULL, NULL, NULL, NULL, NULL, 29, 892, 'Ex sed error et erro', 'Pariatur Illum ull', 'Ut est amet sint i', 'Nulla hic molestiae', 'Ut est amet sint i', 0, '2023-01-31 01:48:15', '2023-01-31 01:48:15'),
-(8, 'Valentine George', 4, 5, '<p>Explicabo. Nobis qui.</p>', 'Consequatur est re', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvvOu_xVVRCcdwutaWwCQ0Jp0zsPv4v1liyQ&usqp=CAU', NULL, NULL, NULL, NULL, NULL, 79, 828, 'Sit ut qui cum aute', 'Ea sapiente cum sunt', 'Velit doloremque per', 'Occaecat quia natus', 'Velit doloremque per', 0, '2023-01-31 01:54:49', '2023-01-31 01:54:49');
+INSERT INTO `products` (`id`, `product_name`, `category_id`, `sub_category_id`, `description`, `sku`, `product_image`, `image_one`, `image_two`, `image_three`, `image_four`, `image_five`, `cost`, `mrp_price`, `dimension`, `weight`, `care`, `design_code`, `country_of_origin`, `status`, `created_at`, `updated_at`, `is_discount`) VALUES
+(3, 'Zena Gordon', 2, 7, NULL, 'Veniam quia deserun', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvvOu_xVVRCcdwutaWwCQ0Jp0zsPv4v1liyQ&usqp=CAU', NULL, NULL, NULL, NULL, NULL, 32, 849, 'Sint et voluptas fac', 'Error fugit odio li', 'Perspiciatis culpa', 'Delectus nostrud as', NULL, 1, '2023-01-31 00:30:05', '2023-01-31 00:30:05', 0),
+(5, 'Heidi Goff', 2, 5, '<p><strong style=\"color: rgb(0, 0, 0);\">Lorem Ipsum</strong><span style=\"color: rgb(0, 0, 0);\">&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span></p>', 'Dolorum facere optio', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvvOu_xVVRCcdwutaWwCQ0Jp0zsPv4v1liyQ&usqp=CAU', NULL, NULL, NULL, NULL, NULL, 100, 625, 'Velit incidunt nobi', 'Est voluptatum iste', 'Qui nemo sapiente am', 'Aspernatur dolorem n', 'Qui nemo sapiente am', 1, '2023-01-31 00:58:12', '2023-01-31 00:58:12', 0),
+(6, 'Gregory Berg', 3, 5, '<p>Deserunt eos volupta.</p>', 'Consequatur sunt cil', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvvOu_xVVRCcdwutaWwCQ0Jp0zsPv4v1liyQ&usqp=CAU', NULL, NULL, NULL, NULL, NULL, 67, 111, 'Aut exercitationem v', 'Quis provident non', 'In in voluptas optio', 'Doloribus doloremque', 'In in voluptas optio', 0, '2023-01-31 01:45:12', '2023-01-31 01:45:12', 1),
+(7, 'Kalia Mcintosh', 2, 5, '<p>Esse proident, id, m.</p>', 'Rerum molestiae aliq', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvvOu_xVVRCcdwutaWwCQ0Jp0zsPv4v1liyQ&usqp=CAU', NULL, NULL, NULL, NULL, NULL, 29, 892, 'Ex sed error et erro', 'Pariatur Illum ull', 'Ut est amet sint i', 'Nulla hic molestiae', 'Ut est amet sint i', 1, '2023-01-31 01:48:15', '2023-01-31 01:48:15', 0),
+(8, 'Valentine George', 4, 5, '<p>Explicabo. Nobis qui.</p>', 'Consequatur est re', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvvOu_xVVRCcdwutaWwCQ0Jp0zsPv4v1liyQ&usqp=CAU', NULL, NULL, NULL, NULL, NULL, 79, 828, 'Sit ut qui cum aute', 'Ea sapiente cum sunt', 'Velit doloremque per', 'Occaecat quia natus', 'Velit doloremque per', 0, '2023-01-31 01:54:49', '2023-01-31 01:54:49', 0);
 
 -- --------------------------------------------------------
 
@@ -568,13 +697,12 @@ INSERT INTO `sizes` (`id`, `size_name`, `slug`, `precedence`, `status`, `created
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '0 for dissable the user',
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -585,9 +713,10 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `email_verified_at`, `password`, `phone`, `address`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Niloy', 'Alam', 'nila@alam.com', NULL, '$tytu8797667', '015846987', 'Dhaka', 1, NULL, '2023-02-02 09:46:06', '2023-02-02 09:46:07'),
-(2, 'Selim', 'Ahmed', 'selim@mailc.com', NULL, '$78658776fjdfgghj', '015469875', 'Ctg', 1, NULL, '2023-02-02 09:47:04', '2023-02-02 09:47:05');
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `phone`, `address`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Niloy', 'nila@alam.com', NULL, '$tytu8797667', '015846987', 'Dhaka', 1, NULL, '2023-02-02 09:46:06', '2023-02-02 09:46:07'),
+(2, 'Selim', 'selim@mailc.com', NULL, '$2y$10$LDdg9xv8M36Pfi40/dHwXedTv8qvUgKwiE9ixvPQdze1zIukSeqUe', '015469875', 'Ctg', 1, NULL, '2023-02-02 09:47:04', '2023-02-02 09:47:05'),
+(3, 'Jammal', 'jamal@mailc.com', NULL, '$2y$10$k35e3g0NRu3owjVfOthyq.g7GIfoLEVp415cc2uBB26POTyIt1Bj6', NULL, NULL, 1, NULL, '2023-02-05 03:34:10', '2023-02-05 03:34:10');
 
 --
 -- Indexes for dumped tables
@@ -610,6 +739,18 @@ ALTER TABLE `attributes`
 -- Indexes for table `attribute_values`
 --
 ALTER TABLE `attribute_values`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `campaigns`
+--
+ALTER TABLE `campaigns`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `campaign_products`
+--
+ALTER TABLE `campaign_products`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -665,6 +806,12 @@ ALTER TABLE `migrations`
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `order_details`
+--
+ALTER TABLE `order_details`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -753,10 +900,22 @@ ALTER TABLE `attribute_values`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `campaigns`
+--
+ALTER TABLE `campaigns`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `campaign_products`
+--
+ALTER TABLE `campaign_products`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `colours`
@@ -768,13 +927,13 @@ ALTER TABLE `colours`
 -- AUTO_INCREMENT for table `deliveries`
 --
 ALTER TABLE `deliveries`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `discounts`
 --
 ALTER TABLE `discounts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `fabrics`
@@ -798,13 +957,19 @@ ALTER TABLE `inventories`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `order_details`
+--
+ALTER TABLE `order_details`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `payments`
@@ -816,7 +981,7 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -858,7 +1023,7 @@ ALTER TABLE `sizes`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

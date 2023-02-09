@@ -205,7 +205,6 @@ export default {
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
                             <h4>Order</h4>
-                            <button class="btn btn-primary mb-2 mr-3" data-toggle="modal" data-target="#sizeModal" @click="formReset">Add New</button>
                         </div>                          
                     </div>
                 </div>       
@@ -229,7 +228,7 @@ export default {
                                     <tr>
                                         <td>{{ index+1 }}</td>
                                         <td>{{ order.order_id }}</td>
-                                        <td>{{ order.user.first_name }} {{ order.user.last_name }}</td>
+                                        <td>{{ order.user.name }}</td>
                                         <td>{{ order.total_price }}</td>
                                         <td>{{ order.shipping_method }}</td>
                                         <td>{{ order.payment_method }}</td>

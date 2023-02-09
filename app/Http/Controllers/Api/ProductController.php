@@ -16,6 +16,7 @@ class ProductController extends Controller
         $byProduct = $request->get('by_product');
         $discount   = $request->get('discount');
         $keyword   = $request->get('keyword');
+        $tak_some   = $request->get('take_some');
         $q_category   = $request->get('category');
         $q_sub_category   = $request->get('sub_category');
         $camp_id   = $request->get('camp_id');
@@ -45,6 +46,9 @@ class ProductController extends Controller
             $product = $product->orWhere('sku','like','%'.$keyword.'%');
         }
 
+        if($tak_some != ''){
+            $product = $product->latest()->take($tak_some);
+        }
         
         if($noPagination != ''){
             if($byProduct != ''){

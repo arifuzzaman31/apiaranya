@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\AllStatic;
 use Illuminate\Http\Request;
 use App\Models\Campaign;
+use App\Models\CampaignProduct;
+use App\Models\Discount;
+use App\Models\Product;
+use DB;
 
 class CampaignController extends Controller
 {
@@ -59,6 +63,43 @@ class CampaignController extends Controller
             return response()->json(['status' => 'success', 'message' => $this->fieldname.' Created Successfully!']);
         }catch (\Throwable $th) {
             
+            return response()->json(['status' => 'error', 'message' => $th]);
+        }
+    }
+
+    
+    public function storeAddtoCamp(Request $request)
+    {
+        $request->validate([
+            'campaign' => 'required',
+            'discount_type' => 'required',
+            'discount_amount' => 'required',
+            'product' => 'required|array|min:1'
+        ]);
+
+        try{
+            DB::beginTransaction();
+
+            if(!empty($request->product)){
+                foreach($request->product as $value){
+                    $disc = new Discount();
+                    $disc->product_id  =  $value;
+                    $disc->discount_amount  =  $request->discount_amount;
+                    $disc->discount_type  =   $request->discount_type;
+                    $disc->max_amount  =   $request->max_amount;
+                    $disc->status = AllStatic::$active;
+                    $disc->save();
+                }
+            }
+
+            $camp = Campaign::find($request->campaign);
+            $camp->product()->attach($request->product);
+            $camp->save();
+
+            DB::commit();
+            return response()->json(['status' => 'success', 'message' => 'Product Has Added to Campaign!']);
+        }catch (\Throwable $th) {
+            DB::rollback();
             return response()->json(['status' => 'error', 'message' => $th]);
         }
     }

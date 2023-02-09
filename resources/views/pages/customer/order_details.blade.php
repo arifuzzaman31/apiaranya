@@ -47,6 +47,10 @@
                                 <td colspan="9"><p>No Data found</p></td>
                             </tr>
                         @endforelse
+                        <tr>
+                            <td colspan="8" class="text-right">Total: </td>
+                            <td>{{ $orders->total_price }}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>  
@@ -74,7 +78,7 @@
                             <tr  class="text-center">
                                 <td colspan="3"><p>No Data found</p></td>
                             </tr>
-                        @endforelse
+                            @endforelse
                     </tbody>
                 </table>
             </div>  

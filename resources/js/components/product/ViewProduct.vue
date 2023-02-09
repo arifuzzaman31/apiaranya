@@ -3,6 +3,10 @@ import { ref,reactive, onMounted } from 'vue';
 import axios from 'axios';
 import { Bootstrap4Pagination } from 'laravel-vue-pagination';
 import Mixin from '../../mixer';
+const date = new Date();
+let day = date.getDate();
+let month = date.getMonth() + 1;
+let year = date.getFullYear();
 
 export default {
     mixins:[Mixin],
@@ -19,15 +23,18 @@ export default {
             keyword: '',
             filterdata: {
                 category: '',
-                camp_id: ''
-            },
-            addTocamp: {
                 camp_id: '',
-                disc_type: '',
-                disc_amount: '',
+                per_page: 2
+            },
+            isCheckAll: false,
+            addTocamp: {
+                campaign: '',
+                discount_type: 'flat',
+                discount_amount: '',
                 max_amount: '',
                 product:[],
             },
+            campProd: [],
             allcampaign: [],
             campaign:{
                 campaign_name: '',
@@ -37,15 +44,21 @@ export default {
                 start_at: `${day}-${month}-${year}`,
                 expire_at: `${day+1}-${month}-${year}`,
                 status: true
-            }
+            },
+            validation_error: {}
         }
     },
     methods: {
         getProduct(page = 1) {
             try{
-                axios.get(baseUrl+`get-product?page=${page}&per_page=2&camp_id=${this.filterdata.camp_id}&keyword=${this.keyword}`)
+                axios.get(baseUrl+`get-product?page=${page}&per_page=${this.filterdata.per_page}&camp_id=${this.filterdata.camp_id}&keyword=${this.keyword}`)
                 .then(response => {
                     this.allproduct = response.data
+                  
+                    if(this.isCheckAll && response.data.meta.current_page > 1){
+                        const ids = response.data.data.map(v=> v.id);
+                        this.addTocamp.product.push(...ids)
+                    }
                 }).catch(error => {
                     console.log(error)
                 })
@@ -84,7 +97,8 @@ export default {
         filterClear(){
             this.filterdata = {
                 category: '',
-                camp_id: ''
+                camp_id: '',
+                per_page: 10
             },
             this.keyword= ''
             this.allsubcategories = []
@@ -112,7 +126,34 @@ export default {
                     })
                 }
             })
-        }
+        },
+        openCampModal(){
+            if(this.addTocamp.product.length < 1){
+                alert('Please, Select Product');
+                return ;
+            }
+            $("#addToCampModal").modal('show')
+        },
+
+        addToCampaign(){
+            axios.post(baseUrl+'add-to-campaign',this.addTocamp)
+            .then(response => {
+                $("#addToCampModal").modal('hide')
+                this.successMessage(response.data)
+            }).catch(error => {
+                console.log(error)
+            })
+        },
+
+        selectAll: function(){
+
+            this.isCheckAll = !this.isCheckAll;
+            this.addTocamp.product = [];
+            if(this.isCheckAll){ // Check all
+                const ids = this.allproduct.data.map(v => v.id)
+                this.addTocamp.product = ids
+            }
+        },
     },
     mounted(){
         this.getProduct()
@@ -131,6 +172,15 @@ export default {
         <div class="statbox widget box box-shadow mb-4">
             <div class="widget-header">
                 <div class="row">
+                    <div class="col-md-2 col-lg-1 col-4 mb-3">
+                        <label for="search">Per-Page</label>
+                        <select id="product-perpage" class="form-control" @change="getProduct()" v-model="filterdata.per_page">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
                     <div class="col-md-4 col-lg-3 col-12 mb-3">
                         <label for="search">Search</label>
                         <input type="text" @keyup="searchProduct()" v-model="keyword" class="form-control" id="search" placeholder="Search by Name & sku" >
@@ -158,8 +208,12 @@ export default {
                             <option v-for="(value,index) in allcampaign" :value="value.id" :key="index">{{ value.campaign_name }}</option>
                         </select>
                     </div>
-                    <div class="col-md-4 col-lg-3 col-12 mb-3">
-                        <button type="button" class="btn btn-success btn-sm" @click="filterClear()">CLEAR FILTER</button>
+                    <div class="col-md-4 col-lg-3 col-12">
+                        <button type="button" class="btn btn-danger btn-sm mt-4" @click="filterClear()">CLEAR</button>
+                    </div>
+
+                    <div class="col-md-4 col-lg-3 col-12">
+                        <button type="button" class="btn btn-success btn-sm mt-4" @click="openCampModal()">Add To Campaign</button>
                     </div>
                 </div>                 
             </div>
@@ -170,7 +224,7 @@ export default {
                     <tr>
                         <th class="checkbox-column">
                             <label class="new-control new-checkbox checkbox-primary" style="height: 18px; margin: 0 auto;">
-                                <input type="checkbox" class="new-control-input todochkbox" id="todoAll">
+                                <input type="checkbox" @click="selectAll()" v-model="isCheckAll" class="new-control-input todochkbox" id="todoAll">
                                 <span class="new-control-indicator"></span>
                             </label>
                         </th>
@@ -187,7 +241,7 @@ export default {
                         <tr>
                             <td class="checkbox-column">
                                 <label class="new-control new-checkbox checkbox-primary" style="height: 18px; margin: 0 auto;">
-                                    <input type="checkbox" class="new-control-input todochkbox" id="todo-1">
+                                    <input type="checkbox" multiple :name="product.p_name" v-model="addTocamp.product" :value="product.id" class="new-control-input todochkbox" id="todo-1">
                                     <span class="new-control-indicator"></span>
                                 </label>
                             </td>
@@ -216,5 +270,72 @@ export default {
         :data="allproduct"
         @pagination-change-page="getProduct"
     />
+
+    <div id="addToCampModal" class="modal animated fadeInUp custo-fadeInUp" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add To Campaign</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="widget-content-area">
+                        <form @submit.prevent="addToCampaign()">
+                            <div class="form-group">
+                                <label for="size_name">Campaign Name</label>
+                                    <select id="product-camp" class="form-control" v-model="addTocamp.campaign">
+                                        <option value="">Choose...</option>
+                                        <option v-for="(value,index) in allcampaign" :value="value.id" :key="index">{{ value.campaign_name }}</option>
+                                    </select>
+                                <span
+                                    v-if="validation_error.hasOwnProperty('campaign')"
+                                    class="text-danger"
+                                >
+                                    {{ validation_error.campaign[0] }}
+                                </span>
+                            </div>
+
+                                <div class="form-row">
+                                    <label for="discount_amount">Discount Amount</label>
+                                    <input type="number" v-model="addTocamp.discount_amount" class="form-control" id="discount_amount" placeholder="Discount Amount" >
+                                    <span
+                                        v-if="validation_error.hasOwnProperty('discount_amount')"
+                                        class="text-danger"
+                                    >
+                                        {{ validation_error.discount_amount[0] }}
+                                    </span>
+                                </div>
+                            
+                                <div class="form-row mt-1">
+                                    <label for="discount_type">Discount Type</label>
+                                    <select class="form-control tagging" id="discount_type" v-model="addTocamp.discount_type">
+                                        <option value="flat">FLAT</option>
+                                        <option value="percentage">%</option>
+                                    </select>
+                                    <span
+                                        v-if="validation_error.hasOwnProperty('discount_type')"
+                                        class="text-danger"
+                                    >
+                                        {{ validation_error.discount_type[0] }}
+                                    </span>
+                                </div>
+                                <div class="form-row mt-1" v-if="addTocamp.discount_type == 'percentage'">
+                                    <label for="max_amount">Maximum</label>
+                                    <input type="number" class="form-control" id="max_amount" placeholder="Maximum amount" v-model="addTocamp.max_amount" >
+                                </div>
+                            
+                            <div class="modal-footer md-button">
+                                <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </template>

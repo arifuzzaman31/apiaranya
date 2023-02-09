@@ -81,6 +81,6 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     //Campaign
     Route::resource('campaign',CampaignController::class);
     Route::get('get-campaign',[CampaignController::class,'getCampaing']);
-    // Route::get('create-campaign',[CampaignController::class,'create'])->name('create-campaign');
+    Route::post('add-to-campaign',[CampaignController::class,'storeAddtoCamp']);
 
 });

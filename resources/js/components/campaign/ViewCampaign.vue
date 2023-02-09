@@ -282,10 +282,10 @@ export default {
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-4 col-6">
                                 <label for="siz-status">Status</label>
-                                        <label class="switch s-icons s-outline  s-outline-success  mb-4 mr-2">
-                                            <input v-model="form.status" type="checkbox" :checked="form.status" id="siz-status">
-                                            <span class="slider round"></span>
-                                        </label>
+                                    <label class="switch s-icons s-outline  s-outline-success  mb-4 mr-2">
+                                        <input v-model="form.status" type="checkbox" :checked="form.status" id="siz-status">
+                                        <span class="slider round"></span>
+                                    </label>
                                 </div>
 
                                 <div class="modal-footer md-button">
