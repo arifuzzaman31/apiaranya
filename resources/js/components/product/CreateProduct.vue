@@ -1,14 +1,40 @@
 <script>
-import { ref,reactive, onMounted } from 'vue';
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import axios from 'axios';
 import Multiselect from '@vueform/multiselect'
-import Mixin from '../../mixin';
-import useAttributes from '../../composables/attributes';
+import Mixin from '../../mixer'
 
+const cloudName = 'diyc1dizi';
+const uploadPreset = 'webable';
+const myWidget = cloudinary.createUploadWidget(
+  {
+    cloudName: cloudName,
+    uploadPreset: uploadPreset,
+    cropping: true, //add a cropping step
+    // showAdvancedOptions: true,  //add advanced options (public_id and tag)
+    // sources: [ "local", "url"], // restrict the upload sources to URL and local files
+    // multiple: false,  //restrict upload to a single file
+    // folder: "user_images", //upload files to the specified folder
+    // tags: ["users", "profile"], //add the given tags to the uploaded files
+    // context: {alt: "user_uploaded"}, //add the given context data to the uploaded files
+    // clientAllowedFormats: ["images"], //restrict uploading to image files only
+    // maxImageFileSize: 2000000,  //restrict file size to less than 2MB
+    // maxImageWidth: 2000, //Scales the image down to a width of 2000 pixels before uploading
+    // theme: "purple", //change to a purple theme
+  },
+  (error, result) => {
+    if (!error && result && result.event === "success") {
+      console.log("Done! Here is the image info: ", result.info);
+      document
+        .getElementById("prod_default_image")
+        .setAttribute("src", result.info.secure_url);
+    }
+  }
+);
 
 export default {
+    mixins:[Mixin],
     components: {
         QuillEditor,
         Multiselect
@@ -47,169 +73,148 @@ export default {
             allfiltersubcategories: [],
             allcolours: [],
             allsizes: [],
+            formData: new FormData(),
             allfabrics: [],
-            errors: [],
-            allcolours: []
+            validation_error: {},
+            openUploadModal: function () {
+                myWidget.open();
+            },
         }
     },
     methods: {
         submitForm () {
-             axios.post(baseUrl+'product',{'form':this.form,'img':this.uploadimg}).then(response => {
+            this.preperData();
+             axios.post(baseUrl+'product',this.formData).then(response => {
                 if(response.data.status == 'success'){
                     this.clearForm()
-                    notifying(response.data)
+                    this.successMessage(response.data)
                 }
-                console.log(response.data)
             }).catch(e => {
-                console.log(e)
+                // console.log(e)
                 if(e.response.status == 422){
-                    this.errors = e.response.data.errors;
+                    this.validation_error = e.response.data.errors;
+                    this.validationError()
                 }
             })
         },
-        openUploadModal() {
-            cloudinary.openUploadWidget(
-                { cloud_name: 'diyc1dizi',
-                    upload_preset: 'webable',
-                    sources: [
-                        "local",
-                        "camera",
-                        "google_drive",
-                        "facebook",
-                        "dropbox",
-                        "instagram",
-                        "unsplash"
-                    ],
-                    // cropping: true, //add a cropping step
-                    // showAdvancedOptions: true,  //add advanced options (public_id and tag)
-                    // sources: [ "local", "url"], // restrict the upload sources to URL and local files
-                    // multiple: false,  //restrict upload to a single file
-                    // folder: "user_images", //upload files to the specified folder
-                    // tags: ["users", "profile"], //add the given tags to the uploaded files
-                    // context: {alt: "user_uploaded"}, //add the given context data to the uploaded files
-                    // clientAllowedFormats: ["images"], //restrict uploading to image files only
-                    // maxImageFileSize: 2000000,  //restrict file size to less than 2MB
-                    // maxImageWidth: 2000, //Scales the image down to a width of 2000 pixels before uploading
-                    // theme: "purple", //change to a purple theme
-                    styles: {
-                        palette: {
-                            window: "#10173a",
-                            sourceBg: "#20304b",
-                            windowBorder: "#7171D0",
-                            tabIcon: "#79F7FF",
-                            inactiveTabIcon: "#8E9FBF",
-                            menuIcons: "#CCE8FF",
-                            link: "#72F1FF",
-                            action: "#5333FF",
-                            inProgress: "#00ffcc",
-                            complete: "#33ff00",
-                            error: "#cc3333",
-                            textDark: "#000000",
-                            textLight: "#ffffff"
-                        },
-                        fonts: {
-                            default: null,
-                            "sans-serif": {
-                                url: null,
-                                active: true
-                            }
-                        }
-                    }
-                },
-                (error, result) => {
-                if (!error && result && result.event === "success") {
-                    console.log('Done uploading..: ', result.info);
-                    this.form.product_image_one = result.info.secure_url;
-                }
-                }).open();
-            },
-        getCategory() {
-            axios.get(baseUrl+'category').then(response => {
-                let res = response.data.filter(data => data.parent_category == 0)
-                let subcat = response.data.filter(data => data.parent_category !== 0)
-                    this.allcategories = res
-                    this.allfiltersubcategories = subcat
-                })
+
+        preperData(){
+            const imag1 = document.getElementById('prod_default_image').getAttribute('src');
+            this.formData.append('product_name', this.form.product_name);
+            this.formData.append('sku', this.form.sku);
+            this.formData.append('category', this.form.category);
+            this.formData.append('sub_category', this.form.category);
+            this.formData.append('product_image_one', imag1.toString());
+            this.formData.append('product_image_two', imag1.toString());
+            this.formData.append('design_code', this.form.design_code);
+            this.formData.append('stock', this.form.stock);
+            this.formData.append('cost', this.form.cost);
+            this.formData.append('price', this.form.price);
+            this.formData.append('dimention', this.form.dimention);
+            this.formData.append('weight', this.form.weight);
+            this.formData.append('care', this.form.care);
+            this.formData.append('is_fabric', this.form.is_fabric);
+            this.formData.append('selectfabrics ', this.form.selectfabrics);
+            this.formData.append('is_color', this.form.is_color)
+            this.formData.append('selectcolours ', this.form.selectcolours);
+            this.formData.append('is_size', this.form.is_size);
+            this.formData.append('selectsize ', this.form.selectsize);
+            this.formData.append('discount_amount', this.form.discount_amount);
+            this.formData.append('discount_type', this.form.discount_type);
+            this.formData.append('max_amount', this.form.max_amount);
+            this.formData.append('discount_type', this.form.discount_type);
+            this.formData.append('description', this.form.description);
         },
-            getColour() {
-                try{
-                     axios.get(baseUrl+'colour/create?no_paginate=yes').then(response => {
-                        // allcolours.value = response.data
-                        const opt = []
-                        response.data.map(data => {
-                            opt.push({'value':data.id,'name':data.color_name})
-                        })
-                        this.allcolours = opt
-                        // console.log(response.data)
-                    }).catch(error => {
-                        console.log(error)
+       
+        getCategory() {
+             axios.get(baseUrl+'get-category').then(response => {
+                const cat = response.data.data
+                let res = cat.filter(data => data.parent_cat == 0)
+                let subcat = cat.filter(data => data.parent_cat !== 0)
+                this.allcategories.push(...res)
+                // console.log(subcat)
+                this.allfiltersubcategories.push(...subcat)
+            })
+        },
+        getColour() {
+            try{
+                 axios.get(baseUrl+'colour/create?no_paginate=yes').then(response => {
+                    // allcolours.value = response.data
+                    const opt = []
+                    response.data.map(data => {
+                        opt.push({'value':data.id,'name':data.color_name})
                     })
-                }catch(error){
+                    this.allcolours = opt
+                    // console.log(response.data)
+                }).catch(error => {
                     console.log(error)
-                }
-            },
-            getSize() {
-                try{
-                     axios.get(baseUrl+'sizes/create?no_paginate=yes').then(response => {
-                        const opt = []
-                        response.data.map(data => {
-                            opt.push({'value':data.id,'name':data.size_name})
-                        })
-                        this.allsizes = opt
-                    }).catch(error => {
-                        console.log(error)
-                    })
-                }catch(error){
-                    console.log(error)
-                }
-            },
-             getFabric() {
-                try{
-                     axios.get(baseUrl+'fabrics/create?no_paginate=yes').then(response => {
-                        const opt = []
-                        response.data.map(data => {
-                            opt.push({'value':data.id,'name':data.fabric_name})
-                        })
-                        this.allfabrics = opt
-                    }).catch(error => {
-                        console.log(error)
-                    })
-                }catch(error){
-                    console.log(error)
-                }
-            },
-            getSubCategories() {
-                const filterData = (this.allfiltersubcategories).filter((data) => data.parent_category == this.form.category)
-                this.allsubcategories = filterData
-            },
-            clearForm() {
-                this.form = {
-                    product_name : '',
-                    sku : '',
-                    category : null,
-                    sub_category : null,
-                    product_image_one : '',
-                    product_image_two : '',
-                    design_code : '',
-                    stock : 0,
-                    cost : 0,
-                    price : 0,
-                    dimention : '',
-                    weight : '',
-                    care : '',
-                    is_fabric : true,
-                    selectfabrics : null,
-                    is_color : true,
-                    selectcolours : null,
-                    is_size : true,
-                    selectsize : null,
-                    discount_amount : '',
-                    discount_type : 1,
-                    max_amount : 0,
-                    discount_type : 1,
-                    description : ''
-                }
+                })
+            }catch(error){
+                console.log(error)
             }
+        },
+        getSize() {
+            try{
+                axios.get(baseUrl+'sizes/create?no_paginate=yes').then(response => {
+                    const opt = []
+                    response.data.map(data => {
+                        opt.push({'value':data.id,'name':data.size_name})
+                    })
+                    this.allsizes = opt
+                }).catch(error => {
+                    console.log(error)
+                })
+            }catch(error){
+                console.log(error)
+            }
+        },
+        getFabric(){
+            try{
+                axios.get(baseUrl+'fabrics/create?no_paginate=yes').then(response => {
+                    const opt = []
+                    response.data.map(data => {
+                        opt.push({'value':data.id,'name':data.fabric_name})
+                    })
+                    this.allfabrics = opt
+                }).catch(error => {
+                    console.log(error)
+                })
+            }catch(error){
+                console.log(error)
+            }
+        },
+        getSubCategories(){
+            const filterData = (this.allfiltersubcategories).filter((data) => data.parent_cat == this.form.category)
+            this.allsubcategories = filterData
+        },
+        clearForm() {
+            this.form = {
+                product_name : '',
+                sku : '',
+                category : null,
+                sub_category : null,
+                product_image_one : '',
+                product_image_two : '',
+                design_code : '',
+                stock : 0,
+                cost : 0,
+                price : 0,
+                dimention : '',
+                weight : '',
+                care : '',
+                is_fabric : true,
+                selectfabrics : null,
+                is_color : true,
+                selectcolours : null,
+                is_size : true,
+                selectsize : null,
+                discount_amount : '',
+                discount_type : 1,
+                max_amount : 0,
+                description : ''
+            },
+            this.validation_error = {}
+        }
     },
     mounted(){
         this.getCategory()
@@ -217,210 +222,6 @@ export default {
         this.getSize()
         this.getFabric()
     }
-
-    // setup() {
-    //         const { notifying } = Mixin;
-    //         const { allcategories, getCategory } = useAttributes();
-           
-    //         const allsubcategories = ref([]);
-    //         const allcolours = ref([]);
-    //         const allsizes = ref([]);
-    //         const allfabrics = ref([]);
-    //         const errors = ref([]);
-    //         const form = reactive({
-    //             product_name: '',
-    //             sku: '',
-    //             category: null,
-    //             sub_category: null,
-    //             product_image_one: '',
-    //             product_image_two: '',
-    //             design_code: '',
-    //             stock: 0,
-    //             cost: 0,
-    //             price: 0,
-    //             dimention: '',
-    //             weight: '',
-    //             care: '',
-    //             is_fabric: true,
-    //             selectfabrics : null,
-    //             is_color: true,
-    //             selectcolours : null,
-    //             is_size: true,
-    //             selectsize : null,
-    //             discount_amount: '',
-    //             discount_type: 1,
-    //             max_amount: 0,
-    //             discount_type: 1,
-    //             description: '',
-    //         });
-
-    //         const submitForm = async() => {
-    //             await axios.post(baseUrl+'product',form).then(response => {
-    //                 if(response.data.status == 'success'){
-    //                     clearForm()
-    //                     notifying(response.data)
-    //                 }
-    //                 console.log(response.data)
-    //             }).catch(e => {
-    //                 console.log(e)
-    //                 if(e.response.status == 422){
-    //                     errors.value = e.response.data.errors;
-    //                 }
-    //             })
-    //         };
-
-            
-
-    //         const getColour = async() => {
-    //             try{
-    //                 await axios.get(baseUrl+'colour/create?no_paginate=yes').then(response => {
-    //                     // allcolours.value = response.data
-    //                     const opt = []
-    //                     response.data.map(data => {
-    //                         opt.push({'value':data.id,'name':data.color_name})
-    //                     })
-    //                     allcolours.value = opt
-    //                     // console.log(response.data)
-    //                 }).catch(error => {
-    //                     console.log(error)
-    //                 })
-    //             }catch(error){
-    //                 console.log(error)
-    //             }
-    //         }
-
-    //         const getSize = async() => {
-    //             try{
-    //                 await axios.get(baseUrl+'sizes/create?no_paginate=yes').then(response => {
-    //                     const opt = []
-    //                     response.data.map(data => {
-    //                         opt.push({'value':data.id,'name':data.size_name})
-    //                     })
-    //                     allsizes.value = opt
-    //                 }).catch(error => {
-    //                     console.log(error)
-    //                 })
-    //             }catch(error){
-    //                 console.log(error)
-    //             }
-    //         }
-
-    //         const getFabric = async() => {
-    //             try{
-    //                 await axios.get(baseUrl+'fabrics/create?no_paginate=yes').then(response => {
-    //                     const opt = []
-    //                     response.data.map(data => {
-    //                         opt.push({'value':data.id,'name':data.fabric_name})
-    //                     })
-    //                     allfabrics.value = opt
-    //                 }).catch(error => {
-    //                     console.log(error)
-    //                 })
-    //             }catch(error){
-    //                 console.log(error)
-    //             }
-    //         }
-
-    //         const openUploadModal = () => {
-    //             window.cloudinary.openUploadWidget(
-    //                 { cloud_name: 'diyc1dizi',
-    //                     upload_preset: 'webable',
-    //                     sources: [
-    //                         "local",
-    //                         "camera",
-    //                         "google_drive",
-    //                         "facebook",
-    //                         "dropbox",
-    //                         "instagram",
-    //                         "unsplash"
-    //                     ],
-    //                     multiple: true,
-    //                     styles: {
-    //                         palette: {
-    //                             window: "#10173a",
-    //                             sourceBg: "#20304b",
-    //                             windowBorder: "#7171D0",
-    //                             tabIcon: "#79F7FF",
-    //                             inactiveTabIcon: "#8E9FBF",
-    //                             menuIcons: "#CCE8FF",
-    //                             link: "#72F1FF",
-    //                             action: "#5333FF",
-    //                             inProgress: "#00ffcc",
-    //                             complete: "#33ff00",
-    //                             error: "#cc3333",
-    //                             textDark: "#000000",
-    //                             textLight: "#ffffff"
-    //                         },
-    //                         fonts: {
-    //                             default: null,
-    //                             "sans-serif": {
-    //                                 url: null,
-    //                                 active: true
-    //                             }
-    //                         }
-    //                     }
-    //                 },
-    //                 (error, result) => {
-    //                 if (!error && result && result.event === "success") {
-    //                     console.log('Done uploading..: ', result.info);
-    //                     this.form.product_image_one = result.info.secure_url;
-    //                 }
-    //                 }).open();
-    //             }
-
-    //         const getSubCategories = async() => {
-    //             const filterData = (allcategories.value).filter((data) => data.parent_category == form.category)
-    //             allsubcategories.value = filterData
-    //         }
-
-    //         const clearForm = () => {
-    //             form.product_name = '';
-    //             form.sku = '';
-    //             form.category = null;
-    //             form.sub_category = null;
-    //             form.product_image_one = '';
-    //             form.product_image_two = '';
-    //             form.design_code = '';
-    //             form.stock = 0;
-    //             form.cost = 0;
-    //             form.price = 0;
-    //             form.dimention = '';
-    //             form.weight = '';
-    //             form.care = '';
-    //             form.is_fabric = true;
-    //             form.selectfabrics = null;
-    //             form.is_color = true;
-    //             form.selectcolours = null;
-    //             form.is_size = true;
-    //             form.selectsize = null;
-    //             form.discount_amount = '';
-    //             form.discount_type = 1;
-    //             form.max_amount = 0;
-    //             form.discount_type = 1;
-    //             form.description = '';
-    //         }
-
-    //         onMounted(()=>{
-    //             getCategory()
-    //             getColour()
-    //             getSize()
-    //             getFabric()
-    //         });
-
-    //     return {
-    //         form,
-    //         allcategories,
-    //         allsubcategories,
-    //         getSubCategories,
-    //         allcolours,
-    //         allsizes,
-    //         allfabrics,
-    //         errors,
-    //         submitForm,
-    //         // openUploadModal,
-    //         clearForm
-    //     }
-    // },
 }
 </script>
 <template>
@@ -432,67 +233,68 @@ export default {
                         <div class="form-row">
                             <div class="col-md-4">
                                 <label for="product-name">Product name</label>
-                                <input type="text" class="form-control" :class="errors.hasOwnProperty('product_name') ? 'is-invalid' : ''" id="product-name" placeholder="Product name" v-model="form.product_name" >
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('product_name') ? 'is-invalid' : ''" id="product-name" placeholder="Product name" v-model="form.product_name" >
                                     <div
-                                        v-if="errors.hasOwnProperty('product_name')"
+                                        v-if="validation_error.hasOwnProperty('product_name')"
                                         class="invalid-feedback"
                                     >
-                                        {{ errors.product_name[0] }}
+                                        {{ validation_error.product_name[0] }}
                                     </div>
                             </div>
                             <div class="col-md-4">
                                 <label for="product-sku">Product SKU</label>
-                                <input type="text" class="form-control" :class="errors.hasOwnProperty('sku') ? 'is-invalid' : ''" id="product-sku" placeholder="SKU" v-model="form.sku" >
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('sku') ? 'is-invalid' : ''" id="product-sku" placeholder="SKU" v-model="form.sku" >
                                 <div
-                                        v-if="errors.hasOwnProperty('sku')"
+                                        v-if="validation_error.hasOwnProperty('sku')"
                                         class="invalid-feedback"
                                     >
-                                        {{ errors.sku[0] }}
+                                        {{ validation_error.sku[0] }}
                                     </div>
                             </div>
                             <div class="col-md-4">
                                 <label for="product-stock">Stock Qty</label>
-                                <input type="number" class="form-control" :class="errors.hasOwnProperty('stock') ? 'is-invalid' : ''" id="product-stock" placeholder="Qty" v-model="form.stock" >
+                                <input type="number" class="form-control" :class="validation_error.hasOwnProperty('stock') ? 'is-invalid' : ''" id="product-stock" placeholder="Qty" v-model="form.stock" >
                                 <div
-                                        v-if="errors.hasOwnProperty('stock')"
+                                        v-if="validation_error.hasOwnProperty('stock')"
                                         class="invalid-feedback"
                                     >
-                                        {{ errors.stock[0] }}
+                                        {{ validation_error.stock[0] }}
                                     </div>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="product-category">Category </label>
                                 <select id="product-category" class="form-control" @change="getSubCategories()" v-model="form.category">
-                                    <option selected="">Choose...</option>
-                                    <option v-for="(value,index) in allcategories" :value="value.id" :key="index">{{ value.category_name }}</option>
+                                    <option value="">Choose...</option>
+                                    <option v-for="(value,index) in allcategories" :value="value.id" :key="index">{{ value.cat_name }}</option>
                                 </select>
                                 <div
-                                        v-if="errors.hasOwnProperty('category')"
+                                        v-if="validation_error.hasOwnProperty('category')"
                                         class="text-danger font-weight-bold"
                                     >
-                                        {{ errors.category[0] }}
+                                        {{ validation_error.category[0] }}
                                     </div>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="product-category">Sub Category</label>
                                 <select id="product-category" class="form-control" v-model="form.sub_category">
-                                    <option selected="">Choose...</option>
-                                    <option v-for="(value,index) in allsubcategories" :value="value.id" :key="index">{{ value.category_name }}</option>
+                                    <option value="">Choose...</option>
+                                    <option v-for="(value,index) in allsubcategories" :value="value.id" :key="index">{{ value.cat_name }}</option>
                                 </select>
                                 <div
-                                    v-if="errors.hasOwnProperty('sub_category')"
+                                    v-if="validation_error.hasOwnProperty('sub_category')"
                                     class="text-danger font-weight-bold"
                                 >
-                                    {{ errors.sub_category[0] }}
+                                    {{ validation_error.sub_category[0] }}
                                 </div>
                             </div>
     
-                            <div class="col-md-4">
+                            <div class="col-md-4 mt-4">
                                 <label for="product-image1">Product Image (1:1)</label>
                                 <!-- <input type="file" class="form-control" id="product-image"> -->
-                                <button type="button" class="btn btn-sm btn-info" @click="openUploadModal()">Upload files</button>
+                                <button type="button" class="btn btn-sm btn-info" @click="openUploadModal">Upload files</button>
                             </div>
-                            <img :src="form.product_image_one" class="img-fluid"/>
+                            <input type="hidden" id="prod_default" :name="form.product_image_one" :value="form.product_image_one" />
+                            <img :src="form.product_image_one" id="prod_default_image" width="60" class="img-fluid"/>
                         </div>
                     </div>
                 </div>
@@ -506,12 +308,12 @@ export default {
                         <div class="form-row">
                             <div class="col-md-4 mb-3">
                                 <label for="design_code">Design Code</label>
-                                <input type="text" class="form-control" :class="errors.hasOwnProperty('design_code') ? 'is-invalid' : ''" id="design_code" placeholder="Design Code" v-model="form.design_code">
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('design_code') ? 'is-invalid' : ''" id="design_code" placeholder="Design Code" v-model="form.design_code">
                                 <div
-                                        v-if="errors.hasOwnProperty('design_code')"
+                                        v-if="validation_error.hasOwnProperty('design_code')"
                                         class="invalid-feedback"
                                     >
-                                        {{ errors.design_code[0] }}
+                                        {{ validation_error.design_code[0] }}
                                     </div>
                             </div>
                             <div class="col-md-4 mb-3">
@@ -520,12 +322,12 @@ export default {
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label for="product-price">Price (MRP)</label>
-                                <input type="number" class="form-control" :class="errors.hasOwnProperty('price') ? 'is-invalid' : ''" id="product-price" placeholder="Sale Price" v-model="form.price" >
+                                <input type="number" class="form-control" :class="validation_error.hasOwnProperty('price') ? 'is-invalid' : ''" id="product-price" placeholder="Sale Price" v-model="form.price" >
                                 <div
-                                        v-if="errors.hasOwnProperty('price')"
+                                        v-if="validation_error.hasOwnProperty('price')"
                                         class="invalid-feedback"
                                     >
-                                        {{ errors.price[0] }}
+                                        {{ validation_error.price[0] }}
                                     </div>
                             </div>
                             <div class="col-md-4 mb-3">
@@ -534,12 +336,12 @@ export default {
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label for="weight">Weight</label>
-                                <input type="text" class="form-control" :class="errors.hasOwnProperty('weight') ? 'is-invalid' : ''" id="weight" placeholder="Example: 0.45 kg" v-model="form.weight" >
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('weight') ? 'is-invalid' : ''" id="weight" placeholder="Example: 0.45 kg" v-model="form.weight" >
                                 <div
-                                        v-if="errors.hasOwnProperty('weight')"
+                                        v-if="validation_error.hasOwnProperty('weight')"
                                         class="invalid-feedback"
                                     >
-                                        {{ errors.weight[0] }}
+                                        {{ validation_error.weight[0] }}
                                     </div>
                             </div>
                             <div class="col-md-4 mb-3">
@@ -684,11 +486,10 @@ export default {
                             <label for="product-category">Fabric</label>
                             <Multiselect
                                 v-model="form.selectfabrics"
-                                mode="tags"
                                 placeholder="Select Fabric"
                                 track-by="name"
                                 label="name"
-                                :close-on-select="false"
+                                :close-on-select="true"
                                 :search="true"
                                 :options="allfabrics"
                                 :searchable="true"

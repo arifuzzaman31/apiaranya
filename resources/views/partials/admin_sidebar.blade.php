@@ -21,7 +21,7 @@
                        
                     </li>
 
-                    <li class="menu  @if(request()->is('admin/colour') || request()->is('admin/sizes')) active @endif">
+                    <li class="menu  @if(request()->is('admin/colour') || request()->is('admin/sizes')) || request()->is('admin/fabrics')) active @endif">
                         <a href="#attr-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-zap"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
@@ -31,9 +31,32 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
                             </div>
                         </a>
-                        <ul class="collapse submenu list-unstyled" id="attr-menu" data-parent="#accordionExample">
+                        <ul class="collapse submenu list-unstyled" id="attr-menu" data-parent="#attr-menu">
                             <li>
                                 <a href="{{ route('colour.index') }}"> Colour </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('sizes.index') }}"> Size </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('fabrics.index') }}"> Fabrics </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="menu @if(request()->is('admin/home-page')) active @endif">
+                        <a href="#pages-setting" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-zap"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                                <span>Pages</span>
+                            </div>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </div>
+                        </a>
+                        <ul class="collapse submenu list-unstyled" id="pages-setting" data-parent="#pages-setting">
+                            <li>
+                                <a href="{{ route('home-page') }}"> Home </a>
                             </li>
                             <li>
                                 <a href="{{ route('sizes.index') }}"> Size </a>

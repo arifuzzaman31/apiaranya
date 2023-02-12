@@ -11,6 +11,7 @@ use App\Http\Controllers\FabricController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CampaignController;
+use App\Http\Controllers\PagesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -82,5 +83,8 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     Route::resource('campaign',CampaignController::class);
     Route::get('get-campaign',[CampaignController::class,'getCampaing']);
     Route::post('add-to-campaign',[CampaignController::class,'storeAddtoCamp']);
+
+    //Pages
+    Route::get('home-page',[PagesController::class,'homePage'])->name('home-page');
 
 });

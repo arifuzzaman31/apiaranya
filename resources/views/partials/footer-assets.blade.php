@@ -7,6 +7,8 @@
 
 <script>
     var baseUrl = "{{ url('/') }}"+'/admin/';
+    var clName = "{{ env('CLOUDNAME')}}";
+    var clPreset = "{{ env('UPLOADPRESET')}}";
     $(document).ready(function() {
         App.init(); 
     });

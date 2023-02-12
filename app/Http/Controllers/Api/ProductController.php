@@ -63,4 +63,24 @@ class ProductController extends Controller
         }
         return ProductResource::collection($product);
     }
+
+    public function getProductByCat(Request $request,$cat,$subcat = null)
+    {
+        $noPagination = $request->get('no_paginate');
+        $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
+        $product = Product::with(['category:id,category_name','inventory:id,product_id,stock','product_size','product_colour'])
+                    ->where('category_id',$cat)
+                    ->orderBy('id','desc');
+                if($subcat != '' && $subcat != null){
+                    $product = $product->where('sub_category_id',$subcat);
+                }
+        if($noPagination != ''){
+            $product = $product->get();
+        } else {
+            $product = $product->paginate($dataQty);
+        }
+
+        return ProductResource::collection($product);
+        
+    }
 }

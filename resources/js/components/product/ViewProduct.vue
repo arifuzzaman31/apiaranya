@@ -1,5 +1,4 @@
 <script>
-import { ref,reactive, onMounted } from 'vue';
 import axios from 'axios';
 import { Bootstrap4Pagination } from 'laravel-vue-pagination';
 import Mixin from '../../mixer';
@@ -24,7 +23,7 @@ export default {
             filterdata: {
                 category: '',
                 camp_id: '',
-                per_page: 2
+                per_page: 10
             },
             isCheckAll: false,
             addTocamp: {
@@ -145,7 +144,7 @@ export default {
             })
         },
 
-        selectAll: function(){
+        selectAll(){
 
             this.isCheckAll = !this.isCheckAll;
             this.addTocamp.product = [];
@@ -208,12 +207,12 @@ export default {
                             <option v-for="(value,index) in allcampaign" :value="value.id" :key="index">{{ value.campaign_name }}</option>
                         </select>
                     </div>
-                    <div class="col-md-4 col-lg-3 col-12">
-                        <button type="button" class="btn btn-danger btn-sm mt-4" @click="filterClear()">CLEAR</button>
+                    <div class="col-md-4 col-lg-3 col-12 mt-4">
+                        <button type="button" class="btn btn-danger btn-sm" @click="filterClear()">CLEAR</button>
+                        <button type="button" class="btn btn-success btn-sm ml-2" @click="openCampModal()">Add To Campaign</button>
                     </div>
 
                     <div class="col-md-4 col-lg-3 col-12">
-                        <button type="button" class="btn btn-success btn-sm mt-4" @click="openCampModal()">Add To Campaign</button>
                     </div>
                 </div>                 
             </div>

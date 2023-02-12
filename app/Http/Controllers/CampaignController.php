@@ -93,7 +93,7 @@ class CampaignController extends Controller
             }
 
             $camp = Campaign::find($request->campaign);
-            $camp->product()->attach($request->product);
+            $camp->product()->sync($request->product);
             $camp->save();
 
             DB::commit();
