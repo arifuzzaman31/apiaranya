@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\PageController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,3 +29,6 @@ Route::post('auth/login', [AuthController::class, 'loginUser']);
 Route::get('product', [ProductController::class, 'index']);
 
 Route::get('product/{category}/{sub_cate?}', [ProductController::class, 'getProductByCat']);
+
+//object data
+Route::get('home-pagedata',[PageController::class,'homeImageData']);

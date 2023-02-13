@@ -6,7 +6,7 @@ use App\Http\AllStatic;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Validator;
+use Validator,Str;
 
 class CategoryController extends Controller
 {
@@ -31,6 +31,19 @@ class CategoryController extends Controller
     {
         $data = Category::where('status',AllStatic::$active)->get();
         return CategoryResource::collection($data);
+    }
+
+    public function getCategoryByCat(Request $request)
+    {
+        $alldata = Category::where('status',AllStatic::$active)->orderBy('id')->get();
+        $org_data = [];
+        foreach($alldata as $cat)
+        {
+            if($cat->parent_category == 0){
+                $org_data[$cat->category_name] = $alldata->where('parent_category',$cat->id);
+            }
+        }
+        return response()->json($org_data);
     }
 
     /**
@@ -65,6 +78,7 @@ class CategoryController extends Controller
             }
             $category = new Category();
             $category->category_name    = $request->category_name;
+            $category->slug             = Str::slug($request->category_name);
             $category->parent_category  = $request->parent_category;
             $category->category_video   = $request->video_link;
             $category->status           = $request->status ? 1 : 0;

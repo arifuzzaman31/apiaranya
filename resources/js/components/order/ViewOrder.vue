@@ -351,7 +351,6 @@ export default {
                             
                                 <div class="modal-footer md-button">
                                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"  @click="formReset"></i>Discard</button>
-                                    <!-- <button type="button" class="btn btn-primary" @click="updateStatus(order_id)">Update</button> -->
                                 </div>
                            
                         </div>

@@ -47,6 +47,7 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     //Category Route
     Route::resource('category',CategoryController::class);
     Route::get('get-category',[CategoryController::class,'getCategoryData']);
+    Route::get('category-subcategory-data',[CategoryController::class,'getCategoryByCat']);
     Route::get('add-category',[CategoryController::class,'getCategory'])->name('add-category');
 
     Route::resource('colour',ColorController::class);
@@ -86,5 +87,7 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
 
     //Pages
     Route::get('home-page',[PagesController::class,'homePage'])->name('home-page');
+    Route::post('update-home-image',[PagesController::class,'homeImageUpdate']);
+    Route::get('get-home-pagedata',[PagesController::class,'homeImageData']);
 
 });

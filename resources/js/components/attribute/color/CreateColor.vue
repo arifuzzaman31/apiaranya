@@ -7,6 +7,7 @@ export default {
         return {
             form: {
                 color_name: "",
+                color_code:"",
                 status: true
             },
             isLoading: false,
@@ -78,6 +79,16 @@ export default {
                                     class="text-danger"
                                 >
                                     {{ validation_error.color_name[0] }}
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <label for="color_code">Colour Code</label>
+                                <input type="color" class="form-control" v-model="form.color_code" id="color_code" placeholder="Colour Code">
+                                <span
+                                    v-if="validation_error.hasOwnProperty('color_code')"
+                                    class="text-danger"
+                                >
+                                    {{ validation_error.color_code[0] }}
                                 </span>
                             </div>
 

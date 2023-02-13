@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AttributeValue;
+use App\Models\Page;
 use Illuminate\Http\Request;
 
 class PagesController extends Controller
@@ -15,6 +16,30 @@ class PagesController extends Controller
     public function homePage()
     {
         return view('pages.page.homepage');
+    }
+
+    public function homeImageUpdate(Request $request)
+    {
+        // return response()->json($request->all());
+        try {
+            $hp = Page::where('page_name','home')->first();
+            if($request->img_name == 'one') $hp->image_one = $request->uri_link;
+            if($request->img_name == 'two') $hp->image_two = $request->uri_link;
+            if($request->img_name == 'three') $hp->image_three = $request->uri_link;
+            if($request->img_name == 'four') $hp->image_four = $request->uri_link;
+            if($request->img_name == 'five') $hp->image_five = $request->uri_link;
+            if($request->img_name == 'six') $hp->image_six = $request->uri_link;
+            $hp->update();
+            return response()->json(['status' => 'success', 'message' => 'Home Page Updated Successfully!']);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+
+    public function homeImageData()
+    {
+        $data = Page::where('page_name','home')->first();
+        return response()->json($data);
     }
 
     /**

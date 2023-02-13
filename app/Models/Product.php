@@ -23,19 +23,24 @@ class Product extends Model
         return $this->hasOne(Inventory::class);
     }
 
+    public function discount()
+    {
+        return $this->hasMany(Discount::class);
+    }
+
     public function product_colour()
     {
-        return $this->belongsToMany(Colour::class,'product_colours');
+        return $this->belongsToMany(Colour::class,'product_colours')->withTimestamps();
     }
 
     public function product_size()
     {
-        return $this->belongsToMany(Size::class,'product_sizes');
+        return $this->belongsToMany(Size::class,'product_sizes')->withTimestamps();
     }
 
     public function campaign()
     {
-        return $this->belongsToMany(Campaign::class,'campaign_products');
+        return $this->belongsToMany(Campaign::class,'campaign_products')->withTimestamps();
     }
 
     public function order_details()
