@@ -27,6 +27,11 @@ class CategoryController extends Controller
         return view('pages.category.category_add');
     }
 
+    public function editCategory()
+    {
+        return view('pages.category.edit_category');
+    }
+
     public function getCategoryData(Request $request)
     {
         $data = Category::where('status',AllStatic::$active)->get();

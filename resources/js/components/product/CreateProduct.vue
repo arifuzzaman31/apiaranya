@@ -5,34 +5,6 @@ import axios from 'axios';
 import Multiselect from '@vueform/multiselect'
 import Mixin from '../../mixer'
 
-const cloudName = 'diyc1dizi';
-const uploadPreset = 'webable';
-const myWidget = cloudinary.createUploadWidget(
-  {
-    cloudName: cloudName,
-    uploadPreset: uploadPreset,
-    cropping: true, //add a cropping step
-    // showAdvancedOptions: true,  //add advanced options (public_id and tag)
-    // sources: [ "local", "url"], // restrict the upload sources to URL and local files
-    // multiple: false,  //restrict upload to a single file
-    // folder: "user_images", //upload files to the specified folder
-    // tags: ["users", "profile"], //add the given tags to the uploaded files
-    // context: {alt: "user_uploaded"}, //add the given context data to the uploaded files
-    // clientAllowedFormats: ["images"], //restrict uploading to image files only
-    // maxImageFileSize: 2000000,  //restrict file size to less than 2MB
-    // maxImageWidth: 2000, //Scales the image down to a width of 2000 pixels before uploading
-    // theme: "purple", //change to a purple theme
-  },
-  (error, result) => {
-    if (!error && result && result.event === "success") {
-      console.log("Done! Here is the image info: ", result.info);
-      document
-        .getElementById("prod_default_image")
-        .setAttribute("src", result.info.secure_url);
-    }
-  }
-);
-
 export default {
     mixins:[Mixin],
     components: {
@@ -47,8 +19,23 @@ export default {
                 sku: '',
                 category: null,
                 sub_category: null,
-                product_image_one: '',
-                product_image_two: '',
+                vandor : 'Aranya',
+                brand : 'Aranya',
+                designer : '',
+                embellishment : '',
+                making : '',
+                selectIngredient : null,
+                lead_time : '',
+                season : '',
+                variety : '',
+                fit : '',
+                artist_name : '',
+                consignment : '',
+                ingredients : '',
+                product_image_one : '',
+                product_image_two : '',
+                product_image_three : '',
+                product_image_four : '',
                 design_code: '',
                 stock: 0,
                 cost: 0,
@@ -73,24 +60,20 @@ export default {
             allfiltersubcategories: [],
             allcolours: [],
             allsizes: [],
-            formData: new FormData(),
             allfabrics: [],
-            validation_error: {},
-            openUploadModal: function () {
-                myWidget.open();
-            },
+            validation_error: {}
         }
     },
     methods: {
         submitForm () {
-            this.preperData();
-             axios.post(baseUrl+'product',this.formData).then(response => {
+             axios.post(baseUrl+'product',this.form).then(response => {
+                console.log(response)
                 if(response.data.status == 'success'){
                     this.clearForm()
                     this.successMessage(response.data)
                 }
             }).catch(e => {
-                // console.log(e)
+                console.log(e)
                 if(e.response.status == 422){
                     this.validation_error = e.response.data.errors;
                     this.validationError()
@@ -98,32 +81,79 @@ export default {
             })
         },
 
-        preperData(){
-            const imag1 = document.getElementById('prod_default_image').getAttribute('src');
-            this.formData.append('product_name', this.form.product_name);
-            this.formData.append('sku', this.form.sku);
-            this.formData.append('category', this.form.category);
-            this.formData.append('sub_category', this.form.category);
-            this.formData.append('product_image_one', imag1.toString());
-            this.formData.append('product_image_two', imag1.toString());
-            this.formData.append('design_code', this.form.design_code);
-            this.formData.append('stock', this.form.stock);
-            this.formData.append('cost', this.form.cost);
-            this.formData.append('price', this.form.price);
-            this.formData.append('dimention', this.form.dimention);
-            this.formData.append('weight', this.form.weight);
-            this.formData.append('care', this.form.care);
-            this.formData.append('is_fabric', this.form.is_fabric);
-            this.formData.append('selectfabrics ', this.form.selectfabrics);
-            this.formData.append('is_color', this.form.is_color)
-            this.formData.append('selectcolours ', this.form.selectcolours);
-            this.formData.append('is_size', this.form.is_size);
-            this.formData.append('selectsize ', this.form.selectsize);
-            this.formData.append('discount_amount', this.form.discount_amount);
-            this.formData.append('discount_type', this.form.discount_type);
-            this.formData.append('max_amount', this.form.max_amount);
-            this.formData.append('discount_type', this.form.discount_type);
-            this.formData.append('description', this.form.description);
+        openUploadModal(numb){
+            cloudinary.createUploadWidget(
+                { cloud_name: clName,
+                    upload_preset: clPreset,
+                    sources: [
+                        "local",
+                        "camera",
+                        "google_drive",
+                        "facebook",
+                        "dropbox",
+                        "instagram",
+                        "unsplash"
+                    ],
+                    folder: "aranya", //upload files to the specified folder
+                    
+                    styles: {
+                        palette: {
+                            window: "#10173a",
+                            sourceBg: "#20304b",
+                            windowBorder: "#7171D0",
+                            tabIcon: "#79F7FF",
+                            inactiveTabIcon: "#8E9FBF",
+                            menuIcons: "#CCE8FF",
+                            link: "#72F1FF",
+                            action: "#5333FF",
+                            inProgress: "#00ffcc",
+                            complete: "#33ff00",
+                            error: "#cc3333",
+                            textDark: "#000000",
+                            textLight: "#ffffff"
+                        },
+                        fonts: {
+                            default: null,
+                            "sans-serif": {
+                                url: null,
+                                active: true
+                            }
+                        }
+                    }
+                },
+                (error, result) => {
+                if (!error && result && result.event === "success") {
+                    console.log('Done uploading..: ', result.info);
+                    this.setImage(numb,result.info.secure_url)
+                }
+                this.validationError({'status':'error','message':error.error.message})
+                }).open();
+        },
+
+        setImage(numb,uri){
+            switch (numb) {
+                case 'one':
+                    this.form.product_image_one = uri
+                    break;
+                case 'two':
+                    this.form.product_image_two = uri
+                    break;
+                case 'three':
+                    this.form.product_image_three = uri
+                    break;
+
+                case 'four':
+                    this.form.product_image_four = uri
+                    break;
+
+                case 'five':
+                    this.form.product_image_five = uri
+                    break;
+            
+                default:
+                    break;
+            }
+            return true;
         },
        
         getCategory() {
@@ -193,8 +223,22 @@ export default {
                 sku : '',
                 category : null,
                 sub_category : null,
+                vandor : 'Aranya',
+                brand : 'Aranya',
+                designer : '',
+                embellishment : '',
+                making : '',
+                lead_time : '',
+                season : '',
+                variety : '',
+                fit : '',
+                artist_name : '',
+                ingredients : '',
+                consignment : '',
                 product_image_one : '',
                 product_image_two : '',
+                product_image_three : '',
+                product_image_four : '',
                 design_code : '',
                 stock : 0,
                 cost : 0,
@@ -213,6 +257,7 @@ export default {
                 max_amount : 0,
                 description : ''
             },
+            this.allsubcategories= [],
             this.validation_error = {}
         }
     },
@@ -261,7 +306,7 @@ export default {
                                         {{ validation_error.stock[0] }}
                                     </div>
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-4 mt-1">
                                 <label for="product-category">Category </label>
                                 <select id="product-category" class="form-control" @change="getSubCategories()" v-model="form.category">
                                     <option value="">Choose...</option>
@@ -274,7 +319,7 @@ export default {
                                         {{ validation_error.category[0] }}
                                     </div>
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-4 mt-1">
                                 <label for="product-category">Sub Category</label>
                                 <select id="product-category" class="form-control" v-model="form.sub_category">
                                     <option value="">Choose...</option>
@@ -287,20 +332,167 @@ export default {
                                     {{ validation_error.sub_category[0] }}
                                 </div>
                             </div>
-    
-                            <div class="col-md-4 mt-4">
-                                <label for="product-image1">Product Image (1:1)</label>
-                                <!-- <input type="file" class="form-control" id="product-image"> -->
-                                <button type="button" class="btn btn-sm btn-info" @click="openUploadModal">Upload files</button>
+                            <div class="form-group col-md-4 mt-1">
+                                <label for="product-Vandor">Vandor</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('vandor') ? 'is-invalid' : ''" id="product-name" placeholder="Vandor Name" v-model="form.vandor" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('vandor')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.vandor[0] }}
+                                    </div>
                             </div>
-                            <input type="hidden" id="prod_default" :name="form.product_image_one" :value="form.product_image_one" />
-                            <img :src="form.product_image_one" id="prod_default_image" width="60" class="img-fluid"/>
+
+                            <div class="form-group col-md-4 mt-1">
+                                <label for="product-Brand">Brand</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('brand') ? 'is-invalid' : ''" id="product-name" placeholder="Brand Name" v-model="form.brand" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('brand')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.brand[0] }}
+                                    </div>
+                            </div>
+
+                            <div class="form-group col-md-4 mt-1">
+                                <label for="product-Brand">Designer</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('designer') ? 'is-invalid' : ''" id="Designer-name" placeholder="Designer Name" v-model="form.designer" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('designer')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.designer[0] }}
+                                    </div>
+                            </div>
+
+                            <div class="form-group col-md-4 mt-1">
+                                <label for="product-Brand">Embellishment</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('embellishment') ? 'is-invalid' : ''" id="Embellishment-name" placeholder="Embellishment" v-model="form.embellishment" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('embellishment')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.embellishment[0] }}
+                                    </div>
+                            </div>
+                            
+                            <div class="form-group col-md-4 mt-1">
+                                <label for="product-Making">Making</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('making') ? 'is-invalid' : ''" id="Making-name" placeholder="Making" v-model="form.making" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('making')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.making[0] }}
+                                    </div>
+                            </div>
+                            <div class="form-group col-md-4 mt-1">
+                                <label for="product-LeadTime">Lead Time</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('lead_time') ? 'is-invalid' : ''" id="LeadTime-name" placeholder="Lead Time" v-model="form.lead_time" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('lead_time')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.lead_time[0] }}
+                                    </div>
+                            </div>
+                            <div class="form-group col-md-4 mt-1">
+                                <label for="product-Season">Season</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('season') ? 'is-invalid' : ''" id="Season-name" placeholder="Season" v-model="form.season" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('season')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.season[0] }}
+                                    </div>
+                            </div>
+                            <div class="form-group col-md-4 mt-1">
+                                <label for="product-Variety">Variety</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('variety') ? 'is-invalid' : ''" id="Variety-name" placeholder="Variety" v-model="form.variety" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('variety')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.variety[0] }}
+                                    </div>
+                            </div>
+
+                            <div class="form-group col-md-4 mt-1">
+                                <label for="product-Fit">Fit</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('fit') ? 'is-invalid' : ''" id="Fit-name" placeholder="Fit" v-model="form.fit" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('fit')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.fit[0] }}
+                                    </div>
+                            </div>
+
+                            <div class="form-group col-md-4 mt-1">
+                                <label for="product-ArtistName">Artist Name</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('artist_name') ? 'is-invalid' : ''" id="Fit-name" placeholder="Artist Name" v-model="form.artist_name" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('artist_name')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.artist_name[0] }}
+                                    </div>
+                            </div>
+
+                            <div class="form-group col-md-4 mt-1">
+                                <label for="product-Consignment">Consignment</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('consignment') ? 'is-invalid' : ''" id="Fit-name" placeholder="Consignment" v-model="form.consignment" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('consignment')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.consignment[0] }}
+                                    </div>
+                            </div>
+                            <div class="form-group col-md-4 mt-1">
+                                <label for="product-ingredients">Ingredients</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('ingredients') ? 'is-invalid' : ''" id="ingredients-name" placeholder="Ingredients" v-model="form.ingredients" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('ingredients')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.ingredients[0] }}
+                                    </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     
+        <div id="tooltips" class="mb-2">
+            <div class="statbox widget box ">
+                <div class="widget-content ">
+                        <div class="row">
+                        <div class="col-md-3 col-12 mt-4">
+                                <label for="product-image1">Image (1:1)</label>
+                                <!-- <input type="file" class="form-control" id="product-image"> -->
+                                <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('one')">Upload files</button>
+                            </div>
+                            <div class="col-md-3 col-12 mt-4">
+                                <label for="product-image1">Image (1:1)</label>
+                                <!-- <input type="file" class="form-control" id="product-image"> -->
+                                <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('two')">Upload files</button>
+                            </div>
+                            <div class="col-md-3 col-12 mt-4">
+                                <label for="product-image1">Image (1:1)</label>
+                                <!-- <input type="file" class="form-control" id="product-image"> -->
+                                <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('three')">Upload files</button>
+                            </div>
+                            <div class="col-md-3 col-12 mt-4">
+                                <label for="product-image1">Image (1:1)</label>
+                                <!-- <input type="file" class="form-control" id="product-image"> -->
+                                <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('four')">Upload files</button>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div id="tooltips" class="col-lg-12 layout-spacing col-md-12">
                 <div class="statbox widget box ">
@@ -317,7 +509,7 @@ export default {
                                     </div>
                             </div>
                             <div class="col-md-4 mb-3">
-                                <label for="product-cost">Cost</label>
+                                <label for="product-cost">Unit Cost</label>
                                 <input type="number" class="form-control" id="product-cost" placeholder="Product Cost" v-model="form.cost" >
                             </div>
                             <div class="col-md-4 mb-3">
@@ -483,7 +675,7 @@ export default {
                         </div>
 
                         <div class="col-md-12 mb-3" v-if="form.is_fabric">
-                            <label for="product-category">Fabric</label>
+                            <label for="product-category">Composition</label>
                             <Multiselect
                                 v-model="form.selectfabrics"
                                 placeholder="Select Fabric"

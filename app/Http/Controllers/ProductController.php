@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\AllStatic;
 use App\Http\Resources\ProductResource;
 use App\Models\CampaignProduct;
 use App\Models\Product;
@@ -11,7 +12,7 @@ use App\Models\ProductSize;
 use App\Models\Inventory;
 use App\Models\Discount;
 use Illuminate\Http\Request;
-use DB;
+use DB,Str;
 
 class ProductController extends Controller
 {
@@ -91,7 +92,6 @@ class ProductController extends Controller
         $request->validate([
             'product_name' => 'required',
             'category' => 'required',
-            'sub_category' => 'required',
             'sku' => 'required',
             'price' => 'required',
             'stock' => 'required',
@@ -104,15 +104,28 @@ class ProductController extends Controller
 
             $product = new Product();
             $product->product_name        = $request->product_name;
+            $product->slug                = Str::slug($request->product_name);
             $product->category_id         = $request->category;
+            $product->sku         = $request->sku;
             $product->sub_category_id     = $request->sub_category;
             $product->description         = $request->description;
-            $product->sku                 = $request->sku;
-            $product->product_image       = $request->image1_1 ?? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvvOu_xVVRCcdwutaWwCQ0Jp0zsPv4v1liyQ&usqp=CAU';
-            $product->image_one           = $request->image_one;
-            $product->image_two           = $request->image_two;
-            $product->image_three         = $request->image_three;
-            $product->image_four          = $request->image_four;
+            $product->vandor                 = $request->vandor;
+            $product->brand                 = $request->brand;
+            $product->designer                 = $request->designer;
+            $product->embellishment                 = $request->embellishment;
+            $product->making                 = $request->making;
+            $product->lead_time                 = $request->lead_time;
+            $product->season                 = $request->season;
+            $product->variety                 = $request->variety;
+            $product->fit                 = $request->fit;
+            $product->artist_name                 = $request->artist_name;
+            $product->ingredients                 = $request->ingredients;
+            $product->consignment                 = $request->consignment;
+            $product->product_image       = $request->product_image_one;
+            $product->image_one           = $request->product_image_one;
+            $product->image_two           = $request->product_image_two;
+            $product->image_three         = $request->product_image_three;
+            $product->image_four  = $request->product_image_four;
             $product->image_five          = $request->image_five;
             $product->cost                = $request->cost;
             $product->mrp_price           = $request->price;
@@ -121,7 +134,7 @@ class ProductController extends Controller
             $product->care                = $request->care;
             $product->design_code         = $request->design_code;
             $product->country_of_origin   = $request->care;
-            $product->status              = $request->status ? 1 : 0;
+            $product->status              =  AllStatic::$active;
             $product->save();
 
             if($request->is_color && !empty($request->selectcolours)){
@@ -144,14 +157,13 @@ class ProductController extends Controller
                 }
             }
 
-            if($request->is_fabric && !empty($request->selectfabrics)){
-                foreach($request->selectfabrics as $value)
-                { 
+            if($request->is_fabric && $request->selectfabrics){
+                
                     $pf             = new ProductFabric();
                     $pf->product_id = $product->id;
-                    $pf->fabric_id  = $value;
+                    $pf->fabric_id  = $request->selectfabrics;
                     $pf->save();
-                }
+                
             }
             
             if($request->stock){
@@ -178,9 +190,9 @@ class ProductController extends Controller
             return response()->json(['status' => 'success', 'message' => $this->fieldname.' Added Successfully!']);
         } catch (\Throwable $th) {
             DB::rollback();
-            return response()->json(['status' => 'error', 'message' => $th->getMessage()]);
-            return response()->json(['status' => 'error', 'message' => 'Something went wrong!']);
             return $th;
+            return response()->json(['status' => 'error', 'message' => $th]);
+            return response()->json(['status' => 'error', 'message' => 'Something went wrong!']);
         }
     }
 
@@ -204,7 +216,9 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('pages.product.edit',['product' => $product]);
+        $products = Product::with(['category:id,category_name','inventory:id,product_id,stock','product_colour','product_size','product_fabric'])
+        ->find($product->id);
+        return view('pages.product.edit',['product' => $products]);
     }
 
     /**

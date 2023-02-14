@@ -33,6 +33,11 @@ class Product extends Model
         return $this->belongsToMany(Colour::class,'product_colours')->withTimestamps();
     }
 
+    public function product_fabric()
+    {
+        return $this->belongsToMany(Fabric::class,'product_fabrics')->withTimestamps();
+    }
+
     public function product_size()
     {
         return $this->belongsToMany(Size::class,'product_sizes')->withTimestamps();
