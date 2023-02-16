@@ -100,6 +100,13 @@ export default {
                 camp_id: '',
                 per_page: 10
             },
+            this.addTocamp = {
+                campaign: '',
+                discount_type: 'flat',
+                discount_amount: '',
+                max_amount: '',
+                product:[],
+            }
             this.keyword= ''
             this.allsubcategories = []
             this.getProduct()
@@ -139,6 +146,7 @@ export default {
             axios.post(baseUrl+'add-to-campaign',this.addTocamp)
             .then(response => {
                 $("#addToCampModal").modal('hide')
+                this.filterClear()
                 this.successMessage(response.data)
             }).catch(error => {
                 console.log(error)
@@ -231,6 +239,7 @@ export default {
                         <th>Name</th>
                         <th>SKU</th>
                         <th>Category</th>
+                        <th>Sub Category</th>
                         <th>Price</th>
                         <th class="text-center">Status</th>
                         <th class="text-center">Action</th>
@@ -250,6 +259,7 @@ export default {
                             </td>
                             <td>{{ product.p_sku }}</td>
                             <td>{{ product.p_category.cat_name }}</td>
+                            <td>{{ product.p_subcategory.cat_name }}</td>
                             <td>{{ product.p_sale_price}}</td>
                             <td class="text-center">
                                 <span class="badge shadow-none" :class="product.status == 1 ? 'outline-badge-info':'outline-badge-danger'">{{ product.status_text }}</span>

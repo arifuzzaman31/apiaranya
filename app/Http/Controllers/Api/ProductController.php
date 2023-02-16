@@ -21,7 +21,8 @@ class ProductController extends Controller
         $q_sub_category   = $request->get('sub_category');
         $camp_id   = $request->get('camp_id');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
-        $product = Product::with(['category:id,category_name','inventory:id,product_id,stock','product_size','product_colour','discount'])
+
+        $product = Product::with(['category:id,category_name','subcategory','inventory:id,product_id,stock','product_size','product_colour','discount'])
                     ->orderBy('id','desc');
 
         if($camp_id != ''){
@@ -52,7 +53,7 @@ class ProductController extends Controller
         
         if($noPagination != ''){
             if($byProduct != ''){
-                $product = Product::where('id',$byProduct)->with(['category:id,category_name','inventory:id,product_id,stock','product_size','product_colour','discount'])->first();
+                $product = Product::where('id',$byProduct)->with(['category:id,category_name','subcategory','inventory','product_size','product_colour','discount'])->first();
                 return response()->json($product);
             } else {
 
@@ -66,21 +67,37 @@ class ProductController extends Controller
 
     public function getProductByCat(Request $request,$cat,$subcat = null)
     {
-        $noPagination = $request->get('no_paginate');
-        $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
-        $product = Product::with(['category:id,category_name','inventory:id,product_id,stock','product_size','product_colour','discount'])
-                    ->where('category_id',$cat)
-                    ->orderBy('id','desc');
-                if($subcat != '' && $subcat != null){
-                    $product = $product->where('sub_category_id',$subcat);
-                }
-        if($noPagination != ''){
-            $product = $product->get();
-        } else {
-            $product = $product->paginate($dataQty);
+        try {
+            //code...
+            $noPagination = $request->get('no_paginate');
+            $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
+            $product = Product::with(['category:id,category_name','subcategory','inventory','product_size','product_colour','discount'])
+                        ->where('category_id',$cat)
+                        ->orderBy('id','desc');
+                    if($subcat != '' && $subcat != null){
+                        $product = $product->where('sub_category_id',$subcat);
+                    }
+            if($noPagination != ''){
+                $product = $product->get();
+            } else {
+                $product = $product->paginate($dataQty);
+            }
+    
+            return ProductResource::collection($product);
+        } catch (\Throwable $th) {
+            return $this->errorMessage();
         }
-
-        return ProductResource::collection($product);
         
+    }
+
+    public function getProductById($id)
+    {
+        try {
+            //code...
+            $product = Product::with(['category:id,category_name','subcategory','inventory','product_size','product_colour','discount'])->find($id);
+            return new ProductResource($product);
+        } catch (\Throwable $th) {
+            return $this->errorMessage();
+        }
     }
 }

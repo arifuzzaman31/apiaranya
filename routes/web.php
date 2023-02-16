@@ -50,6 +50,8 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     Route::get('category-subcategory-data',[CategoryController::class,'getCategoryByCat']);
     Route::get('add-category',[CategoryController::class,'getCategory'])->name('add-category');
     Route::get('edit-category',[CategoryController::class,'editCategory'])->name('edit-category');
+    Route::get('update-category-image/{id}',[CategoryController::class,'updateCategoryImage'])->name('update-category-image');
+    // Route::get('get-cate-data/{id}',[CategoryController::class,'getCategoryImage'])->name('get-cate-data');
 
     Route::resource('colour',ColorController::class);
     Route::get('get-colour',[ColorController::class,'getColour']);
@@ -85,6 +87,8 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     Route::resource('campaign',CampaignController::class);
     Route::get('get-campaign',[CampaignController::class,'getCampaing']);
     Route::post('add-to-campaign',[CampaignController::class,'storeAddtoCamp']);
+    Route::get('campaign-product/{id}',[CampaignController::class,'getCampProduct']);
+    Route::post('remove-product-camp',[CampaignController::class,'removeCampProduct']);
 
     //Pages
     Route::get('home-page',[PagesController::class,'homePage'])->name('home-page');

@@ -13,6 +13,17 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class)->withDefault([
             'id'                   =>  0,
+            'cat_name'        =>  'unknown',
+            'category_name'        =>  'unknown',
+            'slug'                 =>  'unknown'
+          ]);
+    }
+
+    public function subcategory()
+    {
+        return $this->hasOne(Category::class,'id','sub_category_id')->withDefault([
+            'id'                   =>  0,
+            'cat_name'        =>  'unknown',
             'category_name'        =>  'unknown',
             'slug'                 =>  'unknown'
           ]);
@@ -20,7 +31,7 @@ class Product extends Model
 
     public function inventory()
     {
-        return $this->hasOne(Inventory::class);
+        return $this->hasMany(Inventory::class);
     }
 
     public function discount()

@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Aranya'),
 
     /*
     |--------------------------------------------------------------------------
@@ -27,7 +27,9 @@ return [
     */
 
     'env' => env('APP_ENV', 'production'),
-
+    'clname' => 'diyc1dizi',
+    'clpreset' => 'webable',
+    
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode

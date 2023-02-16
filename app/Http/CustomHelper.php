@@ -45,4 +45,8 @@ use App\Http\AllStatic;
         return $text;
     }
 
+    function myFilter($var){
+        return ($var !== NULL && $var !== FALSE && $var !== "");
+    }
+
 ?>

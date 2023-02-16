@@ -37,7 +37,7 @@ export default {
                 product_image_three : '',
                 product_image_four : '',
                 design_code: '',
-                stock: 0,
+                stock: 1,
                 cost: 0,
                 price: 0,
                 dimention: '',
@@ -46,6 +46,7 @@ export default {
                 is_fabric: true,
                 selectfabrics : null,
                 is_color: true,
+                color_size: true,
                 selectcolours : null,
                 is_size: true,
                 selectsize : null,
@@ -54,7 +55,9 @@ export default {
                 max_amount: 0,
                 discount_type: 1,
                 description: '',
+                attrqty: [{colour_id:'',size_id:'',qty:''}]
             },
+
             allcategories: [],
             allsubcategories: [],
             allfiltersubcategories: [],
@@ -71,6 +74,7 @@ export default {
                 if(response.data.status == 'success'){
                     this.clearForm()
                     this.successMessage(response.data)
+                    window.location.href = baseUrl+"product"
                 }
             }).catch(e => {
                 console.log(e)
@@ -82,7 +86,7 @@ export default {
         },
 
         openUploadModal(numb){
-            cloudinary.createUploadWidget(
+            const widget = window.cloudinary.createUploadWidget(
                 { cloud_name: clName,
                     upload_preset: clPreset,
                     sources: [
@@ -124,10 +128,11 @@ export default {
                 (error, result) => {
                 if (!error && result && result.event === "success") {
                     console.log('Done uploading..: ', result.info);
-                    this.setImage(numb,result.info.secure_url)
+                    this.setImage(numb,result.info.path)
                 }
                 this.validationError({'status':'error','message':error.error.message})
-                }).open();
+                });
+                widget.open();
         },
 
         setImage(numb,uri){
@@ -154,6 +159,13 @@ export default {
                     break;
             }
             return true;
+        },
+
+        addMore(){
+            this.form.attrqty.push({colour_id:'',size_id:'',qty:''})
+        },
+        removeChild(index) {
+            this.form.attrqty.splice(index, 1);
         },
        
         getCategory() {
@@ -296,17 +308,7 @@ export default {
                                         {{ validation_error.sku[0] }}
                                     </div>
                             </div>
-                            <div class="col-md-4">
-                                <label for="product-stock">Stock Qty</label>
-                                <input type="number" class="form-control" :class="validation_error.hasOwnProperty('stock') ? 'is-invalid' : ''" id="product-stock" placeholder="Qty" v-model="form.stock" >
-                                <div
-                                        v-if="validation_error.hasOwnProperty('stock')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.stock[0] }}
-                                    </div>
-                            </div>
-                            <div class="form-group col-md-4 mt-1">
+                            <div class="form-group col-md-4">
                                 <label for="product-category">Category </label>
                                 <select id="product-category" class="form-control" @change="getSubCategories()" v-model="form.category">
                                     <option value="">Choose...</option>
@@ -473,21 +475,25 @@ export default {
                                 <label for="product-image1">Image (1:1)</label>
                                 <!-- <input type="file" class="form-control" id="product-image"> -->
                                 <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('one')">Upload files</button>
+                                <p class="mt-1 text-info" v-if="form.product_image_one != ''">{{  form.product_image_one }}</p>
                             </div>
                             <div class="col-md-3 col-12 mt-4">
                                 <label for="product-image1">Image (1:1)</label>
                                 <!-- <input type="file" class="form-control" id="product-image"> -->
                                 <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('two')">Upload files</button>
+                                <p class="mt-1 text-info" v-if="form.product_image_two != ''">{{  form.product_image_two }}</p>
                             </div>
                             <div class="col-md-3 col-12 mt-4">
                                 <label for="product-image1">Image (1:1)</label>
                                 <!-- <input type="file" class="form-control" id="product-image"> -->
                                 <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('three')">Upload files</button>
+                                <p class="mt-1 text-info" v-if="form.product_image_tree != ''">{{  form.product_image_tree }}</p>
                             </div>
                             <div class="col-md-3 col-12 mt-4">
                                 <label for="product-image1">Image (1:1)</label>
                                 <!-- <input type="file" class="form-control" id="product-image"> -->
                                 <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('four')">Upload files</button>
+                                <p class="mt-1 text-info" v-if="form.product_image_four != ''">{{  form.product_image_four }}</p>
                             </div>
                     </div>
                 </div>
@@ -553,20 +559,20 @@ export default {
                         <h5>Attribute</h5>
                     </div>                 
                     
-                </div>                 
-                    <div class="d-flex justify-content-around">
+                </div>               
+                    <div class="d-flex mt-3">
                         <div class="billing-cycle-radios">
                             <div class="radio billed-yearly-radio">
                                 <div class="d-flex justify-content-center">
-                                    <span class="txt-monthly mr-2">Colours</span>
+                                    <span class="txt-monthly mr-2">Colour Size</span>
                                     <label class="switch s-icons s-outline  s-outline-primary">
-                                        <input v-model="form.is_color" :checked="form.is_color"  type="checkbox" id="colour">
+                                        <input v-model="form.color_size" :checked="form.color_size"  type="checkbox" id="colour">
                                         <span class="slider round"></span>
                                     </label>
                                 </div>
                             </div>
                         </div>
-                        <div class="billing-cycle-radios">
+                        <!-- <div class="billing-cycle-radios">
                             <div class="radio billed-yearly-radio">
                                 <div class="d-flex justify-content-center">
                                     <span class="txt-monthly mr-2">Size</span>
@@ -577,8 +583,8 @@ export default {
                                     
                                 </div>
                             </div>
-                        </div>
-                        <div class="billing-cycle-radios">
+                        </div> -->
+                        <!-- <div class="billing-cycle-radios">
                             <div class="radio billed-yearly-radio">
                                 <div class="d-flex justify-content-center">
                                     <span class="txt-monthly mr-2">Fabric</span>
@@ -599,16 +605,82 @@ export default {
                                 </label>
                                 
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
-     
-    
+            
+            <div class="statbox widget box box-shadow" v-if="form.color_size">
+                <div class="widget-content ">
+                    <div class="row text-center">
+                        <div class="col-4  text-success">
+                            <b>Coluor</b>
+                        </div>
+                        <div class="col-4  text-success">
+                           <b>Size</b> 
+                        </div>
+                        <div class="col-2  text-success">
+                            <b>Qty</b>
+                        </div>
+                        <div class="col-2  text-danger">
+                            <b>Remove</b>
+                        </div>
+                    </div>
+                    <div class="row" v-for="(qt,index) in form.attrqty" :key="index">
+                        <div class="form-group col-md-4">
+                            <select id="product-category" class="form-control" v-model="qt.colour_id">
+                                <option value="">Choose...</option>
+                                <option v-for="(value,index) in allcolours" :value="value.value" :key="index">{{ value.name }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <select id="product-category" class="form-control" v-model="qt.size_id">
+                                <option value="">Choose...</option>
+                                <option v-for="(value,index) in allsizes" :value="value.value" :key="index">{{ value.name }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <input type="number"  class="form-control" id="qty" v-model="qt.qty" placeholder="qty" >
+                        </div>
+                        <div class="form-group col-md-2 text-center" v-if="index != 0">
+                            <a
+                              href="javascript:void(0)"
+                              @click.prevent="removeChild(index)"
+                              class="mt-5"
+                              ><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-danger"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a
+                            >
+                        </div>
+                    </div>
+                </div>
+                <a
+                        href="javascript:void(0)"
+                        @click.prevent="addMore()"
+                        class="btn btn-warning"
+                    >Add More
+                    </a>
+            </div>
+
+            <div class="statbox widget box box-shadow" v-else>
+                <div class="widget-content ">
+                    <div class="row">
+                        <div class="form-group col-md-3 mt-1">
+                                <label for="product-ingredients">Stock</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('stock') ? 'is-invalid' : ''" id="stock-name" placeholder="stock" v-model="form.stock" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('stock')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.stock[0] }}
+                                    </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            
             <div class="statbox widget box box-shadow">
                 <div class="widget-content ">
                     <div class="form-row">
-                        <div class="col-md-12 mb-3" v-if="form.is_color">
+                        <!-- <div class="col-md-12 mb-3" v-if="form.is_color">
                             <label for="product-category">Colour</label>
                              <Multiselect
                                 v-model="form.selectcolours"
@@ -672,7 +744,7 @@ export default {
                                 </div>
                                 </template>
                             </Multiselect>
-                        </div>
+                        </div> -->
 
                         <div class="col-md-12 mb-3" v-if="form.is_fabric">
                             <label for="product-category">Composition</label>
@@ -707,7 +779,7 @@ export default {
                         </div>
                     </div>
                     
-                    <div class="form-row" v-if="form.is_discount">
+                    <!-- <div class="form-row" v-if="form.is_discount">
                         <div class="col-md-4 mb-3">
                             <label for="discount_amount">Discount Amount</label>
                             <input type="number" v-model="form.discount_amount" class="form-control" id="discount_amount" placeholder="Discount Amount" >
@@ -723,7 +795,7 @@ export default {
                             <label for="max_amount">Maximum</label>
                             <input type="number" class="form-control" :disabled="form.discount_type == 'flat' ? true : false" id="max_amount" placeholder="Maximum amount" v-model="form.max_amount" >
                         </div>
-                    </div>
+                    </div> -->
             </div>
         </div>
     

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\PageController;
+use App\Http\Controllers\Api\CategoryController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -30,5 +31,10 @@ Route::get('product', [ProductController::class, 'index']);
 
 Route::get('product/{category}/{sub_cate?}', [ProductController::class, 'getProductByCat']);
 
+Route::get('product-by/{id}', [ProductController::class, 'getProductById']);
+
 //object data
 Route::get('home-pagedata',[PageController::class,'homeImageData']);
+
+//Category data
+Route::get('category/{id}',[CategoryController::class,'categoryData']);

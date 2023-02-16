@@ -24,6 +24,12 @@ class CampaignController extends Controller
         return view('pages.campaign.create_campaign');
     }
 
+    public function getCampProduct($id)
+    {
+        $camp = Campaign::find($id);
+        return view('pages.campaign.campaign_product',['campaigndata' => $camp]);
+    }
+
     public function getCampaing(Request $request)
     {
         $noPagination = $request->get('no_paginate');
@@ -101,6 +107,19 @@ class CampaignController extends Controller
         }catch (\Throwable $th) {
             DB::rollback();
             return response()->json(['status' => 'error', 'message' => $th]);
+        }
+    }
+
+    public function removeCampProduct(Request $request)
+    {
+        try {
+            //code...
+            $camp = Campaign::find($request->camp_id);
+            $camp->product()->detach($request->product);
+            return $this->successMessage("Prodcut Has been removed!");
+        } catch (\Throwable $th) {
+            //throw $th;
+            return $this->errorMessage();
         }
     }
 }

@@ -66,7 +66,7 @@ export default {
         },
 
         openUploadModal(numb){
-            cloudinary.createUploadWidget(
+            const widget = window.cloudinary.createUploadWidget(
                 { cloud_name: clName,
                     upload_preset: clPreset,
                     sources: [
@@ -109,10 +109,10 @@ export default {
                 if (!error && result && result.event === "success") {
                     console.log('Done uploading..: ', result.info);
                     this.setImage(numb,result.info.secure_url)
-                    this.updateImage(numb,result.info.secure_url)
+                    this.updateImage(numb,result.info.path)
                 }
-                this.validationError({'status':'error','message':error.error.message})
-                }).open();
+            });
+                widget.open();
         },
 
         setImage(numb,uri){

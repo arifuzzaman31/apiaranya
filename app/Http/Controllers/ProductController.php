@@ -44,7 +44,7 @@ class ProductController extends Controller
         $keyword   = $request->get('keyword');
         $camp_id   = $request->get('camp_id');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 2;
-        $product = Product::with(['category:id,category_name','inventory:id,product_id,stock','product_size','product_colour'])
+        $product = Product::with(['category:id,category_name','subcategory','inventory:id,product_id,stock','product_size','product_colour','discount'])
                     ->orderBy('id','desc');
 
         if($camp_id != ''){
@@ -88,13 +88,13 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // return response()->json($request->all());
+        
         $request->validate([
             'product_name' => 'required',
             'category' => 'required',
             'sku' => 'required',
+            'stock' => 'required_if:color_size,false',
             'price' => 'required',
-            'stock' => 'required',
             'weight' => 'required',
             'design_code' => 'required'
         ]);
@@ -137,44 +137,47 @@ class ProductController extends Controller
             $product->status              =  AllStatic::$active;
             $product->save();
 
-            if($request->is_color && !empty($request->selectcolours)){
-                foreach($request->selectcolours as $value)
-                { 
-                    $pc             = new ProductColour();
-                    $pc->product_id = $product->id;
-                    $pc->colour_id  = $value;
-                    $pc->save();
-                }
-            }
+            $colorIds = array_column($request->attrqty, 'colour_id');
+            $sizeIds = array_column($request->attrqty, 'size_id');
+           
+            if($request->is_color && !myFilter($colorIds)){
 
-            if($request->is_size && !empty($request->selectsize)){
-                foreach($request->selectsize as $value)
-                { 
-                    $ps             = new ProductSize();
-                    $ps->product_id = $product->id;
-                    $ps->size_id    = $value;
-                    $ps->save();
-                }
+                $product->product_colour()->attach($colorIds);
+            }
+            
+            if($request->is_size && !myFilter($sizeIds)){
+               
+                $product->product_size()->attach($sizeIds);
             }
 
             if($request->is_fabric && $request->selectfabrics){
-                
-                    $pf             = new ProductFabric();
-                    $pf->product_id = $product->id;
-                    $pf->fabric_id  = $request->selectfabrics;
-                    $pf->save();
+
+                    $product->product_fabric()->attach($request->selectfabrics);
                 
             }
             
-            if($request->stock){
-               
-                $stock              = new Inventory();
+            if($request->color_size && $request->attrqty && !empty($request->attrqty)){
+
+                // $product->inventory()->attach($product->id,['colour_id' => $colorIds, 'size_id' => $sizeIds]);
+                foreach($request->attrqty as $value){
+                    if($value['qty'] != ''){
+                        $stock              = new Inventory();
+                        $stock->product_id  = $product->id;
+                        $stock->colour_id  = $value['colour_id'];
+                        $stock->size_id  = $value['size_id'];
+                        $stock->stock       = $value['qty'];
+                        $stock->warning_amount = $request->warning_amount ? $request->warning_amount : 10;
+                        $stock->warehouse   = $request->warehouse;
+                        $stock->save();
+                    }
+                    // return $value['colour_id'];
+                }
+            
+            } else {
+                $stock  = new Inventory();
                 $stock->product_id  = $product->id;
                 $stock->stock       = $request->stock;
-                $stock->warning_amount = $request->warning_amount ? $request->warning_amount : 10;
-                $stock->warehouse   = $request->warehouse;
                 $stock->save();
-            
             }
             
             if($request->is_discount){
@@ -190,7 +193,7 @@ class ProductController extends Controller
             return response()->json(['status' => 'success', 'message' => $this->fieldname.' Added Successfully!']);
         } catch (\Throwable $th) {
             DB::rollback();
-            return $th;
+            return response()->json($th->getMessage());
             return response()->json(['status' => 'error', 'message' => $th]);
             return response()->json(['status' => 'error', 'message' => 'Something went wrong!']);
         }
@@ -204,7 +207,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return Product::with(['category:id,category_name','inventory:id,product_id,stock','product_colour','product_size'])
+        return Product::with(['category:id,category_name','subcategory','inventory:id,product_id,stock','product_colour','product_size','discount'])
             ->find($product->id);
     }
 
@@ -216,7 +219,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $products = Product::with(['category:id,category_name','inventory:id,product_id,stock','product_colour','product_size','product_fabric'])
+        $products = Product::with(['category:id,category_name','subcategory','inventory:id,product_id,stock','product_colour','product_size','product_fabric','discount'])
         ->find($product->id);
         return view('pages.product.edit',['product' => $products]);
     }

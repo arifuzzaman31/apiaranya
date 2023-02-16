@@ -111,6 +111,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
+        return $category;
         //
     }
 
@@ -122,7 +123,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('pages.category.edit_category',['categorydata' => $category]);
     }
 
     /**
@@ -134,7 +135,16 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        try {
+            if($request->img_name == 'one') $category->category_image_one = $request->uri_link;
+            if($request->img_name == 'two') $category->category_image_two = $request->uri_link;
+            if($request->img_name == 'three') $category->category_image_three = $request->uri_link;
+            $category->update();
+            return response()->json(['status' => 'success', 'message' => 'Home Page Updated Successfully!']);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' => 'Something went wrong!']);
+        }
+        
     }
 
     /**

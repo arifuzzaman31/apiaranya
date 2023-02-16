@@ -4,11 +4,11 @@
 <script src="{{ asset('admin-assets/bootstrap/js/bootstrap.min.js')}}"></script>
 <script src="{{ asset('admin-assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
 <script src="{{ asset('admin-assets/assets/js/app.js')}}"></script>
-
+<script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
 <script>
     var baseUrl = "{{ url('/') }}"+'/admin/';
-    var clName = "{{ env('CLOUDNAME')}}";
-    var clPreset = "{{ env('UPLOADPRESET')}}";
+    var clName = "diyc1dizi";
+    var clPreset = "webable";
     $(document).ready(function() {
         App.init(); 
     });
