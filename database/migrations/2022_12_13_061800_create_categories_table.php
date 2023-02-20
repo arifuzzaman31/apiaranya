@@ -23,6 +23,7 @@ class CreateCategoriesTable extends Migration
             $table->string('category_video')->nullable();
             $table->tinyInteger('precedence')->default(0)->comment("Set precedency");
             $table->tinyInteger('status')->default(1)->comment("0 for down the category");
+            $table->softDeletes();
             $table->timestamps();
         });
     }

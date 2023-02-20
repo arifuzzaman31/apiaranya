@@ -22,12 +22,18 @@ class ProductController extends Controller
         $camp_id   = $request->get('camp_id');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
-        $product = Product::with(['category:id,category_name','subcategory','inventory:id,product_id,stock','product_size','product_colour','discount'])
-                    ->orderBy('id','desc');
+        $product = Product::with(['category:id,category_name,slug','subcategory','inventory','product_size','product_colour','discount']);
 
         if($camp_id != ''){
-            $camp_prod = CampaignProduct::where('campaign_id',$camp_id)->pluck('product_id');
-            $product = $product->whereIn('id',$camp_prod);
+            $product = $product->join('campaign_products','products.id','campaign_products.product_id')
+                ->where('campaign_id',$camp_id);
+
+            if($noPagination != ''){
+                $product = $product->get();
+            } else {
+                $product = $product->paginate($dataQty);
+            }
+            return ProductResource::collection($product);
         }
 
         if($q_category != ''){
@@ -52,15 +58,11 @@ class ProductController extends Controller
         }
         
         if($noPagination != ''){
-            if($byProduct != ''){
-                $product = Product::where('id',$byProduct)->with(['category:id,category_name','subcategory','inventory','product_size','product_colour','discount'])->first();
-                return response()->json($product);
-            } else {
-
-                $product = $product->get();
-            }
+            
+            $product = $product->latest()->get();
+            
         } else {
-            $product = $product->paginate($dataQty);
+            $product = $product->latest()->paginate($dataQty);
         }
         return ProductResource::collection($product);
     }
@@ -71,7 +73,7 @@ class ProductController extends Controller
             //code...
             $noPagination = $request->get('no_paginate');
             $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
-            $product = Product::with(['category:id,category_name','subcategory','inventory','product_size','product_colour','discount'])
+            $product = Product::with(['category:id,category_name,slug','subcategory','inventory','product_size','product_colour','discount'])
                         ->where('category_id',$cat)
                         ->orderBy('id','desc');
                     if($subcat != '' && $subcat != null){
@@ -94,7 +96,7 @@ class ProductController extends Controller
     {
         try {
             //code...
-            $product = Product::with(['category:id,category_name','subcategory','inventory','product_size','product_colour','discount'])->find($id);
+            $product = Product::with(['category:id,category_name,slug','subcategory','inventory','product_size','product_colour','discount'])->find($id);
             return new ProductResource($product);
         } catch (\Throwable $th) {
             return $this->errorMessage();

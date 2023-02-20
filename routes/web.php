@@ -12,6 +12,8 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\Payment\SslController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -72,10 +74,12 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     //Order
     Route::get('order',[OrderController::class,'index'])->name('order');
     Route::get('get-order',[OrderController::class,'getOrder'])->name('get-order');
+    Route::get('get-order-excel',[OrderController::class,'getOrderExcel'])->name('get-order-excel');
     Route::post('update/order/status',[OrderController::class,'updateOrder']);
     Route::get('orders-details/{id}',[OrderController::class,'orderDetails']);
     Route::get('order/cancel/{id}',[OrderController::class,'orderCancel']);
     Route::get('get-user-order/{id}',[OrderController::class,'getUserOrder']);
+    Route::delete('order/{id}',[OrderController::class,'destroy']);
 
     //customer
     Route::get('customers',[CustomerController::class,'index'])->name('customers');
@@ -93,6 +97,11 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     //Pages
     Route::get('home-page',[PagesController::class,'homePage'])->name('home-page');
     Route::post('update-home-image',[PagesController::class,'homeImageUpdate']);
-    Route::get('get-home-pagedata',[PagesController::class,'homeImageData']);
-
+    Route::get('get-home-pagedata',[PagesController::class,'homeImageData']); 
+    
 });
+
+Route::get('ssl-commerz/{order_id}',[SslController::class,'sslCommerz'])->name('payment.ssl');
+Route::post('ssl/success',[SslController::class,'sslCommerzSuccess'])->name('ssl.success');
+Route::post('ssl/failed',[SslController::class,'sslCommerzFailed'])->name('ssl.failed');
+Route::post('ssl/cancel',[SslController::class,'sslCommerzCancel'])->name('ssl.cancel');

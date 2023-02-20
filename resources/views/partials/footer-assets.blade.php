@@ -17,7 +17,6 @@
 <!-- END GLOBAL MANDATORY SCRIPTS -->
 
 <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-<script src="{{ asset('admin-assets/plugins/highlight/highlight.pack.js')}}"></script>
 <script src="{{ asset('admin-assets/assets/js/scrollspyNav.js')}}"></script>
     <script>
         checkall('todoAll', 'todochkbox');

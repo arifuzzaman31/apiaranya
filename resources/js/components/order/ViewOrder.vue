@@ -1,148 +1,131 @@
 <script>
-import { ref,reactive, onMounted } from 'vue';
 import axios from 'axios';
-import Mixin from '../../mixin';
+import Mixin from '../../mixer';
 import { Bootstrap4Pagination } from 'laravel-vue-pagination';
 export default {
     name: 'order',
+    mixins: [Mixin],
     components:{
         Bootstrap4Pagination
     },
-    setup(){
-        const { notifying } = Mixin;
-        const orders  = ref([]);
-        const order_details  = ref([]);
-        const errors  = ref([]);
-        const order_id  = ref('');
-        const single_order  = ref('');
-        const order_status_id  = ref('');
-        const size_id  = ref('');
-        const form = reactive({
-            progress_detail: [],
-            status: true
-        });
-        
-        const getOrder = async(page = 1) =>{
-            let res = await axios.get(baseUrl+`get-order?page=${page}&per_page=10`);
-            orders.value = res.data;
-           
-        }
 
-        const updateSize = async() =>{
-           try{
-                await axios.patch('orders/' + size_id.value,form).then(
-                    response => {
-                        $("#sizeModal").modal('hide');
-                        fireToast(response.data)
-                    }
-                ). catch(e => {
-                   if(e.response.status == 422){
-                        errors.value = e.response.data.errors;
-                    }
-                })
-                getOrder()
-                formReset()
-            }catch(e){
-                if(e.response.status == 422){
-                    var data = [];
-                    for(const key in e.response.data.errors){
-                        data.push(e.response.data.errors[key][0]);
-                    }
-                    errors.value = data;
-                }
-            }
-        }
-
-        const cancelOrder = (order) => {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "Order status will be Update!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Do it!'
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    axios.get(baseUrl+'order/cancel/'+order).then(
-                        response => {
-                            
-                            formReset()
-                            getOrder()
-                            notifying(response.data)
-                        }
-                    ). catch(error => {
-                    
-                    })
-                }
-            })
-        }
-
-        const orderDetailModal = async(order) => {
-            order_id.value = order.id
-            single_order.value = order
-            order_status_id.value = order.order_position
-            const orderdata = await axios.get('orders-details/' + order.id)
-            order_details.value = orderdata.data
-            $("#orderDetailModal").modal('show');
-        }
-
-        const updateStatus = (order) => {
-            if(order_status_id.value >= order){
-                alert('Click Next Step')
-                return false
-            }
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "Order status will be Update!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Do it!'
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    axios.post(baseUrl+`update/order/status`,{'order_status_id':order_status_id.value,'id':single_order.value.id}).then(
-                        response => {
-                            $("#orderDetailModal").modal('hide');
-                            formReset()
-                            getOrder()
-                            notifying(response.data)
-                        }
-                    ). catch(error => {
-                    
-                    })
-                }
-            })
-            console.log(order)
-        }
-
-        const formReset = () =>{
-            order_id.value = '';
-            order_status_id.value = '';
-            single_order.value = '';
-            errors.value = '';
-            form.progress_detail = [];
-            form.status = true;
-        }
-        
-        onMounted(getOrder());
-
+    data(){
         return {
-            orders,
-            form,
-            getOrder,
-            updateSize,
-            formReset,
-            errors,
-            cancelOrder,
-            order_id,
-            updateStatus,
-            order_details,
-            order_status_id,
-            single_order,
-            orderDetailModal
+            form: {
+                progress_detail: [],
+                status: true
+            },
+            orders: [],
+            order_details: [],
+            errors: [],
+            order_id: '',
+            single_order: null,
+            order_status_id: '',
+            search: '',
+            filterdata : {
+                order_state: '',
+                status: ''
+            },
+            url: baseUrl
         }
+    },
+
+    methods: {
+        getOrder(page = 1){
+            axios.get(baseUrl+`get-order?page=${page}&per_page=10&keyword=${this.search}&byposition=${this.filterdata.order_state}&status=${this.filterdata.status}`)
+            .then(result => {
+                this.orders = result.data;
+            })
+            .catch(errors => {
+                console.log(errors);
+            });  
+        },
+
+        getSearch(){
+            if(this.search.length < 3) return ;
+            this.getOrder()
+        },
+
+        cancelOrder(id){
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Order status will be Update!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Do it!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.get(baseUrl+'order/cancel/'+id).then(
+                        response => {
+                            this.formReset()
+                            this.getOrder()
+                            this.successMessage(response.data)
+                        }
+                    ). catch(error => {
+                        console.log(error)
+                    })
+                }
+            })
+        },
+
+        deleteOrder(id){
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Order status will be Update!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Do it!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.delete(baseUrl+'order/'+id).then(
+                        response => {
+                            this.formReset()
+                            this.getOrder()
+                            this.successMessage(response.data)
+                        }
+                    ). catch(error => {
+                        console.log(error)
+                    })
+                }
+            })
+        },
+
+        orderDetailModal(order) {
+            this.order_id = order.id
+            this.single_order = order
+            this.order_status_id = order.order_position
+            const orderdata = async() => await axios.get('orders-details/' + order.id);
+            this.order_details = orderdata.data
+            $("#orderDetailModal").modal('show');
+        },
+
+        formReset(){
+            this.errors = '';
+            this.search = '';
+            this.form = {
+                progress_detail : [],
+                status : true
+            }
+            
+        },
+
+        filterClear(){
+            this.search = ''
+            this.filterdata = {
+                status : '',
+                order_state: ''
+            }
+            this.getOrder()
+        },
+
+    },
+
+    mounted(){
+        this.getOrder()
     }
 }
 </script>
@@ -200,7 +183,7 @@ export default {
 <template>
     <div class="row">
         <div id="tableHover" class="col-lg-12 col-12 layout-spacing">
-            <div class="statbox widget box box-shadow">
+            <div class="statbox">
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
@@ -209,6 +192,33 @@ export default {
                     </div>
                 </div>       
                 <div class="widget-content widget-content-area">
+                    <div class="row mb-2">
+                        <div class="col-md-3 col-lg-3 col-12">
+                            <input id="search" @keyup="getSearch()" placeholder="Search By OrderID" type="text" class="form-control"  v-model="search" />
+                        </div>
+                      
+                        <div class="col-md-3 col-lg-3 col-12">
+                            <select id="product-camp" class="form-control" @change="getOrder()" v-model="filterdata.order_state">
+                                <option selected="" value="">Choose...</option>
+                                <option value="0">Pending</option>
+                                <option value="1">Processing</option>
+                                <option value="2">On Delivery</option>
+                                <option value="3">Deliverd</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-3 col-lg-3 col-12">
+                            <select id="product-camp" class="form-control" @change="getOrder()" v-model="filterdata.status">
+                                <option selected="" value="">Choose...</option>
+                                <option value="1">Active</option>
+                                <option value="0">Cancel</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-2 col-lg-3 col-12">
+                            <button type="button" class="btn btn-danger" @click="filterClear()">CLEAR</button>
+                        </div>
+                    </div>
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover mb-4">
                             <thead>
@@ -220,10 +230,10 @@ export default {
                                     <th>Shipping</th>
                                     <th>PaymentBy</th>
                                     <th class="text-center">Status</th>
-                                    <th>Action</th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody v-if="orders.data && orders.data.length > 0">
                                 <template v-for="(order,index) in orders.data" :key="order.id">
                                     <tr>
                                         <td>{{ index+1 }}</td>
@@ -241,28 +251,28 @@ export default {
                                             </span>
                                             <span v-else class="badge badge-danger">Cancel</span>
                                         </td>
-                                        <td>
-                                            <div class="dropdown custom-dropdown">
-                                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-                                                </a>
-
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1" style="will-change: transform;">
-                                                    <a class="dropdown-item" @click="orderDetailModal(order)" href="javascript:void(0);">Order View</a>
-                                                    <a type="button" @click="cancelOrder(order.id)" class="dropdown-item" href="javascript:void(0);">Cancel</a>
-                                                </div>
-                                            </div>
+                                        <td class="text-center">
+                                            <ul class="table-controls d-flex justify-content-around">
+                                                <li><a href="javascript:void(0);" @click="cancelOrder(order.id)" data-toggle="tooltip" data-placement="top" title="Order Cancel">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-slash text-warning"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg></a> </li>
+                                                <li><a href="javascript:void(0);" @click="orderDetailModal(order)" data-toggle="tooltip" data-placement="top" title="View">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play-circle text-info"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg></a></li>
+                                                <li><a href="javascript:void(0);" @click="deleteOrder(order.id)" data-toggle="tooltip" data-placement="top" title="Delete Order"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-danger"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a></li>
+                                            </ul>
                                         </td>
                                     </tr>					
                                 </template>
                             </tbody>
+                            <h4 v-else> No Order Found</h4>
                         </table>
                             <Bootstrap4Pagination
                                 :data="orders"
                                 @pagination-change-page="getOrder"
                             />
                     </div>
-
+                    <div class="float-right">
+                        <a target="_blank" :href="url+`get-order-excel?&keyword=${search}&byposition=${filterdata.order_state}&status=${filterdata.status}`" type="button" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>  Excel</a>
+                    </div>
                 </div>
             </div>
         </div>

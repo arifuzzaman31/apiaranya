@@ -44,12 +44,18 @@ class ProductController extends Controller
         $keyword   = $request->get('keyword');
         $camp_id   = $request->get('camp_id');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 2;
-        $product = Product::with(['category:id,category_name','subcategory','inventory:id,product_id,stock','product_size','product_colour','discount'])
-                    ->orderBy('id','desc');
+        $product = Product::with(['category:id,category_name','subcategory','inventory:id,product_id,stock','product_size','product_colour','discount']);
 
         if($camp_id != ''){
-            $camp_prod = CampaignProduct::where('campaign_id',$camp_id)->pluck('product_id');
-            $product = $product->whereIn('id',$camp_prod);
+            $product = $product->join('campaign_products','products.id','campaign_products.product_id')
+                ->where('campaign_id',$camp_id);
+
+            if($noPagination != ''){
+                $product = $product->get();
+            } else {
+                $product = $product->paginate($dataQty);
+            }
+            return ProductResource::collection($product);
         }
 
         if($discount != ''){
@@ -61,9 +67,9 @@ class ProductController extends Controller
             $product = $product->orWhere('sku','like','%'.$keyword.'%');
         }
         if($noPagination != ''){
-            $product = $product->get();
+            $product = $product->latest()->get();
         } else {
-            $product = $product->paginate($dataQty);
+            $product = $product->latest()->paginate($dataQty);
         }
         return ProductResource::collection($product);
     }
@@ -88,7 +94,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        
+        // return $request->all();
         $request->validate([
             'product_name' => 'required',
             'category' => 'required',
@@ -137,15 +143,15 @@ class ProductController extends Controller
             $product->status              =  AllStatic::$active;
             $product->save();
 
-            $colorIds = array_column($request->attrqty, 'colour_id');
-            $sizeIds = array_column($request->attrqty, 'size_id');
-           
-            if($request->is_color && !myFilter($colorIds)){
+            $colorIds = array_filter(array_column($request->attrqty, 'colour_id'));
+            $sizeIds = array_filter(array_column($request->attrqty, 'size_id'));
+        
+            if($request->is_color && !empty($colorIds)){
 
                 $product->product_colour()->attach($colorIds);
             }
             
-            if($request->is_size && !myFilter($sizeIds)){
+            if($request->is_size && !empty($sizeIds)){
                
                 $product->product_size()->attach($sizeIds);
             }
@@ -207,7 +213,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return Product::with(['category:id,category_name','subcategory','inventory:id,product_id,stock','product_colour','product_size','discount'])
+        return Product::with(['category:id,category_name','subcategory','inventory','product_colour','product_size','discount'])
             ->find($product->id);
     }
 
@@ -219,7 +225,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $products = Product::with(['category:id,category_name','subcategory','inventory:id,product_id,stock','product_colour','product_size','product_fabric','discount'])
+        $products = Product::with(['category:id,category_name','subcategory','inventory','product_colour','product_size','product_fabric','discount'])
         ->find($product->id);
         return view('pages.product.edit',['product' => $products]);
     }

@@ -20,6 +20,7 @@ class CreatePaymentsTable extends Migration
             $table->double('amount',8,2);
             $table->string('payment_type')->nullable();
             $table->tinyInteger('payment_status')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\OrderExport;
 use App\Models\Order;
 use App\Models\Delivery;
 use App\Models\OrderDetails;
+use App\Models\UserBillingInfo;
+use App\Models\UserShippingInfo;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use DB;
 
@@ -28,8 +32,23 @@ class OrderController extends Controller
     public function getOrder(Request $request)
     {
         $noPagination = $request->get('no_paginate');
+        $keyword   = $request->get('keyword');
+        $byposition   = $request->get('byposition');
+        $status   = $request->get('status');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
         $order = Order::with(['user','delivery'])->orderBy('id','desc');
+
+        if($keyword != ''){
+            $order = $order->where('order_id','like','%'.$keyword.'%');
+        }
+
+        if($byposition != ''){
+            $order = $order->where('order_position',$byposition);
+        }
+
+        if($status != ''){
+            $order = $order->where('status',$status);
+        }
         if($noPagination != ''){
             $order = $order->get();
         } else {
@@ -96,7 +115,7 @@ class OrderController extends Controller
 
         } catch (\Throwable $th) {
             DB::rollBack();
-            return $th;
+            // return $th;
             return response()->json(['status' => 'error', 'message' => 'Something went wrong!']);
             //throw $th;
         }
@@ -113,6 +132,12 @@ class OrderController extends Controller
     public function show(Order $order,$id)
     {
         response()->json(Order::find(2));
+    }
+
+
+    public function getOrderExcel(Request $request)
+    {
+        return Excel::download(new \App\Exports\OrderExport($request->keyword,$request->byposition,$request->status),'order_list.xlsx');
     }
 
     /**
@@ -144,8 +169,24 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy(Order $order,$id)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $order = $order->find($id);
+            if(empty($order)){
+                return response()->json(['status' => 'error', 'message' => 'Order Not Found!']);
+            }
+            OrderDetails::where('order_id',$id)->delete();
+            Delivery::where('order_id',$id)->delete();
+            UserBillingInfo::where('order_id',$id)->delete();
+            UserShippingInfo::where('order_id',$id)->delete();
+            $order->delete();
+            DB::commit();
+            return response()->json(['status' => 'success', 'message' => 'Order Deleted Successfully!']);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json(['status' => 'error', 'message' => 'Something went wrong!']);
+        }
     }
 }

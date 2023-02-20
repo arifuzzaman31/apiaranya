@@ -22,7 +22,7 @@ class AllStatic
     public static $cash        = 1;
     public static $paypal      = 2;
     public static $stripe      = 3;
-    public static $ssl         = 4;
+    public static $ssl         = 'sslCommerz';
     public static $razor       = 5;
     public static $flutterwave = 6;
 

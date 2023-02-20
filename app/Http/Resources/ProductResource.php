@@ -15,6 +15,7 @@ class ProductResource extends JsonResource
      */
     public function toArray($request)
     {
+        $imgpath = "https://res.cloudinary.com/diyc1dizi/image/upload/";
         return [
             'id'                => $this->id,
             'p_name'            => $this->product_name,
@@ -25,12 +26,12 @@ class ProductResource extends JsonResource
             'p_description'     => strip_tags($this->description),
             'p_raw_description' => $this->description,
             'p_sku'             => $this->sku,
-            'feature_image'     => $this->product_image,
-            'p_image_one'       => "https://res.cloudinary.com/diyc1dizi/image/upload/".$this->image_one,
-            'p_image_two'       => "https://res.cloudinary.com/diyc1dizi/image/upload/".$this->image_two,
-            'p_image_three'     => "https://res.cloudinary.com/diyc1dizi/image/upload/".$this->image_three,
-            'p_image_four'      => "https://res.cloudinary.com/diyc1dizi/image/upload/".$this->image_four,
-            'p_image_five'      => "https://res.cloudinary.com/diyc1dizi/image/upload/".$this->image_five,
+            'feature_image'     => $this->product_image != null ? $imgpath.$this->product_image : '',
+            'p_image_one'       => $this->image_one != null ? $imgpath.$this->image_one : '',
+            'p_image_two'       => $this->image_two != null ? $imgpath.$this->image_two : '',
+            'p_image_three'     => $this->image_three != null ? $imgpath.$this->image_three : '',
+            'p_image_four'      => $this->image_four != null ? $imgpath.$this->image_four : '',
+            'p_image_five'      => $this->image_five != null ? $imgpath.$this->image_five : '',
             'p_cost_price'      => $this->cost,
             'p_sale_price'      => $this->mrp_price,
             'p_dimension'       => $this->dimension,

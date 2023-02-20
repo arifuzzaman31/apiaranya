@@ -6,6 +6,9 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\PageController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\FrontController;
+use App\Http\Controllers\Api\OrderController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,10 +26,14 @@ Route::middleware('auth:sanctum')->group(function(){
     });
     
     Route::post('logout', [AuthController::class, 'logout']);
+    
+    //user order
+    Route::post('order', [OrderController::class, 'order']);
 });
 
 Route::post('auth/register', [AuthController::class, 'createUser']);
 Route::post('auth/login', [AuthController::class, 'loginUser']);
+
 Route::get('product', [ProductController::class, 'index']);
 
 Route::get('product/{category}/{sub_cate?}', [ProductController::class, 'getProductByCat']);
@@ -38,3 +45,8 @@ Route::get('home-pagedata',[PageController::class,'homeImageData']);
 
 //Category data
 Route::get('category/{id}',[CategoryController::class,'categoryData']);
+
+// get Campain data
+Route::get('all-campaign',[FrontController::class,'getCampaing']);
+
+

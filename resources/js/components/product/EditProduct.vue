@@ -1,67 +1,90 @@
 <script>
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
+import axios from 'axios';
 import Multiselect from '@vueform/multiselect'
-import Mixin from '../../mixer';
+import Mixin from '../../mixer'
 
 export default {
-    mixins: [Mixin],
+    name:'EditProduct',
     props:['pr_product'],
+    mixins:[Mixin],
     components: {
         QuillEditor,
         Multiselect
     },
+
     data(){
         return {
-            product: [],
-            form : {
-                product_name : '',
-                sku : '',
-                category : null,
-                sub_category : null,
+            form: {
+                id:'',
+                product_name: '',
+                sku: '',
+                category: null,
+                sub_category: null,
+                vandor : '',
+                brand : '',
+                designer : '',
+                embellishment : '',
+                making : '',
+                selectIngredient : null,
+                lead_time : '',
+                season : '',
+                variety : '',
+                fit : '',
+                artist_name : '',
+                consignment : '',
+                ingredients : '',
                 product_image_one : '',
                 product_image_two : '',
                 product_image_three : '',
                 product_image_four : '',
-                product_image_five : '',
-                design_code : '',
-                stock : 0,
-                cost : 0,
-                price : 0,
-                dimention : '',
-                weight : '',
-                care : '',
-                is_fabric : true,
+                design_code: '',
+                stock: 1,
+                cost: 0,
+                price: 0,
+                dimention: '',
+                weight: '',
+                care: '',
+                is_fabric: true,
                 selectfabrics : null,
-                is_color : true,
+                is_color: true,
+                color_size: true,
                 selectcolours : null,
-                is_size : true,
+                is_size: true,
                 selectsize : null,
-                discount_amount : '',
-                discount_type : 1,
-                max_amount : 0,
-                description : ''
+                discount_amount: '',
+                discount_type: 1,
+                max_amount: 0,
+                discount_type: 1,
+                description: '',
+                attrqty: [{colour_id:'',size_id:'',qty:''}]
             },
+
             allcategories: [],
             allsubcategories: [],
             allfiltersubcategories: [],
             allcolours: [],
             allsizes: [],
-            formData: new FormData(),
             allfabrics: [],
             validation_error: {}
         }
     },
-
     methods: {
-        getCategory() {
-            axios.get(baseUrl+'get-category').then(response => {
-                const cat = response.data.data
-                let res = cat.filter(data => data.parent_cat == 0)
-                let subcat = cat.filter(data => data.parent_cat !== 0)
-                this.allcategories.push(...res)
-                // console.log(subcat)
-                this.allfiltersubcategories.push(...subcat)
+        updateForm () {
+             axios.put(baseUrl+'product/'+this.form.id,this.form).then(response => {
+                console.log(response)
+                if(response.data.status == 'success'){
+                    this.clearForm()
+                    this.successMessage(response.data)
+                    window.location.href = baseUrl+"product"
+                }
+            }).catch(e => {
+                console.log(e)
+                if(e.response.status == 422){
+                    this.validation_error = e.response.data.errors;
+                    this.validationError()
+                }
             })
         },
 
@@ -108,10 +131,10 @@ export default {
                 (error, result) => {
                 if (!error && result && result.event === "success") {
                     console.log('Done uploading..: ', result.info);
-                    this.setImage(numb,result.info.secure_url)
-                    this.updateImage(numb,result.info.path)
+                    this.setImage(numb,result.info.path)
                 }
-            });
+                this.validationError({'status':'error','message':error.error.message})
+                });
                 widget.open();
         },
 
@@ -138,17 +161,26 @@ export default {
                 default:
                     break;
             }
+            return true;
         },
 
-        updateImage(numb,uri){
-            console.log(numb)
-            console.log(uri)
-            // axios.post(baseUrl+'update-product-image',{'img_name':numb,'uri_link':uri}).then(response => {
-            //     if(response.data.status == 'success'){
-            //     }
-            // })
+        addMore(){
+            this.form.attrqty.push({colour_id:'',size_id:'',qty:''})
         },
-
+        removeCatChild(index) {
+            this.form.attrqty.splice(index, 1);
+        },
+       
+        getCategory() {
+             axios.get(baseUrl+'get-category').then(response => {
+                const cat = response.data.data
+                let res = cat.filter(data => data.parent_cat == 0)
+                let subcat = cat.filter(data => data.parent_cat !== 0)
+                this.allcategories.push(...res)
+                // console.log(subcat)
+                this.allfiltersubcategories.push(...subcat)
+            })
+        },
         getColour() {
             try{
                  axios.get(baseUrl+'colour/create?no_paginate=yes').then(response => {
@@ -197,7 +229,6 @@ export default {
             }
         },
         getSubCategories(){
-            this.form.sub_category = ''
             const filterData = (this.allfiltersubcategories).filter((data) => data.parent_cat == this.form.category)
             this.allsubcategories = filterData
         },
@@ -207,8 +238,22 @@ export default {
                 sku : '',
                 category : null,
                 sub_category : null,
+                vandor : 'Aranya',
+                brand : 'Aranya',
+                designer : '',
+                embellishment : '',
+                making : '',
+                lead_time : '',
+                season : '',
+                variety : '',
+                fit : '',
+                artist_name : '',
+                ingredients : '',
+                consignment : '',
                 product_image_one : '',
                 product_image_two : '',
+                product_image_three : '',
+                product_image_four : '',
                 design_code : '',
                 stock : 0,
                 cost : 0,
@@ -227,45 +272,66 @@ export default {
                 max_amount : 0,
                 description : ''
             },
+            this.allsubcategories= [],
             this.validation_error = {}
         }
     },
 
     mounted(){
+        this.form.attrqty = []
+        const datam = this.pr_product.inventory.map(data => JSON.parse({'colour_id':data.colour_id,'size_id':data.size_id,'qty':data.stock}))
+        this.form.attrqty.push(...datam)
         this.getCategory()
         this.getColour()
         this.getSize()
         this.getFabric()
-
-        // const subc = this.allfiltersubcategories.filter(data => data.parent_cat == this.pr_product.sub_category_id)
-        // this.allsubcategories.push(...subc)
-        // // console.log(subc)
+        
+        this.form.id = this.pr_product.id
         this.form.product_name = this.pr_product.product_name
         this.form.sku = this.pr_product.sku
         this.form.category = this.pr_product.category_id
         this.form.sub_category = this.pr_product.sub_category_id
-        this.form.stock = this.pr_product.inventory.stock
+        this.form.vandor = this.pr_product.vandor
+        this.form.brand = this.pr_product.brand
+        this.form.designer  = this.pr_product.designer
+        this.form.embellishment  = this.pr_product.embellishment
+        this.form.making  = this.pr_product.making
+        this.form.lead_time  = this.pr_product.lead_time
+        this.form.season  = this.pr_product.season
+        this.form.variety  = this.pr_product.variety
+        this.form.fit  = this.pr_product.fit
+        this.form.artist_name  = this.pr_product.artist_name
+        this.form.consignment  = this.pr_product.consignment
+        this.form.ingredients  = this.pr_product.ingredients
+        this.form.product_image_one  = this.pr_product.product_image
+        this.form.product_image_two  = this.pr_product.image_two
+        this.form.product_image_three  = this.pr_product.image_three
+        this.form.product_image_four  = this.pr_product.image_four
         this.form.design_code = this.pr_product.design_code
+        // this.form.stock = this.pr_product.
         this.form.cost = this.pr_product.cost
         this.form.price = this.pr_product.mrp_price
-        this.form.dimension = this.pr_product.dimension
+        this.form.dimention = this.pr_product.dimension
         this.form.weight = this.pr_product.weight
         this.form.care = this.pr_product.care
-        this.form.selectcolours = this.pr_product.product_colour.map(color => color.id)
-        this.form.selectsize = this.pr_product.product_size.map(size => size.id)
-        this.form.selectfabrics = this.pr_product.product_fabric.map(fab => fab.id)
+        this.form.selectfabrics  = this.pr_product.product_fabric[0].id
+        this.form.discount_amount = this.pr_product.discount_amount
+        this.form.max_amount = this.pr_product.
+        this.form.discount_type = this.pr_product.discount_type
         this.form.description = this.pr_product.description
+        
     }
 }
 </script>
 <template>
-    <form class="needs-validation" method="post" @submit.prevent="updateForm()" id="add-product-form">
+    <form class="needs-validation" method="post" @submit.prevent="updateForm" id="add-product-form">
         <div class="row">
             <div id="tooltips" class="col-lg-12 layout-spacing col-md-12">
                 <div class="statbox widget box ">
                     <div class="widget-content ">
                         <div class="form-row">
-                            <div class="col-md-4 mb-3">
+                            {{ form }}
+                            <div class="col-md-4">
                                 <label for="product-name">Product name</label>
                                 <input type="text" class="form-control" :class="validation_error.hasOwnProperty('product_name') ? 'is-invalid' : ''" id="product-name" placeholder="Product name" v-model="form.product_name" >
                                     <div
@@ -275,7 +341,7 @@ export default {
                                         {{ validation_error.product_name[0] }}
                                     </div>
                             </div>
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-4">
                                 <label for="product-sku">Product SKU</label>
                                 <input type="text" class="form-control" :class="validation_error.hasOwnProperty('sku') ? 'is-invalid' : ''" id="product-sku" placeholder="SKU" v-model="form.sku" >
                                 <div
@@ -285,20 +351,10 @@ export default {
                                         {{ validation_error.sku[0] }}
                                     </div>
                             </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="product-stock">Stock Qty</label>
-                                <input type="number" class="form-control" :class="validation_error.hasOwnProperty('stock') ? 'is-invalid' : ''" id="product-stock" placeholder="Qty" v-model="form.stock" >
-                                <div
-                                        v-if="validation_error.hasOwnProperty('stock')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.stock[0] }}
-                                    </div>
-                            </div>
-                            <div class="form-group col-md-4 mb-3">
+                            <div class="form-group col-md-4">
                                 <label for="product-category">Category </label>
                                 <select id="product-category" class="form-control" @change="getSubCategories()" v-model="form.category">
-                                    <option selected="">Choose...</option>
+                                    <option value="">Choose...</option>
                                     <option v-for="(value,index) in allcategories" :value="value.id" :key="index">{{ value.cat_name }}</option>
                                 </select>
                                 <div
@@ -308,10 +364,10 @@ export default {
                                         {{ validation_error.category[0] }}
                                     </div>
                             </div>
-                            <div class="form-group col-md-4 mb-3">
+                            <div class="form-group col-md-4 mt-1">
                                 <label for="product-category">Sub Category</label>
                                 <select id="product-category" class="form-control" v-model="form.sub_category">
-                                    <option selected="">Choose...</option>
+                                    <option value="">Choose...</option>
                                     <option v-for="(value,index) in allsubcategories" :value="value.id" :key="index">{{ value.cat_name }}</option>
                                 </select>
                                 <div
@@ -321,18 +377,171 @@ export default {
                                     {{ validation_error.sub_category[0] }}
                                 </div>
                             </div>
-    
-                            <div class="col-md-4 mb-3">
-                                <label for="product-image1">Product Image (1:1)</label>
-                                <button type="button" class="btn btn-sm btn-info" @click="openUploadModal()">Upload files</button>
+                            <div class="form-group col-md-4 mt-1">
+                                <label for="product-Vandor">Vandor</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('vandor') ? 'is-invalid' : ''" id="product-name" placeholder="Vandor Name" v-model="form.vandor" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('vandor')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.vandor[0] }}
+                                    </div>
+                            </div>
+
+                            <div class="form-group col-md-4 mt-1">
+                                <label for="product-Brand">Brand</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('brand') ? 'is-invalid' : ''" id="product-name" placeholder="Brand Name" v-model="form.brand" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('brand')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.brand[0] }}
+                                    </div>
+                            </div>
+
+                            <div class="form-group col-md-4 mt-1">
+                                <label for="product-Brand">Designer</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('designer') ? 'is-invalid' : ''" id="Designer-name" placeholder="Designer Name" v-model="form.designer" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('designer')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.designer[0] }}
+                                    </div>
+                            </div>
+
+                            <div class="form-group col-md-4 mt-1">
+                                <label for="product-Brand">Embellishment</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('embellishment') ? 'is-invalid' : ''" id="Embellishment-name" placeholder="Embellishment" v-model="form.embellishment" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('embellishment')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.embellishment[0] }}
+                                    </div>
                             </div>
                             
+                            <div class="form-group col-md-4 mt-1">
+                                <label for="product-Making">Making</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('making') ? 'is-invalid' : ''" id="Making-name" placeholder="Making" v-model="form.making" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('making')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.making[0] }}
+                                    </div>
+                            </div>
+                            <div class="form-group col-md-4 mt-1">
+                                <label for="product-LeadTime">Lead Time</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('lead_time') ? 'is-invalid' : ''" id="LeadTime-name" placeholder="Lead Time" v-model="form.lead_time" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('lead_time')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.lead_time[0] }}
+                                    </div>
+                            </div>
+                            <div class="form-group col-md-4 mt-1">
+                                <label for="product-Season">Season</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('season') ? 'is-invalid' : ''" id="Season-name" placeholder="Season" v-model="form.season" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('season')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.season[0] }}
+                                    </div>
+                            </div>
+                            <div class="form-group col-md-4 mt-1">
+                                <label for="product-Variety">Variety</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('variety') ? 'is-invalid' : ''" id="Variety-name" placeholder="Variety" v-model="form.variety" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('variety')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.variety[0] }}
+                                    </div>
+                            </div>
+
+                            <div class="form-group col-md-4 mt-1">
+                                <label for="product-Fit">Fit</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('fit') ? 'is-invalid' : ''" id="Fit-name" placeholder="Fit" v-model="form.fit" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('fit')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.fit[0] }}
+                                    </div>
+                            </div>
+
+                            <div class="form-group col-md-4 mt-1">
+                                <label for="product-ArtistName">Artist Name</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('artist_name') ? 'is-invalid' : ''" id="Fit-name" placeholder="Artist Name" v-model="form.artist_name" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('artist_name')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.artist_name[0] }}
+                                    </div>
+                            </div>
+
+                            <div class="form-group col-md-4 mt-1">
+                                <label for="product-Consignment">Consignment</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('consignment') ? 'is-invalid' : ''" id="Fit-name" placeholder="Consignment" v-model="form.consignment" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('consignment')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.consignment[0] }}
+                                    </div>
+                            </div>
+                            <div class="form-group col-md-4 mt-1">
+                                <label for="product-ingredients">Ingredients</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('ingredients') ? 'is-invalid' : ''" id="ingredients-name" placeholder="Ingredients" v-model="form.ingredients" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('ingredients')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.ingredients[0] }}
+                                    </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     
+        <div id="tooltips" class="mb-2">
+            <div class="statbox widget box ">
+                <div class="widget-content ">
+                        <div class="row">
+                        <div class="col-md-3 col-12 mt-4">
+                                <label for="product-image1">Image (1:1)</label>
+                                <!-- <input type="file" class="form-control" id="product-image"> -->
+                                <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('one')">Upload files</button>
+                                <p class="mt-1 text-info" v-if="form.product_image_one != ''">{{  form.product_image_one }}</p>
+                            </div>
+                            <div class="col-md-3 col-12 mt-4">
+                                <label for="product-image1">Image (1:1)</label>
+                                <!-- <input type="file" class="form-control" id="product-image"> -->
+                                <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('two')">Upload files</button>
+                                <p class="mt-1 text-info" v-if="form.product_image_two != ''">{{  form.product_image_two }}</p>
+                            </div>
+                            <div class="col-md-3 col-12 mt-4">
+                                <label for="product-image1">Image (1:1)</label>
+                                <!-- <input type="file" class="form-control" id="product-image"> -->
+                                <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('three')">Upload files</button>
+                                <p class="mt-1 text-info" v-if="form.product_image_tree != ''">{{  form.product_image_tree }}</p>
+                            </div>
+                            <div class="col-md-3 col-12 mt-4">
+                                <label for="product-image1">Image (1:1)</label>
+                                <!-- <input type="file" class="form-control" id="product-image"> -->
+                                <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('four')">Upload files</button>
+                                <p class="mt-1 text-info" v-if="form.product_image_four != ''">{{  form.product_image_four }}</p>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div id="tooltips" class="col-lg-12 layout-spacing col-md-12">
                 <div class="statbox widget box ">
@@ -349,7 +558,7 @@ export default {
                                     </div>
                             </div>
                             <div class="col-md-4 mb-3">
-                                <label for="product-cost">Cost</label>
+                                <label for="product-cost">Unit Cost</label>
                                 <input type="number" class="form-control" id="product-cost" placeholder="Product Cost" v-model="form.cost" >
                             </div>
                             <div class="col-md-4 mb-3">
@@ -393,62 +602,95 @@ export default {
                         <h5>Attribute</h5>
                     </div>                 
                     
-                </div>                 
-                    <div class="d-flex justify-content-around">
+                </div>               
+                    <div class="d-flex mt-3">
                         <div class="billing-cycle-radios">
                             <div class="radio billed-yearly-radio">
                                 <div class="d-flex justify-content-center">
-                                    <span class="txt-monthly mr-2">Colours</span>
+                                    <span class="txt-monthly mr-2">Colour Size</span>
                                     <label class="switch s-icons s-outline  s-outline-primary">
-                                        <input v-model="form.is_color" :checked="form.is_color"  type="checkbox" id="colour">
+                                        <input v-model="form.color_size" :checked="form.color_size"  type="checkbox" id="colour">
                                         <span class="slider round"></span>
                                     </label>
                                 </div>
                             </div>
                         </div>
-                        <div class="billing-cycle-radios">
-                            <div class="radio billed-yearly-radio">
-                                <div class="d-flex justify-content-center">
-                                    <span class="txt-monthly mr-2">Size</span>
-                                    <label class="switch s-icons s-outline  s-outline-primary">
-                                        <input v-model="form.is_size" :checked="form.is_size" type="checkbox" id="size">
-                                        <span class="slider round"></span>
-                                    </label>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                        <div class="billing-cycle-radios">
-                            <div class="radio billed-yearly-radio">
-                                <div class="d-flex justify-content-center">
-                                    <span class="txt-monthly mr-2">Fabric</span>
-                                    <label class="switch s-icons s-outline  s-outline-primary">
-                                        <input v-model="form.is_fabric" :checked="form.is_fabric" type="checkbox" id="fabric">
-                                        <span class="slider round"></span>
-                                    </label>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                        <div class="radio billed-yearly-radio">
-                            <div class="d-flex justify-content-center">
-                                <span class="txt-monthly mr-2">Discount</span>
-                                <label class="switch s-icons s-outline  s-outline-primary">
-                                    <input type="checkbox" v-model="form.is_discount" :checked="form.is_discount" id="discount6">
-                                    <span class="slider round"></span>
-                                </label>
-                                
-                            </div>
-                        </div>
+                       
                     </div>
                 </div>
             </div>
-     
-    
+            
+            <div class="statbox widget box box-shadow" v-if="form.color_size">
+                <div class="widget-content ">
+                    <div class="row text-center">
+                        <div class="col-4  text-success">
+                            <b>Coluor</b>
+                        </div>
+                        <div class="col-4  text-success">
+                           <b>Size</b> 
+                        </div>
+                        <div class="col-2  text-success">
+                            <b>Qty</b>
+                        </div>
+                        <div class="col-2  text-danger">
+                            <b>Remove</b>
+                        </div>
+                    </div>
+                    <div class="row" v-for="(qt,index) in form.attrqty" :key="index">
+                        <div class="form-group col-md-4">
+                            <select id="product-category" class="form-control" v-model="qt.colour_id">
+                                <option value="">Choose...</option>
+                                <option v-for="(value,index) in allcolours" :selected="value.value == qt.colour_id" :value="value.value" :key="index">{{ value.name }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <select id="product-category" class="form-control" v-model="qt.size_id">
+                                <option value="">Choose...</option>
+                                <option v-for="(value,index) in allsizes" :selected="value.value == qt.size_id" :value="value.value" :key="index">{{ value.name }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <input type="number"  class="form-control" id="qty" v-model="qt.qty" placeholder="qty" >
+                        </div>
+                        <div class="form-group col-md-2 text-center" v-if="index != 0">
+                            <a
+                              href="javascript:void(0)"
+                              @click.prevent="removeCatChild(index)"
+                              class="mt-5"
+                              ><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-danger"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a
+                            >
+                        </div>
+                    </div>
+                </div>
+                <a
+                        href="javascript:void(0)"
+                        @click.prevent="addMore()"
+                        class="btn btn-warning"
+                    >Add More
+                    </a>
+            </div>
+
+            <div class="statbox widget box box-shadow" v-else>
+                <div class="widget-content ">
+                    <div class="row">
+                        <div class="form-group col-md-3 mt-1">
+                                <label for="product-ingredients">Stock</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('stock') ? 'is-invalid' : ''" id="stock-name" placeholder="stock" v-model="form.stock" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('stock')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.stock[0] }}
+                                    </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            
             <div class="statbox widget box box-shadow">
                 <div class="widget-content ">
                     <div class="form-row">
-                        <div class="col-md-12 mb-3" v-if="form.is_color">
+                        <!-- <div class="col-md-12 mb-3" v-if="form.is_color">
                             <label for="product-category">Colour</label>
                              <Multiselect
                                 v-model="form.selectcolours"
@@ -512,10 +754,10 @@ export default {
                                 </div>
                                 </template>
                             </Multiselect>
-                        </div>
+                        </div> -->
 
                         <div class="col-md-12 mb-3" v-if="form.is_fabric">
-                            <label for="product-category">Fabric</label>
+                            <label for="product-category">Composition</label>
                             <Multiselect
                                 v-model="form.selectfabrics"
                                 placeholder="Select Fabric"
@@ -547,7 +789,7 @@ export default {
                         </div>
                     </div>
                     
-                    <div class="form-row" v-if="form.is_discount">
+                    <!-- <div class="form-row" v-if="form.is_discount">
                         <div class="col-md-4 mb-3">
                             <label for="discount_amount">Discount Amount</label>
                             <input type="number" v-model="form.discount_amount" class="form-control" id="discount_amount" placeholder="Discount Amount" >
@@ -563,7 +805,7 @@ export default {
                             <label for="max_amount">Maximum</label>
                             <input type="number" class="form-control" :disabled="form.discount_type == 'flat' ? true : false" id="max_amount" placeholder="Maximum amount" v-model="form.max_amount" >
                         </div>
-                    </div>
+                    </div> -->
             </div>
         </div>
     
@@ -582,7 +824,7 @@ export default {
     </form>
 </template>
 <style src="@vueform/multiselect/themes/default.css"></style>
-<style>
+<style scoped>
   .multiselect-tag.is-user {
     padding: 5px 8px;
     border-radius: 22px;

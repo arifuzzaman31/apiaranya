@@ -24,6 +24,7 @@ class CreateCampaignsTable extends Migration
             $table->date('campaign_start_date');
             $table->date('campaign_expire_date');
             $table->tinyInteger('status')->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

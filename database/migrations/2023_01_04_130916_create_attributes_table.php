@@ -22,6 +22,7 @@ class CreateAttributesTable extends Migration
             $table->string('type')->nullable();
             $table->string('country_of_origin')->nullable();
             $table->tinyInteger('status')->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

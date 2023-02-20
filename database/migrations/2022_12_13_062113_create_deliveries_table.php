@@ -20,6 +20,7 @@ class CreateDeliveriesTable extends Migration
             $table->date('shipping_date');
             $table->string('delivered_by')->nullable();
             $table->tinyInteger('position_status')->default(0)->comment = "0=pending 1=process 2=OnProcess 3=Delivered";
+            $table->softDeletes();
             $table->timestamps();
         });
     }

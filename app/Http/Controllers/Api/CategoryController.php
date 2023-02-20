@@ -12,11 +12,12 @@ class CategoryController extends Controller
     public function categoryData($id)
     {
         try {
-            //code...
             $category = Category::find($id);
             return new CategoryResource($category);
         } catch (\Throwable $th) {
+            // return $th;
             return $this->errorMessage();
+            // return \DB::table('categories')->select(['id','category_name','parent_category','slug'])->get();
         }
     }
 }

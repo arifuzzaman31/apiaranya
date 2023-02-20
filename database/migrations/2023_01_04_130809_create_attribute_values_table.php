@@ -17,6 +17,7 @@ class CreateAttributeValuesTable extends Migration
             $table->id();
             $table->foreignId('attribute_id');
             $table->string('content');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

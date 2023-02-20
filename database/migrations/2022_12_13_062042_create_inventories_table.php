@@ -19,6 +19,7 @@ class CreateInventoriesTable extends Migration
             $table->integer('stock');
             $table->integer('warning_amount');
             $table->string('warehouse');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

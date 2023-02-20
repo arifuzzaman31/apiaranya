@@ -24,6 +24,7 @@ class CreatePagesTable extends Migration
             $table->string('image_five')->nullable();
             $table->string('image_six')->nullable();
             $table->tinyInteger('status')->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
