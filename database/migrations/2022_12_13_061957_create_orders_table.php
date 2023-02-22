@@ -25,6 +25,7 @@ class CreateOrdersTable extends Migration
             $table->integer('total_item')->default(0);
             $table->string('shipping_method')->nullable();
             $table->string('payment_method')->nullable()->comment = "0 for COD/1 for MPAY/ 2 for POS/ 3 for CCRD/4 for BOD if not set default COD";
+            $table->string('payment_method_name')->nullable()->comment = "ssl,amex,stripe";
             $table->string('transaction_id')->nullable();
             $table->double('discount')->default(0);
             $table->double('coupon_discount')->default(0);
@@ -38,8 +39,8 @@ class CreateOrdersTable extends Migration
             $table->tinyInteger('status')->default(1);
             $table->tinyInteger('is_same_address')->default(0);
             $table->tinyInteger('order_position')->default(0)->comment = "0=pending 1=process 2=OnProcess 3=Delivered";
-            $table->enum('delivery_type',['home','pickup point'])->default('home')->comment = "0 for home, 1 for pickup point";
-            $table->enum('percel_type',['Box','DOC'])->default('Box')->comment = "0 for Box, 1 for DOC";
+            $table->tinyInteger('delivery_type')->default('home')->comment = "0 for home, 1 for pickup point";
+            $table->tinyInteger('percel_type')->default('Box')->comment = "0 for Box, 1 for DOC";
             $table->integer('pickup_point_no')->nullable()->comment = "pickup point id";
             $table->softDeletes();
             $table->timestamps();

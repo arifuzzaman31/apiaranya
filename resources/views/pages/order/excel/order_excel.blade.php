@@ -7,13 +7,17 @@
 	    <th>Area </th>
 	    <th>District </th>
 	    <th>Thana</th>
+
+	    <th>Post Code</th>
 	    <th>Home Delivery</th>
 	    <th>Pickup Point</th>
 	    <th>Type</th>
+
 	    <th>Code</th>
 	    <th>Payment Method</th>
 	    <th>Price</th>
 	    <th>Product ID</th>
+
 	    <th>Delivery Date</th>
 	    <th>Comment</th>
 	    <th>Number of item</th>
@@ -30,14 +34,19 @@
 	    <td>{{ $value->user_billing_info->country }}</td>
 	    <td>{{ $value->user_billing_info->city }}</td>
 	    <td>Not Found</td>
+
+	    <td>{{ $value->user_billing_info->post_code }}</td>
 	    <td>{{ $value->delivery_type }}</td>
 	    <td>{{ $value->pickup_point_no }}</td>
-	    <td>N/A</td>
-	    <td> {{ $value->percel_type }}</td>
+	    <td>{{ $value->percel_type }}</td>
+
+	    <td> #</td>
 	    <td>{{ $value->payment_method }}</td>
-	    <td>{{ $value->requested_delivery_date }}</td>
 	    <td>{{ $value->total_price + $value->shipping_amount + $value->vat_amount }}</td>
-	    <td>N/A</td>
+	    <td> N/A</td>
+	
+	    <td>{{ $value->requested_delivery_date }}</td>
+	    <td>No Comment</td>
 	    <td>{{ $value->total_item }}</td>
 	    <td>{{ $value->total_price }}</td>
 	  </tr>

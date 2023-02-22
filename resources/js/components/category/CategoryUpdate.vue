@@ -7,8 +7,11 @@ export default {
         return {
             form: {
                 image_one: '',
+                v_image_one: '',
                 image_two: '',
-                image_three: ''
+                v_image_two: '',
+                image_three: '',
+                v_image_three: ''
             },
             
         }
@@ -70,12 +73,15 @@ export default {
             switch (numb) {
                 case 'one':
                     this.form.image_one = uri
+                    this.form.v_image_one = uri
                     break;
                 case 'two':
                     this.form.image_two = uri
+                    this.form.v_image_two = uri
                     break;
                 case 'three':
                     this.form.image_three = uri
+                    this.form.v_image_three = uri
                     break;
             
                 default:
@@ -97,8 +103,11 @@ export default {
         getCatData(){
             axios.get(baseUrl+'category/'+this.categorydata.id).then(response => {
                 this.form.image_one = response.data.category_image_one
+                this.form.v_image_one = response.data.category_image_one
                 this.form.image_two = response.data.category_image_two
+                this.form.v_image_two = response.data.category_image_two
                 this.form.image_three = response.data.category_image_three
+                this.form.v_image_three = response.data.category_image_three
             })
         }
 
@@ -106,8 +115,11 @@ export default {
     },
 
     mounted(){
+        this.form.v_image_one = this.categorydata.category_image_one
         this.form.image_one = this.categorydata.category_image_one
+        this.form.v_image_two = this.categorydata.category_image_two
         this.form.image_two = this.categorydata.category_image_two
+        this.form.v_image_three = this.categorydata.category_image_three
         this.form.image_three = this.categorydata.category_image_three
     }
 }
@@ -122,7 +134,7 @@ export default {
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Image Should be (1440 x 900) px, Ratio (16:9)</span>
                     </div>
                     <input type="submit" class="btn btn-info btn-block mb-4 mr-2" @click="openUploadModal('one')" value="File Upload" />
-                    <img class="mr-3" width="600" :src="form.image_one" alt="cat image one">
+                    <img class="mr-3" width="600" :src="'https://res.cloudinary.com/diyc1dizi/image/upload/'+form.v_image_one" alt="cat image one">
                 </div>
             </div>
         </div>
@@ -133,7 +145,7 @@ export default {
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Image Should be (720 x 828) px, Ratio (16:24)</span>
                         </div>
                         <input type="submit" class="btn btn-info btn-block mb-4 mr-2" @click="openUploadModal('two')" value="File Upload" />
-                        <img class="mr-3" width="600" :src="form.image_two" alt="cat image two">
+                        <img class="mr-3" width="600" :src="'https://res.cloudinary.com/diyc1dizi/image/upload/'+form.v_image_two" alt="cat image two">
                     </div>
                 </div>
             </div>
@@ -144,7 +156,7 @@ export default {
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Image Should be (720 x 828) px, Ratio (16:24)</span>
                     </div>
                     <input type="submit" class="btn btn-info btn-block mb-4 mr-2" @click="openUploadModal('three')" value="File Upload" />
-                    <img class="mr-3" width="600" :src="form.image_three" alt="cat image three">
+                    <img class="mr-3" width="600" :src="'https://res.cloudinary.com/diyc1dizi/image/upload/'+form.v_image_three" alt="cat image three">
                 </div> 
             </div>
         </div>

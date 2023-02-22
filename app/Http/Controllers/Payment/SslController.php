@@ -24,8 +24,8 @@ class SslController extends Controller
         $post_data['currency'] = "BDT";
         $post_data['tran_id'] = $order_id;
         $post_data['success_url'] = route('ssl.success');
-        $post_data['fail_url']     = config('app.front_url')."/dashboard/?success=failed";
-        $post_data['cancel_url']   = config('app.front_url')."/dashboard/?success=canceled";
+        $post_data['fail_url']     = config('app.front_url')."?success=failed";
+        $post_data['cancel_url']   = config('app.front_url')."?success=canceled";
     
         # CUSTOMER INFORMATION
         $post_data['cus_name'] = $order->user_billing_info->first_name;
@@ -117,7 +117,7 @@ class SslController extends Controller
         // var_dump($sslcz); exit;
     
         if (isset($sslcz['GatewayPageURL']) && $sslcz['GatewayPageURL'] != "") {
-            return redirect()->to($sslcz['GatewayPageURL']);
+            // return redirect()->to($sslcz['GatewayPageURL']);
             // this is important to show the popup, return or echo to sent json response back
             return json_encode(['status' => 'success', 'data' => $sslcz['GatewayPageURL'], 'logo' => $sslcz['storeLogo']]);
         } else {
@@ -129,6 +129,7 @@ class SslController extends Controller
 
     public function sslCommerzSuccess(Request $request)
     {
+        return $request->all();
                 $status   = '';
                 $message  = '';
 
@@ -137,9 +138,9 @@ class SslController extends Controller
             $order = Order::find($request->tran_id);
 
             $order->payment_status = AllStatic::$paid;
-            $order->payment_method = AllStatic::$ssl;
+            $order->payment_method_name = 'sslCommerz';
             $order->card_type = $request->card_type;
-            $order->validation_id = $request->val_id;
+            $order->validation_id = $request->bank_tran_id;
             $order->payment_date =  date('Y-m-d');
             $order->update();
 

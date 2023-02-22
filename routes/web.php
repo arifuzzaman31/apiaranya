@@ -101,7 +101,7 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     
 });
 
-Route::get('ssl-commerz/{order_id}',[SslController::class,'sslCommerz'])->name('payment.ssl');
-Route::post('ssl/success',[SslController::class,'sslCommerzSuccess'])->name('ssl.success');
-Route::post('ssl/failed',[SslController::class,'sslCommerzFailed'])->name('ssl.failed');
-Route::post('ssl/cancel',[SslController::class,'sslCommerzCancel'])->name('ssl.cancel');
+Route::get('ssl-commerz/{order_id}',[OrderController::class,'sslCommerz'])->name('payment.ssl');
+Route::post('ssl-success',[OrderController::class,'sslCommerzSuccess'])->name('ssl.success');
+Route::post('ssl-failed',[OrderController::class,'sslCommerzFailed'])->name('ssl.failed');
+Route::post('ssl-cancel',[OrderController::class,'sslCommerzCancel'])->name('ssl.cancel');

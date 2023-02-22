@@ -18,12 +18,12 @@ class AllStatic
     public static $delivered   = 3;
 
     // payment method  status
+    //0 for COD/1 for MPAY/ 2 for POS/ 3 for CCRD/4 for BOD if not set default COD
 
-    public static $cash        = 1;
-    public static $paypal      = 2;
-    public static $stripe      = 3;
-    public static $ssl         = 'sslCommerz';
-    public static $razor       = 5;
-    public static $flutterwave = 6;
+    public static $cod    = 0;
+    public static $mpay   = 1;
+    public static $pos    = 2;
+    public static $ccrd   = 3;
+    public static $bod    = 4;
 
 }

@@ -20,7 +20,7 @@ return [
 
     'driver' => env('SESSION_DRIVER', 'file'),
 
-    // 'same_site' => 'none',
+    'same_site' => 'lax',
 
     /*
     |--------------------------------------------------------------------------
