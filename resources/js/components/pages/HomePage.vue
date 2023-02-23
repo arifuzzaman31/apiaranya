@@ -244,6 +244,7 @@ export default {
                     </div>
                     
                     <div class="col-sm-3 col-12">
+                        <p class="text-success" style="font-size:17px">Create Image Back Link</p>
                         <div class="my-2">
                             <select id="product-category" class="form-control" @change="getSubCategories()" v-model="filterdata.category">
                                 <option selected="" value="">Choose Category</option>
