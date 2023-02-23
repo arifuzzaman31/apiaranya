@@ -8,7 +8,7 @@ use App\Models\Campaign;
 use App\Models\CampaignProduct;
 use App\Models\Discount;
 use App\Models\Product;
-use DB;
+use DB,Str;
 
 class CampaignController extends Controller
 {
@@ -22,6 +22,30 @@ class CampaignController extends Controller
     public function create()
     {
         return view('pages.campaign.create_campaign');
+    }
+
+    public function update(Request $request,$id)
+    {
+        $request->validate([
+            'campaign_name' => 'required',
+            'start_at' => 'required',
+            'expire_at' => 'required|date|after:start_at'
+        ]);
+        try{
+            $camp = Campaign::find($id);
+            $camp->campaign_name = $request->campaign_name;
+            $camp->slug = Str::slug($request->campaign_name);
+            $camp->campaign_banner_default = $request->campaign_banner;
+            $camp->campaign_meta_image = $request->campaign_meta_image;
+            $camp->campaign_start_date = $request->start_at;
+            $camp->campaign_expire_date = $request->expire_at;
+            $camp->status = $request->status == 1 ? 1 : 0;
+            $camp->save();
+         return response()->json(['status' => 'success', 'message' => $this->fieldname.' Updated Successfully!']);
+    }catch (\Throwable $th) {
+        return response()->json(['status' => 'error', 'message' => $th]);
+    }
+
     }
 
     public function getCampProduct($id)
@@ -52,13 +76,13 @@ class CampaignController extends Controller
         $request->validate([
             'campaign_name' => 'required',
             'start_at' => 'required',
-            'expire_at' => 'required|date|after:start_at',
-            'campaign_banner' => 'required',
+            'expire_at' => 'required|date|after:start_at'
         ]);
 
         try{
             $camp = new Campaign();
             $camp->campaign_name = $request->campaign_name;
+            $camp->slug = Str::slug($request->campaign_name);
             $camp->campaign_banner_default = $request->campaign_banner;
             $camp->campaign_meta_image = $request->campaign_meta_image;
             $camp->campaign_start_date = $request->start_at;
@@ -106,6 +130,7 @@ class CampaignController extends Controller
             return response()->json(['status' => 'success', 'message' => 'Product Has Added to Campaign!']);
         }catch (\Throwable $th) {
             DB::rollback();
+            return $this->errorMessage();
             return response()->json(['status' => 'error', 'message' => $th]);
         }
     }
@@ -113,6 +138,7 @@ class CampaignController extends Controller
     public function removeCampProduct(Request $request)
     {
         try {
+            // return $request->all();
             //code...
             $camp = Campaign::find($request->camp_id);
             $camp->product()->detach($request->product);
@@ -120,6 +146,22 @@ class CampaignController extends Controller
         } catch (\Throwable $th) {
             //throw $th;
             return $this->errorMessage();
+        }
+    }
+
+    public function destroy(Campaign $campaign)
+    {
+        try {
+            DB::beginTransaction();
+            $campaign->product()->detach();
+            $campaign->delete();
+            //code...
+            DB::commit();
+            return $this->successMessage("Campaign removed with Prodcut!");
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return $this->errorMessage();
+            //throw $th;
         }
     }
 }

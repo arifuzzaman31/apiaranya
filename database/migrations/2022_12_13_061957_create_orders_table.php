@@ -31,11 +31,13 @@ class CreateOrdersTable extends Migration
             $table->double('coupon_discount')->default(0);
             $table->tinyInteger('payment_status')->default(0)->comment = "0 not paid 1 = paid";
             $table->string('validation_id')->nullable();
+            $table->string('card_type')->nullable();
             $table->date('order_date');
             $table->date('requested_delivery_date')->nullable();
             $table->date('payment_date')->nullable();
             $table->integer('shipping_amount')->default(0);
             $table->string('tracking_id')->nullable();
+            $table->longText('payment_info')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->tinyInteger('is_same_address')->default(0);
             $table->tinyInteger('order_position')->default(0)->comment = "0=pending 1=process 2=OnProcess 3=Delivered";

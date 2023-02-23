@@ -11,6 +11,7 @@ use App\Models\ProductFabric;
 use App\Models\ProductSize;
 use App\Models\Inventory;
 use App\Models\Discount;
+use App\Models\CategoryFabric;
 use Illuminate\Http\Request;
 use DB,Str;
 
@@ -159,7 +160,17 @@ class ProductController extends Controller
             if($request->is_fabric && $request->selectfabrics){
 
                     $product->product_fabric()->attach($request->selectfabrics);
-                
+
+                    $cid = $request->sub_category != '' ? $request->sub_category : $request->category;
+                    $chk = CategoryFabric::where(
+                        ['category_id' =>  $cid,'fabric_id' => $request->selectfabrics]
+                        )->first();
+                    if(empty($chk)){
+                        CategoryFabric::create([
+                            'category_id' => $cid,
+                            'fabric_id' => $request->selectfabrics
+                        ]);
+                    }
             }
             
             if($request->color_size && $request->attrqty && !empty($request->attrqty)){

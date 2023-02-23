@@ -9,6 +9,7 @@ use App\Http\Controllers\ColorController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\FabricController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Api\OrderController as OdController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\PagesController;
@@ -101,7 +102,7 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     
 });
 
-Route::get('ssl-commerz/{order_id}',[OrderController::class,'sslCommerz'])->name('payment.ssl');
-Route::post('ssl-success',[OrderController::class,'sslCommerzSuccess'])->name('ssl.success');
-Route::post('ssl-failed',[OrderController::class,'sslCommerzFailed'])->name('ssl.failed');
-Route::post('ssl-cancel',[OrderController::class,'sslCommerzCancel'])->name('ssl.cancel');
+Route::get('ssl-commerz/{order_id}',[OdController::class,'sslCommerz'])->name('payment.ssl');
+Route::post('ssl-success',[OdController::class,'sslCommerzSuccess'])->name('ssl.success');
+Route::post('ssl-failed',[OdController::class,'sslCommerzFailed'])->name('ssl.failed');
+Route::post('ssl-cancel',[OdController::class,'sslCommerzCancel'])->name('ssl.cancel');

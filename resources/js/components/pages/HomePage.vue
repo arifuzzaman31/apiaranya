@@ -1,38 +1,4 @@
 <script>
-
-// const myWidget = cloudinary.createUploadWidget(
-//   {
-//     cloudName: clName,
-//     uploadPreset: clPreset,
-    //cropping: true, //add a cropping step
-    // showAdvancedOptions: true,  //add advanced options (public_id and tag)
-    // sources: [
-    //     "local",
-    //     "camera",
-    //     "google_drive",
-    //     "facebook",
-    //     "dropbox",
-    //     "instagram",
-    //     "unsplash"
-    // ], // restrict the upload sources to URL and local files
-    // multiple: false,  //restrict upload to a single file
-    // folder: "user_images", //upload files to the specified folder
-    // tags: ["users", "profile"], //add the given tags to the uploaded files
-    // context: {alt: "user_uploaded"}, //add the given context data to the uploaded files
-    // clientAllowedFormats: ["images"], //restrict uploading to image files only
-    // maxImageFileSize: 2000000,  //restrict file size to less than 2MB
-    // maxImageWidth: 2000, //Scales the image down to a width of 2000 pixels before uploading
-    // theme: "purple", //change to a purple theme
-//   },
-//   (error, result) => {
-//     if (!error && result && result.event === "success") {
-//       console.log("Done! Here is the image info: ", result.info);
-//       document
-//         .getElementById("home_image_one")
-//         .setAttribute("src", result.info.secure_url);
-//     }
-//   }
-// );
 import Mixin from '../../mixer'
 export default {
     mixins: [Mixin],
@@ -40,11 +6,28 @@ export default {
         return {
             form: {
                 image_one: '',
+                back_url_one: '',
                 image_two: '',
+                back_url_two: '',
                 image_three: '',
+                back_url_three: '',
                 image_four: '',
+                back_url_four: '',
                 image_five: '',
+                back_url_five: ''
             },
+            filterdata: {
+                category: '',
+                categoryname: '',
+                subcategory: '',
+                imageuri: '',
+                imagenumb: '',
+                back_url: '',
+                state: 'home'
+            },
+            allcategories: [],
+            allsubcategories: [],
+            allfiltersubcategories: [],
             validation_error: {},
         }
     },
@@ -63,17 +46,8 @@ export default {
                         "instagram",
                         "unsplash"
                     ],
-                    // cropping: true, //add a cropping step
-                    // showAdvancedOptions: true,  //add advanced options (public_id and tag)
-                    // sources: [ "local", "url"], // restrict the upload sources to URL and local files
-                    // multiple: false,  //restrict upload to a single file
                     folder: "aranya", //upload files to the specified folder
-                    // tags: ["users", "profile"], //add the given tags to the uploaded files
-                    // context: {alt: "user_uploaded"}, //add the given context data to the uploaded files
-                    // clientAllowedFormats: ["images"], //restrict uploading to image files only
-                    // maxImageFileSize: 2000000,  //restrict file size to less than 2MB
-                    // maxImageWidth: 2000, //Scales the image down to a width of 2000 pixels before uploading
-                    // theme: "purple", //change to a purple theme
+                    
                     styles: {
                         palette: {
                             window: "#10173a",
@@ -101,9 +75,8 @@ export default {
                 },
                 (error, result) => {
                 if (!error && result && result.event === "success") {
-                    console.log('Done uploading..: ', result.info);
                     this.setImage(numb,result.info.secure_url)
-                    this.updateImage(numb,result.info.path)
+                    // this.updateImage(numb,result.info.path)
                 }
             });
                 widget.open();
@@ -113,20 +86,30 @@ export default {
                 switch (numb) {
                     case 'one':
                         this.form.image_one = uri
+                        this.filterdata.imageuri = uri
+                        this.filterdata.imagenumb = 'one'
                         break;
                     case 'two':
                         this.form.image_two = uri
+                        this.filterdata.imageuri = uri
+                        this.filterdata.imagenumb = 'two'
                         break;
                     case 'three':
                         this.form.image_three = uri
+                        this.filterdata.imageuri = uri
+                        this.filterdata.imagenumb = 'three'
                         break;
 
                     case 'four':
                         this.form.image_four = uri
+                        this.filterdata.imageuri = uri
+                        this.filterdata.imagenumb = 'four'
                         break;
 
                     case 'five':
                         this.form.image_five = uri
+                        this.filterdata.imageuri = uri
+                        this.filterdata.imagenumb = 'five'
                         break;
                 
                     default:
@@ -134,10 +117,10 @@ export default {
                 }
             },
 
-            updateImage(numb,uri){
-                axios.post(baseUrl+'update-home-image',{'img_name':numb,'uri_link':uri}).then(response => {
+            updateImage(){
+                axios.post(baseUrl+'update-home-image',this.filterdata).then(response => {
                     if(response.data.status == 'success'){
-                        this.getHomeData()
+                        // this.getHomeData()
                         this.successMessage(response.data)
                     }
                 })
@@ -150,12 +133,39 @@ export default {
                     this.form.image_three = response.data.image_three
                     this.form.image_four = response.data.image_four
                     this.form.image_five = response.data.image_five
+
+                    this.form.back_url_two = response.data.back_url_two
+                    this.form.back_url_three = response.data.back_url_three
+                    this.form.back_url_four = response.data.back_url_four
+                    this.form.back_url_five = response.data.back_url_five
+                    this.form.back_url_six = response.data.back_url_six
                 })
-            }
+            },
+
+            setImageState(name){
+                // alert(name)
+                this.filterdata.imagenumb = name
+            },
+
+            getCategory() {
+                axios.get(baseUrl+'get-category').then(response => {
+                        let res = response.data.data.filter(data => data.parent_cat == 0)
+                        let subcat = response.data.data.filter(data => data.parent_cat !== 0)
+                        this.allcategories = res
+                        this.allfiltersubcategories = subcat
+                    })
+            },
+            getSubCategories() {
+                this.filterdata.categoryname = this.filterdata.category.slug
+                const filterData = (this.allfiltersubcategories).filter((data) => data.parent_cat == this.filterdata.category.id)
+                this.allsubcategories = filterData
+                this.form.back_url = this.filterdata.category.slug+'/'+this.filterdata.subcategory
+            },
     },
     mounted(){
         this.getHomeData()
-    }
+        this.getCategory()
+    },
 }
 </script>
 
@@ -174,15 +184,15 @@ export default {
                 <div class="row mb-4 mt-3">
                     <div class="col-sm-3 col-12">
                         <div class="nav flex-column nav-pills mb-sm-0 mb-3 text-center mx-auto" id="v-border-pills-tab" role="tablist" aria-orientation="vertical">
-                            <a class="nav-link active" id="v-border-pills-home-tab" data-toggle="pill" href="#v-border-pills-home" role="tab" aria-controls="v-border-pills-home" aria-selected="false">Video</a>
-                            <a class="nav-link text-center" id="v-border-pills-profile-tab" data-toggle="pill" href="#v-border-pills-profile" role="tab" aria-controls="v-border-pills-profile" aria-selected="false">Image 1</a>
-                            <a class="nav-link text-center" id="v-border-pills-messages-tab" data-toggle="pill" href="#v-border-pills-messages" role="tab" aria-controls="v-border-pills-messages" aria-selected="false">Image 2</a>
-                            <a class="nav-link text-center" id="v-border-pills-settings-tab" data-toggle="pill" href="#v-border-pills-settings" role="tab" aria-controls="v-border-pills-settings" aria-selected="true">Image 3</a>
-                            <a class="nav-link text-center" id="v-border-pills-image5-tab" data-toggle="pill" href="#v-border-pills-image5" role="tab" aria-controls="v-border-pills-image5" aria-selected="true">Image 4</a>
+                            <a @click.prevent="setImageState('one')" class="nav-link active" id="v-border-pills-home-tab" data-toggle="pill" href="#v-border-pills-home" role="tab" aria-controls="v-border-pills-home" aria-selected="false">Video</a>
+                            <a @click="setImageState('two')" class="nav-link text-center" id="v-border-pills-profile-tab" data-toggle="pill" href="#v-border-pills-profile" role="tab" aria-controls="v-border-pills-profile" aria-selected="false">Image 1</a>
+                            <a @click="setImageState('three')" class="nav-link text-center" id="v-border-pills-messages-tab" data-toggle="pill" href="#v-border-pills-messages" role="tab" aria-controls="v-border-pills-messages" aria-selected="false">Image 2</a>
+                            <a @click="setImageState('four')" class="nav-link text-center" id="v-border-pills-settings-tab" data-toggle="pill" href="#v-border-pills-settings" role="tab" aria-controls="v-border-pills-settings" aria-selected="true">Image 3</a>
+                            <a @click="setImageState('five')" class="nav-link text-center" id="v-border-pills-image5-tab" data-toggle="pill" href="#v-border-pills-image5" role="tab" aria-controls="v-border-pills-image5" aria-selected="true">Image 4</a>
                         </div>
                     </div>
 
-                    <div class="col-sm-9 col-12">
+                    <div class="col-sm-6 col-12">
                         <div class="tab-content" id="v-border-pills-tabContent">
                             <div class="tab-pane fade active show" id="v-border-pills-home" role="tabpanel" aria-labelledby="v-border-pills-home-tab">
                                 <div class="icon-container mb-2">
@@ -190,7 +200,8 @@ export default {
                                 </div>
                                 <input type="submit" class="btn btn-info btn-block mb-4 mr-2" @click="openUploadModal('one')" value="File Upload" />
                                 <!-- <img class="mr-3" :src="form.image_one" alt="Home image one" />  -->
-                                <video :src="form.image_one" autoplay muted controls></video>                                       
+                                <video :src="form.image_one" autoplay muted controls></video>  
+                                                                 
                             </div>
 
                             <div class="tab-pane fade" id="v-border-pills-profile" role="tabpanel" aria-labelledby="v-border-pills-profile-tab">
@@ -199,6 +210,7 @@ export default {
                                 </div>
                                 <input type="submit" class="btn btn-info btn-block mb-4 mr-2" @click="openUploadModal('two')" value="File Upload" />
                                 <img class="mr-3" width="600" :src="form.image_two" alt="Home image two">
+                                <p>Back Url: domain/{{ form.back_url_two }}</p>   
                             </div>
 
                             <div class="tab-pane fade" id="v-border-pills-messages" role="tabpanel" aria-labelledby="v-border-pills-messages-tab">
@@ -207,6 +219,7 @@ export default {
                                 </div>
                                 <input type="submit" class="btn btn-info btn-block mb-4 mr-2"  @click="openUploadModal('three')" value="File Upload" />
                                 <img class="mr-3" width="600" :src="form.image_three" alt="Home image three">
+                                <p>Back Url: domain/{{ form.back_url_three }}</p>
                             </div>
 
                             <div class="tab-pane fade" id="v-border-pills-settings" role="tabpanel" aria-labelledby="v-border-pills-settings-tab">
@@ -215,6 +228,7 @@ export default {
                                 </div>
                                 <input type="submit" class="btn btn-info btn-block mb-4 mr-2"  @click="openUploadModal('four')" value="File Upload" />
                                 <img class="mr-3" width="600" :src="form.image_four" alt="Home image four">
+                                <p>Back Url: domain/{{ form.back_url_four }}</p>
                             </div>
 
                             <div class="tab-pane fade" id="v-border-pills-image5" role="tabpanel" aria-labelledby="v-border-pills-image5-tab">
@@ -223,9 +237,27 @@ export default {
                                 </div>
                                 <input type="submit" class="btn btn-info btn-block mb-4 mr-2" @click="openUploadModal('five')" value="File Upload" />
                                 <img class="mr-3" width="600" :src="form.image_five" alt="Home image five">
+                                <p>Back Url: domain/{{ form.back_url_five }}</p>
                             </div>
 
                         </div>
+                    </div>
+                    
+                    <div class="col-sm-3 col-12">
+                        <div class="my-2">
+                            <select id="product-category" class="form-control" @change="getSubCategories()" v-model="filterdata.category">
+                                <option selected="" value="">Choose Category</option>
+                                <option v-for="(value,index) in allcategories" :value="value" :key="index">{{ value.cat_name }}</option>
+                            </select>
+                        </div>
+                        <div>
+                            <select id="product-filterdata" class="form-control" v-model="filterdata.subcategory">
+                                <option value="">Choose...</option>
+                                <option v-for="(value,index) in allsubcategories" :value="value.slug" :key="index">{{ value.cat_name }}</option>
+                            </select>
+                        </div>
+                        <button type="submit" @click="updateImage()" class="btn btn-info btn-block my-2">Update</button>
+                       
                     </div>
                 </div>
             </div>
@@ -235,6 +267,6 @@ export default {
 
 <style scoped>
 input,video,img{
-    width: 60% !important;
+    width: 80% !important;
 }
 </style>

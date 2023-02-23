@@ -22,7 +22,7 @@ class ProductController extends Controller
         $camp_id   = $request->get('camp_id');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
-        $product = Product::with(['category:id,category_name,slug','subcategory','inventory','product_size','product_colour','discount']);
+        $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric','inventory','product_size','product_colour','discount']);
 
         if($camp_id != ''){
             $product = $product->join('campaign_products','products.id','campaign_products.product_id')
@@ -73,7 +73,7 @@ class ProductController extends Controller
             //code...
             $noPagination = $request->get('no_paginate');
             $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
-            $product = Product::with(['category:id,category_name,slug','subcategory','inventory','product_size','product_colour','discount'])
+            $product = Product::with(['category:id,category_name,slug','product_fabric','subcategory','inventory','product_size','product_colour','discount'])
                         ->where('category_id',$cat)
                         ->orderBy('id','desc');
                     if($subcat != '' && $subcat != null){
@@ -96,7 +96,7 @@ class ProductController extends Controller
     {
         try {
             //code...
-            $product = Product::with(['category:id,category_name,slug','subcategory','inventory','product_size','product_colour','discount'])->find($id);
+            $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric','inventory','product_size','product_colour','discount'])->find($id);
             return new ProductResource($product);
         } catch (\Throwable $th) {
             return $this->errorMessage();

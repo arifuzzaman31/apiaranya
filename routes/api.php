@@ -49,4 +49,6 @@ Route::get('category/{id}',[CategoryController::class,'categoryData']);
 // get Campain data
 Route::get('all-campaign',[FrontController::class,'getCampaing']);
 
+Route::get('category-fabric/{cat_id}',[FrontController::class,'getCategoryFabric']);
+
 

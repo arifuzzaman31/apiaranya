@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\Product;
-
+use DB;
 class SslController extends Controller
 {
     public function sslCommerz(Request $request,$order_id)
@@ -24,8 +24,8 @@ class SslController extends Controller
         $post_data['currency'] = "BDT";
         $post_data['tran_id'] = $order_id;
         $post_data['success_url'] = route('ssl.success');
-        $post_data['fail_url']     = config('app.front_url')."?success=failed";
-        $post_data['cancel_url']   = config('app.front_url')."?success=canceled";
+        $post_data['fail_url']     = config('app.front_url');
+        $post_data['cancel_url']   = config('app.front_url');
     
         # CUSTOMER INFORMATION
         $post_data['cus_name'] = $order->user_billing_info->first_name;
@@ -50,7 +50,7 @@ class SslController extends Controller
         $post_data['ship_country'] = "Bangladesh";
     
         # OPTIONAL PARAMETERS
-        $post_data['value_a'] = "ref001";
+        $post_data['value_a'] = Auth::id();
         $post_data['value_b '] = "ref002";
         $post_data['value_c'] = "ref003";
         $post_data['value_d'] = "ref004";
@@ -95,13 +95,12 @@ class SslController extends Controller
         curl_setopt($handle, CURLOPT_POSTFIELDS, $post_data);
         curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, 1); # KEEP IT FALSE IF YOU RUN FROM LOCAL PC
-        curl_setopt($handle, CURLOPT_SSL_VERIFYHOST, 2);
-        curl_setopt($handle, CURLOPT_VERBOSE, true);
-        
+
+
         $content = curl_exec($handle );
-    
+
         $code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-    
+
         if($code == 200 && !( curl_errno($handle))) {
             curl_close( $handle);
             $sslcommerzResponse = $content;
@@ -111,64 +110,55 @@ class SslController extends Controller
             exit;
         }
         
-         //dd($content);
+        // dd($content);
         # PARSE THE JSON RESPONSE
         $sslcz = json_decode($sslcommerzResponse, true );
         // var_dump($sslcz); exit;
     
         if (isset($sslcz['GatewayPageURL']) && $sslcz['GatewayPageURL'] != "") {
             // return redirect()->to($sslcz['GatewayPageURL']);
-            // this is important to show the popup, return or echo to sent json response back
-            return json_encode(['status' => 'success', 'data' => $sslcz['GatewayPageURL'], 'logo' => $sslcz['storeLogo']]);
+             return json_encode(['status' => 'success', 'data' => $sslcz['GatewayPageURL'], 'logo' => $sslcz['storeLogo']]);
         } else {
             // return $sslcz;
-            return response()->json((['status' => 'fail', 'data' => null, 'message' => "something went wrong!"]));
+            return json_encode(['status' => 'fail', 'data' => null, 'message' => "something went wrong!"]);
         }
 
     }
 
     public function sslCommerzSuccess(Request $request)
     {
-        return $request->all();
-                $status   = '';
-                $message  = '';
-
         if ($request->status == "VALID") {
+            try
+            {
+                DB::beginTransaction();
+                $order = Order::where('id',$request->tran_id)->first();
 
-            $order = Order::find($request->tran_id);
+                $order->payment_status = AllStatic::$paid;
+                $order->payment_method_name = 'sslCommerz';
+                $order->card_type = $request->card_type;
+                $order->validation_id = $request->val_id;
+                $order->transaction_id = $request->bank_tran_id;
+                $order->payment_date = $request->tran_date;
+                $order->payment_info = json_encode($request->all());
+                $order->update();
 
-            $order->payment_status = AllStatic::$paid;
-            $order->payment_method_name = 'sslCommerz';
-            $order->card_type = $request->card_type;
-            $order->validation_id = $request->bank_tran_id;
-            $order->payment_date =  date('Y-m-d');
-            $order->update();
 
-            $status = 'success';
-            $message = 'Your order no: ' . $request->tran_id . ' Payment Successfully
-             Done';
+                if ($order->payment_status == 1) {
+
+                    return redirect('http://localhost:3000');
+                }
+
+                DB::commit();
+
+                return redirect('http://localhost:3000');
+
+            } catch (\Throwable $th) {
+                // return $th;
+                DB::rollBack();
+                return response()->json(['status' => 'error', 'message' => 'something went wrong'], 400);
+            }
 
         }
-         elseif ($request->status == 'FAILED') 
-         {
-
-            $status = 'error';
-            $message = 'Your order no: ' . $request->tran_id . ' Payment 
-             failed. but your order Cash on Delivery';
-        } 
-        else 
-        {
-    
-            $status = 'error';
-            $message = 'Your order no: ' . $request->tran_id . ' Payment 
-            canceled. But order taken as Cash on Delivery, if you want to pay now, then CLICK on My Order button';
-        }
-
-        return redirect()->route('order.completed',[
-            'flug'    => 1,
-            'status'  => $status,
-            'message' => $message,
-        ]);
 
     }
 
@@ -191,7 +181,7 @@ class SslController extends Controller
             $message = 'Something went wrong and your payment failed  for order #'.$request->tran_id.'.';
         }
 
-        return redirect()->route('order.completed',[
+        return response()->json([
 
             'flug'   => 1,
             'status' => $status,
@@ -208,8 +198,7 @@ class SslController extends Controller
                
             Auth::loginUsingId($request->value_a);
         }
-        return redirect()->route('order.completed',[
-
+        return response()->json([
             'flug'   => 1,
             'status' => 'error',
             'message' => 'The payment has been canceled for order #'.$request->tran_id.'.',

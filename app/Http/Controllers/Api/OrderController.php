@@ -21,7 +21,7 @@ class OrderController extends Controller
         try {
             DB::beginTransaction();
 
-            $order_id   = Str::random(11);
+            $order_id   = date('Ymd').time();
 
             $order = new Order();
             $order->order_id    =   $order_id;
@@ -42,6 +42,7 @@ class OrderController extends Controller
             $order->discount               = 0;
             $order->payment_status         = 0;
             $order->order_date             = date('Y-m-d');
+            $order->requested_delivery_date = date('Y-m-d', strtotime("+1 day"));
             $order->status                 = 1;
             $order->is_same_address        = $request->is_same_address ? $request->is_same_address : 0;
             $order->save();
@@ -86,7 +87,7 @@ class OrderController extends Controller
             $billing->street_address = $request->data['street_address_billing'];
             $billing->save();
 
-            if($request->is_same_address == false)
+            if($request->isSameAddress == false)
             {
                 $shipping = new UserShippingInfo();
                 $shipping->user_id = $order->user_id;
@@ -108,7 +109,7 @@ class OrderController extends Controller
 
         } catch (\Throwable $th) {
             \DB::rollback();
-            return $th;
+            // return $th;
             return response()->json(['status' => 'error', 'message' => $th]);
         }
     }
@@ -151,7 +152,7 @@ class OrderController extends Controller
         $post_data['ship_country'] = "Bangladesh";
     
         # OPTIONAL PARAMETERS
-        $post_data['value_a'] = "ref001";
+        $post_data['value_a'] = Auth::id();
         $post_data['value_b '] = "ref002";
         $post_data['value_c'] = "ref003";
         $post_data['value_d'] = "ref004";
@@ -195,14 +196,13 @@ class OrderController extends Controller
         curl_setopt($handle, CURLOPT_POST, 1 );
         curl_setopt($handle, CURLOPT_POSTFIELDS, $post_data);
         curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, 1); # KEEP IT FALSE IF YOU RUN FROM LOCAL PC
-        curl_setopt($handle, CURLOPT_SSL_VERIFYHOST, 2);
-        curl_setopt($handle, CURLOPT_VERBOSE, true);
-        
+        curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, FALSE); # KEEP IT FALSE IF YOU RUN FROM LOCAL PC
+
+
         $content = curl_exec($handle );
-    
+
         $code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-    
+
         if($code == 200 && !( curl_errno($handle))) {
             curl_close( $handle);
             $sslcommerzResponse = $content;
@@ -222,7 +222,7 @@ class OrderController extends Controller
              return json_encode(['status' => 'success', 'data' => $sslcz['GatewayPageURL'], 'logo' => $sslcz['storeLogo']]);
         } else {
             // return $sslcz;
-            return response()->json((['status' => 'fail', 'data' => null, 'message' => "something went wrong!"]));
+            return json_encode(['status' => 'fail', 'data' => null, 'message' => "something went wrong!"]);
         }
 
     }
@@ -233,24 +233,25 @@ class OrderController extends Controller
             try
             {
                 DB::beginTransaction();
-                $order = Order::find($request->tran_id);
+                $order = Order::where('id',$request->tran_id)->first();
 
                 $order->payment_status = AllStatic::$paid;
                 $order->payment_method_name = 'sslCommerz';
                 $order->card_type = $request->card_type;
                 $order->validation_id = $request->val_id;
-                $order->payment_date =  date('Y-m-d');
+                $order->transaction_id = $request->bank_tran_id;
+                $order->payment_date = $request->tran_date;
+                $order->payment_info = json_encode($request->all());
                 $order->update();
-
 
                 if ($order->payment_status == 1) {
 
-                    return redirect('http://localhost:3000/success');
+                    return redirect('http://localhost:3000');
                 }
 
                 DB::commit();
 
-                return redirect('http://localhost:3000/success');
+                return redirect('http://localhost:3000');
 
             } catch (\Throwable $th) {
                 // return $th;
@@ -281,9 +282,7 @@ class OrderController extends Controller
             $message = 'Something went wrong and your payment failed  for order #'.$request->tran_id.'.';
         }
 
-        return redirect()->route('order.completed',[
-
-            'flug'   => 1,
+        return response()->json(['flug'   => 1,
             'status' => $status,
             'message' => $message,
         ]);
@@ -298,8 +297,7 @@ class OrderController extends Controller
                
             Auth::loginUsingId($request->value_a);
         }
-        return redirect()->route('order.completed',[
-
+        return response()->json([
             'flug'   => 1,
             'status' => 'error',
             'message' => 'The payment has been canceled for order #'.$request->tran_id.'.',

@@ -42,6 +42,7 @@ class ProductResource extends JsonResource
             'p_colours'         => $this->whenLoaded('product_colour'),
             'p_stocks'          => $this->whenLoaded('inventory'),
             'discount'          => $this->whenLoaded('discount'),
+            'p_fabric'          => $this->whenLoaded('product_fabric'),
             'country_of_origin' => $this->country_of_origin,
             'status'            => $this->status,
             'status_text'       => $this->status == 1 ? 'Active' : 'Deactive',

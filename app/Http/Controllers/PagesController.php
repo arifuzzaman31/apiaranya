@@ -23,12 +23,32 @@ class PagesController extends Controller
         // return response()->json($request->all());
         try {
             $hp = Page::where('page_name','home')->first();
-            if($request->img_name == 'one') $hp->image_one = $request->uri_link;
-            if($request->img_name == 'two') $hp->image_two = $request->uri_link;
-            if($request->img_name == 'three') $hp->image_three = $request->uri_link;
-            if($request->img_name == 'four') $hp->image_four = $request->uri_link;
-            if($request->img_name == 'five') $hp->image_five = $request->uri_link;
-            if($request->img_name == 'six') $hp->image_six = $request->uri_link;
+            if($request->imagenumb == 'one'){
+                $hp->image_one = $request->imageuri;
+                if($request->categoryname) $hp->back_url_one = $request->categoryname.'/'.$request->subcategory;
+            } 
+            if($request->imagenumb == 'two'){ 
+                if($request->imageuri) $hp->image_two = $request->imageuri ;
+                if($request->categoryname) $hp->back_url_two = $request->categoryname.'/'.$request->subcategory;
+            }
+            if($request->imagenumb == 'three'){ 
+
+                if($request->imageuri) $hp->image_three = $request->imageuri;
+                if($request->categoryname) $hp->back_url_three  = $request->categoryname.'/'.$request->subcategory;
+            }
+            if($request->imagenumb == 'four'){ 
+                if($request->imageuri) $hp->image_four = $request->imageuri;
+                if($request->categoryname) $hp->back_url_four = $request->categoryname.'/'.$request->subcategory;
+            }
+            if($request->imagenumb == 'five'){ 
+                if($request->imageuri) $hp->image_five = $request->imageuri;
+                if($request->categoryname) $hp->back_url_five = $request->categoryname.'/'.$request->subcategory;
+            }
+            if($request->imagenumb == 'six'){ 
+                if($request->imageuri) $hp->image_six = $request->imageuri;
+                if($request->categoryname) $hp->back_url_six = $request->categoryname.'/'.$request->subcategory;
+            }
+
             $hp->update();
             return response()->json(['status' => 'success', 'message' => 'Home Page Updated Successfully!']);
         } catch (\Throwable $th) {
