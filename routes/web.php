@@ -42,7 +42,7 @@ Route::post('enter-password', [AdminLoginController::class,'store'])->name('rese
 Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     Route::redirect('/', 'admin/dashboard');
     Route::get('/me', [AdminLoginController::class, 'getUser']);
-    Route::view('/dashboard', 'pages.dashboard');
+    Route::get('/dashboard', [AdminLoginController::class, 'index']);
     Route::get('logout', [AdminLoginController::class, 'logout'])->name('logout');
     Route::view('change-password', 'admin.change_password')->name('change-password');
     Route::post('change-password', [AdminLoginController::class, 'changePassword']);

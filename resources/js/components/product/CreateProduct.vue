@@ -489,7 +489,7 @@ export default {
                                 <label for="product-image1">Image (1:1)</label>
                                 <!-- <input type="file" class="form-control" id="product-image"> -->
                                 <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('three')">Upload files</button>
-                                <p class="mt-1 text-info" v-if="form.product_image_tree != ''">{{  form.product_image_tree }}</p>
+                                <p class="mt-1 text-info" v-if="form.product_image_three != ''">{{  form.product_image_three }}</p>
                             </div>
                             <div class="col-md-3 col-12 mt-4">
                                 <label for="product-image1">Image (1:1)</label>
