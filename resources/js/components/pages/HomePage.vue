@@ -121,6 +121,7 @@ export default {
                 axios.post(baseUrl+'update-home-image',this.filterdata).then(response => {
                     if(response.data.status == 'success'){
                         // this.getHomeData()
+                        this.clearFilter()
                         this.successMessage(response.data)
                     }
                 })
@@ -161,6 +162,19 @@ export default {
                 this.allsubcategories = filterData
                 this.form.back_url = this.filterdata.category.slug+'/'+this.filterdata.subcategory
             },
+
+            clearFilter(){
+                this.filterdata = {
+                    category: '',
+                    categoryname: '',
+                    subcategory: '',
+                    imageuri: '',
+                    imagenumb: '',
+                    back_url: '',
+                    state: 'home'
+                }
+                this.allsubcategories = []
+            }
     },
     mounted(){
         this.getHomeData()

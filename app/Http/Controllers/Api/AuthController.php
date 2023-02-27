@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -117,6 +118,81 @@ class AuthController extends Controller
                 'status' => false,
                 'message' => $th->getMessage()
             ], 500);
+        }
+    }
+
+    public function storeNewPassword(Request $request)
+    {
+        $request->validate([
+            'oldpassword' => 'required',
+            'password'    => 'required|confirmed|min:6',
+        ]);
+
+        $hasPassword = Auth::user()->password;
+
+        if (Hash::check($request->oldpassword, $hasPassword)) {
+            $user           = User::find(Auth::id());
+            $user->password = Hash::make($request->password);
+            $user->update();
+            return response()->json(['status' => 'success','massage' => 'Password Updated']);
+        } else {
+            return $this->errorMessage();
+        }
+    }
+
+    public function sendEmailLink(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+        ]);
+
+        try {
+            DB::beginTransaction();
+            $token                  = \Hash::make(uniqueString());
+    
+            $details = [
+                'token' => $token,
+                'email' => $request->email
+            ];
+    
+            \DB::table('password_resets')->insert($details);
+            \Mail::to($request->email)->send(new \App\Mail\ResetPasswordMail($details));
+            DB::commit();
+            return response()->json(['status' => 'success','massage' => 'Token send to Email','reset_token' => $token]);
+            
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            //  return $th;
+             return $this->errorMessage();
+        }
+    }
+
+    public function storeResetPassword(Request $request)
+    {
+        $request->validate([
+            'password' => 'required|confirmed|min:6',
+        ]);
+        try {
+            DB::beginTransaction();
+            $userToken = \DB::table('password_resets')->where('token', $request->token)->first();
+    
+            if (!$userToken) {
+                return response()->json(['status' => 'error','massage' => 'Invalid Token']);
+            }
+    
+            $user           = User::where('email',$userToken->email)->first();
+            $user->password = Hash::make($request->password);
+            $user->update();
+    
+            \DB::table('password_resets')->where('token', $request->token)->delete();
+    
+            DB::commit();
+            $this->successMessage('Password Changed Successfully!');
+            //code...
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            // return $th;
+            return $this->errorMessage();
         }
     }
 }

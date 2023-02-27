@@ -68,17 +68,38 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($orders->delivery as $key => $deliv)
+                        @if(!empty($orders->delivery))
+                            @if($orders->delivery->process_state == 1)
                             <tr>
-                                <td>{{ $key+1 }}</td>
-                                <td>{{ $deliv->shipping_date }}</td>
-                                <td>{{ $deliv->position_status }}</td>
+                                <td>1</td>
+                                <td>{{ $orders->delivery->process_value }}</td>
+                                <td>{{ $orders->delivery->process_date }}</td>
                             </tr>
-                            @empty
-                            <tr  class="text-center">
-                                <td colspan="3"><p>No Data found</p></td>
+                            @endif
+
+                            @if($orders->delivery->on_delivery_state == 2)
+                            <tr>
+                                <td>1</td>
+                                <td>{{ $orders->delivery->on_delivery_value }}</td>
+                                <td>{{ $orders->delivery->on_delivery_date }}</td>
                             </tr>
-                            @endforelse
+                            @endif
+
+                            @if($orders->delivery->delivery_state == 1)
+                            <tr>
+                                <td>1</td>
+                                <td>{{ $orders->delivery->delivery_value }}</td>
+                                <td>{{ $orders->delivery->delivery_date }}</td>
+                            </tr>
+                            @endif
+                        @else 
+                            <tr>
+                                <td>1</td>
+                                <td>Pending</td>
+                                <td>{{ $orders->order_date }}</td>
+                            </tr>
+                        @endif
+                         
                     </tbody>
                 </table>
             </div>  

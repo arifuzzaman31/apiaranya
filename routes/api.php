@@ -52,3 +52,11 @@ Route::get('all-campaign',[FrontController::class,'getCampaing']);
 Route::get('category-fabric/{cat_id}',[FrontController::class,'getCategoryFabric']);
 
 
+// user reset password
+Route::post('user-password-email-reset-link', [AuthController::class, 'sendEmailLink'])->name('user-password-email-reset-link');
+
+Route::post('user/reset/password', [AuthController::class, 'storeResetPassword']);
+
+
+
+

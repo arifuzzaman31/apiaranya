@@ -70,6 +70,36 @@ export default {
             })
         },
 
+        updateStatus(order){
+            if(this.order_status_id >= order){
+                alert('Click Next Step')
+                return false
+            }
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Order status will be Update!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Do it!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.post(baseUrl+`update/order/status`,{'order_status_id':this.order_status_id,'id':this.order_id}).then(
+                        response => {
+                            $("#orderDetailModal").modal('hide');
+                            this.formReset()
+                            this.getOrder()
+                            this.successMessage(response.data)
+                        }
+                    ). catch(error => {
+                    
+                    })
+                }
+            })
+            console.log(order)
+        },
+
         deleteOrder(id){
             Swal.fire({
                 title: 'Are you sure?',
@@ -287,33 +317,33 @@ export default {
                             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                         </button>
                     </div>
-                    <div class="modal-body" v-if="order_status_id">
+                    <div class="modal-body" v-if="order_id">
                         <div class="text-center">
                             <div id="bar-progress" class="mt-5 mt-lg-0" v-if="single_order.status !=0">
                                 <a @click="updateStatus(1)" href="javasript:void(0)" class="step step-active">
                                     <span class="number-container">
-                                                            <span class="number">1</span>
+                                        <span class="number">1</span>
                                     </span>
                                     <h5>Pending</h5>
                                 </a>
                                 <div class="seperator"></div>
                                 <a @click="updateStatus(2)" href="javasript:void(0)" class="step" type="button" disabled="true" :class="order_status_id > 0 ? 'step-active':''">
                                     <span class="number-container">
-                                                            <span class="number">2</span>
+                                        <span class="number">2</span>
                                     </span>
                                     <h5>Process</h5>
                                 </a>
                                 <div class="seperator"></div>
                                 <a @click="updateStatus(3)" href="javasript:void(0)" class="step" :class="order_status_id > 1 ? 'step-active':''">
                                     <span class="number-container">
-                                                            <span class="number">3</span>
+                                        <span class="number">3</span>
                                     </span>
                                     <h5>On Delivery</h5>
                                 </a>
                                 <div class="seperator"></div>
                                 <a @click="updateStatus(4)" href="javasript:void(0)" class="step" :class="order_status_id > 2 ? 'step-active':''">
                                     <span class="number-container">
-                                                            <span class="number">4</span>
+                                        <span class="number">4</span>
                                     </span>
                                     <h5>Delivered</h5>
                                 </a>

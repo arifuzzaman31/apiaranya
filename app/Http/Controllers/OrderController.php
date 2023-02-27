@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\OrderExport;
+use App\Http\AllStatic;
 use App\Models\Order;
 use App\Models\Delivery;
 use App\Models\OrderDetails;
@@ -102,14 +103,29 @@ class OrderController extends Controller
             $order->order_position += 1;
             $order->update();
 
-            $delivery = new Delivery();
-            $delivery->order_id = $order->id;
-            $delivery->tracking_id = $order->tracking_id;
-            $delivery->shipping_date = date('Y-m-d');
-            $delivery->delivered_by = $request->delivered_by;
-            $delivery->position_status = deliveryPosition($order->order_position);
-            $delivery->position_number = $order->order_position;
-            $delivery->save();
+            $delivery = Delivery::where('order_id',$order->order_id)->first();
+            if(empty($delivery)){
+                
+                $delivery->tracking_id = uniqueString();
+                $delivery->process_date = date('Y-m-d');
+                $delivery->process_state = AllStatic::$processing;
+                $delivery->process_value = 'Processing';
+                $delivery->save();
+                
+            } else {
+                if($order->order_position == 2){
+                    $delivery->on_delivery_date = date('Y-m-d');
+                    $delivery->on_delivery_state = AllStatic::$on_delivery;
+                    $delivery->on_delivery_value = 'On Delivery';
+                }
+
+                if($order->order_position == 3){
+                    $delivery->delivery_date = date('Y-m-d');
+                    $delivery->delivery_state = AllStatic::$delivered;
+                    $delivery->delivery_value = 'Delivered';
+                }
+                $delivery->update();
+            }
             DB::commit();
             return response()->json(['status' => 'success', 'message' => 'Order Status Updated!']);
 

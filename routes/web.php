@@ -106,3 +106,4 @@ Route::get('ssl-commerz/{order_id}',[OdController::class,'sslCommerz'])->name('p
 Route::post('ssl-success',[OdController::class,'sslCommerzSuccess'])->name('ssl.success');
 Route::post('ssl-failed',[OdController::class,'sslCommerzFailed'])->name('ssl.failed');
 Route::post('ssl-cancel',[OdController::class,'sslCommerzCancel'])->name('ssl.cancel');
+

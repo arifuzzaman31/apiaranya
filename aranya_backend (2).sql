@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 23, 2023 at 03:38 PM
+-- Generation Time: Feb 27, 2023 at 06:03 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 7.4.30
 
@@ -255,24 +255,19 @@ CREATE TABLE `deliveries` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `order_id` bigint(20) UNSIGNED NOT NULL,
   `tracking_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `shipping_date` date NOT NULL,
+  `process_date` date DEFAULT NULL,
+  `process_state` tinyint(4) DEFAULT NULL,
+  `process_value` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `on_delivery_date` date DEFAULT NULL,
+  `on_delivery_state` tinyint(4) DEFAULT NULL,
+  `on_delivery_value` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `delivery_date` date DEFAULT NULL,
+  `delivery_state` tinyint(4) DEFAULT NULL,
+  `delivery_value` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `delivered_by` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `position_status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `position_number` tinyint(4) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `deliveries`
---
-
-INSERT INTO `deliveries` (`id`, `order_id`, `tracking_id`, `shipping_date`, `delivered_by`, `position_status`, `position_number`, `created_at`, `updated_at`) VALUES
-(1, 2, 'AXD754456', '2023-02-02', NULL, 'panding', 0, '2023-02-02 10:18:59', '2023-02-02 10:19:01'),
-(2, 2, 'AXD754456', '2023-02-02', NULL, 'process', 1, '2023-02-02 10:19:52', '2023-02-02 10:19:53'),
-(3, 2, 'AXD754456', '2023-02-02', NULL, 'delivered', 2, '2023-02-02 10:20:52', '2023-02-02 10:20:53'),
-(6, 3, 'AXD754456', '2023-02-05', NULL, 'Pending', 4, '2023-02-05 08:15:12', '2023-02-05 08:15:12'),
-(9, 2, 'AXD754456', '2023-02-12', NULL, 'Pending', 4, '2023-02-12 03:00:23', '2023-02-12 03:00:23');
 
 -- --------------------------------------------------------
 
@@ -497,8 +492,8 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `order_id`, `user_id`, `total_price`, `shipping_method`, `payment_method`, `payment_method_name`, `vat_rate`, `vat_amount`, `total_item`, `shipping_amount`, `transaction_id`, `discount`, `coupon_discount`, `coupon`, `card_type`, `payment_status`, `validation_id`, `order_date`, `payment_info`, `requested_delivery_date`, `payment_date`, `status`, `created_at`, `updated_at`, `order_position`, `is_same_address`, `tracking_id`, `delivery_type`, `percel_type`, `pickup_point_no`) VALUES
-(2, 'AS1245', 2, 210.00, 'Point', 0, '\"{taka:1245,prod:2}\"', 0.00, 0.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, NULL, '', NULL, NULL, NULL, 1, '2023-02-02 09:48:35', '2023-02-12 03:00:23', 3, 0, 'AXD754456', 1, 1, NULL),
-(3, 'AE5456', 2, 7897.00, 'Cash', 0, '\"{dfdg:gdgd}\"', 0.00, 0.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, NULL, '', NULL, NULL, NULL, 0, '2023-02-02 10:07:15', '2023-02-02 10:07:16', 2, 0, 'SF45566', 1, 1, NULL);
+(2, 'AS1245', 2, 210.00, 'Point', 0, NULL, 0.00, 0.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2022-08-03', NULL, NULL, NULL, 1, '2023-02-02 09:48:35', '2023-02-12 03:00:23', 0, 0, 'AXD754456', 1, 1, NULL),
+(3, 'AE5456', 2, 7897.00, 'Cash', 0, NULL, 0.00, 0.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2023-04-22', NULL, NULL, NULL, 1, '2023-02-02 10:07:15', '2023-02-02 10:07:16', 0, 0, 'SF45566', 1, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -533,7 +528,7 @@ CREATE TABLE `order_details` (
 --
 
 INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `category_id`, `sub_category_id`, `colour_id`, `size_id`, `fabric_id`, `user_id`, `quantity`, `selling_price`, `buying_price`, `total_buying_price`, `total_selling_price`, `unit_discount`, `total_discount`, `status`, `created_at`, `updated_at`) VALUES
-(1, 2, 5, 2, 5, 4, 2, 2, 0, 2, 45.0000, 42.0000, 82.0000, 90.0000, 0, 0, 1, '2023-02-05 07:34:25', '2023-02-05 07:34:26'),
+(1, 3, 5, 2, 5, 4, 2, 2, 0, 2, 45.0000, 42.0000, 82.0000, 90.0000, 0, 0, 1, '2023-02-05 07:34:25', '2023-02-05 07:34:26'),
 (2, 2, 8, 4, 5, 3, 6, 3, 0, 2, 60.0000, 50.0000, 100.0000, 120.0000, 0, 0, 1, '2023-02-05 07:47:27', '2023-02-05 07:47:28');
 
 -- --------------------------------------------------------
@@ -567,7 +562,7 @@ CREATE TABLE `pages` (
 --
 
 INSERT INTO `pages` (`id`, `page_name`, `page_type`, `image_one`, `back_url_one`, `image_two`, `back_url_two`, `image_three`, `back_url_three`, `image_four`, `back_url_four`, `image_five`, `back_url_five`, `image_six`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'home', 'Home', 'https://res.cloudinary.com/diyc1dizi/video/upload/v1676293175/aranya/xf6ije9ipvpxrbmpu4bz.webm', NULL, 'https://res.cloudinary.com/diyc1dizi/image/upload/v1677161203/aranya/cjgiax3rbs8p72sblsyf.jpg', 'men/', 'https://res.cloudinary.com/diyc1dizi/image/upload/v1677160436/aranya/mqtrblzs0moyhhkytij6.jpg', 'home-furnishings/basket', 'https://res.cloudinary.com/diyc1dizi/image/upload/v1677161203/aranya/cjgiax3rbs8p72sblsyf.jpg', 'accessories/scarves', 'https://res.cloudinary.com/diyc1dizi/image/upload/v1677161203/aranya/cjgiax3rbs8p72sblsyf.jpg', 'home-furnishings/table-runner', NULL, 1, '2023-02-13 11:20:14', '2023-02-23 08:08:08');
+(1, 'home', 'Home', 'https://res.cloudinary.com/diyc1dizi/video/upload/v1676293175/aranya/xf6ije9ipvpxrbmpu4bz.webm', NULL, 'https://res.cloudinary.com/diyc1dizi/image/upload/v1676527368/aranya/r98zxbtcywpy4jocgyqd.jpg', 'salwar-kameez', 'https://res.cloudinary.com/diyc1dizi/image/upload/v1676527505/aranya/rt05psuzr0zscuru1bd0.jpg', 'kids', 'https://res.cloudinary.com/diyc1dizi/image/upload/v1676527416/aranya/otzzsonzgftymddvjqyl.jpg', 'beauty-collection', 'https://res.cloudinary.com/diyc1dizi/image/upload/v1677161203/aranya/cjgiax3rbs8p72sblsyf.jpg', 'kimono', NULL, 1, '2023-02-13 11:20:14', '2023-02-26 07:49:33');
 
 -- --------------------------------------------------------
 
@@ -1166,7 +1161,7 @@ ALTER TABLE `colours`
 -- AUTO_INCREMENT for table `deliveries`
 --
 ALTER TABLE `deliveries`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `discounts`

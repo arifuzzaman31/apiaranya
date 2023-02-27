@@ -23,30 +23,60 @@ class PagesController extends Controller
         // return response()->json($request->all());
         try {
             $hp = Page::where('page_name','home')->first();
-            if($request->imagenumb == 'one'){
-                $hp->image_one = $request->imageuri;
-                if($request->categoryname) $hp->back_url_one = $request->categoryname.'/'.$request->subcategory;
-            } 
-            if($request->imagenumb == 'two'){ 
-                if($request->imageuri) $hp->image_two = $request->imageuri ;
-                if($request->categoryname) $hp->back_url_two = $request->categoryname.'/'.$request->subcategory;
-            }
-            if($request->imagenumb == 'three'){ 
-
-                if($request->imageuri) $hp->image_three = $request->imageuri;
-                if($request->categoryname) $hp->back_url_three  = $request->categoryname.'/'.$request->subcategory;
-            }
-            if($request->imagenumb == 'four'){ 
-                if($request->imageuri) $hp->image_four = $request->imageuri;
-                if($request->categoryname) $hp->back_url_four = $request->categoryname.'/'.$request->subcategory;
-            }
-            if($request->imagenumb == 'five'){ 
-                if($request->imageuri) $hp->image_five = $request->imageuri;
-                if($request->categoryname) $hp->back_url_five = $request->categoryname.'/'.$request->subcategory;
-            }
-            if($request->imagenumb == 'six'){ 
-                if($request->imageuri) $hp->image_six = $request->imageuri;
-                if($request->categoryname) $hp->back_url_six = $request->categoryname.'/'.$request->subcategory;
+            switch ($request->imagenumb) {
+                case 'one':
+                        if($request->imageuri) $hp->image_one = $request->imageuri;
+                        if($request->subcategory != ''){
+                            $hp->back_url_one = $request->subcategory;
+                        } else {
+                            $hp->back_url_one = $request->categoryname;
+                        }
+                    break;
+                case 'two':
+                        if($request->imageuri) $hp->image_two = $request->imageuri;
+                        if($request->subcategory != ''){
+                            $hp->back_url_two = $request->subcategory;
+                        } else {
+                            $hp->back_url_two = $request->categoryname;
+                        }
+                    break;
+                case 'three':
+                        if($request->imageuri) $hp->image_three = $request->imageuri;
+                        if($request->subcategory != ''){
+                            $hp->back_url_three = $request->subcategory;
+                        } else {
+                            $hp->back_url_three = $request->categoryname;
+                        }
+                    break;
+                case 'four':
+                        if($request->imageuri) $hp->image_four = $request->imageuri;
+                        if($request->subcategory != ''){
+                            $hp->back_url_four = $request->subcategory;
+                        } else {
+                            $hp->back_url_four = $request->categoryname;
+                        }
+                    break;
+                case 'five':
+                        if($request->imageuri) $hp->image_five = $request->imageuri;
+                        if($request->subcategory != ''){
+                            $hp->back_url_five = $request->subcategory;
+                        } else {
+                            $hp->back_url_five = $request->categoryname;
+                        }
+                    break;
+                case 'six':
+                        if($request->imageuri) $hp->image_six = $request->imageuri;
+                        if($request->subcategory != ''){
+                            $hp->back_url_six = $request->subcategory;
+                        } else {
+                            $hp->back_url_six = $request->categoryname;
+                        }
+                    break;
+                
+                default:
+                    # code...
+                    return false;
+                    break;
             }
 
             $hp->update();

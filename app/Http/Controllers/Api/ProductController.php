@@ -26,6 +26,7 @@ class ProductController extends Controller
 
         if($camp_id != ''){
             $product = $product->join('campaign_products','products.id','campaign_products.product_id')
+                ->select('products.*')
                 ->where('campaign_id',$camp_id);
 
             if($noPagination != ''){

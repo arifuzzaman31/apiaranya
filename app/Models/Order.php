@@ -22,7 +22,7 @@ class Order extends Model
 
     public function delivery()
     {
-        return $this->hasMany(Delivery::class);
+        return $this->hasOne(Delivery::class);
     }
 
     public function user_billing_info()
