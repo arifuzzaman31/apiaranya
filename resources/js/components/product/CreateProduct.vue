@@ -16,8 +16,8 @@ export default {
         return {
             form: {
                 product_name: '',
-                category: null,
-                sub_category: null,
+                category: '',
+                sub_category: '',
                 vandor : 'Aranya',
                 brand : 'Aranya',
                 designer : '',
@@ -231,8 +231,8 @@ export default {
         clearForm() {
             this.form = {
                 product_name : '',
-                category : null,
-                sub_category : null,
+                category : '',
+                sub_category : '',
                 vandor : 'Aranya',
                 brand : 'Aranya',
                 designer : '',
