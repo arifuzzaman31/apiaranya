@@ -35,9 +35,9 @@ class CreateProductsTable extends Migration
             $table->string('product_image');
             $table->string('image_one')->nullable();
             $table->string('image_two')->nullable();
-            $table->string('product_three')->nullable();
-            $table->string('product_four')->nullable();
-            $table->string('product_five')->nullable();
+            $table->string('image_three')->nullable();
+            $table->string('image_four')->nullable();
+            $table->string('image_five')->nullable();
             $table->integer('cost')->nullable();
             $table->integer('mrp_price');
             $table->string('dimension')->nullable();

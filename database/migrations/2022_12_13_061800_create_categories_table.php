@@ -16,10 +16,12 @@ class CreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('category_name');
-            $table->string('slug');
+            $table->string('slug')->nullable();
             $table->string('description')->nullable();
             $table->string('parent_category')->nullable();
-            $table->string('category_image')->nullable();
+            $table->string('category_image_one')->nullable();
+            $table->string('category_image_two')->nullable();
+            $table->string('category_image_three')->nullable();
             $table->string('category_video')->nullable();
             $table->tinyInteger('precedence')->default(0)->comment("Set precedency");
             $table->tinyInteger('status')->default(1)->comment("0 for down the category");

@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\AttributesController;
+use App\Http\Controllers\VendorController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\SizeController;
@@ -13,6 +13,9 @@ use App\Http\Controllers\Api\OrderController as OdController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\DesignerController;
 use App\Http\Controllers\Payment\SslController;
 
 /*
@@ -62,10 +65,13 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     Route::resource('sizes',SizeController::class);
     Route::resource('fabrics',FabricController::class);
     
-    Route::resource('attribute',AttributesController::class);
-    Route::get('get-attribute-data',[AttributesController::class, 'getAttrData']);
-    Route::post('attribute-update/{id}',[AttributesController::class, 'update'])->name('attribute-update');
-    Route::delete('attribute/destroy/{id}',[AttributesController::class, 'destroy'])->name('attribute-destroy');
+    Route::resource('vendors',VendorController::class);
+    Route::resource('brands',BrandController::class);
+    Route::resource('designers',DesignerController::class);
+    Route::resource('artist',ArtistController::class);
+    // Route::get('get-attribute-data',[AttributesController::class, 'getAttrData']);
+    // Route::post('attribute-update/{id}',[AttributesController::class, 'update'])->name('attribute-update');
+    // Route::delete('attribute/destroy/{id}',[AttributesController::class, 'destroy'])->name('attribute-destroy');
     
     
     Route::resource('product',ProductController::class);

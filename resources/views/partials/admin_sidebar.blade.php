@@ -41,6 +41,18 @@
                             <li>
                                 <a href="{{ route('fabrics.index') }}"> Fabrics </a>
                             </li>
+                            <li>
+                                <a href="{{ route('vendors.index') }}"> Vendor </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('brands.index') }}"> Brand </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('designers.index') }}"> Designer </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('artist.index') }}"> Artist </a>
+                            </li>
                         </ul>
                     </li>
 
