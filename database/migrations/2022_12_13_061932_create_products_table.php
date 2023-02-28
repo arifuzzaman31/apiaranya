@@ -19,7 +19,6 @@ class CreateProductsTable extends Migration
             $table->string('slug');
             $table->integer('category_id');
             $table->integer('sub_category_id')->nullable();
-            $table->integer('sku')->nullable();
             $table->string('description')->nullable();
             $table->string('vandor')->nullable();
             $table->string('brand')->nullable();

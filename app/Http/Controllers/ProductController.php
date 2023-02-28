@@ -45,7 +45,7 @@ class ProductController extends Controller
         $keyword   = $request->get('keyword');
         $camp_id   = $request->get('camp_id');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 2;
-        $product = Product::with(['category:id,category_name','subcategory','inventory:id,product_id,stock','product_size','product_colour','discount']);
+        $product = Product::with(['category:id,category_name','subcategory','inventory:id,product_id,stock,sku','product_size','product_colour','discount']);
 
         if($camp_id != ''){
             $product = $product->join('campaign_products','products.id','campaign_products.product_id')
@@ -99,7 +99,6 @@ class ProductController extends Controller
         $request->validate([
             'product_name' => 'required',
             'category' => 'required',
-            'sku' => 'required',
             'stock' => 'required_if:color_size,false',
             'price' => 'required',
             'weight' => 'required',
@@ -113,7 +112,6 @@ class ProductController extends Controller
             $product->product_name        = $request->product_name;
             $product->slug                = Str::slug($request->product_name);
             $product->category_id         = $request->category;
-            $product->sku         = $request->sku;
             $product->sub_category_id     = $request->sub_category;
             $product->description         = $request->description;
             $product->vandor                 = $request->vandor;
@@ -180,8 +178,9 @@ class ProductController extends Controller
                     if($value['qty'] != ''){
                         $stock              = new Inventory();
                         $stock->product_id  = $product->id;
-                        $stock->colour_id  = $value['colour_id'];
-                        $stock->size_id  = $value['size_id'];
+                        $stock->colour_id   = $value['colour_id'];
+                        $stock->size_id     = $value['size_id'];
+                        $stock->sku         = $value['sku'];
                         $stock->stock       = $value['qty'];
                         $stock->warning_amount = $request->warning_amount ? $request->warning_amount : 10;
                         $stock->warehouse   = $request->warehouse;

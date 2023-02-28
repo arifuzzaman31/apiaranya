@@ -17,6 +17,7 @@ class CreateInventoriesTable extends Migration
             $table->id();
             $table->foreignId('product_id');
             $table->integer('stock');
+            $table->string('sku')->nullable();
             $table->integer('warning_amount');
             $table->string('warehouse');
             $table->softDeletes();

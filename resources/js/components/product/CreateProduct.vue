@@ -16,7 +16,6 @@ export default {
         return {
             form: {
                 product_name: '',
-                sku: '',
                 category: null,
                 sub_category: null,
                 vandor : 'Aranya',
@@ -55,7 +54,7 @@ export default {
                 max_amount: 0,
                 discount_type: 1,
                 description: '',
-                attrqty: [{colour_id:'',size_id:'',qty:''}]
+                attrqty: [{colour_id:'',size_id:'',qty:'',sku:''}]
             },
 
             allcategories: [],
@@ -127,8 +126,7 @@ export default {
                 },
                 (error, result) => {
                 if (!error && result && result.event === "success") {
-                    console.log('Done uploading..: ', result.info);
-                    this.setImage(numb,result.info.path)
+                    this.setImage(numb,result.info.secure_url)
                     // widget.close()
                 }
                 this.validationError({'status':'error','message':error.error.message})
@@ -233,7 +231,6 @@ export default {
         clearForm() {
             this.form = {
                 product_name : '',
-                sku : '',
                 category : null,
                 sub_category : null,
                 vandor : 'Aranya',
@@ -268,7 +265,8 @@ export default {
                 discount_amount : '',
                 discount_type : 1,
                 max_amount : 0,
-                description : ''
+                description : '',
+                attrqty: [{colour_id:'',size_id:'',qty:'',sku:''}]
             },
             this.allsubcategories= [],
             this.allfiltersubcategories = [],
@@ -300,20 +298,11 @@ export default {
                                         {{ validation_error.product_name[0] }}
                                     </div>
                             </div>
-                            <div class="col-md-4">
-                                <label for="product-sku">Product SKU</label>
-                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('sku') ? 'is-invalid' : ''" id="product-sku" placeholder="SKU" v-model="form.sku" >
-                                <div
-                                        v-if="validation_error.hasOwnProperty('sku')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.sku[0] }}
-                                    </div>
-                            </div>
+                            
                             <div class="form-group col-md-4">
                                 <label for="product-category">Category </label>
                                 <select id="product-category" class="form-control" @change="getSubCategories()" v-model="form.category">
-                                    <option value="">Choose...</option>
+                                    <option value="">Choose Category...</option>
                                     <option v-for="(value,index) in allcategories" :value="value.id" :key="index">{{ value.cat_name }}</option>
                                 </select>
                                 <div
@@ -326,7 +315,7 @@ export default {
                             <div class="form-group col-md-4 mt-1">
                                 <label for="product-category">Sub Category</label>
                                 <select id="product-category" class="form-control" v-model="form.sub_category">
-                                    <option value="">Choose...</option>
+                                    <option value="">Choose Sub Category...</option>
                                     <option v-for="(value,index) in allsubcategories" :value="value.id" :key="index">{{ value.cat_name }}</option>
                                 </select>
                                 <div
@@ -615,36 +604,42 @@ export default {
             <div class="statbox widget box box-shadow" v-if="form.color_size">
                 <div class="widget-content ">
                     <div class="row text-center">
-                        <div class="col-4  text-success">
+                        <div class="col-3  text-success">
                             <b>Coluor</b>
                         </div>
-                        <div class="col-4  text-success">
+                        <div class="col-3  text-success">
                            <b>Size</b> 
+                        </div>
+                        <div class="col-3  text-success">
+                            <b>SKU</b>
                         </div>
                         <div class="col-2  text-success">
                             <b>Qty</b>
                         </div>
-                        <div class="col-2  text-danger">
+                        <div class="col-1  text-danger">
                             <b>Remove</b>
                         </div>
                     </div>
                     <div class="row" v-for="(qt,index) in form.attrqty" :key="index">
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <select id="product-category" class="form-control" v-model="qt.colour_id">
-                                <option value="">Choose...</option>
+                                <option value="">Choose Coluor...</option>
                                 <option v-for="(value,index) in allcolours" :value="value.value" :key="index">{{ value.name }}</option>
                             </select>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <select id="product-category" class="form-control" v-model="qt.size_id">
-                                <option value="">Choose...</option>
+                                <option value="">Choose Size...</option>
                                 <option v-for="(value,index) in allsizes" :value="value.value" :key="index">{{ value.name }}</option>
                             </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input type="text"  class="form-control" id="sku" v-model="qt.sku" placeholder="SKU" >
                         </div>
                         <div class="form-group col-md-2">
                             <input type="number"  class="form-control" id="qty" v-model="qt.qty" placeholder="qty" >
                         </div>
-                        <div class="form-group col-md-2 text-center" v-if="index != 0">
+                        <div class="form-group col-md-1 text-center" v-if="index != 0">
                             <a
                               href="javascript:void(0)"
                               @click.prevent="removeCatChild(index)"
