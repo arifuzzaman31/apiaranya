@@ -74,13 +74,13 @@ export default {
                     response => {
                         fireToast(response.data)
                         $("#vendorModal").modal('hide');
+                        formReset()
                     }
                 ). catch(e => {
                    if(e.response.status == 422){
                         errors.value = e.response.data.errors;
                     }
                 })
-                formReset()
                 getVendor()
             }catch(e){
                 if(e.response.status == 422){
@@ -95,22 +95,17 @@ export default {
                     response => {
                         $("#vendorModal").modal('hide');
                         fireToast(response.data)
+                        formReset()
+                        getVendor()
                     }
                 ). catch(e => {
                    if(e.response.status == 422){
                         errors.value = e.response.data.errors;
                     }
                 })
-                getVendor()
-                formReset()
+                
             }catch(e){
-                if(e.response.status == 422){
-                    var data = [];
-                    for(const key in e.response.data.errors){
-                        data.push(e.response.data.errors[key][0]);
-                    }
-                    errors.value = data;
-                }
+                
             }
         }
 
@@ -122,6 +117,7 @@ export default {
 
         const formReset = () =>{
             vendor_id.value = '';
+            errors.value = [];
             form.vendor_name = '';
             form.status = true;
         }

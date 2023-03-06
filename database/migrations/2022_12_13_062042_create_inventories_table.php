@@ -16,10 +16,12 @@ class CreateInventoriesTable extends Migration
         Schema::create('inventories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id');
+            $table->foreignId('colour_id');
+            $table->foreignId('size_id');
             $table->integer('stock');
             $table->string('sku')->nullable();
-            $table->integer('warning_amount');
-            $table->string('warehouse');
+            $table->integer('warning_amount')->default(10);
+            $table->string('warehouse')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -35,6 +35,11 @@ class Product extends Model
         return $this->hasMany(Inventory::class);
     }
 
+    public function vat()
+    {
+        return $this->belongsTo(VatTax::class,'vat_tax_id');
+    }
+
     public function discount()
     {
         return $this->hasMany(Discount::class);
@@ -53,6 +58,56 @@ class Product extends Model
     public function product_size()
     {
         return $this->belongsToMany(Size::class,'product_sizes')->withTimestamps();
+    }
+
+    public function product_vendor()
+    {
+        return $this->belongsToMany(Vendor::class,'product_vendors')->withTimestamps();
+    }
+    public function product_brand()
+    {
+        return $this->belongsToMany(Brand::class,'product_brands')->withTimestamps();
+    }
+    public function product_designer()
+    {
+        return $this->belongsToMany(Designer::class,'product_designers')->withTimestamps();
+    }
+    public function product_embellishment()
+    {
+        return $this->belongsToMany(Embellishment::class,'product_embellishments')->withTimestamps();
+    }
+    public function product_making()
+    {
+        return $this->belongsToMany(Making::class,'product_makings')->withTimestamps();
+    }
+
+    public function product_season()
+    {
+        return $this->belongsToMany(Season::class,'product_seasons')->withTimestamps();
+    }
+    public function product_variety()
+    {
+        return $this->belongsToMany(Variety::class,'product_varieties')->withTimestamps();
+    }
+    public function product_fit()
+    {
+        return $this->belongsToMany(Fit::class,'product_fits')->withTimestamps();
+    }
+    public function product_artist()
+    {
+        return $this->belongsToMany(Artist::class,'product_artists')->withTimestamps();
+    }
+    public function product_consignment()
+    {
+        return $this->belongsToMany(Consignment::class,'product_consignments')->withTimestamps();
+    }
+    public function product_ingredient()
+    {
+        return $this->belongsToMany(Ingredients::class,'product_ingredients')->withTimestamps();
+    }
+    public function product_care()
+    {
+        return $this->belongsToMany(Care::class,'product_cares')->withTimestamps();
     }
 
     public function campaign()

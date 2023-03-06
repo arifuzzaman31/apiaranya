@@ -153,7 +153,7 @@ class OrderController extends Controller
 
     public function getOrderExcel(Request $request)
     {
-        return Excel::download(new \App\Exports\OrderExport($request->keyword,$request->byposition,$request->status),'order_list.xlsx');
+        return Excel::download(new OrderExport($request->keyword,$request->byposition,$request->status),'order_list.xlsx');
     }
 
     /**

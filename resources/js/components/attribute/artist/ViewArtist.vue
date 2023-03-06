@@ -74,14 +74,14 @@ export default {
                     response => {
                         fireToast(response.data)
                         $("#artistModal").modal('hide');
+                        formReset()
+                        getArtist()
                     }
                 ). catch(e => {
                    if(e.response.status == 422){
                         errors.value = e.response.data.errors;
                     }
                 })
-                formReset()
-                getArtist()
             }catch(e){
                 if(e.response.status == 422){
                     errors.value = e.response.data.errors;
@@ -95,14 +95,14 @@ export default {
                     response => {
                         $("#artistModal").modal('hide');
                         fireToast(response.data)
+                        getArtist()
+                        formReset()
                     }
                 ). catch(e => {
                    if(e.response.status == 422){
                         errors.value = e.response.data.errors;
                     }
                 })
-                getArtist()
-                formReset()
             }catch(e){
                 if(e.response.status == 422){
                     var data = [];
@@ -121,6 +121,7 @@ export default {
         }
 
         const formReset = () =>{
+            errors.value = []
             artist_id.value = '';
             form.artist_name = '';
             form.status = true;

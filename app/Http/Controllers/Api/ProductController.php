@@ -22,7 +22,7 @@ class ProductController extends Controller
         $camp_id   = $request->get('camp_id');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
-        $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric','inventory','product_size','product_colour','discount']);
+        $product = Product::with(['category:id,category_name,slug','subcategory']);
 
         if($camp_id != ''){
             $product = $product->join('campaign_products','products.id','campaign_products.product_id')
@@ -51,7 +51,7 @@ class ProductController extends Controller
 
         if($keyword != ''){
             $product = $product->where('product_name','like','%'.$keyword.'%');
-            $product = $product->orWhere('sku','like','%'.$keyword.'%');
+            // $product = $product->orWhere('sku','like','%'.$keyword.'%');
         }
 
         if($tak_some != ''){
@@ -74,7 +74,7 @@ class ProductController extends Controller
             //code...
             $noPagination = $request->get('no_paginate');
             $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
-            $product = Product::with(['category:id,category_name,slug','product_fabric','subcategory','inventory','product_size','product_colour','discount'])
+            $product = Product::with(['category:id,category_name,slug','subcategory'])
                         ->where('category_id',$cat)
                         ->orderBy('id','desc');
                     if($subcat != '' && $subcat != null){
@@ -97,7 +97,11 @@ class ProductController extends Controller
     {
         try {
             //code...
-            $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric','inventory','product_size','product_colour','discount'])->find($id);
+            $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric','inventory',
+                'product_size','product_colour','discount',
+                'vat:id,tax_name,tax_percentage','product_vendor','product_brand','product_designer','product_embellishment',
+                'product_making','product_season','product_variety','product_fit','product_artist','product_consignment',
+                'product_ingredient','product_care'])->find($id);
             return new ProductResource($product);
         } catch (\Throwable $th) {
             return $this->errorMessage();

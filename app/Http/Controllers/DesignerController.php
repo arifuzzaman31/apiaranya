@@ -46,15 +46,17 @@ class DesignerController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'designer_name' => 'required'
+            'designer_name' => 'required',
+            'designer_sort_name' => 'required'
         ]);
 
         try {
-            $color = new Designer();
-            $color->designer_name = $request->designer_name;
-            $color->slug = Str::slug($request->designer_name);
-            $color->status = $request->status == true ? 1 : 0;
-            $color->save();
+            $designer = new Designer();
+            $designer->designer_name = $request->designer_name;
+            $designer->designer_sort_name = $request->designer_sort_name;
+            $designer->slug = Str::slug($request->designer_name);
+            $designer->status = $request->status == true ? 1 : 0;
+            $designer->save();
 
             return response()->json(['status' => 'success', 'message' => $this->fieldname.' Added Successfully !']);
         } catch (\Throwable $th) {
@@ -95,12 +97,14 @@ class DesignerController extends Controller
     public function update(Request $request,$id)
     {
         $request->validate([
-            'designer_name' => 'required'
+            'designer_name' => 'required',
+            'designer_sort_name' => 'required'
         ]);
 
         try {
             $updata = Designer::find($id);
             $updata->designer_name = $request->designer_name;
+            $updata->designer_sort_name = $request->designer_sort_name;
             $updata->slug = Str::slug($request->designer_name);
             $updata->status = $request->status == true ? 1 : 0;
             $updata->update();

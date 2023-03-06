@@ -13,6 +13,7 @@ export default {
         const designer_id  = ref('');
         const form = reactive({
             designer_name: '',
+            designer_sort_name: '',
             status: true
         });
         const toastMixin = Swal.mixin({
@@ -74,13 +75,13 @@ export default {
                     response => {
                         fireToast(response.data)
                         $("#designerModal").modal('hide');
+                        formReset()
                     }
                 ). catch(e => {
                    if(e.response.status == 422){
                         errors.value = e.response.data.errors;
                     }
                 })
-                formReset()
                 getDesigner()
             }catch(e){
                 if(e.response.status == 422){
@@ -95,6 +96,7 @@ export default {
                     response => {
                         $("#designerModal").modal('hide');
                         fireToast(response.data)
+                        formReset()
                     }
                 ). catch(e => {
                    if(e.response.status == 422){
@@ -102,7 +104,7 @@ export default {
                     }
                 })
                 getDesigner()
-                formReset()
+                
             }catch(e){
                 if(e.response.status == 422){
                     var data = [];
@@ -117,12 +119,15 @@ export default {
         const editDesigner = (vendor) => {
             designer_id.value = vendor.id;
             form.designer_name = vendor.designer_name;
+            form.designer_sort_name = vendor.designer_sort_name;
             form.status = vendor.status;
         }
 
         const formReset = () =>{
             designer_id.value = '';
+            errors.value = [];
             form.designer_name = '';
+            form.designer_sort_name = '';
             form.status = true;
         }
         
@@ -163,6 +168,7 @@ export default {
                                 <tr>
                                     <th>SL</th>
                                     <th>Designer Name</th>
+                                    <th>Short Name</th>
                                     <th class="text-center">Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -172,6 +178,7 @@ export default {
                                     <tr>
                                         <td>{{ index+1 }}</td>
                                         <td>{{ designer.designer_name }}</td>
+                                        <td>{{ designer.designer_sort_name }}</td>
                                         <td class="text-center">
                                             <label class="switch s-success  mb-4 mx-5">
                                                 <input type="checkbox" :checked="designer.status == 1 ? true : false" disabled>
@@ -218,6 +225,16 @@ export default {
                                         class="text-danger"
                                     >
                                         {{ errors.designer_name[0] }}
+                                    </span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="designer_name">Short Name</label>
+                                    <input type="text" class="form-control" v-model="form.designer_sort_name" id="designer_sort_name" placeholder="Short Name">
+                                    <span
+                                        v-if="errors.hasOwnProperty('designer_sort_name')"
+                                        class="text-danger"
+                                    >
+                                        {{ errors.designer_sort_name[0] }}
                                     </span>
                                 </div>
 

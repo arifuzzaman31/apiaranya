@@ -40,7 +40,7 @@
 
         <!--  BEGIN CONTENT AREA  -->
         <div id="content" class="main-content">
-            <router-view ></router-view>
+            <!-- <router-view ></router-view> -->
             <div class="layout-px-spacing" id="app">
               @yield('content')
             </div>

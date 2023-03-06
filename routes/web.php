@@ -15,8 +15,17 @@ use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\EmbellishmentController;
 use App\Http\Controllers\DesignerController;
-use App\Http\Controllers\Payment\SslController;
+use App\Http\Controllers\MakingController;
+use App\Http\Controllers\FitController;
+use App\Http\Controllers\IngredientsController;
+use App\Http\Controllers\ConsignmentController;
+use App\Http\Controllers\SeasonController;
+use App\Http\Controllers\VarietyController;
+use App\Http\Controllers\CareController;
+use App\Http\Controllers\CompanyController;
+// use App\Http\Controllers\Payment\SslController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,20 +67,28 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     Route::get('edit-category',[CategoryController::class,'editCategory'])->name('edit-category');
     Route::get('update-category-image/{id}',[CategoryController::class,'updateCategoryImage'])->name('update-category-image');
     // Route::get('get-cate-data/{id}',[CategoryController::class,'getCategoryImage'])->name('get-cate-data');
-
+    // start Attributes
     Route::resource('colour',ColorController::class);
     Route::get('get-colour',[ColorController::class,'getColour']);
     // Route::post('colour/store',[ColorController::class, 'store']);
     Route::resource('sizes',SizeController::class);
     Route::resource('fabrics',FabricController::class);
-    
+
     Route::resource('vendors',VendorController::class);
     Route::resource('brands',BrandController::class);
     Route::resource('designers',DesignerController::class);
     Route::resource('artist',ArtistController::class);
-    // Route::get('get-attribute-data',[AttributesController::class, 'getAttrData']);
-    // Route::post('attribute-update/{id}',[AttributesController::class, 'update'])->name('attribute-update');
-    // Route::delete('attribute/destroy/{id}',[AttributesController::class, 'destroy'])->name('attribute-destroy');
+    Route::resource('embellishment',EmbellishmentController::class);
+    Route::resource('making',MakingController::class);
+    Route::resource('season',SeasonController::class);
+    Route::resource('varieties',VarietyController::class);
+    Route::resource('fit',FitController::class);
+    Route::resource('consignment',ConsignmentController::class);
+    Route::resource('ingredient',IngredientsController::class);
+    Route::resource('care',CareController::class);
+
+    // Company
+    Route::resource('vat-tax',CompanyController::class);
     
     
     Route::resource('product',ProductController::class);

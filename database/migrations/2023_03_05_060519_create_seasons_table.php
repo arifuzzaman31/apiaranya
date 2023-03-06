@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAttributesTable extends Migration
+class CreateSeasonsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class CreateAttributesTable extends Migration
      */
     public function up()
     {
-        Schema::create('attributes', function (Blueprint $table) {
+        Schema::create('seasons', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('season_name');
             $table->string('slug')->nullable();
-            $table->longText('description')->nullable();
-            $table->integer('sort_order')->nullable();
-            $table->string('type')->nullable();
-            $table->string('country_of_origin')->nullable();
+            $table->integer('precedence')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->softDeletes();
             $table->timestamps();
@@ -34,6 +31,6 @@ class CreateAttributesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('attributes');
+        Schema::dropIfExists('seasons');
     }
 }

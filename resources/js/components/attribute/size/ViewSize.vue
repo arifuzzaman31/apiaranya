@@ -74,14 +74,14 @@ export default {
                     response => {
                         fireToast(response.data)
                         $("#sizeModal").modal('hide');
+                        formReset()
+                        getSize()
                     }
                 ). catch(e => {
                    if(e.response.status == 422){
                         errors.value = e.response.data.errors;
                     }
                 })
-                formReset()
-                getSize()
             }catch(e){
                 if(e.response.status == 422){
                     errors.value = e.response.data.errors;
@@ -95,14 +95,14 @@ export default {
                     response => {
                         $("#sizeModal").modal('hide');
                         fireToast(response.data)
+                        getSize()
+                        formReset()
                     }
                 ). catch(e => {
                    if(e.response.status == 422){
                         errors.value = e.response.data.errors;
                     }
                 })
-                getSize()
-                formReset()
             }catch(e){
                 if(e.response.status == 422){
                     var data = [];
@@ -121,6 +121,7 @@ export default {
         }
 
         const formReset = () =>{
+            errors.value = []
             size_id.value = '';
             form.size_name = '';
             form.status = true;

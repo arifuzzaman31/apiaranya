@@ -12,11 +12,14 @@ use App\Models\ProductSize;
 use App\Models\Inventory;
 use App\Models\Discount;
 use App\Models\CategoryFabric;
+use App\Models\ProductTag;
 use Illuminate\Http\Request;
+use App\Traits\ProductTrait;
 use DB,Str;
 
 class ProductController extends Controller
 {
+    use ProductTrait;
     public $fieldname = 'Product';
     /**
      * Display a listing of the resource.
@@ -44,8 +47,8 @@ class ProductController extends Controller
         $discount   = $request->get('discount');
         $keyword   = $request->get('keyword');
         $camp_id   = $request->get('camp_id');
-        $dataQty = $request->get('per_page') ? $request->get('per_page') : 2;
-        $product = Product::with(['category:id,category_name','subcategory','inventory:id,product_id,stock,sku','product_size','product_colour','discount']);
+        $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
+        $product = Product::with(['vat','category:id,category_name','subcategory','inventory:id,product_id,stock,sku','product_size','product_colour','discount']);
 
         if($camp_id != ''){
             $product = $product->join('campaign_products','products.id','campaign_products.product_id')
@@ -95,7 +98,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->all();
         $request->validate([
             'product_name' => 'required',
             'category' => 'required',
@@ -107,38 +109,24 @@ class ProductController extends Controller
         
         DB::beginTransaction();
         try {
-
             $product = new Product();
             $product->product_name        = $request->product_name;
             $product->slug                = Str::slug($request->product_name);
             $product->category_id         = $request->category;
             $product->sub_category_id     = $request->sub_category;
             $product->description         = $request->description;
-            $product->vandor                 = $request->vandor;
-            $product->brand                 = $request->brand;
-            $product->designer                 = $request->designer;
-            $product->embellishment                 = $request->embellishment;
-            $product->making                 = $request->making;
-            $product->lead_time                 = $request->lead_time;
-            $product->season                 = $request->season;
-            $product->variety                 = $request->variety;
-            $product->fit                 = $request->fit;
-            $product->artist_name                 = $request->artist_name;
-            $product->ingredients                 = $request->ingredients;
-            $product->consignment                 = $request->consignment;
+            $product->lead_time           = $request->lead_time;
             $product->product_image       = $request->product_image_one;
             $product->image_one           = $request->product_image_one;
             $product->image_two           = $request->product_image_two;
             $product->image_three         = $request->product_image_three;
-            $product->image_four  = $request->product_image_four;
+            $product->image_four          = $request->product_image_four;
             $product->image_five          = $request->image_five;
             $product->cost                = $request->cost;
             $product->mrp_price           = $request->price;
-            $product->dimension           = $request->dimention;
+            $product->dimension           = $request->dimension;
             $product->weight              = $request->weight;
-            $product->care                = $request->care;
             $product->design_code         = $request->design_code;
-            $product->country_of_origin   = $request->care;
             $product->status              =  AllStatic::$active;
             $product->save();
 
@@ -157,18 +145,22 @@ class ProductController extends Controller
 
             if($request->is_fabric && $request->selectfabrics){
 
-                    $product->product_fabric()->attach($request->selectfabrics);
+                $product->product_fabric()->attach($request->selectfabrics);
 
-                    $cid = $request->sub_category != '' ? $request->sub_category : $request->category;
+                $cid = $request->sub_category != '' ? $request->sub_category : $request->category;
+
+                foreach($request->selectfabrics as $subcat){
                     $chk = CategoryFabric::where(
-                        ['category_id' =>  $cid,'fabric_id' => $request->selectfabrics]
+                        ['category_id' =>  $cid,'fabric_id' => $subcat]
                         )->first();
+
                     if(empty($chk)){
                         CategoryFabric::create([
                             'category_id' => $cid,
-                            'fabric_id' => $request->selectfabrics
+                            'fabric_id' => $subcat
                         ]);
                     }
+                }
             }
             
             if($request->color_size && $request->attrqty && !empty($request->attrqty)){
@@ -193,6 +185,7 @@ class ProductController extends Controller
                 $stock  = new Inventory();
                 $stock->product_id  = $product->id;
                 $stock->stock       = $request->stock;
+                $stock->sku       = $request->sku;
                 $stock->save();
             }
             
@@ -205,12 +198,71 @@ class ProductController extends Controller
                 $disc->status = 1;
                 $disc->save();
             }
+
+            if(!empty($request->vendor)){
+               
+                $product->product_vendor()->attach($request->vendor);
+            }
+            if(!empty($request->brand)){
+               
+                $product->product_brand()->attach($request->brand);
+            }
+            if(!empty($request->designer)){
+               
+                $product->product_designer()->attach($request->designer);
+            }
+            if(!empty($request->embellishment)){
+               
+                $product->product_embellishment()->attach($request->embellishment);
+            }
+            if(!empty($request->making)){
+               
+                $product->product_making()->attach($request->making);
+            }
+            if(!empty($request->season)){
+               
+                $product->product_season()->attach($request->season);
+            }
+            if(!empty($request->variety)){
+               
+                $product->product_variety()->attach($request->variety);
+            }
+            if(!empty($request->fit)){
+               
+                $product->product_fit()->attach($request->fit);
+            }
+            if(!empty($request->artist)){
+               
+                $product->product_artist()->attach($request->artist);
+            }
+            if(!empty($request->consignment)){
+               
+                $product->product_consignment()->attach($request->consignment);
+            }
+            if(!empty($request->ingredients)){
+               
+                $product->product_ingredient()->attach($request->ingredients);
+            }
+            if(!empty($request->care)){
+               
+                $product->product_care()->attach($request->care);
+            }
+
+            if(!empty($request->tages)){
+               
+                $str = implode(',', $request->tages);
+               
+                ProductTag::create([
+                    'product_id' => $product->id,
+                    'keyword_name' => json_encode($str)
+                ]);
+            }
+
             DB::commit();
             return response()->json(['status' => 'success', 'message' => $this->fieldname.' Added Successfully!']);
         } catch (\Throwable $th) {
             DB::rollback();
-            return response()->json($th->getMessage());
-            return response()->json(['status' => 'error', 'message' => $th]);
+            // return response()->json($th);
             return response()->json(['status' => 'error', 'message' => 'Something went wrong!']);
         }
     }
@@ -260,11 +312,33 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
-        return response()->json(['status' => 'success', 'message' => $this->fieldname.' Deleted Successfully!']);
-        return response()->json($product->inventory);
         try {
+            DB::beginTransaction();
+            Inventory::where('product_id',$product->id)->delete();
+            Discount::where('product_id',$product->id)->delete();
+            ProductTag::where('product_id',$product->id)->delete();
+            $product->product_colour()->detach();
+            $product->product_fabric()->detach();
+            $product->product_size()->detach();
+            $product->product_vendor()->detach();
+            $product->product_brand()->detach();
+            $product->product_designer()->detach();
+            $product->product_embellishment()->detach();
+            $product->product_making()->detach();
+            $product->product_season()->detach();
+            $product->product_variety()->detach();
+            $product->product_fit()->detach();
+            $product->product_artist()->detach();
+            $product->product_consignment()->detach();
+            $product->product_ingredient()->detach();
+            $product->product_care()->detach();
+            $product->campaign()->detach();
+            $product->delete();
+
+            DB::commit();
+            return response()->json(['status' => 'success', 'message' => $this->fieldname.' Deleted Successfully!']);
         } catch (\Throwable $th) {
+            DB::rollback();
             return response()->json(['status' => 'error', 'message' =>  $th->getMessage()]);
         }
     }

@@ -74,14 +74,14 @@ export default {
                     response => {
                         fireToast(response.data)
                         $("#BrandModal").modal('hide');
+                        formReset()
+                        getBrand()
                     }
                 ). catch(e => {
                    if(e.response.status == 422){
                         errors.value = e.response.data.errors;
                     }
                 })
-                formReset()
-                getBrand()
             }catch(e){
                 if(e.response.status == 422){
                     errors.value = e.response.data.errors;
@@ -95,14 +95,14 @@ export default {
                     response => {
                         $("#BrandModal").modal('hide');
                         fireToast(response.data)
+                        getBrand()
+                        formReset()
                     }
                 ). catch(e => {
                    if(e.response.status == 422){
                         errors.value = e.response.data.errors;
                     }
                 })
-                getBrand()
-                formReset()
             }catch(e){
                 if(e.response.status == 422){
                     var data = [];
@@ -121,6 +121,7 @@ export default {
         }
 
         const formReset = () =>{
+            errors.value = []
             brand_id.value = '';
             form.brand_name = '';
             form.status = true;

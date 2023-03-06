@@ -16,6 +16,7 @@ class CreateDesignersTable extends Migration
         Schema::create('designers', function (Blueprint $table) {
             $table->id();
             $table->string('designer_name');
+            $table->string('designer_sort_name');
             $table->string('slug')->nullable();
             $table->integer('precedence')->nullable();
             $table->tinyInteger('status')->default(1);

@@ -75,13 +75,14 @@ export default {
                     response => {
                         fireToast(response.data)
                         $("#ColorModal").modal('hide');
+                        formReset()
                     }
                 ). catch(e => {
                    if(e.response.status == 422){
                         errors.value = e.response.data.errors;
                     }
                 })
-                formReset()
+                
                 getColour()
             }catch(e){
                 if(e.response.status == 422){
@@ -96,6 +97,7 @@ export default {
                     response => {
                         $("#ColorModal").modal('hide');
                         fireToast(response.data)
+                        formReset()
                     }
                 ). catch(e => {
                    if(e.response.status == 422){
@@ -103,7 +105,6 @@ export default {
                     }
                 })
                 getColour()
-                formReset()
             }catch(e){
                 if(e.response.status == 422){
                     var data = [];
@@ -124,6 +125,7 @@ export default {
 
         const formReset = () =>{
             color_id.value = '';
+            errors.value = [];
             form.color_name = '';
             form.color_code = '';
             form.status = true;
