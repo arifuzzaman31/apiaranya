@@ -23622,7 +23622,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         response.data.map(function (data) {
           opt.push({
             'value': data.id,
-            'name': data.tax_name
+            'name': data.tax_name + ' (' + data.tax_percentage + '%)'
           });
         });
         _this21.alltaxes = opt;

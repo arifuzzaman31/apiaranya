@@ -3,7 +3,7 @@
         <div class="profile-info">
             <figure class="user-cover-image"></figure>
             <div class="user-info">
-                <img src="{{ asset('admin-assets/assets/img/90x90.jpg')}}" alt="avatar">
+                <img src="{{ asset('admin-assets/assets/img/headerLogo.png')}}" alt="avatar">
                 <h6 class="">{{ auth()->guard('admin')->user()->name }}</h6>
                 <p class="">{{ auth()->guard('admin')->user()->email }}</p>
             </div>

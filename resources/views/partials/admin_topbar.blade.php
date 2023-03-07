@@ -4,7 +4,7 @@
         <ul class="navbar-nav theme-brand flex-row  text-center">
             <li class="nav-item theme-logo">
                 <a href="{{ url('admin') }}">
-                    <img src="{{ asset('admin-assets/assets/img/90x90.jpg')}}" class="navbar-logo" alt="logo">
+                    <img src="{{ asset('admin-assets/assets/img/footerLogo.png')}}" class="navbar-logo" alt="logo">
                 </a>
             </li>
             <li class="nav-item theme-text">
@@ -46,7 +46,7 @@
                 <div class="dropdown-menu position-absolute animated fadeInUp" aria-labelledby="userProfileDropdown">
                     <div class="user-profile-section">
                         <div class="media mx-auto">
-                            <img src="{{ asset('admin-assets/assets/img/90x90.jpg')}}" class="img-fluid mr-2" alt="avatar">
+                            <img src="{{ asset('admin-assets/assets/img/aranya-logo-dark.png')}}" class="img-fluid mr-2" alt="avatar">
                             <div class="media-body">
                                 <h5>{{ auth()->guard('admin')->user()->name }}</h5>
                                 <p>{{ auth()->guard('admin')->user()->email }}</p>

@@ -444,7 +444,7 @@ export default {
                 axios.get(baseUrl+'vat-tax/create?no_paginate=yes').then(response => {
                     const opt = []
                     response.data.map(data => {
-                        opt.push({'value':data.id,'name':data.tax_name})
+                        opt.push({'value':data.id,'name':data.tax_name +' ('+data.tax_percentage+'%)'})
                     })
                     this.alltaxes = opt
                 }).catch(error => {
