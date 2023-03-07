@@ -94,6 +94,7 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     Route::resource('product',ProductController::class);
     Route::get('get-product',[ProductController::class,'getProduct']);
     Route::get('get-product/search',[ProductController::class,'getProductBySearch']);
+    Route::post('product-import',[ProductController::class,'bulkUpload']);
     
     //Order
     Route::get('order',[OrderController::class,'index'])->name('order');

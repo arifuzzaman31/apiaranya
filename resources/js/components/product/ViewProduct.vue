@@ -47,6 +47,8 @@ export default {
                 status: true
             },
             singleproduct: null,
+            file: null,
+            button_name: 'Upload',
             validation_error: {},
             url: baseUrl
         }
@@ -161,6 +163,50 @@ export default {
             })
         },
 
+        handleFileUpload(){
+            this.file = this.$refs.file.files[0];
+            document.getElementById("excel-file").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> ' + this.file.name;
+        },
+
+        uploadExcel(){
+            this.button_name = "Uploading...";
+            let formData = new FormData();
+            formData.append('file', this.file);
+            axios.post(baseUrl+'product-import',
+                formData,
+                {
+                    headers : {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            ).then(response => {
+                if(response.data.status === 'success'){
+                    this.successMessage(response.data);
+                    $('#bulkUpload').modal('hide');
+                    this.button_name = "Upload";
+                }
+                else
+                {
+                    this.successMessage(response.data);   
+                    this.button_name = "Upload";
+                }
+            })
+            .catch(err => {
+                    if (err.response.status == 422) 
+                    {
+                        this.validation_error = err.response.data.errors;
+                        this.validationError();
+                        this.button_name = "Upload";
+                    } 
+                    else 
+                    {
+                        this.successMessage(err);
+                        this.button_name = "Upload";
+                    }
+                }
+            );
+        },
+
         selectAll(){
 
             this.isCheckAll = !this.isCheckAll;
@@ -226,7 +272,8 @@ export default {
                     </div>
                     <div class="col-md-4 col-lg-3 col-12 mt-4">
                         <button type="button" class="btn btn-danger btn-sm" @click="filterClear()">CLEAR</button>
-                        <button type="button" class="btn btn-success btn-sm ml-2" @click="openCampModal()">Add To Campaign</button>
+                        <button type="button" class="btn btn-success btn-sm mx-2" @click="openCampModal()">Add To Campaign</button>
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#bulkUpload">Bulk Upload</button>
                     </div>
 
                     <div class="col-md-4 col-lg-3 col-12">
@@ -349,6 +396,44 @@ export default {
                             </div>
                         </form>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="bulkUpload" tabindex="-1" role="dialog" aria-labelledby="bulkUploadLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bulkUploadLabel">Bulk Upload</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">X</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form role="form">
+                                <div class="form-group">
+                                    <p>Upload Product According To Excel Format</p> <br>
+                                    <span class="btn btn-primary btn-file">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                        <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+                                    </span><br>
+                                    <span class="fileinput-new mt-2" id="excel-file"></span>
+                                </div>
+                                <span
+                                    v-if="validation_error.hasOwnProperty('file')"
+                                    class="text-danger"
+                                >
+                                    {{ validation_error.file[0] }}
+                                </span>
+                                
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
+                    <button type="button" class="btn btn-primary" @click="uploadExcel">{{ button_name }}</button>
                 </div>
             </div>
         </div>

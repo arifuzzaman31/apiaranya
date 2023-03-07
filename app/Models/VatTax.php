@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class VatTax extends Model
 {
     use HasFactory,SoftDeletes;
+
+    protected $fillable = ['id', 'tax_name', 'tax_percentage', 'status'];
     
     public function product()
     {

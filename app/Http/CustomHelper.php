@@ -49,4 +49,9 @@ use App\Http\AllStatic;
         return ($var !== NULL && $var !== FALSE && $var !== "");
     }
 
+    function rangDivider()
+    {
+        
+    }
+
 ?>

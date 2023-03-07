@@ -7,7 +7,6 @@
             <div class="row">
                 <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
                     <h4>Category</h4>
-                    <!-- <a class="btn btn-outline-primary" href="{{ route('edit-category') }}">View</a> -->
                 </div>                 
             </div>
         </div>

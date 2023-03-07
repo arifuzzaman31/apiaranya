@@ -20,6 +20,9 @@ class ProductController extends Controller
         $q_category   = $request->get('category');
         $q_sub_category   = $request->get('sub_category');
         $camp_id   = $request->get('camp_id');
+        $attrname   = $request->get('attrname');
+        $attrid   = $request->get('attrid');
+        $pricerange   = $request->get('range');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
         $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric',
@@ -50,9 +53,32 @@ class ProductController extends Controller
             $product = $product->where('is_discount',0);
         }
 
+        if($attrname != '' && $attrid != ''){
+            if($attrname == 'colour'){
+                $product = $product->whereHas('product_colour', function ($q) use ($attrid) {
+                    $q->where('colour_id', $attrid);
+                });
+            }
+            if($attrname == 'size'){
+                $product = $product->whereHas('product_sizes', function ($q) use ($attrid) {
+                    $q->where('size_id', $attrid);
+                });
+            }
+            if($attrname == 'fabric'){
+                $product = $product->whereHas('product_fabrics', function ($q) use ($attrid) {
+                    $q->where('fabric_id', $attrid);
+                });
+            }
+        }
+
         if($keyword != ''){
             $product = $product->where('product_name','like','%'.$keyword.'%');
             // $product = $product->orWhere('sku','like','%'.$keyword.'%');
+        }
+
+        if($pricerange != ''){
+            $rang = explode('-',$pricerange);
+            $product = $product->whereBetween('mrp_price', [$rang[0], $rang[1]]);
         }
 
         if($tak_some != ''){
@@ -75,6 +101,10 @@ class ProductController extends Controller
             //code...
             $noPagination = $request->get('no_paginate');
             $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
+            $attrname   = $request->get('attrname');
+            $attrid   = $request->get('attrid');
+            $pricerange   = $request->get('range');
+            
             $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric',
             'product_size','product_colour'])
                         ->where('category_id',$cat)
@@ -82,6 +112,29 @@ class ProductController extends Controller
                     if($subcat != '' && $subcat != null){
                         $product = $product->where('sub_category_id',$subcat);
                     }
+            if($attrname != '' && $attrid != ''){
+                if($attrname == 'colour'){
+                    $product = $product->whereHas('product_colour', function ($q) use ($attrid) {
+                        $q->where('colour_id', $attrid);
+                    });
+                }
+                if($attrname == 'size'){
+                    $product = $product->whereHas('product_sizes', function ($q) use ($attrid) {
+                        $q->where('size_id', $attrid);
+                    });
+                }
+                if($attrname == 'fabric'){
+                    $product = $product->whereHas('product_fabrics', function ($q) use ($attrid) {
+                        $q->where('fabric_id', $attrid);
+                    });
+                }
+            }
+
+            if($pricerange != ''){
+                $rang = explode('-',$pricerange);
+                $product = $product->whereBetween('mrp_price', [$rang[0], $rang[1]]);
+            }
+
             if($noPagination != ''){
                 $product = $product->get();
             } else {

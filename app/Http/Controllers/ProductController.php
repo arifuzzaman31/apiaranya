@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\AllStatic;
 use App\Http\Resources\ProductResource;
+use App\Imports\ProductImport;
 use App\Models\CampaignProduct;
 use App\Models\Product;
 use App\Models\ProductColour;
@@ -15,7 +16,7 @@ use App\Models\CategoryFabric;
 use App\Models\ProductTag;
 use Illuminate\Http\Request;
 use App\Traits\ProductTrait;
-use DB,Str;
+use DB,Str,Excel;
 
 class ProductController extends Controller
 {
@@ -302,6 +303,22 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         //
+    }
+
+
+    public function bulkUpload(Request $request)
+    {
+        $this->validate($request, [
+            'file'   => 'required|mimes:xls,xlsx'
+        ]);
+
+        $path = $request->file('file')->getRealPath();
+        // return $data = Excel::load($path, function($reader) {})->get();
+        Excel::import(new ProductImport, $path);
+        // $data = Excel::toCollection(new ProductImport,$request->file('file'));
+        dd($data);
+        return $this->successMessage('Excel Data Imported successfully.');
+        dd($request->file('file'));
     }
 
     /**

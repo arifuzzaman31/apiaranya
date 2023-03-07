@@ -56,7 +56,7 @@ export default {
                 max_amount: 0,
                 discount_type: 1,
                 description: '',
-                attrqty: [{colour_id:'',size_id:'',qty:'',sku:''}]
+                attrqty: [{colour_id:[],size_id:'',qty:'',sku:''}]
             },
             tages: [],
             allcategories: [],
@@ -176,7 +176,7 @@ export default {
         },
 
         addMore(){
-            this.form.attrqty.push({colour_id:'',size_id:'',qty:''})
+            this.form.attrqty.push({colour_id:[],size_id:'',qty:'',sku:''})
         },
         removeCatChild(index) {
             this.form.attrqty.splice(index, 1);
@@ -995,25 +995,25 @@ export default {
                                 <label for="product-image1">Image (1:1)</label>
                                 <!-- <input type="file" class="form-control" id="product-image"> -->
                                 <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('one')">Upload files</button>
-                                <p class="mt-1 text-info" v-if="form.product_image_one != ''">{{  form.product_image_one }}</p>
+                                <p class="mt-1 text-info" v-if="form.product_image_one != ''">Image Uploaded</p>
                             </div>
                             <div class="col-md-3 col-12 mt-4">
                                 <label for="product-image1">Image (1:1)</label>
                                 <!-- <input type="file" class="form-control" id="product-image"> -->
                                 <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('two')">Upload files</button>
-                                <p class="mt-1 text-info" v-if="form.product_image_two != ''">{{  form.product_image_two }}</p>
+                                <p class="mt-1 text-info" v-if="form.product_image_two != ''">Image Uploaded</p>
                             </div>
                             <div class="col-md-3 col-12 mt-4">
                                 <label for="product-image1">Image (1:1)</label>
                                 <!-- <input type="file" class="form-control" id="product-image"> -->
                                 <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('three')">Upload files</button>
-                                <p class="mt-1 text-info" v-if="form.product_image_three != ''">{{  form.product_image_three }}</p>
+                                <p class="mt-1 text-info" v-if="form.product_image_three != ''">Image Uploaded</p>
                             </div>
                             <div class="col-md-3 col-12 mt-4">
                                 <label for="product-image1">Image (1:1)</label>
                                 <!-- <input type="file" class="form-control" id="product-image"> -->
                                 <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('four')">Upload files</button>
-                                <p class="mt-1 text-info" v-if="form.product_image_four != ''">{{  form.product_image_four }}</p>
+                                <p class="mt-1 text-info" v-if="form.product_image_four != ''">Image Uploaded </p>
                             </div>
                     </div>
                 </div>
@@ -1144,16 +1144,16 @@ export default {
             <div class="statbox widget box box-shadow" v-if="form.color_size">
                 <div class="widget-content ">
                     <div class="row text-center">
-                        <div class="col-3  text-success">
+                        <div class="col-6  text-success">
                             <b>Colour</b>
                         </div>
-                        <div class="col-3  text-success">
+                        <div class="col-2  text-success">
                            <b>Size</b> 
                         </div>
-                        <div class="col-3  text-success">
+                        <div class="col-2  text-success">
                             <b>SKU</b>
                         </div>
-                        <div class="col-2  text-success">
+                        <div class="col-1  text-success">
                             <b>Qty</b>
                         </div>
                         <div class="col-1  text-danger">
@@ -1161,22 +1161,48 @@ export default {
                         </div>
                     </div>
                     <div class="row" v-for="(qt,index) in form.attrqty" :key="index">
-                        <div class="form-group col-md-3">
-                            <select id="product-category" class="form-control" v-model="qt.colour_id">
-                                <option value="">Choose Colour...</option>
-                                <option v-for="(value,index) in allcolours" :value="value.value" :key="index">{{ value.name }}</option>
-                            </select>
+                        <div class="form-group col-md-6">
+                            <Multiselect
+                                v-model="qt.colour_id"
+                                placeholder="Select Colour"
+                                track-by="name"
+                                label="name"
+                                mode="tags"
+                                :close-on-select="false"
+                                :search="true"
+                                :options="allcolours"
+                                :searchable="true"
+                                >
+                                <template v-slot:tag="{ option, handleTagRemove, disabled }">
+                                <div
+                                    class="multiselect-tag is-user"
+                                    :class="{
+                                    'is-disabled': disabled
+                                    }"
+                                >
+                                    {{ option.name }}
+                                    <span
+                                    v-if="!disabled"
+                                    class="multiselect-tag-remove"
+                                    @mousedown.prevent="handleTagRemove(option, $event)"
+                                    >
+                                    <span class="multiselect-tag-remove-icon"></span>
+                                    </span>
+                                </div>
+                                </template>
+                            </Multiselect>
+                           
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-2">
                             <select id="product-category" class="form-control" v-model="qt.size_id">
                                 <option value="">Choose Size...</option>
                                 <option v-for="(value,index) in allsizes" :value="value.value" :key="index">{{ value.name }}</option>
                             </select>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-2">
                             <input type="text"  class="form-control" id="sku" v-model="qt.sku" placeholder="SKU" >
                         </div>
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-1">
                             <input type="number"  class="form-control" id="qty" v-model="qt.qty" placeholder="qty" >
                         </div>
                         <div class="form-group col-md-1 text-center" v-if="index != 0">
