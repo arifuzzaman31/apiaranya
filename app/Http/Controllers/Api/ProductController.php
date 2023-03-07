@@ -22,7 +22,8 @@ class ProductController extends Controller
         $camp_id   = $request->get('camp_id');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
-        $product = Product::with(['category:id,category_name,slug','subcategory']);
+        $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric',
+        'product_size','product_colour']);
 
         if($camp_id != ''){
             $product = $product->join('campaign_products','products.id','campaign_products.product_id')
@@ -74,7 +75,8 @@ class ProductController extends Controller
             //code...
             $noPagination = $request->get('no_paginate');
             $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
-            $product = Product::with(['category:id,category_name,slug','subcategory'])
+            $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric',
+            'product_size','product_colour'])
                         ->where('category_id',$cat)
                         ->orderBy('id','desc');
                     if($subcat != '' && $subcat != null){
