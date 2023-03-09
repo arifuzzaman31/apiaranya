@@ -10,7 +10,7 @@ class Product extends Model
 {
     use HasFactory,SoftDeletes;
 
-    protected $fillable = ['id', 'product_name', 'slug', 'category_id', 'sub_category_id', 'vat_tax_id', 'lead_time', 'product_image', 'image_one', 'image_two', 'image_three', 'image_four', 'image_five', 'cost', 'mrp_price', 'dimension', 'country_of_origin', 'weight', 'design_code', 'description', 'status', 'is_discount'];
+    protected $fillable = ['product_name', 'slug', 'category_id', 'sub_category_id', 'vat_tax_id', 'lead_time', 'product_image', 'image_one', 'image_two', 'image_three', 'image_four', 'image_five', 'cost', 'mrp_price', 'dimension', 'country_of_origin', 'weight', 'design_code', 'description', 'status', 'is_discount'];
 
     public function category()
     {

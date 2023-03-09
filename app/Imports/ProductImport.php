@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\Inventory;
 use App\Models\Product;
 use App\Models\ProductTag;
+use App\Models\CategoryFabric;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -18,24 +19,44 @@ class ProductImport implements ToCollection
     public function collection(Collection $rows)
     {
         unset($rows[0]);
-        foreach($rows as $row)
+      //   return count($rows);
+        $data = array_filter($rows->toArray(),function ($number) {
+                 return $number[0] !== null;
+             });
+        foreach($data as $row)
         {
+            $ch = Product::where('design_code',$row[1])->first();
+            if(!empty($ch)){
+               $pc = explode(",",$row[19]);
+               foreach($pc as $vl)
+               {
+                  Inventory::create([
+                     'product_id'  => $ch->id,
+                     'colour_id'   => $vl,
+                     'size_id'     => $row[12],
+                     'sku'         => $row[0],
+                     'stock'       => (int)$row[24]
+                 ]);
+               }
+            }
+         // dd($row[2]);
+         try {
             DB::beginTransaction();
             $product = Product::create([
                 'product_name' => $row[2], 
                 'slug' => Str::slug($row[2]), 
-                'category_id' => $row[5], 
-                'sub_category_id' => $row[6], 
-                'vat_tax_id' => $row[0], //not found
+                'category_id' => (int) $row[5], 
+                'sub_category_id' => (int)$row[6], 
+                'vat_tax_id' => 1, //not found
                 'lead_time' => $row[15], 
-                'product_image' => $row[25], 
+                'product_image' => 'https://res.cloudinary.com/diyc1dizi/image/upload/'.$row[25], 
                 'image_one' => $row[25],
                 'image_two' => $row[26], 
                 'image_three' => $row[27], 
                 'image_four' => $row[28], 
                 'image_five' => $row[29], 
-                'cost'      => $row[22], 
-                'mrp_price' => $row[23], 
+                'cost'      => (float)$row[22], 
+                'mrp_price' => (float)$row[23], 
                 'dimension' => $row[30], 
                 // 'country_of_origin' => $row[0], 
                 'weight' => $row[31], 
@@ -45,66 +66,93 @@ class ProductImport implements ToCollection
                 'is_discount' => 0
             ]);
 
-            if(!empty($row[19])){
-                $product->product_colour()->attach(array($row[19]));
+            if(!empty($row[19])){ 
+               $pc = explode(",",$row[19]);
+               $product->product_colour()->attach($pc);
+
+               foreach($pc as $vl)
+               {
+                  Inventory::create([
+                     'product_id'  => $product->id,
+                     'colour_id'   => $vl,
+                     'size_id'     => $row[12],
+                     'sku'         => $row[0],
+                     'stock'       => (int)$row[24]
+                 ]);
+               }
             }
             
             if(!empty($row[12])){
-               
-                $product->product_size()->attach(array($row[12]));
+               $ps = explode(",",$row[12]);
+                $product->product_size()->attach($ps);
             }
 
-            if(!empty($row)){
-               
-               $product->product_fabric()->attach(array($row[11]));
+            if(!empty($row[11])){
+               $pb = explode(",",$row[11]);
+               $product->product_fabric()->attach($pb);
+
+               $cid = (int)$row[6] != '' ? (int)$row[6] : (int) $row[5];
+
+                foreach($pb as $fab){
+                    $chk = CategoryFabric::where(
+                        ['category_id' =>  $cid,'fabric_id' => $fab]
+                        )->first();
+
+                    if(empty($chk)){
+                        CategoryFabric::create([
+                            'category_id' => $cid,
+                            'fabric_id' => $fab
+                        ]);
+                    }
+                }
             }
-            if(!empty($row)){
-               
-               $product->product_vendor()->attach(array($row[4]));
+            if(!empty($row[4])){
+               $pv = explode(",",$row[4]);
+               $product->product_vendor()->attach($pv);
             }
-            if(!empty($row)){
-               
-               $product->product_brand()->attach(array($row[7]));
+            if(!empty($row[7])){
+               $pbr = explode(",",$row[7]);
+               $product->product_brand()->attach($pbr);
             }
-            if(!empty($row)){
-               
-               $product->product_designer()->attach(array($row[9]));
+            if(!empty($row[9])){
+               $pd = explode(",",$row[9]);
+               $product->product_designer()->attach($pd);
             }
-            if(!empty($row)){
-               
-               $product->product_embellishment()->attach(array($row[10]));
+            if(!empty($row[10])){
+               $pem = explode(",",$row[10]);
+               $product->product_embellishment()->attach($pem);
             }
-            if(!empty($row)){
-               
-               $product->product_making()->attach(array($row[14]));
+            if(!empty($row[14])){
+               $pmk = explode(",",$row[14]);
+               $product->product_making()->attach($pmk);
             }
             if(!empty($row[16])){
-               
-               $product->product_season()->attach(array($row[16]));
+               $pse = explode(",",$row[16]);
+               $product->product_season()->attach($pse);
             }
             if(!empty($row[17])){
-               
-               $product->product_variety()->attach(array($row[17]));
+               $pva = explode(",",$row[17]);
+               $product->product_variety()->attach($pva);
             }
             if(!empty($row[18])){
-               
-               $product->product_fit()->attach(array($row[18]));
+               $pf = explode(",",$row[18]);
+               $product->product_fit()->attach($pf);
             }
             if(!empty($row[20])){
-               
-               $product->product_artist()->attach(array($row[20]));
+               $par = explode(",",$row[20]);
+               $product->product_artist()->attach($par);
             }
             if(!empty($row[21])){
-               
-               $product->product_consignment()->attach(array($row[21]));
+               $pco = explode(",",$row[21]);
+               $product->product_consignment()->attach($pco);
             }
             if(!empty($row[13])){
-               
-               $product->product_ingredient()->attach(array($row[13]));
+               $pin = explode(",",$row[13]);
+               $product->product_ingredient()->attach($pin);
             }
             if(!empty($row[32])){
-               
-               $product->product_care()->attach(array($row[32]));
+               $pca = explode(",",$row[32]);
+               $product->product_care()->attach($pca);
             }
 
             if(!empty($row[33])){
@@ -115,13 +163,14 @@ class ProductImport implements ToCollection
                 ]);
             }
 
-            // Inventory::create([
-            //     'product_id'  = $product->id,
-            //     'colour_id'   = $value['colour_id'],
-            //     'size_id'     = $value['size_id'],
-            //     'sku'         = $value['sku'],
-            //     'stock'       = $value['qty']
-            // ]);
+            DB::commit();
+         } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack();
+            return $th;
+
+         }
+            
 
         }
     }

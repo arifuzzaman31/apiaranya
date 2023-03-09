@@ -99,6 +99,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'product_name' => 'required',
             'category' => 'required',
@@ -131,12 +132,13 @@ class ProductController extends Controller
             $product->status              =  AllStatic::$active;
             $product->save();
 
-            $colorIds = array_filter(array_column($request->attrqty, 'colour_id'));
+            $colorIds = array_column($request->attrqty, 'colour_id');
             $sizeIds = array_filter(array_column($request->attrqty, 'size_id'));
-        
+            
             if($request->is_color && !empty($colorIds)){
-
-                $product->product_colour()->attach($colorIds);
+                $cid = array_unique(array_merge(...$colorIds), SORT_REGULAR);
+                $product->product_colour()->attach($cid);
+            
             }
             
             if($request->is_size && !empty($sizeIds)){
@@ -168,16 +170,19 @@ class ProductController extends Controller
 
                 // $product->inventory()->attach($product->id,['colour_id' => $colorIds, 'size_id' => $sizeIds]);
                 foreach($request->attrqty as $value){
-                    if($value['qty'] != ''){
-                        $stock              = new Inventory();
-                        $stock->product_id  = $product->id;
-                        $stock->colour_id   = $value['colour_id'];
-                        $stock->size_id     = $value['size_id'];
-                        $stock->sku         = $value['sku'];
-                        $stock->stock       = $value['qty'];
-                        $stock->warning_amount = $request->warning_amount ? $request->warning_amount : 10;
-                        $stock->warehouse   = $request->warehouse;
-                        $stock->save();
+                    if($value['qty'] != '' && $value['sku'] != ''){
+                        foreach($value['colour_id'] as $sizestock)
+                        {
+                            $stock              = new Inventory();
+                            $stock->product_id  = $product->id;
+                            $stock->colour_id   = $sizestock;
+                            $stock->size_id     = $value['size_id'];
+                            $stock->sku         = $value['sku'];
+                            $stock->stock       = $value['qty'];
+                            $stock->warning_amount = $request->warning_amount ? $request->warning_amount : 10;
+                            $stock->warehouse   = $request->warehouse;
+                            $stock->save();
+                        }
                     }
                     // return $value['colour_id'];
                 }
@@ -263,7 +268,7 @@ class ProductController extends Controller
             return response()->json(['status' => 'success', 'message' => $this->fieldname.' Added Successfully!']);
         } catch (\Throwable $th) {
             DB::rollback();
-            // return response()->json($th);
+            return $th;
             return response()->json(['status' => 'error', 'message' => 'Something went wrong!']);
         }
     }
@@ -316,9 +321,9 @@ class ProductController extends Controller
         // return $data = Excel::load($path, function($reader) {})->get();
         Excel::import(new ProductImport, $path);
         // $data = Excel::toCollection(new ProductImport,$request->file('file'));
-        dd($data);
+        // $data = Excel::toArray(new ProductImport,$request->file('file'));
+
         return $this->successMessage('Excel Data Imported successfully.');
-        dd($request->file('file'));
     }
 
     /**

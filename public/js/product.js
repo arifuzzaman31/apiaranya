@@ -23688,6 +23688,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     }, this.allsubcategories = [], this.allfiltersubcategories = [], this.validation_error = {};
   }), _methods),
   mounted: function mounted() {
+    this.getTaxes();
     this.getCategory();
     this.getColour();
     this.getSize();
@@ -23705,7 +23706,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     this.getConsignment();
     this.getIngredients();
     this.getCare();
-    this.getTaxes();
   }
 });
 
@@ -24302,20 +24302,25 @@ var year = date.getFullYear();
         if (response.data.status === 'success') {
           _this7.successMessage(response.data);
           $('#bulkUpload').modal('hide');
+          formData = new FormData();
           _this7.button_name = "Upload";
+          _this7.file = null;
         } else {
           _this7.successMessage(response.data);
+          formData = new FormData();
           _this7.button_name = "Upload";
+          _this7.file = null;
         }
       })["catch"](function (err) {
         if (err.response.status == 422) {
           _this7.validation_error = err.response.data.errors;
           _this7.validationError();
-          _this7.button_name = "Upload";
         } else {
           _this7.successMessage(err);
-          _this7.button_name = "Upload";
         }
+        formData = new FormData();
+        _this7.button_name = "Upload";
+        _this7.file = null;
       });
     },
     selectAll: function selectAll() {
@@ -25045,9 +25050,9 @@ var _hoisted_137 = {
 var _hoisted_138 = {
   "class": "widget-content"
 };
-var _hoisted_139 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"row text-center\" data-v-46bbc058><div class=\"col-6 text-success\" data-v-46bbc058><b data-v-46bbc058>Colour</b></div><div class=\"col-2 text-success\" data-v-46bbc058><b data-v-46bbc058>Size</b></div><div class=\"col-2 text-success\" data-v-46bbc058><b data-v-46bbc058>SKU</b></div><div class=\"col-1 text-success\" data-v-46bbc058><b data-v-46bbc058>Qty</b></div><div class=\"col-1 text-danger\" data-v-46bbc058><b data-v-46bbc058>Remove</b></div></div>", 1);
+var _hoisted_139 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"row text-center\" data-v-46bbc058><div class=\"col-5 text-success\" data-v-46bbc058><b data-v-46bbc058>Colour</b></div><div class=\"col-2 text-success\" data-v-46bbc058><b data-v-46bbc058>Size</b></div><div class=\"col-2 text-success\" data-v-46bbc058><b data-v-46bbc058>SKU</b></div><div class=\"col-2 text-success\" data-v-46bbc058><b data-v-46bbc058>Qty</b></div><div class=\"col-1 text-danger\" data-v-46bbc058><b data-v-46bbc058>Remove</b></div></div>", 1);
 var _hoisted_140 = {
-  "class": "form-group col-md-6"
+  "class": "form-group col-md-5"
 };
 var _hoisted_141 = ["onMousedown"];
 var _hoisted_142 = /*#__PURE__*/_withScopeId(function () {
@@ -25071,7 +25076,7 @@ var _hoisted_148 = {
 };
 var _hoisted_149 = ["onUpdate:modelValue"];
 var _hoisted_150 = {
-  "class": "form-group col-md-1"
+  "class": "form-group col-md-2"
 };
 var _hoisted_151 = ["onUpdate:modelValue"];
 var _hoisted_152 = {

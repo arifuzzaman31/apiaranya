@@ -511,6 +511,7 @@ export default {
         }
     },
     mounted(){
+        this.getTaxes()
         this.getCategory()
         this.getColour()
         this.getSize()
@@ -528,7 +529,6 @@ export default {
         this.getConsignment()
         this.getIngredients()
         this.getCare()
-        this.getTaxes()
     }
 }
 </script>
@@ -1144,7 +1144,7 @@ export default {
             <div class="statbox widget box box-shadow" v-if="form.color_size">
                 <div class="widget-content ">
                     <div class="row text-center">
-                        <div class="col-6  text-success">
+                        <div class="col-5  text-success">
                             <b>Colour</b>
                         </div>
                         <div class="col-2  text-success">
@@ -1153,7 +1153,7 @@ export default {
                         <div class="col-2  text-success">
                             <b>SKU</b>
                         </div>
-                        <div class="col-1  text-success">
+                        <div class="col-2  text-success">
                             <b>Qty</b>
                         </div>
                         <div class="col-1  text-danger">
@@ -1161,7 +1161,7 @@ export default {
                         </div>
                     </div>
                     <div class="row" v-for="(qt,index) in form.attrqty" :key="index">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-5">
                             <Multiselect
                                 v-model="qt.colour_id"
                                 placeholder="Select Colour"
@@ -1202,7 +1202,7 @@ export default {
                         <div class="form-group col-md-2">
                             <input type="text"  class="form-control" id="sku" v-model="qt.sku" placeholder="SKU" >
                         </div>
-                        <div class="form-group col-md-1">
+                        <div class="form-group col-md-2">
                             <input type="number"  class="form-control" id="qty" v-model="qt.qty" placeholder="qty" >
                         </div>
                         <div class="form-group col-md-1 text-center" v-if="index != 0">

@@ -183,12 +183,16 @@ export default {
                 if(response.data.status === 'success'){
                     this.successMessage(response.data);
                     $('#bulkUpload').modal('hide');
+                    formData = new FormData();
                     this.button_name = "Upload";
+                    this.file = null;
                 }
                 else
                 {
                     this.successMessage(response.data);   
+                    formData = new FormData();
                     this.button_name = "Upload";
+                    this.file = null;
                 }
             })
             .catch(err => {
@@ -196,13 +200,14 @@ export default {
                     {
                         this.validation_error = err.response.data.errors;
                         this.validationError();
-                        this.button_name = "Upload";
                     } 
                     else 
                     {
                         this.successMessage(err);
-                        this.button_name = "Upload";
                     }
+                    formData = new FormData();
+                    this.button_name = "Upload";
+                    this.file = null;
                 }
             );
         },
