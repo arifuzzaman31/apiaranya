@@ -54,12 +54,14 @@ class ColorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'color_name' => 'required'
+            'color_name' => 'required',
+            'color_code' => 'required'
         ]);
 
         try {
             $color = new Colour();
             $color->color_name = $request->color_name;
+            $color->color_code = $request->color_code;
             $color->slug = Str::slug($request->color_name);
             $color->status = $request->status == true ? 1 : 0;
             $color->save();
@@ -104,12 +106,14 @@ class ColorController extends Controller
     public function update(Request $request,$id)
     {
         $request->validate([
-            'color_name' => 'required'
+            'color_name' => 'required',
+            'color_code' => 'required'
         ]);
 
         try {
             $updata = Colour::find($id);
             $updata->color_name = $request->color_name;
+            $updata->color_code = $request->color_code;
             $updata->slug = Str::slug($request->color_name);
             $updata->status = $request->status == true ? 1 : 0;
             $updata->update();

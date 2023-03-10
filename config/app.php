@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Aranya'),
 
     /*
     |--------------------------------------------------------------------------
@@ -27,7 +27,10 @@ return [
     */
 
     'env' => env('APP_ENV', 'production'),
-
+    'clname' => 'diyc1dizi',
+    'clpreset' => 'webable',
+    'front_url' => 'https://aranya-frontend.vercel.app/',
+    
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
@@ -165,7 +168,8 @@ return [
         /*
          * Package Service Providers...
          */
-
+        Barryvdh\Debugbar\ServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -229,6 +233,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 

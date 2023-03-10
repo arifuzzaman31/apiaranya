@@ -20,6 +20,7 @@ class CreateDiscountsTable extends Migration
             $table->enum('discount_type', ['percentage', 'flat']);
             $table->double('max_amount');
             $table->tinyInteger('status')->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

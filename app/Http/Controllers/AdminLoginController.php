@@ -6,9 +6,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Hash,DB;
 use App\Models\Admin;
+use App\Models\Product;
+use App\Models\Order;
+use App\Models\User;
 
 class AdminLoginController extends Controller
 {
+    public function index()
+    {
+        $products = Product::count();
+        $orders = Order::count();
+        $customers = User::count();
+        $data = [
+            ['title' => 'Total Product', 'qty' => $products],
+            ['title' => 'Total Order', 'qty' => $orders],
+            ['title' => 'Total Customer', 'qty' => $customers]
+        ];
+        return view('pages.dashboard',['infos' => $data]);
+    }
     public function login(Request $request)
     {
         $request->validate([

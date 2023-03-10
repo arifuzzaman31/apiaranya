@@ -16,11 +16,13 @@ class CustomerController extends Controller
 
     public function getCustomerOrder($id)
     {
+        $customer = User::where('id',$id)->first();
+
         $order = Order::where('user_id',$id)->with('delivery')->orderBy('id','desc');
     
-        $order = $order->paginate(1);
+        $order = $order->paginate(10);
         
-        return view('pages.customer.order',['orders' => $order]);
+        return view('pages.customer.order',['orders' => $order,'customer' => $customer]);
     }
 
     public function getCustomerOrderDetail($id)

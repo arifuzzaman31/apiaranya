@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('phone');
             $table->string('address');
             $table->tinyInteger('status')->default(1)->comment("0 for dissable the user");
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });

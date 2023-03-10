@@ -2,11 +2,9 @@
 import Mixin from '../../mixer'
 import Multiselect from '@vueform/multiselect'
 const date = new Date();
-
 let day = date.getDate();
 let month = date.getMonth() + 1;
 let year = date.getFullYear();
-
 export default {
     mixins:[Mixin],
     components: {
@@ -26,17 +24,24 @@ export default {
             allcampaign: [],
             addcamp:{
                 camp: {},
+                discount: {
+                    type: 'flat',
+                    amount: '',
+                    max_amount: ''
+                },
                 product: []
             },
-
+            page_obj: {
+                page: 1,
+                curr_page: '',
+                last_page: ''
+            },
             page: 1,
 
             allproduct: [],
-
             validation_error: {},
         }
     },
-
     methods:{
         saveData() {
             
@@ -53,23 +58,17 @@ export default {
               })
               
         },
-
         getProduct() {
             try{
-                 axios.get(baseUrl+`get-product?page=${this.page}&per_page=2`)
+                 axios.get(baseUrl+`get-product?page=${this.page_obj.this.page}&per_page=2&discount=yes&per_page=2`)
                 .then(response => {
-                    // const opt = []
-                    //     response.data.data.map(data => {
-                    //         opt.push({'value':data.id,'name':data.product_name})
-                    //     })
-                    // this.allproduct = opt
-                   
                     if(response.data.current_page > 1){
                         response.data.data.map(data => {
                             this.allproduct.push(data)
                         })
                     } else {
                         this.allproduct = response.data.data
+                        this.page_obj.last_page = response.data.last_page
                     }
                 }).catch(error => {
                     console.log(error)
@@ -78,23 +77,22 @@ export default {
                 console.log(e)
             }
         },
-
         getMore(){
-            this.page++
+            this.page_obj.page++
             this.getProduct()
         },
+        saveCampData(){
 
+        },
         addToCamp(prod){
             this.addcamp.product.push(prod)
     
             this.allproduct = this.allproduct.filter(item => item.id !== prod.id);
         },
-
         remToCamp(prod){
             this.allproduct.push(prod)
             this.addcamp.product = this.addcamp.product.filter(item => item.id !== prod.id);
         },
-
         limitText (count) {
             return `and ${count} other products`
         },
@@ -121,7 +119,6 @@ export default {
         clearAll () {
             this.addcamp.product = [];
         },
-
         getCampaignList() {
             axios.get(baseUrl+`get-campaign?no_paginate=yes`).then(
                   response => {
@@ -130,7 +127,6 @@ export default {
               )
            
         },
-
         discount(type, discount, main_amount) {
             if (type === "2") {
                 return parseFloat(((discount / 100) * main_amount)).toFixed(2);
@@ -138,7 +134,6 @@ export default {
                 return parseFloat(discount).toFixed(2);
             }
         },
-
         formReset(){
             this.validation_error = {};
             this.form = {
@@ -152,7 +147,6 @@ export default {
             }
         }
     },
-
     mounted(){
         this.getCampaignList()
         this.getProduct()
@@ -168,7 +162,7 @@ export default {
         <div id="tooltips" class="col-lg-12 layout-spacing col-md-12">
             <div class="statbox widget box box-shadow">     
                 <div class="widget-content widget-content-area">
-                    <form @submit.prevent="saveData()">
+                    <form @submit.prevent="saveCampData()">
                         <div class="form-row mb-4">
                             <div class="col-md-4 col-12 mb-2">
                                 <label for="Campaign_name">Campaign Name</label>
@@ -200,6 +194,12 @@ export default {
                                     {{ validation_error.expire_at[0] }}
                                 </span>
                             </div>
+                            <div class="col-lg-3 col-md-3 col-sm-4 col-6">
+                                <label class="switch s-icons s-outline  s-outline-success  mb-4 mr-2">
+                                    <input v-model="form.status" type="checkbox" :checked="form.status" id="siz-status">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
                         </div>
                         <input type="submit" name="time" class="btn btn-primary">
                     </form>
@@ -213,17 +213,33 @@ export default {
         <div class="statbox widget box box-shadow">     
             <div class="widget-content widget-content-area">
                 <div class="row">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3 col-lg-3 col-12">
                         <label for="campaign-id">Select Campaign </label>
                         <select id="campaign-id" class="form-control" v-model="addcamp.camp">
                             <option selected="">Choose...</option>
                             <option v-for="(value,index) in allcampaign" :value="value" :key="index">{{ value.campaign_name }}</option>
                         </select>
+                        <div class="mt-1" v-if="addcamp.camp && addcamp.camp.id">
+                            <h6>Start_at : {{  dateToString(addcamp.camp.campaign_start_date) }}  </h6>
+                            <h6>Expire_at : {{  dateToString(addcamp.camp.campaign_expire_date) }}</h6>
+                        </div>
                     </div>
-                    <div class="form-group col-md-6 mt-4" v-if="addcamp.camp && addcamp.camp.id">
-                        <h6>Start_at : {{  dateToString(addcamp.camp.campaign_start_date) }}  </h6>
-                        <h6>Expire_at : {{  dateToString(addcamp.camp.campaign_expire_date) }}</h6>
+                    <div class="form-group col-md-3 col-lg-3 col-12">
+                        <label for="campaign-disc">Discount Type </label>
+                        <select id="campaign-id" class="form-control" v-model="addcamp.discount.type">
+                            <option value="flat">FLAT</option>
+                            <option value="percentage">Percentage</option>
+                        </select>
                     </div>
+                        
+                    <div class="form-group col-md-3 col-lg-3 col-12">
+                        <label for="campaign-disc-amount">Discount Amount </label>
+                        <input type="number" class="form-control" placeholder="Amount">
+                    </div>
+                    <div class="form-group col-md-3 col-lg-3 col-12" v-if="addcamp.discount.type == 'percentage'">
+                        <label for="campaign-disc-amount">Maximum Amount </label>
+                        <input type="number" class="form-control" placeholder="Maximum Amount">
+                      </div>  
                 </div>
 
                     <!-- <div class="form-row">
@@ -284,7 +300,6 @@ export default {
                                             <th>Base Price</th>
                                         </tr>
                                     </thead>
-
                                     <tbody>
                                     <tr v-for="(value,index) in addcamp.product" :key="index">
                                         <td><img style="height: 60px;" :src="value.product_image"></td>
@@ -295,7 +310,6 @@ export default {
                                 </table>
                             </div>							
                         </div>		
-
                     </div>
                              -->
             </div>
@@ -307,7 +321,7 @@ export default {
         <div class="statbox widget box box-shadow">     
             <div class="widget-content widget-content-area">
                 <div class="row">
-                    <div class="col-6 mb-2" v-for="prod in allproduct" :key="prod.id">
+                    <div class="col-md-4 col-lg-3 col-6 mb-2" v-for="prod in allproduct" :key="prod.id">
                         <div class="card">
                             <div class="card-img">
                                 <img width="90" :src="prod.product_image" />
@@ -316,14 +330,14 @@ export default {
                                 <b>{{prod.product_name}}</b>
                                 <p>{{prod.mrp_price}}</p>
                             </div>
-                            <div class="card-footer">
-                                <button type="button" @click="addToCamp(prod)" class="btn-default">Add</button>
+                            <div class="card-footer text-center">
+                                <a href="javasript:void(0)" type="button" @click="addToCamp(prod)" class="btn-default">Add</a>
                             </div>
                         </div>
                     </div>
 
                 </div>
-                <button type="button" @click="getMore()" class="btn-default">Load More</button>
+                <button type="button" v-if="page_obj.page < page_obj.last_page" @click="getMore()" class="btn-default">Load More</button>
             </div>
         </div>
     </div>
@@ -331,7 +345,7 @@ export default {
         <div class="statbox widget box box-shadow">     
             <div class="widget-content widget-content-area">
                 <div class="row">
-                    <div class="col-6 mb-2" v-for="prod in addcamp.product" :key="prod.id">
+                    <div class="col-md-4 col-lg-3 col-6 mb-2" v-for="prod in addcamp.product" :key="prod.id">
                         <div class="card">
                             <div class="card-img">
                                 <img width="90" :src="prod.product_image" />
@@ -340,8 +354,8 @@ export default {
                                 <b>{{prod.product_name}}</b>
                                 <p>{{prod.mrp_price}}</p>
                             </div>
-                            <div class="card-footer">
-                                <button type="button" @click="remToCamp(prod)" class="btn-default">Remove</button>
+                            <div class="card-footer text-center">
+                                <a href="javasript:void(0)" type="button" @click="remToCamp(prod)" class="btn-default">Remove</a>
                             </div>
                         </div>
                     </div>
@@ -361,7 +375,6 @@ export default {
     background: #35495e;
     margin: 3px 3px 8px;
   }
-
   .multiselect-tag.is-user img {
     width: 18px;
     border-radius: 50%;
@@ -369,15 +382,13 @@ export default {
     margin-right: 8px;
     border: 2px solid #ffffffbf;
   }
-
   .multiselect-tag.is-user i:before {
     color: #ffffff;
     border-radius: 50%;;
   }
-
   .user-image {
     margin: 0 6px 0 0;
     border-radius: 50%;
     height: 22px;
   }
-</style>
+  </style>

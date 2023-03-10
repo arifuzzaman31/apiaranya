@@ -40,7 +40,7 @@
 
         <!--  BEGIN CONTENT AREA  -->
         <div id="content" class="main-content">
-            <router-view ></router-view>
+            <!-- <router-view ></router-view> -->
             <div class="layout-px-spacing" id="app">
               @yield('content')
             </div>
@@ -48,6 +48,7 @@
                 <div class="footer-section f-section-1">
                     <p class="">Copyright © {{ date('Y') }} <a target="_blank" href="https://webable.digital/">Webable Digital</a>, All rights reserved.</p>
                 </div>
+                
             </div>
         </div>
         <!--  END CONTENT AREA  -->

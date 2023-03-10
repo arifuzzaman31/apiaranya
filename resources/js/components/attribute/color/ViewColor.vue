@@ -13,6 +13,7 @@ export default {
         const color_id  = ref('');
         const form = reactive({
             color_name: '',
+            color_code:"",           
             status: true
         });
         const toastMixin = Swal.mixin({
@@ -74,13 +75,14 @@ export default {
                     response => {
                         fireToast(response.data)
                         $("#ColorModal").modal('hide');
+                        formReset()
                     }
                 ). catch(e => {
                    if(e.response.status == 422){
                         errors.value = e.response.data.errors;
                     }
                 })
-                formReset()
+                
                 getColour()
             }catch(e){
                 if(e.response.status == 422){
@@ -95,6 +97,7 @@ export default {
                     response => {
                         $("#ColorModal").modal('hide');
                         fireToast(response.data)
+                        formReset()
                     }
                 ). catch(e => {
                    if(e.response.status == 422){
@@ -102,7 +105,6 @@ export default {
                     }
                 })
                 getColour()
-                formReset()
             }catch(e){
                 if(e.response.status == 422){
                     var data = [];
@@ -117,12 +119,15 @@ export default {
         const editColour = (color) => {
             color_id.value = color.id;
             form.color_name = color.color_name;
+            form.color_code = color.color_code;
             form.status = color.status;
         }
 
         const formReset = () =>{
             color_id.value = '';
+            errors.value = [];
             form.color_name = '';
+            form.color_code = '';
             form.status = true;
         }
         
@@ -216,6 +221,17 @@ export default {
                                         {{ errors.color_name[0] }}
                                     </span>
                                 </div>
+
+                                <div class="form-group">
+                                <label for="color_code">Colour Code</label>
+                                <input type="color" class="form-control" v-model="form.color_code" id="color_code" placeholder="Colour Code">
+                                <span
+                                    v-if="errors.hasOwnProperty('color_code')"
+                                    class="text-danger"
+                                >
+                                    {{ errors.color_code[0] }}
+                                </span>
+                            </div>
 
                                 <div class="col-lg-3 col-md-3 col-sm-4 col-6">
                                 <label for="cat-status">Status</label>

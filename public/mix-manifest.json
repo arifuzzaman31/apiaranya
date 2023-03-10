@@ -4,5 +4,7 @@
     "/js/product.js": "/js/product.js",
     "/js/order.js": "/js/order.js",
     "/js/campaign.js": "/js/campaign.js",
+    "/js/pages.js": "/js/pages.js",
+    "/js/category.js": "/js/category.js",
     "/css/app.css": "/css/app.css"
 }

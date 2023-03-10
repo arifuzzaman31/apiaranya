@@ -16,14 +16,16 @@ class CreateCampaignsTable extends Migration
         Schema::create('campaigns', function (Blueprint $table) {
             $table->id();
             $table->string('campaign_name');
+            $table->string('slug')->nullable();
             $table->string('campaign_title')->nullable();
-            $table->string('campaign_banner_default');
+            $table->string('campaign_banner_default')->nullable();
             $table->string('campaign_meta_image')->nullable();
             $table->string('campaign_banner_one')->nullable();
             $table->string('campaign_banner_two')->nullable();
             $table->date('campaign_start_date');
             $table->date('campaign_expire_date');
             $table->tinyInteger('status')->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

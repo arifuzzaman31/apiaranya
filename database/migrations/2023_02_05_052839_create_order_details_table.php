@@ -31,6 +31,7 @@ class CreateOrderDetailsTable extends Migration
             $table->double('unit_discount')->default(0);
             $table->double('total_discount')->default(0);
             $table->tinyInteger('status')->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

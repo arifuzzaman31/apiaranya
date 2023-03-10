@@ -12,7 +12,11 @@
             </div>
         </div>
     </div>
-    <create-product />
+   <create-product :prp_artist="{{$artist}}" :prp_vendor="{{$vendor}}" :prp_brand="{{$brand}}" :prp_care="{{$care}}"
+     :prp_consignment="{{$consignment}}" :prp_designer="{{$designer}}" :prp_embellish="{{$embellish}}"
+     :prp_fabric="{{$fabric}}" :prp_fit="{{$fit}}" :prp_ingredient="{{$ingredient}}" :prp_making="{{$making}}"
+     :prp_season="{{$season}}" :prp_colour="{{$colour}}" :prp_size="{{$size}}" :prp_variety="{{$variety}}" :prp_tax="{{$tax}}"
+    />
 </div>    
 
 <!-- end modal -->

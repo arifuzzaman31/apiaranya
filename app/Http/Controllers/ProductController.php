@@ -2,17 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\AllStatic;
+use App\Http\Resources\ProductResource;
+use App\Imports\ProductImport;
+use App\Models\CampaignProduct;
 use App\Models\Product;
 use App\Models\ProductColour;
 use App\Models\ProductFabric;
 use App\Models\ProductSize;
 use App\Models\Inventory;
 use App\Models\Discount;
+use App\Models\CategoryFabric;
+use App\Models\ProductTag;
 use Illuminate\Http\Request;
-use DB;
+use App\Traits\ProductTrait;
+use DB,Str,Excel;
 
 class ProductController extends Controller
 {
+    use ProductTrait;
     public $fieldname = 'Product';
     /**
      * Display a listing of the resource.
@@ -31,20 +39,62 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('pages.product.create_product');
+        $attrs = [
+            'vendor' => $this->getVendor(),
+            'artist' => $this->getArtist(),
+            'brand' => $this->getBrand(),
+            'care' => $this->getCare(),
+            'consignment' => $this->getConsignment(),
+            'designer' => $this->getDesigner(),
+            'embellish' => $this->getEmbellishment(),
+            'fabric' => $this->getFabric(),
+            'fit' => $this->getFit(),
+            'ingredient' => $this->getIngredient(),
+            'making' => $this->getMaking(),
+            'season' => $this->getSeason(),
+            'size' => $this->getSize(),
+            'colour' => $this->getColour(),
+            'variety' => $this->getVariety(),
+            'tax' => $this->getTax()
+        ];
+        return view('pages.product.create_product',$attrs);
     }
 
     public function getProduct(Request $request)
     {
         $noPagination = $request->get('no_paginate');
-        $dataQty = $request->get('per_page') ? $request->get('per_page') : 2;
-        $product = Product::with(['category:id,category_name','inventory:id,product_id,stock'])->orderBy('id','desc');
-        if($noPagination != ''){
-            $product = $product->get();
-        } else {
-            $product = $product->paginate($dataQty);
+        $discount   = $request->get('discount');
+        $keyword   = $request->get('keyword');
+        $camp_id   = $request->get('camp_id');
+        $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
+        $product = Product::with(['vat','category:id,category_name','subcategory','inventory:id,product_id,stock,sku','product_size','product_colour','discount']);
+
+        if($camp_id != ''){
+            $product = $product->join('campaign_products','products.id','campaign_products.product_id')
+                ->where('campaign_id',$camp_id);
+
+            if($noPagination != ''){
+                $product = $product->get();
+            } else {
+                $product = $product->paginate($dataQty);
+            }
+            return ProductResource::collection($product);
         }
-        return response()->json($product);
+
+        if($discount != ''){
+            $product = $product->where('is_discount',0);
+        }
+
+        if($keyword != ''){
+            $product = $product->where('product_name','like','%'.$keyword.'%');
+            $product = $product->orWhere('sku','like','%'.$keyword.'%');
+        }
+        if($noPagination != ''){
+            $product = $product->latest()->get();
+        } else {
+            $product = $product->latest()->paginate($dataQty);
+        }
+        return ProductResource::collection($product);
     }
 
     public function getProductBySearch(Request $request)
@@ -67,82 +117,100 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        return response()->json($request->all());
         $request->validate([
             'product_name' => 'required',
             'category' => 'required',
-            'sub_category' => 'required',
-            'sku' => 'required',
+            'stock' => 'required_if:color_size,false',
             'price' => 'required',
-            'stock' => 'required',
             'weight' => 'required',
             'design_code' => 'required'
         ]);
         
         DB::beginTransaction();
         try {
-
             $product = new Product();
             $product->product_name        = $request->product_name;
+            $product->slug                = Str::slug($request->product_name);
             $product->category_id         = $request->category;
             $product->sub_category_id     = $request->sub_category;
+            $product->vat_tax_id          = $request->vat['value'];
             $product->description         = $request->description;
-            $product->sku                 = $request->sku;
-            $product->product_image       = $request->image1_1 ?? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvvOu_xVVRCcdwutaWwCQ0Jp0zsPv4v1liyQ&usqp=CAU';
-            $product->image_one           = $request->image_one;
-            $product->image_two           = $request->image_two;
-            $product->image_three         = $request->image_three;
-            $product->image_four          = $request->image_four;
+            $product->lead_time           = $request->lead_time;
+            $product->product_image       = $request->product_image_one;
+            $product->image_one           = $request->product_image_one;
+            $product->image_two           = $request->product_image_two;
+            $product->image_three         = $request->product_image_three;
+            $product->image_four          = $request->product_image_four;
             $product->image_five          = $request->image_five;
             $product->cost                = $request->cost;
             $product->mrp_price           = $request->price;
-            $product->dimension           = $request->dimention;
+            $product->dimension           = $request->dimension;
             $product->weight              = $request->weight;
-            $product->care                = $request->care;
             $product->design_code         = $request->design_code;
-            $product->country_of_origin   = $request->care;
-            $product->status              = $request->status ? 1 : 0;
+            $product->status              =  AllStatic::$active;
             $product->save();
 
-            if($request->is_color && !empty($request->selectcolours)){
-                foreach($request->selectcolours as $value)
-                { 
-                    $pc             = new ProductColour();
-                    $pc->product_id = $product->id;
-                    $pc->colour_id  = $value;
-                    $pc->save();
-                }
+            $colorIds = array_column($request->attrqty, 'colour_id');
+            $sizeIds = array_filter(array_column($request->attrqty, 'size_id'));
+            
+            if($request->is_color && !empty($colorIds)){
+                $cid = array_unique(array_merge(...$colorIds), SORT_REGULAR);
+                $product->product_colour()->attach($cid);
+            
+            }
+            
+            if($request->is_size && !empty($sizeIds)){
+               
+                $product->product_size()->attach($sizeIds);
             }
 
-            if($request->is_size && !empty($request->selectsize)){
-                foreach($request->selectsize as $value)
-                { 
-                    $ps             = new ProductSize();
-                    $ps->product_id = $product->id;
-                    $ps->size_id    = $value;
-                    $ps->save();
-                }
-            }
+            if($request->is_fabric && $request->selectfabrics){
 
-            if($request->is_fabric && !empty($request->selectfabrics)){
-                foreach($request->selectfabrics as $value)
-                { 
-                    $pf             = new ProductFabric();
-                    $pf->product_id = $product->id;
-                    $pf->fabric_id  = $value;
-                    $pf->save();
+                $product->product_fabric()->attach($request->selectfabrics);
+
+                $cid = $request->sub_category != '' ? $request->sub_category : $request->category;
+
+                foreach($request->selectfabrics as $subcat){
+                    $chk = CategoryFabric::where(
+                        ['category_id' =>  $cid,'fabric_id' => $subcat]
+                        )->first();
+
+                    if(empty($chk)){
+                        CategoryFabric::create([
+                            'category_id' => $cid,
+                            'fabric_id' => $subcat
+                        ]);
+                    }
                 }
             }
             
-            if($request->stock){
-               
-                $stock              = new Inventory();
+            if($request->color_size && $request->attrqty && !empty($request->attrqty)){
+
+                // $product->inventory()->attach($product->id,['colour_id' => $colorIds, 'size_id' => $sizeIds]);
+                foreach($request->attrqty as $value){
+                    if($value['qty'] != '' && $value['sku'] != ''){
+                        foreach($value['colour_id'] as $sizestock)
+                        {
+                            $stock              = new Inventory();
+                            $stock->product_id  = $product->id;
+                            $stock->colour_id   = $sizestock;
+                            $stock->size_id     = $value['size_id'];
+                            $stock->sku         = $value['sku'];
+                            $stock->stock       = $value['qty'];
+                            $stock->warning_amount = $request->warning_amount ? $request->warning_amount : 10;
+                            $stock->warehouse   = $request->warehouse;
+                            $stock->save();
+                        }
+                    }
+                    // return $value['colour_id'];
+                }
+            
+            } else {
+                $stock  = new Inventory();
                 $stock->product_id  = $product->id;
                 $stock->stock       = $request->stock;
-                $stock->warning_amount = $request->warning_amount ? $request->warning_amount : 10;
-                $stock->warehouse   = $request->warehouse;
+                $stock->sku       = $request->sku;
                 $stock->save();
-            
             }
             
             if($request->is_discount){
@@ -154,13 +222,72 @@ class ProductController extends Controller
                 $disc->status = 1;
                 $disc->save();
             }
+
+            if(!empty($request->vendor)){
+               
+                $product->product_vendor()->attach($request->vendor);
+            }
+            if(!empty($request->brand)){
+               
+                $product->product_brand()->attach($request->brand);
+            }
+            if(!empty($request->designer)){
+               
+                $product->product_designer()->attach($request->designer);
+            }
+            if(!empty($request->embellishment)){
+               
+                $product->product_embellishment()->attach($request->embellishment);
+            }
+            if(!empty($request->making)){
+               
+                $product->product_making()->attach($request->making);
+            }
+            if(!empty($request->season)){
+               
+                $product->product_season()->attach($request->season);
+            }
+            if(!empty($request->variety)){
+               
+                $product->product_variety()->attach($request->variety);
+            }
+            if(!empty($request->fit)){
+               
+                $product->product_fit()->attach($request->fit);
+            }
+            if(!empty($request->artist)){
+               
+                $product->product_artist()->attach($request->artist);
+            }
+            if(!empty($request->consignment)){
+               
+                $product->product_consignment()->attach($request->consignment);
+            }
+            if(!empty($request->ingredients)){
+               
+                $product->product_ingredient()->attach($request->ingredients);
+            }
+            if(!empty($request->care)){
+               
+                $product->product_care()->attach($request->care);
+            }
+
+            if(!empty($request->tages)){
+               
+                $str = implode(',', $request->tages);
+               
+                ProductTag::create([
+                    'product_id' => $product->id,
+                    'keyword_name' => json_encode($str)
+                ]);
+            }
+
             DB::commit();
             return response()->json(['status' => 'success', 'message' => $this->fieldname.' Added Successfully!']);
         } catch (\Throwable $th) {
             DB::rollback();
-            return response()->json(['status' => 'error', 'message' => $th->getMessage()]);
-            return response()->json(['status' => 'error', 'message' => 'Something went wrong!']);
             return $th;
+            return response()->json(['status' => 'error', 'message' => 'Something went wrong!']);
         }
     }
 
@@ -172,7 +299,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return Product::with(['category:id,category_name','inventory:id,product_id,stock','product_colour','product_size'])
+        return Product::with(['category:id,category_name','subcategory','inventory','product_colour','product_size','discount'])
             ->find($product->id);
     }
 
@@ -184,7 +311,9 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('pages.product.edit',['product' => $product]);
+        $products = Product::with(['category:id,category_name','subcategory','inventory','product_colour','product_size','product_fabric','discount'])
+        ->find($product->id);
+        return view('pages.product.edit',['product' => $products]);
     }
 
     /**
@@ -199,6 +328,22 @@ class ProductController extends Controller
         //
     }
 
+
+    public function bulkUpload(Request $request)
+    {
+        $this->validate($request, [
+            'file'   => 'required|mimes:xls,xlsx'
+        ]);
+
+        $path = $request->file('file')->getRealPath();
+        // return $data = Excel::load($path, function($reader) {})->get();
+        Excel::import(new ProductImport, $path);
+        // $data = Excel::toCollection(new ProductImport,$request->file('file'));
+        // $data = Excel::toArray(new ProductImport,$request->file('file'));
+
+        return $this->successMessage('Excel Data Imported successfully.');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -207,11 +352,33 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
-        return response()->json(['status' => 'success', 'message' => $this->fieldname.' Deleted Successfully!']);
-        return response()->json($product->inventory);
         try {
+            DB::beginTransaction();
+            Inventory::where('product_id',$product->id)->delete();
+            Discount::where('product_id',$product->id)->delete();
+            ProductTag::where('product_id',$product->id)->delete();
+            $product->product_colour()->detach();
+            $product->product_fabric()->detach();
+            $product->product_size()->detach();
+            $product->product_vendor()->detach();
+            $product->product_brand()->detach();
+            $product->product_designer()->detach();
+            $product->product_embellishment()->detach();
+            $product->product_making()->detach();
+            $product->product_season()->detach();
+            $product->product_variety()->detach();
+            $product->product_fit()->detach();
+            $product->product_artist()->detach();
+            $product->product_consignment()->detach();
+            $product->product_ingredient()->detach();
+            $product->product_care()->detach();
+            $product->campaign()->detach();
+            $product->delete();
+
+            DB::commit();
+            return response()->json(['status' => 'success', 'message' => $this->fieldname.' Deleted Successfully!']);
         } catch (\Throwable $th) {
+            DB::rollback();
             return response()->json(['status' => 'error', 'message' =>  $th->getMessage()]);
         }
     }

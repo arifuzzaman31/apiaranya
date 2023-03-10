@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\CategoryResource;
 
 class ProductResource extends JsonResource
 {
@@ -18,9 +19,13 @@ class ProductResource extends JsonResource
             'id'                => $this->id,
             'p_name'            => $this->product_name,
             'cat_id'            => $this->category_id,
+            'p_category'        => new CategoryResource($this->whenLoaded('category')),
+            'p_subcategory'     => new CategoryResource($this->whenLoaded('subcategory')),
             'subcat_id'         => $this->sub_category_id,
-            'p_description'     => $this->description,
-            'p_sku'             => $this->sku,
+            'p_tax'             => $this->whenLoaded('vat'),
+            'p_tax_id'          => $this->vat_tax_id,
+            'p_description'     => strip_tags($this->description),
+            'p_raw_description' => $this->description,
             'feature_image'     => $this->product_image,
             'p_image_one'       => $this->image_one,
             'p_image_two'       => $this->image_two,
@@ -33,9 +38,26 @@ class ProductResource extends JsonResource
             'p_weight'          => $this->weight,
             'p_care'            => $this->care,
             'p_design_code'     => $this->design_code,
-            'country_of_origin'    => $this->country_of_origin,
+            'p_sizes'           => $this->whenLoaded('product_size'),
+            'p_colours'         => $this->whenLoaded('product_colour'),
+            'p_stocks'          => $this->whenLoaded('inventory'),
+            'discount'          => $this->whenLoaded('discount'),
+            'p_fabric'          => $this->whenLoaded('product_fabric'),
+            'p_vendor'          => $this->whenLoaded('product_vendor'),
+            'p_brand'           => $this->whenLoaded('product_brand'),
+            'p_designer'        => $this->whenLoaded('product_designer'),
+            'p_embellishment'   => $this->whenLoaded('product_embellishment'),
+            'p_making'          => $this->whenLoaded('product_making'),
+            'p_season'          => $this->whenLoaded('product_season'),
+            'p_variety'         => $this->whenLoaded('product_variety'),
+            'p_fit'             => $this->whenLoaded('product_fit'),
+            'p_artist'          => $this->whenLoaded('product_artist'),
+            'p_consignment'     => $this->whenLoaded('product_consignment'),
+            'p_ingredient'      => $this->whenLoaded('product_ingredient'),
+            'p_care'            => $this->whenLoaded('product_care'),
+            'country_of_origin' => $this->country_of_origin,
             'status'            => $this->status,
-            'status_text'       => $this->status == 1 ? 'active' : 'Deactive',
+            'status_text'       => $this->status == 1 ? 'Active' : 'Deactive',
             'created_date'      => date('j M Y', strtotime($this->created_at)),
         ];
     }

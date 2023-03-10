@@ -96,14 +96,14 @@ export default {
                     response => {
                         $("#fabricModal").modal('hide');
                         fireToast(response.data)
+                        formReset()
+                        getFabric()
                     }
                 ). catch(e => {
                    if(e.response.status == 422){
                         errors.value = e.response.data.errors;
                     }
                 })
-                formReset()
-                getFabric()
             }catch(e){
                 if(e.response.status == 422){
                     var data = [];

@@ -19,6 +19,7 @@ class CreateSizesTable extends Migration
             $table->string('slug')->nullable();
             $table->integer('precedence')->nullable();
             $table->tinyInteger('status')->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\AllStatic;
+use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Validator;
+use Validator,Str;
 
 class CategoryController extends Controller
 {
@@ -23,6 +25,30 @@ class CategoryController extends Controller
     public function getCategory()
     {
         return view('pages.category.category_add');
+    }
+
+    public function editCategory()
+    {
+        return view('pages.category.edit_category');
+    }
+
+    public function getCategoryData(Request $request)
+    {
+        $data = Category::where('status',AllStatic::$active)->get();
+        return CategoryResource::collection($data);
+    }
+
+    public function getCategoryByCat(Request $request)
+    {
+        $alldata = Category::where('status',AllStatic::$active)->orderBy('id')->get();
+        $org_data = [];
+        foreach($alldata as $cat)
+        {
+            if($cat->parent_category == 0){
+                $org_data[$cat->category_name] = $alldata->where('parent_category',$cat->id);
+            }
+        }
+        return response()->json($org_data);
     }
 
     /**
@@ -57,6 +83,7 @@ class CategoryController extends Controller
             }
             $category = new Category();
             $category->category_name    = $request->category_name;
+            $category->slug             = Str::slug($request->category_name);
             $category->parent_category  = $request->parent_category;
             $category->category_video   = $request->video_link;
             $category->status           = $request->status ? 1 : 0;
@@ -84,6 +111,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
+        return $category;
         //
     }
 
@@ -95,7 +123,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('pages.category.edit_category',['categorydata' => $category]);
     }
 
     /**
@@ -107,7 +135,16 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        try {
+            if($request->img_name == 'one') $category->category_image_one = $request->uri_link;
+            if($request->img_name == 'two') $category->category_image_two = $request->uri_link;
+            if($request->img_name == 'three') $category->category_image_three = $request->uri_link;
+            $category->update();
+            return response()->json(['status' => 'success', 'message' => 'Home Page Updated Successfully!']);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' => 'Something went wrong!']);
+        }
+        
     }
 
     /**

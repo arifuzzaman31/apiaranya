@@ -20,6 +20,10 @@ return [
 
     'driver' => env('SESSION_DRIVER', 'file'),
 
+    // 'same_site' => 'lax',
+    //'same_site' => 'none',
+    //'secure' => true,
+
     /*
     |--------------------------------------------------------------------------
     | Session Lifetime

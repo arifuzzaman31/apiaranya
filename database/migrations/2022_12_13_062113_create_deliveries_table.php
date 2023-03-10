@@ -17,9 +17,17 @@ class CreateDeliveriesTable extends Migration
             $table->id();
             $table->foreignId('order_id');
             $table->integer('tracking_id');
-            $table->date('shipping_date');
+            $table->date('process_date')->nullable();
+            $table->tinyInteger('process_state')->nullable();
+            $table->string('process_value')->nullable();
+            $table->date('on_delivery_date')->nullable();
+            $table->tinyInteger('on_delivery_state')->nullable();
+            $table->string('on_delivery_value')->nullable();
+            $table->date('delivery_date')->nullable();
+            $table->tinyInteger('delivery_state')->nullable();
+            $table->string('delivery_value')->nullable();
             $table->string('delivered_by')->nullable();
-            $table->tinyInteger('position_status')->default(0)->comment = "0=pending 1=process 2=OnProcess 3=Delivered";
+            $table->softDeletes();
             $table->timestamps();
         });
     }
