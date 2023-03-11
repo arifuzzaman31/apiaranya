@@ -13,10 +13,10 @@ export default {
             },
             up_show: false,
             form: {
-                image_one: 'https://aranya-frontend.vercel.app/_next/image?url=%2Fassets%2Fsaree.png&w=1920&q=75',
-                image_two: 'https://aranya-frontend.vercel.app/_next/image?url=%2Fassets%2Fsaree.png&w=1920&q=75',
-                image_three: 'https://aranya-frontend.vercel.app/_next/image?url=%2Fassets%2Fsaree.png&w=1920&q=75',
-                image_four: 'https://aranya-frontend.vercel.app/_next/image?url=%2Fassets%2Fsaree.png&w=1920&q=75'
+                image_one: '',
+                image_two: '',
+                image_three: '',
+                image_four: ''
             },
             
         }
