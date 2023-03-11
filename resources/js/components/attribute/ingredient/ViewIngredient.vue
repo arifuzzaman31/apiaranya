@@ -192,7 +192,7 @@ export default {
                         </table>
                             <Bootstrap4Pagination
                                 :data="ingredients"
-                                @pagination-change-page="getFit"
+                                @pagination-change-page="getIngredient"
                             />
                     </div>
 
