@@ -340,7 +340,10 @@ class ProductController extends Controller
         Excel::import(new ProductImport, $path);
         // $data = Excel::toCollection(new ProductImport,$request->file('file'));
         // $data = Excel::toArray(new ProductImport,$request->file('file'));
-
+        // $data = array_filter($data->toArray(),function ($number) {
+        //     return $number[0] !== null;
+        // });
+        // return count($data[0]);
         return $this->successMessage('Excel Data Imported successfully.');
     }
 

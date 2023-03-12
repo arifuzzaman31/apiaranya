@@ -20,31 +20,36 @@ class ProductImport implements ToCollection
     {
         unset($rows[0]);
       //   return count($rows);
-        $data = array_filter($rows->toArray(),function ($number) {
-                 return $number[0] !== null;
-             });
-        foreach($data as $row)
+      //   $data = array_filter($rows->toArray(),function ($number) {
+      //            return $number[0] !== null;
+      //        });
+        foreach($rows as $row)
         {
             $ch = Product::where('design_code',$row[1])->first();
             if($ch){
                   $this->putCombAttr($row,$ch);
+                  if($row[12] != ''){
+                     $ps = explode(",",$row[12]);
+                      $ch->product_size()->attach($ps);
+                  }
             } else {
 
                try {
                   DB::beginTransaction();
+                  $imglink = 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya-product-v2/';
                   $product = Product::create([
                       'product_name' => $row[2], 
                       'slug' => Str::slug($row[2]), 
                       'category_id' => (int) $row[5], 
                       'sub_category_id' => (int)$row[6], 
-                      'vat_tax_id' => 1, //not found
+                      'vat_tax_id' => $row[34], //not found
                       'lead_time' => $row[15], 
-                      'product_image' => 'https://res.cloudinary.com/diyc1dizi/image/upload/'.$row[25], 
-                      'image_one' => $row[25],
-                      'image_two' => $row[26], 
-                      'image_three' => $row[27], 
-                      'image_four' => $row[28], 
-                      'image_five' => $row[29], 
+                      'product_image' => $imglink.$row[1].'/'.$row[25], 
+                      'image_one' => $imglink.$row[1].'/'.$row[25],
+                      'image_two' => $row[26] !='' ? $imglink.$row[1].'/'.$row[26] : '', 
+                      'image_three' => $row[27] !='' ? $imglink.$row[1].'/'.$row[27] : '', 
+                      'image_four' => $row[28] !='' ? $imglink.$row[1].'/'.$row[28] : '', 
+                      'image_five' => $row[29] !='' ? $imglink.$row[1].'/'.$row[29] : '', 
                       'cost'      => (float)$row[22], 
                       'mrp_price' => (float)$row[23], 
                       'dimension' => $row[30], 
@@ -148,7 +153,7 @@ class ProductImport implements ToCollection
                } catch (\Throwable $th) {
                   //throw $th;
                   DB::rollBack();
-                  return $th;
+                  // return $th;
       
                }
             }
