@@ -6,6 +6,7 @@ use App\Models\Inventory;
 use App\Models\Product;
 use App\Models\ProductTag;
 use App\Models\CategoryFabric;
+use App\Models\ProductSize;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -29,9 +30,18 @@ class ProductImport implements ToCollection
             if($ch){
                   $this->putCombAttr($row,$ch);
                   if($row[12] != ''){
-                     $ps = explode(",",$row[12]);
-                      $ch->product_size()->attach($ps);
+         
+                      $chksiz = ProductSize::where(
+                        ['product_id' =>  $ch->id,'size_id' => $row[12]]
+                        )->first();
+
+                     if(empty($chksiz)){
+                        ProductSize::create(
+                              ['product_id' =>  $ch->id,'size_id' => $row[12]]
+                           );
+                     }
                   }
+
             } else {
 
                if($row[25] != ''){

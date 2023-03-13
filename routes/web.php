@@ -25,6 +25,7 @@ use App\Http\Controllers\SeasonController;
 use App\Http\Controllers\VarietyController;
 use App\Http\Controllers\CareController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\CountryController;
 // use App\Http\Controllers\Payment\SslController;
 
 /*
@@ -86,6 +87,7 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     Route::resource('consignment',ConsignmentController::class);
     Route::resource('ingredient',IngredientsController::class);
     Route::resource('care',CareController::class);
+    Route::resource('country',CountryController::class);
 
     // Company
     Route::resource('vat-tax',CompanyController::class);

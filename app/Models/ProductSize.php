@@ -11,6 +11,8 @@ class ProductSize extends Model
 
     protected $table = 'product_sizes';
 
+    protected $fillable = ['product_id', 'size_id'];
+
     public function product(){
 
         return $this->hasManyThrough(
