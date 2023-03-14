@@ -65,6 +65,8 @@ class ProductController extends Controller
         $noPagination = $request->get('no_paginate');
         $discount   = $request->get('discount');
         $keyword   = $request->get('keyword');
+        $category   = $request->get('category');
+        $subcategory   = $request->get('subcategory');
         $camp_id   = $request->get('camp_id');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
         $product = Product::with(['vat','category:id,category_name','subcategory','inventory:id,product_id,stock,sku','product_size','product_colour','discount']);
@@ -78,11 +80,18 @@ class ProductController extends Controller
             } else {
                 $product = $product->paginate($dataQty);
             }
-            return ProductResource::collection($product);
+            return $product;
         }
 
         if($discount != ''){
             $product = $product->where('is_discount',0);
+        }
+
+        if($category != '' ){
+            $product = $product->where('category_id',$category);
+            if($subcategory != ''){
+                $product = $product->where('sub_category_id',$subcategory);
+            }
         }
 
         if($keyword != ''){
@@ -94,7 +103,7 @@ class ProductController extends Controller
         } else {
             $product = $product->latest()->paginate($dataQty);
         }
-        return ProductResource::collection($product);
+        return $product;
     }
 
     public function getProductBySearch(Request $request)

@@ -152,7 +152,7 @@ class OrderController extends Controller
         $post_data['ship_country'] = "Bangladesh";
     
         # OPTIONAL PARAMETERS
-        $post_data['value_a'] = Auth::id();
+        $post_data['value_a'] = $order->user_id;
         $post_data['value_b '] = "ref002";
         $post_data['value_c'] = "ref003";
         $post_data['value_d'] = "ref004";

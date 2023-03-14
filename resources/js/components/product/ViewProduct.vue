@@ -24,6 +24,7 @@ export default {
             keyword: '',
             filterdata: {
                 category: '',
+                subcategory: '',
                 camp_id: '',
                 per_page: 10
             },
@@ -56,14 +57,15 @@ export default {
     methods: {
         getProduct(page = 1) {
             try{
-                axios.get(baseUrl+`get-product?page=${page}&per_page=${this.filterdata.per_page}&camp_id=${this.filterdata.camp_id}&keyword=${this.keyword}`)
+                axios.get(baseUrl+`get-product?page=${page}&per_page=${this.filterdata.per_page}&camp_id=${this.filterdata.camp_id}&category=${this.filterdata.category}&subcategory=${this.filterdata.subcategory}&keyword=${this.keyword}`)
                 .then(response => {
                     this.allproduct = response.data
                   
-                    if(this.isCheckAll && response.data.meta.current_page > 1){
+                    if(this.isCheckAll){
                         const ids = response.data.data.map(v=> v.id);
-                        this.addTocamp.product.push(...ids)
+                        this.addTocamp.product.push(...ids);
                     }
+                    [...new Set(this.addTocamp.product)]
                 }).catch(error => {
                     console.log(error)
                 })
@@ -88,6 +90,7 @@ export default {
         getSubCategories() {
             const filterData = (this.allfiltersubcategories).filter((data) => data.parent_cat == this.filterdata.category)
             this.allsubcategories = filterData
+            if(filterData.length == 0) this.getProduct()
         },
 
         getCampaign(){
@@ -102,6 +105,7 @@ export default {
         filterClear(){
             this.filterdata = {
                 category: '',
+                subcategory: '',
                 camp_id: '',
                 per_page: 10
             },
@@ -262,7 +266,7 @@ export default {
 
                     <div class="col-md-4 col-lg-3 col-12 mb-3">
                         <label for="max_amount">Sub Category</label>
-                        <select id="product-subcategory" class="form-control" >
+                        <select id="product-subcategory" class="form-control" @change="getProduct()" v-model="filterdata.subcategory">
                             <option selected="" value="">Choose...</option>
                             <option v-for="(value,index) in allsubcategories" :value="value.id" :key="index">{{ value.cat_name }}</option>
                         </select>
@@ -309,18 +313,18 @@ export default {
                         <tr>
                             <td class="checkbox-column">
                                 <label class="new-control new-checkbox checkbox-primary" style="height: 18px; margin: 0 auto;">
-                                    <input type="checkbox" multiple :name="product.p_name" v-model="addTocamp.product" :value="product.id" class="new-control-input todochkbox" id="todo-1">
+                                    <input type="checkbox" multiple :name="product.product_name" v-model="addTocamp.product" :value="product.id" class="new-control-input todochkbox" id="todo-1">
                                     <span class="new-control-indicator"></span>
                                 </label>
                             </td>
                             <td>
-                                <p class="mb-0">{{ product.p_name }}</p>
+                                <p class="mb-0">{{ product.product_name }}</p>
                             </td>
-                            <td>{{ product.p_category.cat_name }}</td>
-                            <td>{{ product.p_subcategory.cat_name }}</td>
-                            <td>{{ product.p_sale_price}}</td>
+                            <td>{{ product.category.category_name }}</td>
+                            <td>{{ product.subcategory.category_name }}</td>
+                            <td>{{ product.mrp_price}}</td>
                             <td class="text-center">
-                                <span class="badge shadow-none" :class="product.status == 1 ? 'outline-badge-info':'outline-badge-danger'">{{ product.status_text }}</span>
+                                <span class="badge shadow-none" :class="product.status == 1 ? 'outline-badge-info':'outline-badge-danger'">{{ product.status ? 'Active' : 'Deactive' }}</span>
                             </td>
                             <td class="text-center">
                                 <ul class="table-controls d-flex justify-content-around">
