@@ -23772,17 +23772,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     this.form.view_image_three = this.pr_product.image_three;
     this.form.view_image_four = this.pr_product.image_four;
     this.form.design_code = this.pr_product.design_code;
-    // this.form.stock = this.pr_product.
-    // this.form.cost = this.pr_product.cost
-    // this.form.price = this.pr_product.mrp_price
     this.form.dimention = this.pr_product.dimension;
     this.form.weight = this.pr_product.weight;
-    // this.form.care = this.pr_product.care
-    // this.form.selectfabrics  = this.pr_product.product_fabric[0].id
-    // this.form.discount_amount = this.pr_product.discount_amount
-    // this.form.max_amount = this.pr_product.
-    // this.form.discount_type = this.pr_product.discount_type
-    // this.form.description = this.pr_product.description
+    // this.tages = this.pr_product.tag.keyword_name.split(",")
+    this.form.tages = ['dghgf', 'rterr', 'dhfgh'];
+    this.form.description = this.pr_product.description;
   }
 });
 
@@ -26233,26 +26227,49 @@ var _hoisted_183 = /*#__PURE__*/_withScopeId(function () {
   }, null, -1 /* HOISTED */);
 });
 var _hoisted_184 = [_hoisted_183];
-var _hoisted_185 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"statbox widget box box-shadow\" data-v-9a18946c><div class=\"widget-content\" data-v-9a18946c><div class=\"form-row\" data-v-9a18946c><div class=\"col-md-12 mb-3\" data-v-9a18946c><label for=\"product-Tags\" data-v-9a18946c>Tags</label><!-- &lt;Multiselect\r\n                            v-model=&quot;form.tages&quot;\r\n                            placeholder=&quot;Create Tags&quot;\r\n                            :create-option=&quot;true&quot;\r\n                            label=&quot;name&quot; track-by=&quot;code&quot;\r\n                            mode=&quot;tags&quot;\r\n                            :close-on-select=&quot;false&quot;\r\n                            :searchable=&quot;true&quot;\r\n                            :options=&quot;tages&quot;\r\n                            :multiple=&quot;true&quot; \r\n                            :taggable=&quot;true&quot; \r\n                            @tag=&quot;addTag&quot;\r\n                            &gt;\r\n                            &lt;template v-slot:tag=&quot;{ option, handleTagRemove, disabled }&quot;&gt;\r\n                            &lt;div\r\n                                class=&quot;multiselect-tag is-user&quot;\r\n                                :class=&quot;{\r\n                                &#39;is-disabled&#39;: disabled\r\n                                }&quot;\r\n                            &gt;\r\n                                {{ option.name }}\r\n                                &lt;span\r\n                                v-if=&quot;!disabled&quot;\r\n                                class=&quot;multiselect-tag-remove&quot;\r\n                                @mousedown.prevent=&quot;handleTagRemove(option, $event)&quot;\r\n                                &gt;\r\n                                &lt;span class=&quot;multiselect-tag-remove-icon&quot;&gt;&lt;/span&gt;\r\n                                &lt;/span&gt;\r\n                            &lt;/div&gt;\r\n                            &lt;/template&gt;\r\n                        &lt;/Multiselect&gt; --></div></div></div></div>", 1);
+var _hoisted_185 = {
+  "class": "statbox widget box box-shadow"
+};
 var _hoisted_186 = {
-  "class": "row mt-2"
+  "class": "widget-content"
 };
 var _hoisted_187 = {
+  "class": "form-row"
+};
+var _hoisted_188 = {
+  "class": "col-md-12 mb-3"
+};
+var _hoisted_189 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "for": "product-Tags"
+  }, "Tags", -1 /* HOISTED */);
+});
+var _hoisted_190 = ["onMousedown"];
+var _hoisted_191 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "multiselect-tag-remove-icon"
+  }, null, -1 /* HOISTED */);
+});
+var _hoisted_192 = [_hoisted_191];
+var _hoisted_193 = {
+  "class": "row mt-2"
+};
+var _hoisted_194 = {
   id: "tooltips",
   "class": "col-lg-12 layout-spacing col-md-12"
 };
-var _hoisted_188 = {
+var _hoisted_195 = {
   "class": "statbox widget box"
 };
-var _hoisted_189 = {
+var _hoisted_196 = {
   "class": "widget-content"
 };
-var _hoisted_190 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_197 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "editor-container"
   }, "Description", -1 /* HOISTED */);
 });
-var _hoisted_191 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_198 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "btn btn-success",
     type: "submit"
@@ -26265,7 +26282,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", {
     "class": "needs-validation",
     method: "post",
-    onSubmit: _cache[33] || (_cache[33] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+    onSubmit: _cache[34] || (_cache[34] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.updateForm && $options.updateForm.apply($options, arguments);
     }, ["prevent"])),
     id: "add-product-form"
@@ -26952,14 +26969,49 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
 
     _: 1 /* STABLE */
-  }, 8 /* PROPS */, ["modelValue", "options"])])])])]), _hoisted_185, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_186, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_187, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_188, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_189, [_hoisted_190, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_QuillEditor, {
+  }, 8 /* PROPS */, ["modelValue", "options"])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_185, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_186, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_187, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_188, [_hoisted_189, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Multiselect, {
+    modelValue: $data.form.tages,
+    "onUpdate:modelValue": _cache[32] || (_cache[32] = function ($event) {
+      return $data.form.tages = $event;
+    }),
+    placeholder: "Create Tags",
+    "create-option": true,
+    label: "name",
+    "track-by": "code",
+    mode: "tags",
+    "close-on-select": false,
+    searchable: true,
+    options: $data.tages,
+    multiple: true,
+    taggable: true,
+    onTag: _ctx.addTag
+  }, {
+    tag: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (_ref16) {
+      var option = _ref16.option,
+        handleTagRemove = _ref16.handleTagRemove,
+        disabled = _ref16.disabled;
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["multiselect-tag is-user", {
+          'is-disabled': disabled
+        }])
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(option.name) + " ", 1 /* TEXT */), !disabled ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
+        key: 0,
+        "class": "multiselect-tag-remove",
+        onMousedown: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+          return handleTagRemove(option, $event);
+        }, ["prevent"])
+      }, _hoisted_192, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_190)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2 /* CLASS */)];
+    }),
+
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["modelValue", "options", "onTag"])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_193, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_194, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_195, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_196, [_hoisted_197, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_QuillEditor, {
     theme: "snow",
     content: $data.form.description,
-    "onUpdate:content": _cache[32] || (_cache[32] = function ($event) {
+    "onUpdate:content": _cache[33] || (_cache[33] = function ($event) {
       return $data.form.description = $event;
     }),
     contentType: "html"
-  }, null, 8 /* PROPS */, ["content"])])])])]), _hoisted_191], 32 /* HYDRATE_EVENTS */);
+  }, null, 8 /* PROPS */, ["content"])])])])]), _hoisted_198], 32 /* HYDRATE_EVENTS */);
 }
 
 /***/ }),

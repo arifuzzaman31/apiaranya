@@ -10,4 +10,9 @@ class ProductTag extends Model
     use HasFactory;
 
     protected $fillable = ['product_id','keyword_name','code','status'];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

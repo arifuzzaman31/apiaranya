@@ -42,6 +42,11 @@ class Product extends Model
         return $this->belongsTo(VatTax::class,'vat_tax_id');
     }
 
+    public function tag()
+    {
+        return $this->hasOne(ProductTag::class);
+    }
+
     public function discount()
     {
         return $this->hasMany(Discount::class);

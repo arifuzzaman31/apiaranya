@@ -337,11 +337,8 @@ export default {
         this.form.design_code = this.pr_product.design_code
         this.form.dimention = this.pr_product.dimension
         this.form.weight = this.pr_product.weight
-        // this.form.care = this.pr_product.care
-        // this.form.selectfabrics  = this.pr_product.product_fabric[0].id
-        // this.form.discount_amount = this.pr_product.discount_amount
-        // this.form.max_amount = this.pr_product.
-        // this.form.discount_type = this.pr_product.discount_type
+        // this.tages = this.pr_product.tag.keyword_name.split(",")
+        this.form.tages = ['dghgf','rterr','dhfgh']
         this.form.description = this.pr_product.description
         
     }
@@ -1119,7 +1116,7 @@ export default {
                 <div class="form-row">
                     <div class="col-md-12 mb-3">
                         <label for="product-Tags">Tags</label>
-                        <!-- <Multiselect
+                        <Multiselect
                             v-model="form.tages"
                             placeholder="Create Tags"
                             :create-option="true"
@@ -1149,7 +1146,7 @@ export default {
                                 </span>
                             </div>
                             </template>
-                        </Multiselect> -->
+                        </Multiselect>
                     </div>
                 </div>
             </div>
@@ -1160,7 +1157,7 @@ export default {
                 <div class="statbox widget box ">
                     <div class="widget-content ">
                         <label for="editor-container">Description</label>
-                        <QuillEditor theme="snow" v-model="form.description" contentType="html" />
+                        <QuillEditor theme="snow" v-model:content="form.description" contentType="html" />
                     </div>
                 </div>
             </div>

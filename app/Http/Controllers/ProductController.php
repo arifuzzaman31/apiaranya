@@ -327,7 +327,7 @@ class ProductController extends Controller
     {
         $products = Product::with(['product_vendor:id','product_brand:id','product_designer:id','product_making:id','product_season:id',
                     'product_embellishment:id','inventory:id,product_id,stock,sku','product_size','product_colour','discount','product_fabric:id',
-                    'product_variety:id','product_fit:id','product_artist:id','product_consignment:id','product_ingredient:id','product_care:id'
+                    'product_variety:id','product_fit:id','product_artist:id','product_consignment:id','product_ingredient:id','product_care:id','tag'
                     ])
         ->find($product->id);
         return view('pages.product.edit',['product' => $products,'attrs' => json_encode($this->attrForProd())]);
