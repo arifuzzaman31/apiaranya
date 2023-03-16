@@ -12,7 +12,7 @@
             </div>
         </div>
     </div>
-    <edit-product :pr_product="{{ $product }}" />
+    <edit-product :pr_product="{{ $product }}" :attrs="{{ $attrs }}" />
 </div>    
 
 <!-- end modal -->

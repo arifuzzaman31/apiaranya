@@ -61,8 +61,6 @@ class ProductImport implements ToCollection
                       'image_three' => $row[27] !='' ? $imglink.$row[1].'/'.$row[27].'.png' : '', 
                       'image_four' => $row[28] !='' ? $imglink.$row[1].'/'.$row[28].'.png' : '', 
                       'image_five' => $row[29] !='' ? $imglink.$row[1].'/'.$row[29].'.png' : '', 
-                      'cost'      => (float)$row[22], 
-                      'mrp_price' => (float)$row[23], 
                       'dimension' => $row[30], 
                       // 'country_of_origin' => $row[0], 
                       'weight' => $row[31], 
@@ -186,6 +184,8 @@ class ProductImport implements ToCollection
                'colour_id'   => $vl ? $vl : 0,
                'size_id'     => $row[12] ? $row[12] : 0,
                'sku'         => $row[0],
+               'cpu'         => (float)$row[22],
+               'mrp'         => (float)$row[23],
                'stock'       => (int)$row[24]
             ]);
          }
@@ -196,6 +196,8 @@ class ProductImport implements ToCollection
             'colour_id'   => 0,
             'size_id'     => $row[12] ? $row[12] : 0,
             'sku'         => $row[0],
+            'cpu'         => (float)$row[22],
+            'mrp'         => (float)$row[23],
             'stock'       => (int)$row[24]
          ]);
             

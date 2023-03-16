@@ -44,7 +44,7 @@ export default {
                 dimension: '',
                 weight: '',
                 care: [],
-                vat: null,
+                vat: 1,
                 is_fabric: true,
                 selectfabrics : [],
                 is_color: true,
@@ -57,7 +57,7 @@ export default {
                 max_amount: 0,
                 discount_type: 1,
                 description: '',
-                attrqty: [{colour_id:[],size_id:'',qty:'',sku:''}]
+                attrqty: [{colour_id:[],size_id:'',cpu:'',mrp:'',qty:'',sku:''}]
             },
             tages: [],
             allcategories: [],
@@ -222,7 +222,7 @@ export default {
                 dimension: '',
                 weight: '',
                 care: [],
-                vat: null,
+                vat: 1,
                 is_fabric: true,
                 selectfabrics : [],
                 is_color: true,
@@ -235,7 +235,7 @@ export default {
                 max_amount: 0,
                 discount_type: 1,
                 description: '',
-                attrqty: [{colour_id:[],size_id:'',qty:'',sku:''}]
+                attrqty: [{colour_id:[],size_id:'',cpu:'',mrp:'',qty:'',sku:''}]
             },
             this.allsubcategories= [],
             this.allfiltersubcategories = [],
@@ -740,7 +740,7 @@ export default {
                 <div class="statbox widget box ">
                     <div class="widget-content ">
                         <div class="form-row">
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-3 mb-3">
                                 <label for="design_code">Design Code</label>
                                 <input type="text" class="form-control" :class="validation_error.hasOwnProperty('design_code') ? 'is-invalid' : ''" id="design_code" placeholder="Design Code" v-model="form.design_code">
                                 <div
@@ -750,25 +750,12 @@ export default {
                                         {{ validation_error.design_code[0] }}
                                     </div>
                             </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="product-cost">Unit Cost</label>
-                                <input type="number" class="form-control" id="product-cost" placeholder="Product Cost" v-model="form.cost" >
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="product-price">Price (MRP)</label>
-                                <input type="number" class="form-control" :class="validation_error.hasOwnProperty('price') ? 'is-invalid' : ''" id="product-price" placeholder="Sale Price" v-model="form.price" >
-                                <div
-                                        v-if="validation_error.hasOwnProperty('price')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.price[0] }}
-                                    </div>
-                            </div>
-                            <div class="col-md-4 mb-3">
+                         
+                            <div class="col-md-3 mb-3">
                                 <label for="Dimension">Dimension</label>
                                 <input type="text" class="form-control" id="dimension" placeholder="Example: 29 × 27 × 5 cm" v-model="form.dimension" >
                             </div>
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-3 mb-3">
                                 <label for="weight">Weight</label>
                                 <input type="text" class="form-control" :class="validation_error.hasOwnProperty('weight') ? 'is-invalid' : ''" id="weight" placeholder="Example: 0.45 kg" v-model="form.weight" >
                                 <div
@@ -778,7 +765,7 @@ export default {
                                         {{ validation_error.weight[0] }}
                                     </div>
                             </div>
-                            <div class="form-group col-md-4 mb-3">
+                            <div class="form-group col-md-3 mb-3">
                                 <label for="product-LeadTime">Lead Time</label>
                                 <input type="text" class="form-control" :class="validation_error.hasOwnProperty('lead_time') ? 'is-invalid' : ''" id="LeadTime-name" placeholder="Lead Time" v-model="form.lead_time" >
                                     <div
@@ -860,7 +847,7 @@ export default {
             <div class="statbox widget box box-shadow" v-if="form.color_size">
                 <div class="widget-content ">
                     <div class="row text-center">
-                        <div class="col-5  text-success">
+                        <div class="col-3  text-success">
                             <b>Colour</b>
                         </div>
                         <div class="col-2  text-success">
@@ -868,6 +855,12 @@ export default {
                         </div>
                         <div class="col-2  text-success">
                             <b>SKU</b>
+                        </div>
+                        <div class="col-1  text-success">
+                            <b>CPU</b>
+                        </div>
+                        <div class="col-1  text-success">
+                            <b>MRP</b>
                         </div>
                         <div class="col-2  text-success">
                             <b>Qty</b>
@@ -877,7 +870,7 @@ export default {
                         </div>
                     </div>
                     <div class="row" v-for="(qt,index) in form.attrqty" :key="index">
-                        <div class="form-group col-md-5">
+                        <div class="form-group col-md-3">
                             <Multiselect
                                 v-model="qt.colour_id"
                                 placeholder="Select Colour"
@@ -910,16 +903,22 @@ export default {
                            
                         </div>
                         <div class="form-group col-md-2">
-                            <select id="product-category" class="form-control" v-model="qt.size_id">
+                            <select id="product-category" class="form-control" v-model="qt.size_id" required>
                                 <option value="">Choose Size...</option>
                                 <option v-for="(value,index) in prp_size" :value="value.value" :key="index">{{ value.name }}</option>
                             </select>
                         </div>
                         <div class="form-group col-md-2">
-                            <input type="text"  class="form-control" id="sku" v-model="qt.sku" placeholder="SKU" >
+                            <input type="text"  class="form-control" id="sku" v-model="qt.sku" placeholder="SKU" required>
+                        </div>
+                        <div class="form-group col-md-1">
+                            <input type="number"  class="form-control" id="sku" v-model="qt.cpu" placeholder="CPU" required>
+                        </div>
+                        <div class="form-group col-md-1">
+                            <input type="number"  class="form-control" id="sku" v-model="qt.mrp" placeholder="MRP" required>
                         </div>
                         <div class="form-group col-md-2">
-                            <input type="number"  class="form-control" id="qty" v-model="qt.qty" placeholder="qty" >
+                            <input type="number"  class="form-control" id="qty" v-model="qt.qty" placeholder="qty" required>
                         </div>
                         <div class="form-group col-md-1 text-center" v-if="index != 0">
                             <a
@@ -942,7 +941,7 @@ export default {
             <div class="statbox widget box box-shadow" v-else>
                 <div class="widget-content ">
                     <div class="row">
-                        <div class="form-group col-md-3 mt-1">
+                        <div class="form-group col-md-3">
                                 <label for="product-ingredients">Stock</label>
                                 <input type="text" class="form-control" :class="validation_error.hasOwnProperty('stock') ? 'is-invalid' : ''" id="stock-name" placeholder="stock" v-model="form.stock" >
                                     <div
@@ -953,7 +952,22 @@ export default {
                                     </div>
                             </div>
 
-                        <div class="form-group col-md-3 mt-1">
+                            <div class="col-md-3">
+                                <label for="product-cost">Unit Cost</label>
+                                <input type="number" class="form-control" id="product-cost" placeholder="CPU" v-model="form.cost" >
+                            </div>
+                            <div class="col-md-3">
+                                <label for="product-price">Price(MRP)</label>
+                                <input type="number" class="form-control" :class="validation_error.hasOwnProperty('price') ? 'is-invalid' : ''" id="product-price" placeholder="Sale Price" v-model="form.price" >
+                                <div
+                                        v-if="validation_error.hasOwnProperty('price')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.price[0] }}
+                                    </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
                                 <label for="product-sku">SKU</label>
                                 <input type="text" class="form-control" :class="validation_error.hasOwnProperty('sku') ? 'is-invalid' : ''" id="product-sku" placeholder="SKU" v-model="form.sku" >
                                     <div

@@ -27,8 +27,6 @@ class CreateProductsTable extends Migration
             $table->string('image_three')->nullable();
             $table->string('image_four')->nullable();
             $table->string('image_five')->nullable();
-            $table->double('cost',8,2)->nullable();
-            $table->double('mrp_price',8,2);
             $table->string('dimension')->nullable();
             $table->string('country_of_origin')->nullable();
             $table->string('weight')->nullable();

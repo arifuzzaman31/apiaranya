@@ -37,9 +37,9 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function attrForProd()
     {
-        $attrs = [
+        return [
             'vendor' => $this->getVendor(),
             'artist' => $this->getArtist(),
             'brand' => $this->getBrand(),
@@ -57,7 +57,11 @@ class ProductController extends Controller
             'variety' => $this->getVariety(),
             'tax' => $this->getTax()
         ];
-        return view('pages.product.create_product',$attrs);
+    }
+
+    public function create()
+    {
+        return view('pages.product.create_product',$this->attrForProd());
     }
 
     public function getProduct(Request $request)
@@ -130,7 +134,6 @@ class ProductController extends Controller
             'product_name' => 'required',
             'category' => 'required',
             'stock' => 'required_if:color_size,false',
-            'price' => 'required',
             'weight' => 'required',
             'design_code' => 'required'
         ]);
@@ -142,7 +145,7 @@ class ProductController extends Controller
             $product->slug                = Str::slug($request->product_name);
             $product->category_id         = $request->category;
             $product->sub_category_id     = $request->sub_category;
-            $product->vat_tax_id          = $request->vat['value'];
+            $product->vat_tax_id          = $request->vat;
             $product->description         = $request->description;
             $product->lead_time           = $request->lead_time;
             $product->product_image       = $request->product_image_one;
@@ -151,8 +154,6 @@ class ProductController extends Controller
             $product->image_three         = $request->product_image_three;
             $product->image_four          = $request->product_image_four;
             $product->image_five          = $request->image_five;
-            $product->cost                = $request->cost;
-            $product->mrp_price           = $request->price;
             $product->dimension           = $request->dimension;
             $product->weight              = $request->weight;
             $product->design_code         = $request->design_code;
@@ -197,7 +198,7 @@ class ProductController extends Controller
 
                 // $product->inventory()->attach($product->id,['colour_id' => $colorIds, 'size_id' => $sizeIds]);
                 foreach($request->attrqty as $value){
-                    if($value['qty'] != '' && $value['sku'] != ''){
+                    if($value['qty'] != '' && $value['sku'] != '' && $value['cpu'] != '' && $value['mrp'] != ''){
                         foreach($value['colour_id'] as $sizestock)
                         {
                             $stock              = new Inventory();
@@ -206,6 +207,8 @@ class ProductController extends Controller
                             $stock->size_id     = $value['size_id'];
                             $stock->sku         = $value['sku'];
                             $stock->stock       = $value['qty'];
+                            $stock->cpu         = $value['cpu'];
+                            $stock->mrp         = $value['mrp'];
                             $stock->warning_amount = $request->warning_amount ? $request->warning_amount : 10;
                             $stock->warehouse   = $request->warehouse;
                             $stock->save();
@@ -219,18 +222,20 @@ class ProductController extends Controller
                 $stock->product_id  = $product->id;
                 $stock->stock       = $request->stock;
                 $stock->sku       = $request->sku;
+                $stock->cpu       = $request->cost;
+                $stock->mrp       = $request->price;
                 $stock->save();
             }
             
-            if($request->is_discount){
-                $disc                  = new Discount();
-                $disc->product_id      = $product->id;
-                $disc->discount_amount = $request->discount_amount;
-                $disc->discount_type   = $request->discount_type;
-                $disc->max_amount      = $request->max_amount;
-                $disc->status = 1;
-                $disc->save();
-            }
+            // if($request->is_discount){
+            //     $disc                  = new Discount();
+            //     $disc->product_id      = $product->id;
+            //     $disc->discount_amount = $request->discount_amount;
+            //     $disc->discount_type   = $request->discount_type;
+            //     $disc->max_amount      = $request->max_amount;
+            //     $disc->status = 1;
+            //     $disc->save();
+            // }
 
             if(!empty($request->vendor)){
                
@@ -292,11 +297,11 @@ class ProductController extends Controller
             }
 
             DB::commit();
-            return response()->json(['status' => 'success', 'message' => $this->fieldname.' Added Successfully!']);
+            return $this->successMessage($this->fieldname.' Added Successfully!');
         } catch (\Throwable $th) {
             DB::rollback();
             return $th;
-            return response()->json(['status' => 'error', 'message' => 'Something went wrong!']);
+            return $this->errorMessage('Something went wrong!');
         }
     }
 
@@ -320,9 +325,12 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $products = Product::with(['category:id,category_name','subcategory','inventory','product_colour','product_size','product_fabric','discount'])
+        $products = Product::with(['product_vendor:id','product_brand:id','product_designer:id','product_making:id','product_season:id',
+                    'product_embellishment:id','inventory:id,product_id,stock,sku','product_size','product_colour','discount','product_fabric:id',
+                    'product_variety:id','product_fit:id','product_artist:id','product_consignment:id','product_ingredient:id','product_care:id'
+                    ])
         ->find($product->id);
-        return view('pages.product.edit',['product' => $products]);
+        return view('pages.product.edit',['product' => $products,'attrs' => json_encode($this->attrForProd())]);
     }
 
     /**

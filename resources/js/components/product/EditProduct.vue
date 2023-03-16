@@ -7,7 +7,7 @@ import Mixin from '../../mixer'
 
 export default {
     name:'EditProduct',
-    props:['pr_product'],
+    props:['pr_product','attrs'],
     mixins:[Mixin],
     components: {
         QuillEditor,
@@ -17,56 +17,57 @@ export default {
     data(){
         return {
             form: {
-                id:'',
                 product_name: '',
+                category: '',
+                sub_category: '',
                 sku: '',
-                category: null,
-                sub_category: null,
-                vandor : '',
-                brand : '',
-                designer : '',
-                embellishment : '',
-                making : '',
-                selectIngredient : null,
+                vendor : [],
+                brand : [],
+                designer : [],
+                embellishment : [],
+                making : [],
                 lead_time : '',
-                season : '',
-                variety : '',
-                fit : '',
-                artist_name : '',
-                consignment : '',
-                ingredients : '',
+                season : [],
+                variety : [],
+                tages : [],
+                fit : [],
+                artist : [],
+                consignment : [],
+                ingredient : [],
                 product_image_one : '',
                 product_image_two : '',
                 product_image_three : '',
                 product_image_four : '',
+                view_image_one : '',
+                view_image_two : '',
+                view_image_three : '',
+                view_image_four : '',
                 design_code: '',
                 stock: 1,
                 cost: 0,
                 price: 0,
-                dimention: '',
+                dimension: '',
                 weight: '',
-                care: '',
+                care: [],
+                vat: '',
                 is_fabric: true,
-                selectfabrics : null,
+                fabrics : [],
                 is_color: true,
                 color_size: true,
-                selectcolours : null,
+                selectcolours : [],
                 is_size: true,
-                selectsize : null,
+                selectsize : [],
                 discount_amount: '',
                 discount_type: 1,
                 max_amount: 0,
                 discount_type: 1,
                 description: '',
-                attrqty: [{colour_id:'',size_id:'',qty:''}]
+                attrqty: [{colour_id:[],size_id:'',qty:'',sku:''}]
             },
-
+            tages: [],
             allcategories: [],
             allsubcategories: [],
             allfiltersubcategories: [],
-            allcolours: [],
-            allsizes: [],
-            allfabrics: [],
             validation_error: {}
         }
     },
@@ -165,7 +166,7 @@ export default {
         },
 
         addMore(){
-            this.form.attrqty.push({colour_id:'',size_id:'',qty:''})
+            this.form.attrqty.push({colour_id:[],size_id:'',qty:'',sku:''})
         },
         removeCatChild(index) {
             this.form.attrqty.splice(index, 1);
@@ -179,6 +180,9 @@ export default {
                 this.allcategories.push(...res)
                 // console.log(subcat)
                 this.allfiltersubcategories.push(...subcat)
+                if(this.form.sub_category != ''){
+                    this.getSubCategories()
+                }
             })
         },
         getColour() {
@@ -234,43 +238,48 @@ export default {
         },
         clearForm() {
             this.form = {
-                product_name : '',
-                sku : '',
-                category : null,
-                sub_category : null,
-                vandor : 'Aranya',
-                brand : 'Aranya',
-                designer : '',
-                embellishment : '',
-                making : '',
+                product_name: '',
+                category: '',
+                sub_category: '',
+                sku: '',
+                vendor : [],
+                brand : [],
+                designer : [],
+                embellishment : [],
+                making : [],
                 lead_time : '',
-                season : '',
-                variety : '',
-                fit : '',
-                artist_name : '',
-                ingredients : '',
-                consignment : '',
+                season : [],
+                variety : [],
+                tages : [],
+                fit : [],
+                artist : [],
+                consignment : [],
+                ingredient : [],
                 product_image_one : '',
                 product_image_two : '',
                 product_image_three : '',
                 product_image_four : '',
-                design_code : '',
-                stock : 0,
-                cost : 0,
-                price : 0,
-                dimention : '',
-                weight : '',
-                care : '',
-                is_fabric : true,
-                selectfabrics : null,
-                is_color : true,
-                selectcolours : null,
-                is_size : true,
-                selectsize : null,
-                discount_amount : '',
-                discount_type : 1,
-                max_amount : 0,
-                description : ''
+                design_code: '',
+                stock: 1,
+                cost: 0,
+                price: 0,
+                dimension: '',
+                weight: '',
+                care: [],
+                vat: '',
+                is_fabric: true,
+                fabrics : [],
+                is_color: true,
+                color_size: true,
+                selectcolours : [],
+                is_size: true,
+                selectsize : [],
+                discount_amount: '',
+                discount_type: 1,
+                max_amount: 0,
+                discount_type: 1,
+                description: '',
+                attrqty: [{colour_id:[],size_id:'',qty:'',sku:''}]
             },
             this.allsubcategories= [],
             this.validation_error = {}
@@ -278,46 +287,61 @@ export default {
     },
 
     mounted(){
-        this.form.attrqty = []
-        const datam = this.pr_product.inventory.map(data => JSON.parse({'colour_id':data.colour_id,'size_id':data.size_id,'qty':data.stock}))
-        this.form.attrqty.push(...datam)
-        this.getCategory()
-        this.getColour()
-        this.getSize()
-        this.getFabric()
+        // this.form.attrqty = []
+        // const datam = this.pr_product.inventory.map(data => JSON.parse({'colour_id':data.colour_id,'size_id':data.size_id,'qty':data.stock}))
+        // this.form.attrqty.push(...datam)
+        // this.getColour()
+        // this.getSize()
+        // this.getFabric()
         
-        this.form.id = this.pr_product.id
+        // this.form.id = this.pr_product.id
         this.form.product_name = this.pr_product.product_name
-        this.form.sku = this.pr_product.sku
+        // this.form.sku = this.pr_product.sku
         this.form.category = this.pr_product.category_id
         this.form.sub_category = this.pr_product.sub_category_id
-        this.form.vandor = this.pr_product.vandor
-        this.form.brand = this.pr_product.brand
-        this.form.designer  = this.pr_product.designer
-        this.form.embellishment  = this.pr_product.embellishment
-        this.form.making  = this.pr_product.making
+        this.getCategory()
+   
+        const vids = this.pr_product.product_vendor.map(v=> v.id);
+        this.form.vendor.push(...vids);
+        const brids = this.pr_product.product_brand.map(v=> v.id);
+        this.form.brand.push(...brids);
+        const dids = this.pr_product.product_designer.map(v=> v.id);
+        this.form.designer.push(...dids);
+        const emids = this.pr_product.product_embellishment.map(v=> v.id);
+        this.form.embellishment.push(...emids);
+        const mids = this.pr_product.product_making.map(v=> v.id);
+        this.form.making.push(...mids);
+        const sids = this.pr_product.product_season.map(v=> v.id);
+        this.form.season.push(...sids);
+        const vaids = this.pr_product.product_variety.map(v=> v.id);
+        this.form.variety.push(...vaids);
+        const fids = this.pr_product.product_fit.map(v=> v.id);
+        this.form.fit.push(...fids);
+        const arids = this.pr_product.product_artist.map(v=> v.id);
+        this.form.artist.push(...arids);
+        const coids = this.pr_product.product_consignment.map(v=> v.id);
+        this.form.consignment.push(...coids);
+        const inids = this.pr_product.product_ingredient.map(v=> v.id);
+        this.form.ingredient.push(...inids);
+        const caids = this.pr_product.product_care.map(v=> v.id);
+        this.form.care.push(...caids);
+        const faids = this.pr_product.product_fabric.map(v=> v.id);
+        this.form.fabrics.push(...faids);
+     
+        this.form.vat  = this.pr_product.vat_tax_id
         this.form.lead_time  = this.pr_product.lead_time
-        this.form.season  = this.pr_product.season
-        this.form.variety  = this.pr_product.variety
-        this.form.fit  = this.pr_product.fit
-        this.form.artist_name  = this.pr_product.artist_name
-        this.form.consignment  = this.pr_product.consignment
-        this.form.ingredients  = this.pr_product.ingredients
-        this.form.product_image_one  = this.pr_product.product_image
-        this.form.product_image_two  = this.pr_product.image_two
-        this.form.product_image_three  = this.pr_product.image_three
-        this.form.product_image_four  = this.pr_product.image_four
+        this.form.view_image_one  = this.pr_product.product_image
+        this.form.view_image_two  = this.pr_product.image_two
+        this.form.view_image_three  = this.pr_product.image_three
+        this.form.view_image_four  = this.pr_product.image_four
         this.form.design_code = this.pr_product.design_code
-        // this.form.stock = this.pr_product.
-        this.form.cost = this.pr_product.cost
-        this.form.price = this.pr_product.mrp_price
         this.form.dimention = this.pr_product.dimension
         this.form.weight = this.pr_product.weight
-        this.form.care = this.pr_product.care
-        this.form.selectfabrics  = this.pr_product.product_fabric[0].id
-        this.form.discount_amount = this.pr_product.discount_amount
-        this.form.max_amount = this.pr_product.
-        this.form.discount_type = this.pr_product.discount_type
+        // this.form.care = this.pr_product.care
+        // this.form.selectfabrics  = this.pr_product.product_fabric[0].id
+        // this.form.discount_amount = this.pr_product.discount_amount
+        // this.form.max_amount = this.pr_product.
+        // this.form.discount_type = this.pr_product.discount_type
         this.form.description = this.pr_product.description
         
     }
@@ -330,7 +354,6 @@ export default {
                 <div class="statbox widget box ">
                     <div class="widget-content ">
                         <div class="form-row">
-                            {{ form }}
                             <div class="col-md-4">
                                 <label for="product-name">Product name</label>
                                 <input type="text" class="form-control" :class="validation_error.hasOwnProperty('product_name') ? 'is-invalid' : ''" id="product-name" placeholder="Product name" v-model="form.product_name" >
@@ -341,20 +364,11 @@ export default {
                                         {{ validation_error.product_name[0] }}
                                     </div>
                             </div>
-                            <div class="col-md-4">
-                                <label for="product-sku">Product SKU</label>
-                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('sku') ? 'is-invalid' : ''" id="product-sku" placeholder="SKU" v-model="form.sku" >
-                                <div
-                                        v-if="validation_error.hasOwnProperty('sku')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.sku[0] }}
-                                    </div>
-                            </div>
+                            
                             <div class="form-group col-md-4">
                                 <label for="product-category">Category </label>
                                 <select id="product-category" class="form-control" @change="getSubCategories()" v-model="form.category">
-                                    <option value="">Choose...</option>
+                                    <option value="">Choose Category...</option>
                                     <option v-for="(value,index) in allcategories" :value="value.id" :key="index">{{ value.cat_name }}</option>
                                 </select>
                                 <div
@@ -364,10 +378,10 @@ export default {
                                         {{ validation_error.category[0] }}
                                     </div>
                             </div>
-                            <div class="form-group col-md-4 mt-1">
-                                <label for="product-category">Sub Category</label>
-                                <select id="product-category" class="form-control" v-model="form.sub_category">
-                                    <option value="">Choose...</option>
+                            <div class="form-group col-md-4">
+                                <label for="product-subcategory">Sub Category</label>
+                                <select id="product-subcategory" class="form-control" v-model="form.sub_category">
+                                    <option value="">Choose Sub Category...</option>
                                     <option v-for="(value,index) in allsubcategories" :value="value.id" :key="index">{{ value.cat_name }}</option>
                                 </select>
                                 <div
@@ -377,331 +391,18 @@ export default {
                                     {{ validation_error.sub_category[0] }}
                                 </div>
                             </div>
-                            <div class="form-group col-md-4 mt-1">
-                                <label for="product-Vandor">Vandor</label>
-                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('vandor') ? 'is-invalid' : ''" id="product-name" placeholder="Vandor Name" v-model="form.vandor" >
-                                    <div
-                                        v-if="validation_error.hasOwnProperty('vandor')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.vandor[0] }}
-                                    </div>
-                            </div>
 
-                            <div class="form-group col-md-4 mt-1">
-                                <label for="product-Brand">Brand</label>
-                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('brand') ? 'is-invalid' : ''" id="product-name" placeholder="Brand Name" v-model="form.brand" >
-                                    <div
-                                        v-if="validation_error.hasOwnProperty('brand')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.brand[0] }}
-                                    </div>
-                            </div>
-
-                            <div class="form-group col-md-4 mt-1">
-                                <label for="product-Brand">Designer</label>
-                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('designer') ? 'is-invalid' : ''" id="Designer-name" placeholder="Designer Name" v-model="form.designer" >
-                                    <div
-                                        v-if="validation_error.hasOwnProperty('designer')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.designer[0] }}
-                                    </div>
-                            </div>
-
-                            <div class="form-group col-md-4 mt-1">
-                                <label for="product-Brand">Embellishment</label>
-                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('embellishment') ? 'is-invalid' : ''" id="Embellishment-name" placeholder="Embellishment" v-model="form.embellishment" >
-                                    <div
-                                        v-if="validation_error.hasOwnProperty('embellishment')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.embellishment[0] }}
-                                    </div>
-                            </div>
-                            
-                            <div class="form-group col-md-4 mt-1">
-                                <label for="product-Making">Making</label>
-                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('making') ? 'is-invalid' : ''" id="Making-name" placeholder="Making" v-model="form.making" >
-                                    <div
-                                        v-if="validation_error.hasOwnProperty('making')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.making[0] }}
-                                    </div>
-                            </div>
-                            <div class="form-group col-md-4 mt-1">
-                                <label for="product-LeadTime">Lead Time</label>
-                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('lead_time') ? 'is-invalid' : ''" id="LeadTime-name" placeholder="Lead Time" v-model="form.lead_time" >
-                                    <div
-                                        v-if="validation_error.hasOwnProperty('lead_time')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.lead_time[0] }}
-                                    </div>
-                            </div>
-                            <div class="form-group col-md-4 mt-1">
-                                <label for="product-Season">Season</label>
-                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('season') ? 'is-invalid' : ''" id="Season-name" placeholder="Season" v-model="form.season" >
-                                    <div
-                                        v-if="validation_error.hasOwnProperty('season')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.season[0] }}
-                                    </div>
-                            </div>
-                            <div class="form-group col-md-4 mt-1">
-                                <label for="product-Variety">Variety</label>
-                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('variety') ? 'is-invalid' : ''" id="Variety-name" placeholder="Variety" v-model="form.variety" >
-                                    <div
-                                        v-if="validation_error.hasOwnProperty('variety')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.variety[0] }}
-                                    </div>
-                            </div>
-
-                            <div class="form-group col-md-4 mt-1">
-                                <label for="product-Fit">Fit</label>
-                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('fit') ? 'is-invalid' : ''" id="Fit-name" placeholder="Fit" v-model="form.fit" >
-                                    <div
-                                        v-if="validation_error.hasOwnProperty('fit')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.fit[0] }}
-                                    </div>
-                            </div>
-
-                            <div class="form-group col-md-4 mt-1">
-                                <label for="product-ArtistName">Artist Name</label>
-                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('artist_name') ? 'is-invalid' : ''" id="Fit-name" placeholder="Artist Name" v-model="form.artist_name" >
-                                    <div
-                                        v-if="validation_error.hasOwnProperty('artist_name')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.artist_name[0] }}
-                                    </div>
-                            </div>
-
-                            <div class="form-group col-md-4 mt-1">
-                                <label for="product-Consignment">Consignment</label>
-                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('consignment') ? 'is-invalid' : ''" id="Fit-name" placeholder="Consignment" v-model="form.consignment" >
-                                    <div
-                                        v-if="validation_error.hasOwnProperty('consignment')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.consignment[0] }}
-                                    </div>
-                            </div>
-                            <div class="form-group col-md-4 mt-1">
-                                <label for="product-ingredients">Ingredients</label>
-                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('ingredients') ? 'is-invalid' : ''" id="ingredients-name" placeholder="Ingredients" v-model="form.ingredients" >
-                                    <div
-                                        v-if="validation_error.hasOwnProperty('ingredients')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.ingredients[0] }}
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-        <div id="tooltips" class="mb-2">
-            <div class="statbox widget box ">
-                <div class="widget-content ">
-                        <div class="row">
-                        <div class="col-md-3 col-12 mt-4">
-                                <label for="product-image1">Image (1:1)</label>
-                                <!-- <input type="file" class="form-control" id="product-image"> -->
-                                <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('one')">Upload files</button>
-                                <p class="mt-1 text-info" v-if="form.product_image_one != ''">{{  form.product_image_one }}</p>
-                            </div>
-                            <div class="col-md-3 col-12 mt-4">
-                                <label for="product-image1">Image (1:1)</label>
-                                <!-- <input type="file" class="form-control" id="product-image"> -->
-                                <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('two')">Upload files</button>
-                                <p class="mt-1 text-info" v-if="form.product_image_two != ''">{{  form.product_image_two }}</p>
-                            </div>
-                            <div class="col-md-3 col-12 mt-4">
-                                <label for="product-image1">Image (1:1)</label>
-                                <!-- <input type="file" class="form-control" id="product-image"> -->
-                                <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('three')">Upload files</button>
-                                <p class="mt-1 text-info" v-if="form.product_image_tree != ''">{{  form.product_image_tree }}</p>
-                            </div>
-                            <div class="col-md-3 col-12 mt-4">
-                                <label for="product-image1">Image (1:1)</label>
-                                <!-- <input type="file" class="form-control" id="product-image"> -->
-                                <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('four')">Upload files</button>
-                                <p class="mt-1 text-info" v-if="form.product_image_four != ''">{{  form.product_image_four }}</p>
-                            </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div id="tooltips" class="col-lg-12 layout-spacing col-md-12">
-                <div class="statbox widget box ">
-                    <div class="widget-content ">
-                        <div class="form-row">
-                            <div class="col-md-4 mb-3">
-                                <label for="design_code">Design Code</label>
-                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('design_code') ? 'is-invalid' : ''" id="design_code" placeholder="Design Code" v-model="form.design_code">
-                                <div
-                                        v-if="validation_error.hasOwnProperty('design_code')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.design_code[0] }}
-                                    </div>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="product-cost">Unit Cost</label>
-                                <input type="number" class="form-control" id="product-cost" placeholder="Product Cost" v-model="form.cost" >
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="product-price">Price (MRP)</label>
-                                <input type="number" class="form-control" :class="validation_error.hasOwnProperty('price') ? 'is-invalid' : ''" id="product-price" placeholder="Sale Price" v-model="form.price" >
-                                <div
-                                        v-if="validation_error.hasOwnProperty('price')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.price[0] }}
-                                    </div>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="dimention">Dimentions</label>
-                                <input type="text" class="form-control" id="dimention" placeholder="Example: 29 × 27 × 5 cm" v-model="form.dimention" >
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="weight">Weight</label>
-                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('weight') ? 'is-invalid' : ''" id="weight" placeholder="Example: 0.45 kg" v-model="form.weight" >
-                                <div
-                                        v-if="validation_error.hasOwnProperty('weight')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.weight[0] }}
-                                    </div>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="care">Care</label>
-                                <input type="text" class="form-control" id="care" placeholder="Care" v-model="form.care" >
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-        <div class="statbox widget box box-shadow">
-            <div class="widget-header">
-                <div class="row">
-                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
-                        <h5>Attribute</h5>
-                    </div>                 
-                    
-                </div>               
-                    <div class="d-flex mt-3">
-                        <div class="billing-cycle-radios">
-                            <div class="radio billed-yearly-radio">
-                                <div class="d-flex justify-content-center">
-                                    <span class="txt-monthly mr-2">Colour Size</span>
-                                    <label class="switch s-icons s-outline  s-outline-primary">
-                                        <input v-model="form.color_size" :checked="form.color_size"  type="checkbox" id="colour">
-                                        <span class="slider round"></span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                       
-                    </div>
-                </div>
-            </div>
-            
-            <div class="statbox widget box box-shadow" v-if="form.color_size">
-                <div class="widget-content ">
-                    <div class="row text-center">
-                        <div class="col-4  text-success">
-                            <b>Coluor</b>
-                        </div>
-                        <div class="col-4  text-success">
-                           <b>Size</b> 
-                        </div>
-                        <div class="col-2  text-success">
-                            <b>Qty</b>
-                        </div>
-                        <div class="col-2  text-danger">
-                            <b>Remove</b>
-                        </div>
-                    </div>
-                    <div class="row" v-for="(qt,index) in form.attrqty" :key="index">
-                        <div class="form-group col-md-4">
-                            <select id="product-category" class="form-control" v-model="qt.colour_id">
-                                <option value="">Choose...</option>
-                                <option v-for="(value,index) in allcolours" :selected="value.value == qt.colour_id" :value="value.value" :key="index">{{ value.name }}</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <select id="product-category" class="form-control" v-model="qt.size_id">
-                                <option value="">Choose...</option>
-                                <option v-for="(value,index) in allsizes" :selected="value.value == qt.size_id" :value="value.value" :key="index">{{ value.name }}</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <input type="number"  class="form-control" id="qty" v-model="qt.qty" placeholder="qty" >
-                        </div>
-                        <div class="form-group col-md-2 text-center" v-if="index != 0">
-                            <a
-                              href="javascript:void(0)"
-                              @click.prevent="removeCatChild(index)"
-                              class="mt-5"
-                              ><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-danger"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a
-                            >
-                        </div>
-                    </div>
-                </div>
-                <a
-                        href="javascript:void(0)"
-                        @click.prevent="addMore()"
-                        class="btn btn-warning"
-                    >Add More
-                    </a>
-            </div>
-
-            <div class="statbox widget box box-shadow" v-else>
-                <div class="widget-content ">
-                    <div class="row">
-                        <div class="form-group col-md-3 mt-1">
-                                <label for="product-ingredients">Stock</label>
-                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('stock') ? 'is-invalid' : ''" id="stock-name" placeholder="stock" v-model="form.stock" >
-                                    <div
-                                        v-if="validation_error.hasOwnProperty('stock')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.stock[0] }}
-                                    </div>
-                            </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="statbox widget box box-shadow">
-                <div class="widget-content ">
-                    <div class="form-row">
-                        <!-- <div class="col-md-12 mb-3" v-if="form.is_color">
-                            <label for="product-category">Colour</label>
+                            <div class="col-md-12 mb-3">
+                            <label for="product-Vendor">Vendor</label>
                              <Multiselect
-                                v-model="form.selectcolours"
-                               
+                                v-model="form.vendor"
                                 mode="tags"
-                                placeholder="Select Colour"
+                                placeholder="Select Vendor"
                                 track-by="name"
                                 label="name"
                                 :close-on-select="false"
                                 :search="true"
-                                :options="allcolours"
+                                :options="attrs.vendor"
                                 :searchable="true"
                                 >
                                 <template v-slot:tag="{ option, handleTagRemove, disabled }">
@@ -723,17 +424,18 @@ export default {
                                 </template>
                             </Multiselect>
                         </div> 
-                        <div class="col-md-12 mb-3" v-if="form.is_size">
-                            <label for="product-category">Size</label>
-                            <Multiselect
-                                v-model="form.selectsize"
+
+                        <div class="col-md-12 mb-3">
+                            <label for="product-Brand">Brand</label>
+                             <Multiselect
+                                v-model="form.brand"
                                 mode="tags"
-                                placeholder="Select Size"
+                                placeholder="Select Brand"
                                 track-by="name"
                                 label="name"
                                 :close-on-select="false"
                                 :search="true"
-                                :options="allsizes"
+                                :options="attrs.brand"
                                 :searchable="true"
                                 >
                                 <template v-slot:tag="{ option, handleTagRemove, disabled }">
@@ -754,18 +456,639 @@ export default {
                                 </div>
                                 </template>
                             </Multiselect>
-                        </div> -->
+                        </div> 
 
-                        <div class="col-md-12 mb-3" v-if="form.is_fabric">
-                            <label for="product-category">Composition</label>
-                            <Multiselect
-                                v-model="form.selectfabrics"
-                                placeholder="Select Fabric"
+                        <div class="col-md-12 mb-3">
+                            <label for="product-Designer">Designer</label>
+                             <Multiselect
+                                v-model="form.designer"
+                                mode="tags"
+                                placeholder="Select Designer"
+                                track-by="name"
+                                label="name"
+                                :close-on-select="false"
+                                :search="true"
+                                :options="attrs.designer"
+                                :searchable="true"
+                                >
+                                <template v-slot:tag="{ option, handleTagRemove, disabled }">
+                                <div
+                                    class="multiselect-tag is-user"
+                                    :class="{
+                                    'is-disabled': disabled
+                                    }"
+                                >
+                                    {{ option.name }}
+                                    <span
+                                    v-if="!disabled"
+                                    class="multiselect-tag-remove"
+                                    @mousedown.prevent="handleTagRemove(option, $event)"
+                                    >
+                                    <span class="multiselect-tag-remove-icon"></span>
+                                    </span>
+                                </div>
+                                </template>
+                            </Multiselect>
+                        </div> 
+
+                        <div class="col-md-12 mb-3">
+                            <label for="product-Embellishment">Embellishment</label>
+                             <Multiselect
+                                v-model="form.embellishment"
+                                mode="tags"
+                                placeholder="Select Embellishment"
+                                track-by="name"
+                                label="name"
+                                :close-on-select="false"
+                                :search="true"
+                                :options="attrs.embellish"
+                                :searchable="true"
+                                >
+                                <template v-slot:tag="{ option, handleTagRemove, disabled }">
+                                <div
+                                    class="multiselect-tag is-user"
+                                    :class="{
+                                    'is-disabled': disabled
+                                    }"
+                                >
+                                    {{ option.name }}
+                                    <span
+                                    v-if="!disabled"
+                                    class="multiselect-tag-remove"
+                                    @mousedown.prevent="handleTagRemove(option, $event)"
+                                    >
+                                    <span class="multiselect-tag-remove-icon"></span>
+                                    </span>
+                                </div>
+                                </template>
+                            </Multiselect>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <label for="product-Making">Making</label>
+                             <Multiselect
+                                v-model="form.making"
+                                mode="tags"
+                                placeholder="Select Making"
+                                track-by="name"
+                                label="name"
+                                :close-on-select="false"
+                                :search="true"
+                                :options="attrs.making"
+                                :searchable="true"
+                                >
+                                <template v-slot:tag="{ option, handleTagRemove, disabled }">
+                                <div
+                                    class="multiselect-tag is-user"
+                                    :class="{
+                                    'is-disabled': disabled
+                                    }"
+                                >
+                                    {{ option.name }}
+                                    <span
+                                    v-if="!disabled"
+                                    class="multiselect-tag-remove"
+                                    @mousedown.prevent="handleTagRemove(option, $event)"
+                                    >
+                                    <span class="multiselect-tag-remove-icon"></span>
+                                    </span>
+                                </div>
+                                </template>
+                            </Multiselect>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <label for="product-Season">Season</label>
+                             <Multiselect
+                                v-model="form.season"
+                                mode="tags"
+                                placeholder="Select Season"
+                                track-by="name"
+                                label="name"
+                                :close-on-select="false"
+                                :search="true"
+                                :options="attrs.season"
+                                :searchable="true"
+                                >
+                                <template v-slot:tag="{ option, handleTagRemove, disabled }">
+                                <div
+                                    class="multiselect-tag is-user"
+                                    :class="{
+                                    'is-disabled': disabled
+                                    }"
+                                >
+                                    {{ option.name }}
+                                    <span
+                                    v-if="!disabled"
+                                    class="multiselect-tag-remove"
+                                    @mousedown.prevent="handleTagRemove(option, $event)"
+                                    >
+                                    <span class="multiselect-tag-remove-icon"></span>
+                                    </span>
+                                </div>
+                                </template>
+                            </Multiselect>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <label for="product-Variety">Variety</label>
+                             <Multiselect
+                                v-model="form.variety"
+                                mode="tags"
+                                placeholder="Select Variety"
+                                track-by="name"
+                                label="name"
+                                :close-on-select="false"
+                                :search="true"
+                                :options="attrs.variety"
+                                :searchable="true"
+                                >
+                                <template v-slot:tag="{ option, handleTagRemove, disabled }">
+                                <div
+                                    class="multiselect-tag is-user"
+                                    :class="{
+                                    'is-disabled': disabled
+                                    }"
+                                >
+                                    {{ option.name }}
+                                    <span
+                                    v-if="!disabled"
+                                    class="multiselect-tag-remove"
+                                    @mousedown.prevent="handleTagRemove(option, $event)"
+                                    >
+                                    <span class="multiselect-tag-remove-icon"></span>
+                                    </span>
+                                </div>
+                                </template>
+                            </Multiselect>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <label for="product-Fit">Fit</label>
+                             <Multiselect
+                                v-model="form.fit"
+                                mode="tags"
+                                placeholder="Select Fit"
+                                track-by="name"
+                                label="name"
+                                :close-on-select="false"
+                                :search="true"
+                                :options="attrs.fit"
+                                :searchable="true"
+                                >
+                                <template v-slot:tag="{ option, handleTagRemove, disabled }">
+                                <div
+                                    class="multiselect-tag is-user"
+                                    :class="{
+                                    'is-disabled': disabled
+                                    }"
+                                >
+                                    {{ option.name }}
+                                    <span
+                                    v-if="!disabled"
+                                    class="multiselect-tag-remove"
+                                    @mousedown.prevent="handleTagRemove(option, $event)"
+                                    >
+                                    <span class="multiselect-tag-remove-icon"></span>
+                                    </span>
+                                </div>
+                                </template>
+                            </Multiselect>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <label for="product-Artist">Artist</label>
+                             <Multiselect
+                                v-model="form.artist"
+                                mode="tags"
+                                placeholder="Select Artist"
+                                track-by="name"
+                                label="name"
+                                :close-on-select="false"
+                                :search="true"
+                                :options="attrs.artist"
+                                :searchable="true"
+                                >
+                                <template v-slot:tag="{ option, handleTagRemove, disabled }">
+                                <div
+                                    class="multiselect-tag is-user"
+                                    :class="{
+                                    'is-disabled': disabled
+                                    }"
+                                >
+                                    {{ option.name }}
+                                    <span
+                                    v-if="!disabled"
+                                    class="multiselect-tag-remove"
+                                    @mousedown.prevent="handleTagRemove(option, $event)"
+                                    >
+                                    <span class="multiselect-tag-remove-icon"></span>
+                                    </span>
+                                </div>
+                                </template>
+                            </Multiselect>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="product-Consignment">Consignment</label>
+                             <Multiselect
+                                v-model="form.consignment"
+                                mode="tags"
+                                placeholder="Select Consignment"
+                                track-by="name"
+                                label="name"
+                                :close-on-select="false"
+                                :search="true"
+                                :options="attrs.consignment"
+                                :searchable="true"
+                                >
+                                <template v-slot:tag="{ option, handleTagRemove, disabled }">
+                                <div
+                                    class="multiselect-tag is-user"
+                                    :class="{
+                                    'is-disabled': disabled
+                                    }"
+                                >
+                                    {{ option.name }}
+                                    <span
+                                    v-if="!disabled"
+                                    class="multiselect-tag-remove"
+                                    @mousedown.prevent="handleTagRemove(option, $event)"
+                                    >
+                                    <span class="multiselect-tag-remove-icon"></span>
+                                    </span>
+                                </div>
+                                </template>
+                            </Multiselect>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="product-Season">Ingredients</label>
+                             <Multiselect
+                                v-model="form.ingredient"
+                                mode="tags"
+                                placeholder="Select Ingredients"
+                                track-by="name"
+                                label="name"
+                                :close-on-select="false"
+                                :search="true"
+                                :options="attrs.ingredient"
+                                :searchable="true"
+                                >
+                                <template v-slot:tag="{ option, handleTagRemove, disabled }">
+                                <div
+                                    class="multiselect-tag is-user"
+                                    :class="{
+                                    'is-disabled': disabled
+                                    }"
+                                >
+                                    {{ option.name }}
+                                    <span
+                                    v-if="!disabled"
+                                    class="multiselect-tag-remove"
+                                    @mousedown.prevent="handleTagRemove(option, $event)"
+                                    >
+                                    <span class="multiselect-tag-remove-icon"></span>
+                                    </span>
+                                </div>
+                                </template>
+                            </Multiselect>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <label for="product-Care">Care</label>
+                             <Multiselect
+                                v-model="form.care"
+                                mode="tags"
+                                placeholder="Select Care"
+                                track-by="name"
+                                label="name"
+                                :close-on-select="false"
+                                :search="true"
+                                :options="attrs.care"
+                                :searchable="true"
+                                >
+                                <template v-slot:tag="{ option, handleTagRemove, disabled }">
+                                <div
+                                    class="multiselect-tag is-user"
+                                    :class="{
+                                    'is-disabled': disabled
+                                    }"
+                                >
+                                    {{ option.name }}
+                                    <span
+                                    v-if="!disabled"
+                                    class="multiselect-tag-remove"
+                                    @mousedown.prevent="handleTagRemove(option, $event)"
+                                    >
+                                    <span class="multiselect-tag-remove-icon"></span>
+                                    </span>
+                                </div>
+                                </template>
+                            </Multiselect>
+                        </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div id="tooltips" class="mb-2">
+            <div class="statbox widget box ">
+                <div class="widget-content ">
+                        <div class="row">
+                        <div class="col-md-3 col-12 mt-4">
+                                <label for="product-image1">Image (1:1)</label>
+                                <!-- <input type="file" class="form-control" id="product-image"> -->
+                                <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('one')">Upload files</button>
+                                <p class="mt-1 text-info" v-if="form.product_image_one != ''">Image Uploaded</p><br>
+                                <img :src="form.view_image_one" width="100" class="img-fluid" />
+                            </div>
+                            <div class="col-md-3 col-12 mt-4">
+                                <label for="product-image1">Image (1:1)</label>
+                                <!-- <input type="file" class="form-control" id="product-image"> -->
+                                <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('two')">Upload files</button>
+                                <p class="mt-1 text-info" v-if="form.product_image_two != ''">Image Uploaded</p><br>
+                                <img :src="form.view_image_two" width="100" class="img-fluid" />
+                            </div>
+                            <div class="col-md-3 col-12 mt-4">
+                                <label for="product-image1">Image (1:1)</label>
+                                <!-- <input type="file" class="form-control" id="product-image"> -->
+                                <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('three')">Upload files</button>
+                                <p class="mt-1 text-info" v-if="form.product_image_three != ''">Image Uploaded</p><br>
+                                <img :src="form.view_image_three" width="100" class="img-fluid" />
+                            </div>
+                            <div class="col-md-3 col-12 mt-4">
+                                <label for="product-image1">Image (1:1)</label>
+                                <!-- <input type="file" class="form-control" id="product-image"> -->
+                                <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('four')">Upload files</button>
+                                <p class="mt-1 text-info" v-if="form.product_image_four != ''">Image Uploaded </p><br>
+                                <img :src="form.view_image_four" width="100" class="img-fluid" />
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div id="tooltips" class="col-lg-12 layout-spacing col-md-12">
+                <div class="statbox widget box ">
+                    <div class="widget-content ">
+                        <div class="form-row">
+                            <div class="col-md-3 mb-3">
+                                <label for="design_code">Design Code</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('design_code') ? 'is-invalid' : ''" id="design_code" v-model="form.design_code">
+                                <div
+                                    v-if="validation_error.hasOwnProperty('design_code')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.design_code[0] }}
+                                    </div>
+                            </div>
+                         
+                            <div class="col-md-3 mb-3">
+                                <label for="Dimension">Dimension</label>
+                                <input type="text" class="form-control" id="dimension" v-model="form.dimension" >
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="weight">Weight</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('weight') ? 'is-invalid' : ''" id="weight" v-model="form.weight" >
+                                <div
+                                    v-if="validation_error.hasOwnProperty('weight')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.weight[0] }}
+                                    </div>
+                            </div>
+                            <div class="form-group col-md-3 mb-3">
+                                <label for="LeadTime">Lead Time</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('lead_time') ? 'is-invalid' : ''" id="LeadTime" v-model="form.lead_time" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('lead_time')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.lead_time[0] }}
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="statbox widget box-shadow">
+            <div class="widget-content">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <label for="product-Tags">VAT</label>
+                        <Multiselect
+                                v-model="form.vat"
+                                placeholder="Select VAT"
                                 track-by="name"
                                 label="name"
                                 :close-on-select="true"
+                                :options="attrs.tax"
+                                :searchable="true"
+                            >
+                            <template v-slot:tag="{ option, handleTagRemove, disabled }">
+                            <div
+                                class="multiselect-tag is-user"
+                                :class="{
+                                'is-disabled': disabled
+                                }"
+                            >
+                                {{ option.name }}
+                                <span
+                                v-if="!disabled"
+                                class="multiselect-tag-remove"
+                                @mousedown.prevent="handleTagRemove(option, $event)"
+                                >
+                                <span class="multiselect-tag-remove-icon"></span>
+                                </span>
+                            </div>
+                            </template>
+                        </Multiselect>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="statbox widget box box-shadow">
+            <div class="widget-header">
+                <div class="row">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex">
+                        <h5>Attribute</h5>
+                        <div class="ml-5 d-flex">
+                            <div class="billing-cycle-radios">
+                                <div class="radio billed-yearly-radio">
+                                    <div class="d-flex justify-content-center">
+                                        <span class="txt-monthly mr-2">Colour Size</span>
+                                        <label class="switch s-icons s-outline  s-outline-primary">
+                                            <input v-model="form.color_size" :checked="form.color_size"  type="checkbox" id="colour">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>                 
+                    
+                </div>               
+                    
+                </div>
+            </div>
+            
+            <div class="statbox widget box box-shadow" v-if="form.color_size">
+                <div class="widget-content ">
+                    <div class="row text-center">
+                        <div class="col-3  text-success">
+                            <b>Colour</b>
+                        </div>
+                        <div class="col-2  text-success">
+                           <b>Size</b> 
+                        </div>
+                        <div class="col-2  text-success">
+                            <b>SKU</b>
+                        </div>
+                        <div class="col-1  text-success">
+                            <b>CPU</b>
+                        </div>
+                        <div class="col-1  text-success">
+                            <b>MRP</b>
+                        </div>
+                        <div class="col-2  text-success">
+                            <b>Qty</b>
+                        </div>
+                        <div class="col-1  text-danger">
+                            <b>Remove</b>
+                        </div>
+                    </div>
+                    <div class="row" v-for="(qt,index) in form.attrqty" :key="index">
+                        <div class="form-group col-md-3">
+                            <Multiselect
+                                v-model="qt.colour_id"
+                                placeholder="Select Colour"
+                                track-by="name"
+                                label="name"
+                                mode="tags"
+                                :close-on-select="false"
                                 :search="true"
-                                :options="allfabrics"
+                                :options="prp_colour"
+                                :searchable="true"
+                                >
+                                <template v-slot:tag="{ option, handleTagRemove, disabled }">
+                                <div
+                                    class="multiselect-tag is-user"
+                                    :class="{
+                                    'is-disabled': disabled
+                                    }"
+                                >
+                                    {{ option.name }}
+                                    <span
+                                    v-if="!disabled"
+                                    class="multiselect-tag-remove"
+                                    @mousedown.prevent="handleTagRemove(option, $event)"
+                                    >
+                                    <span class="multiselect-tag-remove-icon"></span>
+                                    </span>
+                                </div>
+                                </template>
+                            </Multiselect>
+                           
+                        </div>
+                        <div class="form-group col-md-2">
+                            <select id="product-category" class="form-control" v-model="qt.size_id" required>
+                                <option value="">Choose Size...</option>
+                                <option v-for="(value,index) in prp_size" :value="value.value" :key="index">{{ value.name }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <input type="text"  class="form-control" id="sku" v-model="qt.sku" placeholder="SKU" required>
+                        </div>
+                        <div class="form-group col-md-1">
+                            <input type="number"  class="form-control" id="sku" v-model="qt.cpu" placeholder="CPU" required>
+                        </div>
+                        <div class="form-group col-md-1">
+                            <input type="number"  class="form-control" id="sku" v-model="qt.mrp" placeholder="MRP" required>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <input type="number"  class="form-control" id="qty" v-model="qt.qty" placeholder="qty" required>
+                        </div>
+                        <div class="form-group col-md-1 text-center" v-if="index != 0">
+                            <a
+                              href="javascript:void(0)"
+                              @click.prevent="removeCatChild(index)"
+                              class="mt-5"
+                              ><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-danger"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a
+                            >
+                        </div>
+                    </div>
+                </div>
+                <a
+                        href="javascript:void(0)"
+                        @click.prevent="addMore()"
+                        class="btn btn-warning"
+                    >Add More
+                    </a>
+            </div>
+
+            <div class="statbox widget box box-shadow" v-else>
+                <div class="widget-content ">
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                                <label for="product-ingredients">Stock</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('stock') ? 'is-invalid' : ''" id="stock-name" placeholder="stock" v-model="form.stock" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('stock')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.stock[0] }}
+                                    </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="product-cost">Unit Cost</label>
+                                <input type="number" class="form-control" id="product-cost" placeholder="CPU" v-model="form.cost" >
+                            </div>
+                            <div class="col-md-3">
+                                <label for="product-price">Price(MRP)</label>
+                                <input type="number" class="form-control" :class="validation_error.hasOwnProperty('price') ? 'is-invalid' : ''" id="product-price" placeholder="Sale Price" v-model="form.price" >
+                                <div
+                                        v-if="validation_error.hasOwnProperty('price')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.price[0] }}
+                                    </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="product-sku">SKU</label>
+                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('sku') ? 'is-invalid' : ''" id="product-sku" placeholder="SKU" v-model="form.sku" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('sku')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.sku[0] }}
+                                    </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="statbox widget box box-shadow">
+                <div class="widget-content ">
+                    <div class="form-row">
+                       
+                        <div class="col-md-12 mb-3">
+                            <label for="product-Fabric">Composition</label>
+                            <Multiselect
+                                v-model="form.fabrics"
+                                placeholder="Select Fabric"
+                                track-by="name"
+                                label="name"
+                                mode="tags"
+                                :close-on-select="false"
+                                :search="true"
+                                :options="attrs.fabric"
                                 :searchable="true"
                                 >
                                 <template v-slot:tag="{ option, handleTagRemove, disabled }">
@@ -788,24 +1111,47 @@ export default {
                             </Multiselect>
                         </div>
                     </div>
-                    
-                    <!-- <div class="form-row" v-if="form.is_discount">
-                        <div class="col-md-4 mb-3">
-                            <label for="discount_amount">Discount Amount</label>
-                            <input type="number" v-model="form.discount_amount" class="form-control" id="discount_amount" placeholder="Discount Amount" >
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label for="discount_type">Discount Type</label>
-                            <select class="form-control tagging" id="discount_type" v-model="form.discount_type">
-                                <option value="flat">FLAT</option>
-                                <option value="percentage">%</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label for="max_amount">Maximum</label>
-                            <input type="number" class="form-control" :disabled="form.discount_type == 'flat' ? true : false" id="max_amount" placeholder="Maximum amount" v-model="form.max_amount" >
-                        </div>
-                    </div> -->
+            </div>
+
+        </div>
+        <div class="statbox widget box box-shadow">
+            <div class="widget-content ">
+                <div class="form-row">
+                    <div class="col-md-12 mb-3">
+                        <label for="product-Tags">Tags</label>
+                        <!-- <Multiselect
+                            v-model="form.tages"
+                            placeholder="Create Tags"
+                            :create-option="true"
+                            label="name" track-by="code"
+                            mode="tags"
+                            :close-on-select="false"
+                            :searchable="true"
+                            :options="tages"
+                            :multiple="true" 
+                            :taggable="true" 
+                            @tag="addTag"
+                            >
+                            <template v-slot:tag="{ option, handleTagRemove, disabled }">
+                            <div
+                                class="multiselect-tag is-user"
+                                :class="{
+                                'is-disabled': disabled
+                                }"
+                            >
+                                {{ option.name }}
+                                <span
+                                v-if="!disabled"
+                                class="multiselect-tag-remove"
+                                @mousedown.prevent="handleTagRemove(option, $event)"
+                                >
+                                <span class="multiselect-tag-remove-icon"></span>
+                                </span>
+                            </div>
+                            </template>
+                        </Multiselect> -->
+                    </div>
+                </div>
             </div>
         </div>
     
@@ -814,7 +1160,7 @@ export default {
                 <div class="statbox widget box ">
                     <div class="widget-content ">
                         <label for="editor-container">Description</label>
-                        <QuillEditor theme="snow" v-model:content="form.description" contentType="html" />
+                        <QuillEditor theme="snow" v-model="form.description" contentType="html" />
                     </div>
                 </div>
             </div>

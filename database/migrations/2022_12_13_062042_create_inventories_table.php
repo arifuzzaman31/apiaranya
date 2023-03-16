@@ -19,6 +19,8 @@ class CreateInventoriesTable extends Migration
             $table->foreignId('colour_id');
             $table->foreignId('size_id');
             $table->integer('stock');
+            $table->double('cpu',8,6)->default(0);
+            $table->double('mrp',8,6)->default(0);
             $table->string('sku')->nullable();
             $table->integer('warning_amount')->default(10);
             $table->string('warehouse')->nullable();

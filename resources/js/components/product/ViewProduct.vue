@@ -303,7 +303,7 @@ export default {
                         <th>Name</th>
                         <th>Category</th>
                         <th>Sub Category</th>
-                        <th>Price</th>
+                        <th>Design Code</th>
                         <th class="text-center">Status</th>
                         <th class="text-center">Action</th>
                     </tr>
@@ -322,7 +322,7 @@ export default {
                             </td>
                             <td>{{ product.category.category_name }}</td>
                             <td>{{ product.subcategory.category_name }}</td>
-                            <td>{{ product.mrp_price}}</td>
+                            <td>{{ product.design_code}}</td>
                             <td class="text-center">
                                 <span class="badge shadow-none" :class="product.status == 1 ? 'outline-badge-info':'outline-badge-danger'">{{ product.status ? 'Active' : 'Deactive' }}</span>
                             </td>
