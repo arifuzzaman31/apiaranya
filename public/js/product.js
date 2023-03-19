@@ -23411,6 +23411,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     var _form;
     return {
       form: (_form = {
+        id: '',
         product_name: '',
         category: '',
         sub_category: '',
@@ -23423,7 +23424,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         lead_time: '',
         season: [],
         variety: [],
-        tages: [],
+        tags: [],
         fit: [],
         artist: [],
         consignment: [],
@@ -23454,12 +23455,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         discount_amount: '',
         discount_type: 1,
         max_amount: 0
-      }, _defineProperty(_form, "discount_type", 1), _defineProperty(_form, "description", ''), _defineProperty(_form, "attrqty", [{
-        colour_id: [],
-        size_id: '',
-        qty: '',
-        sku: ''
-      }]), _form),
+      }, _defineProperty(_form, "discount_type", 1), _defineProperty(_form, "description", ''), _defineProperty(_form, "attrqty", []), _form),
       tages: [],
       allcategories: [],
       allsubcategories: [],
@@ -23556,6 +23552,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.form.attrqty.push({
         colour_id: [],
         size_id: '',
+        cpu: '',
+        mrp: '',
         qty: '',
         sku: ''
       });
@@ -23663,7 +23661,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         lead_time: '',
         season: [],
         variety: [],
-        tages: [],
+        tags: [],
         fit: [],
         artist: [],
         consignment: [],
@@ -23690,24 +23688,18 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         discount_amount: '',
         discount_type: 1,
         max_amount: 0
-      }, _defineProperty(_this$form, "discount_type", 1), _defineProperty(_this$form, "description", ''), _defineProperty(_this$form, "attrqty", [{
-        colour_id: [],
-        size_id: '',
-        qty: '',
-        sku: ''
-      }]), _this$form), this.allsubcategories = [], this.validation_error = {};
+      }, _defineProperty(_this$form, "discount_type", 1), _defineProperty(_this$form, "description", ''), _defineProperty(_this$form, "attrqty", []), _this$form), this.tages = [], this.allsubcategories = [], this.validation_error = {};
     }
   },
   mounted: function mounted() {
-    var _this$form$vendor, _this$form$brand, _this$form$designer, _this$form$embellishm, _this$form$making, _this$form$season, _this$form$variety, _this$form$fit, _this$form$artist, _this$form$consignmen, _this$form$ingredient, _this$form$care, _this$form$fabrics;
+    var _this$form$vendor, _this$form$brand, _this$form$designer, _this$form$embellishm, _this$form$making, _this$form$season, _this$form$variety, _this$form$fit, _this$form$artist, _this$form$consignmen, _this$form$ingredient, _this$form$care, _this$form$fabrics, _this$form$attrqty, _this$tages, _this$form$tags;
     // this.form.attrqty = []
     // const datam = this.pr_product.inventory.map(data => JSON.parse({'colour_id':data.colour_id,'size_id':data.size_id,'qty':data.stock}))
     // this.form.attrqty.push(...datam)
     // this.getColour()
     // this.getSize()
     // this.getFabric()
-
-    // this.form.id = this.pr_product.id
+    this.form.id = this.pr_product.id;
     this.form.product_name = this.pr_product.product_name;
     // this.form.sku = this.pr_product.sku
     this.form.category = this.pr_product.category_id;
@@ -23765,6 +23757,26 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       return v.id;
     });
     (_this$form$fabrics = this.form.fabrics).push.apply(_this$form$fabrics, _toConsumableArray(faids));
+    var arr = [];
+    this.pr_product.inventory.forEach(function (item, ind) {
+      var index = arr.findIndex(function (tm) {
+        return item.sku == tm.sku && item.sku == tm.sku && item.cpu == tm.cpu && item.mrp == tm.mrp;
+      });
+      if (index == -1) {
+        arr.push({
+          'colour_id': [item.colour_id],
+          'size_id': item.size_id,
+          'cpu': item.cpu,
+          'mrp': item.mrp,
+          'qty': item.stock,
+          'sku': item.sku
+        });
+        console.log(arr[index]);
+      } else {
+        arr[index].colour_id.push(item.colour_id);
+      }
+    });
+    (_this$form$attrqty = this.form.attrqty).push.apply(_this$form$attrqty, arr);
     this.form.vat = this.pr_product.vat_tax_id;
     this.form.lead_time = this.pr_product.lead_time;
     this.form.view_image_one = this.pr_product.product_image;
@@ -23774,8 +23786,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     this.form.design_code = this.pr_product.design_code;
     this.form.dimention = this.pr_product.dimension;
     this.form.weight = this.pr_product.weight;
-    // this.tages = this.pr_product.tag.keyword_name.split(",")
-    this.form.tages = ['dghgf', 'rterr', 'dhfgh'];
+    var in_tag = this.pr_product.tag.keyword_name.split(",");
+    (_this$tages = this.tages).push.apply(_this$tages, _toConsumableArray(in_tag));
+    (_this$form$tags = this.form.tags).push.apply(_this$form$tags, _toConsumableArray(in_tag));
     this.form.description = this.pr_product.description;
   }
 });
@@ -26273,7 +26286,7 @@ var _hoisted_198 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "btn btn-success",
     type: "submit"
-  }, "Save", -1 /* HOISTED */);
+  }, "Update", -1 /* HOISTED */);
 });
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -26823,7 +26836,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       mode: "tags",
       "close-on-select": false,
       search: true,
-      options: _ctx.prp_colour,
+      options: $props.attrs.colour,
       searchable: true
     }, {
       tag: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (_ref14) {
@@ -26851,7 +26864,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         return qt.size_id = $event;
       },
       required: ""
-    }, [_hoisted_149, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.prp_size, function (value, index) {
+    }, [_hoisted_149, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.attrs.size, function (value, index) {
       return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
         value: value.value,
         key: index
@@ -26970,9 +26983,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
     _: 1 /* STABLE */
   }, 8 /* PROPS */, ["modelValue", "options"])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_185, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_186, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_187, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_188, [_hoisted_189, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Multiselect, {
-    modelValue: $data.form.tages,
+    modelValue: $data.form.tags,
     "onUpdate:modelValue": _cache[32] || (_cache[32] = function ($event) {
-      return $data.form.tages = $event;
+      return $data.form.tags = $event;
     }),
     placeholder: "Create Tags",
     "create-option": true,

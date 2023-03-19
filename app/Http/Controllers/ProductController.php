@@ -99,8 +99,10 @@ class ProductController extends Controller
         }
 
         if($keyword != ''){
-            $product = $product->where('product_name','like','%'.$keyword.'%');
-            $product = $product->orWhere('sku','like','%'.$keyword.'%');
+            $product = $product->whereHas('inventory', function ($q) use ($keyword) {
+                $q->where('sku','like','%'.$keyword.'%');
+            }); 
+            $product = $product->orWhere('product_name','like','%'.$keyword.'%');
         }
         if($noPagination != ''){
             $product = $product->latest()->get();
@@ -326,7 +328,7 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $products = Product::with(['product_vendor:id','product_brand:id','product_designer:id','product_making:id','product_season:id',
-                    'product_embellishment:id','inventory:id,product_id,stock,sku','product_size','product_colour','discount','product_fabric:id',
+                    'product_embellishment:id','inventory','product_size','product_colour','discount','product_fabric:id',
                     'product_variety:id','product_fit:id','product_artist:id','product_consignment:id','product_ingredient:id','product_care:id','tag'
                     ])
         ->find($product->id);

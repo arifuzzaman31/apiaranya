@@ -17,6 +17,7 @@ export default {
     data(){
         return {
             form: {
+                id:'',
                 product_name: '',
                 category: '',
                 sub_category: '',
@@ -29,7 +30,7 @@ export default {
                 lead_time : '',
                 season : [],
                 variety : [],
-                tages : [],
+                tags : [],
                 fit : [],
                 artist : [],
                 consignment : [],
@@ -62,7 +63,7 @@ export default {
                 max_amount: 0,
                 discount_type: 1,
                 description: '',
-                attrqty: [{colour_id:[],size_id:'',qty:'',sku:''}]
+                attrqty: []
             },
             tages: [],
             allcategories: [],
@@ -166,7 +167,7 @@ export default {
         },
 
         addMore(){
-            this.form.attrqty.push({colour_id:[],size_id:'',qty:'',sku:''})
+            this.form.attrqty.push({colour_id:[],size_id:'',cpu:'',mrp:'',qty:'',sku:''})
         },
         removeCatChild(index) {
             this.form.attrqty.splice(index, 1);
@@ -250,7 +251,7 @@ export default {
                 lead_time : '',
                 season : [],
                 variety : [],
-                tages : [],
+                tags : [],
                 fit : [],
                 artist : [],
                 consignment : [],
@@ -279,8 +280,9 @@ export default {
                 max_amount: 0,
                 discount_type: 1,
                 description: '',
-                attrqty: [{colour_id:[],size_id:'',qty:'',sku:''}]
+                attrqty: []
             },
+            this.tages = [],
             this.allsubcategories= [],
             this.validation_error = {}
         }
@@ -293,8 +295,7 @@ export default {
         // this.getColour()
         // this.getSize()
         // this.getFabric()
-        
-        // this.form.id = this.pr_product.id
+        this.form.id = this.pr_product.id
         this.form.product_name = this.pr_product.product_name
         // this.form.sku = this.pr_product.sku
         this.form.category = this.pr_product.category_id
@@ -327,7 +328,20 @@ export default {
         this.form.care.push(...caids);
         const faids = this.pr_product.product_fabric.map(v=> v.id);
         this.form.fabrics.push(...faids);
-     
+
+        let arr = []
+
+        this.pr_product.inventory.forEach((item,ind) => {
+            let index = arr.findIndex(tm => (item.sku == tm.sku && item.sku == tm.sku && item.cpu == tm.cpu && item.mrp == tm.mrp));
+            if(index == -1){
+                arr.push({'colour_id':[item.colour_id],'size_id':item.size_id,'cpu':item.cpu,'mrp':item.mrp,'qty':item.stock,'sku':item.sku})
+                console.log(arr[index])
+            } else {
+               arr[index].colour_id.push(item.colour_id)
+            }
+        })
+        this.form.attrqty.push(...arr);
+
         this.form.vat  = this.pr_product.vat_tax_id
         this.form.lead_time  = this.pr_product.lead_time
         this.form.view_image_one  = this.pr_product.product_image
@@ -337,8 +351,9 @@ export default {
         this.form.design_code = this.pr_product.design_code
         this.form.dimention = this.pr_product.dimension
         this.form.weight = this.pr_product.weight
-        // this.tages = this.pr_product.tag.keyword_name.split(",")
-        this.form.tages = ['dghgf','rterr','dhfgh']
+        let in_tag = this.pr_product.tag.keyword_name.split(",")
+        this.tages.push(...in_tag)
+        this.form.tags.push(...in_tag)
         this.form.description = this.pr_product.description
         
     }
@@ -969,7 +984,7 @@ export default {
                                 mode="tags"
                                 :close-on-select="false"
                                 :search="true"
-                                :options="prp_colour"
+                                :options="attrs.colour"
                                 :searchable="true"
                                 >
                                 <template v-slot:tag="{ option, handleTagRemove, disabled }">
@@ -995,7 +1010,7 @@ export default {
                         <div class="form-group col-md-2">
                             <select id="product-category" class="form-control" v-model="qt.size_id" required>
                                 <option value="">Choose Size...</option>
-                                <option v-for="(value,index) in prp_size" :value="value.value" :key="index">{{ value.name }}</option>
+                                <option v-for="(value,index) in attrs.size" :value="value.value" :key="index">{{ value.name }}</option>
                             </select>
                         </div>
                         <div class="form-group col-md-2">
@@ -1117,7 +1132,7 @@ export default {
                     <div class="col-md-12 mb-3">
                         <label for="product-Tags">Tags</label>
                         <Multiselect
-                            v-model="form.tages"
+                            v-model="form.tags"
                             placeholder="Create Tags"
                             :create-option="true"
                             label="name" track-by="code"
@@ -1163,7 +1178,7 @@ export default {
             </div>
         </div>
     
-        <button class="btn btn-success" type="submit">Save</button>
+        <button class="btn btn-success" type="submit">Update</button>
     </form>
 </template>
 <style src="@vueform/multiselect/themes/default.css"></style>
