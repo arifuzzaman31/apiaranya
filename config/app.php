@@ -29,7 +29,10 @@ return [
     'env' => env('APP_ENV', 'production'),
     'clname' => 'diyc1dizi',
     'clpreset' => 'webable',
-    'front_url' => 'https://aranya-frontend.vercel.app/',
+    'front_url' => 'https://staging.aranya.com.bd/',
+    'payment_mode' => 'sandbox',
+    'storeid' => 'test_aranya01bd',
+    'storepassw' => '67582559',
     
     /*
     |--------------------------------------------------------------------------

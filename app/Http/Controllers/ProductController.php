@@ -103,6 +103,7 @@ class ProductController extends Controller
                 $q->where('sku','like','%'.$keyword.'%');
             }); 
             $product = $product->orWhere('product_name','like','%'.$keyword.'%');
+            $product = $product->orWhere('design_code','like','%'.$keyword.'%');
         }
         if($noPagination != ''){
             $product = $product->latest()->get();
@@ -136,7 +137,7 @@ class ProductController extends Controller
             'product_name' => 'required',
             'category' => 'required',
             'stock' => 'required_if:color_size,false',
-            'weight' => 'required',
+            //'weight' => 'required',
             'design_code' => 'required'
         ]);
         
@@ -344,7 +345,180 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        return $request->attrqty;
+        $request->validate([
+            'product_name' => 'required',
+            'category' => 'required',
+            'stock' => 'required_if:color_size,false',
+            //'weight' => 'required',
+            'design_code' => 'required'
+        ]);
+        DB::beginTransaction();
+        try {
+            $product->product_name        = $request->product_name;
+            $product->slug                = Str::slug($request->product_name);
+            $product->category_id         = $request->category;
+            $product->sub_category_id     = $request->sub_category;
+            $product->vat_tax_id          = $request->vat;
+            $product->description         = $request->description;
+            $product->lead_time           = $request->lead_time;
+            if($request->product_image_one != ''){
+                $product->product_image   = $request->product_image_one;
+                $product->image_one       = $request->product_image_one;
+            }
+            if($request->product_image_two != ''){
+                $product->image_two       = $request->product_image_two;
+            }
+            if($request->product_image_three != ''){
+                $product->image_three     = $request->product_image_three;
+            }
+            if($request->product_image_four != ''){
+                $product->image_four      = $request->product_image_four;
+            }
+            if($request->image_five != ''){
+                $product->image_five      = $request->image_five;
+            }
+            $product->dimension           = $request->dimension;
+            $product->weight              = $request->weight;
+            $product->design_code         = $request->design_code;
+            $product->status              =  AllStatic::$active;
+            $product->update();
+
+            $colorIds = array_column($request->attrqty, 'colour_id');
+            $sizeIds = array_filter(array_column($request->attrqty, 'size_id'));
+            
+            if($request->is_color && !empty($colorIds)){
+                $cid = array_unique(array_merge(...$colorIds), SORT_REGULAR);
+                $product->product_colour()->sync($cid);
+            
+            }
+            
+            if($request->is_size && !empty($sizeIds)){
+               
+                $product->product_size()->sync($sizeIds);
+            }
+
+            if($request->is_fabric && $request->fabrics){
+
+                $product->product_fabric()->sync($request->fabrics);
+
+                $cid = $request->sub_category != '' ? $request->sub_category : $request->category;
+
+                foreach($request->fabrics as $subcat){
+                    $chk = CategoryFabric::where(
+                        ['category_id' =>  $cid,'fabric_id' => $subcat]
+                        )->first();
+
+                    if(empty($chk)){
+                        CategoryFabric::create([
+                            'category_id' => $cid,
+                            'fabric_id' => $subcat
+                        ]);
+                    }
+                }
+            }
+            
+            if($request->color_size && $request->attrqty && !empty($request->attrqty)){
+
+                // $product->inventory()->attach($product->id,['colour_id' => $colorIds, 'size_id' => $sizeIds]);
+                foreach($request->attrqty as $value){
+                    if($value['qty'] != '' && $value['sku'] != '' && $value['cpu'] != '' && $value['mrp'] != ''){
+                        foreach($value['colour_id'] as $sizestock)
+                        {
+                            DB::table('inventories')->where('product_id',$product->id)->delete();
+                            DB::table('inventories')
+                                ->insert([
+                                    'product_id' => $product->id,
+                                    'size_id' => $value['size_id'] ? $value['size_id'] : 0,
+                                    'colour_id' => $sizestock ? $sizestock : 0,
+                                    'sku' => $value['sku'],
+                                    'stock' => $value['qty'],
+                                    'cpu' => $value['cpu'],
+                                    'mrp' => $value['mrp'],
+                                    'warning_amount' => 10
+                                ]);
+                        }
+                    }
+              
+                }
+            
+            } else {
+                $stock  = Inventory::where('product_id',$request->id)->first();
+                $stock->stock       = $request->stock;
+                $stock->sku       = $request->sku;
+                $stock->cpu       = $request->cost;
+                $stock->mrp       = $request->price;
+                $stock->update();
+            }
+
+            if(!empty($request->vendor)){
+               
+                $product->product_vendor()->sync($request->vendor);
+            }
+            if(!empty($request->brand)){
+               
+                $product->product_brand()->sync($request->brand);
+            }
+            if(!empty($request->designer)){
+               
+                $product->product_designer()->sync($request->designer);
+            }
+            if(!empty($request->embellishment)){
+               
+                $product->product_embellishment()->sync($request->embellishment);
+            }
+            if(!empty($request->making)){
+               
+                $product->product_making()->sync($request->making);
+            }
+            if(!empty($request->season)){
+               
+                $product->product_season()->sync($request->season);
+            }
+            if(!empty($request->variety)){
+               
+                $product->product_variety()->sync($request->variety);
+            }
+            if(!empty($request->fit)){
+               
+                $product->product_fit()->sync($request->fit);
+            }
+            if(!empty($request->artist)){
+               
+                $product->product_artist()->sync($request->artist);
+            }
+            if(!empty($request->consignment)){
+               
+                $product->product_consignment()->sync($request->consignment);
+            }
+            if(!empty($request->ingredients)){
+               
+                $product->product_ingredient()->sync($request->ingredients);
+            }
+            if(!empty($request->care)){
+               
+                $product->product_care()->sync($request->care);
+            }
+
+            if(!empty($request->tags)){
+               
+                $str = implode(',', $request->tags);
+
+                DB::table('product_tags')
+                ->updateOrInsert(
+                    ['product_id' => $product->id],
+                    ['keyword_name' => $str]
+                );
+            }
+
+            DB::commit();
+            return $this->successMessage($this->fieldname.' Successfully Updated!');
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return $th;
+            return $this->errorMessage('Something went wrong!');
+            //throw $th;
+        }
     }
 
 
@@ -363,7 +537,7 @@ class ProductController extends Controller
         //     return $number[0] !== null;
         // });
         // return count($data[0]);
-        return $this->successMessage('Excel Data Imported successfully.');
+        return $this->successMessage('Excel Data Imported Successfully.');
     }
 
     /**

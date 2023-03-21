@@ -168,8 +168,12 @@ export default {
 
         addMore(){
             this.form.attrqty.push({colour_id:[],size_id:'',cpu:'',mrp:'',qty:'',sku:''})
+            // this.form.attrqty.push({colour_id:[],size_id:'',cpu:'',mrp:'',qty:'',sku:'',is_rm: false})
         },
         removeCatChild(index) {
+            // this.form.attrqty[index].is_rm = true
+            // console.log(this.form.attrqty[index].is_rm)
+            // //  = true;
             this.form.attrqty.splice(index, 1);
         },
        
@@ -289,18 +293,12 @@ export default {
     },
 
     mounted(){
-        // this.form.attrqty = []
-        // const datam = this.pr_product.inventory.map(data => JSON.parse({'colour_id':data.colour_id,'size_id':data.size_id,'qty':data.stock}))
-        // this.form.attrqty.push(...datam)
-        // this.getColour()
-        // this.getSize()
-        // this.getFabric()
+   
+        this.getCategory()
         this.form.id = this.pr_product.id
         this.form.product_name = this.pr_product.product_name
-        // this.form.sku = this.pr_product.sku
         this.form.category = this.pr_product.category_id
         this.form.sub_category = this.pr_product.sub_category_id
-        this.getCategory()
    
         const vids = this.pr_product.product_vendor.map(v=> v.id);
         this.form.vendor.push(...vids);
@@ -332,16 +330,16 @@ export default {
         let arr = []
 
         this.pr_product.inventory.forEach((item,ind) => {
-            let index = arr.findIndex(tm => (item.sku == tm.sku && item.sku == tm.sku && item.cpu == tm.cpu && item.mrp == tm.mrp));
+            let index = arr.findIndex(tm => (item.sku == tm.sku && item.cpu == tm.cpu && item.mrp == tm.mrp));
             if(index == -1){
+                // if(item.colour_id.length > 0)
                 arr.push({'colour_id':[item.colour_id],'size_id':item.size_id,'cpu':item.cpu,'mrp':item.mrp,'qty':item.stock,'sku':item.sku})
-                console.log(arr[index])
             } else {
                arr[index].colour_id.push(item.colour_id)
             }
         })
         this.form.attrqty.push(...arr);
-
+      
         this.form.vat  = this.pr_product.vat_tax_id
         this.form.lead_time  = this.pr_product.lead_time
         this.form.view_image_one  = this.pr_product.product_image
@@ -351,9 +349,11 @@ export default {
         this.form.design_code = this.pr_product.design_code
         this.form.dimention = this.pr_product.dimension
         this.form.weight = this.pr_product.weight
-        let in_tag = this.pr_product.tag.keyword_name.split(",")
-        this.tages.push(...in_tag)
-        this.form.tags.push(...in_tag)
+        if(this.pr_product.tag && this.pr_product.tag.keyword_name != ''){
+            let in_tag = this.pr_product.tag.keyword_name.split(",")
+            this.tages.push(...in_tag); this.form.tags.push(...in_tag)
+        }
+        
         this.form.description = this.pr_product.description
         
     }
@@ -949,7 +949,7 @@ export default {
                 </div>
             </div>
             
-            <div class="statbox widget box box-shadow" v-if="form.color_size">
+            <div class="statbox widget box box-shadow">
                 <div class="widget-content ">
                     <div class="row text-center">
                         <div class="col-3  text-success">
@@ -1008,7 +1008,7 @@ export default {
                            
                         </div>
                         <div class="form-group col-md-2">
-                            <select id="product-category" class="form-control" v-model="qt.size_id" required>
+                            <select id="product-category" class="form-control" v-model="qt.size_id">
                                 <option value="">Choose Size...</option>
                                 <option v-for="(value,index) in attrs.size" :value="value.value" :key="index">{{ value.name }}</option>
                             </select>
@@ -1017,10 +1017,10 @@ export default {
                             <input type="text"  class="form-control" id="sku" v-model="qt.sku" placeholder="SKU" required>
                         </div>
                         <div class="form-group col-md-1">
-                            <input type="number"  class="form-control" id="sku" v-model="qt.cpu" placeholder="CPU" required>
+                            <input type="text"  class="form-control" id="sku" v-model="qt.cpu" placeholder="CPU" required>
                         </div>
                         <div class="form-group col-md-1">
-                            <input type="number"  class="form-control" id="sku" v-model="qt.mrp" placeholder="MRP" required>
+                            <input type="number" class="form-control" id="sku" v-model="qt.mrp" placeholder="MRP" required>
                         </div>
                         <div class="form-group col-md-2">
                             <input type="number"  class="form-control" id="qty" v-model="qt.qty" placeholder="qty" required>
@@ -1041,49 +1041,6 @@ export default {
                         class="btn btn-warning"
                     >Add More
                     </a>
-            </div>
-
-            <div class="statbox widget box box-shadow" v-else>
-                <div class="widget-content ">
-                    <div class="row">
-                        <div class="form-group col-md-3">
-                                <label for="product-ingredients">Stock</label>
-                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('stock') ? 'is-invalid' : ''" id="stock-name" placeholder="stock" v-model="form.stock" >
-                                    <div
-                                        v-if="validation_error.hasOwnProperty('stock')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.stock[0] }}
-                                    </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <label for="product-cost">Unit Cost</label>
-                                <input type="number" class="form-control" id="product-cost" placeholder="CPU" v-model="form.cost" >
-                            </div>
-                            <div class="col-md-3">
-                                <label for="product-price">Price(MRP)</label>
-                                <input type="number" class="form-control" :class="validation_error.hasOwnProperty('price') ? 'is-invalid' : ''" id="product-price" placeholder="Sale Price" v-model="form.price" >
-                                <div
-                                        v-if="validation_error.hasOwnProperty('price')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.price[0] }}
-                                    </div>
-                            </div>
-
-                            <div class="form-group col-md-3">
-                                <label for="product-sku">SKU</label>
-                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('sku') ? 'is-invalid' : ''" id="product-sku" placeholder="SKU" v-model="form.sku" >
-                                    <div
-                                        v-if="validation_error.hasOwnProperty('sku')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.sku[0] }}
-                                    </div>
-                            </div>
-                    </div>
-                </div>
             </div>
             
             <div class="statbox widget box box-shadow">

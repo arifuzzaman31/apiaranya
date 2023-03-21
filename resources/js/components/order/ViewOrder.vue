@@ -124,12 +124,21 @@ export default {
             })
         },
 
+        getOrderdetail(id){
+            axios.get(baseUrl+`orders-details/${id}`)
+            .then(result => {
+                this.order_details = result.data;
+            })
+            .catch(errors => {
+                console.log(errors);
+            });  
+        },
+
         orderDetailModal(order) {
+            this.getOrderdetail(order.id)
             this.order_id = order.id
             this.single_order = order
             this.order_status_id = order.order_position
-            const orderdata = async() => await axios.get('orders-details/' + order.id);
-            this.order_details = orderdata.data
             $("#orderDetailModal").modal('show');
         },
 
@@ -270,8 +279,8 @@ export default {
                                         <td>{{ order.order_id }}</td>
                                         <td>{{ order.user.name }}</td>
                                         <td>{{ order.total_price }}</td>
-                                        <td>{{ order.shipping_method }}</td>
-                                        <td>{{ order.payment_method }}</td>
+                                        <td>{{ order.shipping_amount }}</td>
+                                        <td>{{ order.payment_method_name }}</td>
                                         <td class="text-center">
                                             <span v-if="order.status !=0">
                                                 <span v-if="order.order_position == 0" class="badge badge-info">Pending</span>
@@ -318,7 +327,7 @@ export default {
                         </button>
                     </div>
                     <div class="modal-body" v-if="order_id">
-                        <div class="text-center">
+                        <!-- <div class="text-center">
                             <div id="bar-progress" class="mt-5 mt-lg-0" v-if="single_order.status !=0">
                                 <a @click="updateStatus(1)" href="javasript:void(0)" class="step step-active">
                                     <span class="number-container">
@@ -353,7 +362,7 @@ export default {
                                 <h6 class="text-danger">Order Canceled</h6>
                               
                             </div>
-                        </div>
+                        </div> -->
                         <div class="widget-content widget-content-area">
                             <div>
                                 <table class="table table-bordered table-hover mb-4">

@@ -15,29 +15,35 @@ use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
+
     public function order(Request $request)
     {
-        //return response()->json($request->all());
         try {
+	    //return response()->json($request->all());
             DB::beginTransaction();
 
             $order_id   = date('Ymd').time();
-
+	        $shipCharge = 0;
+            if($request->data['deliveryMethod'] == 'outSideDhaka'){
+                $shipCharge += 250;
+            }
+            if($request->data['deliveryMethod'] == 'insideDhaka'){
+                $shipCharge += 100;
+            }
             $order = new Order();
             $order->order_id    =   $order_id;
             $order->shipping_method  =  $request->shipping_method;
             $order->payment_method    =   $request->payment_method;
-            $order->user_id           = Auth::user()->id;
-          
+            $order->user_id           = $request->isGuestCheckout == false ? Auth::user()->id : 0;
             $order->vat_rate               = $request->vat_rate;
             $order->vat_amount             = $request->vat_total;
             $order->payment_method         = 0;
-            $order->shipping_amount        = $request->shipping_amount ? $request->shipping_amount:100;
+            $order->shipping_amount        = $shipCharge;
             $order->vat_rate               = $request->vat_rate?$request->vat_rate:0;
             $order->vat_amount             = $request->vat_amount?$request->vat_amount:0;
             $order->total_item             = $request->totalAmount ? $request->totalAmount : 1;
-            $order->total_price           = $request->totalPrice;
-            $order->coupon_discount        = $request->coupon_discount;
+            $order->total_price           = (float)$request->totalPrice;
+            $order->coupon_discount        = $request->coupon_discount ? $request->coupon_discount : 0;
             $order->coupon                  = $request->coupon_code;
             $order->discount               = 0;
             $order->payment_status         = 0;
@@ -53,21 +59,21 @@ class OrderController extends Controller
               
                 $product = Product::find($value['id']);
   
-                $details = new OrderDetails;
+                $details = new OrderDetails();
 
                 $details->order_id            = $order->id;
                 $details->category_id         = $product->category_id;
                 $details->sub_category_id     = $product->sub_category_id ?$product->sub_category_id :0 ;
-                $details->fabric_id           = $product->fabric_id ? $product->fabric_id : 0;
+                $details->fabric_id           = 0;
                 $details->product_id          = $value['id'];
                 $details->size_id             = $value['size_id'];
                 $details->colour_id           = $value['color_id'];
-                $details->user_id             = $order->user_id;
+                $details->user_id             = $request->isGuestCheckout == false ? Auth::user()->id : 0;
                 $details->quantity            = $value['amount'];
-                $details->selling_price       = $value['totalPrice'];
+                $details->selling_price       = $value['price'];
                 $details->buying_price        = $product->cost;
-                $details->total_buying_price  = $product->buying_price * $value['amount'];
-                $details->total_selling_price = $value['price'] * $value['amount'];
+                $details->total_buying_price  = (float)($product->cost * $value['amount']);
+                $details->total_selling_price = (float)$value['totalPrice'];
                 $details->unit_discount       = 0;
                 $details->total_discount      = 0;
                 $details->save();
@@ -75,7 +81,7 @@ class OrderController extends Controller
             }
 
             $billing = new UserBillingInfo();
-            $billing->user_id = $order->user_id;
+            $billing->user_id = $request->isGuestCheckout == false ? Auth::user()->id : 0;
             $billing->order_id = $order->id; //orderID
             $billing->first_name = $request->data['first_name_billing'];
             $billing->last_name = $request->data['last_name_billing'];
@@ -90,7 +96,7 @@ class OrderController extends Controller
             if($request->isSameAddress == false)
             {
                 $shipping = new UserShippingInfo();
-                $shipping->user_id = $order->user_id;
+                $shipping->user_id = $request->isGuestCheckout == false ? Auth::user()->id : 0;
                 $shipping->order_id = $order->id; //orderID
                 $shipping->first_name = $request->data['first_name_shipping'];
                 $shipping->last_name = $request->data['last_name_shipping'];
@@ -102,6 +108,13 @@ class OrderController extends Controller
                 $shipping->street_address = $request->data['street_address_shipping'];
                 $shipping->save();
             }
+
+            DB::table('payments')->insert([
+                'order_id' => $order_id,
+                'amount' => ($order->total_price + $order->shipping_amount + $order->vat_amount) - $order->coupon_discount,
+                'payment_status' => 0,
+                'created_at'    => date("Y-m-d H:i:s")
+            ]);
             
             \DB::commit();
 
@@ -109,7 +122,7 @@ class OrderController extends Controller
 
         } catch (\Throwable $th) {
             \DB::rollback();
-            // return $th;
+            return $th;
             return response()->json(['status' => 'error', 'message' => $th]);
         }
     }
@@ -120,8 +133,15 @@ class OrderController extends Controller
         $order_details = OrderDetails::with('product:id,product_name,mrp_price')->where('order_id', $order_id)->get();
         
         $post_data = array();
-        $post_data['store_id'] = "limme601b86f8e6dd4";
-        $post_data['store_passwd'] = "limme601b86f8e6dd4@ssl";
+        if(config('app.payment_mode') == 'sandbox'){
+            $storeid = "limme601b86f8e6dd4";
+            $storepass = "limme601b86f8e6dd4@ssl";
+        } else {
+            $storeid = config('app.storeid');
+            $storepass = config('app.storepassw');
+        }
+        $post_data['store_id'] = $storeid;
+        $post_data['store_passwd'] = $storepass;
         $post_data['total_amount'] = ($order->total_price + $order->shipping_amount + $order->vat_amount) - $order->coupon_discount;
         $post_data['currency'] = "BDT";
         $post_data['tran_id'] = $order_id;
@@ -152,7 +172,7 @@ class OrderController extends Controller
         $post_data['ship_country'] = "Bangladesh";
     
         # OPTIONAL PARAMETERS
-        $post_data['value_a'] = $order->user_id;
+        $post_data['value_a'] = "0";
         $post_data['value_b '] = "ref002";
         $post_data['value_c'] = "ref003";
         $post_data['value_d'] = "ref004";
@@ -187,8 +207,12 @@ class OrderController extends Controller
     
         // dd($post_data);
         # REQUEST SEND TO SSLCOMMERZ
-        $direct_api_url = "https://sandbox.sslcommerz.com/gwprocess/v4/api.php";
-       
+        if (config('app.payment_mode') == 'sandbox') {
+            $direct_api_url = "https://sandbox.sslcommerz.com/gwprocess/v4/api.php";
+        } else {
+            $direct_api_url = "https://securepay.sslcommerz.com/gwprocess/v4/api.php";
+        }
+
         $handle = curl_init();
         curl_setopt($handle, CURLOPT_URL, $direct_api_url );
         curl_setopt($handle, CURLOPT_TIMEOUT, 30);
@@ -243,18 +267,23 @@ class OrderController extends Controller
                 $order->payment_date = $request->tran_date;
                 $order->payment_info = json_encode($request->all());
                 $order->update();
+                DB::table('payments')->where('order_id', $order->order_id)->update([
+                    'payment_type' => 'sslCommerz-'.$request->card_type,
+                    'transaction_id' => $request->bank_tran_id,
+                    'payment_status' => AllStatic::$paid,
+                    'updated_at'    => date("Y-m-d H:i:s")
+                ]);
 
                 if ($order->payment_status == 1) {
-
-                    return redirect('http://localhost:3000');
+                    
+                    DB::commit();
+                    return redirect('https://staging.aranya.com.bd/shop');
                 }
 
-                DB::commit();
-
-                return redirect('http://localhost:3000');
+                DB::rollBack();
+                return redirect('https://staging.aranya.com.bd/shop');
 
             } catch (\Throwable $th) {
-                // return $th;
                 DB::rollBack();
                 return response()->json(['status' => 'error', 'message' => 'something went wrong'], 400);
             }
@@ -291,12 +320,12 @@ class OrderController extends Controller
 
     public function sslCommerzCancel(Request $request)
     {
-        return "Cancelled";
-        // return $request->all();
-        if(!Auth::check()){
+        // return "Cancelled";
+        // // return $request->all();
+        // if(!Auth::check()){
                
-            Auth::loginUsingId($request->value_a);
-        }
+        //     Auth::loginUsingId($request->value_a);
+        // }
         return response()->json([
             'flug'   => 1,
             'status' => 'error',
