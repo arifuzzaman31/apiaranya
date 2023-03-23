@@ -21,7 +21,6 @@ export default {
                 product_name: '',
                 category: '',
                 sub_category: '',
-                sku: '',
                 vendor : [],
                 brand : [],
                 designer : [],
@@ -332,8 +331,11 @@ export default {
         this.pr_product.inventory.forEach((item,ind) => {
             let index = arr.findIndex(tm => (item.sku == tm.sku && item.cpu == tm.cpu && item.mrp == tm.mrp));
             if(index == -1){
-                // if(item.colour_id.length > 0)
-                arr.push({'colour_id':[item.colour_id],'size_id':item.size_id,'cpu':item.cpu,'mrp':item.mrp,'qty':item.stock,'sku':item.sku})
+                if(item.colour_id > 0 || item.size_id > 0){
+                    arr.push({'colour_id':[item.colour_id],'size_id':item.size_id,'cpu':item.cpu,'mrp':item.mrp,'qty':item.stock,'sku':item.sku})
+                } else {
+                    arr.push({'colour_id':[],'size_id': '','cpu':item.cpu,'mrp':item.mrp,'qty':item.stock,'sku':item.sku})
+                }
             } else {
                arr[index].colour_id.push(item.colour_id)
             }
@@ -928,20 +930,6 @@ export default {
                 <div class="row">
                     <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex">
                         <h5>Attribute</h5>
-                        <div class="ml-5 d-flex">
-                            <div class="billing-cycle-radios">
-                                <div class="radio billed-yearly-radio">
-                                    <div class="d-flex justify-content-center">
-                                        <span class="txt-monthly mr-2">Colour Size</span>
-                                        <label class="switch s-icons s-outline  s-outline-primary">
-                                            <input v-model="form.color_size" :checked="form.color_size"  type="checkbox" id="colour">
-                                            <span class="slider round"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                        </div>
                     </div>                 
                     
                 </div>               

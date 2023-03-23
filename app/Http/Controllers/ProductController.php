@@ -147,7 +147,7 @@ class ProductController extends Controller
             $product->product_name        = $request->product_name;
             $product->slug                = Str::slug($request->product_name);
             $product->category_id         = $request->category;
-            $product->sub_category_id     = $request->sub_category;
+            $product->sub_category_id     = $request->sub_category ? $request->sub_category : 0;
             $product->vat_tax_id          = $request->vat;
             $product->description         = $request->description;
             $product->lead_time           = $request->lead_time;
@@ -197,48 +197,38 @@ class ProductController extends Controller
                 }
             }
             
-            if($request->color_size && $request->attrqty && !empty($request->attrqty)){
-
-                // $product->inventory()->attach($product->id,['colour_id' => $colorIds, 'size_id' => $sizeIds]);
+            if($request->attrqty && !empty($request->attrqty)){
                 foreach($request->attrqty as $value){
                     if($value['qty'] != '' && $value['sku'] != '' && $value['cpu'] != '' && $value['mrp'] != ''){
-                        foreach($value['colour_id'] as $sizestock)
-                        {
-                            $stock              = new Inventory();
+                        if(!empty($value['colour_id'])){
+                            foreach($value['colour_id'] as $sizestock)
+                            {
+                                DB::table('inventories')
+                                    ->insert([
+                                        'product_id' => $product->id,
+                                        'size_id' => $value['size_id'] ? $value['size_id'] : 0,
+                                        'colour_id' => $sizestock ? $sizestock : 0,
+                                        'sku' => $value['sku'],
+                                        'stock' => $value['qty'],
+                                        'cpu' => $value['cpu'],
+                                        'mrp' => $value['mrp'],
+                                        'warning_amount' => 10
+                                ]);
+                            }
+                        } else {
+                            $stock  = new Inventory();
                             $stock->product_id  = $product->id;
-                            $stock->colour_id   = $sizestock;
-                            $stock->size_id     = $value['size_id'];
-                            $stock->sku         = $value['sku'];
                             $stock->stock       = $value['qty'];
-                            $stock->cpu         = $value['cpu'];
-                            $stock->mrp         = $value['mrp'];
-                            $stock->warning_amount = $request->warning_amount ? $request->warning_amount : 10;
-                            $stock->warehouse   = $request->warehouse;
+                            $stock->size_id     = $value['size_id'] ? $value['size_id'] : 0;
+                            $stock->colour_id   =  0;
+                            $stock->sku       = $value['sku'];
+                            $stock->cpu       = $value['cpu'];
+                            $stock->mrp       = $value['mrp'];
                             $stock->save();
                         }
                     }
-                    // return $value['colour_id'];
                 }
-            
-            } else {
-                $stock  = new Inventory();
-                $stock->product_id  = $product->id;
-                $stock->stock       = $request->stock;
-                $stock->sku       = $request->sku;
-                $stock->cpu       = $request->cost;
-                $stock->mrp       = $request->price;
-                $stock->save();
             }
-            
-            // if($request->is_discount){
-            //     $disc                  = new Discount();
-            //     $disc->product_id      = $product->id;
-            //     $disc->discount_amount = $request->discount_amount;
-            //     $disc->discount_type   = $request->discount_type;
-            //     $disc->max_amount      = $request->max_amount;
-            //     $disc->status = 1;
-            //     $disc->save();
-            // }
 
             if(!empty($request->vendor)){
                
@@ -295,7 +285,7 @@ class ProductController extends Controller
                
                 ProductTag::create([
                     'product_id' => $product->id,
-                    'keyword_name' => json_encode($str)
+                    'keyword_name' => $str
                 ]);
             }
 
@@ -316,7 +306,13 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return Product::with(['category:id,category_name','subcategory','inventory','product_colour','product_size','discount'])
+        return Product::with(['category:id,category_name','subcategory:id,category_name','inventory.colour','inventory.size',
+        'vat:id,tax_name,tax_percentage',
+        'tag:id,keyword_name','product_fabric:id,fabric_code,fabric_name','product_vendor:id,vendor_name',
+        'product_brand:id,brand_name','product_designer:id,designer_name,designer_sort_name','product_embellishment:id,embellishment_name',
+        'product_making:id,making_name','product_season:id,season_name','product_variety:id,variety_name','product_fit:id,fit_name',
+        'product_artist:id,artist_name','product_consignment:id,consignment_name','product_ingredient:id,ingredient_name',
+        'product_care:id,care_name'])
             ->find($product->id);
     }
 
@@ -345,12 +341,10 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        return $request->attrqty;
+        // return $request->attrqty;
         $request->validate([
             'product_name' => 'required',
             'category' => 'required',
-            'stock' => 'required_if:color_size,false',
-            //'weight' => 'required',
             'design_code' => 'required'
         ]);
         DB::beginTransaction();
@@ -358,7 +352,7 @@ class ProductController extends Controller
             $product->product_name        = $request->product_name;
             $product->slug                = Str::slug($request->product_name);
             $product->category_id         = $request->category;
-            $product->sub_category_id     = $request->sub_category;
+            $product->sub_category_id     = $request->sub_category ? $request->sub_category : 0;
             $product->vat_tax_id          = $request->vat;
             $product->description         = $request->description;
             $product->lead_time           = $request->lead_time;
@@ -390,7 +384,6 @@ class ProductController extends Controller
             if($request->is_color && !empty($colorIds)){
                 $cid = array_unique(array_merge(...$colorIds), SORT_REGULAR);
                 $product->product_colour()->sync($cid);
-            
             }
             
             if($request->is_size && !empty($sizeIds)){
@@ -398,7 +391,7 @@ class ProductController extends Controller
                 $product->product_size()->sync($sizeIds);
             }
 
-            if($request->is_fabric && $request->fabrics){
+            if($request->is_fabric && !empty($request->fabrics)){
 
                 $product->product_fabric()->sync($request->fabrics);
 
@@ -418,37 +411,40 @@ class ProductController extends Controller
                 }
             }
             
-            if($request->color_size && $request->attrqty && !empty($request->attrqty)){
-
-                // $product->inventory()->attach($product->id,['colour_id' => $colorIds, 'size_id' => $sizeIds]);
+            if($request->attrqty && !empty($request->attrqty)){
+                DB::table('inventories')->where('product_id',$product->id)->delete();
                 foreach($request->attrqty as $value){
                     if($value['qty'] != '' && $value['sku'] != '' && $value['cpu'] != '' && $value['mrp'] != ''){
-                        foreach($value['colour_id'] as $sizestock)
-                        {
-                            DB::table('inventories')->where('product_id',$product->id)->delete();
-                            DB::table('inventories')
-                                ->insert([
-                                    'product_id' => $product->id,
-                                    'size_id' => $value['size_id'] ? $value['size_id'] : 0,
-                                    'colour_id' => $sizestock ? $sizestock : 0,
-                                    'sku' => $value['sku'],
-                                    'stock' => $value['qty'],
-                                    'cpu' => $value['cpu'],
-                                    'mrp' => $value['mrp'],
-                                    'warning_amount' => 10
+                        if(!empty($value['colour_id'])){
+                            foreach($value['colour_id'] as $sizestock)
+                            {
+                                DB::table('inventories')
+                                    ->insert([
+                                        'product_id' => $product->id,
+                                        'size_id' => $value['size_id'] ? $value['size_id'] : 0,
+                                        'colour_id' => $sizestock ? $sizestock : 0,
+                                        'sku' => $value['sku'],
+                                        'stock' => $value['qty'],
+                                        'cpu' => $value['cpu'],
+                                        'mrp' => $value['mrp'],
+                                        'warning_amount' => 10
                                 ]);
+                            }
+                        } else {
+                            $stock  = new Inventory();
+                            $stock->product_id  = $product->id;
+                            $stock->stock       = $value['qty'];
+                            $stock->size_id     = $value['size_id'] ? $value['size_id'] : 0;
+                            $stock->colour_id   =  0;
+                            $stock->sku       = $value['sku'];
+                            $stock->cpu       = $value['cpu'];
+                            $stock->mrp       = $value['mrp'];
+                            $stock->save();
                         }
                     }
               
                 }
             
-            } else {
-                $stock  = Inventory::where('product_id',$request->id)->first();
-                $stock->stock       = $request->stock;
-                $stock->sku       = $request->sku;
-                $stock->cpu       = $request->cost;
-                $stock->mrp       = $request->price;
-                $stock->update();
             }
 
             if(!empty($request->vendor)){

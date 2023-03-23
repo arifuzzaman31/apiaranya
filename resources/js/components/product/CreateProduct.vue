@@ -19,7 +19,6 @@ export default {
                 product_name: '',
                 category: '',
                 sub_category: '',
-                sku: '',
                 vendor : [],
                 brand : [],
                 designer : [],
@@ -38,9 +37,6 @@ export default {
                 product_image_three : '',
                 product_image_four : '',
                 design_code: '',
-                stock: 1,
-                cost: 0,
-                price: 0,
                 dimension: '',
                 weight: '',
                 care: [],
@@ -48,7 +44,6 @@ export default {
                 is_fabric: true,
                 selectfabrics : [],
                 is_color: true,
-                color_size: true,
                 selectcolours : [],
                 is_size: true,
                 selectsize : [],
@@ -216,9 +211,6 @@ export default {
                 product_image_three : '',
                 product_image_four : '',
                 design_code: '',
-                stock: 1,
-                cost: 0,
-                price: 0,
                 dimension: '',
                 weight: '',
                 care: [],
@@ -292,16 +284,6 @@ export default {
                                     {{ validation_error.sub_category[0] }}
                                 </div>
                             </div>
-                            <!-- <div class="form-group col-md-4 mt-1">
-                                <label for="product-Vandor">Vandor</label>
-                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('vandor') ? 'is-invalid' : ''" id="product-name" placeholder="Vandor Name" v-model="form.vandor" >
-                                    <div
-                                        v-if="validation_error.hasOwnProperty('vandor')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.vandor[0] }}
-                                    </div>
-                            </div> -->
 
                             <div class="col-md-12 mb-3">
                             <label for="product-Vendor">Vendor</label>
@@ -823,20 +805,6 @@ export default {
                 <div class="row">
                     <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex">
                         <h5>Attribute</h5>
-                        <div class="ml-5 d-flex">
-                            <div class="billing-cycle-radios">
-                                <div class="radio billed-yearly-radio">
-                                    <div class="d-flex justify-content-center">
-                                        <span class="txt-monthly mr-2">Colour Size</span>
-                                        <label class="switch s-icons s-outline  s-outline-primary">
-                                            <input v-model="form.color_size" :checked="form.color_size"  type="checkbox" id="colour">
-                                            <span class="slider round"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                        </div>
                     </div>                 
                     
                 </div>               
@@ -844,7 +812,7 @@ export default {
                 </div>
             </div>
             
-            <div class="statbox widget box box-shadow" v-if="form.color_size">
+            <div class="statbox widget box box-shadow">
                 <div class="widget-content ">
                     <div class="row text-center">
                         <div class="col-3  text-success">
@@ -903,7 +871,7 @@ export default {
                            
                         </div>
                         <div class="form-group col-md-2">
-                            <select id="product-category" class="form-control" v-model="qt.size_id" required>
+                            <select id="product-category" class="form-control" v-model="qt.size_id">
                                 <option value="">Choose Size...</option>
                                 <option v-for="(value,index) in prp_size" :value="value.value" :key="index">{{ value.name }}</option>
                             </select>
@@ -938,49 +906,6 @@ export default {
                     </a>
             </div>
 
-            <div class="statbox widget box box-shadow" v-else>
-                <div class="widget-content ">
-                    <div class="row">
-                        <div class="form-group col-md-3">
-                                <label for="product-ingredients">Stock</label>
-                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('stock') ? 'is-invalid' : ''" id="stock-name" placeholder="stock" v-model="form.stock" >
-                                    <div
-                                        v-if="validation_error.hasOwnProperty('stock')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.stock[0] }}
-                                    </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <label for="product-cost">Unit Cost</label>
-                                <input type="number" class="form-control" id="product-cost" placeholder="CPU" v-model="form.cost" >
-                            </div>
-                            <div class="col-md-3">
-                                <label for="product-price">Price(MRP)</label>
-                                <input type="number" class="form-control" :class="validation_error.hasOwnProperty('price') ? 'is-invalid' : ''" id="product-price" placeholder="Sale Price" v-model="form.price" >
-                                <div
-                                        v-if="validation_error.hasOwnProperty('price')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.price[0] }}
-                                    </div>
-                            </div>
-
-                            <div class="form-group col-md-3">
-                                <label for="product-sku">SKU</label>
-                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('sku') ? 'is-invalid' : ''" id="product-sku" placeholder="SKU" v-model="form.sku" >
-                                    <div
-                                        v-if="validation_error.hasOwnProperty('sku')"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ validation_error.sku[0] }}
-                                    </div>
-                            </div>
-                    </div>
-                </div>
-            </div>
-            
             <div class="statbox widget box box-shadow">
                 <div class="widget-content ">
                     <div class="form-row">

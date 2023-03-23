@@ -89,6 +89,7 @@ export default {
             onPress,
             userOrders,
             getUserOrder,
+            getCustomer,
             keyword
         }
     }
@@ -114,7 +115,7 @@ export default {
                 </tr>
             </thead>
             <tbody>
-                <template v-for="customer in customers.data">
+                <template v-for="customer in customers.data" :key="customer.id">
                     <tr>
                         <td>{{ customer.id }}</td>
                         <td>{{ customer.name }}</td>

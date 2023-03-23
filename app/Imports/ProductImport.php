@@ -69,12 +69,11 @@ class ProductImport implements ToCollection
                       'status' => 1, 
                       'is_discount' => 0
                   ]);
-      
+                  
+                  $this->putCombAttr($row,$product);
                   if(!empty($row[19])){ 
                      $pc = explode(",",$row[19]);
                      $product->product_colour()->attach($pc);
-                     
-                     $this->putCombAttr($row,$product);
                   }
                   
                   if(!empty($row[12])){
