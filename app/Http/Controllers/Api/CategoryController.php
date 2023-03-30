@@ -20,4 +20,9 @@ class CategoryController extends Controller
             // return \DB::table('categories')->select(['id','category_name','parent_category','slug'])->get();
         }
     }
+
+    public function allCategoryList()
+    {
+        return getParentCategory();
+    }
 }

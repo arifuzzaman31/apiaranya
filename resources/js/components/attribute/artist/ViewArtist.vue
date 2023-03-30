@@ -15,6 +15,10 @@ export default {
             artist_name: '',
             status: true
         });
+        const keyword = reactive({
+            key:'',
+            url : baseUrl
+        });
         const toastMixin = Swal.mixin({
             toast: true,
             icon: 'success',
@@ -39,9 +43,17 @@ export default {
         }
 
         const getArtist = async(page = 1) =>{
-            let res = await axios.get(baseUrl+`artist/create?page=${page}`);
+            let res = await axios.get(baseUrl+`artist/create?&keyword=${keyword.key}&per_page=10&page=${page}`);
             artist.value = res.data;
             // console.log(artist.value)
+        }
+
+        const onPress = () => {
+            if (keyword.key.length < 3) {
+                return;
+            }
+            return getArtist()
+            
         }
 
         const deleteArtist = async(id)=>{
@@ -139,7 +151,8 @@ export default {
             formReset,
             storeArtist,
             deleteArtist,
-            errors
+            errors,
+            keyword
         }
     }
 }
@@ -158,6 +171,9 @@ export default {
                     </div>
                 </div>       
                 <div class="widget-content widget-content-area">
+                    <div class="row col-4 mb-2">
+                        <input id="search" placeholder="Search By Name" type="text" class="form-control"  @keyup.prevent="onPress" v-model="keyword.key" />
+                    </div>
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover mb-4">
                             <thead>

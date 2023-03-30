@@ -47,6 +47,8 @@ Route::get('home-pagedata',[PageController::class,'homeImageData']);
 //Category data
 Route::get('category/{id}',[CategoryController::class,'categoryData']);
 
+Route::get('category-list',[CategoryController::class,'allCategoryList']);
+
 // get Campain data
 Route::get('all-campaign',[FrontController::class,'getCampaing']);
 

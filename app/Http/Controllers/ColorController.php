@@ -27,9 +27,14 @@ class ColorController extends Controller
      */
     public function create(Request $request)
     {
+        $keyword   = $request->get('keyword');
         $noPagination = $request->get('no_paginate');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 10;
         $color = Colour::orderBy('id','desc');
+        if($keyword != ''){
+            $color = $color->orWhere('color_name','like','%'.$keyword.'%');
+            $color = $color->orWhere('color_code','like','%'.$keyword.'%');
+        }
         if($noPagination != ''){
             $color = $color->get();
         } else {

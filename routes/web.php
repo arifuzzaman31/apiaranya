@@ -125,6 +125,7 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     Route::get('home-page',[PagesController::class,'homePage'])->name('home-page');
     Route::post('update-home-image',[PagesController::class,'homeImageUpdate']);
     Route::get('get-home-pagedata',[PagesController::class,'homeImageData']); 
+    Route::get('all-attr-download',[PagesController::class,'exportAllAttr']); 
     
 });
 

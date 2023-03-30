@@ -16,6 +16,10 @@ export default {
             color_code:"",           
             status: true
         });
+        const keyword = reactive({
+            key:'',
+            url : baseUrl
+        });
         const toastMixin = Swal.mixin({
             toast: true,
             icon: 'success',
@@ -40,9 +44,17 @@ export default {
         }
 
         const getColour = async(page = 1) =>{
-            let res = await axios.get(baseUrl+`colour/create?page=${page}`);
+            let res = await axios.get(baseUrl+`colour/create?&keyword=${keyword.key}&per_page=10&page=${page}`);
             colours.value = res.data;
             // console.log(colours.value)
+        }
+
+        const onPress = () => {
+            if (keyword.key.length < 3) {
+                return;
+            }
+            return getColour()
+            
         }
 
         const deleteColor = async(id)=>{
@@ -104,7 +116,7 @@ export default {
                         errors.value = e.response.data.errors;
                     }
                 })
-                getColour()
+            getColour()
             }catch(e){
                 if(e.response.status == 422){
                     var data = [];
@@ -121,6 +133,11 @@ export default {
             form.color_name = color.color_name;
             form.color_code = color.color_code;
             form.status = color.status;
+        }
+
+        const clearfilter = () => {
+            keyword.key = ''
+            getColour()
         }
 
         const formReset = () =>{
@@ -143,7 +160,10 @@ export default {
             formReset,
             storeColor,
             deleteColor,
-            errors
+            errors,
+            keyword,
+            onPress,
+            clearfilter
         }
     }
 }
@@ -162,6 +182,10 @@ export default {
                     </div>
                 </div>       
                 <div class="widget-content widget-content-area">
+                    <div class="d-flex flex-row col-4 mb-2">
+                        <input id="search" placeholder="Search By Name" type="text" class="form-control"  @keyup.prevent="onPress" v-model="keyword.key" />
+                        <button type="button" class="btn btn-danger btn-sm mx-3" @click="clearfilter">CLEAR</button>
+                    </div>
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover mb-4">
                             <thead>
@@ -193,7 +217,6 @@ export default {
                                 @pagination-change-page="getColour"
                             />
                     </div>
-
                 </div>
             </div>
         </div>

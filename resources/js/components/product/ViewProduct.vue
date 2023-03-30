@@ -292,6 +292,7 @@ export default {
                         <button type="button" class="btn btn-danger btn-sm" @click="filterClear()">CLEAR</button>
                         <button type="button" class="btn btn-success btn-sm mx-2" @click="openCampModal()">Add To Campaign</button>
                         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#bulkUpload">Bulk Upload</button>
+                        <a type="button" :href="url+'all-attr-download'" class="btn btn-primary btn-sm">Attr Sheet</a>
                     </div>
 
                     <div class="col-md-4 col-lg-3 col-12">

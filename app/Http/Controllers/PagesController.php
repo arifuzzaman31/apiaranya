@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\AttributeExport;
 use App\Models\AttributeValue;
+use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Page;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PagesController extends Controller
 {
@@ -97,9 +101,16 @@ class PagesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function exportAllAttr()
     {
-        //
+        $plate = [
+            'category'    => Category::select('id', 'category_name', 'parent_category', 'status')->get()->toArray(),
+            'brand'           => Brand::select('id', 'brand_name', 'status')->get()->toArray()
+        ];
+        
+        $export = new AttributeExport($plate);
+        return Excel::download($export, 'attribute-list.xlsx');
+
     }
 
     /**
