@@ -19,42 +19,42 @@ class OrderController extends Controller
     public function order(Request $request)
     {
         try {
-	    //return response()->json($request->all());
+            //return response()->json($request->all());
             DB::beginTransaction();
 
             $order_id   = date('Ymd').time();
-	        $shipCharge = 0;
+            $tax_amount = 0;
+            $shipCharge = 0;
             if($request->data['deliveryMethod'] == 'outSideDhaka'){
                 $shipCharge += 250;
             }
             if($request->data['deliveryMethod'] == 'insideDhaka'){
                 $shipCharge += 100;
             }
+
             $order = new Order();
             $order->order_id    =   $order_id;
-            $order->shipping_method  =  $request->shipping_method;
+            $order->shipping_method   =  $request->shipping_method;
             $order->payment_method    =   $request->payment_method;
             $order->user_id           = $request->isGuestCheckout == false ? Auth::user()->id : 0;
-            $order->vat_rate               = $request->vat_rate;
-            $order->vat_amount             = $request->vat_total;
+            $order->vat_rate               = 7.5;
+            $order->vat_amount             = $tax_amount;
             $order->payment_method         = 0;
             $order->shipping_amount        = $shipCharge;
-            $order->vat_rate               = $request->vat_rate?$request->vat_rate:0;
-            $order->vat_amount             = $request->vat_amount?$request->vat_amount:0;
             $order->total_item             = $request->totalAmount ? $request->totalAmount : 1;
             $order->total_price           = (float)$request->totalPrice;
             $order->coupon_discount        = $request->coupon_discount ? $request->coupon_discount : 0;
             $order->coupon                  = $request->coupon_code;
             $order->discount               = 0;
             $order->payment_status         = 0;
+            $order->delivery_type          = $shipCharge == 0 ? 1 : 0;
+            $order->order_position          = $request->data['paymentMethod'] != 'online' ? 1 : 0;
             $order->order_date             = date('Y-m-d');
             $order->requested_delivery_date = date('Y-m-d', strtotime("+1 day"));
             $order->status                 = 1;
-            $order->is_same_address        = $request->is_same_address ? $request->is_same_address : 0;
+            $order->is_same_address        = $request->isSameAddress == false ? 0 : 1;
             $order->save();
 
-          
-            
             foreach ($request->cart as $value) {
               
                 $product = Product::find($value['id']);
@@ -63,7 +63,7 @@ class OrderController extends Controller
 
                 $details->order_id            = $order->id;
                 $details->category_id         = $product->category_id;
-                $details->sub_category_id     = $product->sub_category_id ?$product->sub_category_id :0 ;
+                $details->sub_category_id     = $product->sub_category_id ? $product->sub_category_id :0 ;
                 $details->fabric_id           = 0;
                 $details->product_id          = $value['id'];
                 $details->size_id             = $value['size_id'];
@@ -78,7 +78,13 @@ class OrderController extends Controller
                 $details->total_discount      = 0;
                 $details->save();
 
+                $tax_amount += ($value['taxAmount']/100)*$value['totalPrice'];
             }
+
+            DB::table('orders')->where('id',$order->id)->update([
+                'vat_amount' => $tax_amount
+            ]);
+            
 
             $billing = new UserBillingInfo();
             $billing->user_id = $request->isGuestCheckout == false ? Auth::user()->id : 0;
@@ -111,14 +117,28 @@ class OrderController extends Controller
 
             DB::table('payments')->insert([
                 'order_id' => $order_id,
-                'amount' => ($order->total_price + $order->shipping_amount + $order->vat_amount) - $order->coupon_discount,
+                'amount' => (($order->total_price + $order->shipping_amount + $order->vat_amount) - ($order->discount + $order->coupon_discount)),
                 'payment_status' => 0,
                 'created_at'    => date("Y-m-d H:i:s")
             ]);
             
+            DB::table('deliveries')->insert([
+                'order_id' => $order->id,
+                'created_at'    => date("Y-m-d H:i:s")
+            ]);
+            
             \DB::commit();
-
-            return response()->json(['status' => 'success', 'message' => 'order created', 'payment' => $this->sslCommerz($order->id)], 200);
+            if($request->data['paymentMethod'] == 'online'){
+                return response()->json(['status' => 'success', 'type' => 'online', 'message' => 'Order Created', 'payment' => $this->sslCommerz($order->id)], 200);
+            } else {
+                DB::table('deliveries')->where('order_id', $order->id)->update([
+                    'process_date' => date('Y-m-d'),
+                    'process_state' => AllStatic::$processing,
+                    'process_value' => deliveryPosition(AllStatic::$processing),
+                    'created_at'    => date("Y-m-d H:i:s")
+                ]);
+                return response()->json(['status' => 'success','type' => 'cash', 'order_id' => $order_id], 200);
+            }
 
         } catch (\Throwable $th) {
             \DB::rollback();
@@ -142,7 +162,7 @@ class OrderController extends Controller
         }
         $post_data['store_id'] = $storeid;
         $post_data['store_passwd'] = $storepass;
-        $post_data['total_amount'] = ($order->total_price + $order->shipping_amount + $order->vat_amount) - $order->coupon_discount;
+        $post_data['total_amount'] = (($order->total_price + $order->shipping_amount + $order->vat_amount) - ($order->discount + $order->coupon_discount));
         $post_data['currency'] = "BDT";
         $post_data['tran_id'] = $order_id;
         $post_data['success_url'] = route('ssl.success');
@@ -198,7 +218,7 @@ class OrderController extends Controller
         $post_data['product_profile'] = "general";
         $post_data['product_amount'] = $order->total_price;
         $post_data['vat'] = $order->vat_rate;
-        $post_data['discount_amount'] = $order->vat_amount;
+        $post_data['discount_amount'] = ($order->discount + $order->coupon_discount);
         $post_data['convenience_fee'] = $order->shipping_amount;
     
         //$post_data['allowed_bin'] = "3,4";
@@ -274,14 +294,20 @@ class OrderController extends Controller
                     'updated_at'    => date("Y-m-d H:i:s")
                 ]);
 
+                DB::table('deliveries')->where('order_id', $order->id)->update([
+                    'process_date' => date('Y-m-d'),
+                    'process_state' => AllStatic::$processing,
+                    'process_value' => deliveryPosition(AllStatic::$processing),
+                    'updated_at'    => date("Y-m-d H:i:s")
+                ]);
+
                 if ($order->payment_status == 1) {
-                    
                     DB::commit();
-                    return redirect('https://staging.aranya.com.bd/shop');
+                    return redirect('http://localhost:3000/payment?payment=success&orderid='.$order->order_id.'&transid='.$order->transaction_id);
                 }
 
                 DB::rollBack();
-                return redirect('https://staging.aranya.com.bd/shop');
+                return redirect('http://localhost:3000/payment?payment=fail');
 
             } catch (\Throwable $th) {
                 DB::rollBack();
@@ -338,7 +364,7 @@ class OrderController extends Controller
     {
         $noPagination = $request->get('no_paginate');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
-        $order = DB::table('orders')->selectRaw('id,user_id,total_price,vat_rate,vat_amount,total_item,payment_status,order_position')
+        $order = DB::table('orders')->selectRaw('id,order_id,user_id,total_price,total_item,payment_status,order_position,order_date')
                 ->where('user_id',Auth::id())->orderBy('id','desc');
         if($noPagination != ''){
             $order = $order->get();
@@ -354,5 +380,10 @@ class OrderController extends Controller
         $details = DB::table('order_details')->with(['product','colour','size','fabric'])->where('order_id',$id)->get();
 
         return response()->json($details);
+    }
+
+    public function invoice()
+    {
+        return view('partials.invoice');
     }
 }

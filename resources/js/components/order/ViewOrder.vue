@@ -21,6 +21,12 @@ export default {
             order_id: '',
             single_order: null,
             order_status_id: '',
+            order_status: {
+                order_id: '',
+                order_position: '',
+                tracking_id: '',
+                date: ''
+            },
             search: '',
             filterdata : {
                 order_state: '',
@@ -49,7 +55,7 @@ export default {
         cancelOrder(id){
             Swal.fire({
                 title: 'Are you sure?',
-                text: "Order status will be Update!",
+                text: "Order will be Cancel!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -70,34 +76,16 @@ export default {
             })
         },
 
-        updateStatus(order){
-            if(this.order_status_id >= order){
-                alert('Click Next Step')
-                return false
-            }
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "Order status will be Update!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Do it!'
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    axios.post(baseUrl+`update/order/status`,{'order_status_id':this.order_status_id,'id':this.order_id}).then(
-                        response => {
-                            $("#orderDetailModal").modal('hide');
-                            this.formReset()
-                            this.getOrder()
-                            this.successMessage(response.data)
-                        }
-                    ). catch(error => {
-                    
-                    })
-                }
+        updateStatus(){
+            axios.post(baseUrl+`update/order/status`,this.order_status)
+            .then(result => {
+                $("#orderStatusModal").modal('hide');
+                this.successMessage(result.data)
+                this.getOrder()
             })
-            console.log(order)
+            .catch(errors => {
+                console.log(errors);
+            });
         },
 
         deleteOrder(id){
@@ -128,6 +116,19 @@ export default {
             axios.get(baseUrl+`orders-details/${id}`)
             .then(result => {
                 this.order_details = result.data;
+            })
+            .catch(errors => {
+                console.log(errors);
+            });  
+        },
+
+        orderStatus(data){
+            axios.get(baseUrl+`order-shipment/${data.id}`)
+            .then(result => {
+                this.order_status.order_id = result.data.id
+                this.order_status.order_position = result.data.order_position
+                this.order_status.tracking_id = result.data.tracking_id
+                $("#orderStatusModal").modal('show');
             })
             .catch(errors => {
                 console.log(errors);
@@ -291,13 +292,18 @@ export default {
                                             <span v-else class="badge badge-danger">Cancel</span>
                                         </td>
                                         <td class="text-center">
-                                            <ul class="table-controls d-flex justify-content-around">
-                                                <li><a href="javascript:void(0);" @click="cancelOrder(order.id)" data-toggle="tooltip" data-placement="top" title="Order Cancel">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-slash text-warning"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg></a> </li>
-                                                <li><a href="javascript:void(0);" @click="orderDetailModal(order)" data-toggle="tooltip" data-placement="top" title="View">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play-circle text-info"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg></a></li>
-                                                <li><a href="javascript:void(0);" @click="deleteOrder(order.id)" data-toggle="tooltip" data-placement="top" title="Delete Order"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-danger"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a></li>
-                                            </ul>
+                                            <div class="dropdown custom-dropdown">
+                                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+                                                </a>
+
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink2">
+                                                    <a class="dropdown-item" @click="orderDetailModal(order)" href="javascript:void(0);">Order Details</a>
+                                                    <a class="dropdown-item" @click="orderStatus(order)" href="javascript:void(0);">Order Status</a>
+                                                    <a class="dropdown-item"  @click="cancelOrder(order.id)" href="javascript:void(0);">Cancel</a>
+                                                    <a class="dropdown-item" @click="deleteOrder(order.id)" href="javascript:void(0);">Delete</a>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>					
                                 </template>
@@ -402,6 +408,49 @@ export default {
                                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"  @click="formReset"></i>Discard</button>
                                 </div>
                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="orderStatusModal" class="modal animated fadeInUp custo-fadeInUp" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Order Status</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"  @click="formReset">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="widget-content">
+                            <form method="post">
+                                <div>
+                                    <div class="form-group">
+                                        <label for="tracking">Tracking ID</label>
+                                        <input id="tracking" type="text" name="txt" v-model="order_status.tracking_id" placeholder="Tracking ID" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Order Status</label>
+                                        <select class="form-control" v-model="order_status.order_position">
+                                            <option value="0">Pending</option>
+                                            <option value="1">Processing</option>
+                                            <option value="2">Ready To Delivery</option>
+                                            <option value="3">Delivered</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Date</label>
+                                        <input id="date" v-model="order_status.date" class="form-control flatpickr-input active" type="date" placeholder="Select Date..">
+                                    </div>
+                                    <div class="modal-footer md-button">
+                                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12" @click="formReset"></i>Discard</button>
+                                        <button type="button" @click="updateStatus(order_status.order_id)" class="btn btn-primary">Update</button>
+                                    </div>
+                                </div>  
+                            </form>
                         </div>
                     </div>
                 </div>

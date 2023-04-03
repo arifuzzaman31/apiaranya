@@ -102,11 +102,12 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     Route::get('order',[OrderController::class,'index'])->name('order');
     Route::get('get-order',[OrderController::class,'getOrder'])->name('get-order');
     Route::get('get-order-excel',[OrderController::class,'getOrderExcel'])->name('get-order-excel');
-    Route::post('update/order/status',[OrderController::class,'updateOrder']);
+    Route::post('update/order/status',[OrderController::class,'updateOrderStatus']);
     Route::get('orders-details/{id}',[OrderController::class,'orderDetails']);
     Route::get('order/cancel/{id}',[OrderController::class,'orderCancel']);
     Route::get('get-user-order/{id}',[OrderController::class,'getUserOrder']);
     Route::delete('order/{id}',[OrderController::class,'destroy']);
+    Route::get('order-shipment/{id}',[OrderController::class,'orderShipment']);
 
     //customer
     Route::get('customers',[CustomerController::class,'index'])->name('customers');
@@ -133,4 +134,6 @@ Route::get('ssl-commerz/{order_id}',[OdController::class,'sslCommerz'])->name('p
 Route::post('ssl-success',[OdController::class,'sslCommerzSuccess'])->name('ssl.success');
 Route::post('ssl-failed',[OdController::class,'sslCommerzFailed'])->name('ssl.failed');
 Route::post('ssl-cancel',[OdController::class,'sslCommerzCancel'])->name('ssl.cancel');
+
+Route::get('invoice',[OdController::class,'invoice'])->name('invoice');
 

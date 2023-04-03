@@ -88,42 +88,52 @@ class OrderController extends Controller
         return response()->json(['status' => 'success', 'message' => 'Order Has been Canceled!']);
     }
 
+    public function orderShipment($id)
+    {
+        try {
+            return Order::select('id','order_id','order_position','tracking_id')->find($id);
+        } catch (\Throwable $th) {
+            return $this->errorMessage();
+            //throw $th;
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function updateOrder(Request $request)
+    public function updateOrderStatus(Request $request)
     {
         try {
             // return $request->all();
             DB::beginTransaction();
-            $order = Order::find($request->id);
-            $order->order_position += 1;
+            $order = Order::find($request->order_id);
+            $order->order_position = $request->order_position;
+            $order->tracking_id = $request->tracking_id;
             $order->update();
 
-            $delivery = Delivery::where('order_id',$order->order_id)->first();
-            if(empty($delivery)){
-                
-                $delivery->tracking_id = uniqueString();
-                $delivery->process_date = date('Y-m-d');
-                $delivery->process_state = AllStatic::$processing;
-                $delivery->process_value = 'Processing';
-                $delivery->save();
-                
-            } else {
-                if($order->order_position == 2){
-                    $delivery->on_delivery_date = date('Y-m-d');
-                    $delivery->on_delivery_state = AllStatic::$on_delivery;
-                    $delivery->on_delivery_value = 'On Delivery';
+            $delivery = Delivery::where('order_id',$request->order_id)->first();
+            if(!empty($delivery)){
+                if($request->order_position == AllStatic::$processing){
+                    $delivery->process_date = $request->date;
+                    $delivery->process_state = AllStatic::$processing;
+                    $delivery->process_value = deliveryPosition(AllStatic::$processing);
                 }
 
-                if($order->order_position == 3){
-                    $delivery->delivery_date = date('Y-m-d');
-                    $delivery->delivery_state = AllStatic::$delivered;
-                    $delivery->delivery_value = 'Delivered';
+                if($request->order_position == AllStatic::$on_delivery){
+                    $delivery->on_delivery_date = $request->date;
+                    $delivery->on_delivery_state = AllStatic::$on_delivery;
+                    $delivery->on_delivery_value = deliveryPosition(AllStatic::$on_delivery);
                 }
+
+                if($request->order_position == AllStatic::$delivered){
+                    $delivery->delivery_date = $request->date;
+                    $delivery->delivery_state = AllStatic::$delivered;
+                    $delivery->delivery_value = deliveryPosition(AllStatic::$delivered);
+                }
+                $delivery->tracking_id = $request->tracking_id;
                 $delivery->update();
             }
             DB::commit();

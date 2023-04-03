@@ -16,7 +16,7 @@ class CreateDeliveriesTable extends Migration
         Schema::create('deliveries', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id');
-            $table->integer('tracking_id');
+            $table->string('tracking_id')->nullable();
             $table->date('process_date')->nullable();
             $table->tinyInteger('process_state')->nullable();
             $table->string('process_value')->nullable();

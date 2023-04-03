@@ -22,7 +22,10 @@ class Order extends Model
 
     public function delivery()
     {
-        return $this->hasOne(Delivery::class);
+        return $this->hasOne(Delivery::class)->withDefault([
+            'id' => '0',
+            'order_id' => ''
+        ]);
     }
 
     public function user_billing_info()

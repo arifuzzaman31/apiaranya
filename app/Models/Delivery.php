@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Delivery extends Model
 {
-    use HasFactory;
-
+    use HasFactory,SoftDeletes;
+    
     public function order()
     {
         return $this->belongsTo(Order::class);
