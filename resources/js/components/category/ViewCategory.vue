@@ -273,7 +273,7 @@ export default {
                             </tr>				
                             <tr>
                                 <td>25</td>
-                                <td>Accessories</td>
+                                <td>Jewelry</td>
                                 <td>Ashtodhatu Jewellery</td>
                                 <td class="text-center">Active</td>
                                 <td class="text-center">
@@ -282,7 +282,7 @@ export default {
                             </tr>				
                             <tr>
                                 <td>26</td>
-                                <td>Accessories</td>
+                                <td>Jewelry</td>
                                 <td>Silver Jewellery</td>
                                 <td class="text-center">Active</td>
                                 <td class="text-center">
@@ -291,7 +291,7 @@ export default {
                             </tr>				
                             <tr>
                                 <td>27</td>
-                                <td>Accessories</td>
+                                <td>Jewelry</td>
                                 <td>Metal Jewellery</td>
                                 <td class="text-center">Active</td>
                                 <td class="text-center">
@@ -300,7 +300,7 @@ export default {
                             </tr>				
                             <tr>
                                 <td>28</td>
-                                <td>Accessories</td>
+                                <td>Jewelry</td>
                                 <td>Other Jewellery</td>
                                 <td class="text-center">Active</td>
                                 <td class="text-center">
@@ -342,7 +342,43 @@ export default {
                                 <td class="text-center">
                                    <a class="btn btn-sm" target="_blank" :href="url+'category/36/edit'">Edit</a>
                                 </td>
-                            </tr>				
+                            </tr>	
+                            <tr>
+                                <td>33</td>
+                                <td>Kids</td>
+                                <td>Girls</td>
+                                <td class="text-center">Active</td>
+                                <td class="text-center">
+                                   <a class="btn btn-sm" target="_blank" :href="url+'category/38/edit'">Edit</a>
+                                </td>
+                            </tr>	
+                            <tr>
+                                <td>34</td>
+                                <td>Kids</td>
+                                <td>Boys</td>
+                                <td class="text-center">Active</td>
+                                <td class="text-center">
+                                   <a class="btn btn-sm" target="_blank" :href="url+'category/39/edit'">Edit</a>
+                                </td>
+                            </tr>	
+                            <tr>
+                                <td>35</td>
+                                <td>Kids</td>
+                                <td>Babies</td>
+                                <td class="text-center">Active</td>
+                                <td class="text-center">
+                                   <a class="btn btn-sm" target="_blank" :href="url+'category/40/edit'">Edit</a>
+                                </td>
+                            </tr>	
+                            <tr>
+                                <td>36</td>
+                                <td>Kids</td>
+                                <td>Toddlers</td>
+                                <td class="text-center">Active</td>
+                                <td class="text-center">
+                                   <a class="btn btn-sm" target="_blank" :href="url+'category/41/edit'">Edit</a>
+                                </td>
+                            </tr>	
                           
                         </tbody>
                     </table>
