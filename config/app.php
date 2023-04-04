@@ -31,8 +31,8 @@ return [
     'clpreset' => 'webable',
     'front_url' => 'https://staging.aranya.com.bd/',
     'payment_mode' => 'sandbox',
-    'storeid' => 'test_aranya01bd',
-    'storepassw' => '67582559',
+    'storeid' => 'limme601b86f8e6dd4',
+    'storepassw' => 'limme601b86f8e6dd4@ssl',
     
     /*
     |--------------------------------------------------------------------------

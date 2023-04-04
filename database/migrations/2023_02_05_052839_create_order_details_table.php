@@ -25,6 +25,8 @@ class CreateOrderDetailsTable extends Migration
             $table->foreignId('user_id')->comment = "customer_id";
             $table->integer('quantity');
             $table->double('selling_price',8,4);
+            $table->double('vat_rate',8,4)->default(0);
+            $table->double('vat_amount',8,4)->default(0);
             $table->double('buying_price',8,4);
             $table->double('total_buying_price',8,4);
             $table->double('total_selling_price',8,4);

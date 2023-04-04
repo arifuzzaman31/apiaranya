@@ -135,6 +135,30 @@ export default {
             });  
         },
 
+        refundOrder(id){
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Do You Make Refund!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Do it!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.get(baseUrl+`order-refund/${id}`).then(
+                        response => {
+                            // this.getOrder()
+                            console.log(response.data)
+                            this.successMessage(response.data)
+                        }
+                    ). catch(error => {
+                        console.log(error)
+                    })
+                }
+            }) 
+        },
+
         orderDetailModal(order) {
             this.getOrderdetail(order.id)
             this.order_id = order.id
@@ -259,7 +283,7 @@ export default {
                             <button type="button" class="btn btn-danger" @click="filterClear()">CLEAR</button>
                         </div>
                     </div>
-                    <div class="table-responsive">
+                    <div class="table-responsive" style="min-height: 50vh;">
                         <table class="table table-bordered table-hover mb-4">
                             <thead>
                                 <tr>
@@ -269,6 +293,7 @@ export default {
                                     <th>Price</th>
                                     <th>Shipping</th>
                                     <th>PaymentBy</th>
+                                    <th>Refund Claim Date</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -282,6 +307,7 @@ export default {
                                         <td>{{ order.total_price }}</td>
                                         <td>{{ order.shipping_amount }}</td>
                                         <td>{{ order.payment_method_name }}</td>
+                                        <td>{{ order.refund_claim_date }}</td>
                                         <td class="text-center">
                                             <span v-if="order.status !=0">
                                                 <span v-if="order.order_position == 0" class="badge badge-info">Pending</span>
@@ -301,6 +327,7 @@ export default {
                                                     <a class="dropdown-item" @click="orderDetailModal(order)" href="javascript:void(0);">Order Details</a>
                                                     <a class="dropdown-item" @click="orderStatus(order)" href="javascript:void(0);">Order Status</a>
                                                     <a class="dropdown-item"  @click="cancelOrder(order.id)" href="javascript:void(0);">Cancel</a>
+                                                    <a class="dropdown-item" v-if="(order.payment_status == 1) && (order.is_claim_refund == 1)" @click="refundOrder(order.id)" href="javascript:void(0);">Refund</a>
                                                     <a class="dropdown-item" @click="deleteOrder(order.id)" href="javascript:void(0);">Delete</a>
                                                 </div>
                                             </div>

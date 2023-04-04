@@ -251,7 +251,7 @@ export default {
     <div class="container-fluid mt-3">
         <div class="statbox widget box box-shadow mb-4">
             <div class="widget-header">
-                <div class="row">
+                <div class="row d-flex align-items-center">
                     <div class="col-md-2 col-lg-1 col-4 mb-3">
                         <label for="search">Per-Page</label>
                         <select id="product-perpage" class="form-control" @change="getProduct()" v-model="filterdata.per_page">
@@ -288,11 +288,12 @@ export default {
                             <option v-for="(value,index) in allcampaign" :value="value.id" :key="index">{{ value.campaign_name }}</option>
                         </select>
                     </div>
-                    <div class="col-md-4 col-lg-3 col-12 mt-4">
+                    <div class="col-md-6 col-lg-6 col-12">
                         <button type="button" class="btn btn-danger btn-sm" @click="filterClear()">CLEAR</button>
-                        <button type="button" class="btn btn-success btn-sm mx-2" @click="openCampModal()">Add To Campaign</button>
-                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#bulkUpload">Bulk Upload</button>
-                        <a type="button" :href="url+'all-attr-download'" class="btn btn-primary btn-sm">Attr Sheet</a>
+                        <button type="button" class="btn btn-success btn-sm mx-1" @click="openCampModal()">Add To Campaign</button>
+                        <button type="button" class="btn btn-primary btn-sm mx-1" data-toggle="modal" data-target="#bulkUpload">Bulk Upload</button>
+                        <a type="button" :href="url+'all-attr-download'" class="btn btn-primary btn-sm mx-1">Attr Sheet</a>
+                        <a type="button" :href="url+'product-stock-download'" class="btn btn-secondary btn-sm">Stock Sheet</a>
                     </div>
 
                     <div class="col-md-4 col-lg-3 col-12">

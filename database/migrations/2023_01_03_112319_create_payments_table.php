@@ -20,6 +20,11 @@ class CreatePaymentsTable extends Migration
             $table->double('amount',8,2);
             $table->string('payment_type')->nullable();
             $table->tinyInteger('payment_status')->nullable();
+            $table->tinyInteger('is_claim_refund')->default(0)->comment = "0 for No Claim, 1 for claimed";
+            $table->date('refund_claim_date')->nullable();
+            $table->tinyInteger('is_refunded')->default(0)->comment = "0 for refund not done, 1 for refund done";
+            $table->date('refund_date')->nullable();
+            $table->longText('refund_info')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

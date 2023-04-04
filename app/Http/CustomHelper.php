@@ -45,6 +45,34 @@ use App\Http\AllStatic;
         return $text;
     }
 
+    function paymentMethodType($status){
+        $text = "";
+        switch ($status) {
+            case 1:
+                # code...
+                $text = "MPAY";
+                break;
+            case 2:
+                # code...
+                $text = "POS";
+                break;
+            case 3:
+                # code...
+                $text = "CCRD";
+                break;
+
+            case 4:
+                # code...
+                $text = "BOD";
+                break;
+            
+            default:
+                $text = "COD";
+                break;
+        }
+        return $text;
+    }
+
     function myFilter($var){
         return ($var !== NULL && $var !== FALSE && $var !== "");
     }

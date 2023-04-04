@@ -97,6 +97,7 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     Route::get('get-product',[ProductController::class,'getProduct']);
     Route::get('get-product/search',[ProductController::class,'getProductBySearch']);
     Route::post('product-import',[ProductController::class,'bulkUpload']);
+    Route::get('product-stock-download',[ProductController::class,'exportProductStock']); 
     
     //Order
     Route::get('order',[OrderController::class,'index'])->name('order');
@@ -108,6 +109,7 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     Route::get('get-user-order/{id}',[OrderController::class,'getUserOrder']);
     Route::delete('order/{id}',[OrderController::class,'destroy']);
     Route::get('order-shipment/{id}',[OrderController::class,'orderShipment']);
+    Route::get('order-refund/{id}',[OrderController::class,'orderRefund']);
 
     //customer
     Route::get('customers',[CustomerController::class,'index'])->name('customers');
@@ -127,6 +129,7 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     Route::post('update-home-image',[PagesController::class,'homeImageUpdate']);
     Route::get('get-home-pagedata',[PagesController::class,'homeImageData']); 
     Route::get('all-attr-download',[PagesController::class,'exportAllAttr']); 
+    
     
 });
 

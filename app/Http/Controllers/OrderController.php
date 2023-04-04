@@ -98,6 +98,73 @@ class OrderController extends Controller
         }
     }
 
+
+    public function orderRefund($id)
+    {
+        try {
+            $order = Order::find($id);
+            $bank_tran_id=urlencode($order->transaction_id);
+            $refund_amount=urlencode((($order->total_price + $order->shipping_amount + $order->vat_amount) - ($order->discount + $order->coupon_discount)));
+            $refund_remarks=urlencode('Out of Stock');
+            $store_id=urlencode(config('app.storeid'));
+            $store_passwd=urlencode(config('app.storepassw'));
+
+            $requested_url = ("https://sandbox.sslcommerz.com/validator/api/merchantTransIDvalidationAPI.php?refund_amount=$refund_amount&refund_remarks=$refund_remarks&bank_tran_id=$bank_tran_id&store_id=$store_id&store_passwd=$store_passwd&v=1&format=json");
+
+            $handle = curl_init();
+            curl_setopt($handle, CURLOPT_URL, $requested_url);
+            curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($handle, CURLOPT_SSL_VERIFYHOST, false); # IF YOU RUN FROM LOCAL PC
+            curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, false); # IF YOU RUN FROM LOCAL PC
+
+            $result = curl_exec($handle);
+
+            $code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+
+            if($code == 200 && !( curl_errno($handle)))
+            {
+
+                # TO CONVERT AS ARRAY
+                # $result = json_decode($result, true);
+                # $status = $result['status'];
+
+                # TO CONVERT AS OBJECT
+                $result = json_decode($result);
+
+                # TRANSACTION INFO
+                $status = $result->status;
+                $bank_tran_id = $result->bank_tran_id;
+                $trans_id = $result->trans_id;
+                $refund_ref_id = $result->refund_ref_id;
+                $errorReason = $result->errorReason;
+
+                # API AUTHENTICATION
+                $APIConnect = $result->APIConnect;
+
+                DB::table('payments')->where('order_id', $order->id)->update([
+                    'is_refunded' => AllStatic::$active,
+                    'refund_date' => date("Y-m-d"),
+                    'refund_info' => json_encode($result),
+                    'updated_at'    => date("Y-m-d H:i:s")
+                ]);
+             
+                $order->is_refunded = AllStatic::$active;
+                $order->refund_date = date("Y-m-d");
+                $order->update();
+           
+                
+                return response()->json(['status' => $status,'message' => 'Refund Successfully Done']);
+            } else {
+                return $this->errorMessage();
+            }
+            
+
+        } catch (\Throwable $th) {
+            // return $th;
+            return $this->errorMessage();
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *

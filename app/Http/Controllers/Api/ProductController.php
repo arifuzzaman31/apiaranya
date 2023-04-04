@@ -94,7 +94,7 @@ class ProductController extends Controller
             $pricerange   = $request->get('range');
             
             $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric',
-            'product_size','product_colour'])
+            'product_size','product_colour','inventory:product_id,colour_id,size_id,stock,mrp,sku'])
                         ->where('category_id',$cat)
                         ->orderBy('id','desc');
                     if($subcat != '' && $subcat != null){

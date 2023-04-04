@@ -14,7 +14,7 @@ class Order extends Model
     {
         return $this->belongsTo(User::class)->withDefault([
             'name' => 'N/F',
-            'email' => 'nomail found',
+            'email' => 'email not found',
             'phone' => 'N/F',
             'address' => 'N/F'
         ]);

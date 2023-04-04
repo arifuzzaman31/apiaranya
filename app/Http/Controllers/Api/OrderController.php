@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\AllStatic;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\OrderResource;
+use App\Models\Inventory;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Order;
@@ -71,6 +73,8 @@ class OrderController extends Controller
                 $details->user_id             = $request->isGuestCheckout == false ? Auth::user()->id : 0;
                 $details->quantity            = $value['amount'];
                 $details->selling_price       = $value['price'];
+                $details->vat_rate            = $value['vat_rate'] ? $value['vat_rate'] : 0;
+                $details->vat_amount          = $value['vat_amount'] ? $value['vat_amount'] : 0;
                 $details->buying_price        = $product->cost;
                 $details->total_buying_price  = (float)($product->cost * $value['amount']);
                 $details->total_selling_price = (float)$value['totalPrice'];
@@ -78,13 +82,16 @@ class OrderController extends Controller
                 $details->total_discount      = 0;
                 $details->save();
 
+                $decrese = Inventory::where(['product_id' => $value['id'],'colour_id' => $value['color_id'], 'size_id' => $value['size_id']])->first();
+                $decrese->stock -= $value['amount'];
+                $decrese->update();
+
                 $tax_amount += ($value['taxAmount']/100)*$value['totalPrice'];
             }
 
             DB::table('orders')->where('id',$order->id)->update([
                 'vat_amount' => $tax_amount
             ]);
-            
 
             $billing = new UserBillingInfo();
             $billing->user_id = $request->isGuestCheckout == false ? Auth::user()->id : 0;
@@ -287,7 +294,7 @@ class OrderController extends Controller
                 $order->payment_date = $request->tran_date;
                 $order->payment_info = json_encode($request->all());
                 $order->update();
-                DB::table('payments')->where('order_id', $order->order_id)->update([
+                DB::table('payments')->where('order_id', $order->id)->update([
                     'payment_type' => 'sslCommerz-'.$request->card_type,
                     'transaction_id' => $request->bank_tran_id,
                     'payment_status' => AllStatic::$paid,
@@ -371,15 +378,37 @@ class OrderController extends Controller
         } else {
             $order = $order->paginate($dataQty);
         }
-        return response()->json($order);
+        return OrderResource::collection($order);
     }
 
     public function orderDetails($id)
     {
         // $order = Order::find($id)->first();
         $details = DB::table('order_details')->with(['product','colour','size','fabric'])->where('order_id',$id)->get();
-
         return response()->json($details);
+    }
+
+    public function orderRefundClaim($id)
+    {
+        $order = Order::find($id)->first();
+        if($order->payment_status == AllStatic::$paid)
+        {
+            $order->is_claim_refund = AllStatic::$active;
+            $order->refund_claim_date = date('Y-m-d');
+            $order->update();
+
+            DB::table('payments')->where('order_id', $order->id)->update([
+                'is_claim_refund' => AllStatic::$active,
+                'refund_claim_date' => date("Y-m-d"),
+                'updated_at'    => date("Y-m-d H:i:s")
+            ]);
+            return $this->successMessage('Refund Claim Successfull!');
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No Payment found for this Order!'
+            ]);
+        }
     }
 
     public function invoice()

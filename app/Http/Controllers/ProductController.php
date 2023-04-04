@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\StockExport;
 use App\Http\AllStatic;
 use App\Http\Resources\ProductResource;
 use App\Imports\ProductImport;
@@ -16,7 +17,8 @@ use App\Models\CategoryFabric;
 use App\Models\ProductTag;
 use Illuminate\Http\Request;
 use App\Traits\ProductTrait;
-use DB,Str,Excel;
+use DB,Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -314,6 +316,11 @@ class ProductController extends Controller
         'product_artist:id,artist_name','product_consignment:id,consignment_name','product_ingredient:id,ingredient_name',
         'product_care:id,care_name'])
             ->find($product->id);
+    }
+
+    public function exportProductStock()
+    {
+        return Excel::download(new StockExport(),'stock_list.xlsx');
     }
 
     /**

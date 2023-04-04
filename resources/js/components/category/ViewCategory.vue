@@ -162,15 +162,7 @@ export default {
                                    <a class="btn btn-sm" target="_blank" :href="url+'category/18/edit'">Edit</a>
                                 </td>
                             </tr>					
-                            <tr>
-                                <td>13</td>
-                                <td>Kids</td>
-                                <td>N/A</td>
-                                <td class="text-center">Active</td>
-                                <td class="text-center">
-                                   <a class="btn btn-sm" target="_blank" :href="url+'category/3/edit'">Edit</a>
-                                </td>
-                            </tr>					
+                           					
                             <tr>
                                 <td>14</td>
                                 <td>Home Furnishings</td>
@@ -273,7 +265,7 @@ export default {
                             </tr>				
                             <tr>
                                 <td>25</td>
-                                <td>Jewelry</td>
+                                <td>Jewellery</td>
                                 <td>Ashtodhatu Jewellery</td>
                                 <td class="text-center">Active</td>
                                 <td class="text-center">
@@ -282,7 +274,7 @@ export default {
                             </tr>				
                             <tr>
                                 <td>26</td>
-                                <td>Jewelry</td>
+                                <td>Jewellery</td>
                                 <td>Silver Jewellery</td>
                                 <td class="text-center">Active</td>
                                 <td class="text-center">
@@ -291,7 +283,7 @@ export default {
                             </tr>				
                             <tr>
                                 <td>27</td>
-                                <td>Jewelry</td>
+                                <td>Jewellery</td>
                                 <td>Metal Jewellery</td>
                                 <td class="text-center">Active</td>
                                 <td class="text-center">
@@ -300,7 +292,7 @@ export default {
                             </tr>				
                             <tr>
                                 <td>28</td>
-                                <td>Jewelry</td>
+                                <td>Jewellery</td>
                                 <td>Other Jewellery</td>
                                 <td class="text-center">Active</td>
                                 <td class="text-center">
