@@ -264,7 +264,7 @@ export default {
                                 <option value="0">Pending</option>
                                 <option value="1">Processing</option>
                                 <option value="2">On Delivery</option>
-                                <option value="3">Deliverd</option>
+                                <option value="3">Delivered</option>
                             </select>
                         </div>
 
@@ -273,6 +273,7 @@ export default {
                                 <option selected="" value="">Choose...</option>
                                 <option value="1">Active</option>
                                 <option value="0">Cancel</option>
+                                <option value="2">On-Hold</option>
                             </select>
                         </div>
                         
@@ -280,7 +281,7 @@ export default {
                             <button type="button" class="btn btn-danger" @click="filterClear()">CLEAR</button>
                         </div>
                     </div>
-                    <div class="table-responsive" style="min-height: 50vh;">
+                    <div class="table-responsive" style="min-height: 60vh;">
                         <table class="table table-bordered table-hover mb-4">
                             <thead>
                                 <tr>
