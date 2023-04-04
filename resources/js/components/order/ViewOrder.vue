@@ -25,7 +25,8 @@ export default {
                 order_id: '',
                 order_position: '',
                 tracking_id: '',
-                date: ''
+                date: '',
+                order_modify: ''
             },
             search: '',
             filterdata : {
@@ -52,28 +53,24 @@ export default {
             this.getOrder()
         },
 
-        cancelOrder(id){
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "Order will be Cancel!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Do it!'
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    axios.get(baseUrl+'order/cancel/'+id).then(
-                        response => {
-                            this.formReset()
-                            this.getOrder()
-                            this.successMessage(response.data)
-                        }
-                    ). catch(error => {
-                        console.log(error)
-                    })
-                }
+        cancelOrder(order){
+            this.order_status.order_id = order.id
+            this.order_status.order_modify = order.status
+            $("#orderModifyModal").modal('show');
+        },
+
+        orderModify(){
+            axios.post(baseUrl+`order/cancel`,this.order_status)
+            .then(result => {
+                this.order_status.order_id = ''
+                this.order_status.order_modify = ''
+                $("#orderModifyModal").modal('hide');
+                this.successMessage(result.data)
+                this.getOrder()
             })
+            .catch(errors => {
+                console.log(errors);
+            });
         },
 
         updateStatus(){
@@ -294,7 +291,8 @@ export default {
                                     <th>Shipping</th>
                                     <th>PaymentBy</th>
                                     <th>Refund Claim Date</th>
-                                    <th class="text-center">Status</th>
+                                    <th>Order Status</th>
+                                    <th class="text-center">Progress</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -308,14 +306,16 @@ export default {
                                         <td>{{ order.shipping_amount }}</td>
                                         <td>{{ order.payment_method_name }}</td>
                                         <td>{{ order.refund_claim_date }}</td>
+                                        <td>
+                                            <span v-if="order.status == 0" class="badge badge-danger">Cancel</span>
+                                            <span v-if="order.status == 1" class="badge badge-primary">Active</span>
+                                            <span v-if="order.status == 2" class="badge badge-warning">On-Hold</span>
+                                        </td>
                                         <td class="text-center">
-                                            <span v-if="order.status !=0">
-                                                <span v-if="order.order_position == 0" class="badge badge-info">Pending</span>
-                                                <span v-if="order.order_position == 1" class="badge badge-primary">On Process</span>
-                                                <span v-if="order.order_position == 2" class="badge badge-warning">On Delivery</span>
-                                                <span v-if="order.order_position == 3" class="badge badge-success">Delivered</span>
-                                            </span>
-                                            <span v-else class="badge badge-danger">Cancel</span>
+                                            <span v-if="order.order_position == 0" class="badge badge-info">Pending</span>
+                                            <span v-if="order.order_position == 1" class="badge badge-primary">Processing</span>
+                                            <span v-if="order.order_position == 2" class="badge badge-warning">On Delivery</span>
+                                            <span v-if="order.order_position == 3" class="badge badge-success">Delivered</span>
                                         </td>
                                         <td class="text-center">
                                             <div class="dropdown custom-dropdown">
@@ -325,8 +325,8 @@ export default {
 
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink2">
                                                     <a class="dropdown-item" @click="orderDetailModal(order)" href="javascript:void(0);">Order Details</a>
-                                                    <a class="dropdown-item" @click="orderStatus(order)" href="javascript:void(0);">Order Status</a>
-                                                    <a class="dropdown-item"  @click="cancelOrder(order.id)" href="javascript:void(0);">Cancel</a>
+                                                    <a class="dropdown-item" @click="orderStatus(order)" href="javascript:void(0);">Progress</a>
+                                                    <a class="dropdown-item"  @click="cancelOrder(order)" href="javascript:void(0);">Status</a>
                                                     <a class="dropdown-item" v-if="(order.payment_status == 1) && (order.is_claim_refund == 1)" @click="refundOrder(order.id)" href="javascript:void(0);">Refund</a>
                                                     <a class="dropdown-item" @click="deleteOrder(order.id)" href="javascript:void(0);">Delete</a>
                                                 </div>
@@ -475,6 +475,40 @@ export default {
                                     <div class="modal-footer md-button">
                                         <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12" @click="formReset"></i>Discard</button>
                                         <button type="button" @click="updateStatus(order_status.order_id)" class="btn btn-primary">Update</button>
+                                    </div>
+                                </div>  
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="orderModifyModal" class="modal animated fadeInUp custo-fadeInUp" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Order</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"  @click="formReset">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="widget-content">
+                            <form method="post">
+                                <div>
+                                    <div class="form-group">
+                                        <label for="">Order</label>
+                                        <select class="form-control" v-model="order_status.order_modify">
+                                            <option value="0">Cancel</option>
+                                            <option value="1">Active</option>
+                                            <option value="2">On-Hold</option>
+                                        </select>
+                                    </div>
+                                    <div class="modal-footer md-button">
+                                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12" @click="formReset"></i>Discard</button>
+                                        <button type="button" @click="orderModify(order_status.order_id)" class="btn btn-primary">Update</button>
                                     </div>
                                 </div>  
                             </form>

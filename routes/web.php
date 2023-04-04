@@ -105,7 +105,7 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     Route::get('get-order-excel',[OrderController::class,'getOrderExcel'])->name('get-order-excel');
     Route::post('update/order/status',[OrderController::class,'updateOrderStatus']);
     Route::get('orders-details/{id}',[OrderController::class,'orderDetails']);
-    Route::get('order/cancel/{id}',[OrderController::class,'orderCancel']);
+    Route::post('order/cancel',[OrderController::class,'orderCancel']);
     Route::get('get-user-order/{id}',[OrderController::class,'getUserOrder']);
     Route::delete('order/{id}',[OrderController::class,'destroy']);
     Route::get('order-shipment/{id}',[OrderController::class,'orderShipment']);

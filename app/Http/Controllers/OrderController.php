@@ -80,12 +80,12 @@ class OrderController extends Controller
         return response()->json($details);
     }
 
-    public function orderCancel($id)
+    public function orderCancel(Request $request)
     {
-        $order = Order::find($id);
-        $order->status = 0;
+        $order = Order::find($request->order_id);
+        $order->status = $request->order_modify;
         $order->update();
-        return response()->json(['status' => 'success', 'message' => 'Order Has been Canceled!']);
+        return response()->json(['status' => 'success', 'message' => 'Order Has been Modified!']);
     }
 
     public function orderShipment($id)
@@ -103,6 +103,9 @@ class OrderController extends Controller
     {
         try {
             $order = Order::find($id);
+            if($order->is_refunded == AllStatic::$paid){
+                return response()->json(['status' => 'error','message' => 'Already Refunded']);
+            }
             $bank_tran_id=urlencode($order->transaction_id);
             $refund_amount=urlencode((($order->total_price + $order->shipping_amount + $order->vat_amount) - ($order->discount + $order->coupon_discount)));
             $refund_remarks=urlencode('Out of Stock');
