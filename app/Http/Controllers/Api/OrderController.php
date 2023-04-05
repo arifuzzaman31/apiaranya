@@ -373,7 +373,7 @@ class OrderController extends Controller
     {
         $noPagination = $request->get('no_paginate');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
-        $order = DB::table('orders')->selectRaw('id,order_id,user_id,total_price,total_item,payment_status,order_position,order_date')
+        $order = DB::table('orders')
                 ->where('user_id',Auth::id())->orderBy('id','desc');
         if($noPagination != ''){
             $order = $order->get();
@@ -415,6 +415,7 @@ class OrderController extends Controller
 
     public function invoice()
     {
-        return view('partials.invoice');
+        $order = Order::with('order_details.product','user_billing_info')->find(255);
+        return view('email.order_invoice',['order_info' => $order]);
     }
 }
