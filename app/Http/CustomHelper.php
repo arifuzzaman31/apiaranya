@@ -73,6 +73,25 @@ use App\Http\AllStatic;
         return $text;
     }
 
+    function orderStatus($status){
+        $text = "";
+        switch ($status) {
+            case 0:
+                # code...
+                $text = "Cancel";
+                break;
+            case 2:
+                # code...
+                $text = "On-Hold";
+                break;
+            
+            default:
+                $text = "Active";
+                break;
+        }
+        return $text;
+    }
+
     function myFilter($var){
         return ($var !== NULL && $var !== FALSE && $var !== "");
     }

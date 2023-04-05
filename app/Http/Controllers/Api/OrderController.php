@@ -60,7 +60,7 @@ class OrderController extends Controller
             foreach ($request->cart as $value) {
               
                 $product = Product::find($value['id']);
-  
+                $decrese = Inventory::where(['product_id' => $value['id'],'colour_id' => $value['color_id'], 'size_id' => $value['size_id']])->first();
                 $details = new OrderDetails();
 
                 $details->order_id            = $order->id;
@@ -73,18 +73,18 @@ class OrderController extends Controller
                 $details->user_id             = $request->isGuestCheckout == false ? Auth::user()->id : 0;
                 $details->quantity            = $value['amount'];
                 $details->selling_price       = $value['price'];
-                $details->vat_rate            = $value['vat_rate'] ? $value['vat_rate'] : 0;
-                $details->vat_amount          = $value['vat_amount'] ? $value['vat_amount'] : 0;
-                $details->buying_price        = $product->cost;
-                $details->total_buying_price  = (float)($product->cost * $value['amount']);
+                $details->vat_rate            = 7.5;
+                $details->vat_amount          = 0;
+                $details->buying_price        = (float)$decrese->cpu;
+                $details->total_buying_price  = (float)($decrese->cpu * $value['amount']);
                 $details->total_selling_price = (float)$value['totalPrice'];
                 $details->unit_discount       = 0;
                 $details->total_discount      = 0;
                 $details->save();
 
-                $decrese = Inventory::where(['product_id' => $value['id'],'colour_id' => $value['color_id'], 'size_id' => $value['size_id']])->first();
-                $decrese->stock -= $value['amount'];
-                $decrese->update();
+                
+                // $decrese->stock -= $value['amount'];
+                // $decrese->update();
 
                 $tax_amount += ($value['taxAmount']/100)*$value['totalPrice'];
             }
@@ -157,7 +157,7 @@ class OrderController extends Controller
     public function sslCommerz($order_id)
     {
         $order = Order::with('user','user_billing_info')->find($order_id);
-        $order_details = OrderDetails::with('product:id,product_name,mrp_price')->where('order_id', $order_id)->get();
+        $order_details = OrderDetails::with('product:id,product_name')->where('order_id', $order_id)->get();
         
         $post_data = array();
         if(config('app.payment_mode') == 'sandbox'){
@@ -211,9 +211,10 @@ class OrderController extends Controller
         $product_name = [];
 
         foreach ($order_details as $value) {
+            $inv = Inventory::where(['product_id' => $value->product_id,'colour_id' => $value->colour_id, 'size_id' => $value->size_id])->first();
             $arr = [];
             $arr['product']  =  $value->product->product_name;
-            $arr['amount']   =  $value->total_selling_price;
+            $arr['amount']   =  $inv->mrp;
 
             array_push($product_name, $arr);
         }
@@ -237,7 +238,8 @@ class OrderController extends Controller
         if (config('app.payment_mode') == 'sandbox') {
             $direct_api_url = "https://sandbox.sslcommerz.com/gwprocess/v4/api.php";
         } else {
-            $direct_api_url = "https://securepay.sslcommerz.com/gwprocess/v4/api.php";
+            $direct_api_url = "https://sandbox.sslcommerz.com/gwprocess/v4/api.php";
+            //$direct_api_url = "https://securepay.sslcommerz.com/gwprocess/v4/api.php";
         }
 
         $handle = curl_init();
@@ -384,7 +386,7 @@ class OrderController extends Controller
     public function orderDetails($id)
     {
         // $order = Order::find($id)->first();
-        $details = DB::table('order_details')->with(['product','colour','size','fabric'])->where('order_id',$id)->get();
+        $details = OrderDetails::with(['product','colour','size','fabric'])->where('order_id',$id)->get();
         return response()->json($details);
     }
 
