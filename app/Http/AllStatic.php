@@ -10,6 +10,8 @@ class AllStatic
     // payment status
     public static $paid     = 1;
     public static $not_paid = 0;
+    public static $failed = 2;
+    public static $cancel = 3;
 
     // delivery status
     public static $pending     = 0;

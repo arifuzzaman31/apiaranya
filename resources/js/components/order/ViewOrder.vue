@@ -30,6 +30,7 @@ export default {
             },
             search: '',
             filterdata : {
+                payment_status: '',
                 order_state: '',
                 status: ''
             },
@@ -39,7 +40,7 @@ export default {
 
     methods: {
         getOrder(page = 1){
-            axios.get(baseUrl+`get-order?page=${page}&per_page=10&keyword=${this.search}&byposition=${this.filterdata.order_state}&status=${this.filterdata.status}`)
+            axios.get(baseUrl+`get-order?page=${page}&per_page=10&keyword=${this.search}&byposition=${this.filterdata.order_state}&payment_status=${this.filterdata.payment_status}&status=${this.filterdata.status}`)
             .then(result => {
                 this.orders = result.data;
             })
@@ -177,6 +178,7 @@ export default {
         filterClear(){
             this.search = ''
             this.filterdata = {
+                payment_status : '',
                 status : '',
                 order_state: ''
             }
@@ -268,7 +270,7 @@ export default {
                             </select>
                         </div>
 
-                        <div class="col-md-3 col-lg-3 col-12">
+                        <div class="col-md-2 col-lg-2 col-12">
                             <select id="product-camp" class="form-control" @change="getOrder()" v-model="filterdata.status">
                                 <option selected="" value="">Choose...</option>
                                 <option value="1">Active</option>
@@ -276,8 +278,18 @@ export default {
                                 <option value="2">On-Hold</option>
                             </select>
                         </div>
+
+                        <div class="col-md-2 col-lg-2 col-12">
+                            <select id="product-camp" class="form-control" @change="getOrder()" v-model="filterdata.payment_status">
+                                <option selected="" value="">Choose...</option>
+                                <option value="1">Paid</option>
+                                <option value="0">Unpaid</option>
+                                <option value="2">Failed</option>
+                                <option value="3">Cancel</option>
+                            </select>
+                        </div>
                         
-                        <div class="col-md-2 col-lg-3 col-12">
+                        <div class="col-md-2 col-lg-2 col-12">
                             <button type="button" class="btn btn-danger" @click="filterClear()">CLEAR</button>
                         </div>
                     </div>
@@ -290,6 +302,7 @@ export default {
                                     <th>Customer</th>
                                     <th>Price</th>
                                     <th>Shipping</th>
+                                    <th>Payment</th>
                                     <th>PaymentBy</th>
                                     <th>Refund Claim Date</th>
                                     <th>Order Status</th>
@@ -305,6 +318,12 @@ export default {
                                         <td>{{ order.user.name }}</td>
                                         <td>{{ order.total_price }}</td>
                                         <td>{{ order.shipping_amount }}</td>
+                                        <td>
+                                            <span v-if="order.payment_status == 0" class="badge badge-warning">Unpaid</span>
+                                            <span v-if="order.payment_status == 1" class="badge badge-primary">Paid</span>
+                                            <span v-if="order.payment_status == 2" class="badge badge-light">Failed</span>
+                                            <span v-if="order.payment_status == 3" class="badge badge-danger">Cancel</span>
+                                        </td>
                                         <td>{{ order.payment_method_name }}</td>
                                         <td>{{ order.refund_claim_date }}</td>
                                         <td>

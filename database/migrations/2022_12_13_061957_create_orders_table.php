@@ -29,7 +29,7 @@ class CreateOrdersTable extends Migration
             $table->string('transaction_id')->nullable();
             $table->double('discount')->default(0);
             $table->double('coupon_discount')->default(0);
-            $table->tinyInteger('payment_status')->default(0)->comment = "0 not paid 1 = paid";
+            $table->tinyInteger('payment_status')->default(0)->comment = "0 not paid ,1 = paid ,2 = faild, 3 = cancel";
             $table->string('validation_id')->nullable();
             $table->string('card_type')->nullable();
             $table->date('order_date');

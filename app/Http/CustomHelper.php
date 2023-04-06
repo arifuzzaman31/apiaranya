@@ -91,6 +91,29 @@ use App\Http\AllStatic;
         }
         return $text;
     }
+    function paymentStatusText($status){
+        $text = "";
+        switch ($status) {
+            case 1:
+                # code...
+                $text = "Paid";
+                break;
+            case 2:
+                # code...
+                $text = "Failed";
+                break;
+
+            case 3:
+                # code...
+                $text = "Cancel";
+                break;
+            
+            default:
+                $text = "Unpaid";
+                break;
+        }
+        return $text;
+    }
 
     function myFilter($var){
         return ($var !== NULL && $var !== FALSE && $var !== "");

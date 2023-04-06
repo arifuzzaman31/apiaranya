@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\AllStatic;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
+use App\Mail\InvoiceMail;
 use App\Models\Inventory;
 use Illuminate\Http\Request;
 use App\Models\Product;
@@ -14,6 +15,7 @@ use App\Models\UserBillingInfo;
 use App\Models\UserShippingInfo;
 use Auth,Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -24,7 +26,7 @@ class OrderController extends Controller
             //return response()->json($request->all());
             DB::beginTransaction();
 
-            $order_id   = date('Ymd').time();
+            // $order_id   = date('Ymd');
             $tax_amount = 0;
             $shipCharge = 0;
             if($request->data['deliveryMethod'] == 'outSideDhaka'){
@@ -35,7 +37,7 @@ class OrderController extends Controller
             }
 
             $order = new Order();
-            $order->order_id    =   $order_id;
+            $order->order_id    =   date('Ymd').$order->id;
             $order->shipping_method   =  $request->shipping_method;
             $order->payment_method    =   $request->payment_method;
             $order->user_id           = $request->isGuestCheckout == false ? Auth::user()->id : 0;
@@ -123,7 +125,7 @@ class OrderController extends Controller
             }
 
             DB::table('payments')->insert([
-                'order_id' => $order_id,
+                'order_id' => $order->id,
                 'amount' => (($order->total_price + $order->shipping_amount + $order->vat_amount) - ($order->discount + $order->coupon_discount)),
                 'payment_status' => 0,
                 'created_at'    => date("Y-m-d H:i:s")
@@ -134,7 +136,8 @@ class OrderController extends Controller
                 'created_at'    => date("Y-m-d H:i:s")
             ]);
             
-            \DB::commit();
+            DB::commit();
+            $this->invoice($order->id);
             if($request->data['paymentMethod'] == 'online'){
                 return response()->json(['status' => 'success', 'type' => 'online', 'message' => 'Order Created', 'payment' => $this->sslCommerz($order->id)], 200);
             } else {
@@ -144,7 +147,7 @@ class OrderController extends Controller
                     'process_value' => deliveryPosition(AllStatic::$processing),
                     'created_at'    => date("Y-m-d H:i:s")
                 ]);
-                return response()->json(['status' => 'success','type' => 'cash', 'order_id' => $order_id], 200);
+                return response()->json(['status' => 'success','type' => 'cash', 'order_id' => $order->order_id], 200);
             }
 
         } catch (\Throwable $th) {
@@ -336,6 +339,10 @@ class OrderController extends Controller
                
         //     Auth::loginUsingId($request->value_a);
         // }
+        DB::table('orders')->where('id',$request->tran_id)->update([
+            'payment_status' => AllStatic::$failed
+        ]);
+
         if ($request->status == 'FAILED') {
 
             $message = 'Payment failed for order #'.$request->tran_id.' due to ' . $request->error. '.';
@@ -361,6 +368,10 @@ class OrderController extends Controller
                
         //     Auth::loginUsingId($request->value_a);
         // }
+        DB::table('orders')->where('id',$request->tran_id)->update([
+            'payment_status' => AllStatic::$cancel
+        ]);
+
         return response()->json([
             'flug'   => 1,
             'status' => 'error',
@@ -413,9 +424,14 @@ class OrderController extends Controller
         }
     }
 
-    public function invoice()
+    public function invoice($order_id=28)
     {
-        $order = Order::with('order_details.product','user_billing_info')->find(255);
+        $order = Order::with('order_details.product','user_billing_info')->find($order_id);
+
+        Mail::to($order->user_billing_info->email)->send(new InvoiceMail($order));
+        Mail::to('online@aranya.com.bd')->send(new InvoiceMail($order));
+        return false;
+        $order = Order::with('order_details.product','user_billing_info')->find(140);
         return view('email.order_invoice',['order_info' => $order]);
     }
 }

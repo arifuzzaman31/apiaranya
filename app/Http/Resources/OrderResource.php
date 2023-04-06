@@ -31,7 +31,7 @@ class OrderResource extends JsonResource
             'coupon_discount'   => $this->coupon_discount,
             'payment_status'    => $this->payment_status,
             'order_position'    => $this->order_position,
-            'payment_status_text' => $this->payment_status == 1 ? 'Paid' : 'Unpaid',
+            'payment_status_text' => paymentStatusText($this->payment_status),
             'order_date'        => date('j M Y', strtotime($this->order_date)),
             'requested_delivery_date'       => $this->requested_delivery_date,
             'payment_date'      => date('j M Y', strtotime($this->payment_date)),

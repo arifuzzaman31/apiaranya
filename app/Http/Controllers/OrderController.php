@@ -35,12 +35,17 @@ class OrderController extends Controller
         $noPagination = $request->get('no_paginate');
         $keyword   = $request->get('keyword');
         $byposition   = $request->get('byposition');
+        $payment_status   = $request->get('payment_status');
         $status   = $request->get('status');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
         $order = Order::with(['user','delivery'])->orderBy('id','desc');
 
         if($keyword != ''){
             $order = $order->where('order_id','like','%'.$keyword.'%');
+        }
+
+        if($payment_status != ''){
+            $order = $order->where('payment_status',$payment_status);
         }
 
         if($byposition != ''){

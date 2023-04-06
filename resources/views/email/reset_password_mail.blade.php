@@ -60,13 +60,7 @@
         width: 580px; 
       }
       /* This should also be a block element, so that it will fill 100% of the .container */
-      /* .content {
-        box-sizing: border-box;
-        display: block;
-        margin: 0 auto;
-        max-width: 580px;
-        padding: 10px; 
-      } */
+ 
       /* -------------------------------------
           HEADER, FOOTER, MAIN
       ------------------------------------- */

@@ -26,7 +26,7 @@ class ProductController extends Controller
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
         $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric',
-        'product_size','product_colour']);
+        'product_size','product_colour','inventory:product_id,colour_id,size_id,stock,mrp,sku']);
 
         if($camp_id != ''){
             $product = $product->join('campaign_products','products.id','campaign_products.product_id')
@@ -66,7 +66,9 @@ class ProductController extends Controller
 
         if($pricerange != ''){
             $rang = explode('-',$pricerange);
-            $product = $product->whereBetween('mrp_price', [$rang[0], $rang[1]]);
+            $product = $product->whereHas('inventory', function ($q) use ($rang) {
+                $q->whereBetween('mrp_price', [$rang[0], $rang[1]]);
+            });
         }
 
         if($tak_some != ''){
