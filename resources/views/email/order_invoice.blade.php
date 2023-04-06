@@ -1,161 +1,261 @@
 <!DOCTYPE html>
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="{{ URL::asset('admin-assets/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Invoice</title>
     <style>
-        body{margin-top:20px;color: #484b51;}.text-secondary-d1 {color: #728299!important;}.page-header {margin: 0 0 1rem;padding-bottom: 1rem;padding-top: .5rem;border-bottom: 1px dotted #e2e2e2;display: -ms-flexbox;display: flex;-ms-flex-pack: justify;justify-content: space-between;-ms-flex-align: center;align-items: center;}.page-title {padding: 0;margin: 0;font-size: 1.75rem;font-weight: 300;}.brc-default-l1 {border-color: #dce9f0!important;}.ml-n1, .mx-n1 {margin-left: -.25rem!important;}.mr-n1, .mx-n1 {margin-right: -.25rem!important;}.mb-4, .my-4 {margin-bottom: 1.5rem!important;}hr {margin-top: 1rem;margin-bottom: 1rem;border: 0;border-top: 1px solid rgba(0,0,0,.1);}.text-grey-m2 {color: #888a8d!important;}.text-success-m2 {color: #86bd68!important;}.font-bolder, .text-600 {font-weight: 600!important;}.text-110 {font-size: 110%!important;}.text-blue {color: #478fcc!important;}.pb-25, .py-25 {padding-bottom: .75rem!important;}.pt-25, .py-25 {padding-top: .75rem!important;}.bgc-default-tp1 {background-color: rgba(121,169,197,.92)!important;}.bgc-default-l4, .bgc-h-default-l4:hover {background-color: #f3f8fa!important;}.page-header .page-tools {-ms-flex-item-align: end;align-self: flex-end;}.btn-light {color: #757984;background-color: #f5f6f9;border-color: #dddfe4;}.w-2 {width: 1rem;}.text-120 {font-size: 120%!important;}.text-primary-m1 {color: #4087d4!important;}.text-danger-m1 {color: #dd4949!important;}.text-blue-m2 {color: #68a3d5!important;}.text-150 {font-size: 150%!important;}.text-60 {font-size: 60%!important;}.text-grey-m1 {color: #7b7d81!important;}.align-bottom {vertical-align: bottom!important;}
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 90%;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      td,
+      th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+      a {
+        text-decoration: none;
+      }
     </style>
-</head>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <td style="border: none; color: #8a858e">
+          Invoice ID: <strong>#{{ $order_info->order_id }}</strong>
+        </td>
+        <th style="border: none"></th>
 
-<body>
-    <div class="page-content container">
-        <div class="page-header text-blue-d2">
-            <h1 class="page-title text-secondary-d1">
-                Invoice
-                <small class="page-info">
-                    <i class="fa fa-angle-double-right text-80"></i>
-                    ID: #{{ $order_info->order_id }}
-                </small>
-            </h1>
-            <div class="page-tools">
-            <div class="action-buttons">
-                <a class="btn bg-white btn-light mx-1px text-95" href="#">
-                    aranya.com.bd
-                </a>
-               
-            </div>
-        </div>
-        </div>
+        <td style="border: none; text-align: right">
+          <a
+            href="{{ url('/') }}"
+            style="border: 1px solid #8a858e; padding: 5px; color: #8a858e"
+            >araya.com.bd</a
+          >
+        </td>
+      </tr>
+    </table>
+    <hr width="800px" />
+    <table>
+      <tr>
+        <td style="border: none"></td>
+        <th style="border: none; text-align: center">
+          <img
+            src="{{ asset('admin-assets/assets/img/aranya-logo-dark.png') }}"
+            alt="Aranya Logo"
+            width="50px"
+          />
+        </th>
 
-        <div class="container px-0">
-            <div class="row mt-4">
-                <div class="col-12 col-lg-12">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="text-center text-150">
-                                <i class="fa fa-book fa-2x text-success-m2 mr-1"></i>
-                                <img src="{{ asset('admin-assets/assets/img/aranya-logo-dark.png') }}" alt="aranya logo" width="100px">
-                            </div>
-                        </div>
-                    </div>
-                    <!-- .row -->
+        <td style="border: none; text-align: right"></td>
+      </tr>
+    </table>
+    <hr width="800px" />
+    <table>
+      <tr>
+        <td style="border: none; color: #8a858e">
+          To: <strong style="color: #3092cb">{{ $order_info->user_billing_info->first_name != 'N/A' ? $order_info->user_billing_info->full_name : 'Unknown'}}</strong>
+        </td>
+        <th style="border: none"></th>
 
-                    <hr class="row brc-default-l1 mx-n1 mb-4" />
+        <td style="border: none; text-align: right; color: #8a858e">Invoice</td>
+      </tr>
+      <tr style="background-color: #fff">
+        <td style="border: none; color: #8a858e">{{ $order_info->user_billing_info->street_address != 'N/A' ? $order_info->user_billing_info->street_address : ''}}, {{ $order_info->user_billing_info->city != 'N/A' ?  $order_info->user_billing_info->city : ''}}</td>
+        <td style="border: none"></td>
 
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div>
-                                <span class="text-sm text-grey-m2 align-middle">To:</span>
-                                <span class="text-600 text-110 text-blue align-middle">{{ $order_info->user_billing_info->full_name }}</span>
-                            </div>
-                            <div class="text-grey-m2">
-                                <div class="my-1">
-                                {{ $order_info->user_billing_info->street_address }}, {{ $order_info->user_billing_info->city }}
-                                </div>
-                                <div class="my-1">
-                                    {{ $order_info->user_billing_info->country }}
-                                </div>
-                                <div class="my-1"><i class="fa fa-phone fa-flip-horizontal text-secondary"></i> <b class="text-600">{{ $order_info->user_billing_info->phone }}</b></div>
-                            </div>
-                        </div>
-                        <!-- /.col -->
+        <td style="border: none; text-align: right; color: #8a858e">
+          ID: #{{ $order_info->order_id }}
+        </td>
+      </tr>
+      <tr>
+        <td style="border: none; color: #8a858e">{{ $order_info->user_billing_info->country != 'N/A' ? $order_info->user_billing_info->country : ''}}</td>
+        <td style="border: none"></td>
 
-                        <div class="text-95 col-sm-6 align-self-start d-sm-flex justify-content-end">
-                            <hr class="d-sm-none" />
-                            <div class="text-grey-m2">
-                                <div class="mt-1 mb-2 text-secondary-m1 text-600 text-125">
-                                    Invoice
-                                </div>
+        <td style="border: none; text-align: right; color: #8a858e">
+          Order Date: {{ $order_info->order_date }}
+        </td>
+      </tr>
+      <tr style="background-color: #fff">
+        <td style="border: none; color: #8a858e">{{ $order_info->user_billing_info->phone != 'N/A' ? $order_info->user_billing_info->phone : ''}}</td>
+        <td style="border: none"></td>
 
-                                <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">ID:</span> #{{ $order_info->order_id }}</div>
+        <td style="border: none; text-align: right; color: #8a858e">
+          Status:
+          <span
+            style="
+              background-color: orange;
+              padding: 5px;
+              border-radius: 10px;
+              color: black;
+            "
+            >{{ $order_info->payment_status == 1 ? 'Paid' : 'Unpaid'}}</span
+          >
+        </td>
+      </tr>
+    </table>
 
-                                <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Order Date:</span> {{ $order_info->order_date }}</div>
+    <table style="margin-top: 2rem">
+      <tr style="background-color: #5b93b4; border: none">
+        <th style="border: none; color: #ffffff">SL</th>
+        <th style="border: none; color: #ffffff">Product</th>
+        <th style="border: none; color: #ffffff">Qty</th>
+        <th style="border: none; color: #ffffff">Unit Price</th>
+        <th style="border: none; color: #ffffff">Amount</th>
+      </tr>
+      @foreach($order_info->order_details as $key => $value)
+        <tr>
+            <td style="@if($key%2 != 0) border: none @endif" >{{ $key+1 }}</td>
+            <td style="@if($key%2 != 0) border: none @endif">{{ $value->product->product_name }}</td>
+            <td style="@if($key%2 != 0) border: none @endif">{{ $value->quantity }}</td>
+            <td style="@if($key%2 != 0) border: none @endif">{{ $value->selling_price }}</td>
+            <td style="@if($key%2 != 0) border: none @endif">{{ $value->total_selling_price }}</td>
+        </tr>
+      @endforeach
+    </table>
+    <table
+      style="
+        margin-top: 1rem;
+        max-width: 600px;
+        width: 90%;
+        margin-right: 0 auto;
+      "
+    >
+      <tr>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <!-- <td style="border: none; color: #8a858e">
+          To: <strong style="color: #3092cb">Kabira</strong>
+        </td> -->
+        <td
+          style="
+            border: none;
+            color: #8a858e;
+            /* background-color: red; */
+            text-align: right;
+          "
+        >
+          SubTotal : <strong>{{ $order_info->total_price }}</strong>
+        </td>
 
-                                <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Status:</span> <span class="badge badge-warning badge-pill px-25">{{ $order_info->payment_status == 1 ? 'Paid' : 'Unpaid'}}</span></div>
-                            </div>
-                        </div>
-                        <!-- /.col -->
-                    </div>
+        <!-- <td style="border: none; text-align: right; color: #8a858e">invoice</td> -->
+      </tr>
+      <tr style="background-color: #fff">
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <!-- <td style="border: none; color: #8a858e">
+          To: <strong style="color: #3092cb">Kabira</strong>
+        </td> -->
+        <td
+          style="
+            border: none;
+            color: #8a858e;
 
-                    <div class="mt-4">
-                        <div class="row text-600 text-white bgc-default-tp1 py-25">
-                            <div class="d-none d-sm-block col-1">#</div>
-                            <div class="col-9 col-sm-5">Product</div>
-                            <div class="d-none d-sm-block col-4 col-sm-2">Qty</div>
-                            <div class="d-none d-sm-block col-sm-2">Unit Price</div>
-                            <div class="col-2">Amount</div>
-                        </div>
+            text-align: right;
+          "
+        >
+          Tax : <strong>{{ $order_info->vat_amount }}</strong>
+        </td>
 
-                        <div class="text-95 text-secondary-d3">
-                            @foreach($order_info->order_details as $key => $value)
-                                <div class="row mb-2 mb-sm-0 py-25 @if($key%2 != 0) bgc-default-l4 @endif">
-                                    <div class="d-none d-sm-block col-1">{{ $key+1 }}</div>
-                                    <div class="col-9 col-sm-5">{{ $value->product->product_name }}</div>
-                                    <div class="d-none d-sm-block col-2">{{ $value->quantity }}</div>
-                                    <div class="d-none d-sm-block col-2 text-95">{{ $value->selling_price }}</div>
-                                    <div class="col-2 text-secondary-d2">{{ $value->total_selling_price }}</div>
-                                </div>
-                            @endforeach
-                        </div>
+        <!-- <td style="border: none; text-align: right; color: #8a858e">invoice</td> -->
+      </tr>
+      <tr>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <!-- <td style="border: none; color: #8a858e">
+          To: <strong style="color: #3092cb">Kabira</strong>
+        </td> -->
+        <td
+          style="
+            border: none;
+            color: #8a858e;
+            /* background-color: red; */
+            text-align: right;
+          "
+        >
+          Shipping Charge : <strong>{{ $order_info->shipping_amount }}</strong>
+        </td>
 
-                        <div class="row border-b-2 brc-default-l2"></div>
+        <!-- <td style="border: none; text-align: right; color: #8a858e">invoice</td> -->
+      </tr>
+      <tr style="background-color: #fff">
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <!-- <td style="border: none; color: #8a858e">
+          To: <strong style="color: #3092cb">Kabira</strong>
+        </td> -->
+        <td
+          style="
+            border: none;
+            color: #8a858e;
+            /* background-color: red; */
+            text-align: right;
+          "
+        >
+          Total Amount : <strong>{{ $order_info->total_price + $order_info->vat_amount + $order_info->shipping_amount }}</strong>
+        </td>
 
-                        <div class="row d-flex justify-content-end mt-3">
-                            <!-- <div class="col-12 col-sm-7 text-grey-d2 text-95 mt-2 mt-lg-0">
-                                Extra note such as company or payment information...
-                            </div> -->
-
-                            <div class="col-12 col-sm-5 text-grey text-90 order-first order-sm-last">
-                                <div class="row my-2">
-                                    <div class="col-7 text-right">
-                                        SubTotal
-                                    </div>
-                                    <div class="col-5">
-                                        <span class="text-120 text-secondary-d1">{{ $order_info->total_price }}</span>
-                                    </div>
-                                </div>
-
-                                <div class="row my-2">
-                                    <div class="col-7 text-right">
-                                        Tax
-                                    </div>
-                                    <div class="col-5">
-                                        <span class="text-110 text-secondary-d1">{{ $order_info->vat_amount }}</span>
-                                    </div>
-                                </div>
-
-                                <div class="row my-2">
-                                    <div class="col-7 text-right">
-                                        Shipping Charge
-                                    </div>
-                                    <div class="col-5">
-                                        <span class="text-110 text-secondary-d1">{{ $order_info->shipping_amount }}</span>
-                                    </div>
-                                </div>
-
-                                <div class="row my-2 align-items-center bgc-primary-l3 p-2">
-                                    <div class="col-7 text-right">
-                                        Total Amount
-                                    </div>
-                                    <div class="col-5">
-                                        <span class="text-150 text-success-d3 opacity-2">{{ $order_info->total_price + $order_info->vat_amount + $order_info->shipping_amount }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr />
-
-                        <div>
-                            <span class="text-secondary-d1 text-105">Thank you for your business</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
+        <!-- <td style="border: none; text-align: right; color: #8a858e">invoice</td> -->
+      </tr>
+    </table>
+  </body>
 </html>

@@ -350,7 +350,7 @@
                 </tr> 
                 <tr>
                   <td class="content-block powered-by">
-                    Powered by <a target="_blank" href="http://jumriz.com" target="_blank">{{ env('APP_NAME') }}</a>.
+                    Powered by <a target="_blank" href="{{url('/')}}" target="_blank">{{ env('APP_NAME') }}</a>.
                   </td>
                 </tr>
               </table>

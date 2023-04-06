@@ -27,7 +27,6 @@ class OrderController extends Controller
             DB::beginTransaction();
 
             // $order_id   = date('Ymd');
-            $tax_amount = 0;
             $shipCharge = 0;
             if($request->data['deliveryMethod'] == 'outSideDhaka'){
                 $shipCharge += 250;
@@ -42,7 +41,7 @@ class OrderController extends Controller
             $order->payment_method    =   $request->payment_method;
             $order->user_id           = $request->isGuestCheckout == false ? Auth::user()->id : 0;
             $order->vat_rate               = 7.5;
-            $order->vat_amount             = $tax_amount;
+            $order->vat_amount             = (float)($request->totalPriceWithTax - $request->totalPrice);
             $order->payment_method         = 0;
             $order->shipping_amount        = $shipCharge;
             $order->total_item             = $request->totalAmount ? $request->totalAmount : 1;
@@ -75,8 +74,8 @@ class OrderController extends Controller
                 $details->user_id             = $request->isGuestCheckout == false ? Auth::user()->id : 0;
                 $details->quantity            = $value['amount'];
                 $details->selling_price       = $value['price'];
-                $details->vat_rate            = 7.5;
-                $details->vat_amount          = 0;
+                $details->vat_rate            = $value['taxAmount'];
+                $details->vat_amount          = (float)($value['vatAmountParticularProduct'] * $value['amount']);
                 $details->buying_price        = (float)$decrese->cpu;
                 $details->total_buying_price  = (float)($decrese->cpu * $value['amount']);
                 $details->total_selling_price = (float)$value['totalPrice'];
@@ -87,13 +86,7 @@ class OrderController extends Controller
                 
                 // $decrese->stock -= $value['amount'];
                 // $decrese->update();
-
-                $tax_amount += ($value['taxAmount']/100)*$value['totalPrice'];
             }
-
-            DB::table('orders')->where('id',$order->id)->update([
-                'vat_amount' => $tax_amount
-            ]);
 
             $billing = new UserBillingInfo();
             $billing->user_id = $request->isGuestCheckout == false ? Auth::user()->id : 0;
@@ -137,7 +130,7 @@ class OrderController extends Controller
             ]);
             
             DB::commit();
-            $this->invoice($order->id);
+            $this->invoiceToMail($order->id);
             if($request->data['paymentMethod'] == 'online'){
                 return response()->json(['status' => 'success', 'type' => 'online', 'message' => 'Order Created', 'payment' => $this->sslCommerz($order->id)], 200);
             } else {
@@ -315,11 +308,11 @@ class OrderController extends Controller
 
                 if ($order->payment_status == 1) {
                     DB::commit();
-                    return redirect('http://localhost:3000/payment?payment=success&orderid='.$order->order_id.'&transid='.$order->transaction_id);
+                    return redirect('https://staging.aranya.com.bd/payment?payment=success&orderid='.$order->order_id.'&transid='.$order->transaction_id);
                 }
 
                 DB::rollBack();
-                return redirect('http://localhost:3000/payment?payment=fail');
+                return redirect('https://staging.aranya.com.bd/payment?payment=fail');
 
             } catch (\Throwable $th) {
                 DB::rollBack();
@@ -380,6 +373,14 @@ class OrderController extends Controller
 
     }
 
+    public function orderCancel(Request $request)
+    {
+        $order = Order::find($request->order_id);
+        $order->status = 0;
+        $order->update();
+        return response()->json(['status' => 'success', 'message' => 'Order Has been Cancelled!']);
+    }
+
     public function orderList(Request $request)
     {
         $noPagination = $request->get('no_paginate');
@@ -404,7 +405,7 @@ class OrderController extends Controller
     public function orderRefundClaim($id)
     {
         $order = Order::find($id)->first();
-        if($order->payment_status == AllStatic::$paid)
+        if($order->payment_status == AllStatic::$paid && $order->is_claim_refund == AllStatic::$not_paid)
         {
             $order->is_claim_refund = AllStatic::$active;
             $order->refund_claim_date = date('Y-m-d');
@@ -424,14 +425,15 @@ class OrderController extends Controller
         }
     }
 
-    public function invoice($order_id=28)
+    public function invoiceToMail($order_id)
     {
         $order = Order::with('order_details.product','user_billing_info')->find($order_id);
+        if($order->user_billing_info->email != ''){
 
-        Mail::to($order->user_billing_info->email)->send(new InvoiceMail($order));
+            Mail::to($order->user_billing_info->email)->send(new InvoiceMail($order));
+        }
         Mail::to('online@aranya.com.bd')->send(new InvoiceMail($order));
         return false;
-        $order = Order::with('order_details.product','user_billing_info')->find(140);
-        return view('email.order_invoice',['order_info' => $order]);
+        //return view('email.order_invoice',['order_info' => $order]);
     }
 }

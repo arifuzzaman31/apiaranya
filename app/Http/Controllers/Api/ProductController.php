@@ -61,13 +61,13 @@ class ProductController extends Controller
 
         if($keyword != ''){
             $product = $product->where('product_name','like','%'.$keyword.'%');
-            // $product = $product->orWhere('sku','like','%'.$keyword.'%');
+            $product = $product->orWhere('design_code','like','%'.$keyword.'%');
         }
 
         if($pricerange != ''){
             $rang = explode('-',$pricerange);
             $product = $product->whereHas('inventory', function ($q) use ($rang) {
-                $q->whereBetween('mrp_price', [$rang[0], $rang[1]]);
+                $q->whereBetween('mrp', [$rang[0], $rang[1]]);
             });
         }
 
@@ -110,7 +110,9 @@ class ProductController extends Controller
 
             if($pricerange != ''){
                 $rang = explode('-',$pricerange);
-                $product = $product->whereBetween('mrp_price', [$rang[0], $rang[1]]);
+                $product = $product->whereHas('inventory', function ($q) use ($rang) {
+                    $q->whereBetween('mrp', [$rang[0], $rang[1]]);
+                });
             }
 
             if($noPagination != ''){

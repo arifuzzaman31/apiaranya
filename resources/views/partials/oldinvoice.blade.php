@@ -1,309 +1,174 @@
 <!DOCTYPE html>
-<html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <title>Invoice</title>
+    <link href="https://cdn.usebootstrap.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body{margin-top:20px;color: #484b51;}.text-secondary-d1 {color: #728299!important;}.page-header {margin: 0 0 1rem;padding-bottom: 1rem;padding-top: .5rem;border-bottom: 1px dotted #e2e2e2;display: -ms-flexbox;display: flex;-ms-flex-pack: justify;justify-content: space-between;-ms-flex-align: center;align-items: center;}.page-title {padding: 0;margin: 0;font-size: 1.75rem;font-weight: 300;}.brc-default-l1 {border-color: #dce9f0!important;}.ml-n1, .mx-n1 {margin-left: -.25rem!important;}.mr-n1, .mx-n1 {margin-right: -.25rem!important;}.mb-4, .my-4 {margin-bottom: 1.5rem!important;}hr {margin-top: 1rem;margin-bottom: 1rem;border: 0;border-top: 1px solid rgba(0,0,0,.1);}.text-grey-m2 {color: #888a8d!important;}.text-success-m2 {color: #86bd68!important;}.font-bolder, .text-600 {font-weight: 600!important;}.text-110 {font-size: 110%!important;}.text-blue {color: #478fcc!important;}.pb-25, .py-25 {padding-bottom: .75rem!important;}.pt-25, .py-25 {padding-top: .75rem!important;}.bgc-default-tp1 {background-color: rgba(121,169,197,.92)!important;}.bgc-default-l4, .bgc-h-default-l4:hover {background-color: #f3f8fa!important;}.page-header .page-tools {-ms-flex-item-align: end;align-self: flex-end;}.btn-light {color: #757984;background-color: #f5f6f9;border-color: #dddfe4;}.w-2 {width: 1rem;}.text-120 {font-size: 120%!important;}.text-primary-m1 {color: #4087d4!important;}.text-danger-m1 {color: #dd4949!important;}.text-blue-m2 {color: #68a3d5!important;}.text-150 {font-size: 150%!important;}.text-60 {font-size: 60%!important;}.text-grey-m1 {color: #7b7d81!important;}.align-bottom {vertical-align: bottom!important;}
+    </style>
 </head>
 
 <body>
-    <div class="continer w-75 mx-auto mt-4">
-        <header>
-            <div class="log d-flex justify-content-between align-items-center">
-                <img src="https://aranya.com.bd/wp-content/uploads/2017/10/Aranya-Logo-Dark.png" alt="" width="100px">
-                <div class="content">
-                    <h4>www.aranya.com.bd</h4>
-                    <p>online@aranya.com.bd</p>
-                </div>
+    <div class="page-content container">
+        <div class="page-header text-blue-d2">
+            <h1 class="page-title text-secondary-d1">
+                Invoice
+                <small class="page-info">
+                    <i class="fa fa-angle-double-right text-80"></i>
+                    ID: #45674574545
+                </small>
+            </h1>
+            <div class="page-tools">
+            <div class="action-buttons">
+                <a class="btn bg-white btn-light mx-1px text-95" href="#">
+                    aranya.com.bd
+                </a>
+               
             </div>
+        </div>
+        </div>
 
-
-        </header>
-        <section class="mt-5">
-            <h3 class="bold">INVOICE</h3>
-            <div class=" mt-5">
-                <div class="row">
-                    <div class="col-md-6">
-                        <p class="text-left" style="text-align: left;">Samiha Zaman <br>
-                            Flat 2C, House # 122 (Husain<br>
-                            Symphony), Road 9A, Dhanmondi<br>
-                            Dhaka<br>
-                            1209<br>
-                            01705564858 , 01716581582</p>
+        <div class="container px-0">
+            <div class="row mt-4">
+                <div class="col-12 col-lg-12">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="text-center text-150">
+                                <i class="fa fa-book fa-2x text-success-m2 mr-1"></i>
+                                <img src="https://staging.aranya.com.bd/assets/headerLogo.png" alt="aranya logo" width="100px">
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6 ">
+                    <!-- .row -->
 
-                        <div class="">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <!-- <p class="text-left" style="text-align: left;">
-                                        Order Number:
+                    <hr class="row brc-default-l1 mx-n1 mb-4" />
 
-                                    </p> -->
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div>
+                                <span class="text-sm text-grey-m2 align-middle">To:</span>
+                                <span class="text-600 text-110 text-blue align-middle">Kabira</span>
+                            </div>
+                            <div class="text-grey-m2">
+                                <div class="my-1">
+                                Gulshan-1,Dhaka
                                 </div>
-                                <div class="col-md-3">
-                                    <p class="text-left" style="text-align: left;">
-                                        Order Number:
-
-                                    </p>
+                                <div class="my-1">
+                                    Bangladesh
                                 </div>
-                                <div class="col-md-3">
-                                    <p class="text-left" style="text-align: left;">
-                                        30171
+                                <div class="my-1"><i class="fa fa-phone fa-flip-horizontal text-secondary"></i> <b class="text-600">01854698754</b></div>
+                            </div>
+                        </div>
+                        <!-- /.col -->
 
-                                    </p>
-                                </div>
-                                <div class="col-md-6">
-                                    <!-- <p class="text-left" style="text-align: left;">
-                                        Order Number:
-
-                                    </p> -->
-                                </div>
-                                <div class="col-md-3">
-                                    <p class="text-left" style="text-align: left;">
-                                        Order Date:
-
-                                    </p>
-                                </div>
-                                <div class="col-md-3">
-                                    <p class="text-left" style="text-align: left;">
-                                        April 2, 2023
-
-                                    </p>
-                                </div>
-                                <div class="col-md-6">
-                                    <!-- <p class="text-left" style="text-align: left;">
-                                        Order Number:
-
-                                    </p> -->
-                                </div>
-                                <div class="col-md-3">
-                                    <p class="text-left" style="text-align: left;">
-                                        Payment Method:
-
-                                    </p>
-                                </div>
-                                <div class="col-md-3">
-                                    <p class="text-left" style="text-align: left;">
-                                        Cash on delivery
-
-                                    </p>
+                        <div class="text-95 col-sm-6 align-self-start d-sm-flex justify-content-end">
+                            <hr class="d-sm-none" />
+                            <div class="text-grey-m2">
+                                <div class="mt-1 mb-2 text-secondary-m1 text-600 text-125">
+                                    Invoice
                                 </div>
 
+                                <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">ID:</span> #64563563214</div>
+
+                                <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Order Date:</span> 2023-05-16</div>
+
+                                <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Status:</span> <span class="badge badge-warning badge-pill px-25">Paid</span></div>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+
+                    <div class="mt-4">
+                        <div class="row text-600 text-white bgc-default-tp1 py-25">
+                            <div class="d-none d-sm-block col-1">#</div>
+                            <div class="col-9 col-sm-5">Product</div>
+                            <div class="d-none d-sm-block col-4 col-sm-2">Qty</div>
+                            <div class="d-none d-sm-block col-sm-2">Unit Price</div>
+                            <div class="col-2">Amount</div>
+                        </div>
+
+                        <div class="text-95 text-secondary-d3">
+                                <div class="row mb-2 mb-sm-0 py-25">
+                                    <div class="d-none d-sm-block col-1">1</div>
+                                    <div class="col-9 col-sm-5">product name 1</div>
+                                    <div class="d-none d-sm-block col-2">2</div>
+                                    <div class="d-none d-sm-block col-2 text-95">200</div>
+                                    <div class="col-2 text-secondary-d2">400</div>
+                                </div>
+                                <div class="row mb-2 mb-sm-0 py-25 bgc-default-l4">
+                                    <div class="d-none d-sm-block col-1">2</div>
+                                    <div class="col-9 col-sm-5">product name 2</div>
+                                    <div class="d-none d-sm-block col-2">1</div>
+                                    <div class="d-none d-sm-block col-2 text-95">300</div>
+                                    <div class="col-2 text-secondary-d2">300</div>
+                                </div>
+                                <div class="row mb-2 mb-sm-0 py-25">
+                                    <div class="d-none d-sm-block col-1">3</div>
+                                    <div class="col-9 col-sm-5">product name 3</div>
+                                    <div class="d-none d-sm-block col-2">2</div>
+                                    <div class="d-none d-sm-block col-2 text-95">200</div>
+                                    <div class="col-2 text-secondary-d2">400</div>
+                                </div>
+                         
+                        </div>
+
+                        <div class="row border-b-2 brc-default-l2"></div>
+
+                        <div class="row d-flex justify-content-end mt-3">
+                            <!-- <div class="col-12 col-sm-7 text-grey-d2 text-95 mt-2 mt-lg-0">
+                                Extra note such as company or payment information...
+                            </div> -->
+
+                            <div class="col-12 col-sm-5 text-grey text-90 order-first order-sm-last">
+                                <div class="row my-2">
+                                    <div class="col-7 text-right">
+                                        SubTotal
+                                    </div>
+                                    <div class="col-5">
+                                        <span class="text-120 text-secondary-d1">846</span>
+                                    </div>
+                                </div>
+
+                                <div class="row my-2">
+                                    <div class="col-7 text-right">
+                                        Tax
+                                    </div>
+                                    <div class="col-5">
+                                        <span class="text-110 text-secondary-d1">180</span>
+                                    </div>
+                                </div>
+
+                                <div class="row my-2">
+                                    <div class="col-7 text-right">
+                                        Shipping Charge
+                                    </div>
+                                    <div class="col-5">
+                                        <span class="text-110 text-secondary-d1">120</span>
+                                    </div>
+                                </div>
+
+                                <div class="row my-2 align-items-center bgc-primary-l3 p-2">
+                                    <div class="col-7 text-right">
+                                        Total Amount
+                                    </div>
+                                    <div class="col-5">
+                                        <span class="text-150 text-success-d3 opacity-2">1150</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- <div class="contents d-flex justify-content-end align-items-end ">
-                            <p class="text-left" style="text-align: left;">
-                                Order Number: 30171
-                                <br>
-                                Order Date: April 2, 2023<br>
-                                Payment Method: Cash on delivery<br>
-                            </p>
-                           
-                        </div> -->
+                        <hr />
 
-
-
+                        <div>
+                            <!-- <span class="text-secondary-d1 text-105">Thank you for your business</span> -->
+                        </div>
                     </div>
-
-
                 </div>
-        </section>
-        <section class="bg-dark p-2 mt-4">
-            <div class="row px-2 mt-1">
-
-                <div class="col-md-3">
-                    <p class="text-left text-light" style="text-align: left;">
-                        Product
-
-                    </p>
-                </div>
-                <div class="col-md-3">
-                    <p class="text-left text-light" style="text-align: right;">
-                        Quantity
-
-                    </p>
-                </div>
-                <div class="col-md-3">
-                    <p class="text-left text-light" style="text-align: right;">
-                        Price
-                    </p>
-                </div>
-                <div class="col-md-3">
-                    <!-- <p class="text-left" style="text-align: left;">
-                            Order Number:
-
-                        </p> -->
-                </div>
-                <!-- <h6 class="text-light">Product</h6>
-            <div class="product-menu d-flex justify-content-around">
-                <h6 class="text-light px-4">Quantity</h6>
-                <h6 class="text-light  px-4">Price</h6>
-            </div> -->
-
-        </section>
-        <div class="row px-2 mt-1">
-
-            <div class="col-md-3">
-                <p class="text-left" style="text-align: left;">
-                    Fit with Avocado - S
-
-                </p>
-            </div>
-            <div class="col-md-3">
-                <p class="text-left" style="text-align: right;">
-                    1
-
-                </p>
-            </div>
-            <div class="col-md-3">
-                <p class="text-left" style="text-align: right;">
-                    ৳ 2,275
-                </p>
-            </div>
-            <div class="col-md-3">
-                <!-- <p class="text-left" style="text-align: left;">
-                                        Order Number:
-
-                                    </p> -->
-            </div>
-            <div class="col-md-3">
-                <p class="text-left" style="text-align: left;">
-                    Size: S
-
-                </p>
-            </div>
-            <div class="col-md-3">
-                <p class="text-left" style="text-align: left;">
-                    <!-- April 2, 2023 -->
-
-                </p>
-            </div>
-            <div class="col-md-6">
-                <!-- <p class="text-left" style="text-align: left;">
-                                        Order Number:
-
-                                    </p> -->
-            </div>
-            <div class="col-md-3">
-                <p class="text-left" style="text-align: left;">
-                    SKU: D1938
-
-                </p>
-            </div>
-            <div class="col-md-3">
-                <p class="text-left" style="text-align: left;">
-                    <!-- Cash on delivery -->
-
-                </p>
-            </div>
-            <div class="col-md-6">
-                <!-- <p class="text-left" style="text-align: left;">
-                                        Order Number:
-
-                                    </p> -->
-            </div>
-            <div class="col-md-3">
-                <p class="text-left" style="text-align: left;">
-                    Weight: .220kg
-
-                </p>
-            </div>
-            <div class="col-md-6">
-                <!-- <p class="text-left" style="text-align: left;">
-                                        Order Number:
-
-                                    </p> -->
-            </div>
-        </div>
-        <hr>
-        <div class="row px-2 mt-1">
-
-            <div class="col-md-6">
-                <!-- <p class="text-left" style="text-align: left;">
-        Fit with Avocado - S
-
-    </p> -->
-            </div>
-            <div class="col-md-3">
-                <p class="text-left" style="text-align: right;">
-                Subtotal
-
-                </p>
-            </div>
-            <div class="col-md-3">
-                <p class="text-left" style="text-align: right;">
-                    ৳ 2,275
-                </p>
-            </div>
-        </div>
-        <div class="row px-2 mt-1">
-
-            <div class="col-md-6">
-                <!-- <p class="text-left" style="text-align: left;">
-        Fit with Avocado - S
-
-    </p> -->
-            </div>
-            <div class="col-md-3">
-                <p class="text-left" style="text-align: right;">
-                Shipping
-
-                </p>
-            </div>
-            <div class="col-md-3">
-                <p class="text-left" style="text-align: right;">
-                ৳ 100 via Shipping
-                </p>
-            </div>
-        </div>
-        <div class="row px-2 mt-1">
-
-            <div class="col-md-6">
-                <!-- <p class="text-left" style="text-align: left;">
-        Fit with Avocado - S
-
-    </p> -->
-            </div>
-            <div class="col-md-3">
-                <p class="text-left" style="text-align: right;">
-                Tax
-
-                </p>
-            </div>
-            <div class="col-md-3">
-                <p class="text-left" style="text-align: right;">
-                ৳ 171
-
-                </p>
-            </div>
-        </div>
-        <div class="row px-2 mt-1">
-
-            <div class="col-md-6">
-                <!-- <p class="text-left" style="text-align: left;">
-        Fit with Avocado - S
-
-    </p> -->
-            </div>
-            <div class="col-md-3">
-                <p class="text-left" style="text-align: right;">
-                  Total
-
-                </p>
-            </div>
-            <div class="col-md-3">
-                <p class="text-left" style="text-align: right;">
-                    ৳ 2,275
-                </p>
             </div>
         </div>
     </div>
 </body>
-
 </html>
