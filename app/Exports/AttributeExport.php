@@ -22,10 +22,13 @@ class AttributeExport implements FromArray, WithMultipleSheets
 
     public function sheets(): array
     {
-        $sheets = [
-            new CategorySheetExport($this->sheets['category']),
-            new BrandSheetExport($this->sheets['brand']),
-        ];
+        // ,
+        // new BrandSheetExport($this->sheets['brand']),
+        $cate = \DB::table('categories')->select('id', 'category_name', 'parent_category', 'status')->get()->toArray();
+        $sheets = [new CategorySheetExport($cate)];
+        foreach($this->sheets as $key => $value){
+            $sheets[] = new BrandSheetExport($this->sheets[$key],$key);
+        }
 
         return $sheets;
     }

@@ -9,9 +9,12 @@ use App\Models\Category;
 use App\Models\Page;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Traits\ProductTrait;
+use DB;
 
 class PagesController extends Controller
 {
+    use ProductTrait;
     /**
      * Display a listing of the resource.
      *
@@ -103,9 +106,24 @@ class PagesController extends Controller
      */
     public function exportAllAttr()
     {
+        // return $this->getBrand()->toArray();
         $plate = [
-            'category'    => Category::select('id', 'category_name', 'parent_category', 'status')->get()->toArray(),
-            'brand'           => Brand::select('id', 'brand_name', 'status')->get()->toArray()
+            // 'category' => DB::table('categories')->select('id', 'category_name', 'parent_category', 'status')->get()->toArray(),
+            'brand'    => DB::table('brands')->select('id', 'brand_name', 'status')->get()->toArray(),
+            'artist'  => DB::table('artists')->select('id', 'artist_name', 'status')->get()->toArray(),
+            'care'    => DB::table('cares')->select('id', 'care_name', 'status')->get()->toArray(),
+            'color'    => DB::table('colours')->select('id', 'color_name', 'status')->get()->toArray(),
+            'consignment'    => DB::table('consignments')->select('id', 'consignment_name', 'status')->get()->toArray(),
+            'designer'    => DB::table('designers')->select('id', 'designer_name', 'status')->get()->toArray(),
+            'embellishment'    => DB::table('embellishments')->select('id', 'embellishment_name', 'status')->get()->toArray(),
+            'fabric'    => DB::table('fabrics')->select('id', 'fabric_name', 'status')->get()->toArray(),
+            'fit'    => DB::table('fits')->select('id', 'fit_name', 'status')->get()->toArray(),
+            'ingredient'    => DB::table('ingredients')->select('id', 'ingredient_name', 'status')->get()->toArray(),
+            'making'    => DB::table('makings')->select('id', 'making_name', 'status')->get()->toArray(),
+            'season'    => DB::table('seasons')->select('id', 'season_name', 'status')->get()->toArray(),
+            'size'    => DB::table('sizes')->select('id', 'size_name', 'status')->get()->toArray(),
+            'variety'    => DB::table('varieties')->select('id', 'variety_name', 'status')->get()->toArray(),
+            'vendor'    => DB::table('vendors')->select('id', 'vendor_name', 'status')->get()->toArray(),
         ];
         
         $export = new AttributeExport($plate);

@@ -1,31 +1,31 @@
 <?php
 
 namespace App\Exports;
-
 use Maatwebsite\Excel\Concerns\FromArray;
-use Maatwebsite\Excel\Concerns\ShouldAutoSize;
-use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
-use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Maatwebsite\Excel\Concerns\WithColumnWidths;
 
-class BrandSheetExport implements FromArray, WithHeadings, WithTitle, ShouldAutoSize, WithColumnFormatting, WithMapping, WithStyles
+class BrandSheetExport implements FromArray, WithHeadings,WithColumnWidths, WithTitle, WithMapping, WithStyles
 {
-    protected $rows;
+    public $keys;
+    public $rows;
 
-    public function __construct(array $rows)
+    public function __construct(array $rows,$key)
     {
         $this->rows = $rows;
+        $this->keys = $key;
     }
 
     public function map($row): array
     {
+        $va = $this->keys.'_name';
         return [
-            $row['id'],
-            $row['brand_name']
+            $row->id,
+            $row->$va
         ];
     }
 
@@ -33,7 +33,7 @@ class BrandSheetExport implements FromArray, WithHeadings, WithTitle, ShouldAuto
     {
         return [
             'ID',
-            'Brand_Name'
+            ucfirst($this->keys.'_name')
         ];
     }
 
@@ -44,7 +44,7 @@ class BrandSheetExport implements FromArray, WithHeadings, WithTitle, ShouldAuto
 
     public function title(): string
     {
-        return 'Brand';
+        return ucfirst($this->keys);
     }
 
     public function styles(Worksheet $sheet)
@@ -59,6 +59,7 @@ class BrandSheetExport implements FromArray, WithHeadings, WithTitle, ShouldAuto
                 ],
                 'alignment' => [
                     'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
                 ],
             ],
         ];
@@ -67,8 +68,16 @@ class BrandSheetExport implements FromArray, WithHeadings, WithTitle, ShouldAuto
     public function columnFormats(): array
     {
         return [
+            'A' => '#,##0',
             'B' => '#,##0',
-            'C' => NumberFormat::FORMAT_PERCENTAGE_00,
+        ];
+    }
+
+    public function columnWidths(): array
+    {
+        return [
+            'A' => 40,
+            'B' => 40,            
         ];
     }
 }
