@@ -138,4 +138,4 @@ Route::post('ssl-success',[OdController::class,'sslCommerzSuccess'])->name('ssl.
 Route::post('ssl-failed',[OdController::class,'sslCommerzFailed'])->name('ssl.failed');
 Route::post('ssl-cancel',[OdController::class,'sslCommerzCancel'])->name('ssl.cancel');
 
-Route::get('invoice',[OdController::class,'invoice'])->name('invoice');
+Route::get('invoice',[OdController::class,'invoiceToMail'])->name('invoice');

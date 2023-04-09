@@ -434,6 +434,6 @@ class OrderController extends Controller
         }
         Mail::to('online@aranya.com.bd')->send(new InvoiceMail($order));
         return false;
-        //return view('email.order_invoice',['order_info' => $order]);
+        return view('email.order_invoice',['order_info' => $order]);
     }
 }

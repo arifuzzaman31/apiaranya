@@ -124,6 +124,7 @@ class PagesController extends Controller
             'size'    => DB::table('sizes')->select('id', 'size_name', 'status')->get()->toArray(),
             'variety'    => DB::table('varieties')->select('id', 'variety_name', 'status')->get()->toArray(),
             'vendor'    => DB::table('vendors')->select('id', 'vendor_name', 'status')->get()->toArray(),
+            'tax'    => DB::table('vat_taxes')->select('id', 'tax_percentage as tax_name')->get()->toArray(),
         ];
         
         $export = new AttributeExport($plate);

@@ -6,12 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Invoice</title>
     <style>
+      body{
+        background-color: #f6f6f6; 
+      }
       table {
         font-family: arial, sans-serif;
         border-collapse: collapse;
         width: 90%;
         max-width: 800px;
         margin: 0 auto;
+      
       }
 
       td,
@@ -27,9 +31,19 @@
       a {
         text-decoration: none;
       }
+      div{
+        background-color: #ffffff;
+        padding: 1.5rem;
+        width: 90%;
+        max-width: 800px;
+        margin: 0 auto;
+        height: fit-content;
+
+      }
     </style>
   </head>
   <body>
+    <div>
     <table>
       <tr>
         <td style="border: none; color: #8a858e">
@@ -39,14 +53,16 @@
 
         <td style="border: none; text-align: right">
           <a
-            href="{{ url('/') }}"
+            href="{{ config('app.front_url') }}"
             style="border: 1px solid #8a858e; padding: 5px; color: #8a858e"
             >araya.com.bd</a
           >
         </td>
       </tr>
     </table>
-    <hr width="800px" />
+    <hr style="width: 90%;
+        max-width: 800px;
+        margin: 0 auto;" />
     <table>
       <tr>
         <td style="border: none"></td>
@@ -61,7 +77,9 @@
         <td style="border: none; text-align: right"></td>
       </tr>
     </table>
-    <hr width="800px" />
+    <hr style="width: 90%;
+        max-width: 800px;
+        margin: 0 auto;" />
     <table>
       <tr>
         <td style="border: none; color: #8a858e">
@@ -112,25 +130,21 @@
         <th style="border: none; color: #ffffff">Product</th>
         <th style="border: none; color: #ffffff">Qty</th>
         <th style="border: none; color: #ffffff">Unit Price</th>
-        <th style="border: none; color: #ffffff">Amount</th>
+        <th style="border: none; color: #ffffff ;text-align: right;">Amount</th>
       </tr>
       @foreach($order_info->order_details as $key => $value)
-        <tr>
+        <tr >
             <td style="@if($key%2 != 0) border: none @endif" >{{ $key+1 }}</td>
             <td style="@if($key%2 != 0) border: none @endif">{{ $value->product->product_name }}</td>
             <td style="@if($key%2 != 0) border: none @endif">{{ $value->quantity }}</td>
             <td style="@if($key%2 != 0) border: none @endif">{{ $value->selling_price }}</td>
-            <td style="@if($key%2 != 0) border: none @endif">{{ $value->total_selling_price }}</td>
+            <td style="@if($key%2 != 0) border: none @endif ;text-align: right">{{ $value->total_selling_price }}</td>
         </tr>
       @endforeach
     </table>
     <table
-      style="
-        margin-top: 1rem;
-        max-width: 600px;
-        width: 90%;
-        margin-right: 0 auto;
-      "
+    style="margin-top: 1rem;"
+     
     >
       <tr>
         <th style="border: none"></th>
@@ -257,5 +271,6 @@
         <!-- <td style="border: none; text-align: right; color: #8a858e">invoice</td> -->
       </tr>
     </table>
+    </div>
   </body>
 </html>

@@ -45,7 +45,7 @@ class CategorySheetExport implements FromArray, WithHeadings, WithTitle, WithCol
 
     public function title(): string
     {
-        return 'category';
+        return 'Category';
     }
 
     public function styles(Worksheet $sheet)

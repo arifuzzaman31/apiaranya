@@ -33,7 +33,7 @@ class BrandSheetExport implements FromArray, WithHeadings,WithColumnWidths, With
     {
         return [
             'ID',
-            ucfirst($this->keys.'_name')
+            ucfirst($this->keys == 'tax' ? 'tax_percentage' : $this->keys.'_name')
         ];
     }
 
