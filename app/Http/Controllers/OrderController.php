@@ -98,6 +98,7 @@ class OrderController extends Controller
     {
         $order = Order::find($request->order_id);
         $order->payment_status = $request->payment_status;
+        $order->payment_date = date("Y-m-d");
         $order->update();
         return response()->json(['status' => 'success', 'message' => 'Order Payment Changed!']);
     }

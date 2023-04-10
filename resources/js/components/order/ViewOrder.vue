@@ -181,11 +181,19 @@ export default {
         },
 
         orderDetailModal(order) {
-            this.getOrderdetail(order.id)
-            this.order_id = order.id
-            this.single_order = order
-            this.order_status_id = order.order_position
-            $("#orderDetailModal").modal('show');
+            
+            axios.get(baseUrl+`orders-details/${order.id}`)
+            .then(result => {
+                this.order_id = order.id
+                this.single_order = order
+                this.order_status_id = order.order_position
+                this.order_details = result.data.details;
+                this.shipment_info = result.data.order;
+                $("#orderDetailModal").modal('show');
+            })
+            .catch(errors => {
+                console.log(errors);
+            });  
         },
 
         formReset(){
@@ -409,7 +417,8 @@ export default {
                             <div class="row d-flex justify-content-between">
                                 <div class="col-md-4 text-left">
                                     <h6 class="text-success">Billing Info</h6>
-                                    <p>Name: {{ shipment_info.user_billing_info.first_name }} {{ shipment_info.user_billing_info.last_name }}</p>
+                                    <p v-if="(shipment_info.user_billing_info.first_name != '') || (shipment_info.user_billing_info.last_name != '')">Name: {{ shipment_info.user_billing_info.first_name }} {{ shipment_info.user_billing_info.last_name }}</p>
+                                 
                                     <p>Phone: {{ shipment_info.user_billing_info.phone }}</p>
                                     <p>Email: {{ shipment_info.user_billing_info.email }}</p>
                                     <p>Street Address: {{ shipment_info.user_billing_info.street_address }}</p>
@@ -417,15 +426,19 @@ export default {
                                     <p>City: {{ shipment_info.user_billing_info.city }}</p>
                                     <p>Country: {{ shipment_info.user_billing_info.country }}</p>
                                 </div>
-                                <div class="col-md-4 text-right">
+                                <div class="col-md-4 text-right" v-if="shipment_info.is_same_address != 0">
                                     <h6 class="text-success">Shipping Info</h6>
-                                    <p>Name: {{ shipment_info.user_shipping_info.first_name }} {{ shipment_info.user_shipping_info.last_name }}</p>
+                                    <p v-if="(shipment_info.user_shipping_info.first_name != '') || (shipment_info.user_shipping_info.last_name != '')">Name: {{ shipment_info.user_shipping_info.first_name }} {{ shipment_info.user_shipping_info.last_name }}</p>
                                     <p>Phone: {{ shipment_info.user_shipping_info.phone }}</p>
                                     <p>Email: {{ shipment_info.user_shipping_info.email }}</p>
                                     <p>Street Address: {{ shipment_info.user_shipping_info.street_address }}</p>
                                     <p>Post Code: {{ shipment_info.user_shipping_info.post_code }}</p>
                                     <p>City: {{ shipment_info.user_shipping_info.city }}</p>
                                     <p>Country: {{ shipment_info.user_shipping_info.country }}</p>
+                                </div>
+                                <div class="col-md-4 text-right" v-else>
+                                    <h6 class="text-success">Shipping Info</h6>
+                                    <p class="text-info">As Per Billing Info</p>
                                 </div>
                             </div>
                             <div>
