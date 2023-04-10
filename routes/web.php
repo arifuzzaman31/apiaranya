@@ -106,6 +106,7 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     Route::post('update/order/status',[OrderController::class,'updateOrderStatus']);
     Route::get('orders-details/{id}',[OrderController::class,'orderDetails']);
     Route::post('order/cancel',[OrderController::class,'orderCancel']);
+    Route::post('update-payment-status/{id}',[OrderController::class,'orderPaymentStatus']);
     Route::get('get-user-order/{id}',[OrderController::class,'getUserOrder']);
     Route::delete('order/{id}',[OrderController::class,'destroy']);
     Route::get('order-shipment/{id}',[OrderController::class,'orderShipment']);

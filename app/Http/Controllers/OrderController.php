@@ -80,9 +80,10 @@ class OrderController extends Controller
     public function orderDetails($id)
     {
         // $order = Order::find($id)->first();
+        $order = Order::with('user_shipping_info','user_billing_info')->find($id);
         $details = OrderDetails::with(['product','colour','size','fabric'])->where('order_id',$id)->get();
 
-        return response()->json($details);
+        return response()->json(['details' => $details,'order' => $order]);
     }
 
     public function orderCancel(Request $request)
@@ -91,6 +92,14 @@ class OrderController extends Controller
         $order->status = $request->order_modify;
         $order->update();
         return response()->json(['status' => 'success', 'message' => 'Order Has been Modified!']);
+    }
+
+    public function orderPaymentStatus(Request $request)
+    {
+        $order = Order::find($request->order_id);
+        $order->payment_status = $request->payment_status;
+        $order->update();
+        return response()->json(['status' => 'success', 'message' => 'Order Payment Changed!']);
     }
 
     public function orderShipment($id)

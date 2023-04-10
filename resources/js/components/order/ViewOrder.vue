@@ -17,6 +17,7 @@ export default {
             },
             orders: [],
             order_details: [],
+            shipment_info: [],
             errors: [],
             order_id: '',
             single_order: null,
@@ -26,7 +27,8 @@ export default {
                 order_position: '',
                 tracking_id: '',
                 date: '',
-                order_modify: ''
+                order_modify: '',
+                payment_status: ''
             },
             search: '',
             filterdata : {
@@ -74,6 +76,26 @@ export default {
             });
         },
 
+        paymentStatus(order){
+            this.order_status.order_id = order.id
+            this.order_status.payment_status = order.payment_status
+            $("#paymentStatusModal").modal('show');
+        },
+
+        paymentModify(id){
+            axios.post(baseUrl+`update-payment-status/${id}`,this.order_status)
+            .then(result => {
+                this.order_status.order_id = ''
+                this.order_status.payment_status = ''
+                $("#paymentStatusModal").modal('hide');
+                this.successMessage(result.data)
+                this.getOrder()
+            })
+            .catch(errors => {
+                console.log(errors);
+            });
+        },
+
         updateStatus(){
             axios.post(baseUrl+`update/order/status`,this.order_status)
             .then(result => {
@@ -113,7 +135,8 @@ export default {
         getOrderdetail(id){
             axios.get(baseUrl+`orders-details/${id}`)
             .then(result => {
-                this.order_details = result.data;
+                this.order_details = result.data.details;
+                this.shipment_info = result.data.order;
             })
             .catch(errors => {
                 console.log(errors);
@@ -347,6 +370,7 @@ export default {
                                                     <a class="dropdown-item" @click="orderDetailModal(order)" href="javascript:void(0);">Order Details</a>
                                                     <a class="dropdown-item" @click="orderStatus(order)" href="javascript:void(0);">Progress</a>
                                                     <a class="dropdown-item"  @click="cancelOrder(order)" href="javascript:void(0);">Status</a>
+                                                    <a class="dropdown-item"  @click="paymentStatus(order)" href="javascript:void(0);">Payment Status</a>
                                                     <a class="dropdown-item" v-if="(order.payment_status == 1) && (order.is_claim_refund == 1)" @click="refundOrder(order.id)" href="javascript:void(0);">Refund</a>
                                                     <a class="dropdown-item" @click="deleteOrder(order.id)" href="javascript:void(0);">Delete</a>
                                                 </div>
@@ -380,43 +404,30 @@ export default {
                         </button>
                     </div>
                     <div class="modal-body" v-if="order_id">
-                        <!-- <div class="text-center">
-                            <div id="bar-progress" class="mt-5 mt-lg-0" v-if="single_order.status !=0">
-                                <a @click="updateStatus(1)" href="javasript:void(0)" class="step step-active">
-                                    <span class="number-container">
-                                        <span class="number">1</span>
-                                    </span>
-                                    <h5>Pending</h5>
-                                </a>
-                                <div class="seperator"></div>
-                                <a @click="updateStatus(2)" href="javasript:void(0)" class="step" type="button" disabled="true" :class="order_status_id > 0 ? 'step-active':''">
-                                    <span class="number-container">
-                                        <span class="number">2</span>
-                                    </span>
-                                    <h5>Process</h5>
-                                </a>
-                                <div class="seperator"></div>
-                                <a @click="updateStatus(3)" href="javasript:void(0)" class="step" :class="order_status_id > 1 ? 'step-active':''">
-                                    <span class="number-container">
-                                        <span class="number">3</span>
-                                    </span>
-                                    <h5>On Delivery</h5>
-                                </a>
-                                <div class="seperator"></div>
-                                <a @click="updateStatus(4)" href="javasript:void(0)" class="step" :class="order_status_id > 2 ? 'step-active':''">
-                                    <span class="number-container">
-                                        <span class="number">4</span>
-                                    </span>
-                                    <h5>Delivered</h5>
-                                </a>
-                            </div>
-                            <div id="bar-progress" class="mt-5 mt-lg-0" v-else>
-                                
-                                <h6 class="text-danger">Order Canceled</h6>
-                              
-                            </div>
-                        </div> -->
+
                         <div class="widget-content widget-content-area">
+                            <div class="row d-flex justify-content-between">
+                                <div class="col-md-4 text-left">
+                                    <h6 class="text-success">Billing Info</h6>
+                                    <p>Name: {{ shipment_info.user_billing_info.first_name }} {{ shipment_info.user_billing_info.last_name }}</p>
+                                    <p>Phone: {{ shipment_info.user_billing_info.phone }}</p>
+                                    <p>Email: {{ shipment_info.user_billing_info.email }}</p>
+                                    <p>Street Address: {{ shipment_info.user_billing_info.street_address }}</p>
+                                    <p>Post Code: {{ shipment_info.user_billing_info.post_code }}</p>
+                                    <p>City: {{ shipment_info.user_billing_info.city }}</p>
+                                    <p>Country: {{ shipment_info.user_billing_info.country }}</p>
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    <h6 class="text-success">Shipping Info</h6>
+                                    <p>Name: {{ shipment_info.user_shipping_info.first_name }} {{ shipment_info.user_shipping_info.last_name }}</p>
+                                    <p>Phone: {{ shipment_info.user_shipping_info.phone }}</p>
+                                    <p>Email: {{ shipment_info.user_shipping_info.email }}</p>
+                                    <p>Street Address: {{ shipment_info.user_shipping_info.street_address }}</p>
+                                    <p>Post Code: {{ shipment_info.user_shipping_info.post_code }}</p>
+                                    <p>City: {{ shipment_info.user_shipping_info.city }}</p>
+                                    <p>Country: {{ shipment_info.user_shipping_info.country }}</p>
+                                </div>
+                            </div>
                             <div>
                                 <table class="table table-bordered table-hover mb-4">
                                     <thead>
@@ -529,6 +540,39 @@ export default {
                                     <div class="modal-footer md-button">
                                         <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12" @click="formReset"></i>Discard</button>
                                         <button type="button" @click="orderModify(order_status.order_id)" class="btn btn-primary">Update</button>
+                                    </div>
+                                </div>  
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="paymentStatusModal" class="modal animated fadeInUp custo-fadeInUp" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Payment Status</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"  @click="formReset">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="widget-content">
+                            <form method="post">
+                                <div>
+                                    <div class="form-group">
+                                        <label for="">Payment</label>
+                                        <select class="form-control" v-model="order_status.payment_status">
+                                            <option value="1">Paid</option>
+                                            <option value="0">Unpaid</option>
+                                        </select>
+                                    </div>
+                                    <div class="modal-footer md-button">
+                                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12" @click="formReset"></i>Discard</button>
+                                        <button type="button" @click="paymentModify(order_status.order_id)" class="btn btn-primary">Update</button>
                                     </div>
                                 </div>  
                             </form>

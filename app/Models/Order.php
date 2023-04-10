@@ -33,6 +33,7 @@ class Order extends Model
         return $this->hasOne(UserBillingInfo::class)->withDefault([
             'first_name' => 'N/A',
             'country' => 'N/A',
+            'email' => 'N/A',
             'city' => 'N/A',
             'phone' => 'N/A',
             'post_code' => 'N/A',
@@ -45,6 +46,7 @@ class Order extends Model
         return $this->hasOne(UserShippingInfo::class)->withDefault([
             'first_name' => 'N/A',
             'country' => 'N/A',
+            'email' => 'N/A',
             'city' => 'N/A',
             'phone' => 'N/A',
             'post_code' => 'N/A',

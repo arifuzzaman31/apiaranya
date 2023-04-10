@@ -25,11 +25,10 @@ class OrderController extends Controller
         try {
             //return response()->json($request->all());
             DB::beginTransaction();
-
             // $order_id   = date('Ymd');
             $shipCharge = 0;
             if($request->data['deliveryMethod'] == 'outSideDhaka'){
-                $shipCharge += 250;
+                $shipCharge += 200;
             }
             if($request->data['deliveryMethod'] == 'insideDhaka'){
                 $shipCharge += 100;
@@ -38,7 +37,6 @@ class OrderController extends Controller
             $order = new Order();
             $order->order_id    =   date('Ymd').$order->id;
             $order->shipping_method   =  $request->shipping_method;
-            $order->payment_method    =   $request->payment_method;
             $order->user_id           = $request->isGuestCheckout == false ? Auth::user()->id : 0;
             $order->vat_rate               = 7.5;
             $order->vat_amount             = (float)($request->totalPriceWithTax - $request->totalPrice);
@@ -75,7 +73,7 @@ class OrderController extends Controller
                 $details->quantity            = $value['amount'];
                 $details->selling_price       = $value['price'];
                 $details->vat_rate            = $value['taxAmount'];
-                $details->vat_amount          = (float)($value['vatAmountParticularProduct'] * $value['amount']);
+                $details->vat_amount          = (float)($value['vatAmountParticularProduct']);
                 $details->buying_price        = (float)$decrese->cpu;
                 $details->total_buying_price  = (float)($decrese->cpu * $value['amount']);
                 $details->total_selling_price = (float)$value['totalPrice'];
@@ -145,7 +143,7 @@ class OrderController extends Controller
 
         } catch (\Throwable $th) {
             \DB::rollback();
-            return $th;
+            // return $th;
             return response()->json(['status' => 'error', 'message' => $th]);
         }
     }
