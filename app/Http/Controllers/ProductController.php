@@ -31,6 +31,8 @@ class ProductController extends Controller
      */
     public function index()
     {
+        // $ids = Product::select('id','sub_category_id')->where('sub_category_id',7)->pluck('id');
+        // DB::table('product_colours')->whereIn('product_id',$ids)->delete();
         return view('pages.product.product');
     }
 
