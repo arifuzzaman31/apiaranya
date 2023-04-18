@@ -34,6 +34,7 @@ export default {
                 artist : [],
                 consignment : [],
                 ingredient : [],
+                flat_colour : [],
                 product_image_one : '',
                 product_image_two : '',
                 product_image_three : '',
@@ -326,6 +327,11 @@ export default {
         const faids = this.pr_product.product_fabric.map(v=> v.id);
         this.form.fabrics.push(...faids);
 
+        if(this.pr_product.flat_colour && this.pr_product.flat_colour != ''){
+            let in_color = this.pr_product.flat_colour.split(",")
+            this.form.flat_colour.push(...in_color);
+        }
+
         let arr = []
 
         this.pr_product.inventory.forEach((item,ind) => {
@@ -362,7 +368,7 @@ export default {
 }
 </script>
 <template>
-    <form class="needs-validation" method="post" @submit.prevent="updateForm" id="add-product-form">
+    <form class="needs-validation" method="post" @submit.prevent="updateForm" id="update-product-form">
         <div class="row">
             <div id="tooltips" class="col-lg-12 layout-spacing col-md-12">
                 <div class="statbox widget box ">
@@ -900,6 +906,44 @@ export default {
                                 label="name"
                                 :close-on-select="true"
                                 :options="attrs.tax"
+                                :searchable="true"
+                            >
+                            <template v-slot:tag="{ option, handleTagRemove, disabled }">
+                            <div
+                                class="multiselect-tag is-user"
+                                :class="{
+                                'is-disabled': disabled
+                                }"
+                            >
+                                {{ option.name }}
+                                <span
+                                v-if="!disabled"
+                                class="multiselect-tag-remove"
+                                @mousedown.prevent="handleTagRemove(option, $event)"
+                                >
+                                <span class="multiselect-tag-remove-icon"></span>
+                                </span>
+                            </div>
+                            </template>
+                        </Multiselect>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="statbox widget box-shadow">
+            <div class="widget-content">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <label for="product-Tags">Colour</label>
+                        <Multiselect
+                                v-model="form.flat_colour"
+                                placeholder="Select Colour"
+                                track-by="name"
+                                label="name"
+                                mode="tags"
+                                :close-on-select="true"
+                                :options="attrs.flat_colour"
                                 :searchable="true"
                             >
                             <template v-slot:tag="{ option, handleTagRemove, disabled }">

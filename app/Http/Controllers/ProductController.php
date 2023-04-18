@@ -31,8 +31,6 @@ class ProductController extends Controller
      */
     public function index()
     {
-        // $ids = Product::select('id','sub_category_id')->where('sub_category_id',7)->pluck('id');
-        // DB::table('product_colours')->whereIn('product_id',$ids)->delete();
         return view('pages.product.product');
     }
 
@@ -59,7 +57,8 @@ class ProductController extends Controller
             'size' => $this->getSize(),
             'colour' => $this->getColour(),
             'variety' => $this->getVariety(),
-            'tax' => $this->getTax()
+            'tax' => $this->getTax(),
+            'flat_colour' => $this->flatColour()
         ];
     }
 
@@ -155,6 +154,7 @@ class ProductController extends Controller
             $product->vat_tax_id          = $request->vat;
             $product->description         = $request->description;
             $product->lead_time           = $request->lead_time;
+            $product->flat_colour         = implode(",",$request->flat_colour);
             $product->product_image       = $request->product_image_one;
             $product->image_one           = $request->product_image_one;
             $product->image_two           = $request->product_image_two;
@@ -382,6 +382,7 @@ class ProductController extends Controller
                 $product->image_five      = $request->image_five;
             }
             $product->dimension           = $request->dimension;
+            $product->flat_colour         = implode(",",$request->flat_colour);
             $product->weight              = $request->weight;
             $product->design_code         = $request->design_code;
             $product->status              =  AllStatic::$active;

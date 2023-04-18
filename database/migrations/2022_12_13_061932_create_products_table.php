@@ -28,6 +28,7 @@ class CreateProductsTable extends Migration
             $table->string('image_four')->nullable();
             $table->string('image_five')->nullable();
             $table->string('dimension')->nullable();
+            $table->string('flat_colour')->nullable();
             $table->string('country_of_origin')->nullable();
             $table->string('weight')->nullable();
             $table->string('design_code')->nullable();

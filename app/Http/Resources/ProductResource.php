@@ -52,6 +52,7 @@ class ProductResource extends JsonResource
             'p_variety'         => $this->whenLoaded('product_variety'),
             'p_fit'             => $this->whenLoaded('product_fit'),
             'p_artist'          => $this->whenLoaded('product_artist'),
+            'p_flat_colour'     => $this->flat_colour,
             'p_consignment'     => $this->whenLoaded('product_consignment'),
             'p_ingredient'      => $this->whenLoaded('product_ingredient'),
             'p_care'            => $this->whenLoaded('product_care'),

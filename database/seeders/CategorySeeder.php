@@ -56,7 +56,14 @@ class CategorySeeder extends Seeder
             (33,'Scarves','scarves',null,6,null,null,null,null,7),
             (34,'Orna','orna',null,6,null,null,null,null,8),
             (35,'Stoles','stoles',null,6,null,null,null,null,9),
-            (36,'Shawls','shawls',null,6,null,null,null,null,10)
+            (36,'Shawls','shawls',null,6,null,null,null,null,10),
+
+            (37,'Jewellery','jewellery',null,0,null,null,null,null,7),
+            
+            (38,'Girls','girls',null,3,null,null,null,null,1),
+            (39,'Boys','boys',null,3,null,null,null,null,2),
+            (40,'Babies','babies',null,3,null,null,null,null,3),
+            (41,'Toddlers','toddlers',null,3,null,null,null,null,4)
         ");
     }
 }

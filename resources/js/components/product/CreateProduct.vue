@@ -6,7 +6,7 @@ import Multiselect from '@vueform/multiselect'
 import Mixin from '../../mixer'
 
 export default {
-    props:['prp_vendor','prp_artist','prp_colour','prp_brand','prp_care','prp_consignment','prp_designer','prp_embellish','prp_fabric','prp_fit','prp_ingredient','prp_making','prp_season','prp_size','prp_variety','prp_tax'],
+    props:['prp_vendor','prp_artist','prp_colour','prp_brand','prp_care','flat_colour','prp_consignment','prp_designer','prp_embellish','prp_fabric','prp_fit','prp_ingredient','prp_making','prp_season','prp_size','prp_variety','prp_tax'],
     mixins:[Mixin],
     components: {
         QuillEditor,
@@ -32,6 +32,7 @@ export default {
                 artist : [],
                 consignment : [],
                 ingredients : [],
+                flat_colour : [],
                 product_image_one : '',
                 product_image_two : '',
                 product_image_three : '',
@@ -55,6 +56,7 @@ export default {
                 attrqty: [{colour_id:[],size_id:'',cpu:'',mrp:'',qty:'',sku:''}]
             },
             tages: [],
+            list_colour: [],
             allcategories: [],
             allsubcategories: [],
             allfiltersubcategories: [],
@@ -235,7 +237,9 @@ export default {
         }
     },
     mounted(){
-       
+        this.prp_colour.map(color => {
+           this.list_colour.push({'value':color.color_name,'name':color.color_name})
+        })
         this.getCategory()
     }
 }
@@ -800,6 +804,45 @@ export default {
             </div>
         </div>
 
+        <div class="statbox widget box-shadow">
+            <div class="widget-content">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <label for="product-Tags">Colour</label>
+                        <Multiselect
+                                v-model="form.flat_colour"
+                                placeholder="Select Colour"
+                                track-by="name"
+                                label="name"
+                                mode="tags"
+                                :close-on-select="false"
+                                :search="true"
+                                :options="flat_colour"
+                                :searchable="true"
+                                >
+                                <template v-slot:tag="{ option, handleTagRemove, disabled }">
+                                <div
+                                    class="multiselect-tag is-user"
+                                    :class="{
+                                    'is-disabled': disabled
+                                    }"
+                                >
+                                    {{ option.name }}
+                                    <span
+                                    v-if="!disabled"
+                                    class="multiselect-tag-remove"
+                                    @mousedown.prevent="handleTagRemove(option, $event)"
+                                    >
+                                    <span class="multiselect-tag-remove-icon"></span>
+                                    </span>
+                                </div>
+                                </template>
+                            </Multiselect>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="statbox widget box box-shadow">
             <div class="widget-header">
                 <div class="row">
@@ -1002,30 +1045,3 @@ export default {
     </form>
 </template>
 <style src="@vueform/multiselect/themes/default.css"></style>
-<style scoped>
-  .multiselect-tag.is-user {
-    padding: 5px 8px;
-    border-radius: 22px;
-    background: #35495e;
-    margin: 3px 3px 8px;
-  }
-
-  .multiselect-tag.is-user img {
-    width: 18px;
-    border-radius: 50%;
-    height: 18px;
-    margin-right: 8px;
-    border: 2px solid #ffffffbf;
-  }
-
-  .multiselect-tag.is-user i:before {
-    color: #ffffff;
-    border-radius: 50%;;
-  }
-
-  .user-image {
-    margin: 0 6px 0 0;
-    border-radius: 50%;
-    height: 22px;
-  }
-</style>

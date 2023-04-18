@@ -84,6 +84,12 @@ trait ProductTrait {
         $colour = DB::table('colours')->selectRaw('id as value,color_name as name,status')->where('status',AllStatic::$active)->orderBy('id','desc')->get();
         return $colour;
     }
+
+    public function flatColour()
+    {
+        $colour = DB::table('colours')->selectRaw('color_name as value,color_name as name,status')->where('status',AllStatic::$active)->orderBy('id','desc')->get();
+        return $colour;
+    }
     public function getVariety()
     {
         $variety = DB::table('varieties')->selectRaw('id as value,variety_name as name,status')->where('status',AllStatic::$active)->orderBy('id','desc')->get();
