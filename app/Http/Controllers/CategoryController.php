@@ -58,7 +58,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.category.category_add');
     }
 
     /**

@@ -59,7 +59,7 @@ class OrderController extends Controller
             foreach ($request->cart as $value) {
               
                 $product = Product::find($value['id']);
-                $decrese = Inventory::where(['product_id' => $value['id'],'colour_id' => $value['color_id'], 'size_id' => $value['size_id']])->first();
+                $decrese = Inventory::where(['product_id' => $value['id'],'size_id' => $value['size_id']])->first();
                 $details = new OrderDetails();
 
                 $details->order_id            = $order->id;
@@ -205,7 +205,7 @@ class OrderController extends Controller
         $product_name = [];
 
         foreach ($order_details as $value) {
-            $inv = Inventory::where(['product_id' => $value->product_id,'colour_id' => $value->colour_id, 'size_id' => $value->size_id])->first();
+            $inv = Inventory::where(['product_id' => $value->product_id,'size_id' => $value->size_id])->first();
             $arr = [];
             $arr['product']  =  $value->product->product_name;
             $arr['amount']   =  $inv->mrp;

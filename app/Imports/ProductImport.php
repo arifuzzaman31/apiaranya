@@ -24,16 +24,17 @@ class ProductImport implements ToCollection
         $data = array_filter($rows->toArray(),function ($number) {
                  return $number[0] !== null;
              });
+         // dd($data);
         foreach($data as $row)
         {
             $ch = Product::where('design_code',$row[1])->first();
             if($ch){
-                  // $this->putCombAttr($row,$ch);
+                  $this->putCombAttr($row,$ch);
                   if($row[12] != ''){
          
-                      $chksiz = ProductSize::where(
-                        ['product_id' =>  $ch->id,'size_id' => $row[12]]
-                        )->first();
+                     $chksiz = ProductSize::where(
+                        ['product_id' => $ch->id,'size_id' => $row[12]]
+                     )->first();
 
                      if(empty($chksiz)){
                         ProductSize::create(
@@ -61,20 +62,21 @@ class ProductImport implements ToCollection
                         'image_three' => $row[35] !='' ? $imglink.$row[1].'/'.$row[35].'.png' : '', 
                         'image_four' => $row[36] !='' ? $imglink.$row[1].'/'.$row[36].'.png' : '', 
                         'image_five' => $row[37] !='' ? $imglink.$row[1].'/'.$row[37].'.png' : '', 
-                        'dimension' => $row[22].'X'.$row[23].'X'.$row[24],
+                        'dimension' => $row[22] != '' ? $row[22].'X'.$row[23].'X'.$row[24] : '',
                         'country_of_origin' => $row[26],
                         'weight' => $row[21],
                         'design_code' => $row[1], 
                         'description' => $row[3], 
+                        'flat_colour' => $row[19],
                         'status' => 1, 
                         'is_discount' => 0
                      ]);
                      
                      // $this->putCombAttr($row,$product);
-                     if(!empty($row[19])){ 
-                        $pc = explode(",",$row[19]);
-                        $product->product_colour()->attach($pc);
-                     }
+                     // if(!empty($row[19])){ 
+                     //    $pc = explode(",",$row[19]);
+                     //    $product->product_colour()->attach($pc);
+                     // }
                      
                      if(!empty($row[12])){
                         $ps = explode(",",$row[12]);
@@ -180,10 +182,8 @@ class ProductImport implements ToCollection
 
     public function putCombAttr($row,$ch)
     {
-      $pc = explode(",",$row[19]);
-      if(!empty($pc)){
-         foreach($pc as $vl)
-         {
+
+      if($row[12] != ''){
             Inventory::create([
                'product_id'  => $ch->id,
                'colour_id'   => 0,
@@ -193,19 +193,18 @@ class ProductImport implements ToCollection
                'mrp'         => (float)$row[29],
                'stock'       => (int)$row[30]
             ]);
-         }
-
-      } else {
-         Inventory::create([
-            'product_id'  => $ch->id,
-            'colour_id'   => 0,
-            'size_id'     => $row[12] ? $row[12] : 0,
-            'sku'         => $row[0],
-            'cpu'         => (float)$row[28],
-            'mrp'         => (float)$row[29],
-            'stock'       => (int)$row[30]
-         ]);
+      } 
+      // else {
+      //    Inventory::create([
+      //       'product_id'  => $ch->id,
+      //       'colour_id'   => 0,
+      //       'size_id'     => $row[12] ? $row[12] : 0,
+      //       'sku'         => $row[0],
+      //       'cpu'         => (float)$row[28],
+      //       'mrp'         => (float)$row[29],
+      //       'stock'       => (int)$row[30]
+      //    ]);
             
-      }
+      // }
     }
 }

@@ -173,7 +173,6 @@ class ProductController extends Controller
             if($request->is_color && !empty($colorIds)){
                 $cid = array_unique(array_merge(...$colorIds), SORT_REGULAR);
                 $product->product_colour()->attach($cid);
-            
             }
             
             if($request->is_size && !empty($sizeIds)){
