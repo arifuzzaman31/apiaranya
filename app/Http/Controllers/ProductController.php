@@ -161,7 +161,10 @@ class ProductController extends Controller
             $product->image_three         = $request->product_image_three;
             $product->image_four          = $request->product_image_four;
             $product->image_five          = $request->image_five;
-            $product->dimension           = $request->dimension;
+            $product->height              = $request->height;
+            $product->width               = $request->width;
+            $product->length              = $request->length;
+            $product->unit                = $request->unit;
             $product->weight              = $request->weight;
             $product->design_code         = $request->design_code;
             $product->status              =  AllStatic::$active;
@@ -380,7 +383,10 @@ class ProductController extends Controller
             if($request->image_five != ''){
                 $product->image_five      = $request->image_five;
             }
-            $product->dimension           = $request->dimension;
+            $product->height              = $request->height;
+            $product->width               = $request->width;
+            $product->length              = $request->length;
+            $product->unit                = $request->unit;
             $product->flat_colour         = implode(",",$request->flat_colour);
             $product->weight              = $request->weight;
             $product->design_code         = $request->design_code;

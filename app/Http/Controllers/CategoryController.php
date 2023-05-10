@@ -69,12 +69,12 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        return response()->json(['status' => 'success', 'message' => 'Category Added Successfully!']);
+        // return response()->json(['status' => 'success', 'message' => $request->all()]);
         $validator = Validator::make($request->all(), [
             'category_name' => 'required',
             'category_image' => 'nullable',
-            'parent_category' => 'required',
-            'video_link' => 'required',
+            'parent_category' => 'nullable',
+            'video_link' => 'nullable',
         ]);
 
         try {
@@ -86,6 +86,7 @@ class CategoryController extends Controller
             $category->slug             = Str::slug($request->category_name);
             $category->parent_category  = $request->parent_category;
             $category->category_video   = $request->video_link;
+            $category->precedence       = $request->precedence;
             $category->status           = $request->status ? 1 : 0;
             if($request->file('category_image')){
                 $file = $request->file('category_image');

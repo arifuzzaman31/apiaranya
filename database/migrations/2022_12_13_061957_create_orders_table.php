@@ -45,7 +45,7 @@ class CreateOrdersTable extends Migration
             $table->tinyInteger('percel_type')->default(0)->comment = "0 for Box, 1 for DOC";
             $table->tinyInteger('is_claim_refund')->default(0)->comment = "0 for No Claim, 1 for claimed";
             $table->date('refund_claim_date')->nullable();
-            $table->tinyInteger('is_refunded')->default(0)->comment = "0 for refund not done, 1 for refund done";
+            $table->tinyInteger('is_refunded')->default(0)->comment = "0 for refund not done, 1 for refund done, 2 for reject";
             $table->date('refund_date')->nullable();
             $table->integer('pickup_point_no')->nullable()->comment = "pickup point id";
             $table->softDeletes();

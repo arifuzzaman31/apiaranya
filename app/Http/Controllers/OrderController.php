@@ -37,9 +37,22 @@ class OrderController extends Controller
         $byposition   = $request->get('byposition');
         $payment_status   = $request->get('payment_status');
         $status   = $request->get('status');
+        $from   = $request->get('from');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
-        $order = Order::with(['user','delivery'])->orderBy('id','desc');
 
+        $order = Order::with(['user','delivery'])->orderBy('id','desc');
+        if($from != '' && $from == 'request-refund'){
+            $order = $order->where('is_refunded',AllStatic::$inactive)->where('is_claim_refund',AllStatic::$active);
+        }
+
+        if($from != '' && $from == 'approve-refund'){
+            $order = $order->where('is_refunded',AllStatic::$active)->where('is_claim_refund',AllStatic::$active);
+        } 
+      
+        if($from != '' && $from == 'reject-refund'){
+            $order = $order->where('is_refunded',AllStatic::$failed)->where('is_claim_refund',AllStatic::$active);
+        } 
+      
         if($keyword != ''){
             $order = $order->where('order_id','like','%'.$keyword.'%');
         }
@@ -114,13 +127,24 @@ class OrderController extends Controller
     }
 
 
-    public function orderRefund($id)
+    public function orderRefund($id,$status)
     {
         try {
             $order = Order::find($id);
             if($order->is_refunded == AllStatic::$paid){
                 return response()->json(['status' => 'error','message' => 'Already Refunded']);
             }
+            if($status == 2) {
+                DB::table('payments')->where('order_id', $order->id)->update([
+                    'is_refunded' => AllStatic::$failed,
+                    'updated_at'  => date("Y-m-d H:i:s")
+                ]);
+             
+                $order->is_refunded = AllStatic::$failed;
+                $order->update();
+                return response()->json(['status' => 'success','message' => 'Refund Request Rejected!']);
+            }
+
             $bank_tran_id=urlencode($order->transaction_id);
             $refund_amount=urlencode((($order->total_price + $order->shipping_amount + $order->vat_amount) - ($order->discount + $order->coupon_discount)));
             $refund_remarks=urlencode('Out of Stock');

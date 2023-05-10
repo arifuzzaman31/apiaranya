@@ -354,6 +354,7 @@ export default {
         @pagination-change-page="getProduct"
     />
     <product-detail :product="singleproduct"></product-detail>
+    
     <div id="addToCampModal" class="modal animated fadeInUp custo-fadeInUp" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->

@@ -20,7 +20,7 @@ class ProductImport implements ToCollection
     public function collection(Collection $rows)
     {
         unset($rows[0]);
-      //   return count($rows);
+         // return count($rows);
         $data = array_filter($rows->toArray(),function ($number) {
                  return $number[0] !== null;
              });
@@ -29,9 +29,9 @@ class ProductImport implements ToCollection
         {
             $ch = Product::where('design_code',$row[1])->first();
             if($ch){
-                  $this->putCombAttr($row,$ch);
                   if($row[12] != ''){
-         
+                     $this->putCombAttr($row,$ch);
+                  
                      $chksiz = ProductSize::where(
                         ['product_id' => $ch->id,'size_id' => $row[12]]
                      )->first();

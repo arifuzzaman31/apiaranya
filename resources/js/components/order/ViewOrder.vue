@@ -333,6 +333,7 @@ export default {
                                     <th>Customer</th>
                                     <th>Price</th>
                                     <th>Shipping</th>
+                                    <th>P-Type</th>
                                     <th>Payment</th>
                                     <th>PaymentBy</th>
                                     <th>Refund Claim Date</th>
@@ -349,6 +350,10 @@ export default {
                                         <td>{{ order.user.name }}</td>
                                         <td>{{ order.total_price }}</td>
                                         <td>{{ order.shipping_amount }}</td>
+                                        <td>
+                                            <span v-if="order.payment_status == 0" class="badge badge-primary">COD</span>
+                                            <span v-else class="badge badge-light">Others</span>
+                                        </td>
                                         <td>
                                             <span v-if="order.payment_status == 0" class="badge badge-warning">Unpaid</span>
                                             <span v-if="order.payment_status == 1" class="badge badge-primary">Paid</span>
@@ -387,7 +392,12 @@ export default {
                                     </tr>					
                                 </template>
                             </tbody>
-                            <h4 v-else> No Order Found</h4>
+                            <tbody v-else class="text-center mt-3">
+                                <tr>
+                                    <td colspan="12">No Order Found</td>
+                                </tr>
+                                 
+                            </tbody>
                         </table>
                             <Bootstrap4Pagination
                                 :data="orders"

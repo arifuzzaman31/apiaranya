@@ -26,6 +26,7 @@ use App\Http\Controllers\VarietyController;
 use App\Http\Controllers\CareController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CountryController;
+use App\Http\Controllers\RefundController;
 // use App\Http\Controllers\Payment\SslController;
 
 /*
@@ -88,6 +89,11 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     Route::resource('ingredient',IngredientsController::class);
     Route::resource('care',CareController::class);
     Route::resource('country',CountryController::class);
+    Route::view('refund','pages.refund.refund')->name('refund');
+    Route::view('approve-refund','pages.refund.refund')->name('approve-refund');
+    Route::view('reject-refund','pages.refund.refund')->name('reject-refund');
+    Route::get('refund-configure',[RefundController::class,'configure'])->name('refund-configure');
+    Route::post('refund/settings/update',[RefundController::class,'update']);
 
     // Company
     Route::resource('vat-tax',CompanyController::class);
@@ -110,7 +116,7 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     Route::get('get-user-order/{id}',[OrderController::class,'getUserOrder']);
     Route::delete('order/{id}',[OrderController::class,'destroy']);
     Route::get('order-shipment/{id}',[OrderController::class,'orderShipment']);
-    Route::get('order-refund/{id}',[OrderController::class,'orderRefund']);
+    Route::get('order-refund/{id}/refund/{status}',[OrderController::class,'orderRefund']);
 
     //customer
     Route::get('customers',[CustomerController::class,'index'])->name('customers');

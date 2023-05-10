@@ -38,7 +38,10 @@ export default {
                 product_image_three : '',
                 product_image_four : '',
                 design_code: '',
-                dimension: '',
+                unit: '',
+                height: '',
+                width: '',
+                length: '',
                 weight: '',
                 care: [],
                 vat: 1,
@@ -213,7 +216,10 @@ export default {
                 product_image_three : '',
                 product_image_four : '',
                 design_code: '',
-                dimension: '',
+                unit: '',
+                height: '',
+                width: '',
+                length: '',
                 weight: '',
                 care: [],
                 vat: 1,
@@ -728,7 +734,7 @@ export default {
                         <div class="form-row">
                             <div class="col-md-3 mb-3">
                                 <label for="design_code">Design Code</label>
-                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('design_code') ? 'is-invalid' : ''" id="design_code" placeholder="Design Code" v-model="form.design_code">
+                                <input type="text" class="form-control form-control-sm" :class="validation_error.hasOwnProperty('design_code') ? 'is-invalid' : ''" id="design_code" placeholder="Design Code" v-model="form.design_code">
                                 <div
                                         v-if="validation_error.hasOwnProperty('design_code')"
                                         class="invalid-feedback"
@@ -737,13 +743,25 @@ export default {
                                     </div>
                             </div>
                          
-                            <div class="col-md-3 mb-3">
-                                <label for="Dimension">Dimension</label>
-                                <input type="text" class="form-control" id="dimension" placeholder="Example: 29 × 27 × 5 cm" v-model="form.dimension" >
+                            <div class="col-md-1 mb-3">
+                                <label for="length">Length</label>
+                                <input type="number" class="form-control form-control-sm" id="length" placeholder="Enter Length" v-model="form.length" />
                             </div>
-                            <div class="col-md-3 mb-3">
+                            <div class="col-md-1 mb-3">
+                                <label for="height">Height</label>
+                                <input type="number" class="form-control form-control-sm" id="height" placeholder="Enter Height" v-model="form.height" />
+                            </div>
+                            <div class="col-md-1 mb-3">
+                                <label for="width">Width</label>
+                                <input type="number" class="form-control form-control-sm" id="width" placeholder="Enter Width" v-model="form.width" />
+                            </div>
+                            <div class="col-md-1 mb-3">
+                                <label for="unit">Unit</label>
+                                <input type="text" class="form-control form-control-sm" id="unit" placeholder="Enter Width" v-model="form.unit" />
+                            </div>
+                            <div class="col-md-2 mb-3">
                                 <label for="weight">Weight</label>
-                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('weight') ? 'is-invalid' : ''" id="weight" placeholder="Example: 0.45 kg" v-model="form.weight" >
+                                <input type="text" class="form-control form-control-sm" :class="validation_error.hasOwnProperty('weight') ? 'is-invalid' : ''" id="weight" placeholder="Example: 0.45 kg" v-model="form.weight" >
                                 <div
                                         v-if="validation_error.hasOwnProperty('weight')"
                                         class="invalid-feedback"
@@ -753,7 +771,7 @@ export default {
                             </div>
                             <div class="form-group col-md-3 mb-3">
                                 <label for="product-LeadTime">Lead Time</label>
-                                <input type="text" class="form-control" :class="validation_error.hasOwnProperty('lead_time') ? 'is-invalid' : ''" id="LeadTime-name" placeholder="Lead Time" v-model="form.lead_time" >
+                                <input type="text" class="form-control form-control-sm" :class="validation_error.hasOwnProperty('lead_time') ? 'is-invalid' : ''" id="LeadTime-name" placeholder="Lead Time" v-model="form.lead_time" >
                                     <div
                                         v-if="validation_error.hasOwnProperty('lead_time')"
                                         class="invalid-feedback"
@@ -848,14 +866,26 @@ export default {
                 <div class="row">
                     <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex">
                         <h5>Attribute</h5>
+                        <div class="ml-5 d-flex">
+                            <div class="billing-cycle-radios">
+                                <div class="radio billed-yearly-radio">
+                                    <div class="d-flex justify-content-center">
+                                        <span class="txt-monthly mr-2">Has Variations?</span>
+                                        <label class="switch s-icons s-outline  s-outline-primary">
+                                            <input v-model="form.color_size" :checked="form.color_size"  type="checkbox" id="colour">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
                     </div>                 
-                    
-                </div>               
-                    
-                </div>
+                </div>         
             </div>
+        </div>
             
-            <div class="statbox widget box box-shadow">
+            <div class="statbox widget box box-shadow" v-if="form.color_size">
                 <div class="widget-content ">
                     <div class="row text-center">
                         <div class="col-3  text-success">
@@ -947,6 +977,41 @@ export default {
                         class="btn btn-warning"
                     >Add More
                     </a>
+            </div>
+
+            <div class="statbox widget box box-shadow" v-else>
+                <div class="widget-content ">
+                    <div class="row text-center">
+                        <div class="col-3 text-success">
+                            <b>SKU</b>
+                        </div>
+                        <div class="col-3 text-success">
+                            <b>CPU</b>
+                        </div>
+                        <div class="col-3 text-success">
+                            <b>MRP</b>
+                        </div>
+                        <div class="col-3 text-success">
+                            <b>Qty</b>
+                        </div>
+                        
+                    </div>
+                    <div class="row" v-for="(qt,index) in form.attrqty" :key="index">
+                        <div class="form-group col-md-3">
+                            <input type="text"  class="form-control" id="sku" v-model="qt.sku" placeholder="SKU" required>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input type="number"  class="form-control" id="sku" v-model="qt.cpu" placeholder="CPU" required>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input type="number"  class="form-control" id="sku" v-model="qt.mrp" placeholder="MRP" required>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input type="number"  class="form-control" id="qty" v-model="qt.qty" placeholder="qty" required>
+                        </div>
+                        
+                    </div>
+                </div>
             </div>
 
             <div class="statbox widget box box-shadow">
