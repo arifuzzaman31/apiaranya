@@ -48,7 +48,7 @@ export default {
             const formattedDate = newYears.toDateString().slice(3);
             const valuedate = formattedDate.split(' ');
             // console.log(valuedate);
-            return valuedate[1] + ' ' + valuedate[2] + ', ' + valuedate[3];
+            return valuedate[2] + ' ' + valuedate[1] + ', ' + valuedate[3];
             // const formattedDate = format(newYears.toDateString(), 'MMM dd, yyyy');
             // return formattedDate;
             

@@ -109,14 +109,15 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     Route::get('order',[OrderController::class,'index'])->name('order');
     Route::get('get-order',[OrderController::class,'getOrder'])->name('get-order');
     Route::get('get-order-excel',[OrderController::class,'getOrderExcel'])->name('get-order-excel');
-    Route::post('update/order/status',[OrderController::class,'updateOrderStatus']);
-    Route::get('orders-details/{id}',[OrderController::class,'orderDetails']);
+    Route::post('update/order/status/{id?}',[OrderController::class,'updateOrderStatus']);
+    // Route::get('orders-details/{id}',[OrderController::class,'orderDetails']);
     Route::post('order/cancel',[OrderController::class,'orderCancel']);
     Route::post('update-payment-status/{id}',[OrderController::class,'orderPaymentStatus']);
     Route::get('get-user-order/{id}',[OrderController::class,'getUserOrder']);
     Route::delete('order/{id}',[OrderController::class,'destroy']);
     Route::get('order-shipment/{id}',[OrderController::class,'orderShipment']);
     Route::get('order-refund/{id}/refund/{status}',[OrderController::class,'orderRefund']);
+    Route::get('order-details/{order_id}',[OrderController::class,'orderDetails']);
 
     //customer
     Route::get('customers',[CustomerController::class,'index'])->name('customers');

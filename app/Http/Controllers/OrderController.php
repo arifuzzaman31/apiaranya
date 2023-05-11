@@ -11,7 +11,7 @@ use App\Models\UserBillingInfo;
 use App\Models\UserShippingInfo;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
-use DB;
+use DB,PDF;
 
 class OrderController extends Controller
 {
@@ -90,13 +90,22 @@ class OrderController extends Controller
         return response()->json($order);
     }
 
-    public function orderDetails($id)
+    public function orderDetails(Request $request,$id)
     {
         // $order = Order::find($id)->first();
-        $order = Order::with('user_shipping_info','user_billing_info')->find($id);
+        $order = Order::with('user','delivery','user_shipping_info','user_billing_info')->find($id);
         $details = OrderDetails::with(['product','colour','size','fabric'])->where('order_id',$id)->get();
 
-        return response()->json(['details' => $details,'order' => $order]);
+        if($request->from == 'pdf'){
+            $pdf = \PDF::loadView('invoice');
+            return $pdf->download('invoice.pdf');
+        }
+        return view('pages.order.order_details',['details' => $details,'order' => $order]);
+
+        // $order = Order::with('user_shipping_info','user_billing_info')->find($id);
+        // $details = OrderDetails::with(['product','colour','size','fabric'])->where('order_id',$id)->get();
+
+        // return response()->json(['details' => $details,'order' => $order]);
     }
 
     public function orderCancel(Request $request)
@@ -226,19 +235,19 @@ class OrderController extends Controller
             $delivery = Delivery::where('order_id',$request->order_id)->first();
             if(!empty($delivery)){
                 if($request->order_position == AllStatic::$processing){
-                    $delivery->process_date = $request->date;
+                    $delivery->process_date = $request->date ? $request->date : date('Y-m-d');
                     $delivery->process_state = AllStatic::$processing;
                     $delivery->process_value = deliveryPosition(AllStatic::$processing);
                 }
 
                 if($request->order_position == AllStatic::$on_delivery){
-                    $delivery->on_delivery_date = $request->date;
+                    $delivery->on_delivery_date = $request->date ? $request->date : date('Y-m-d');
                     $delivery->on_delivery_state = AllStatic::$on_delivery;
                     $delivery->on_delivery_value = deliveryPosition(AllStatic::$on_delivery);
                 }
 
                 if($request->order_position == AllStatic::$delivered){
-                    $delivery->delivery_date = $request->date;
+                    $delivery->delivery_date = $request->date ? $request->date : date('Y-m-d');
                     $delivery->delivery_state = AllStatic::$delivered;
                     $delivery->delivery_value = deliveryPosition(AllStatic::$delivered);
                 }

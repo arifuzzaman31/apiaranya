@@ -24,6 +24,7 @@ class CreateOrdersTable extends Migration
             $table->double('vat_amount')->default(0)->comment = "value added vat amount";
             $table->integer('total_item')->default(0);
             $table->string('shipping_method')->nullable();
+            $table->string('payment_via')->nullable()->comment = "0 for COD,1 Online";
             $table->string('payment_method')->nullable()->comment = "0 for COD/1 for MPAY/ 2 for POS/ 3 for CCRD/4 for BOD if not set default COD";
             $table->string('payment_method_name')->nullable()->comment = "ssl,amex,stripe";
             $table->string('transaction_id')->nullable();

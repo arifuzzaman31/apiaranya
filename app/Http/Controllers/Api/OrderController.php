@@ -41,11 +41,12 @@ class OrderController extends Controller
             $order->vat_rate               = 7.5;
             $order->vat_amount             = (float)($request->totalPriceWithTax - $request->totalPrice);
             $order->payment_method         = 0;
+            $order->payment_via            = $request->data['paymentMethod'] == 'online' ? 1 : 0;
             $order->shipping_amount        = $shipCharge;
             $order->total_item             = $request->totalAmount ? $request->totalAmount : 1;
-            $order->total_price           = (float)$request->totalPrice;
+            $order->total_price            = (float)$request->totalPrice;
             $order->coupon_discount        = $request->coupon_discount ? $request->coupon_discount : 0;
-            $order->coupon                  = $request->coupon_code;
+            $order->coupon                 = $request->coupon_code;
             $order->discount               = 0;
             $order->payment_status         = 0;
             $order->delivery_type          = $shipCharge == 0 ? 1 : 0;
@@ -68,7 +69,7 @@ class OrderController extends Controller
                 $details->fabric_id           = 0;
                 $details->product_id          = $value['id'];
                 $details->size_id             = $value['size_id'];
-                $details->colour_id           = $value['color_id'];
+                $details->colour_id           = $value['color_id'] ? $value['color_id'] : 0;
                 $details->user_id             = $request->isGuestCheckout == false ? Auth::user()->id : 0;
                 $details->quantity            = $value['amount'];
                 $details->selling_price       = $value['price'];
