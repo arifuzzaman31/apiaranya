@@ -7,61 +7,17 @@
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
       <title>Document</title>
    </head>
-   <body>
-      <section class="w-75 mx-auto">
-         <h4 class="shadow-lg p-3 bg-white rounded mt-3">Order Details</h4>
-         <div >
-            <!-- <div class="row gx-5">
-               <div class="col-md-9 bg-light shadow-lg p-3 bg-white rounded mt-1">
-                 First, but unordered
-               </div>
-               <div class="col-md-2 bg-light shadow-lg p-3 bg-white rounded mt-1">
-                 Second, but last
-               </div>
-               
-               </div> -->
+   <body style="max-width:23cm">
+      <section class="">
             <div class=" overflow-hidden">
                <div class="row gx-2">
-                  <div class="col-md-10">
+                  <div class="col-md-12">
                      <div class="p-3 border shadow-lg bg-white rounded">
                         <div class="container">
                            <div class="row">
                               <div class="col-md-3">
                                  <h5>Invoice <span class="text-warning">#G-Store:9</span> </h5>
                                  <p class="text-secondary">Order Date: 22 Mar, 2023</p>
-                              </div>
-                              <div class="col-md-3">
-                                 <div class="dropdown">
-                                    <button class="btn btn-light dropdown-toggle p-2 w-100 border shadow-lg bg-white rounded" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Payment Status
-                                    </button>
-                                    <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
-                                       <a class="dropdown-item" href="#">Paid</a>
-                                       <a class="dropdown-item" href="#">Unpaid</a>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="col-md-3">
-                                 <div class="dropdown">
-                                    <button class="btn btn-light dropdown-toggle w-100 p-2 w-100 border shadow-lg bg-white rounded" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Delivery Status
-                                    </button>
-                                    <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
-                                       <a class="dropdown-item" href="#">Order places</a>
-                                       <a class="dropdown-item" href="#">Pending</a>
-                                       <a class="dropdown-item" href="#">Pending</a>
-                                       <a class="dropdown-item" href="#">Pending</a>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="col-md-3">
-                                 <button type="button" class="btn btn-success w-100">
-                                    <svg class="px-1" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
-                                       <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                       <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                                    </svg>
-                                    Download Invoice
-                                 </button>
                               </div>
                            </div>
                         </div>
@@ -149,20 +105,10 @@
                         </div>
                      </div>
                   </div>
-                  <div class="col-md-2">
-                     <div class="p-4 border shadow-lg bg-white rounded">
-                        <h5>Order Logs</h5>
-                        <div class="form-check mt-3">
-                           <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                           <label class="form-check-label" for="flexRadioDefault1">
-                           No logs found
-                           </label>
-                        </div>
-                     </div>
-                  </div>
+         
                </div>
             </div>
-         </div>
+
       </section>
    </body>
    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

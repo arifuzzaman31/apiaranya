@@ -97,6 +97,7 @@ class OrderController extends Controller
         $details = OrderDetails::with(['product','colour','size','fabric'])->where('order_id',$id)->get();
 
         if($request->from == 'pdf'){
+            // return view('invoice');
             $pdf = \PDF::loadView('invoice');
             return $pdf->download('invoice.pdf');
         }
