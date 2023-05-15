@@ -404,12 +404,11 @@ class OrderController extends Controller
     public function orderItemRefundClaim($item_id,$order_id = null)
     {
         $configure = DB::table('refund_configure')->first();
+        $order = OrderDetails::find($item_id);
 
-        $order = OrderDetails::find($item_id)->first();
-        // if($configure->status == 1 && $configure->refund_within_days > date('Y-m-d')) {
-        //     return 
-        // }
-
+        if(($configure->status == AllStatic::$active) && $order->created_at->addDays($configure->refund_within_days)->format('Y-m-d') <= date('Y-m-d')) {
+            return response()->json(['status' => 'error','message' => 'Refund Date Expired!']);
+        }
         $order->is_claim_refund = AllStatic::$active;
         $order->refund_claim_date = date('Y-m-d');
         $order->update();

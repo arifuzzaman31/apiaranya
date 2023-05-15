@@ -32,6 +32,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('order/cancel',[OrderController::class,'orderCancel']);
     Route::get('order-item/{item_id}/cliam-refund/{order_id?}', [OrderController::class, 'orderItemRefundClaim']);
 });
+Route::get('order-item/{item_id}/cliam-refund/{order_id?}', [OrderController::class, 'orderItemRefundClaim']);
 Route::get('order-details/{id}', [OrderController::class, 'orderDetails']);
 Route::post('guest-order', [OrderController::class, 'order']);
 Route::post('auth/register', [AuthController::class, 'createUser']);
