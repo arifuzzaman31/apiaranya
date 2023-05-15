@@ -384,7 +384,7 @@ class OrderController extends Controller
     {
         $noPagination = $request->get('no_paginate');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
-        $order = DB::table('orders')
+        $order = Order::with('order_details')
                 ->where('user_id',Auth::id())->orderBy('id','desc');
         if($noPagination != ''){
             $order = $order->get();
@@ -401,27 +401,19 @@ class OrderController extends Controller
         return response()->json($details);
     }
 
-    public function orderRefundClaim($id)
+    public function orderItemRefundClaim($item_id,$order_id = null)
     {
-        $order = Order::find($id)->first();
-        if($order->payment_status == AllStatic::$paid && $order->is_claim_refund == AllStatic::$not_paid)
-        {
-            $order->is_claim_refund = AllStatic::$active;
-            $order->refund_claim_date = date('Y-m-d');
-            $order->update();
+        $configure = DB::table('refund_configure')->first();
 
-            DB::table('payments')->where('order_id', $order->id)->update([
-                'is_claim_refund' => AllStatic::$active,
-                'refund_claim_date' => date("Y-m-d"),
-                'updated_at'    => date("Y-m-d H:i:s")
-            ]);
-            return $this->successMessage('Refund Claim Successfull!');
-        } else {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'No Payment found for this Order!'
-            ]);
-        }
+        $order = OrderDetails::find($item_id)->first();
+        // if($configure->status == 1 && $configure->refund_within_days > date('Y-m-d')) {
+        //     return 
+        // }
+
+        $order->is_claim_refund = AllStatic::$active;
+        $order->refund_claim_date = date('Y-m-d');
+        $order->update();
+        return $this->successMessage('Refund Claim Successful!');
     }
 
     public function invoiceToMail($order_id)

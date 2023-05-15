@@ -94,6 +94,8 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     Route::view('reject-refund','pages.refund.refund')->name('reject-refund');
     Route::get('refund-configure',[RefundController::class,'configure'])->name('refund-configure');
     Route::post('refund/settings/update',[RefundController::class,'update']);
+    Route::get('refund-item-detail',[RefundController::class,'refundItemDetail']);
+    Route::post('order-item-refund',[RefundController::class,'orderItemRefund']);
 
     // Company
     Route::resource('vat-tax',CompanyController::class);
@@ -116,7 +118,6 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     Route::get('get-user-order/{id}',[OrderController::class,'getUserOrder']);
     Route::delete('order/{id}',[OrderController::class,'destroy']);
     Route::get('order-shipment/{id}',[OrderController::class,'orderShipment']);
-    Route::get('order-refund/{id}/refund/{status}',[OrderController::class,'orderRefund']);
     Route::get('order-details/{order_id}',[OrderController::class,'orderDetails']);
 
     //customer

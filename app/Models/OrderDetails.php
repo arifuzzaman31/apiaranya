@@ -51,4 +51,15 @@ class OrderDetails extends Model
 
         ]);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class)->withDefault([
+            'id'    => 0,
+            'first_name' => 'Unknown',
+            'last_name' => 'Unknown',
+            'name' => 'Unknown'
+
+        ]);
+    }
 }

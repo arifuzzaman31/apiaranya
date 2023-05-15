@@ -3,8 +3,8 @@ import axios from 'axios';
 import Mixin from '../../mixer';
 import { Bootstrap4Pagination } from 'laravel-vue-pagination';
 export default {
-    name: 'order',
-    props:['pagefrom','pagetitile'],
+    name: 'refund',
+    props:['pagefrom','pagetitle'],
     mixins: [Mixin],
     components:{
         Bootstrap4Pagination
@@ -12,7 +12,7 @@ export default {
 
     data(){
         return {
-            orders: [],
+            refund_items: [],
             order_details: [],
             shipment_info: [],
             errors: [],
@@ -25,17 +25,18 @@ export default {
             },
             refund:{
                 id: '',
-                refund_status: ''
+                refund_status: '',
+                reason: ''
             },
             url: baseUrl
         }
     },
 
     methods: {
-        getOrder(page = 1){
-            axios.get(baseUrl+`get-order?from=${this.pagefrom}&page=${page}&per_page=10&keyword=${this.search}`)
+        getRefundItem(page = 1){
+            axios.get(baseUrl+`refund-item-detail?from=${this.pagefrom}&page=${page}&per_page=10&keyword=${this.search}`)
             .then(result => {
-                this.orders = result.data;
+                this.refund_items = result.data;
             })
             .catch(errors => {
                 console.log(errors);
@@ -44,7 +45,7 @@ export default {
 
         getSearch(){
             if(this.search.length < 3) return ;
-            this.getOrder()
+            this.getRefundItem()
         },
 
         deleteOrder(id){
@@ -61,7 +62,7 @@ export default {
                     axios.delete(baseUrl+'order/'+id).then(
                         response => {
                             this.formReset()
-                            this.getOrder()
+                            this.getRefundItem()
                             this.successMessage(response.data)
                         }
                     ). catch(error => {
@@ -82,8 +83,8 @@ export default {
             });  
         },
 
-        refundOrder(order){
-            this.refund.id = order.id
+        refundOrder(item){
+            this.refund.id = item.id
             // this.refund.refund_status = order.is_refunded
             $("#refundModifyModal").modal('show');
         },
@@ -91,7 +92,7 @@ export default {
         refundModify(){
             Swal.fire({
                 title: 'Are you sure?',
-                text: "Do You Make Refund!",
+                text: "Refund Status Will be Changed!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -99,10 +100,10 @@ export default {
                 confirmButtonText: 'Yes, Do it!'
                 }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.get(baseUrl+`order-refund/${this.refund.id}/refund/${this.refund.refund_status}`).then(
+                    axios.post(baseUrl+`order-item-refund`,this.refund).then(
                         response => {
-                            $("#refundModifyModal").modal('show');
-                            this.getOrder()
+                            $("#refundModifyModal").modal('hide');
+                            this.getRefundItem()
                             this.successMessage(response.data)
                         }
                     ). catch(error => {
@@ -139,14 +140,13 @@ export default {
             this.filterdata = {
                 refund_state: ''
             }
-            this.getOrder()
+            this.getRefundItem()
         },
 
     },
 
     mounted(){
-        this.getOrder()
-        console.log(this.pagefrom)
+        this.getRefundItem()
     }
 }
 </script>
@@ -158,7 +158,7 @@ export default {
                 <div class="widget-header">
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
-                            <h4>{{ pagetitile }}</h4>
+                            <h4>{{ pagetitle }}</h4>
                         </div>                          
                     </div>
                 </div>       
@@ -177,29 +177,31 @@ export default {
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Order Number</th>
                                     <th>User</th>
+                                    <th>Order Code</th>
+                                    <th>Product</th>
                                     <th>Price</th>
-                                    <th class="text-center">Action</th>
+                                    <th>Payment</th>
+                                    <th v-show="pagefrom == 'request-refund'" class="text-center">Action</th>
                                 </tr>
                             </thead>
-                            <tbody v-if="orders.data && orders.data.length > 0">
-                                <template v-for="(order,index) in orders.data" :key="index">
+                            <tbody v-if="refund_items.data && refund_items.data.length > 0">
+                                <template v-for="(item,index) in refund_items.data" :key="index">
                                     <tr>
-                                        <td>{{ order.id }}</td>
-                                        <td>{{ order.order_id }}</td>
-                                        <td>{{ order.user.name }}</td>
-                                        <td>{{ order.total_price }}</td>
-                                        <td class="text-center">
+                                        <td>{{ index+1 }}</td>
+                                        <td>{{ item.user.name }}</td>
+                                        <td>{{ '#G-Store:'+item.order_id }}</td>
+                                        <td>{{ item.product.product_name }}</td>
+                                        <td>{{ item.selling_price }}</td>
+                                        <td>{{ item.order.payment_status == 1 ? 'Paid' : 'Unpaid' }}</td>
+                                        <td class="text-center" v-show="pagefrom == 'request-refund'">
                                             <div class="dropdown custom-dropdown">
                                                 <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
                                                 </a>
 
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink2">
-                                                    <a class="dropdown-item" @click="orderDetailModal(order)" href="javascript:void(0);">Order Details</a>
-                                                    <a class="dropdown-item" v-if="(order.payment_status == 1) && (order.is_claim_refund == 1)" @click="refundOrder(order)" href="javascript:void(0);">Refund</a>
-                                                    <a class="dropdown-item" @click="deleteOrder(order.id)" href="javascript:void(0);">Delete</a>
+                                                    <a class="dropdown-item" @click="refundOrder(item)" href="javascript:void(0);">Refund</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -208,13 +210,13 @@ export default {
                             </tbody>
                             <tbody v-else class="text-center mt-3">
                                 <tr>
-                                    <td colspan="7">No Refund Found</td>
+                                    <td colspan="6">No Refund Found</td>
                                 </tr>
                                  
                             </tbody>
                         </table>
                             <Bootstrap4Pagination
-                                :data="orders"
+                                :data="refund_items"
                                 @pagination-change-page="getOrder"
                             />
                     </div>
@@ -324,9 +326,13 @@ export default {
                                         <label for="">Refund Action</label>
                                         <select class="form-control" v-model="refund.refund_status">
                                             <option value="">Select Action</option>
-                                            <option value="1">Refund</option>
+                                            <option value="1">Approve</option>
                                             <option value="2">Reject</option>
                                         </select>
+                                    </div>
+                                    <div class="form-group" v-if="refund.refund_status == 2">
+                                        <label for="">Reject Reason</label>
+                                        <textarea v-model="refund.reason" class="form-control" rows="3"></textarea>
                                     </div>
                                     <div class="modal-footer md-button">
                                         <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12" @click="formReset"></i>Discard</button>
