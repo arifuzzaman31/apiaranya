@@ -79,48 +79,48 @@ class RefundController extends Controller
                 return response()->json(['status' => 'success','message' => 'Refund Request Rejected!']);
             }
 
-            $order_detail->is_refunded = AllStatic::$active;
-            $order_detail->refund_date = date("Y-m-d");
-            $order_detail->update();
-            return response()->json(['status' => 'success','message' => 'Refund Approved!']);
+            // $order_detail->is_refunded = AllStatic::$active;
+            // $order_detail->refund_date = date("Y-m-d");
+            // $order_detail->update();
+            // return response()->json(['status' => 'success','message' => 'Refund Approved!']);
 
-            // $bank_tran_id=urlencode($order_detail->transaction_id);
-            // $refund_amount=urlencode((($order_detail->total_price + $order_detail->shipping_amount + $order_detail->vat_amount) - ($order_detail->discount + $order_detail->coupon_discount)));
-            // $refund_remarks=urlencode('Out of Stock');
-            // $store_id=urlencode(config('app.storeid'));
-            // $store_passwd=urlencode(config('app.storepassw'));
+            $bank_tran_id=urlencode($order_detail->transaction_id);
+            $refund_amount=urlencode(($order_detail->selling_price + $order_detail->vat_amount));
+            $refund_remarks=urlencode('Out of Stock');
+            $store_id=urlencode(config('app.storeid'));
+            $store_passwd=urlencode(config('app.storepassw'));
 
-            // $requested_url = ("https://sandbox.sslcommerz.com/validator/api/merchantTransIDvalidationAPI.php?refund_amount=$refund_amount&refund_remarks=$refund_remarks&bank_tran_id=$bank_tran_id&store_id=$store_id&store_passwd=$store_passwd&v=1&format=json");
+            $requested_url = ("https://sandbox.sslcommerz.com/validator/api/merchantTransIDvalidationAPI.php?refund_amount=$refund_amount&refund_remarks=$refund_remarks&bank_tran_id=$bank_tran_id&store_id=$store_id&store_passwd=$store_passwd&v=1&format=json");
 
-            // $handle = curl_init();
-            // curl_setopt($handle, CURLOPT_URL, $requested_url);
-            // curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-            // curl_setopt($handle, CURLOPT_SSL_VERIFYHOST, false); # IF YOU RUN FROM LOCAL PC
-            // curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, false); # IF YOU RUN FROM LOCAL PC
+            $handle = curl_init();
+            curl_setopt($handle, CURLOPT_URL, $requested_url);
+            curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($handle, CURLOPT_SSL_VERIFYHOST, false); # IF YOU RUN FROM LOCAL PC
+            curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, false); # IF YOU RUN FROM LOCAL PC
 
-            // $result = curl_exec($handle);
+            $result = curl_exec($handle);
 
-            // $code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+            $code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
 
-            // if($code == 200 && !( curl_errno($handle)))
-            // {
+            if($code == 200 && !( curl_errno($handle)))
+            {
 
                 # TO CONVERT AS ARRAY
                 # $result = json_decode($result, true);
                 # $status = $result['status'];
 
                 # TO CONVERT AS OBJECT
-                // $result = json_decode($result);
+                $result = json_decode($result);
 
                 # TRANSACTION INFO
-                // $status = $result->status;
-                // $bank_tran_id = $result->bank_tran_id;
-                // $trans_id = $result->trans_id;
-                // $refund_ref_id = $result->refund_ref_id;
-                // $errorReason = $result->errorReason;
+                $status = $result->status;
+                $bank_tran_id = $result->bank_tran_id;
+                $trans_id = $result->trans_id;
+                $refund_ref_id = $result->refund_ref_id;
+                $errorReason = $result->errorReason;
 
                 # API AUTHENTICATION
-                // $APIConnect = $result->APIConnect;
+                $APIConnect = $result->APIConnect;
 
                 // DB::table('payments')->where('order_id', $order->id)->update([
                 //     'is_refunded' => AllStatic::$active,
@@ -128,16 +128,15 @@ class RefundController extends Controller
                 //     'refund_info' => json_encode($result),
                 //     'updated_at'    => date("Y-m-d H:i:s")
                 // ]);
-             
-                // $order_detail->is_refunded = AllStatic::$active;
-                // $order_detail->refund_date = date("Y-m-d");
-                // $order_detail->update();
-           
-                
-               // return response()->json(['status' => $status,'message' => 'Refund Successfully Done']);
-            // } else {
-            //     return $this->errorMessage();
-            // }
+            
+                $order_detail->is_refunded = AllStatic::$active;
+                $order_detail->refund_date = date("Y-m-d");
+                $order_detail->refund_info = json_encode($result);
+                $order_detail->update();
+               return response()->json(['status' => $status,'message' => 'Refund Successfully Done']);
+            } else {
+                return $this->errorMessage();
+            }
             
 
         } catch (\Throwable $th) {

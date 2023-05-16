@@ -69,7 +69,7 @@ class OrderController extends Controller
                 $details->fabric_id           = 0;
                 $details->product_id          = $value['id'];
                 $details->size_id             = $value['size_id'];
-                $details->colour_id           = $value['color_id'] ? $value['color_id'] : 0;
+                $details->colour_id           = 0;
                 $details->user_id             = $request->isGuestCheckout == false ? Auth::user()->id : 0;
                 $details->quantity            = $value['amount'];
                 $details->selling_price       = $value['price'];
@@ -401,20 +401,26 @@ class OrderController extends Controller
         return response()->json($details);
     }
 
-    public function orderItemRefundClaim($item_id,$order_id = null)
+    public function orderItemRefundClaim(Request $request)
     {
         $configure = DB::table('refund_configure')->first();
-        $order = OrderDetails::find($item_id);
+        $order = OrderDetails::find($request->item_id);
 
-        if(($configure->status == AllStatic::$active) && $order->created_at->addDays($configure->refund_within_days)->format('Y-m-d') <= date('Y-m-d')) {
-            return response()->json(['status' => 'error','message' => 'Refund Date Expired!']);
+        if($configure->status == AllStatic::$active){
+		if($order->created_at->addDays($configure->refund_within_days)->format('Y-m-d') <= date('Y-m-d')){
+			return response()->json(['status' => 'error','message' => 'Refund Request Date Expired!']);
+		} else {
+			$order->is_claim_refund = AllStatic::$active;
+        		$order->refund_claim_date = date('Y-m-d');
+        		$order->update();
+        		return $this->successMessage('Refund Claim Successful!');
+		}
         }
-        $order->is_claim_refund = AllStatic::$active;
-        $order->refund_claim_date = date('Y-m-d');
-        $order->update();
-        return $this->successMessage('Refund Claim Successful!');
-    }
 
+        return response()->json(['status' => 'error','message' => 'Refund Not Allowed!']);
+        
+    }
+    
     public function invoiceToMail($order_id)
     {
         $order = Order::with('order_details.product','user_billing_info')->find($order_id);

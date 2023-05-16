@@ -38,6 +38,7 @@ class CreateOrderDetailsTable extends Migration
             $table->date('refund_date')->nullable();
             $table->longText('refund_claim_reason')->nullable();
             $table->longText('refund_reject_reason')->nullable();
+            $table->longText('refund_info')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->softDeletes();
             $table->timestamps();

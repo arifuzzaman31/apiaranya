@@ -27,6 +27,7 @@ use App\Http\Controllers\CareController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\RefundController;
+use App\Http\Controllers\RoleController;
 // use App\Http\Controllers\Payment\SslController;
 
 /*
@@ -60,6 +61,12 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     Route::get('logout', [AdminLoginController::class, 'logout'])->name('logout');
     Route::view('change-password', 'admin.change_password')->name('change-password');
     Route::post('change-password', [AdminLoginController::class, 'changePassword']);
+
+    // Role Permission
+    Route::resource('role',RoleController::class);
+    Route::get('get-role',[RoleController::class,'getRole']);
+    Route::get('get-role-data',[RoleController::class,'getRoleData']);
+    Route::resource('employee',RoleController::class);
 
     //Category Route
     Route::resource('category',CategoryController::class);
