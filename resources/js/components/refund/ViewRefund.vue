@@ -48,30 +48,6 @@ export default {
             this.getRefundItem()
         },
 
-        deleteOrder(id){
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "Order will be Delete!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Do it!'
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    axios.delete(baseUrl+'order/'+id).then(
-                        response => {
-                            this.formReset()
-                            this.getRefundItem()
-                            this.successMessage(response.data)
-                        }
-                    ). catch(error => {
-                        console.log(error)
-                    })
-                }
-            })
-        },
-
         getOrderdetail(id){
             axios.get(baseUrl+`orders-details/${id}`)
             .then(result => {
@@ -111,22 +87,6 @@ export default {
                     })
                 }
             }) 
-        },
-
-        orderDetailModal(order) {
-            
-            axios.get(baseUrl+`orders-details/${order.id}`)
-            .then(result => {
-                this.order_id = order.id
-                this.single_order = order
-                this.order_status_id = order.order_position
-                this.order_details = result.data.details;
-                this.shipment_info = result.data.order;
-                $("#orderDetailModal").modal('show');
-            })
-            .catch(errors => {
-                console.log(errors);
-            });  
         },
 
         formReset(){
@@ -217,7 +177,7 @@ export default {
                         </table>
                             <Bootstrap4Pagination
                                 :data="refund_items"
-                                @pagination-change-page="getOrder"
+                                @pagination-change-page="getRefundItem"
                             />
                     </div>
                    
@@ -225,89 +185,6 @@ export default {
             </div>
         </div>
 
-        <div id="orderDetailModal" class="modal animated fadeInUp custo-fadeInUp" role="dialog">
-            <div class="modal-dialog modal-xl">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Order Details</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"  @click="formReset">
-                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                        </button>
-                    </div>
-                    <div class="modal-body" v-if="order_id">
-
-                        <div class="widget-content widget-content-area">
-                            <div class="row d-flex justify-content-between">
-                                <div class="col-md-4 text-left">
-                                    <h6 class="text-success">Billing Info</h6>
-                                    <p v-if="(shipment_info.user_billing_info.first_name != '') || (shipment_info.user_billing_info.last_name != '')">Name: {{ shipment_info.user_billing_info.first_name }} {{ shipment_info.user_billing_info.last_name }}</p>
-                                 
-                                    <p>Phone: {{ shipment_info.user_billing_info.phone }}</p>
-                                    <p>Email: {{ shipment_info.user_billing_info.email }}</p>
-                                    <p>Street Address: {{ shipment_info.user_billing_info.street_address }}</p>
-                                    <p>Post Code: {{ shipment_info.user_billing_info.post_code }}</p>
-                                    <p>City: {{ shipment_info.user_billing_info.city }}</p>
-                                    <p>Country: {{ shipment_info.user_billing_info.country }}</p>
-                                </div>
-                                <div class="col-md-4 text-right" v-if="shipment_info.is_same_address != 0">
-                                    <h6 class="text-success">Shipping Info</h6>
-                                    <p v-if="(shipment_info.user_shipping_info.first_name != '') || (shipment_info.user_shipping_info.last_name != '')">Name: {{ shipment_info.user_shipping_info.first_name }} {{ shipment_info.user_shipping_info.last_name }}</p>
-                                    <p>Phone: {{ shipment_info.user_shipping_info.phone }}</p>
-                                    <p>Email: {{ shipment_info.user_shipping_info.email }}</p>
-                                    <p>Street Address: {{ shipment_info.user_shipping_info.street_address }}</p>
-                                    <p>Post Code: {{ shipment_info.user_shipping_info.post_code }}</p>
-                                    <p>City: {{ shipment_info.user_shipping_info.city }}</p>
-                                    <p>Country: {{ shipment_info.user_shipping_info.country }}</p>
-                                </div>
-                                <div class="col-md-4 text-right" v-else>
-                                    <h6 class="text-success">Shipping Info</h6>
-                                    <p class="text-info">As Per Billing Info</p>
-                                </div>
-                            </div>
-                            <div>
-                                <table class="table table-bordered table-hover mb-4">
-                                    <thead>
-                                        <tr>
-                                            <th>SL</th>
-                                            <th>Product Name</th>
-                                            <th>Picture</th>
-                                            <th>Colour</th>
-                                            <th>Size</th>
-                                            <th>Fabric</th>
-                                            <th>Unit Price</th>
-                                            <th>Qty</th>
-                                            <th>Total Price</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="(orderdetail,index) in order_details" :key="index">
-                                            <td>{{ index+1 }}</td>
-                                            <td>{{ orderdetail.product.product_name }}</td>
-                                            <td>
-                                                <img height="60" :src="orderdetail.product.product_image" />
-                                            </td>
-                                            <td>{{ orderdetail.colour.color_name }}</td>
-                                            <td>{{ orderdetail.size.size_name }}</td>
-                                            <td>{{ orderdetail.fabric.fabric_name }}</td>
-                                            <td>{{ orderdetail.selling_price }}</td>
-                                            <td>{{ orderdetail.quantity }}</td>
-                                            <td>{{ orderdetail.total_selling_price }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                
-                            
-                                <div class="modal-footer md-button">
-                                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"  @click="formReset"></i>Discard</button>
-                                </div>
-                           
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div id="refundModifyModal" class="modal animated fadeInUp custo-fadeInUp" role="dialog">
             <div class="modal-dialog">
                 <!-- Modal content-->

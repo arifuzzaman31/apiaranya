@@ -28,6 +28,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\RefundController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\EmployeeController;
 // use App\Http\Controllers\Payment\SslController;
 
 /*
@@ -65,8 +66,8 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     // Role Permission
     Route::resource('role',RoleController::class);
     Route::get('get-role',[RoleController::class,'getRole']);
-    Route::get('get-role-data',[RoleController::class,'getRoleData']);
-    Route::resource('employee',RoleController::class);
+    Route::get('get-permission-data',[RoleController::class,'getPermissionData']);
+    Route::resource('employee',EmployeeController::class);
 
     //Category Route
     Route::resource('category',CategoryController::class);

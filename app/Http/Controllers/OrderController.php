@@ -80,21 +80,14 @@ class OrderController extends Controller
 
     public function orderDetails(Request $request,$id)
     {
-        // $order = Order::find($id)->first();
+        if($request->from == 'pdf'){
+            $orderdata = Order::find($id);
+            $pdf = \PDF::loadView('invoice',['order_info' => $orderdata]);
+            return $pdf->download('invoice-'.$orderdata->order_id.'.pdf');
+        }
         $order = Order::with('user','delivery','user_shipping_info','user_billing_info')->find($id);
         $details = OrderDetails::with(['product','colour','size','fabric'])->where('order_id',$id)->get();
-
-        if($request->from == 'pdf'){
-            // return view('invoice');
-            $pdf = \PDF::loadView('invoice');
-            return $pdf->download('invoice.pdf');
-        }
         return view('pages.order.order_details',['details' => $details,'order' => $order]);
-
-        // $order = Order::with('user_shipping_info','user_billing_info')->find($id);
-        // $details = OrderDetails::with(['product','colour','size','fabric'])->where('order_id',$id)->get();
-
-        // return response()->json(['details' => $details,'order' => $order]);
     }
 
     public function orderCancel(Request $request)

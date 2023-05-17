@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\Permission;
-use App\Models\RolePermission;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
@@ -16,7 +16,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return view('pages.auth.role');
+        $role = Role::with('role_permission')->get();
+        return view('pages.auth.role',['roles' => $role,'permission' => $this->getPermissionData()]);
     }
 
     /**
@@ -29,17 +30,15 @@ class RoleController extends Controller
         //
     }
 
-    public function getRoleData()
+    public function getPermissionData()
     {
-        $role = Role::paginate(10);
-        return $role;
+        $permission = Permission::get()->groupBy('group_name');
+        return $permission;
     }
 
     public function getRole()
     {
-        $permission = Permission::get()->groupBy('group_name');
-        // dd($permission);
-        return view('pages.auth.add_role',['permissions' => $permission]);
+        return view('pages.auth.add_role',['permissions' => $this->getPermissionData()]);
     }
 
     /**
@@ -67,7 +66,6 @@ class RoleController extends Controller
             return $th;
             return $this->errorMessage();
         }
-
     }
 
     /**
@@ -78,7 +76,6 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        //
     }
 
     /**
@@ -89,7 +86,6 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        //
     }
 
     /**
@@ -101,7 +97,22 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        //
+        $this->validate($request, [
+            'role_name' => 'required',
+            'role_permissions' => 'required|array|min:1'
+        ]);
+        try {
+            $role->role_name = $request->role_name;
+            $role->update();
+
+            if(($request->role_name != '') && !empty($request->role_permissions)){  
+                $role->role_permission()->sync($request->role_permissions);
+            }
+            return $this->successMessage('Role Updated Successfully!');
+        } catch (\Throwable $th) {
+            return $th;
+            return $this->errorMessage();
+        }
     }
 
     /**
@@ -112,6 +123,16 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        //
+        try {
+            $user = Admin::where('role_id',$role->id)->first();
+            if($user){
+                return response()->json(['status' => 'error','message' => 'Employee Has this Role!']);
+            }              
+            $role->role_permission()->detach();
+            $role->delete();
+            return $this->successMessage('Role Deleted Successfully!');
+        } catch (\Throwable $th) {
+            return $this->errorMessage();
+        }
     }
 }

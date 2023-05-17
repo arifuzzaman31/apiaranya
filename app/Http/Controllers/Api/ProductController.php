@@ -94,6 +94,7 @@ class ProductController extends Controller
             $attrname   = $request->get('attrname');
             $attrid   = $request->get('attrid');
             $pricerange   = $request->get('range');
+            $tak_some   = $request->get('take_some');
             
             $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric',
             'product_size','product_colour','inventory:product_id,colour_id,size_id,stock,mrp,sku'])
@@ -116,6 +117,9 @@ class ProductController extends Controller
             }
 
             if($noPagination != ''){
+                if($tak_some != ''){
+                    $product = $product->latest()->take($tak_some);
+                }
                 $product = $product->get();
             } else {
                 $product = $product->paginate($dataQty);

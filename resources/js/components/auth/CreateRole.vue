@@ -9,7 +9,6 @@ export default {
                 role_name: '',
                 role_permissions: []
             },
-            category_id: '',
             url: baseUrl,
             validation_error: {}
         }
@@ -29,16 +28,13 @@ export default {
                     }
                 })
             } catch(e){
-                if(e.response.status == 422){
-                    this.validation_error = e.response.data.errors
-                }
+                this.validationError({'message':'Something went wrong!'})
             }
         },
         updateCategory(){},
 
         formReset(){
             this.validation_error = {}
-            this.category_id = '';
             this.form = {
                 role_name: '',
                 role_permissions: []
@@ -54,6 +50,7 @@ export default {
             <div class="row" style="width:99%">
                 <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between mx-3">
                     <h4>Create Role</h4>
+                    <a :href="url+'role'" class="btn btn-success"> Back</a>
                 </div>                 
             </div>
         </div>

@@ -1,116 +1,276 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-      <title>Document</title>
-   </head>
-   <body style="max-width:23cm">
-      <section class="">
-            <div class=" overflow-hidden">
-               <div class="row gx-2">
-                  <div class="col-md-12">
-                     <div class="p-3 border shadow-lg bg-white rounded">
-                        <div class="container">
-                           <div class="row">
-                              <div class="col-md-3">
-                                 <h5>Invoice <span class="text-warning">#G-Store:9</span> </h5>
-                                 <p class="text-secondary">Order Date: 22 Mar, 2023</p>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="container">
-                           <div class="row">
-                              <div class="col-md-6">
-                                 <h6>Customer Info</h6>
-                                 <p>Name: Robert Jacobs <br>
-                                    Email: customer@themetags.com <br>
-                                    Phone: +880 1235 385 478 <br>
-                                    Delivery Type: Scheduled <br>
-                                    Delivery Time: 26 March, 12pm - 2pm
-                                 </p>
-                              </div>
-                              <div class="col-md-3">
-                                 <h6>Shipping Address</h6>
-                                 <p>5-9-191, Brindavan <br> Complex, Addanki, <br> Andhra Pradesh, India</p>
-                              </div>
-                              <div class="col-md-3">
-                                 <h6>Billing Address</h6>
-                                 <p>5-9-191, Brindavan <br> Complex, Addanki, <br> Andhra Pradesh, India</p>
-                              </div>
-                           </div>
-                        </div>
-                        <hr>
-                        <div class="container">
-                           <div class="row">
-                              <div class="col-md-1">
-                                 <h6>S/L</h6>
-                                 <p>1</p>
-                              </div>
-                              <div class="col-md-5">
-                                 <h6>Products</h6>
-                                 <div class="d-flex align-items-center">
-                                    <div>
-                                       <img class="px-2" src="https://grostore.themetags.com/public/uploads/media/BE7N2VlcmU1abeHNA01HpN5XSl01aNlsKXuKhN2c.png" alt="" width="50px" />
-                                    </div>
-                                    <p>Gala Apple ± 50 gm <br>
-                                       <small>Weight: 5kg</small>
-                                    </p>
-                                 </div>
-                              </div>
-                              <div class="col-md-2">
-                                 <h6>Unit Price</h6>
-                                 <p>₹3,600.00</p>
-                              </div>
-                              <div class="col-md-2">
-                                 <h6>QTY</h6>
-                                 <p>1</p>
-                              </div>
-                              <div class="col-md-2">
-                                 <h6>Total Price</h6>
-                                 <p class="text-warning" >₹3,600.00</p>
-                              </div>
-                           </div>
-                        </div>
-                        <hr>
-                        <div class="container">
-                           <div class="row">
-                              <div class="col-md-2">
-                                 <h6>Payment Method</h6>
-                                 <p>Cash On Delivery</p>
-                              </div>
-                              <div class="col-md-3">
-                                 <h6>Logistic</h6>
-                                 <p>Delivery By BirdWings</p>
-                              </div>
-                              <div class="col-md-2">
-                                 <h6>Sub Total</h6>
-                                 <p>₹3,600.00</p>
-                              </div>
-                              <div class="col-md-1">
-                                 <h6>Tips</h6>
-                                 <p>₹0.00</p>
-                              </div>
-                              <div class="col-md-2">
-                                 <h6>Shipping Cost</h6>
-                                 <p >₹3,600.00</p>
-                              </div>
-                              <div class="col-md-2">
-                                 <h6>Grand Total</h6>
-                                 <p class="text-warning" >₹66,680.00</p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-         
-               </div>
-            </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Invoice-{{$order_info->order_id}}</title>
+    <style>
+      body{
+        width: 100%;
+      }
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 98%;
+        max-width: 800px;
+        margin: 0 auto;
+      
+      }
+   
+      td,
+      th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
 
-      </section>
-   </body>
-   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+      a {
+        text-decoration: none;
+      }
+      div{
+        background-color: #ffffff;
+        padding: 1.5rem;
+        width: 97%;
+        max-width: 900px;
+        margin: 0 auto;
+        height: fit-content;
+
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+    <table>
+      <tr>
+        <td style="border: none; color: #8a858e">
+          Invoice ID: <strong>#{{ $order_info->order_id }}</strong>
+        </td>
+        <th style="border: none"></th>
+
+        <td style="border: none; text-align: right">
+          <a
+            href="{{ config('app.front_url') }}"
+            style="border: 1px solid #8a858e; padding: 5px; color: #8a858e"
+            >araya.com.bd</a
+          >
+        </td>
+      </tr>
+    </table>
+    <hr style="width: 98%;
+        max-width: 900px;
+        margin: 0 auto;" />
+    <table>
+      <tr>
+        <td style="border: none"></td>
+        <th style="border: none; text-align: center">
+          <img
+            src="{{ asset('admin-assets/assets/img/aranya-logo-dark.png') }}"
+            alt="Aranya Logo"
+            width="50px"
+          />
+        </th>
+
+        <td style="border: none; text-align: right"></td>
+      </tr>
+    </table>
+    <hr style="width: 98%;
+        max-width: 900px;
+        margin: 0 auto;" />
+    <table>
+      <tr>
+        <td style="border: none; color: #8a858e">
+          To: <strong style="color: #3092cb">{{ $order_info->user_billing_info->first_name != 'N/A' ? $order_info->user_billing_info->full_name : 'Unknown'}}</strong>
+        </td>
+        <th style="border: none"></th>
+
+        <td style="border: none; text-align: right; color: #8a858e">Invoice</td>
+      </tr>
+      <tr style="background-color: #fff">
+        <td style="border: none; color: #8a858e">{{ $order_info->user_billing_info->street_address != 'N/A' ? $order_info->user_billing_info->street_address : ''}}, {{ $order_info->user_billing_info->city != 'N/A' ?  $order_info->user_billing_info->city : ''}}</td>
+        <td style="border: none"></td>
+
+        <td style="border: none; text-align: right; color: #8a858e">
+          ID: #{{ $order_info->order_id }}
+        </td>
+      </tr>
+      <tr>
+        <td style="border: none; color: #8a858e">{{ $order_info->user_billing_info->country != 'N/A' ? $order_info->user_billing_info->country : ''}}</td>
+        <td style="border: none"></td>
+
+        <td style="border: none; text-align: right; color: #8a858e">
+          Order Date: {{ $order_info->order_date }}
+        </td>
+      </tr>
+      <tr style="background-color: #fff">
+        <td style="border: none; color: #8a858e">{{ $order_info->user_billing_info->phone != 'N/A' ? $order_info->user_billing_info->phone : ''}}</td>
+        <td style="border: none"></td>
+
+        <td style="border: none; text-align: right; color: #8a858e">
+          Status:
+          <span
+            style="
+              background-color: orange;
+              padding: 5px;
+              border-radius: 10px;
+              color: black;
+            "
+            >{{ $order_info->payment_status == 1 ? 'Paid' : 'Unpaid'}}</span
+          >
+        </td>
+      </tr>
+    </table>
+
+    <table style="margin-top: 2rem">
+      <tr style="background-color: #5b93b4; border: none">
+        <th style="border: none; color: #ffffff">SL</th>
+        <th style="border: none; color: #ffffff">Product</th>
+        <th style="border: none; color: #ffffff">Qty</th>
+        <th style="border: none; color: #ffffff">Unit Price</th>
+        <th style="border: none; color: #ffffff ;text-align: right;">Amount</th>
+      </tr>
+      @foreach($order_info->order_details as $key => $value)
+        <tr>
+            <td style="@if($key%2 != 0) border: none @endif" >{{ $key+1 }}</td>
+            <td style="@if($key%2 != 0) border: none @endif">{{ $value->product->product_name }}</td>
+            <td style="@if($key%2 != 0) border: none @endif">{{ $value->quantity }}</td>
+            <td style="@if($key%2 != 0) border: none @endif">{{ $value->selling_price }}</td>
+            <td style="@if($key%2 != 0) border: none @endif ;text-align: right">{{ $value->total_selling_price }}</td>
+        </tr>
+      @endforeach
+    </table>
+    <table
+    style="margin-top: 1rem;"
+     
+    >
+      <tr>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <!-- <td style="border: none; color: #8a858e">
+          To: <strong style="color: #3092cb">Kabira</strong>
+        </td> -->
+        <td
+          style="
+            border: none;
+            color: #8a858e;
+            /* background-color: red; */
+            text-align: right;
+          "
+        >
+          SubTotal : <strong>{{ $order_info->total_price }}</strong>
+        </td>
+
+        <!-- <td style="border: none; text-align: right; color: #8a858e">invoice</td> -->
+      </tr>
+      <tr style="background-color: #fff">
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <!-- <td style="border: none; color: #8a858e">
+          To: <strong style="color: #3092cb">Kabira</strong>
+        </td> -->
+        <td
+          style="
+            border: none;
+            color: #8a858e;
+
+            text-align: right;
+          "
+        >
+          Tax : <strong>{{ $order_info->vat_amount }}</strong>
+        </td>
+
+        <!-- <td style="border: none; text-align: right; color: #8a858e">invoice</td> -->
+      </tr>
+      <tr>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <!-- <td style="border: none; color: #8a858e">
+          To: <strong style="color: #3092cb">Kabira</strong>
+        </td> -->
+        <td
+          style="
+            border: none;
+            color: #8a858e;
+            /* background-color: red; */
+            text-align: right;
+          "
+        >
+          Shipping Charge : <strong>{{ $order_info->shipping_amount }}</strong>
+        </td>
+
+        <!-- <td style="border: none; text-align: right; color: #8a858e">invoice</td> -->
+      </tr>
+      <tr style="background-color: #fff">
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <th style="border: none"></th>
+        <!-- <td style="border: none; color: #8a858e">
+          To: <strong style="color: #3092cb">Kabira</strong>
+        </td> -->
+        <td
+          style="
+            border: none;
+            color: #8a858e;
+            /* background-color: red; */
+            text-align: right;
+          "
+        >
+          Total Amount : <strong>{{ $order_info->total_price + $order_info->vat_amount + $order_info->shipping_amount }}</strong>
+        </td>
+
+        <!-- <td style="border: none; text-align: right; color: #8a858e">invoice</td> -->
+      </tr>
+    </table>
+    </div>
+  </body>
 </html>
