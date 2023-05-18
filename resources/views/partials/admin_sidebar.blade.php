@@ -95,7 +95,8 @@
                     </div>
                 </a>
             </li>
-
+         
+            @if(checkPermission('attribute-view'))
             <li class="menu  @if(request()->is('admin/colour') || request()->is('admin/sizes')) || request()->is('admin/fabrics')) active @endif">
                 <a href="#attrs" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
                     <div class="">
@@ -160,7 +161,8 @@
                     </li>
                 </ul>
             </li>
-
+            @endif
+            @if(checkPermission('page-view'))
             <li class="menu @if(request()->is('admin/home-page')) active @endif">
                 <a href="#pages" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
@@ -177,7 +179,9 @@
                     </li>
                 </ul>
             </li>
+            @endif
 
+            @if(checkPermission('menu-view'))
             <li class="menu @if(request()->is('admin/category')) active @endif">
                 <a href="#menus" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
@@ -197,7 +201,9 @@
                     </li>
                 </ul>
             </li>
+            @endif
 
+            @if(checkPermission('role-view'))
             <li class="menu @if(request()->is('admin/role')) active @endif">
                 <a href="#employee" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
@@ -212,12 +218,15 @@
                     <li>
                         <a href="{{ route('role.index') }}"> Role </a>
                     </li>
+                    @if(checkPermission('employee-view'))
                     <li>
                         <a href="{{ route('employee.index') }}"> Employee </a>
                     </li>
+                    @endif
                 </ul>
             </li>
-
+            @endif
+            @if(checkPermission('product-view'))
             <li class="menu @if(request()->is('admin/product')) active @endif">
                 <a href="{{ route('product.index') }}" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
@@ -226,7 +235,8 @@
                     </div>
                 </a>
             </li>
-
+            @endif
+            @if(checkPermission('order-view'))
             <li class="menu @if(request()->is('admin/order')) active @endif">
                 <a href="{{ route('order') }}" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
@@ -235,7 +245,8 @@
                     </div>
                 </a>
             </li>
-
+            @endif
+            @if(checkPermission('refund-view'))
             <li class="menu @if(request()->is('admin/refund')) active @endif">
                 <a href="#refund" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
@@ -247,21 +258,31 @@
                     </div>
                 </a>
                 <ul class="collapse submenu list-unstyled" id="refund" data-parent="#accordionExample">
+                    @if(checkPermission('refund-configure'))
                     <li>
                         <a href="{{ route('refund-configure') }}">Refund Configure </a>
                     </li>
+                    @endif
+                    @if(checkPermission('refund-request-view'))
                     <li>
                         <a href="{{ route('refund') }}">Refund Request </a>
                     </li>
+                    @endif
+                    @if(checkPermission('approve-refund-view'))
                     <li>
                         <a href="{{ route('approve-refund') }}">Approved Refund </a>
                     </li>
+                    @endif
+                    
+                    @if(checkPermission('reject-refund-view'))
                     <li>
                         <a href="{{ route('reject-refund') }}">Reject Refund </a>
                     </li>
+                    @endif
                 </ul>
             </li>
-
+            @endif
+            @if(checkPermission('customer-view'))
             <li class="menu @if(request()->is('admin/customers')) active @endif" id="productMenu">
                 <a href="{{ route('customers') }}" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
@@ -270,7 +291,8 @@
                     </div>
                 </a>
             </li>
-
+            @endif
+            @if(checkPermission('campaign-view'))
             <li class="menu @if(request()->is('admin/campaign')) active @endif" id="productMenu">
                 <a href="{{ route('campaign.index') }}" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
@@ -279,7 +301,7 @@
                     </div>
                 </a>
             </li>
-            
+            @endif
         </ul>
         
     </nav>

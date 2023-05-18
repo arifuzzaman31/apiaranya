@@ -1,5 +1,5 @@
 <script>
-import { ref,reactive, onMounted } from 'vue';
+import { ref,reactive, computed,onMounted } from 'vue';
 import axios from 'axios';
 import { Bootstrap4Pagination } from 'laravel-vue-pagination';
 export default {
@@ -123,6 +123,7 @@ export default {
         }
         
         onMounted(getVendor());
+        const showPermission = computed(() => window.userPermission)
 
         return {
             vendors,
@@ -134,7 +135,8 @@ export default {
             formReset,
             storeVendor,
             deleteVendor,
-            errors
+            errors,
+            showPermission
         }
     }
 }
@@ -148,7 +150,7 @@ export default {
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
                             <h4>Vendor</h4>
-                            <button class="btn btn-primary mb-2 mr-3" data-toggle="modal" data-target="#vendorModal" @click="formReset">Add New</button>
+                            <button class="btn btn-primary mb-2 mr-3" v-show="showPermission.includes('attribute-create')" data-toggle="modal" data-target="#vendorModal" @click="formReset">Add New</button>
                         </div>                          
                     </div>
                 </div>       
@@ -160,7 +162,7 @@ export default {
                                     <th>SL</th>
                                     <th>Size Name</th>
                                     <th class="text-center">Status</th>
-                                    <th>Action</th>
+                                    <th v-show="showPermission.includes('attribute-edit') || showPermission.includes('attribute-delete')">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -175,9 +177,9 @@ export default {
 
                                             </label>
                                         </td>
-                                        <td>
-                                            <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#vendorModal" @click="editVendor(size)">Edit</button>
-                                            <button type="button" class="btn btn-sm btn-danger ml-2" @click="deleteVendor(size.id)">Delete</button>
+                                        <td v-show="showPermission.includes('attribute-edit') || showPermission.includes('attribute-delete')">
+                                            <button type="button" v-show="showPermission.includes('attribute-edit')" class="btn btn-sm btn-info" data-toggle="modal" data-target="#vendorModal" @click="editVendor(size)">Edit</button>
+                                            <button type="button" v-show="showPermission.includes('attribute-delete')" class="btn btn-sm btn-danger ml-2" @click="deleteVendor(size.id)">Delete</button>
                                         </td>
                                     </tr>					
                                 </template>

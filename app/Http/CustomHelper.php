@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\AllStatic;
+use Illuminate\Support\Facades\Cache;
 
     function getParentCategory(){
 
@@ -43,6 +44,13 @@ use App\Http\AllStatic;
                 break;
         }
         return $text;
+    }
+
+    function checkPermission($permission){
+        $value = Cache::rememberForever('admin_permission', function () {
+             return auth()->guard('admin')->user()->role->role_permission->pluck('slug');
+        });
+        return in_array($permission,[...$value]);
     }
 
     function paymentMethodType($status){

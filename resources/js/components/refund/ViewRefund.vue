@@ -170,7 +170,7 @@ export default {
                             </tbody>
                             <tbody v-else class="text-center mt-3">
                                 <tr>
-                                    <td colspan="6">No Refund Found</td>
+                                    <td colspan="7">No Refund Found</td>
                                 </tr>
                                  
                             </tbody>

@@ -4,6 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\Admin;
 use App\Models\Page;
+use App\Models\Permission;
+use App\Models\Role;
+use App\Models\RolePermission;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,14 +20,27 @@ class DatabaseSeeder extends Seeder
     {
         Admin::query()->truncate(); 
         Page::query()->truncate();
+        Role::query()->truncate();
+        RolePermission::query()->truncate();
+        Permission::query()->truncate();
+
         $this->call([
-            CategorySeeder::class
+            CategorySeeder::class,
+            PermissionSeeder::class,
         ]);
+
+        $role = Role::create([
+            'role_name' => 'Super Admin',
+            'status' => 1
+        ]);
+
+        $role->role_permission()->attach(Permission::all()->pluck('id'));
     
         Admin::create([
             "name" => "Aranya",
             "email" => "admin@admin.com",
-            "password" => bcrypt("123")
+            "password" => bcrypt("123"),
+            "role_id"   => 1
         ]);
 
         Page::create([

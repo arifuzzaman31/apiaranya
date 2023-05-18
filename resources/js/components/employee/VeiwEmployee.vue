@@ -111,6 +111,10 @@ export default {
                 this.validationError({'message':'Something went wrong!'})
             }
         },
+        searchKeyword(){
+            if(this.keyword.length < 3) return false;
+            this.getEmployee()
+        },
 
         formReset(){
             this.form = {
@@ -127,6 +131,11 @@ export default {
 
     mounted(){
         this.getEmployee()
+    },
+    computed: {
+        showPermission() {
+            return window.userPermission;
+        }
     }
 }
 </script>
@@ -139,13 +148,14 @@ export default {
                 <div class="row">
                     <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
                         <h4>Employee</h4>
-                        <button class="btn btn-primary mb-2 mr-3" data-toggle="modal" data-target="#emplModal" @click="formReset">Add New</button>
+                        <button class="btn btn-primary mb-2 mr-3" v-show="showPermission.includes('employee-create')" data-toggle="modal" data-target="#emplModal" @click="formReset">Add New</button>
                     </div>                          
                 </div>
             </div>       
             <div class="widget-content widget-content-area">
                 <div class="row col-4 mb-2">
-                    <input id="search" placeholder="Search By Name" type="text" @keyup="getEmployee()" class="form-control" v-model="keyword" />
+                    <input id="search" placeholder="Search By Name" type="text" @keyup="searchKeyword()" class="form-control" v-model="keyword" />
+                    <button class="btn btn-danger" @click="formReset()">Clear</button>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover mb-4">
@@ -155,7 +165,7 @@ export default {
                                 <th>Employee Name</th>
                                 <th>Email</th>
                                 <th>Role</th>
-                                <th>Action</th>
+                                <th v-show="showPermission.includes('employee-edit') || showPermission.includes('employee-delete')">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -165,9 +175,9 @@ export default {
                                     <td>{{ empl.name }}</td>
                                     <td>{{ empl.email }} </td>
                                     <td>{{ empl.role_id ? empl.role.role_name : 'No Role'}} </td>
-                                    <td>
-                                        <button type="button" class="btn btn-sm btn-info" @click="editEmp(empl)">Edit</button>
-                                        <button type="button" class="btn btn-sm btn-danger ml-2" @click="deleteEmp(empl.id)">Delete</button>
+                                    <td v-show="showPermission.includes('employee-edit') || showPermission.includes('employee-delete')">
+                                        <button v-show="showPermission.includes('employee-edit')" type="button" class="btn btn-sm btn-info" @click="editEmp(empl)">Edit</button>
+                                        <button type="button" v-show="showPermission.includes('employee-delete')" class="btn btn-sm btn-danger ml-2" @click="deleteEmp(empl.id)">Delete</button>
                                     </td>
                                 </tr>					
                             </template>

@@ -146,8 +146,6 @@ Route::group(['middleware' => ['admin'],'prefix' => 'admin'], function () {
     Route::post('update-home-image',[PagesController::class,'homeImageUpdate']);
     Route::get('get-home-pagedata',[PagesController::class,'homeImageData']); 
     Route::get('all-attr-download',[PagesController::class,'exportAllAttr']); 
-    
-    
 });
 
 Route::get('ssl-commerz/{order_id}',[OdController::class,'sslCommerz'])->name('payment.ssl');

@@ -144,6 +144,11 @@ export default {
     },
     mounted(){
         this.getProduct()
+    },
+    computed: {
+        showPermission() {
+            return window.userPermission;
+        }
     }
 }
 </script>
@@ -173,7 +178,7 @@ export default {
                  
                     <div class="col-md-4 col-lg-3 col-12 mt-4">
                         <button type="button" class="btn btn-danger btn-sm" @click="filterClear()">CLEAR</button>
-                        <button type="button" class="btn btn-success btn-sm ml-2" @click="removeFromCamp()">Remove From Campaign</button>
+                        <button type="button" v-show="showPermission.includes('product-remove-campaign')" class="btn btn-success btn-sm ml-2" @click="removeFromCamp()">Remove From Campaign</button>
                     </div>
 
                     <div class="col-md-4 col-lg-3 col-12">

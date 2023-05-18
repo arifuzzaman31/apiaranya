@@ -20098,7 +20098,7 @@ var _hoisted_26 = {
   "class": "text-center mt-3"
 };
 var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
-  colspan: "6"
+  colspan: "7"
 }, "No Refund Found")], -1 /* HOISTED */);
 var _hoisted_28 = [_hoisted_27];
 var _hoisted_29 = {
