@@ -75,6 +75,11 @@ export default {
                 this.validationError({'message':'Something went wrong!'})
             }
         },
+    },
+    computed: {
+        showPermission() {
+            return window.userPermission;
+        }
     }
 }
 </script>
@@ -85,7 +90,7 @@ export default {
         <div class="row" style="width:99%">
             <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between mx-3">
                 <h4>Role List</h4>
-                <a :href="url+'get-role'" class="btn btn-primary mb-2 mr-3">Add New</a>
+                <a :href="url+'get-role'" v-if="showPermission.includes('role-create')" class="btn btn-primary mb-2 mr-3">Add New</a>
             </div>                 
         </div>
     </div>
@@ -106,8 +111,8 @@ export default {
                                 <td>{{ index+1 }}</td>
                                 <td>{{ role.role_name }}</td>
                                 <td class="text-center">
-                                    <a class="btn btn-sm btn-warning" href="javascript:void(0);" @click="editRole(role)" type="button" title="Edit">Edit</a>
-                                    <a class="btn btn-sm mx-1 btn-danger" href="javascript:void(0);" @click="deleteRole(role.id)" type="button" title="Delete">Delete</a>
+                                    <a class="btn btn-sm btn-warning" v-if="showPermission.includes('role-edit')" href="javascript:void(0);" @click="editRole(role)" type="button" title="Edit">Edit</a>
+                                    <a class="btn btn-sm mx-1 btn-danger" v-if="showPermission.includes('role-edit')" href="javascript:void(0);" @click="deleteRole(role.id)" type="button" title="Delete">Delete</a>
                                 </td>
                             </tr>	
                         </tbody>

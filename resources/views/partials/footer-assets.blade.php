@@ -9,7 +9,7 @@
     var baseUrl = "{{ url('/') }}"+'/admin/';
     var clName = "diyc1dizi";
     var clPreset = "webable";
-    window.userPermission = "{{ auth()->guard('admin')->user()->role->role_permission->pluck('slug')  ?? [] }}";
+
     $(document).ready(function() {
         App.init(); 
     });

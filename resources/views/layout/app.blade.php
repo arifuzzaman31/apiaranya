@@ -67,6 +67,7 @@
             $(".active").parents(".menu").children("a").attr('data-active',true);
             $(".active").parents().addClass('show');
         });
+        window.userPermission = "{{ auth()->guard('admin')->user()->role->role_permission->pluck('slug')  ?? [] }}";
     </script>
     
     @stack('script')

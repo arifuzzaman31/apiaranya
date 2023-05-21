@@ -47,6 +47,11 @@ export default {
         this.order_status.payment_status = this.order.payment_status;
         this.order_status.order_position = this.order.order_position;
     },
+    computed: {
+        showPermission() {
+            return window.userPermission;
+        }
+    }
 };
 </script>
 
@@ -81,7 +86,7 @@ export default {
                                             {{ dateToString(order.order_date) }}
                                         </p>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-3" v-if="showPermission.includes('order-update')">
                                         <select
                                             class="form-control"
                                             @change="
@@ -98,7 +103,7 @@ export default {
                                             <option value="1">Paid</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-3" v-if="showPermission.includes('order-update')">
                                         <select
                                             class="form-control"
                                             @change="

@@ -48,6 +48,7 @@ export default {
                 is_fabric: true,
                 selectfabrics : [],
                 is_color: true,
+                has_variation: true,
                 selectcolours : [],
                 is_size: true,
                 selectsize : [],
@@ -226,7 +227,7 @@ export default {
                 is_fabric: true,
                 selectfabrics : [],
                 is_color: true,
-                color_size: true,
+                has_variation: true,
                 selectcolours : [],
                 is_size: true,
                 selectsize : [],
@@ -872,7 +873,7 @@ export default {
                                     <div class="d-flex justify-content-center">
                                         <span class="txt-monthly mr-2">Has Variations?</span>
                                         <label class="switch s-icons s-outline  s-outline-primary">
-                                            <input v-model="form.color_size" :checked="form.color_size"  type="checkbox" id="colour">
+                                            <input v-model="form.has_variation" :checked="form.has_variation"  type="checkbox" id="colour">
                                             <span class="slider round"></span>
                                         </label>
                                     </div>
@@ -885,7 +886,7 @@ export default {
             </div>
         </div>
             
-            <div class="statbox widget box box-shadow" v-if="form.color_size">
+            <div class="statbox widget box box-shadow" v-if="form.has_variation">
                 <div class="widget-content ">
                     <div class="row text-center">
                         <div class="col-3  text-success">

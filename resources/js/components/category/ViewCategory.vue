@@ -83,7 +83,7 @@ export default {
             <div class="row" style="width:99%">
                 <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between mx-3">
                     <h4>Category</h4>
-                    <button class="btn btn-primary mb-2 mr-3" v-show="showPermission.includes('menu-create')" data-toggle="modal" data-target="#cateModal" @click="formReset">Add New</button>
+                    <button class="btn btn-primary mb-2 mr-3" v-if="showPermission.includes('menu-create')" data-toggle="modal" data-target="#cateModal" @click="formReset">Add New</button>
                 </div>                 
             </div>
         </div>
@@ -98,7 +98,7 @@ export default {
                                 <th>Category</th>
                                 <th>Sub Category</th>
                                 <th class="text-center">Status</th>
-                                <th class="text-center" v-show="showPermission.includes('menu-edit')">Action</th>
+                                <th class="text-center" v-if="showPermission.includes('menu-edit')">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -107,8 +107,8 @@ export default {
                                 <td>Kids</td>
                                 <td>Toddlers</td>
                                 <td class="text-center">Active</td>
-                                <td class="text-center" v-show="showPermission.includes('menu-edit')">
-                                   <a v-show="showPermission.includes('menu-edit')" class="btn btn-sm" target="_blank" :href="url+'category/41/edit'">Edit</a>
+                                <td class="text-center" v-if="showPermission.includes('menu-edit')">
+                                   <a v-if="showPermission.includes('menu-edit')" class="btn btn-sm" target="_blank" :href="url+'category/41/edit'">Edit</a>
                                 </td>
                             </tr>	
                           

@@ -80,7 +80,7 @@ export default {
             return getCustomer()
             
         }
-
+        const showPermission = computed(() => window.userPermission)
         onMounted(()=> getCustomer())
         return {
             customers,
@@ -90,7 +90,8 @@ export default {
             userOrders,
             getUserOrder,
             getCustomer,
-            keyword
+            keyword,
+            showPermission
         }
     }
 }
@@ -111,7 +112,7 @@ export default {
                     <th>Email</th>
                     <th>Address</th>
                     <th class="text-center">Status</th>
-                    <th>Action</th>
+                    <th v-if="showPermission.includes('customer-order-view')">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -123,7 +124,7 @@ export default {
                         <td>{{ customer.email }}</td>
                         <td>{{ customer.address }}</td>
                         <td class="text-center">{{ customer.status == 1 ? 'Active' : 'Deactive' }}</td>
-                        <td>
+                        <td v-if="showPermission.includes('customer-order-view')">
                             <a :href="keyword.url+'get-user/'+customer.id+'/orders'" type="button">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                             </a>
@@ -163,7 +164,7 @@ export default {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <template v-for="(order,index) in userOrders.data">
+                                    <template v-for="(order,index) in userOrders.data" :key="index">
                                         <tr>
                                             <td>{{ index+1 }}</td>
                                             <td>{{ order.order_id }}</td>

@@ -76,7 +76,7 @@ class ProductController extends Controller
         $subcategory   = $request->get('subcategory');
         $camp_id   = $request->get('camp_id');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
-        $product = Product::with(['vat','category:id,category_name','subcategory','inventory:id,product_id,stock,sku','product_size','product_colour','discount']);
+        $product = Product::with(['vat','category:id,category_name','subcategory','inventory','product_size','product_colour','discount']);
 
         if($camp_id != ''){
             $product = $product->join('campaign_products','products.id','campaign_products.product_id')
@@ -166,6 +166,7 @@ class ProductController extends Controller
             $product->length              = $request->length;
             $product->unit                = $request->unit;
             $product->weight              = $request->weight;
+            $product->has_variation       = $request->has_variation == true ? 1 : 0;
             $product->design_code         = $request->design_code;
             $product->status              =  AllStatic::$active;
             $product->save();

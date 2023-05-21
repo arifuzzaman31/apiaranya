@@ -19887,6 +19887,11 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.getHomeData();
     this.getCategory();
+  },
+  computed: {
+    showPermission: function showPermission() {
+      return window.userPermission;
+    }
   }
 });
 
@@ -20069,62 +20074,67 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     role: "tab",
     "aria-controls": "v-border-pills-image5",
     "aria-selected": "true"
-  }, "Image 4")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, "Image 4")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, $options.showPermission.includes('page-update') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("input", {
+    key: 0,
     type: "submit",
     "class": "btn btn-info btn-block mb-4 mr-2",
     onClick: _cache[5] || (_cache[5] = function ($event) {
       return $options.openUploadModal('one');
     }),
     value: "File Upload"
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <img class=\"mr-3\" :src=\"form.image_one\" alt=\"Home image one\" />  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("video", {
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <img class=\"mr-3\" :src=\"form.image_one\" alt=\"Home image one\" />  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("video", {
     src: $data.form.image_one,
     autoplay: "",
     muted: "",
     controls: ""
-  }, null, 8 /* PROPS */, _hoisted_12)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, null, 8 /* PROPS */, _hoisted_12)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, $options.showPermission.includes('page-update') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("input", {
+    key: 0,
     type: "submit",
     "class": "btn btn-info btn-block mb-4 mr-2",
     onClick: _cache[6] || (_cache[6] = function ($event) {
       return $options.openUploadModal('two');
     }),
     value: "File Upload"
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     "class": "mr-3",
     width: "600",
     src: $data.form.image_two,
     alt: "Home image two"
-  }, null, 8 /* PROPS */, _hoisted_15), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Back Url: domain/" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.back_url_two), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, null, 8 /* PROPS */, _hoisted_15), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Back Url: domain/" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.back_url_two), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, $options.showPermission.includes('page-update') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("input", {
+    key: 0,
     type: "submit",
     "class": "btn btn-info btn-block mb-4 mr-2",
     onClick: _cache[7] || (_cache[7] = function ($event) {
       return $options.openUploadModal('three');
     }),
     value: "File Upload"
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     "class": "mr-3",
     width: "600",
     src: $data.form.image_three,
     alt: "Home image three"
-  }, null, 8 /* PROPS */, _hoisted_18), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Back Url: domain/" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.back_url_three), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, null, 8 /* PROPS */, _hoisted_18), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Back Url: domain/" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.back_url_three), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, $options.showPermission.includes('page-update') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("input", {
+    key: 0,
     type: "submit",
     "class": "btn btn-info btn-block mb-4 mr-2",
     onClick: _cache[8] || (_cache[8] = function ($event) {
       return $options.openUploadModal('four');
     }),
     value: "File Upload"
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     "class": "mr-3",
     width: "600",
     src: $data.form.image_four,
     alt: "Home image four"
-  }, null, 8 /* PROPS */, _hoisted_21), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Back Url: domain/" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.back_url_four), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [_hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, null, 8 /* PROPS */, _hoisted_21), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Back Url: domain/" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.back_url_four), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [_hoisted_23, $options.showPermission.includes('page-update') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("input", {
+    key: 0,
     type: "submit",
     "class": "btn btn-info btn-block mb-4 mr-2",
     onClick: _cache[9] || (_cache[9] = function ($event) {
       return $options.openUploadModal('five');
     }),
     value: "File Upload"
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     "class": "mr-3",
     width: "600",
     src: $data.form.image_five,
@@ -20154,13 +20164,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       value: value.slug,
       key: index
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(value.cat_name), 9 /* TEXT, PROPS */, _hoisted_31);
-  }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.filterdata.subcategory]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.filterdata.subcategory]])]), $options.showPermission.includes('page-update') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+    key: 0,
     type: "submit",
     onClick: _cache[13] || (_cache[13] = function ($event) {
       return $options.updateImage();
     }),
     "class": "btn btn-info btn-block my-2"
-  }, "Update")])])])])]);
+  }, "Update")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])])]);
 }
 
 /***/ }),

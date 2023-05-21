@@ -156,7 +156,7 @@ export default {
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
                             <h4>Care</h4>
-                            <button class="btn btn-primary mb-2 mr-3" v-show="showPermission.includes('attribute-create')" data-toggle="modal" data-target="#careModal" @click="formReset">Add New</button>
+                            <button class="btn btn-primary mb-2 mr-3" v-if="showPermission.includes('attribute-create')" data-toggle="modal" data-target="#careModal" @click="formReset">Add New</button>
                         </div>                          
                     </div>
                 </div>       
@@ -168,7 +168,7 @@ export default {
                                     <th>SL</th>
                                     <th>Care </th>
                                     <th class="text-center">Status</th>
-                                    <th v-show="showPermission.includes('attribute-edit') || showPermission.includes('attribute-delete')">Action</th>
+                                    <th v-if="showPermission.includes('attribute-edit') || showPermission.includes('attribute-delete')">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -183,9 +183,9 @@ export default {
 
                                             </label>
                                         </td>
-                                        <td v-show="showPermission.includes('attribute-edit') || showPermission.includes('attribute-delete')">
-                                            <button type="button" v-show="showPermission.includes('attribute-edit')" class="btn btn-sm btn-info" data-toggle="modal" data-target="#careModal" @click="editCare(care)">Edit</button>
-                                            <button type="button" v-show="showPermission.includes('attribute-delete')" class="btn btn-sm btn-danger ml-2" @click="deleteCare(care.id)">Delete</button>
+                                        <td v-if="showPermission.includes('attribute-edit') || showPermission.includes('attribute-delete')">
+                                            <button type="button" v-if="showPermission.includes('attribute-edit')" class="btn btn-sm btn-info" data-toggle="modal" data-target="#careModal" @click="editCare(care)">Edit</button>
+                                            <button type="button" v-if="showPermission.includes('attribute-delete')" class="btn btn-sm btn-danger ml-2" @click="deleteCare(care.id)">Delete</button>
                                         </td>
                                     </tr>					
                                 </template>

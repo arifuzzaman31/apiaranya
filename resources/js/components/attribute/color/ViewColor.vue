@@ -179,7 +179,7 @@ export default {
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
                             <h4>Colour</h4>
-                            <button class="btn btn-primary mb-2" v-show="showPermission.includes('attribute-create')" data-toggle="modal" data-target="#ColorModal" @click="formReset">Add New</button>
+                            <button class="btn btn-primary mb-2" v-if="showPermission.includes('attribute-create')" data-toggle="modal" data-target="#ColorModal" @click="formReset">Add New</button>
                         </div>                          
                     </div>
                 </div>       
@@ -196,7 +196,7 @@ export default {
                                     <th>Name</th>
                                     <th>Colour Code</th>
                                     <th class="text-center">Status</th>
-                                    <th v-show="showPermission.includes('attribute-edit') || showPermission.includes('attribute-delete')">Action</th>
+                                    <th v-if="showPermission.includes('attribute-edit') || showPermission.includes('attribute-delete')">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -206,9 +206,9 @@ export default {
                                         <td>{{ color.color_name }}</td>
                                         <td>{{ color.color_code }}</td>
                                         <td>{{ color.status == 1 ? 'active' : 'Inactive' }}</td>
-                                        <td v-show="showPermission.includes('attribute-edit') || showPermission.includes('attribute-delete')">
-                                            <button type="button" v-show="showPermission.includes('attribute-edit')" class="btn btn-sm btn-info" data-toggle="modal" data-target="#ColorModal" @click="editColour(color)">Edit</button>
-                                            <button type="button" v-show="showPermission.includes('attribute-delete')" class="btn btn-sm btn-danger ml-2" @click="deleteColor(color.id)">Delete</button>
+                                        <td v-if="showPermission.includes('attribute-edit') || showPermission.includes('attribute-delete')">
+                                            <button type="button" v-if="showPermission.includes('attribute-edit')" class="btn btn-sm btn-info" data-toggle="modal" data-target="#ColorModal" @click="editColour(color)">Edit</button>
+                                            <button type="button" v-if="showPermission.includes('attribute-delete')" class="btn btn-sm btn-danger ml-2" @click="deleteColor(color.id)">Delete</button>
                                         </td>
                                     </tr>					
                                 </template>

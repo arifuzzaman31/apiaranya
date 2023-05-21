@@ -180,6 +180,11 @@ export default {
         this.getHomeData()
         this.getCategory()
     },
+    computed: {
+        showPermission() {
+            return window.userPermission;
+        }
+    }
 }
 </script>
 
@@ -212,7 +217,7 @@ export default {
                                 <div class="icon-container mb-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Video Should be (1440 x 900) px, Ratio (16:9)</span>
                                 </div>
-                                <input type="submit" class="btn btn-info btn-block mb-4 mr-2" @click="openUploadModal('one')" value="File Upload" />
+                                <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2" @click="openUploadModal('one')" value="File Upload" />
                                 <!-- <img class="mr-3" :src="form.image_one" alt="Home image one" />  -->
                                 <video :src="form.image_one" autoplay muted controls></video>  
                                                                  
@@ -222,7 +227,7 @@ export default {
                                 <div class="icon-container mb-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Image Should be (1440 x 900) px, Ratio (16:9)</span>
                                 </div>
-                                <input type="submit" class="btn btn-info btn-block mb-4 mr-2" @click="openUploadModal('two')" value="File Upload" />
+                                <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2" @click="openUploadModal('two')" value="File Upload" />
                                 <img class="mr-3" width="600" :src="form.image_two" alt="Home image two">
                                 <p>Back Url: domain/{{ form.back_url_two }}</p>   
                             </div>
@@ -231,7 +236,7 @@ export default {
                                 <div class="icon-container mb-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Image Should be (720 x 828) px, Ratio (16:24)</span>
                                 </div>
-                                <input type="submit" class="btn btn-info btn-block mb-4 mr-2"  @click="openUploadModal('three')" value="File Upload" />
+                                <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2"  @click="openUploadModal('three')" value="File Upload" />
                                 <img class="mr-3" width="600" :src="form.image_three" alt="Home image three">
                                 <p>Back Url: domain/{{ form.back_url_three }}</p>
                             </div>
@@ -240,7 +245,7 @@ export default {
                                 <div class="icon-container mb-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Image Should be (720 x 828) px, Ratio (16:24)</span>
                                 </div>
-                                <input type="submit" class="btn btn-info btn-block mb-4 mr-2"  @click="openUploadModal('four')" value="File Upload" />
+                                <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2"  @click="openUploadModal('four')" value="File Upload" />
                                 <img class="mr-3" width="600" :src="form.image_four" alt="Home image four">
                                 <p>Back Url: domain/{{ form.back_url_four }}</p>
                             </div>
@@ -249,7 +254,7 @@ export default {
                                 <div class="icon-container mb-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Image Should be (1440 x 700) px, Ratio (16:9)</span>
                                 </div>
-                                <input type="submit" class="btn btn-info btn-block mb-4 mr-2" @click="openUploadModal('five')" value="File Upload" />
+                                <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2" @click="openUploadModal('five')" value="File Upload" />
                                 <img class="mr-3" width="600" :src="form.image_five" alt="Home image five">
                                 <p>Back Url: domain/{{ form.back_url_five }}</p>
                             </div>
@@ -271,7 +276,7 @@ export default {
                                 <option v-for="(value,index) in allsubcategories" :value="value.slug" :key="index">{{ value.cat_name }}</option>
                             </select>
                         </div>
-                        <button type="submit" @click="updateImage()" class="btn btn-info btn-block my-2">Update</button>
+                        <button type="submit" @click="updateImage()" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block my-2">Update</button>
                        
                     </div>
                 </div>

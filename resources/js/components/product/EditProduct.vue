@@ -44,17 +44,17 @@ export default {
                 view_image_three : '',
                 view_image_four : '',
                 design_code: '',
-                stock: 1,
-                cost: 0,
-                price: 0,
-                dimension: '',
+                unit: '',
+                height: '',
+                width: '',
+                length: '',
                 weight: '',
                 care: [],
                 vat: '',
                 is_fabric: true,
                 fabrics : [],
                 is_color: true,
-                color_size: true,
+                has_variation: true,
                 selectcolours : [],
                 is_size: true,
                 selectsize : [],
@@ -265,17 +265,17 @@ export default {
                 product_image_three : '',
                 product_image_four : '',
                 design_code: '',
-                stock: 1,
-                cost: 0,
-                price: 0,
-                dimension: '',
+                unit: '',
+                height: '',
+                width: '',
+                length: '',
                 weight: '',
                 care: [],
                 vat: '',
                 is_fabric: true,
                 fabrics : [],
                 is_color: true,
-                color_size: true,
+                has_variation: true,
                 selectcolours : [],
                 is_size: true,
                 selectsize : [],
@@ -299,6 +299,11 @@ export default {
         this.form.product_name = this.pr_product.product_name
         this.form.category = this.pr_product.category_id
         this.form.sub_category = this.pr_product.sub_category_id
+        this.form.unit = this.pr_product.unit
+        this.form.height = this.pr_product.height
+        this.form.width = this.pr_product.width
+        this.form.length = this.pr_product.length
+        this.form.has_variation = this.pr_product.has_variation == 1 ? true : false
    
         const vids = this.pr_product.product_vendor.map(v=> v.id);
         this.form.vendor.push(...vids);
@@ -864,11 +869,23 @@ export default {
                                     </div>
                             </div>
                          
-                            <div class="col-md-3 mb-3">
-                                <label for="Dimension">Dimension</label>
-                                <input type="text" class="form-control" id="dimension" v-model="form.dimension" >
+                            <div class="col-md-1 mb-3">
+                                <label for="length">Length</label>
+                                <input type="number" class="form-control form-control-sm" id="length" placeholder="Enter Length" v-model="form.length" />
                             </div>
-                            <div class="col-md-3 mb-3">
+                            <div class="col-md-1 mb-3">
+                                <label for="height">Height</label>
+                                <input type="number" class="form-control form-control-sm" id="height" placeholder="Enter Height" v-model="form.height" />
+                            </div>
+                            <div class="col-md-1 mb-3">
+                                <label for="width">Width</label>
+                                <input type="number" class="form-control form-control-sm" id="width" placeholder="Enter Width" v-model="form.width" />
+                            </div>
+                            <div class="col-md-1 mb-3">
+                                <label for="unit">Unit</label>
+                                <input type="text" class="form-control form-control-sm" id="unit" placeholder="Enter Width" v-model="form.unit" />
+                            </div>
+                            <div class="col-md-2 mb-3">
                                 <label for="weight">Weight</label>
                                 <input type="text" class="form-control" :class="validation_error.hasOwnProperty('weight') ? 'is-invalid' : ''" id="weight" v-model="form.weight" >
                                 <div
@@ -969,19 +986,17 @@ export default {
             </div>
         </div>
 
-        <div class="statbox widget box box-shadow">
-            <div class="widget-header">
-                <div class="row">
-                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex">
-                        <h5>Attribute</h5>
-                    </div>                 
-                    
-                </div>               
-                    
+            <div class="statbox widget box box-shadow mt-2">
+                <div class="widget-header">
+                    <div class="row">
+                        <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex">
+                            <h5>Attribute</h5>
+                        </div>                 
+                    </div>                  
                 </div>
             </div>
             
-            <div class="statbox widget box box-shadow">
+            <div class="statbox widget box box-shadow" v-if="form.has_variation">
                 <div class="widget-content ">
                     <div class="row text-center">
                         <div class="col-3  text-success">
@@ -1073,6 +1088,41 @@ export default {
                         class="btn btn-warning"
                     >Add More
                     </a>
+            </div>
+
+            <div class="statbox widget box box-shadow" v-else>
+                <div class="widget-content ">
+                    <div class="row text-center">
+                        <div class="col-3 text-success">
+                            <b>SKU</b>
+                        </div>
+                        <div class="col-3 text-success">
+                            <b>CPU</b>
+                        </div>
+                        <div class="col-3 text-success">
+                            <b>MRP</b>
+                        </div>
+                        <div class="col-3 text-success">
+                            <b>Qty</b>
+                        </div>
+                        
+                    </div>
+                    <div class="row" v-for="(qt,index) in form.attrqty" :key="index">
+                        <div class="form-group col-md-3">
+                            <input type="text"  class="form-control" id="sku" v-model="qt.sku" placeholder="SKU" required>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input type="number"  class="form-control" id="sku" v-model="qt.cpu" placeholder="CPU" required>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input type="number"  class="form-control" id="sku" v-model="qt.mrp" placeholder="MRP" required>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input type="number"  class="form-control" id="qty" v-model="qt.qty" placeholder="qty" required>
+                        </div>
+                        
+                    </div>
+                </div>
             </div>
             
             <div class="statbox widget box box-shadow">

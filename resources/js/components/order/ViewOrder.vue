@@ -220,6 +220,11 @@ export default {
 
     mounted(){
         this.getOrder()
+    },
+    computed: {
+        showPermission() {
+            return window.userPermission;
+        }
     }
 }
 </script>
@@ -382,11 +387,11 @@ export default {
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink2">
                                                     <!-- <a class="dropdown-item" @click="orderDetailModal(order)" href="javascript:void(0);">Order Details</a> -->
                                                     <a class="dropdown-item" :href="url+'order-details/'+order.id">Order Details</a>
-                                                    <a class="dropdown-item" @click="orderStatus(order)" href="javascript:void(0);">Progress</a>
-                                                    <a class="dropdown-item"  @click="cancelOrder(order)" href="javascript:void(0);">Status</a>
-                                                    <a class="dropdown-item"  @click="paymentStatus(order)" href="javascript:void(0);">Payment Status</a>
-                                                    <a class="dropdown-item" v-if="(order.payment_status == 1) && (order.is_claim_refund == 1)" @click="refundOrder(order.id)" href="javascript:void(0);">Refund</a>
-                                                    <a class="dropdown-item" @click="deleteOrder(order.id)" href="javascript:void(0);">Delete</a>
+                                                    <a class="dropdown-item" v-if="showPermission.includes('order-update')" @click="orderStatus(order)" href="javascript:void(0);">Progress</a>
+                                                    <a class="dropdown-item" v-if="showPermission.includes('order-update')" @click="cancelOrder(order)" href="javascript:void(0);">Status</a>
+                                                    <a class="dropdown-item" v-if="showPermission.includes('order-update')" @click="paymentStatus(order)" href="javascript:void(0);">Payment Status</a>
+                                                    <a class="dropdown-item" v-if="(order.payment_status == 1) && (order.is_claim_refund == 1) && showPermission.includes('refund-action')" @click="refundOrder(order.id)" href="javascript:void(0);">Refund</a>
+                                                    <a class="dropdown-item" v-if="showPermission.includes('order-delete')" @click="deleteOrder(order.id)" href="javascript:void(0);">Delete</a>
                                                 </div>
                                             </div>
                                         </td>
