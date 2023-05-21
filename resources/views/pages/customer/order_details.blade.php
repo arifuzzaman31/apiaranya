@@ -24,6 +24,7 @@
                             <th>Fabric</th>
                             <th>Unit Price</th>
                             <th>Qty</th>
+                            <th>Is Refunded</th>
                             <th>Total Price</th>
                         </tr>
                     </thead>
@@ -40,15 +41,16 @@
                                 <td>{{ $detail->fabric->fabric_name }}</td>
                                 <td>{{ $detail->selling_price }}</td>
                                 <td>{{ $detail->quantity }}</td>
+                                <td>{{ $detail->is_refunded == 1 ? 'Refunded' : ''}}</td>
                                 <td>{{ $detail->total_selling_price }}</td>
                             </tr>
                             @empty
                             <tr  class="text-center">
-                                <td colspan="9"><p>No Data found</p></td>
+                                <td colspan="10"><p>No Data found</p></td>
                             </tr>
                         @endforelse
                         <tr>
-                            <td colspan="8" class="text-right">Total: </td>
+                            <td colspan="9" class="text-right">Total: </td>
                             <td>{{ $orders->total_price }}</td>
                         </tr>
                     </tbody>
@@ -56,7 +58,43 @@
             </div>  
         </div>
         <div class="row widget-content widget-content-area">
-            <div class="col-md-6 col-4">
+            
+                    <div class="col-md-4 ml-1 card py-2">
+                        <h6 class="text-info">Shipping Address</h6>
+                        @if($orders->is_same_address != 1)<p class="">
+                            {{
+                                $orders->user_shipping_info->street_address
+                            }}
+                            <br />
+                            {{ $orders->delivery->post_code }},
+                            <br />
+                            {{
+                                $orders->user_shipping_info->city
+                            }},{{
+                                $orders->user_shipping_info->country
+                            }}
+                        </p>
+                        @else
+                        <p class="">Same as Billing Address</p>
+                        @endif
+                    </div>
+                    <div class="col-md-4 ml-2 card py-2">
+                        <h6 class="text-info">Billing Address</h6>
+                        <p class="">
+                            {{
+                                $orders->user_billing_info->street_address
+                            }}
+                            <br />
+                            {{
+                                $orders->user_billing_info->post_code
+                            }}, <br />
+                            {{ $orders->user_billing_info->city }},
+                            {{ $orders->delivery->country }}
+                        </p>
+                    </div>              
+              
+                
+            <div class="col-md-6 col-12 mt-3">
                 <h6 class="text-center">Delivery Progress</h6>
                 <table class="table table-bordered table-hover mb-4">
                     <thead>
@@ -102,6 +140,7 @@
                          
                     </tbody>
                 </table>
+                </div>  
             </div>  
         </div>
     </div>

@@ -107,6 +107,11 @@ export default {
 
     mounted(){
         this.getRefundItem()
+    },
+    computed: {
+        showPermission() {
+            return window.userPermission;
+        }
     }
 }
 </script>
@@ -142,7 +147,7 @@ export default {
                                     <th>Product</th>
                                     <th>Price</th>
                                     <th>Payment</th>
-                                    <th v-if="pagefrom == 'request-refund'" class="text-center">Action</th>
+                                    <th v-if="(pagefrom == 'request-refund') && showPermission.includes('refund-action')" class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody v-if="refund_items.data && refund_items.data.length > 0">
@@ -154,7 +159,7 @@ export default {
                                         <td>{{ item.product.product_name }}</td>
                                         <td>{{ item.selling_price }}</td>
                                         <td>{{ item.order.payment_status == 1 ? 'Paid' : 'Unpaid' }}</td>
-                                        <td class="text-center" v-if="pagefrom == 'request-refund'">
+                                        <td class="text-center" v-if="(pagefrom == 'request-refund') && showPermission.includes('refund-action')">
                                             <div class="dropdown custom-dropdown">
                                                 <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>

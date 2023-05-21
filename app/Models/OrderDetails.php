@@ -10,6 +10,13 @@ class OrderDetails extends Model
 {
     use HasFactory;
 
+    public function getTotalAttribute()
+    {
+        return $this->options->sum(function ($option) {
+            return $option->total_selling_price;
+        });
+    }
+
     public function order()
     {
         return $this->belongsTo(Order::class);

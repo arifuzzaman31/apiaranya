@@ -10,6 +10,7 @@ use App\Models\Inventory;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\User;
 use App\Models\OrderDetails;
 use App\Models\UserBillingInfo;
 use App\Models\UserShippingInfo;
@@ -38,7 +39,7 @@ class OrderController extends Controller
             $order->order_id    =   date('Ymd').$order->id;
             $order->shipping_method   =  $request->shipping_method;
             $order->user_id           = $request->isGuestCheckout == false ? Auth::user()->id : 0;
-            $order->vat_rate               = 7.5;
+            $order->vat_rate               = 0;
             $order->vat_amount             = (float)($request->totalPriceWithTax - $request->totalPrice);
             $order->payment_method         = 0;
             $order->payment_via            = $request->data['paymentMethod'] == 'online' ? 1 : 0;
@@ -81,7 +82,6 @@ class OrderController extends Controller
                 $details->unit_discount       = 0;
                 $details->total_discount      = 0;
                 $details->save();
-
                 
                 // $decrese->stock -= $value['amount'];
                 // $decrese->update();
@@ -99,6 +99,15 @@ class OrderController extends Controller
             $billing->post_code = $request->data['post_code_billing'];
             $billing->street_address = $request->data['street_address_billing'];
             $billing->save();
+
+            $address = $billing->street_address.', '.$billing->city.', '.$billing->post_code.','.$billing->country;
+
+            if($request->isGuestCheckout == false){
+                User::where('id', Auth::user()->id)->update([
+                    'phone' => $billing->phone,
+                    'address' => $address
+                ]);
+            }
 
             if($request->isSameAddress == false)
             {

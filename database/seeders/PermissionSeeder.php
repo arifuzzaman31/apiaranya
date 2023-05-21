@@ -221,6 +221,13 @@ class PermissionSeeder extends Seeder
             ],
             [
                 'group_name' => 'Refund',
+                'permission_name' => 'Refund View',
+                'route_name' => null,
+                'slug' => 'refund-view',
+                'status' => 1
+            ],
+            [
+                'group_name' => 'Refund',
                 'permission_name' => 'Refund Request View',
                 'route_name' => null,
                 'slug' => 'refund-request-view',

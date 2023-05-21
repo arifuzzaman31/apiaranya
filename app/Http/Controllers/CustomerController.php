@@ -27,8 +27,8 @@ class CustomerController extends Controller
 
     public function getCustomerOrderDetail($id)
     {
-        $order = Order::where('id',$id)->with('delivery')->orderBy('id','desc')->first();
-        $details = OrderDetails::with(['product','size','fabric','order'])->where('order_id',$id)->get();
+        $order = Order::where('id',$id)->with(['delivery','user_shipping_info','user_billing_info'])->orderBy('id','desc')->first();
+        $details = OrderDetails::with(['product','size','fabric','order'])->where(['order_id'=> $id])->get();
         
         return view('pages.customer.order_details',['details' => $details,'orders' => $order]);
     }
