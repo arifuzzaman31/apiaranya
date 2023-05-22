@@ -7,7 +7,7 @@
         <div class="widget-header">
             <div class="row">
                 <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
-                    <h4>Order of {{$customer->name}}</h4>
+                    <h4>Order of {{ $orders[0] ? $orders[0]->user->name : 'Unknown'}}</h4>
                 </div>                 
             </div>
         </div>
@@ -33,16 +33,10 @@
                             <td>{{ $order->shipping_method }}</td>
                             <td>{{ $order->payment_method }}</td>
                             <td class="text-center">
-                                @if($order->status != 0)
-                                <span>
-                                    @if($order->order_position == 0)<span class="badge badge-info">Pending</span>@endif
-                                    @if($order->order_position == 1)<span class="badge badge-primary">Process</span>@endif
-                                    @if($order->order_position == 2)<span class="badge badge-warning">On Delivery</span>@endif
-                                    @if($order->order_position == 3)<span class="badge badge-success">Delivered</span>@endif
-                                </span>
-                                @else
-                                    <span class="badge badge-danger">Cancel</span>
-                                @endif
+                                @if($order->order_position == 0)<span class="badge badge-info">Pending</span>@endif
+                                @if($order->order_position == 1)<span class="badge badge-primary">Process</span>@endif
+                                @if($order->order_position == 2)<span class="badge badge-warning">On Delivery</span>@endif
+                                @if($order->order_position == 3)<span class="badge badge-success">Delivered</span>@endif
                             </td>
                             <td>
                                 <a href="{{ url('admin/user-order-detail',$order->id) }}" type="button">

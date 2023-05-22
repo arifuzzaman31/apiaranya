@@ -13,10 +13,11 @@ class Order extends Model
     public function user()
     {
         return $this->belongsTo(User::class)->withDefault([
-            'name' => 'N/F',
-            'email' => 'email not found',
-            'phone' => 'N/F',
-            'address' => 'N/F'
+            'id'    =>  0,
+            'name' => 'Unknown',
+            'email' => 'Unknown',
+            'phone' => 'Unknown',
+            'address' => 'Unknown'
         ]);
     }
 

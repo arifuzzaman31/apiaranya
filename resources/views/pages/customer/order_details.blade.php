@@ -12,14 +12,13 @@
         </div>
         <div class="widget-content widget-content-area">
             <div>
-                <p class="mb-2"><b>Tracking ID: </b>{{ $orders->tracking_id }}</p>
+                <!-- <p class="mb-2"><b>Tracking ID: </b>{{ $orders->tracking_id }}</p> -->
                 <table class="table table-bordered table-hover mb-4">
                     <thead>
                         <tr>
                             <th>SL</th>
                             <th>Product Name</th>
                             <th>Picture</th>
-                            <th>Colour</th>
                             <th>Size</th>
                             <th>Fabric</th>
                             <th>Unit Price</th>
@@ -36,21 +35,20 @@
                                 <td>
                                     <img height="60" src="{{$detail->product->product_image}}" />
                                 </td>
-                                <td>{{ $detail->colour->color_name }}</td>
                                 <td>{{ $detail->size->size_name }}</td>
                                 <td>{{ $detail->fabric->fabric_name }}</td>
                                 <td>{{ $detail->selling_price }}</td>
                                 <td>{{ $detail->quantity }}</td>
-                                <td>{{ $detail->is_refunded == 1 ? 'Refunded' : ''}}</td>
+                                <td>{{ $detail->is_refunded == 1 ? 'Refunded' : 'N/A'}}</td>
                                 <td>{{ $detail->total_selling_price }}</td>
                             </tr>
                             @empty
                             <tr  class="text-center">
-                                <td colspan="10"><p>No Data found</p></td>
+                                <td colspan="9"><p>No Data found</p></td>
                             </tr>
                         @endforelse
                         <tr>
-                            <td colspan="9" class="text-right">Total: </td>
+                            <td colspan="8" class="text-right">Total: </td>
                             <td>{{ $orders->total_price }}</td>
                         </tr>
                     </tbody>
