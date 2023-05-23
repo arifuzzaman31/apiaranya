@@ -50,7 +50,7 @@ export default {
         
         const getCustomer = async(page = 1) => {
             try{
-                await axios.get(baseUrl+`get-customer?page=${page}&keyword=${keyword.key}&per_page=2`)
+                await axios.get(baseUrl+`get-customer?page=${page}&keyword=${keyword.key}&per_page=10`)
                 .then(response => {
                     customers.value = response.data
                 }).catch(error => {
@@ -111,7 +111,7 @@ export default {
                     <th>Phone</th>
                     <th>Email</th>
                     <th>Address</th>
-                    <th>Paid Amount</th>
+                    <th>Successful Payment</th>
                     <th class="text-center">Status</th>
                     <th v-if="showPermission.includes('customer-order-view')">Action</th>
                 </tr>

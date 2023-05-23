@@ -19818,7 +19818,7 @@ __webpack_require__.r(__webpack_exports__);
         if (result.isConfirmed) {
           axios["delete"](baseUrl + "role/".concat(id)).then(function (response) {
             _this.successMessage(response.data);
-            // window.location.reload()
+            window.location.reload();
           })["catch"](function (error) {
             console.log(error);
           });

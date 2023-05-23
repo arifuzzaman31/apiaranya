@@ -19777,7 +19777,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               page = _args.length > 0 && _args[0] !== undefined ? _args[0] : 1;
               _context.prev = 1;
               _context.next = 4;
-              return axios.get(baseUrl + "get-customer?page=".concat(page, "&keyword=").concat(keyword.key, "&per_page=2")).then(function (response) {
+              return axios.get(baseUrl + "get-customer?page=".concat(page, "&keyword=").concat(keyword.key, "&per_page=10")).then(function (response) {
                 customers.value = response.data;
               })["catch"](function (error) {
                 console.log(error);
@@ -20236,7 +20236,7 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Phone", -1 /* HOISTED */);
 var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Email", -1 /* HOISTED */);
 var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Address", -1 /* HOISTED */);
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Paid Amount", -1 /* HOISTED */);
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Successful Payment", -1 /* HOISTED */);
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
   "class": "text-center"
 }, "Status", -1 /* HOISTED */);

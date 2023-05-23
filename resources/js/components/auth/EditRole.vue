@@ -39,8 +39,7 @@ export default {
         }
     },
     mounted(){
-        console.log(this.role_permission)
-        // const rol = this.role_permission.map((item) => item.id)
+        this.formReset()
         this.form.role_permissions.push(this.role_permission)
         this.getPermission()
     }

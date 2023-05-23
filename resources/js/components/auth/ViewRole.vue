@@ -45,7 +45,7 @@ export default {
                     axios.delete(baseUrl+`role/${id}`).then(
                         response => {
                             this.successMessage(response.data)
-                            // window.location.reload()
+                            window.location.reload()
                         }
                     ). catch(error => {
                         console.log(error)
