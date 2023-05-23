@@ -6,6 +6,7 @@ use App\Models\Admin;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class RoleController extends Controller
 {
@@ -61,6 +62,7 @@ class RoleController extends Controller
             if(($request->role_name != '') && !empty($request->role_permissions)){  
                 $role->role_permission()->attach($request->role_permissions);
             }
+            Cache::forget('admin_permission');
             return $this->successMessage('Role Added Successfully!');
         } catch (\Throwable $th) {
             return $th;
@@ -108,6 +110,7 @@ class RoleController extends Controller
             if(($request->role_name != '') && !empty($request->role_permissions)){  
                 $role->role_permission()->sync($request->role_permissions);
             }
+            Cache::forget('admin_permission');
             return $this->successMessage('Role Updated Successfully!');
         } catch (\Throwable $th) {
             return $th;
@@ -130,6 +133,7 @@ class RoleController extends Controller
             }              
             $role->role_permission()->detach();
             $role->delete();
+            Cache::forget('admin_permission');
             return $this->successMessage('Role Deleted Successfully!');
         } catch (\Throwable $th) {
             return $this->errorMessage();
