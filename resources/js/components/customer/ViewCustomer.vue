@@ -117,9 +117,9 @@ export default {
                 </tr>
             </thead>
             <tbody>
-                <template v-for="customer in customers.data" :key="customer.id">
+                <template v-for="(customer,index) in customers.data" :key="customer.id">
                     <tr>
-                        <td>{{ customer.id }}</td>
+                        <td>{{ index+1 }}</td>
                         <td>{{ customer.name }}</td>
                         <td>{{ customer.phone }}</td>
                         <td>{{ customer.email }}</td>

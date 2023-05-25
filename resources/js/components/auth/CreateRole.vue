@@ -95,7 +95,7 @@ export default {
                 {{ validation_error.role_permissions[0] }}
             </span>
         </div>
-        <input type="submit" name="time" class="btn btn-primary" />
+        <input type="submit" name="time" class="btn btn-primary" value="Save" />
     </form>
   
 </template>

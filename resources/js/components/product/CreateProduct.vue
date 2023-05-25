@@ -48,7 +48,7 @@ export default {
                 is_fabric: true,
                 selectfabrics : [],
                 is_color: true,
-                has_variation: true,
+                has_variation: false,
                 selectcolours : [],
                 is_size: true,
                 selectsize : [],
@@ -57,8 +57,11 @@ export default {
                 max_amount: 0,
                 discount_type: 1,
                 description: '',
-                attrqty: [{colour_id:[],size_id:'',cpu:'',mrp:'',qty:'',sku:''}]
+                attrqty: [{colour_id:'',size_id:'',cpu:'',mrp:'',qty:'',sku:''}]
             },
+            choose_colours: [],
+            choose_sizes: [],
+            combine: false,
             tages: [],
             list_colour: [],
             allcategories: [],
@@ -162,7 +165,7 @@ export default {
         },
 
         addMore(){
-            this.form.attrqty.push({colour_id:[],size_id:'',qty:'',sku:''})
+            this.form.attrqty.push({colour_id:'',size_id:'',cpu:'',mrp:'',qty:'',sku:''})
         },
         removeCatChild(index) {
             this.form.attrqty.splice(index, 1);
@@ -191,6 +194,36 @@ export default {
             }
             this.tages.push(tag)
             this.form.tages.push(tag)
+        },
+
+        makeAttrComb(){
+            this.combine = true 
+            this.form.attrqty = []
+            if(this.choose_colours.length > 0 && this.form.is_color && this.form.is_size && this.choose_sizes.length > 0){
+                new Set([...this.choose_colours])
+                new Set([...this.choose_sizes])
+                this.choose_colours.map(item => {
+                    this.choose_sizes.map(it => {
+                        this.form.attrqty.push({colour_id:item,size_id:it,cpu:'',mrp:'',qty:'',sku:''})
+                    })
+                })
+            } else {
+                if(this.choose_colours.length > 0 && this.form.is_color){
+                    new Set([...this.choose_colours])
+                    this.choose_sizes = []
+                    this.choose_colours.map(item => {
+                        this.form.attrqty.push({colour_id:item,size_id:'',cpu:'',mrp:'',qty:'',sku:''})
+                    })
+                } else {
+                    new Set([...this.choose_sizes])
+                    this.choose_colours = []
+                    this.choose_sizes.map(it => {
+                        this.form.attrqty.push({colour_id:'',size_id:it,cpu:'',mrp:'',qty:'',sku:''})
+                    })
+                }
+            }
+            
+            
         },
 
         clearForm() {
@@ -227,7 +260,7 @@ export default {
                 is_fabric: true,
                 selectfabrics : [],
                 is_color: true,
-                has_variation: true,
+                has_variation: false,
                 selectcolours : [],
                 is_size: true,
                 selectsize : [],
@@ -236,7 +269,7 @@ export default {
                 max_amount: 0,
                 discount_type: 1,
                 description: '',
-                attrqty: [{colour_id:[],size_id:'',cpu:'',mrp:'',qty:'',sku:''}]
+                attrqty: [{colour_id:'',size_id:'',cpu:'',mrp:'',qty:'',sku:''}]
             },
             this.allsubcategories= [],
             this.allfiltersubcategories = [],
@@ -785,7 +818,7 @@ export default {
                 </div>
             </div>
         </div>
-        
+
         <div class="statbox widget box-shadow">
             <div class="widget-content">
                 <div class="form-row">
@@ -862,12 +895,12 @@ export default {
             </div>
         </div>
 
-        <div class="statbox widget box box-shadow">
+        <div class="statbox widget box box-shadow mt-3">
             <div class="widget-header">
                 <div class="row">
                     <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex">
                         <h5>Attribute</h5>
-                        <div class="ml-5 d-flex">
+                        <div class="ml-5  d-flex">
                             <div class="billing-cycle-radios">
                                 <div class="radio billed-yearly-radio">
                                     <div class="d-flex justify-content-center">
@@ -885,43 +918,66 @@ export default {
                 </div>         
             </div>
         </div>
-            
-            <div class="statbox widget box box-shadow" v-if="form.has_variation">
+        
+        <div class="statbox widget box box-shadow" v-if="form.has_variation">
                 <div class="widget-content ">
-                    <div class="row text-center">
-                        <div class="col-3  text-success">
-                            <b>Colour</b>
+                        <div class="row" v-show="form.has_variation">
+                            <div class="form-group col-md-3">
+                                <div class="custom-control custom-checkbox mt-2">
+                                    <input type="checkbox" v-model="form.is_color" :checked="form.is_color" class="custom-control-input" id="hasColour">
+                                    <label class="custom-control-label" for="hasColour">Has Colour ?</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-9" v-show="form.is_color">
+                                <Multiselect
+                                    v-model="choose_colours"
+                                    placeholder="Select Colour"
+                                    track-by="name"
+                                    label="name"
+                                    mode="tags"
+                                    :close-on-select="false"
+                                    :search="true"
+                                    :options="prp_colour"
+                                    :searchable="true"
+                                    >
+                                    <template v-slot:tag="{ option, handleTagRemove, disabled }">
+                                    <div
+                                        class="multiselect-tag is-user"
+                                        :class="{
+                                        'is-disabled': disabled
+                                        }"
+                                    >
+                                        {{ option.name }}
+                                        <span
+                                        v-if="!disabled"
+                                        class="multiselect-tag-remove"
+                                        @mousedown.prevent="handleTagRemove(option, $event)"
+                                        >
+                                        <span class="multiselect-tag-remove-icon"></span>
+                                        </span>
+                                    </div>
+                                    </template>
+                                </Multiselect>
+                            
+                            </div>
                         </div>
-                        <div class="col-2  text-success">
-                           <b>Size</b> 
-                        </div>
-                        <div class="col-2  text-success">
-                            <b>SKU</b>
-                        </div>
-                        <div class="col-1  text-success">
-                            <b>CPU</b>
-                        </div>
-                        <div class="col-1  text-success">
-                            <b>MRP</b>
-                        </div>
-                        <div class="col-2  text-success">
-                            <b>Qty</b>
-                        </div>
-                        <div class="col-1  text-danger">
-                            <b>Remove</b>
-                        </div>
-                    </div>
-                    <div class="row" v-for="(qt,index) in form.attrqty" :key="index">
-                        <div class="form-group col-md-3">
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <div class="custom-control custom-checkbox mt-2">
+                                    <input type="checkbox" v-model="form.is_size" :checked="form.is_size" class="custom-control-input" id="hasSize">
+                                    <label class="custom-control-label" for="hasSize">Has Size ?</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-9" v-show="form.is_size">
                             <Multiselect
-                                v-model="qt.colour_id"
-                                placeholder="Select Colour"
+                                v-model="choose_sizes"
+                                placeholder="Select Size"
                                 track-by="name"
                                 label="name"
                                 mode="tags"
                                 :close-on-select="false"
                                 :search="true"
-                                :options="prp_colour"
+                                :options="prp_size"
                                 :searchable="true"
                                 >
                                 <template v-slot:tag="{ option, handleTagRemove, disabled }">
@@ -942,9 +998,46 @@ export default {
                                 </div>
                                 </template>
                             </Multiselect>
-                           
+                           </div>
                         </div>
-                        <div class="form-group col-md-2">
+                   
+                    <button class="btn btn-success btn-sm" type="button" @click.prevent="makeAttrComb()">Add</button>
+                </div>
+            </div>
+
+            <div class="statbox widget box box-shadow" v-if="form.has_variation && combine">
+                <div class="widget-content ">
+                    <div class="row text-center">
+                        <div class="col-3  text-success" v-show="form.is_color">
+                            <b>Colour</b>
+                        </div>
+                        <div class="col-2  text-success"  v-show="form.is_size">
+                           <b>Size</b> 
+                        </div>
+                        <div class="col-2  text-success">
+                            <b>SKU</b>
+                        </div>
+                        <div class="text-success" :class="(form.is_size && form.is_color) ? 'col-1' : 'col-2'">
+                            <b>CPU</b>
+                        </div>
+                        <div class="col-1  text-success" :class="(form.is_size && form.is_color) ? 'col-1' : 'col-2'">
+                            <b>MRP</b>
+                        </div>
+                        <div class="col-2 text-success">
+                            <b>Qty</b>
+                        </div>
+                        <div class="col-1  text-danger">
+                            <b>Remove</b>
+                        </div>
+                    </div>
+                    <div class="row" v-for="(qt,index) in form.attrqty" :key="index">
+                        <div class="form-group col-md-3" v-show="form.is_color">
+                            <select id="product-category" class="form-control" v-model="qt.colour_id">
+                                <option value="">Choose Colour...</option>
+                                <option v-for="(value,index) in prp_colour" :value="value.value" :key="index">{{ value.name }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2" v-show="form.is_size">
                             <select id="product-category" class="form-control" v-model="qt.size_id">
                                 <option value="">Choose Size...</option>
                                 <option v-for="(value,index) in prp_size" :value="value.value" :key="index">{{ value.name }}</option>
@@ -953,10 +1046,10 @@ export default {
                         <div class="form-group col-md-2">
                             <input type="text"  class="form-control" id="sku" v-model="qt.sku" placeholder="SKU" required>
                         </div>
-                        <div class="form-group col-md-1">
+                        <div class="form-group" :class="(form.is_size && form.is_color) ? 'col-md-1' : 'col-md-2'">
                             <input type="number"  class="form-control" id="sku" v-model="qt.cpu" placeholder="CPU" required>
                         </div>
-                        <div class="form-group col-md-1">
+                        <div class="form-group" :class="(form.is_size && form.is_color) ? 'col-md-1' : 'col-md-2'">
                             <input type="number"  class="form-control" id="sku" v-model="qt.mrp" placeholder="MRP" required>
                         </div>
                         <div class="form-group col-md-2">
@@ -967,8 +1060,7 @@ export default {
                               href="javascript:void(0)"
                               @click.prevent="removeCatChild(index)"
                               class="mt-5"
-                              ><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-danger"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a
-                            >
+                              ><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-danger"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a>
                         </div>
                     </div>
                 </div>
@@ -980,7 +1072,7 @@ export default {
                     </a>
             </div>
 
-            <div class="statbox widget box box-shadow" v-else>
+            <div class="statbox widget box box-shadow" v-if="!form.has_variation">
                 <div class="widget-content ">
                     <div class="row text-center">
                         <div class="col-3 text-success">

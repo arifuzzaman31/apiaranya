@@ -169,9 +169,9 @@ export default {
                             </tr>
                         </thead>
                         <tbody>
-                            <template v-for="empl in employee.data" :key="empl.id">
+                            <template v-for="(empl,index) in employee.data" :key="index">
                                 <tr>
-                                    <td>{{ empl.id }}</td>
+                                    <td>{{ index+1 }}</td>
                                     <td>{{ empl.name }}</td>
                                     <td>{{ empl.email }} </td>
                                     <td>{{ empl.role_id ? empl.role.role_name : 'No Role'}} </td>

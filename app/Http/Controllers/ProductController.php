@@ -136,14 +136,14 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'product_name' => 'required',
-            'category' => 'required',
-            'stock' => 'required_if:color_size,false',
-            //'weight' => 'required',
-            'design_code' => 'required'
-        ]);
-        
+        // $request->validate([
+        //     'product_name' => 'required',
+        //     'category' => 'required',
+        //     'stock' => 'required_if:color_size,false',
+        //     //'weight' => 'required',
+        //     'design_code' => 'required'
+        // ]);
+
         DB::beginTransaction();
         try {
             $product = new Product();
@@ -171,17 +171,17 @@ class ProductController extends Controller
             $product->status              =  AllStatic::$active;
             $product->save();
 
-            $colorIds = array_column($request->attrqty, 'colour_id');
+            $colorIds = array_filter(array_column($request->attrqty, 'colour_id'));
             $sizeIds = array_filter(array_column($request->attrqty, 'size_id'));
             
             if($request->is_color && !empty($colorIds)){
-                $cid = array_unique(array_merge(...$colorIds), SORT_REGULAR);
+                $cid = array_unique($colorIds);
                 $product->product_colour()->attach($cid);
             }
             
             if($request->is_size && !empty($sizeIds)){
                
-                $product->product_size()->attach($sizeIds);
+                $product->product_size()->attach(array_unique($sizeIds));
             }
 
             if($request->is_fabric && $request->selectfabrics){
@@ -207,32 +207,17 @@ class ProductController extends Controller
             if($request->attrqty && !empty($request->attrqty)){
                 foreach($request->attrqty as $value){
                     if($value['qty'] != '' && $value['sku'] != '' && $value['cpu'] != '' && $value['mrp'] != ''){
-                        if(!empty($value['colour_id'])){
-                            foreach($value['colour_id'] as $sizestock)
-                            {
-                                DB::table('inventories')
-                                    ->insert([
-                                        'product_id' => $product->id,
-                                        'size_id' => $value['size_id'] ? $value['size_id'] : 0,
-                                        'colour_id' => $sizestock ? $sizestock : 0,
-                                        'sku' => $value['sku'],
-                                        'stock' => $value['qty'],
-                                        'cpu' => $value['cpu'],
-                                        'mrp' => $value['mrp'],
-                                        'warning_amount' => 10
-                                ]);
-                            }
-                        } else {
-                            $stock  = new Inventory();
-                            $stock->product_id  = $product->id;
-                            $stock->stock       = $value['qty'];
-                            $stock->size_id     = $value['size_id'] ? $value['size_id'] : 0;
-                            $stock->colour_id   =  0;
-                            $stock->sku       = $value['sku'];
-                            $stock->cpu       = $value['cpu'];
-                            $stock->mrp       = $value['mrp'];
-                            $stock->save();
-                        }
+                        DB::table('inventories')
+                            ->insert([
+                                'product_id' => $product->id,
+                                'size_id' => $value['size_id'] != '' ? $value['size_id'] : 0,
+                                'colour_id' => $value['colour_id'] != '' ? $value['colour_id'] : 0,
+                                'sku' => $value['sku'],
+                                'stock' => $value['qty'],
+                                'cpu' => $value['cpu'],
+                                'mrp' => $value['mrp'],
+                                'warning_amount' => 10
+                        ]);  
                     }
                 }
             }

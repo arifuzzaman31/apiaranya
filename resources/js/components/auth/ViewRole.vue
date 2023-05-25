@@ -44,8 +44,14 @@ export default {
                 if (result.isConfirmed) {
                     axios.delete(baseUrl+`role/${id}`).then(
                         response => {
-                            this.successMessage(response.data)
-                            window.location.reload()
+                            if(response.data.status == 'success'){
+                                this.successMessage(response.data)
+                                this.formReset()
+                                window.location.reload()
+                            }else{
+
+                                this.validationError(response.data)
+                            }
                         }
                     ). catch(error => {
                         console.log(error)
@@ -61,6 +67,7 @@ export default {
                             this.successMessage(response.data)
                             this.formReset()
                             $("#updateRoleModal").modal('hide');
+                            window.location.reload()
                         }else{
 
                             this.validationError({'message':'Something went wrong!'})

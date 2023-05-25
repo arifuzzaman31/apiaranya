@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Discount;
+use App\Models\User;
+use App\Models\OrderDetails;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class DiscountController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +16,12 @@ class DiscountController extends Controller
      */
     public function index()
     {
-        //
+        $userData =  User::select(DB::raw("(COUNT(*)) as count"),DB::raw("MONTHNAME(created_at) as monthname"))
+            ->whereYear('created_at', date('Y'))
+            ->orderBy('created_at')
+            ->groupBy('monthname')
+            ->get();
+        return response()->json($userData);
     }
 
     /**
@@ -22,9 +29,15 @@ class DiscountController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function topProductSale()
     {
-        //
+        $countdata = DB::table('order_details')
+                ->join('categories', 'order_details.category_id', '=', 'categories.id')
+                ->select('order_details.*', 'categories.category_name', 'order_details.category_id',DB::raw('COUNT(*) as total_sales'))
+                ->groupBy('order_details.category_id')
+                ->whereYear('order_details.created_at',date('Y'))
+                ->get();
+        return response()->json($countdata);
     }
 
     /**
