@@ -1,51 +1,27 @@
 <template>
-  <p>Pie Chart</p>
-  <div style="max-width: 400px">
-    <vue3-chart-js v-bind="{ ...pieChart }" />
-  </div>
+  <Doughnut :data="doughtData" :options="options" />
 </template>
 
 <script>
-import Vue3ChartJs from "@j-t-mcc/vue3-chartjs";
-import { onMounted } from 'vue';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
+import { Doughnut } from 'vue-chartjs'
+
+ChartJS.register(ArcElement, Tooltip, Legend)
 
 export default {
-  name: "TopProductSale",
+  name: 'Top-sale-by-cate',
   components: {
-    Vue3ChartJs,
+    Doughnut
   },
-  setup() {
-    const pieChart = {
-      type: "pie",
-      data: {
-        labels: ["VueJs", "EmberJs", "ReactJs", "AngularJs"],
-        datasets: [
-          {
-            backgroundColor: ["#41B883", "#E46651", "#00D8FF", "#DD1B16"],
-            data: [40, 20, 80, 10],
-          },
-        ],
-      },
-    };
+  props:['doughtData'],
 
-    const topProductSale = () => {
-          axios.get('top-product-sale').then(
-            response => {
-              console.log(response.data);
-                // const countPeople = response.data.map(item => item.count)
-                // const countMonth = response.data.map(item => item.monthname)
-                // addData(barChart,[...countMonth],[...countPeople])
-                // barChart()
-            }
-        ).catch(e => {
-            console.log(e.response);
-        })
-    }
-    onMounted(() => topProductSale())
+  data(){
     return {
-      topProductSale,
-      pieChart,
-    };
-  },
-};
+      options: {
+        responsive: true,
+        maintainAspectRatio: false
+      }
+    }
+  }
+}
 </script>

@@ -14,5 +14,9 @@ class Category extends Model
     {
         return $this->hasOne(Product::class);
     }
+    public function order_details()
+    {
+        return $this->hasOne(OrderDetails::class);
+    }
 
 }
