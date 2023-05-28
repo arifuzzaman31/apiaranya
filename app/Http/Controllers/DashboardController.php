@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\AllStatic;
 use App\Models\User;
 use App\Models\OrderDetails;
 use App\Models\Category;
@@ -31,8 +32,24 @@ class DashboardController extends Controller
             ->havingRaw('productsCount >= 1')
             // ->take(2)
             ->get();
+
+        $earnings = DB::table('order_details')
+            ->select(DB::raw("(SUM(total_selling_price)) as total_earn"),DB::raw("CAST(MONTHNAME(created_at) AS CHAR(3)) as monthname"))
+            ->whereYear('created_at', date('Y'))
+            ->orderBy('created_at')
+            ->groupBy('monthname')
+            ->get();
+
+        $sales_of_month = DB::table('order_details')
+            ->select(DB::raw("(SUM(total_selling_price)) as total_sale"),DB::raw("DATE_FORMAT(created_at, '%d %M') AS dayname"))
+            ->whereMonth('created_at', date('m'))
+            ->where('is_refunded',AllStatic::$inactive)
+            ->orderBy('created_at')
+            ->groupBy('dayname')
+            ->get();
         
-        return response()->json(['customer' => $userData,'sale_by_cat' => $saleByCat]);
+        return response()->json(['customer' => $userData,'sale_by_cat' => $saleByCat,
+                'earning' => $earnings,'sales_of_month' => $sales_of_month]);
     }
 
     /**
@@ -42,6 +59,21 @@ class DashboardController extends Controller
      */
     public function topProductSale()
     {
+        return DB::table('order_details')
+        ->select(DB::raw("(SUM(total_selling_price)) as total_earn"),DB::raw("DATE_FORMAT(created_at, '%d %M') AS dayname"))
+        ->whereMonth('created_at', date('m'))
+        ->where('is_refunded',AllStatic::$inactive)
+        ->orderBy('created_at')
+        ->groupBy('dayname')
+        ->get();
+
+        return DB::table('order_details')
+            ->select(DB::raw("(SUM(total_selling_price)) as total_earn"),DB::raw("CAST(MONTHNAME(created_at) AS CHAR(3)) as monthname"))
+            ->whereYear('created_at', date('Y'))
+            ->orderBy('created_at')
+            ->groupBy('monthname')
+            ->get();
+
         return DB::table('order_details')
             ->join('categories','order_details.category_id','categories.id')
             ->select(DB::raw('count(*) AS productsCount'),'categories.category_name AS catname', 'category_id')

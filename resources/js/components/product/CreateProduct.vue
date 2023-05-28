@@ -1008,7 +1008,7 @@ export default {
             <div class="statbox widget box box-shadow" v-if="form.has_variation && combine">
                 <div class="widget-content ">
                     <div class="row text-center">
-                        <div class="col-3  text-success" v-show="form.is_color">
+                        <div class="col-2 col-sm-2 text-success" v-show="form.is_color">
                             <b>Colour</b>
                         </div>
                         <div class="col-2  text-success"  v-show="form.is_size">
@@ -1020,7 +1020,7 @@ export default {
                         <div class="text-success" :class="(form.is_size && form.is_color) ? 'col-1' : 'col-2'">
                             <b>CPU</b>
                         </div>
-                        <div class="col-1  text-success" :class="(form.is_size && form.is_color) ? 'col-1' : 'col-2'">
+                        <div class="col-1  text-success" :class="(form.is_size && form.is_color) ? 'col-2' : 'col-2'">
                             <b>MRP</b>
                         </div>
                         <div class="col-2 text-success">
@@ -1031,31 +1031,31 @@ export default {
                         </div>
                     </div>
                     <div class="row" v-for="(qt,index) in form.attrqty" :key="index">
-                        <div class="form-group col-md-3" v-show="form.is_color">
-                            <select id="product-category" class="form-control" v-model="qt.colour_id">
+                        <div class="form-group col-md-2 col-sm-2" v-show="form.is_color">
+                            <select id="product-category" class="form-control form-control-sm" v-model="qt.colour_id">
                                 <option value="">Choose Colour...</option>
                                 <option v-for="(value,index) in prp_colour" :value="value.value" :key="index">{{ value.name }}</option>
                             </select>
                         </div>
                         <div class="form-group col-md-2" v-show="form.is_size">
-                            <select id="product-category" class="form-control" v-model="qt.size_id">
+                            <select id="product-category" class="form-control form-control-sm" v-model="qt.size_id">
                                 <option value="">Choose Size...</option>
                                 <option v-for="(value,index) in prp_size" :value="value.value" :key="index">{{ value.name }}</option>
                             </select>
                         </div>
                         <div class="form-group col-md-2">
-                            <input type="text"  class="form-control" id="sku" v-model="qt.sku" placeholder="SKU" required>
+                            <input type="text"  class="form-control form-control-sm" id="sku" v-model="qt.sku" placeholder="SKU" required>
                         </div>
                         <div class="form-group" :class="(form.is_size && form.is_color) ? 'col-md-1' : 'col-md-2'">
-                            <input type="number"  class="form-control" id="sku" v-model="qt.cpu" placeholder="CPU" required>
+                            <input type="number"  class="form-control form-control-sm" id="sku" v-model="qt.cpu" placeholder="CPU" required>
                         </div>
-                        <div class="form-group" :class="(form.is_size && form.is_color) ? 'col-md-1' : 'col-md-2'">
-                            <input type="number"  class="form-control" id="sku" v-model="qt.mrp" placeholder="MRP" required>
+                        <div class="form-group" :class="(form.is_size && form.is_color) ? 'col-md-2' : 'col-md-2'">
+                            <input type="number"  class="form-control form-control-sm" id="sku" v-model="qt.mrp" placeholder="MRP" required>
                         </div>
                         <div class="form-group col-md-2">
-                            <input type="number"  class="form-control" id="qty" v-model="qt.qty" placeholder="qty" required>
+                            <input type="number"  class="form-control form-control-sm" id="qty" v-model="qt.qty" placeholder="qty" required>
                         </div>
-                        <div class="form-group col-md-1 text-center" v-if="index != 0">
+                        <div class="form-group form-control-sm col-md-1 text-center" v-if="index != 0">
                             <a
                               href="javascript:void(0)"
                               @click.prevent="removeCatChild(index)"

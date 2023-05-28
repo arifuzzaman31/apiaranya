@@ -22114,7 +22114,7 @@ var _hoisted_168 = {
   "class": "row text-center"
 };
 var _hoisted_169 = {
-  "class": "col-3 text-success"
+  "class": "col-2 col-sm-2 text-success"
 };
 var _hoisted_170 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "Colour", -1 /* HOISTED */);
 var _hoisted_171 = [_hoisted_170];
@@ -22137,7 +22137,7 @@ var _hoisted_181 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElemen
   "class": "col-1 text-danger"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "Remove")], -1 /* HOISTED */);
 var _hoisted_182 = {
-  "class": "form-group col-md-3"
+  "class": "form-group col-md-2 col-sm-2"
 };
 var _hoisted_183 = ["onUpdate:modelValue"];
 var _hoisted_184 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
@@ -22164,7 +22164,7 @@ var _hoisted_194 = {
 var _hoisted_195 = ["onUpdate:modelValue"];
 var _hoisted_196 = {
   key: 0,
-  "class": "form-group col-md-1 text-center"
+  "class": "form-group form-control-sm col-md-1 text-center"
 };
 var _hoisted_197 = ["onClick"];
 var _hoisted_198 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"feather feather-trash-2 text-danger\"><polyline points=\"3 6 5 6 21 6\"></polyline><path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"></path><line x1=\"10\" y1=\"11\" x2=\"10\" y2=\"17\"></line><line x1=\"14\" y1=\"11\" x2=\"14\" y2=\"17\"></line></svg>", 1);
@@ -22919,14 +22919,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, "Add")])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.form.has_variation && $data.combine ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_166, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_167, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_168, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_169, _hoisted_171, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.form.is_color]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_172, _hoisted_174, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.form.is_size]]), _hoisted_175, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["text-success", $data.form.is_size && $data.form.is_color ? 'col-1' : 'col-2'])
   }, _hoisted_177, 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["col-1 text-success", $data.form.is_size && $data.form.is_color ? 'col-1' : 'col-2'])
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["col-1 text-success", $data.form.is_size && $data.form.is_color ? 'col-2' : 'col-2'])
   }, _hoisted_179, 2 /* CLASS */), _hoisted_180, _hoisted_181]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.form.attrqty, function (qt, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       "class": "row",
       key: index
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_182, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
       id: "product-category",
-      "class": "form-control",
+      "class": "form-control form-control-sm",
       "onUpdate:modelValue": function onUpdateModelValue($event) {
         return qt.colour_id = $event;
       }
@@ -22937,7 +22937,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(value.name), 9 /* TEXT, PROPS */, _hoisted_185);
     }), 128 /* KEYED_FRAGMENT */))], 8 /* PROPS */, _hoisted_183), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, qt.colour_id]])], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.form.is_color]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_186, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
       id: "product-category",
-      "class": "form-control",
+      "class": "form-control form-control-sm",
       "onUpdate:modelValue": function onUpdateModelValue($event) {
         return qt.size_id = $event;
       }
@@ -22948,7 +22948,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(value.name), 9 /* TEXT, PROPS */, _hoisted_189);
     }), 128 /* KEYED_FRAGMENT */))], 8 /* PROPS */, _hoisted_187), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, qt.size_id]])], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.form.is_size]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_190, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
       type: "text",
-      "class": "form-control",
+      "class": "form-control form-control-sm",
       id: "sku",
       "onUpdate:modelValue": function onUpdateModelValue($event) {
         return qt.sku = $event;
@@ -22959,7 +22959,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-group", $data.form.is_size && $data.form.is_color ? 'col-md-1' : 'col-md-2'])
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
       type: "number",
-      "class": "form-control",
+      "class": "form-control form-control-sm",
       id: "sku",
       "onUpdate:modelValue": function onUpdateModelValue($event) {
         return qt.cpu = $event;
@@ -22967,10 +22967,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       placeholder: "CPU",
       required: ""
     }, null, 8 /* PROPS */, _hoisted_192), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, qt.cpu]])], 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-group", $data.form.is_size && $data.form.is_color ? 'col-md-1' : 'col-md-2'])
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-group", $data.form.is_size && $data.form.is_color ? 'col-md-2' : 'col-md-2'])
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
       type: "number",
-      "class": "form-control",
+      "class": "form-control form-control-sm",
       id: "sku",
       "onUpdate:modelValue": function onUpdateModelValue($event) {
         return qt.mrp = $event;
@@ -22979,7 +22979,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       required: ""
     }, null, 8 /* PROPS */, _hoisted_193), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, qt.mrp]])], 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_194, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
       type: "number",
-      "class": "form-control",
+      "class": "form-control form-control-sm",
       id: "qty",
       "onUpdate:modelValue": function onUpdateModelValue($event) {
         return qt.qty = $event;
