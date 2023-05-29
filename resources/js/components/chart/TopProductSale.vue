@@ -19,6 +19,8 @@ export default {
     return {
       options: {
         responsive: true,
+        cutout:90,
+        aspectRatio: 1,
         maintainAspectRatio: false
       }
     }

@@ -33,6 +33,7 @@ class OrderController extends Controller
     public function getOrder(Request $request)
     {
         $noPagination = $request->get('no_paginate');
+        $taken = $request->get('take_some');
         $keyword   = $request->get('keyword');
         $byposition   = $request->get('byposition');
         $payment_status   = $request->get('payment_status');
@@ -57,6 +58,9 @@ class OrderController extends Controller
             $order = $order->where('status',$status);
         }
         if($noPagination != ''){
+            if($taken != ''){
+                $order = $order->take($taken);
+            }
             $order = $order->get();
         } else {
             $order = $order->paginate($dataQty);

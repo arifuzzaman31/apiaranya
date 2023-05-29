@@ -47,7 +47,7 @@ export default {
                             if(response.data.status == 'success'){
                                 this.successMessage(response.data)
                                 this.formReset()
-                                window.location.reload()
+                                window.location.reload(true)
                             }else{
 
                                 this.validationError(response.data)
@@ -67,7 +67,7 @@ export default {
                             this.successMessage(response.data)
                             this.formReset()
                             $("#updateRoleModal").modal('hide');
-                            window.location.reload()
+                            window.location.reload(true)
                         }else{
 
                             this.validationError({'message':'Something went wrong!'})

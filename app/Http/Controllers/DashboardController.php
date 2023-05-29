@@ -97,15 +97,25 @@ class DashboardController extends Controller
         return response()->json($countdata);
     }
 
+
+    public function getOrderInfo()
+    {
+        $countdata = DB::table('orders')
+            ->groupBy('order_position')
+            ->select('order_position', DB::raw('count(*) as total'))
+            ->get();
+        return response()->json($countdata);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function getOrderReport(Request $request)
     {
-        //
+        return "hello";
     }
 
     /**

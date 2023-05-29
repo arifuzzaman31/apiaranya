@@ -18,9 +18,9 @@ export default {
             try{
                 axios.post('role',this.form).then(
                     response => {
-                        console.log(response.data)
                         this.successMessage(response.data)
                         this.formReset()
+                        window.location.href = baseUrl+'role'
                     }
                 ).catch(e => {
                     if(e.response.status == 422){

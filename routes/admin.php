@@ -90,31 +90,39 @@ Route::post('product-import',[ProductController::class,'bulkUpload']);
 Route::get('product-stock-download',[ProductController::class,'exportProductStock']); 
 
 //Order
-Route::get('order',[OrderController::class,'index'])->name('order');
-Route::get('get-order',[OrderController::class,'getOrder'])->name('get-order');
-Route::get('get-order-excel',[OrderController::class,'getOrderExcel'])->name('get-order-excel');
-Route::post('update/order/status/{id?}',[OrderController::class,'updateOrderStatus']);
-// Route::get('orders-details/{id}',[OrderController::class,'orderDetails']);
-Route::post('order/cancel',[OrderController::class,'orderCancel']);
-Route::post('update-payment-status/{id}',[OrderController::class,'orderPaymentStatus']);
-Route::get('get-user-order/{id}',[OrderController::class,'getUserOrder']);
-Route::delete('order/{id}',[OrderController::class,'destroy']);
-Route::get('order-shipment/{id}',[OrderController::class,'orderShipment']);
-Route::get('order-details/{order_id}',[OrderController::class,'orderDetails']);
+Route::controller(OrderController::class)
+    ->group(function () {
+        Route::get('order','index')->name('order');
+        Route::get('get-order','getOrder')->name('get-order');
+        Route::get('get-order-excel','getOrderExcel')->name('get-order-excel');
+        Route::post('update/order/status/{id?}','updateOrderStatus');
+        // Route::get('orders-details/{id}','orderDetails');
+        Route::post('order/cancel','orderCancel');
+        Route::post('update-payment-status/{id}','orderPaymentStatus');
+        Route::get('get-user-order/{id}','getUserOrder');
+        Route::delete('order/{id}','destroy');
+        Route::get('order-shipment/{id}','orderShipment');
+        Route::get('order-details/{order_id}','orderDetails');
+    });
 
 //customer
-Route::get('customers',[CustomerController::class,'index'])->name('customers');
-Route::get('get-customer',[CustomerController::class,'getCustomer']);
-Route::get('get-user/{id}/orders',[CustomerController::class,'getCustomerOrder']);
-Route::get('user-order-detail/{order_id}',[CustomerController::class,'getCustomerOrderDetail'])->name('user-order-detail/{id}');
+Route::controller(OrderController::class)
+    ->group(function () {
+        Route::get('customers','index')->name('customers');
+        Route::get('get-customer','getCustomer');
+        Route::get('get-user/{id}/orders','getCustomerOrder');
+        Route::get('user-order-detail/{order_id}','getCustomerOrderDetail')->name('user-order-detail/{id}');
+    });
 
 //Campaign
 Route::resource('campaign',CampaignController::class);
-Route::get('get-campaign',[CampaignController::class,'getCampaing']);
-Route::post('add-to-campaign',[CampaignController::class,'storeAddtoCamp']);
-Route::get('campaign-product/{id}',[CampaignController::class,'getCampProduct']);
-Route::post('remove-product-camp',[CampaignController::class,'removeCampProduct']);
-
+Route::controller(OrderController::class)
+    ->group(function () {
+    Route::get('get-campaign','getCampaing');
+    Route::post('add-to-campaign','storeAddtoCamp');
+    Route::get('campaign-product/{id}','getCampProduct');
+    Route::post('remove-product-camp','removeCampProduct');
+});
 //Pages
 Route::get('home-page',[PagesController::class,'homePage'])->name('home-page');
 Route::post('update-home-image',[PagesController::class,'homeImageUpdate']);
@@ -124,7 +132,8 @@ Route::get('all-attr-download',[PagesController::class,'exportAllAttr']);
 Route::controller(DashboardController::class)
     ->group(function () {
         Route::get('customer-of-this-month', 'index');
-        Route::get('top-product-sale', 'topProductSale');
+        Route::get('get-order-info', 'getOrderInfo');
+        Route::get('order-report', 'getOrderReport')->name('order-report');
     });
 
 ?>

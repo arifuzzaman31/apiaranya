@@ -9,10 +9,101 @@
     <div class="col-md-6 col-sm-6 col-12">  
         <customer-of-month :chartData="chartData" />
     </div> 
-     <div class="col-12 col-sm-6">
+     <div class="col-md-6 col-sm-6 col-12">
         <sales-of-month :totalEarning="totalSaleMonth" />
-    </div> 
+    </div>
 </div>
+<div class="row mt-5">
+    <div id="tabsWithIcons" class="col-lg-12 col-12 layout-spacing">
+        <div class="statbox box box-shadow">
+            <div class="widget-content widget-content-area rounded-pills-icon">
+                <ul class="nav nav-pills justify-content-around" id="rounded-pills-icon-tab" role="tablist">
+                    <li class="nav-item ml-2 mr-2">
+                        <a class="nav-link mb-2 text-center" id="rounded-pills-icon-home-tab" data-toggle="pill" href="#rounded-pills-icon-home" role="tab" aria-controls="rounded-pills-icon-home" aria-selected="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg> Total Order <p class="text-success font-weight-bold">{{ order_info[0] ? order_info[0].ttl : 0 }}</p></a>
+                    </li>
+                    <li class="nav-item ml-2 mr-2">
+                        <a class="nav-link mb-2 text-center" id="rounded-pills-icon-profile-tab" data-toggle="pill" href="#rounded-pills-icon-profile" role="tab" aria-controls="rounded-pills-icon-profile" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-package"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg> Order Pending <p class="text-success font-weight-bold">{{ order_info[1] ? order_info[1].pending : 0 }}</p></a>
+                    </li>
+                    <li class="nav-item ml-2 mr-2">
+                        <a class="nav-link mb-2 text-center" id="rounded-pills-icon-contact-tab" data-toggle="pill" href="#rounded-pills-icon-contact" role="tab" aria-controls="rounded-pills-icon-contact" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg> Order Processing <p class="text-success font-weight-bold">{{ order_info[2] ? order_info[2].processing : 0 }}</p></a>
+                    </li>
+
+                    <li class="nav-item ml-2 mr-2">
+                        <a class="nav-link mb-2 text-center" id="rounded-pills-icon-settings-tab" data-toggle="pill" href="#rounded-pills-icon-settings" role="tab" aria-controls="rounded-pills-icon-settings" aria-selected="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg> Total Delivered <p class="text-success font-weight-bold">{{ order_info[3] ? order_info[3].delivered : 0 }}</p></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="row">
+        <div id="tableHover" class="col-lg-12 col-12 layout-spacing">
+            <div class="statbox">      
+                <div class="widget-content widget-content-area">
+                    <div class="row">
+                        <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
+                            <h4>Recent Order</h4>
+                        </div>                          
+                    </div>
+                    <div class="table-responsive" style="min-height: 60vh;">
+                        <table class="table table-bordered table-hover mb-4">
+                            <thead>
+                                <tr>
+                                    <th>SL</th>
+                                    <th>OrderID</th>
+                                    <th>Customer</th>
+                                    <th>Price</th>
+                                    <th>P-Type</th>
+                                    <th>Payment</th>
+                                    <th>PaymentBy</th>
+                                    <th class="text-center">Progress</th>
+                                </tr>
+                            </thead>
+                            <tbody v-if="orders && orders.length > 0">
+                                <template v-for="(order,index) in orders" :key="order.id">
+                                    <tr>
+                                        <td>{{ index+1 }}</td>
+                                        <td>{{ order.order_id }}</td>
+                                        <td>{{ order.user.name }}</td>
+                                        <td>{{ order.total_price }}</td>
+                                        <td>
+                                            <span v-if="order.payment_status == 0" class="badge badge-primary">COD</span>
+                                            <span v-else class="badge badge-light">Others</span>
+                                        </td>
+                                        <td>
+                                            <span v-if="order.payment_status == 0" class="badge badge-warning">Unpaid</span>
+                                            <span v-if="order.payment_status == 1" class="badge badge-primary">Paid</span>
+                                            <span v-if="order.payment_status == 2" class="badge badge-light">Failed</span>
+                                            <span v-if="order.payment_status == 3" class="badge badge-danger">Cancel</span>
+                                        </td>
+                                        <td>{{ order.payment_method_name }}</td>
+                                        
+                                        <td class="text-center">
+                                            <span v-if="order.order_position == 0" class="badge badge-info">Pending</span>
+                                            <span v-if="order.order_position == 1" class="badge badge-primary">Processing</span>
+                                            <span v-if="order.order_position == 2" class="badge badge-warning">On Delivery</span>
+                                            <span v-if="order.order_position == 3" class="badge badge-success">Delivered</span>
+                                        </td>
+                                    
+                                    </tr>					
+                                </template>
+                            </tbody>
+                            <tbody v-else class="text-center mt-3">
+                                <tr>
+                                    <td colspan="8">No Order Found</td>
+                                </tr>
+                                 
+                            </tbody>
+                        </table>
+                           
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -36,10 +127,38 @@ export default {
             doughtData: null,
             totalEarning: null,
             totalSaleMonth: null,
+            orders: [],
+            order_info: []
         }
     },
 
     methods:{
+        getOrder(){
+            axios.get(baseUrl+`get-order?no_paginate=yes&take_some=10`)
+            .then(result => {
+                this.orders = result.data;
+            })
+            .catch(errors => {
+                console.log(errors);
+            });  
+        },
+
+        getOrderInfo(){
+            axios.get(baseUrl+`get-order-info`)
+            .then(result => {
+                var dt = ['ttl','pending','processing','delivered']
+                result.data.map((item,i) => {
+                    var colname = dt[item.order_position]
+                    const obj={}
+                    obj[colname] = item.total
+                    this.order_info.push(obj)
+                });
+            })
+            .catch(errors => {
+                console.log(errors);
+            });
+        },
+
         getDataMonth(){
             axios.get(baseUrl+'customer-of-this-month')
             .then(response => {
@@ -124,6 +243,8 @@ export default {
 
     mounted(){
         this.getDataMonth()
+        this.getOrder()
+        this.getOrderInfo()
     }
 }
 </script>
