@@ -5,7 +5,7 @@
             <div class="widget widget-chart-one">
                 <div class="widget-heading">
                     <ul class="tabs tab-pills">
-                        <li><a href="javascript:void(0);" id="tb_1" class="tabmenu">Total Earnign</a></li>
+                        <li><a href="javascript:void(0);" id="tb_1" class="tabmenu">Total Earning</a></li>
                     </ul>
                 </div>
 
@@ -34,7 +34,7 @@
             <div class="widget widget-chart-one">
                 <div class="widget-heading">
                     <ul class="tabs tab-pills">
-                        <li><a href="javascript:void(0);" id="tb_1" class="tabmenu">This Month Customer</a></li>
+                        <li><a href="javascript:void(0);" id="tb_1" class="tabmenu">Current Year Customer</a></li>
                     </ul>
                 </div>
 
@@ -196,7 +196,7 @@ export default {
         },
 
         getDataMonth(){
-            axios.get(baseUrl+'customer-of-this-month')
+            axios.get(baseUrl+'Current Year Customer')
             .then(response => {
                 this.chartData = {
                     labels: response.data.customer.map(item => item.monthname),
