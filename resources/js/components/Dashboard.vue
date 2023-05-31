@@ -196,7 +196,7 @@ export default {
         },
 
         getDataMonth(){
-            axios.get(baseUrl+'Current Year Customer')
+            axios.get(baseUrl+'customer-of-this-Year')
             .then(response => {
                 this.chartData = {
                     labels: response.data.customer.map(item => item.monthname),

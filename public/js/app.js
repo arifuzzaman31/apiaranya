@@ -19764,7 +19764,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getDataMonth: function getDataMonth() {
       var _this3 = this;
-      axios.get(baseUrl + 'customer-of-this-month').then(function (response) {
+      axios.get(baseUrl + 'customer-of-this-Year').then(function (response) {
         _this3.chartData = {
           labels: response.data.customer.map(function (item) {
             return item.monthname;
@@ -20315,7 +20315,7 @@ var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   href: "javascript:void(0);",
   id: "tb_1",
   "class": "tabmenu"
-}, "Total Earnign")])])], -1 /* HOISTED */);
+}, "Total Earning")])])], -1 /* HOISTED */);
 var _hoisted_6 = {
   "class": "widget-content"
 };
@@ -20354,7 +20354,7 @@ var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   href: "javascript:void(0);",
   id: "tb_1",
   "class": "tabmenu"
-}, "This Month Customer")])])], -1 /* HOISTED */);
+}, "Current Year Customer")])])], -1 /* HOISTED */);
 var _hoisted_16 = {
   "class": "widget-content"
 };
