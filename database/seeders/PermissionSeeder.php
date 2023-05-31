@@ -302,6 +302,20 @@ class PermissionSeeder extends Seeder
                 'route_name' => null,
                 'slug' => 'product-remove-campaign',
                 'status' => 1
+            ],
+            [
+                'group_name' => 'Report',
+                'permission_name' => 'Report View',
+                'route_name' => null,
+                'slug' => 'report-view',
+                'status' => 1
+            ],
+            [
+                'group_name' => 'Report',
+                'permission_name' => 'Order Report',
+                'route_name' => null,
+                'slug' => 'order-report',
+                'status' => 1
             ]
         ];
 

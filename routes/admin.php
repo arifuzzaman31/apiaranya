@@ -38,39 +38,50 @@ Route::view('change-password', 'admin.change_password')->name('change-password')
 Route::post('change-password', [AdminLoginController::class, 'changePassword']);
 
 // Role Permission
-Route::resource('role',RoleController::class);
 Route::get('get-role',[RoleController::class,'getRole']);
 Route::get('get-permission-data',[RoleController::class,'getPermissionData']);
-Route::resource('employee',EmployeeController::class);
 
 //Category Route
-Route::resource('category',CategoryController::class);
-Route::get('get-category',[CategoryController::class,'getCategoryData']);
-Route::get('category-subcategory-data',[CategoryController::class,'getCategoryByCat']);
-Route::get('add-category',[CategoryController::class,'getCategory'])->name('add-category');
-Route::get('edit-category',[CategoryController::class,'editCategory'])->name('edit-category');
-Route::get('update-category-image/{id}',[CategoryController::class,'updateCategoryImage'])->name('update-category-image');
+// Route::resource('category',CategoryController::class);
+Route::controller(OrderController::class)
+    ->group(function () {
+        Route::get('get-category',[CategoryController::class,'getCategoryData']);
+        Route::get('category-subcategory-data',[CategoryController::class,'getCategoryByCat']);
+        Route::get('add-category',[CategoryController::class,'getCategory'])->name('add-category');
+        Route::get('edit-category',[CategoryController::class,'editCategory'])->name('edit-category');
+        Route::get('update-category-image/{id}',[CategoryController::class,'updateCategoryImage'])->name('update-category-image');
+
+    });
+
+Route::resources([
+    'role' => RoleController::class,
+    'employee' => EmployeeController::class,
+    'category' => CategoryController::class,
+    'colour' => ColorController::class,
+    'sizes' => SizeController::class,
+    'fabrics' => FabricController::class,
+    'vendors' => VendorController::class,
+    'brands' => BrandController::class,
+    'designers' => DesignerController::class,
+    'artist' => ArtistController::class,
+    'embellishment' => EmbellishmentController::class,
+    'making' => MakingController::class,
+    'season' => SeasonController::class,
+    'varieties' => VarietyController::class,
+    'fit' => FitController::class,
+    'ingredient' => IngredientsController::class,
+    'care' => CareController::class,
+    'country' => CountryController::class,
+    'vat-tax' => CompanyController::class,
+    'product' => ProductController::class,
+    'campaign' => CampaignController::class,
+    'consignment' => ConsignmentController::class,
+]);
 // Route::get('get-cate-data/{id}',[CategoryController::class,'getCategoryImage'])->name('get-cate-data');
 // start Attributes
-Route::resource('colour',ColorController::class);
 Route::get('get-colour',[ColorController::class,'getColour']);
 // Route::post('colour/store',[ColorController::class, 'store']);
-Route::resource('sizes',SizeController::class);
-Route::resource('fabrics',FabricController::class);
 
-Route::resource('vendors',VendorController::class);
-Route::resource('brands',BrandController::class);
-Route::resource('designers',DesignerController::class);
-Route::resource('artist',ArtistController::class);
-Route::resource('embellishment',EmbellishmentController::class);
-Route::resource('making',MakingController::class);
-Route::resource('season',SeasonController::class);
-Route::resource('varieties',VarietyController::class);
-Route::resource('fit',FitController::class);
-Route::resource('consignment',ConsignmentController::class);
-Route::resource('ingredient',IngredientsController::class);
-Route::resource('care',CareController::class);
-Route::resource('country',CountryController::class);
 Route::view('refund','pages.refund.refund')->name('refund');
 Route::view('approve-refund','pages.refund.refund')->name('approve-refund');
 Route::view('reject-refund','pages.refund.refund')->name('reject-refund');
@@ -80,10 +91,7 @@ Route::get('refund-item-detail',[RefundController::class,'refundItemDetail']);
 Route::post('order-item-refund',[RefundController::class,'orderItemRefund']);
 
 // Company
-Route::resource('vat-tax',CompanyController::class);
 
-
-Route::resource('product',ProductController::class);
 Route::get('get-product',[ProductController::class,'getProduct']);
 Route::get('get-product/search',[ProductController::class,'getProductBySearch']);
 Route::post('product-import',[ProductController::class,'bulkUpload']);
@@ -106,7 +114,7 @@ Route::controller(OrderController::class)
     });
 
 //customer
-Route::controller(OrderController::class)
+Route::controller(CustomerController::class)
     ->group(function () {
         Route::get('customers','index')->name('customers');
         Route::get('get-customer','getCustomer');
@@ -115,8 +123,8 @@ Route::controller(OrderController::class)
     });
 
 //Campaign
-Route::resource('campaign',CampaignController::class);
-Route::controller(OrderController::class)
+
+Route::controller(CampaignController::class)
     ->group(function () {
     Route::get('get-campaign','getCampaing');
     Route::post('add-to-campaign','storeAddtoCamp');
@@ -124,16 +132,20 @@ Route::controller(OrderController::class)
     Route::post('remove-product-camp','removeCampProduct');
 });
 //Pages
-Route::get('home-page',[PagesController::class,'homePage'])->name('home-page');
-Route::post('update-home-image',[PagesController::class,'homeImageUpdate']);
-Route::get('get-home-pagedata',[PagesController::class,'homeImageData']); 
-Route::get('all-attr-download',[PagesController::class,'exportAllAttr']);
+Route::controller(PagesController::class)
+    ->group(function () {
+    Route::get('home-page','homePage')->name('home-page');
+    Route::post('update-home-image','homeImageUpdate');
+    Route::get('get-home-pagedata','homeImageData'); 
+    Route::get('all-attr-download','exportAllAttr');
+});
 
 Route::controller(DashboardController::class)
     ->group(function () {
         Route::get('customer-of-this-month', 'index');
         Route::get('get-order-info', 'getOrderInfo');
-        Route::get('order-report', 'getOrderReport')->name('order-report');
+        Route::get('order-report-data', 'getOrderReport');
     });
+Route::view('order-report', 'pages.report.order_report')->name('order-report');
 
 ?>

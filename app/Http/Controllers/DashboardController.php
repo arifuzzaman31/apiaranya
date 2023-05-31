@@ -115,7 +115,8 @@ class DashboardController extends Controller
      */
     public function getOrderReport(Request $request)
     {
-        return "hello";
+        $order = DB::table('orders')->paginate(10);
+        return response()->json($order);
     }
 
     /**
