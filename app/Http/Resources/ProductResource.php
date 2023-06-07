@@ -26,7 +26,7 @@ class ProductResource extends JsonResource
             'p_tax_id'          => $this->vat_tax_id,
             'p_description'     => strip_tags($this->description),
             'p_raw_description' => $this->description,
-            'feature_image'     => $this->product_image,
+            // 'feature_image'     => $this->product_image,
             'p_image_one'       => $this->image_one,
             'p_image_two'       => $this->image_two,
             'p_image_three'     => $this->image_three,

@@ -32,12 +32,15 @@ class OrderController extends Controller
      */
     public function getOrder(Request $request)
     {
+        // return $request->get('date_range');
         $noPagination = $request->get('no_paginate');
         $taken = $request->get('take_some');
         $keyword   = $request->get('keyword');
         $byposition   = $request->get('byposition');
         $payment_status   = $request->get('payment_status');
         $status   = $request->get('status');
+        $from   = $request->get('from');
+        $to   = $request->get('to');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
         $order = Order::with(['user','delivery'])->orderBy('id','desc');
@@ -56,6 +59,10 @@ class OrderController extends Controller
 
         if($status != ''){
             $order = $order->where('status',$status);
+        }
+        
+        if($from != '' && $to != ''){
+            $order = $order->whereBetween('order_date',[$from,$to]);
         }
         if($noPagination != ''){
             if($taken != ''){

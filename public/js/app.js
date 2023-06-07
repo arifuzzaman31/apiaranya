@@ -19764,7 +19764,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getDataMonth: function getDataMonth() {
       var _this3 = this;
-      axios.get(baseUrl + 'customer-of-this-Year').then(function (response) {
+      axios.get(baseUrl + 'customer-of-this-month').then(function (response) {
         _this3.chartData = {
           labels: response.data.customer.map(function (item) {
             return item.monthname;

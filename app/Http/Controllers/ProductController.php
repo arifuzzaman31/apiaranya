@@ -4,13 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Exports\StockExport;
 use App\Http\AllStatic;
-use App\Http\Resources\ProductResource;
 use App\Imports\ProductImport;
-use App\Models\CampaignProduct;
 use App\Models\Product;
-use App\Models\ProductColour;
-use App\Models\ProductFabric;
-use App\Models\ProductSize;
+use App\Notifications\ArticlePublished;
 use App\Models\Inventory;
 use App\Models\Discount;
 use App\Models\CategoryFabric;
@@ -136,13 +132,18 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'product_name' => 'required',
-        //     'category' => 'required',
-        //     'stock' => 'required_if:color_size,false',
-        //     //'weight' => 'required',
-        //     'design_code' => 'required'
-        // ]);
+        // $product = Product::find(17);
+
+        // $product->notify(new ArticlePublished);
+        // return false;
+
+        $request->validate([
+            'product_name' => 'required',
+            'category' => 'required',
+            'stock' => 'required_if:color_size,false',
+            //'weight' => 'required',
+            'design_code' => 'required'
+        ]);
 
         DB::beginTransaction();
         try {
@@ -281,6 +282,7 @@ class ProductController extends Controller
                 ]);
             }
 
+            // $product->notify(new ArticlePublished);
             DB::commit();
             return $this->successMessage($this->fieldname.' Added Successfully!');
         } catch (\Throwable $th) {

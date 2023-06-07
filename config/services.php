@@ -29,5 +29,10 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    
+    'facebook_poster' => [
+        'page_id' => '2764794843778221',
+        'access_token' => '1cd66a9d055088bd3a06698b8b64c89e',
+    ],
 
 ];
