@@ -202,10 +202,13 @@ class AuthController extends Controller
             $user           = User::find(Auth::id());
             $user->first_name = $request->first_name;
             $user->last_name = $request->last_name;
-            $user->name = $request->first_name .' '.$request->last_name;
+            $user->name = $request->full_name;
             $user->email = $request->email;
             $user->phone = $request->phone;
             $user->address = $request->address;
+            $user->date_of_birth = $request->date_of_birth;
+            $user->gender = $request->gender;
+            $user->occupation = $request->occupation;
             $user->update();
             return $this->successMessage('Profile Changed Successfully!');
         } catch (\Throwable $th) {
