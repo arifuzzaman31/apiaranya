@@ -21,19 +21,34 @@ class ProductController extends Controller
 {
     use ProductTrait;
     public $fieldname = 'Product';
-    public function testa(){
-        $path = public_path('newdata.xlsx');
-        $data = \Excel::download($path);
-        dd($data);
 
-        Excel::load('newdata.xlsx',  function ($reader) {
-            return $reader;
-            // $reader->sheet('Sheet1', function($sheet) {
-            //     $sheet->appendRow([
-            //         '4564','testing data','test1', 'test2','new','in stock','5456 MRP','link1','link2'
-            //     ]);
-            // });
-        })->export('xlsx');
+    public function testa(){
+        return Excel::download(new MyExport, 'filename.xlsx');
+
+        // $path = public_path('newdata.xlsx');
+        // $data = \Excel::import($path)->get();
+        // unset($data[0][0]);
+        // dd($data);
+
+        // $sheet = \Excel::store('newdata.xlsx',function ($reader) {
+        //     $reader->sheet('Sheet1', function($sheet) {
+        //                 $sheet->append([
+        //                     '4564','testing data','test1', 'test2','new','in stock','5456 MRP','link1','link2'
+        //                 ]);
+        //             });
+        // });
+        // $sheet->append([
+        //                 '4564','testing data','test1', 'test2','new','in stock','5456 MRP','link1','link2'
+        //             ]);
+        return "done";
+        // Excel::import($path,  function ($reader) {
+        //     // return $reader;
+        //     $reader->sheet('Sheet1', function($sheet) {
+        //         $sheet->appendRow([
+        //             '4564','testing data','test1', 'test2','new','in stock','5456 MRP','link1','link2'
+        //         ]);
+        //     });
+        // })->export('xlsx');
     }
 
     /**

@@ -22,7 +22,7 @@ use App\Http\Controllers\Api\OrderController as OdController;
 
 Route::redirect('/', 'login');
 
-// Route::get('get-token', [ProductController::class,'testa']);
+Route::get('get-token', [ProductController::class,'testa']);
 
 Route::get('login', function () {
     // return \Hash::make(123);
