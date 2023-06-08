@@ -6,16 +6,14 @@ use App\Exports\StockExport;
 use App\Http\AllStatic;
 use App\Imports\ProductImport;
 use App\Models\Product;
-use App\Notifications\ArticlePublished;
 use App\Models\Inventory;
 use App\Models\Discount;
+use App\Exports\AddProduct;
 use App\Models\CategoryFabric;
 use App\Models\ProductTag;
 use Illuminate\Http\Request;
 use App\Traits\ProductTrait;
-use DB,Str;
-
-use Illuminate\Support\Facades\Http;
+use DB,Str,Excel;
 
 class ProductController extends Controller
 {
@@ -23,21 +21,15 @@ class ProductController extends Controller
     public $fieldname = 'Product';
 
     public function testa(){
-        return Excel::download(new MyExport, 'filename.xlsx');
+        return Excel::download(new AddProduct, 'filename.csv', \Maatwebsite\Excel\Excel::CSV);
 
         // $path = public_path('newdata.xlsx');
         // $data = \Excel::import($path)->get();
         // unset($data[0][0]);
         // dd($data);
 
-        // $sheet = \Excel::store('newdata.xlsx',function ($reader) {
-        //     $reader->sheet('Sheet1', function($sheet) {
-        //                 $sheet->append([
-        //                     '4564','testing data','test1', 'test2','new','in stock','5456 MRP','link1','link2'
-        //                 ]);
-        //             });
-        // });
-        // $sheet->append([
+        // $sheet = Excel::store($this,'newdata.xlsx');
+        // $this->appendRow([
         //                 '4564','testing data','test1', 'test2','new','in stock','5456 MRP','link1','link2'
         //             ]);
         return "done";

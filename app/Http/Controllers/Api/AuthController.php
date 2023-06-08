@@ -200,18 +200,24 @@ class AuthController extends Controller
     {
         try {
             $user           = User::find(Auth::id());
-            $user->first_name = $request->first_name;
-            $user->last_name = $request->last_name;
+            //$user->first_name = $request->first_name;
+            //$user->last_name = $request->last_name;
             $user->name = $request->full_name;
-            $user->email = $request->email;
+           // $user->email = $request->email;
             $user->phone = $request->phone;
             $user->address = $request->address;
             $user->date_of_birth = $request->date_of_birth;
             $user->gender = $request->gender;
             $user->occupation = $request->occupation;
             $user->update();
-            return $this->successMessage('Profile Changed Successfully!');
+	        return response()->json([
+                'status' => 'success',
+                'message' => 'Profile Changed Successfully!',
+                'user'  => $user
+            ], 200);
+
         } catch (\Throwable $th) {
+		//return $th;
             return $this->errorMessage();
         }
         
