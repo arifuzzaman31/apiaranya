@@ -31,8 +31,8 @@ return [
     ],
     
     'facebook_poster' => [
-        'page_id' => '2764794843778221',
-        'access_token' => '1cd66a9d055088bd3a06698b8b64c89e',
+        'page_id' => '574012441566463',
+        'access_token' => '724af045d789206a8fffc7a94bff3b27',
     ],
 
 ];

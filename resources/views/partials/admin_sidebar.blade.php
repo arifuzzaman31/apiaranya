@@ -177,6 +177,9 @@
                     <li>
                         <a href="{{ route('home-page') }}"> Home </a>
                     </li>
+                    <!-- <li>
+                        <a href="{{ route('shipping') }}"> Shipping </a>
+                    </li> -->
                 </ul>
             </li>
             @endif
@@ -196,10 +199,10 @@
                     <li>
                         <a href="{{ route('category.index') }}"> Category </a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="{{ route('category.index') }}"> SubCategory </a>
                     </li>
-                </ul>
+                </ul> -->
             </li>
             @endif
 

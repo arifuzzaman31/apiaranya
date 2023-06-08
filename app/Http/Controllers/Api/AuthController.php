@@ -187,12 +187,30 @@ class AuthController extends Controller
             \DB::table('password_resets')->where('token', $request->token)->delete();
     
             DB::commit();
-            $this->successMessage('Password Changed Successfully!');
+            return $this->successMessage('Password Changed Successfully!');
             //code...
         } catch (\Throwable $th) {
             DB::rollBack();
             // return $th;
             return $this->errorMessage();
         }
+    }
+
+    public function profileUpdate(Request $request)
+    {
+        try {
+            $user           = User::find(Auth::id());
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
+            $user->name = $request->first_name .' '.$request->last_name;
+            $user->email = $request->email;
+            $user->phone = $request->phone;
+            $user->address = $request->address;
+            $user->update();
+            return $this->successMessage('Profile Changed Successfully!');
+        } catch (\Throwable $th) {
+            return $this->errorMessage();
+        }
+        
     }
 }

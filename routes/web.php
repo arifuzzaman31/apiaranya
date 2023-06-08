@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\SocialController;
+use App\Http\Controllers\ProductController;
 
 use App\Http\Controllers\Api\OrderController as OdController;
 
@@ -21,9 +22,8 @@ use App\Http\Controllers\Api\OrderController as OdController;
 
 Route::redirect('/', 'login');
 
-Route::get('get-token', function () {
-    return "https://graph.facebook.com/oauth/access_token?client_id=508992588020094&client_secret=aee9ae4b04242465e74afc8d910b11b8&grant_type=client_credentials";
-});
+// Route::get('get-token', [ProductController::class,'testa']);
+
 Route::get('login', function () {
     // return \Hash::make(123);
     return view('admin.login');

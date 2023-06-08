@@ -75,12 +75,14 @@ Route::resources([
     'vat-tax' => CompanyController::class,
     'product' => ProductController::class,
     'campaign' => CampaignController::class,
-    'consignment' => ConsignmentController::class,
+    'consignment' => ConsignmentController::class
 ]);
 // Route::get('get-cate-data/{id}',[CategoryController::class,'getCategoryImage'])->name('get-cate-data');
 // start Attributes
 Route::get('get-colour',[ColorController::class,'getColour']);
 // Route::post('colour/store',[ColorController::class, 'store']);
+
+Route::view('shipping','pages.shipping.shipping')->name('shipping');
 
 Route::view('refund','pages.refund.refund')->name('refund');
 Route::view('approve-refund','pages.refund.refund')->name('approve-refund');

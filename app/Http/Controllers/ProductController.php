@@ -14,12 +14,28 @@ use App\Models\ProductTag;
 use Illuminate\Http\Request;
 use App\Traits\ProductTrait;
 use DB,Str;
-use Maatwebsite\Excel\Facades\Excel;
+
+use Illuminate\Support\Facades\Http;
 
 class ProductController extends Controller
 {
     use ProductTrait;
     public $fieldname = 'Product';
+    public function testa(){
+        $path = public_path('newdata.xlsx');
+        $data = \Excel::download($path);
+        dd($data);
+
+        Excel::load('newdata.xlsx',  function ($reader) {
+            return $reader;
+            // $reader->sheet('Sheet1', function($sheet) {
+            //     $sheet->appendRow([
+            //         '4564','testing data','test1', 'test2','new','in stock','5456 MRP','link1','link2'
+            //     ]);
+            // });
+        })->export('xlsx');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -132,11 +148,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // $product = Product::find(17);
-
-        // $product->notify(new ArticlePublished);
-        // return false;
-
         $request->validate([
             'product_name' => 'required',
             'category' => 'required',
@@ -281,8 +292,6 @@ class ProductController extends Controller
                     'keyword_name' => $str
                 ]);
             }
-
-            // $product->notify(new ArticlePublished);
             DB::commit();
             return $this->successMessage($this->fieldname.' Added Successfully!');
         } catch (\Throwable $th) {

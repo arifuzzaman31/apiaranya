@@ -36,7 +36,7 @@ class OrderController extends Controller
             }
 
             $order = new Order();
-            $order->order_id    =   date('Ymd').$order->id;
+            $order->order_id    =   date('Ymd').time();
             $order->shipping_method   =  $request->shipping_method;
             $order->user_id           = $request->isGuestCheckout == false ? Auth::user()->id : 0;
             $order->vat_rate               = 0;
