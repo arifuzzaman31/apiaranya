@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -118,6 +119,56 @@ class AuthController extends Controller
                 'status' => false,
                 'message' => $th->getMessage()
             ], 500);
+        }
+    }
+
+    public function redirectToProvider($provider)
+    {
+        // return $provider;
+        // $validated = $this->validateProvider($provider);
+
+        // if (!is_null($validated)) return $validated;
+
+        return Socialite::driver($provider)->redirect();
+    }
+
+    public function handleProviderCallback(Request $request,$provider)
+    {
+        return Socialite::driver($provider)->stateless()->user();
+        $validator = Validator::make($request->only('provider', 'access_provider_token'), [
+            'provider' => ['required', 'string'],
+            'access_provider_token' => ['required', 'string']
+        ]);
+        
+        if ($validator->fails()) return response()->json($validator->errors(), 400);
+
+        $provider = $request->provider;
+        $validated = $this->validateProvider($provider);
+
+        if (!is_null($validated)) return $validated;
+
+        $providerUser = Socialite::driver($provider)->userFromToken($request->access_provider_token);
+        
+        $user = User::firstOrCreate(
+            [
+                'email' => $providerUser->getEmail()
+            ],
+            [
+                'name' => $providerUser->getName(),
+            ]
+        );
+        return response()->json([
+            'status' => true,
+            'message' => 'User Created Successfully',
+            'user'  => $user,
+            'token' => $user->createToken("Sanctom+Socialite")->plainTextToken
+        ], 200);
+    }
+
+    protected function validateProvider($provider)
+    {
+        if (!in_array($provider, ['google','facebook'])) {
+            return response()->json(["message" => 'You can login via google or facebook account'], 400);
         }
     }
 

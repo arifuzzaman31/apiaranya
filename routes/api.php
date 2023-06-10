@@ -19,6 +19,8 @@ use App\Http\Controllers\Api\OrderController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('auth/register', [AuthController::class, 'createUser']);
+Route::post('auth/login', [AuthController::class, 'loginUser']);
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::get('user', function (Request $request) {
@@ -36,8 +38,7 @@ Route::middleware('auth:sanctum')->group(function(){
 
 Route::get('order-details/{id}', [OrderController::class, 'orderDetails']);
 Route::post('guest-order', [OrderController::class, 'order']);
-Route::post('auth/register', [AuthController::class, 'createUser']);
-Route::post('auth/login', [AuthController::class, 'loginUser']);
+
 
 Route::get('product', [ProductController::class, 'index']);
 
@@ -63,7 +64,3 @@ Route::get('category-fabric/{cat_id}',[FrontController::class,'getCategoryFabric
 Route::post('user-password-email-reset-link', [AuthController::class, 'sendEmailLink'])->name('user-password-email-reset-link');
 
 Route::post('user/reset/password', [AuthController::class, 'storeResetPassword']);
-
-
-
-

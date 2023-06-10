@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\ProductController;
-
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\OrderController as OdController;
 
 // use App\Http\Controllers\Payment\SslController;
@@ -21,7 +21,8 @@ use App\Http\Controllers\Api\OrderController as OdController;
 */
 
 Route::redirect('/', 'login');
-
+Route::get('login/{provider}', [AuthController::class, 'redirectToProvider']);
+Route::get('login/{provider}/callback', [AuthController::class, 'handleProviderCallback']);
 Route::get('get-token', [ProductController::class,'testa']);
 
 Route::get('login', function () {

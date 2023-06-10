@@ -20,27 +20,8 @@ class ProductController extends Controller
     use ProductTrait;
     public $fieldname = 'Product';
 
-    public function testa(){
-        return Excel::download(new AddProduct, 'filename.csv', \Maatwebsite\Excel\Excel::CSV);
-
-        // $path = public_path('newdata.xlsx');
-        // $data = \Excel::import($path)->get();
-        // unset($data[0][0]);
-        // dd($data);
-
-        // $sheet = Excel::store($this,'newdata.xlsx');
-        // $this->appendRow([
-        //                 '4564','testing data','test1', 'test2','new','in stock','5456 MRP','link1','link2'
-        //             ]);
-        return "done";
-        // Excel::import($path,  function ($reader) {
-        //     // return $reader;
-        //     $reader->sheet('Sheet1', function($sheet) {
-        //         $sheet->appendRow([
-        //             '4564','testing data','test1', 'test2','new','in stock','5456 MRP','link1','link2'
-        //         ]);
-        //     });
-        // })->export('xlsx');
+    public function testa(){ 
+         return storage_path(Excel::store(new AddProduct, 'product.csv'));
     }
 
     /**
@@ -300,6 +281,14 @@ class ProductController extends Controller
                 ]);
             }
             DB::commit();
+            if(is_file(storage_path('app/product.csv')))
+            {
+                // 1. possibility
+                //Storage::delete($file);
+                // 2. possibility
+                unlink(storage_path('app/product.csv'));
+            }
+            storage_path(Excel::store(new AddProduct, 'product.csv'));
             return $this->successMessage($this->fieldname.' Added Successfully!');
         } catch (\Throwable $th) {
             DB::rollback();
@@ -527,6 +516,14 @@ class ProductController extends Controller
             }
 
             DB::commit();
+            if(is_file(storage_path('app/product.csv')))
+            {
+                // 1. possibility
+                //Storage::delete($file);
+                // 2. possibility
+                unlink(storage_path('app/product.csv'));
+            }
+            storage_path(Excel::store(new AddProduct, 'product.csv'));
             return $this->successMessage($this->fieldname.' Successfully Updated!');
         } catch (\Throwable $th) {
             DB::rollback();
