@@ -21,7 +21,7 @@ class ProductController extends Controller
     public $fieldname = 'Product';
 
     public function testa(){ 
-         return storage_path(Excel::store(new AddProduct, 'product.csv'));
+         return public_path(Excel::store(new AddProduct, 'product.csv'));
     }
 
     /**
@@ -281,14 +281,14 @@ class ProductController extends Controller
                 ]);
             }
             DB::commit();
-            if(is_file(storage_path('app/product.csv')))
+            if(is_file(public_path('product.csv')))
             {
                 // 1. possibility
                 //Storage::delete($file);
                 // 2. possibility
-                unlink(storage_path('app/product.csv'));
+                unlink(public_path('product.csv'));
             }
-            storage_path(Excel::store(new AddProduct, 'product.csv'));
+            public_path(Excel::store(new AddProduct, 'product.csv'));
             return $this->successMessage($this->fieldname.' Added Successfully!');
         } catch (\Throwable $th) {
             DB::rollback();
@@ -516,14 +516,14 @@ class ProductController extends Controller
             }
 
             DB::commit();
-            if(is_file(storage_path('app/product.csv')))
+            if(is_file(public_path('product.csv')))
             {
                 // 1. possibility
                 //Storage::delete($file);
                 // 2. possibility
-                unlink(storage_path('app/product.csv'));
+                unlink(public_path('product.csv'));
             }
-            storage_path(Excel::store(new AddProduct, 'product.csv'));
+            public_path(Excel::store(new AddProduct, 'product.csv'));
             return $this->successMessage($this->fieldname.' Successfully Updated!');
         } catch (\Throwable $th) {
             DB::rollback();

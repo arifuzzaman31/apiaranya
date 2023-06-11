@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\AllStatic;
 use App\Models\Campaign;
 use App\Http\Resources\CampaignResource;
-use App\Models\CategoryFabric;
 use Illuminate\Support\Facades\DB;
 
 class FrontController extends Controller
@@ -30,6 +29,15 @@ class FrontController extends Controller
             ->join('category_fabric','fabrics.id','category_fabric.fabric_id') 
             ->where('category_id',$cat_id)
             ->get();
+    }
+
+    public function allAttribute()
+    {
+        return response()->json([
+            'fabrics' => DB::table('fabrics')->select('id','fabric_name','status')->where('status',AllStatic::$active)->get(),
+            'sizes' => DB::table('sizes')->select('id','size_name','status')->where('status',AllStatic::$active)->get(),
+            'colours' => DB::table('colours')->select('id','color_name','status')->where('status',AllStatic::$active)->get()
+        ]);
     }
 
 }

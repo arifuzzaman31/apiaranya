@@ -125,43 +125,34 @@ class AuthController extends Controller
     public function redirectToProvider($provider)
     {
         // return $provider;
-        // $validated = $this->validateProvider($provider);
+        $validated = $this->validateProvider($provider);
 
-        // if (!is_null($validated)) return $validated;
+        if (!is_null($validated)) return $validated;
 
         return Socialite::driver($provider)->redirect();
     }
 
     public function handleProviderCallback(Request $request,$provider)
     {
-        return Socialite::driver($provider)->stateless()->user();
-        $validator = Validator::make($request->only('provider', 'access_provider_token'), [
-            'provider' => ['required', 'string'],
-            'access_provider_token' => ['required', 'string']
-        ]);
-        
-        if ($validator->fails()) return response()->json($validator->errors(), 400);
+        $userapp = Socialite::driver($provider)->stateless()->user();
 
-        $provider = $request->provider;
         $validated = $this->validateProvider($provider);
 
         if (!is_null($validated)) return $validated;
-
-        $providerUser = Socialite::driver($provider)->userFromToken($request->access_provider_token);
         
         $user = User::firstOrCreate(
             [
-                'email' => $providerUser->getEmail()
+                'email' => $userapp->getEmail()
             ],
             [
-                'name' => $providerUser->getName(),
+                'name' => $userapp->getName(),
             ]
         );
         return response()->json([
             'status' => true,
             'message' => 'User Created Successfully',
             'user'  => $user,
-            'token' => $user->createToken("Sanctom+Socialite")->plainTextToken
+            'token' => $user->createToken($user->email)->plainTextToken
         ], 200);
     }
 

@@ -39,6 +39,7 @@ Route::middleware('auth:sanctum')->group(function(){
 Route::get('order-details/{id}', [OrderController::class, 'orderDetails']);
 Route::post('guest-order', [OrderController::class, 'order']);
 
+Route::get('attribute-list', [FrontController::class, 'allAttribute']);
 
 Route::get('product', [ProductController::class, 'index']);
 

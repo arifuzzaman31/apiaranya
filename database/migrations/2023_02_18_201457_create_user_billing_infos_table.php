@@ -23,7 +23,8 @@ class CreateUserBillingInfosTable extends Migration
             $table->string('city');
             $table->string('email');
             $table->string('phone');
-            $table->string('post_code');
+            $table->string('post_code')->nullable();
+            $table->string('apartment')->nullable();
             $table->string('street_address');
             $table->timestamps();
         });

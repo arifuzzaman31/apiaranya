@@ -98,6 +98,7 @@ class OrderController extends Controller
             $billing->phone = $request->data['phone_billing'];
             $billing->post_code = $request->data['post_code_billing'];
             $billing->street_address = $request->data['street_address_billing'];
+            $billing->apartment = $request->data['apartment_address_billing'];
             $billing->save();
 
             $address = $billing->street_address.', '.$billing->city.', '.$billing->post_code.','.$billing->country;
@@ -122,6 +123,7 @@ class OrderController extends Controller
                 $shipping->phone = $request->data['phone_shipping'];
                 $shipping->post_code = $request->data['post_code_shipping'];
                 $shipping->street_address = $request->data['street_address_shipping'];
+                $shipping->apartment = $request->data['apartment_address_shipping'];
                 $shipping->save();
             }
 
@@ -138,7 +140,7 @@ class OrderController extends Controller
             ]);
             
             DB::commit();
-            $this->invoiceToMail($order->id);
+            //$this->invoiceToMail($order->id);
             if($request->data['paymentMethod'] == 'online'){
                 return response()->json(['status' => 'success', 'type' => 'online', 'message' => 'Order Created', 'payment' => $this->sslCommerz($order->id)], 200);
             } else {
@@ -393,7 +395,7 @@ class OrderController extends Controller
     {
         $noPagination = $request->get('no_paginate');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
-        $order = Order::with('order_details')
+        $order = Order::with('order_details.product')
                 ->where('user_id',Auth::id())->orderBy('id','desc');
         if($noPagination != ''){
             $order = $order->get();
