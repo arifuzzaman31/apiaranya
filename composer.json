@@ -9,7 +9,6 @@
         "barryvdh/laravel-dompdf": "^2.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
-        "laravel-notification-channels/facebook-poster": "^5.0",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.15",
         "laravel/socialite": "^5.6",
