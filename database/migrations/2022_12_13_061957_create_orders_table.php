@@ -39,7 +39,7 @@ class CreateOrdersTable extends Migration
             $table->integer('shipping_amount')->default(0);
             $table->string('tracking_id')->nullable();
             $table->longText('payment_info')->nullable();
-            $table->tinyInteger('status')->default(1);
+            $table->tinyInteger('status')->default(1)->comment = "0=cancel, 1=active, 2=On-hold";
             $table->tinyInteger('is_same_address')->default(0);
             $table->tinyInteger('order_position')->default(0)->comment = "0=pending 1=process 2=OnProcess 3=Delivered";
             $table->tinyInteger('delivery_type')->default(0)->comment = "0 for home, 1 for pickup point";
