@@ -106,6 +106,24 @@ class AuthController extends Controller
         }
     }
 
+    public function socialLoginUser(Request $request)
+    {
+        $user = User::firstOrCreate(
+            [
+                'email' => $request->email
+            ],
+            [
+                'name' => $request->name,
+            ]
+        );
+        return response()->json([
+            'status' => true,
+            'message' => 'User Created Successfully',
+            'user'  => $user,
+            'token' => $user->createToken($user->email)->plainTextToken
+        ], 200);
+    }
+
     public function logout(Request $request)
     {
         try {

@@ -21,6 +21,7 @@ use App\Http\Controllers\Api\OrderController;
 */
 Route::post('auth/register', [AuthController::class, 'createUser']);
 Route::post('auth/login', [AuthController::class, 'loginUser']);
+Route::post('social/login', [AuthController::class, 'socialLoginUser']);
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::get('user', function (Request $request) {

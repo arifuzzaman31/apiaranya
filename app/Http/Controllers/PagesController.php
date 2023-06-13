@@ -174,11 +174,14 @@ class PagesController extends Controller
 
     public function getShippingData(Request $request)
     {
-        try {
-            return DB::table('shipping_configs')->paginate(1);
-        } catch (\Throwable $th) {
-            //throw $th;
+        $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
+        $keyword   = $request->get('keyword');
+        $shipp = DB::table('shipping_configs')->orderBy('country_name','asc');
+        if($keyword != ''){
+            $shipp = $shipp->where('country_name','like','%'.$keyword.'%');
         }
+        
+        return $shipp->paginate($dataQty);
     }
 
     /**
