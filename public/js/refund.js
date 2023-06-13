@@ -19913,7 +19913,7 @@ var _hoisted_9 = {
 var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "refund_within_days",
   "class": "form-label"
-}, "Allow Refund Within Days", -1 /* HOISTED */);
+}, "Allow Refund/Cancellation Within Days", -1 /* HOISTED */);
 var _hoisted_11 = {
   "class": "mb-1"
 };

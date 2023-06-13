@@ -316,6 +316,34 @@ class PermissionSeeder extends Seeder
                 'route_name' => null,
                 'slug' => 'order-report',
                 'status' => 1
+            ],
+            [
+                'group_name' => 'Shipping',
+                'permission_name' => 'Shipping View',
+                'route_name' => null,
+                'slug' => 'shipping-view',
+                'status' => 1
+            ],
+            [
+                'group_name' => 'Shipping',
+                'permission_name' => 'Add Shipping',
+                'route_name' => null,
+                'slug' => 'add-shipping',
+                'status' => 1
+            ],
+            [
+                'group_name' => 'Shipping',
+                'permission_name' => 'Edit Shipping',
+                'route_name' => null,
+                'slug' => 'edit-shipping',
+                'status' => 1
+            ],
+            [
+                'group_name' => 'Shipping',
+                'permission_name' => 'Delete Shipping',
+                'route_name' => null,
+                'slug' => 'delete-shipping',
+                'status' => 1
             ]
         ];
 

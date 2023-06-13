@@ -82,7 +82,13 @@ Route::resources([
 Route::get('get-colour',[ColorController::class,'getColour']);
 // Route::post('colour/store',[ColorController::class, 'store']);
 
-Route::view('shipping','pages.shipping.shipping')->name('shipping');
+Route::controller(PagesController::class)
+    ->group(function () {
+        Route::get('shipping','getShipping')->name('shipping');
+        Route::post('add-shipping-charge','storeShippingCharge');
+        Route::get('get-shipping-data','getShippingData');
+        Route::delete('remove-shipping-data/{id}','deleteShipping');
+});
 
 Route::view('refund','pages.refund.refund')->name('refund');
 Route::view('approve-refund','pages.refund.refund')->name('approve-refund');

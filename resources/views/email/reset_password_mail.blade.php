@@ -325,7 +325,7 @@
                         <p style="color: #000000; font-size :20px; font-weight: 600">Hello ,</p>
                      
                         <p style="padding-top: 0px; padding-bottom: 25px; color: #717274; font-size: 15px;"> To Reset Your Password Please Click on Reset Password Button Below </p> 
-                        <p> <a class="align-center" href="{{config('app.front_url')}}token?{{$details['token']}}"
+                        <p> <a class="align-center" href="{{$details['backUri']}}/resetPassword?token={{$details['token']}}"
                            target="_blank" style="font-size: 15px; letter-spacing: .5px;  background-color:#1f988e; color: #fff; padding: 12px 25px; text-decoration: none; border-radius: 4px"> Reset Password </a>  </p> 
 
                         <p style="color: #717274; font-size :15px; padding-top: 50px;word-break: break-all; margin-bottom: 0;">Thanks, </p>  

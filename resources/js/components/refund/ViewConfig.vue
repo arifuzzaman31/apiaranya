@@ -60,7 +60,7 @@ export default {
                     <div class="card-body">
                         <h5 class="mb-3">Basic Information</h5>
                         <div class="mb-3">
-                            <label for="refund_within_days" class="form-label">Allow Refund Within Days</label>
+                            <label for="refund_within_days" class="form-label">Allow Refund/Cancellation Within Days</label>
                             <input class="form-control" type="hidden" name="id" v-model="form.id" />
                             <input class="form-control" type="number" min="0" v-model="form.refund_within_days" placeholder="Type refund days" required="">
                         </div>

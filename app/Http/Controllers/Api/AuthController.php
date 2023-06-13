@@ -194,10 +194,16 @@ class AuthController extends Controller
     
             $details = [
                 'token' => $token,
-                'email' => $request->email
+                'email' => $request->email,
+                'backUri' => $request->backUri
             ];
     
-            \DB::table('password_resets')->insert($details);
+            \DB::table('password_resets')->insert(
+                [
+                    'token' => $token,
+                    'email' => $request->email
+                ]
+            );
             \Mail::to($request->email)->send(new \App\Mail\ResetPasswordMail($details));
             DB::commit();
             return response()->json(['status' => 'success','massage' => 'Token send to Email','reset_token' => $token]);
@@ -211,12 +217,8 @@ class AuthController extends Controller
 
     public function storeResetPassword(Request $request)
     {
-        $request->validate([
-            'password' => 'required|confirmed|min:6',
-        ]);
         try {
-            DB::beginTransaction();
-            $userToken = \DB::table('password_resets')->where('token', $request->token)->first();
+            $userToken = DB::table('password_resets')->where('token', $request->token)->first();
     
             if (!$userToken) {
                 return response()->json(['status' => 'error','massage' => 'Invalid Token']);
@@ -226,13 +228,11 @@ class AuthController extends Controller
             $user->password = Hash::make($request->password);
             $user->update();
     
-            \DB::table('password_resets')->where('token', $request->token)->delete();
-    
-            DB::commit();
+            DB::table('password_resets')->where('token', $request->token)->delete();
+ 
             return $this->successMessage('Password Changed Successfully!');
-            //code...
+
         } catch (\Throwable $th) {
-            DB::rollBack();
             // return $th;
             return $this->errorMessage();
         }
@@ -242,9 +242,9 @@ class AuthController extends Controller
     {
         try {
             $user           = User::find(Auth::id());
-            //$user->first_name = $request->first_name;
+            $user->first_name = $request->full_name;
             //$user->last_name = $request->last_name;
-            $user->name = $request->full_name;
+            //$user->name = $request->full_name;
            // $user->email = $request->email;
             $user->phone = $request->phone;
             $user->address = $request->address;

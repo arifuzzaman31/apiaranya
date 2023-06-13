@@ -103,13 +103,6 @@ class OrderController extends Controller
 
             $address = $billing->street_address.', '.$billing->city.', '.$billing->post_code.','.$billing->country;
 
-            if($request->isGuestCheckout == false){
-                User::where('id', Auth::user()->id)->update([
-                    'phone' => $billing->phone,
-                    'address' => $address
-                ]);
-            }
-
             if($request->isSameAddress == false)
             {
                 $shipping = new UserShippingInfo();
@@ -142,7 +135,8 @@ class OrderController extends Controller
             DB::commit();
             //$this->invoiceToMail($order->id);
             if($request->data['paymentMethod'] == 'online'){
-                return response()->json(['status' => 'success', 'type' => 'online', 'message' => 'Order Created', 'payment' => $this->sslCommerz($order->id)], 200);
+                $backUri = $request->backUri ? $request->backUri : 'https://staging.aranya.com.bd';
+                return response()->json(['status' => 'success', 'type' => 'online', 'message' => 'Order Created', 'payment' => $this->sslCommerz($order->id,$backUri)], 200);
             } else {
                 DB::table('deliveries')->where('order_id', $order->id)->update([
                     'process_date' => date('Y-m-d'),
@@ -160,7 +154,7 @@ class OrderController extends Controller
         }
     }
     
-    public function sslCommerz($order_id)
+    public function sslCommerz($order_id,$backUri)
     {
         $order = Order::with('user','user_billing_info')->find($order_id);
         $order_details = OrderDetails::with('product:id,product_name')->where('order_id', $order_id)->get();
@@ -205,7 +199,7 @@ class OrderController extends Controller
         $post_data['ship_country'] = "Bangladesh";
     
         # OPTIONAL PARAMETERS
-        $post_data['value_a'] = "0";
+        $post_data['value_a'] = $backUri;
         $post_data['value_b '] = "ref002";
         $post_data['value_c'] = "ref003";
         $post_data['value_d'] = "ref004";
@@ -318,11 +312,11 @@ class OrderController extends Controller
 
                 if ($order->payment_status == 1) {
                     DB::commit();
-                    return redirect('https://staging.aranya.com.bd/payment?payment=success&orderid='.$order->order_id.'&transid='.$order->transaction_id);
+                    return redirect($request->value_a.'/payment?payment=success&orderid='.$order->order_id.'&transid='.$order->transaction_id);
                 }
 
                 DB::rollBack();
-                return redirect('https://staging.aranya.com.bd/payment?payment=fail');
+                return redirect($request->value_a.'/payment?payment=fail');
 
             } catch (\Throwable $th) {
                 DB::rollBack();
@@ -385,10 +379,20 @@ class OrderController extends Controller
 
     public function orderCancel(Request $request)
     {
+        $configure = DB::table('refund_configure')->first();
         $order = Order::find($request->order_id);
-        $order->status = 0;
-        $order->update();
-        return response()->json(['status' => 'success', 'message' => 'Order Has been Cancelled!']);
+
+        if($configure->status == AllStatic::$active){
+            if($order->created_at->addDays($configure->refund_within_days)->format('Y-m-d') <= date('Y-m-d')){
+                return response()->json(['status' => 'error','message' => 'Cancellation Request Date Expired!']);
+            } else {
+                $order->status = 0;
+                $order->update();
+                return response()->json(['status' => 'success', 'message' => 'Order Has been Cancelled!']);
+            }
+        }
+        return response()->json(['status' => 'error','message' => 'Cancellation Not Allowed!']);
+        
     }
 
     public function orderList(Request $request)
@@ -418,14 +422,14 @@ class OrderController extends Controller
         $order = OrderDetails::find($request->item_id);
 
         if($configure->status == AllStatic::$active){
-		if($order->created_at->addDays($configure->refund_within_days)->format('Y-m-d') <= date('Y-m-d')){
-			return response()->json(['status' => 'error','message' => 'Refund Request Date Expired!']);
-		} else {
-			$order->is_claim_refund = AllStatic::$active;
-        		$order->refund_claim_date = date('Y-m-d');
-        		$order->update();
-        		return $this->successMessage('Refund Claim Successful!');
-		}
+            if($order->created_at->addDays($configure->refund_within_days)->format('Y-m-d') <= date('Y-m-d')){
+                return response()->json(['status' => 'error','message' => 'Refund Request Date Expired!']);
+            } else {
+                $order->is_claim_refund = AllStatic::$active;
+                    $order->refund_claim_date = date('Y-m-d');
+                    $order->update();
+                    return $this->successMessage('Refund Claim Successful!');
+            }
         }
 
         return response()->json(['status' => 'error','message' => 'Refund Not Allowed!']);

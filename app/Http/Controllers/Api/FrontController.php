@@ -31,6 +31,13 @@ class FrontController extends Controller
             ->get();
     }
 
+    public function shippingData()
+    {
+        return DB::table('shipping_configs') 
+            ->where('status',AllStatic::$active)
+            ->get();
+    }
+
     public function allAttribute()
     {
         return response()->json([

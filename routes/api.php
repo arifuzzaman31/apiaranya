@@ -28,7 +28,6 @@ Route::middleware('auth:sanctum')->group(function(){
     });
     
     Route::post('logout', [AuthController::class, 'logout']); 
-    //user order
     Route::post('order', [OrderController::class, 'order']);
     Route::get('order', [OrderController::class, 'orderList']);
     Route::post('order/cancel',[OrderController::class,'orderCancel']);
@@ -39,6 +38,7 @@ Route::middleware('auth:sanctum')->group(function(){
 Route::get('order-details/{id}', [OrderController::class, 'orderDetails']);
 Route::post('guest-order', [OrderController::class, 'order']);
 
+Route::get('shipping-charge', [FrontController::class, 'shippingData']);
 Route::get('attribute-list', [FrontController::class, 'allAttribute']);
 
 Route::get('product', [ProductController::class, 'index']);
@@ -64,4 +64,4 @@ Route::get('category-fabric/{cat_id}',[FrontController::class,'getCategoryFabric
 // user reset password
 Route::post('user-password-email-reset-link', [AuthController::class, 'sendEmailLink'])->name('user-password-email-reset-link');
 
-Route::post('user/reset/password', [AuthController::class, 'storeResetPassword']);
+Route::post('user-reset-password', [AuthController::class, 'storeResetPassword']);

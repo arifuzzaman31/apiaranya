@@ -138,9 +138,47 @@ class PagesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function getShipping()
     {
-        //
+        return view('pages.page.shipping');
+    }
+
+    public function storeShippingCharge(Request $request)
+    {
+        $request->validate([
+            'country_name'  => 'required|unique:shipping_configs'
+        ]);
+        try{
+            DB::table('shipping_configs')->insert([
+                'country_name'  => $request->country_name,
+                'insidecity_shipping_charge' => $request->inside_city,
+                'outsidecity_shipping_charge' => $request->outside_city,
+                'status'    => $request->status ? 1 : 0,
+                'created_at' => now(),
+            ]);
+            return $this->successMessage("Shipping Charge Added!");
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' =>  $th->getMessage()]);
+        }
+    }
+
+    public function deleteShipping($id)
+    {
+        try {
+            DB::table('shipping_configs')->where('id',$id)->delete();
+            return $this->successMessage("Shipping Charge Added!");
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' =>  $th->getMessage()]);
+        }
+    }
+
+    public function getShippingData(Request $request)
+    {
+        try {
+            return DB::table('shipping_configs')->paginate(1);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     /**
