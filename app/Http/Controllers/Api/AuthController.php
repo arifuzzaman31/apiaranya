@@ -277,7 +277,7 @@ class AuthController extends Controller
             ], 200);
 
         } catch (\Throwable $th) {
-		//return $th;
+		    return $th;
             return $this->errorMessage();
         }
         

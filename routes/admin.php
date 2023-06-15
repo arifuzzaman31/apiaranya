@@ -29,6 +29,7 @@ use App\Http\Controllers\RefundController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MediaManagerController;
 
 Route::redirect('/', 'admin/dashboard');
 Route::get('/me', [AdminLoginController::class, 'getUser']);
@@ -75,7 +76,8 @@ Route::resources([
     'vat-tax' => CompanyController::class,
     'product' => ProductController::class,
     'campaign' => CampaignController::class,
-    'consignment' => ConsignmentController::class
+    'consignment' => ConsignmentController::class,
+    'media-manager' => MediaManagerController::class
 ]);
 // Route::get('get-cate-data/{id}',[CategoryController::class,'getCategoryImage'])->name('get-cate-data');
 // start Attributes

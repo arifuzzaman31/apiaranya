@@ -344,6 +344,20 @@ class PermissionSeeder extends Seeder
                 'route_name' => null,
                 'slug' => 'delete-shipping',
                 'status' => 1
+            ],
+            [
+                'group_name' => 'Media-Manager',
+                'permission_name' => 'Media View',
+                'route_name' => null,
+                'slug' => 'media-view',
+                'status' => 1
+            ],
+            [
+                'group_name' => 'Media-Manager',
+                'permission_name' => 'Media Delete',
+                'route_name' => null,
+                'slug' => 'media-delete',
+                'status' => 1
             ]
         ];
 

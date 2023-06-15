@@ -101,8 +101,6 @@ class OrderController extends Controller
             $billing->apartment = $request->data['apartment_address_billing'];
             $billing->save();
 
-            $address = $billing->street_address.', '.$billing->city.', '.$billing->post_code.','.$billing->country;
-
             if($request->isSameAddress == false)
             {
                 $shipping = new UserShippingInfo();
