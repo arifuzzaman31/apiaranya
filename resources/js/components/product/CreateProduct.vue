@@ -4,13 +4,15 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import axios from 'axios';
 import Multiselect from '@vueform/multiselect'
 import Mixin from '../../mixer'
+import ImageCard from './ImageCard.vue';
 
 export default {
     props:['prp_vendor','prp_artist','prp_colour','prp_brand','prp_care','flat_colour','prp_consignment','prp_designer','prp_embellish','prp_fabric','prp_fit','prp_ingredient','prp_making','prp_season','prp_size','prp_variety','prp_tax'],
     mixins:[Mixin],
     components: {
         QuillEditor,
-        Multiselect
+        Multiselect,
+        ImageCard
     },
 
     data(){
@@ -33,6 +35,7 @@ export default {
                 consignment : [],
                 ingredients : [],
                 flat_colour : [],
+                selectedImages : [],
                 product_image_one : '',
                 product_image_two : '',
                 product_image_three : '',
@@ -63,6 +66,8 @@ export default {
             choose_sizes: [],
             combine: false,
             tages: [],
+            allImages: [],
+            page: 1,
             list_colour: [],
             allcategories: [],
             allsubcategories: [],
@@ -245,6 +250,7 @@ export default {
                 artist : [],
                 consignment : [],
                 ingredients : [],
+                selectedImages : [],
                 product_image_one : '',
                 product_image_two : '',
                 product_image_three : '',
@@ -273,14 +279,45 @@ export default {
             },
             this.allsubcategories= [],
             this.allfiltersubcategories = [],
+            this.page = 1,
             this.validation_error = {}
-        }
+        },
+        mediaModalOpen(){
+            $("#mediaModal").modal('show');
+        },
+        getImageData(){
+            axios.get(baseUrl+`media-manager/create?page=${this.page}&per_page=10`)
+            .then(result => {
+                if(this.page == 1){
+                    this.allImages = result.data;
+                } else {
+                    this.allImages.data.push(...result.data.data)
+                }
+            })
+            .catch(errors => {
+                console.log(errors);
+            });  
+        },
+        loadMore(){
+            this.getImageData(this.page++)
+        },
+        updateSelection(img, selected) {
+            if (selected) {
+                this.selectedImages.push(img);
+            } else {
+                const index = this.selectedImages.findIndex(p => p.id === img.id);
+                if (index !== -1) {
+                this.selectedImages.splice(index, 1);
+                }
+            }
+        },
     },
     mounted(){
         this.prp_colour.map(color => {
            this.list_colour.push({'value':color.color_name,'name':color.color_name})
         })
         this.getCategory()
+        this.getImageData()
     }
 }
 </script>
@@ -736,7 +773,8 @@ export default {
                         <div class="col-md-3 col-12 mt-4">
                                 <label for="product-image1">Image (1:1)</label>
                                 <!-- <input type="file" class="form-control" id="product-image"> -->
-                                <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('one')">Upload files</button>
+                                <button type="button" class="btn btn-sm btn-info" @click="mediaModalOpen()" >Upload files</button>
+                                <!-- <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('one')">Upload files</button> -->
                                 <p class="mt-1 text-info" v-if="form.product_image_one != ''">Image Uploaded</p>
                             </div>
                             <div class="col-md-3 col-12 mt-4">
@@ -1198,8 +1236,58 @@ export default {
                 </div>
             </div>
         </div>
-    
         <button class="btn btn-success" type="submit">Save</button>
     </form>
+
+    <div id="mediaModal" class="modal animated fadeInUp custo-fadeInBottom" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Media</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="widget-content">
+                            <div class="statbox widget">
+                                <div class="widget-header">
+                                    <div class="row" v-if="allImages.data && allImages.data.length > 0">
+                                        <div class="col-xl-2 col-md-3 col-sm-6 col-12" v-for="(item,ind) in allImages.data" :key="ind">
+                                            <a href="" >
+                                                <ImageCard :item="item" :selecting="true" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <button  v-if="allImages.data && allImages.data.length > 0 && page < allImages.last_page" @click="loadMore()" class="btn btn-primary mt-4">Load More</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 </template>
 <style src="@vueform/multiselect/themes/default.css"></style>
+<style scoped>
+.modal-dialog {
+  min-width: 92%;
+  height: 100%;
+  bottom: 0;
+  padding: 0;
+  top:80;
+}
+.modal-body{
+    height: 80vh;
+    overflow-y: auto;
+}
+.modal-content {
+  height: auto;
+  min-width: 100%;
+  min-height: 100%;
+  border-radius: 0;
+  bottom: 0;
+}
+</style>
