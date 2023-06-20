@@ -1,11 +1,16 @@
 <script>
 export default {
-    props:['item','selecting'],
+    props:['item'],
+    data(){
+        return {
+            activetoggle : false
+        }
+    }
 }
 </script>
 
 <template>
-<div class="card component-card_9" :class="selecting ? 'active-card' : ''">
+<div class="card component-card_9" :class="activetoggle ? 'active-card' : ''">
     <img :src="item.file_link" class="card-img-top" :alt="item.product_name">
     <div class="card-body">
         <h6 class="card-title">{{ item.product_name }}</h6>

@@ -136,6 +136,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request->selectedImages[1];
         $request->validate([
             'product_name' => 'required',
             'category' => 'required',
@@ -143,7 +144,6 @@ class ProductController extends Controller
             //'weight' => 'required',
             'design_code' => 'required'
         ]);
-
         DB::beginTransaction();
         try {
             $product = new Product();
@@ -155,12 +155,12 @@ class ProductController extends Controller
             $product->description         = $request->description;
             $product->lead_time           = $request->lead_time;
             $product->flat_colour         = implode(",",$request->flat_colour);
-            $product->product_image       = $request->product_image_one;
-            $product->image_one           = $request->product_image_one;
-            $product->image_two           = $request->product_image_two;
-            $product->image_three         = $request->product_image_three;
-            $product->image_four          = $request->product_image_four;
-            $product->image_five          = $request->image_five;
+            $product->product_image       = $request->selectedImages[0] ?? NULL;
+            $product->image_one           = $request->selectedImages[0] ?? NULL;
+            $product->image_two           = $request->selectedImages[1] ?? NULL;
+            $product->image_three         = $request->selectedImages[2] ?? NULL;
+            $product->image_four          = $request->selectedImages[3] ?? NULL;
+            $product->image_five          = $request->selectedImages[4] ?? NULL;
             $product->height              = $request->height;
             $product->width               = $request->width;
             $product->length              = $request->length;
@@ -187,21 +187,6 @@ class ProductController extends Controller
             if($request->is_fabric && $request->selectfabrics){
 
                 $product->product_fabric()->attach($request->selectfabrics);
-
-                $cid = $request->sub_category != '' ? $request->sub_category : $request->category;
-
-                foreach($request->selectfabrics as $subcat){
-                    $chk = CategoryFabric::where(
-                        ['category_id' =>  $cid,'fabric_id' => $subcat]
-                        )->first();
-
-                    if(empty($chk)){
-                        CategoryFabric::create([
-                            'category_id' => $cid,
-                            'fabric_id' => $subcat
-                        ]);
-                    }
-                }
             }
             
             if($request->attrqty && !empty($request->attrqty)){
@@ -360,21 +345,28 @@ class ProductController extends Controller
             $product->vat_tax_id          = $request->vat;
             $product->description         = $request->description;
             $product->lead_time           = $request->lead_time;
-            if($request->product_image_one != ''){
-                $product->product_image   = $request->product_image_one;
-                $product->image_one       = $request->product_image_one;
+
+            $product->product_image       = $request->selectedImages[0] ?? NULL;
+            $product->image_one           = $request->selectedImages[0] ?? NULL;
+            $product->image_two           = $request->selectedImages[1] ?? NULL;
+            $product->image_three         = $request->selectedImages[2] ?? NULL;
+            $product->image_four          = $request->selectedImages[3] ?? NULL;
+            $product->image_five          = $request->selectedImages[4] ?? NULL;
+            if($request->selectedImages[0] != ''){
+                $product->product_image   = $request->selectedImages[0] ?? NULL;;
+                $product->image_one       = $request->selectedImages[0] ?? NULL;;
             }
-            if($request->product_image_two != ''){
-                $product->image_two       = $request->product_image_two;
+            if($request->selectedImages[1] != ''){
+                $product->image_two       = $request->selectedImages[1] ?? NULL;;
             }
-            if($request->product_image_three != ''){
-                $product->image_three     = $request->product_image_three;
+            if($request->selectedImages[2] != ''){
+                $product->image_three     = $request->selectedImages[2] ?? NULL;;
             }
-            if($request->product_image_four != ''){
-                $product->image_four      = $request->product_image_four;
+            if($request->selectedImages[3] != ''){
+                $product->image_four      = $request->selectedImages[3] ?? NULL;;
             }
             if($request->image_five != ''){
-                $product->image_five      = $request->image_five;
+                $product->image_five      = $request->image_five ?? NULL;;
             }
             $product->height              = $request->height;
             $product->width               = $request->width;
@@ -402,21 +394,6 @@ class ProductController extends Controller
             if($request->is_fabric && !empty($request->fabrics)){
 
                 $product->product_fabric()->sync($request->fabrics);
-
-                $cid = $request->sub_category != '' ? $request->sub_category : $request->category;
-
-                foreach($request->fabrics as $subcat){
-                    $chk = CategoryFabric::where(
-                        ['category_id' =>  $cid,'fabric_id' => $subcat]
-                        )->first();
-
-                    if(empty($chk)){
-                        CategoryFabric::create([
-                            'category_id' => $cid,
-                            'fabric_id' => $subcat
-                        ]);
-                    }
-                }
             }
             
             if($request->attrqty && !empty($request->attrqty)){

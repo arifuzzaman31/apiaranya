@@ -35,14 +35,7 @@ export default {
                 consignment : [],
                 ingredient : [],
                 flat_colour : [],
-                product_image_one : '',
-                product_image_two : '',
-                product_image_three : '',
-                product_image_four : '',
-                view_image_one : '',
-                view_image_two : '',
-                view_image_three : '',
-                view_image_four : '',
+                selectedImages : [],
                 design_code: '',
                 unit: '',
                 height: '',
@@ -67,6 +60,9 @@ export default {
             },
             tages: [],
             allcategories: [],
+            allImages: [],
+            page: 1,
+            media_keyword: '',
             allsubcategories: [],
             allfiltersubcategories: [],
             validation_error: {}
@@ -90,82 +86,6 @@ export default {
             })
         },
 
-        openUploadModal(numb){
-            const widget = window.cloudinary.createUploadWidget(
-                { cloud_name: clName,
-                    upload_preset: clPreset,
-                    sources: [
-                        "local",
-                        "camera",
-                        "google_drive",
-                        "facebook",
-                        "dropbox",
-                        "instagram",
-                        "unsplash"
-                    ],
-                    folder: "aranya", //upload files to the specified folder
-                    
-                    styles: {
-                        palette: {
-                            window: "#10173a",
-                            sourceBg: "#20304b",
-                            windowBorder: "#7171D0",
-                            tabIcon: "#79F7FF",
-                            inactiveTabIcon: "#8E9FBF",
-                            menuIcons: "#CCE8FF",
-                            link: "#72F1FF",
-                            action: "#5333FF",
-                            inProgress: "#00ffcc",
-                            complete: "#33ff00",
-                            error: "#cc3333",
-                            textDark: "#000000",
-                            textLight: "#ffffff"
-                        },
-                        fonts: {
-                            default: null,
-                            "sans-serif": {
-                                url: null,
-                                active: true
-                            }
-                        }
-                    }
-                },
-                (error, result) => {
-                if (!error && result && result.event === "success") {
-                    console.log('Done uploading..: ', result.info);
-                    this.setImage(numb,result.info.path)
-                }
-                this.validationError({'status':'error','message':error.error.message})
-                });
-                widget.open();
-        },
-
-        setImage(numb,uri){
-            switch (numb) {
-                case 'one':
-                    this.form.product_image_one = uri
-                    break;
-                case 'two':
-                    this.form.product_image_two = uri
-                    break;
-                case 'three':
-                    this.form.product_image_three = uri
-                    break;
-
-                case 'four':
-                    this.form.product_image_four = uri
-                    break;
-
-                case 'five':
-                    this.form.product_image_five = uri
-                    break;
-            
-                default:
-                    break;
-            }
-            return true;
-        },
-
         addMore(){
             this.form.attrqty.push({colour_id:[],size_id:'',cpu:'',mrp:'',qty:'',sku:''})
             // this.form.attrqty.push({colour_id:[],size_id:'',cpu:'',mrp:'',qty:'',sku:'',is_rm: false})
@@ -178,10 +98,10 @@ export default {
         },
        
         getCategory() {
-             axios.get(baseUrl+'get-category').then(response => {
-                const cat = response.data.data
-                let res = cat.filter(data => data.parent_cat == 0)
-                let subcat = cat.filter(data => data.parent_cat !== 0)
+             axios.get(baseUrl+'get-category?no_paginate=yes').then(response => {
+                const cat = response.data
+                let res = cat.filter(data => data.parent_category == 0)
+                let subcat = cat.filter(data => data.parent_category != 0)
                 this.allcategories.push(...res)
                 // console.log(subcat)
                 this.allfiltersubcategories.push(...subcat)
@@ -238,7 +158,7 @@ export default {
             }
         },
         getSubCategories(){
-            const filterData = (this.allfiltersubcategories).filter((data) => data.parent_cat == this.form.category)
+            const filterData = (this.allfiltersubcategories).filter((data) => data.parent_category == this.form.category)
             this.allsubcategories = filterData
         },
         clearForm() {
@@ -260,10 +180,7 @@ export default {
                 artist : [],
                 consignment : [],
                 ingredient : [],
-                product_image_one : '',
-                product_image_two : '',
-                product_image_three : '',
-                product_image_four : '',
+                selectedImages : [],
                 design_code: '',
                 unit: '',
                 height: '',
@@ -289,11 +206,44 @@ export default {
             this.tages = [],
             this.allsubcategories= [],
             this.validation_error = {}
+        },
+        getImageData(){
+            axios.get(baseUrl+`media-manager/create?page=${this.page}&per_page=10&keyword=${this.media_keyword}`)
+            .then(result => {
+                if(this.page == 1){
+                    this.allImages = result.data;
+                } else {
+                    this.allImages.data.push(...result.data.data)
+                }
+            })
+            .catch(errors => {
+                console.log(errors);
+            });  
+        },
+        updateMediaModalOpen(){
+            $("#updateMediaModal").modal('show');
+        },
+        loadMore(){
+            this.getImageData(this.page++)
+        },
+
+        selectImage(item){
+            // console.log(item.id)
+            if(this.form.selectedImages && this.form.selectedImages.length < 4){
+                this.form.selectedImages.push(item.file_link)
+                new Set([...this.form.selectedImages])
+            } else {
+                this.validationError({"message":"Maximum 4 File Upload!"})
+            }
+        },
+        searchMedia(){
+            if(this.media_keyword.length > 3) return;
+            this.getImageData()
         }
     },
 
     mounted(){
-   
+        this.getImageData()
         this.getCategory()
         this.form.id = this.pr_product.id
         this.form.product_name = this.pr_product.product_name
@@ -355,10 +305,7 @@ export default {
       
         this.form.vat  = this.pr_product.vat_tax_id
         this.form.lead_time  = this.pr_product.lead_time
-        this.form.view_image_one  = this.pr_product.product_image
-        this.form.view_image_two  = this.pr_product.image_two
-        this.form.view_image_three  = this.pr_product.image_three
-        this.form.view_image_four  = this.pr_product.image_four
+        this.form.selectedImages = [this.pr_product.image_one,this.pr_product.image_two,this.pr_product.image_three,this.pr_product.image_four]
         this.form.design_code = this.pr_product.design_code
         this.form.dimention = this.pr_product.dimension
         this.form.weight = this.pr_product.weight
@@ -394,7 +341,7 @@ export default {
                                 <label for="product-category">Category </label>
                                 <select id="product-category" class="form-control" @change="getSubCategories()" v-model="form.category">
                                     <option value="">Choose Category...</option>
-                                    <option v-for="(value,index) in allcategories" :value="value.id" :key="index">{{ value.cat_name }}</option>
+                                    <option v-for="(value,index) in allcategories" :value="value.id" :key="index">{{ value.category_name }}</option>
                                 </select>
                                 <div
                                         v-if="validation_error.hasOwnProperty('category')"
@@ -407,7 +354,7 @@ export default {
                                 <label for="product-subcategory">Sub Category</label>
                                 <select id="product-subcategory" class="form-control" v-model="form.sub_category">
                                     <option value="">Choose Sub Category...</option>
-                                    <option v-for="(value,index) in allsubcategories" :value="value.id" :key="index">{{ value.cat_name }}</option>
+                                    <option v-for="(value,index) in allsubcategories" :value="value.id" :key="index">{{ value.category_name }}</option>
                                 </select>
                                 <div
                                     v-if="validation_error.hasOwnProperty('sub_category')"
@@ -820,35 +767,16 @@ export default {
         <div id="tooltips" class="mb-2">
             <div class="statbox widget box ">
                 <div class="widget-content ">
-                        <div class="row">
-                        <div class="col-md-3 col-12 mt-4">
-                                <label for="product-image1">Image (1:1)</label>
-                                <!-- <input type="file" class="form-control" id="product-image"> -->
-                                <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('one')">Upload files</button>
-                                <p class="mt-1 text-info" v-if="form.product_image_one != ''">Image Uploaded</p><br>
-                                <img :src="form.view_image_one" width="100" class="img-fluid" />
-                            </div>
-                            <div class="col-md-3 col-12 mt-4">
-                                <label for="product-image1">Image (1:1)</label>
-                                <!-- <input type="file" class="form-control" id="product-image"> -->
-                                <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('two')">Upload files</button>
-                                <p class="mt-1 text-info" v-if="form.product_image_two != ''">Image Uploaded</p><br>
-                                <img :src="form.view_image_two" width="100" class="img-fluid" />
-                            </div>
-                            <div class="col-md-3 col-12 mt-4">
-                                <label for="product-image1">Image (1:1)</label>
-                                <!-- <input type="file" class="form-control" id="product-image"> -->
-                                <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('three')">Upload files</button>
-                                <p class="mt-1 text-info" v-if="form.product_image_three != ''">Image Uploaded</p><br>
-                                <img :src="form.view_image_three" width="100" class="img-fluid" />
-                            </div>
-                            <div class="col-md-3 col-12 mt-4">
-                                <label for="product-image1">Image (1:1)</label>
-                                <!-- <input type="file" class="form-control" id="product-image"> -->
-                                <button type="button" class="btn btn-sm btn-info" @click="openUploadModal('four')">Upload files</button>
-                                <p class="mt-1 text-info" v-if="form.product_image_four != ''">Image Uploaded </p><br>
-                                <img :src="form.view_image_four" width="100" class="img-fluid" />
-                            </div>
+                    <div class="row">
+                        <div class="col-12 my-2 text-center">
+                            <button type="button" class="btn btn-sm btn-info" @click="updateMediaModalOpen()">Upload files</button>
+                        </div>
+                        <div class="col-md-3 d-flex justify-content-center" v-for="(itm,index) in this.form.selectedImages" :key="index"> 
+                            <img :src="itm" style="width:80px;height:100px" class="img-fluid rounded" />
+                            <button type="button" @click="() => this.form.selectedImages.splice(index, 1)" class="close text-danger image-close" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1219,6 +1147,65 @@ export default {
     
         <button class="btn btn-success" type="submit">Update</button>
     </form>
+
+    <div id="updateMediaModal" class="modal animated fadeInUp custo-fadeInBottom" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update Media</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+        
+                <div class="modal-body">
+                    <div class="widget-content">
+                        <div class="statbox widget">
+                            <div class="widget-header">
+                                <div class="row"> 
+                                    <div class="col-md-9 border-right" style="height: 75vh;overflow-y: auto;">
+                                        <div class="row" v-if="allImages.data && allImages.data.length > 0">
+                                            <div class="col-xl-2 col-md-3 col-sm-6 col-12" v-for="(item,ind) in allImages.data" :key="ind">
+                                                <div class="card component-card_9">
+                                                    <a href="#" type="button" @click="selectImage(item)">
+                                                        <img :src="item.file_link" class="card-img-top" :alt="item.product_name">
+                                                    </a>
+                                                    <div class="card-body">
+                                                        <h6 class="card-title">{{ item.product_name }}</h6>
+                                                        <p class="card-text">{{ item.extension }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button v-if="allImages.data && allImages.data.length > 0 && page < allImages.last_page" @click="loadMore()" class="btn btn-primary mt-4">Load More</button>
+                                    </div>
+                                    <div class="col-md-3"  style="height: 80vh;overflow-y: auto;">
+                                        <div class="row"> 
+                                            <div class="col-md-12"> 
+                                                <input type="text" @keyup="searchMedia()" v-model="media_keyword" class="form-control" id="search" placeholder="Search by Name" />
+                                            </div>
+                                            <div class="col-md-12 d-flex justify-content-center my-2" v-for="(itm,index) in this.form.selectedImages" :key="index"> 
+                                                <img :src="itm" style="width:80%;height:90%" class="img-fluid rounded" />
+                                                <button type="button" @click="() => this.form.selectedImages.splice(index, 1)" class="close text-danger image-close" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="mt-2 d-flex justify-content-center">
+                            <button class="btn btn-info" data-dismiss="modal"><i class="flaticon-cancel-12"></i>Select & Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 <style src="@vueform/multiselect/themes/default.css"></style>
 <style scoped>
@@ -1247,4 +1234,29 @@ export default {
     border-radius: 50%;
     height: 22px;
   }
+  .modal-dialog {
+  min-width: 92%;
+  height: 80%;
+  bottom: 0;
+  padding: 0;
+  top:40;
+}
+
+.modal-content {
+  height: auto;
+  min-width: 100%;
+  min-height: 100%;
+  border-radius: 0;
+  bottom: 0;
+}
+.image-close {
+  position: absolute;
+  font-size: 1.9rem;
+  z-index: 2;
+}
+
+.image-close:hover:before {
+  opacity: 1;
+  transition: all 200ms ease;
+}
 </style>

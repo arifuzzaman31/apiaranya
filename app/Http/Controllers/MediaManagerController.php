@@ -31,7 +31,8 @@ class MediaManagerController extends Controller
         $keyword   = $request->get('keyword');
         $imgdata = DB::table('media_managers')->orderBy('created_at','desc');
         if($keyword != ''){
-            $imgdata = $imgdata->where('country_name','like','%'.$keyword.'%');
+            $imgdata = $imgdata->where('product_name','like','%'.$keyword.'%');
+            $imgdata = $imgdata->orWhere('extension','like','%'.$keyword.'%');
         }
         
         return response()->json($imgdata->paginate($dataQty));
@@ -50,7 +51,7 @@ class MediaManagerController extends Controller
             foreach($request->imgs as $value)
             {
                 DB::table('media_managers')->insert([
-                    'file_link' => 'https://res.cloudinary.com/diyc1dizi/image/upload/'.$value['public_id'].'.'.$value['format'],
+                    'file_link' => 'https://res.cloudinary.com/diyc1dizi/'.$value['resource_type'].'/'.'upload/'.$value['public_id'].'.'.$value['format'],
                     'file_type' => $value['resource_type'],
                     'product_name' =>  array_values(array_slice(explode('/',$value['public_id']), -1))[0],
                     'extension' => $value['format'],

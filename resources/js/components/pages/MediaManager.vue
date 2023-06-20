@@ -116,7 +116,8 @@ export default ({
                     <div class="col-xl-2 col-md-3 col-sm-6 col-12" v-for="(item,ind) in allImages.data" :key="ind">
                         <!-- <img :src="item.file_link" class="img-fluid" :alt="item.product_name" /> -->
                         <div class="card component-card_9">
-                            <img :src="item.file_link" class="card-img-top" :alt="item.product_name">
+                            <img :src="item.file_link" class="card-img-top" :alt="item.product_name" v-if="item.file_type != 'video'">
+                            <video :src="item.file_link" v-else autoplay muted controls></video>
                             <div class="card-body">
                                 <h6 class="card-title">{{ item.product_name }}</h6>
                                 <p class="card-text">{{ item.extension }}</p>

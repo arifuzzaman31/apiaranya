@@ -44,15 +44,16 @@ Route::get('get-permission-data',[RoleController::class,'getPermissionData']);
 
 //Category Route
 // Route::resource('category',CategoryController::class);
-Route::controller(OrderController::class)
+Route::controller(CategoryController::class)
     ->group(function () {
-        Route::get('get-category',[CategoryController::class,'getCategoryData']);
-        Route::get('category-subcategory-data',[CategoryController::class,'getCategoryByCat']);
-        Route::get('add-category',[CategoryController::class,'getCategory'])->name('add-category');
-        Route::get('edit-category',[CategoryController::class,'editCategory'])->name('edit-category');
-        Route::get('update-category-image/{id}',[CategoryController::class,'updateCategoryImage'])->name('update-category-image');
+        Route::get('get-category','getCategoryData');
+        Route::get('category-subcategory-data','getCategoryByCat');
+        Route::get('add-category','getCategory')->name('add-category');
+        Route::get('edit-category','editCategory')->name('edit-category');
+        Route::get('update-category-image/{id}','updateCategoryImage')->name('update-category-image');
+        Route::post('fabric-add-category','updateCompCat');
 
-    });
+});
 
 Route::resources([
     'role' => RoleController::class,

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\AllStatic;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryResource;
 use Illuminate\Http\Request;
@@ -23,6 +24,7 @@ class CategoryController extends Controller
 
     public function allCategoryList()
     {
-        return getParentCategory();
+        $category = Category::with('children')->where('parent_category',AllStatic::$inactive)->get();
+        return response()->json($category);
     }
 }

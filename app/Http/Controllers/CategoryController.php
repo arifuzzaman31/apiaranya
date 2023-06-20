@@ -6,6 +6,7 @@ use App\Http\AllStatic;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Validator,Str;
 
 class CategoryController extends Controller
@@ -34,8 +35,19 @@ class CategoryController extends Controller
 
     public function getCategoryData(Request $request)
     {
-        $data = Category::where('status',AllStatic::$active)->get();
-        return CategoryResource::collection($data);
+        $perPage = $request->per_page ?? 20;
+        $noPagination = $request->get('no_paginate');
+        $cate = Category::with('subcategory:id,category_name','composition')
+                ->where('status',AllStatic::$active)->orderBy('created_at','desc');
+        
+        if($noPagination != ''){
+            
+            $cate = $cate->latest()->get();
+            
+        } else {
+            $cate = $cate->latest()->paginate($perPage);
+        }
+        return response()->json($cate);
     }
 
     public function getCategoryByCat(Request $request)
@@ -86,14 +98,13 @@ class CategoryController extends Controller
             $category->slug             = Str::slug($request->category_name);
             $category->parent_category  = $request->parent_category;
             $category->category_video   = $request->video_link;
-            $category->precedence       = $request->precedence;
+            $category->precedence       = $request->precedence ?? 0;
             $category->status           = $request->status ? 1 : 0;
-            if($request->file('category_image')){
-                $file = $request->file('category_image');
-                $filename = time().'_'.$file->getClientOriginalName();
-                $file->move('images/category',$filename);
-                $category->category_image   = $filename;
-            }
+          
+            // $category->category_image_one   = $request->category_image_one;
+            // $category->category_image_one   = $request->category_image_one;
+            // $category->category_image_one   = $request->category_image_one;
+            
             $category->save();
             return response()->json(['status' => 'success', 'message' => 'Category Added Successfully!']);
         } catch (\Throwable $th) {
@@ -137,12 +148,25 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         try {
-            if($request->img_name == 'one') $category->category_image_one = $request->uri_link;
-            if($request->img_name == 'two') $category->category_image_two = $request->uri_link;
-            if($request->img_name == 'three') $category->category_image_three = $request->uri_link;
+            $category->category_image_one = $request->image_one;
+            $category->category_image_two = $request->image_two;
+            $category->category_image_three = $request->image_three;
             $category->update();
             return response()->json(['status' => 'success', 'message' => 'Home Page Updated Successfully!']);
         } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' => 'Something went wrong!']);
+        }
+        
+    }
+
+    public function updateCompCat(Request $request)
+    {
+        try {
+            $category = Category::find($request->cat_id);
+            $category->composition()->sync($request->composition);
+            return response()->json(['status' => 'success', 'message' => 'Composition Updated Successfully!']);
+        } catch (\Throwable $th) {
+            return $th;
             return response()->json(['status' => 'error', 'message' => 'Something went wrong!']);
         }
         
@@ -156,6 +180,14 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        try {
+            if(!empty($category->product)){
+                return response()->json(['status' => 'error', 'message' => 'Category Has Many Product!']);
+            }
+            $category->delete();
+            return response()->json(['status' => 'success', 'message' => 'Category Deleted Successfully!']);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' =>  $th->getMessage()]);
+        }
     }
 }

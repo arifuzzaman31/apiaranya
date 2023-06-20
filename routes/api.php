@@ -40,7 +40,7 @@ Route::get('order-details/{id}', [OrderController::class, 'orderDetails']);
 Route::post('guest-order', [OrderController::class, 'order']);
 
 Route::get('shipping-charge', [FrontController::class, 'shippingData']);
-Route::get('attribute-list', [FrontController::class, 'allAttribute']);
+Route::get('attribute-list/{category_id}', [FrontController::class, 'allAttribute']);
 
 Route::get('product', [ProductController::class, 'index']);
 

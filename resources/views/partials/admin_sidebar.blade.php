@@ -177,9 +177,9 @@
                     <li>
                         <a href="{{ route('home-page') }}"> Home </a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="{{ route('shipping') }}"> Shipping </a>
-                    </li>
+                    </li> -->
                 </ul>
             </li>
             @endif

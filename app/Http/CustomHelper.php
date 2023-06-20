@@ -2,10 +2,13 @@
 
 use App\Http\AllStatic;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
     function getParentCategory(){
 
-        return App\Models\Category::select(['id','category_name','parent_category','slug'])->orderBy('id')->get();
+        return App\Models\Category::select(['id','category_name','parent_category','slug'])
+                ->where('parent_category',AllStatic::$inactive)
+                ->orderBy('id')->get();
         
         return array(
             '1' => 'women',
@@ -16,6 +19,10 @@ use Illuminate\Support\Facades\Cache;
             '6' => 'beauty',
             '7' => 'food'
         );
+    }
+
+    function getComposition(){
+        return DB::table('fabrics')->selectRaw('id as value,fabric_name as name,status')->where('status',AllStatic::$active)->orderBy('id','desc')->get();
     }
 
     function uniqueString() {

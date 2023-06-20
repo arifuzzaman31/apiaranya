@@ -11,7 +11,7 @@
                 </div>
                 <div class="modal-body" v-if="product">
                     <div class="row d-flex justify-content-between">
-                        <div class="col-md-6 col-12">
+                        <div class="col-md-5 col-12">
                             <ul class="list-group ">
                                 <li  class="list-group-item"><b>Product Name : {{ product.product_name }}</b></li>
                                 <li  class="list-group-item"><b>Category : {{ product.category.category_name }}</b></li>
@@ -24,7 +24,7 @@
                             </ul>
                             
                         </div>
-                        <div class="d-flex justify-content-around col-md-6 col-12 w-100">
+                        <div class="d-flex justify-content-around col-md-7 col-12 w-100">
                             <img class="img-fluid orderImage" :src="product.image_one" alt="product-image" />
                             <img class="img-fluid orderImage" v-if="product.image_two" :src="product.image_two" alt="product-image" />
                             <img class="img-fluid orderImage" v-if="product.image_three" :src="product.image_three" alt="product-image" />
@@ -108,7 +108,7 @@ props: ['product']
 
 .orderImage{
 max-height: 40%;
-max-width: 40%;
+max-width: 30%;
 }
 
 </style>

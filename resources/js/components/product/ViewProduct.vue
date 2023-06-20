@@ -80,15 +80,15 @@ export default {
         },
 
         getCategory() {
-            axios.get(baseUrl+'get-category').then(response => {
-                    let res = response.data.data.filter(data => data.parent_cat == 0)
-                    let subcat = response.data.data.filter(data => data.parent_cat !== 0)
+            axios.get(baseUrl+'get-category?no_paginate=yes').then(response => {
+                    let res = response.data.filter(data => data.parent_category == 0)
+                    let subcat = response.data.filter(data => data.parent_category !== 0)
                     this.allcategories = res
                     this.allfiltersubcategories = subcat
                 })
         },
         getSubCategories() {
-            const filterData = (this.allfiltersubcategories).filter((data) => data.parent_cat == this.filterdata.category)
+            const filterData = (this.allfiltersubcategories).filter((data) => data.parent_category == this.filterdata.category)
             this.allsubcategories = filterData
             if(filterData.length == 0) this.getProduct()
         },
@@ -274,7 +274,7 @@ export default {
                         <label for="max_amount">Category</label>
                         <select id="product-category" class="form-control" @change="getSubCategories()" v-model="filterdata.category">
                             <option selected="" value="">Choose...</option>
-                            <option v-for="(value,index) in allcategories" :value="value.id" :key="index">{{ value.cat_name }}</option>
+                            <option v-for="(value,index) in allcategories" :value="value.id" :key="index">{{ value.category_name }}</option>
                         </select>
                     </div>
 
@@ -282,7 +282,7 @@ export default {
                         <label for="max_amount">Sub Category</label>
                         <select id="product-subcategory" class="form-control" @change="getProduct()" v-model="filterdata.subcategory">
                             <option selected="" value="">Choose...</option>
-                            <option v-for="(value,index) in allsubcategories" :value="value.id" :key="index">{{ value.cat_name }}</option>
+                            <option v-for="(value,index) in allsubcategories" :value="value.id" :key="index">{{ value.category_name }}</option>
                         </select>
                     </div>
 

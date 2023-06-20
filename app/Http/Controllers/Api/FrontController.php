@@ -38,10 +38,12 @@ class FrontController extends Controller
             ->get();
     }
 
-    public function allAttribute()
+    public function allAttribute($category_id)
     {
         return response()->json([
-            'fabrics' => DB::table('fabrics')->select('id','fabric_name','status')->where('status',AllStatic::$active)->get(),
+            'fabrics' => DB::table('fabrics')->join('category_fabric', function($join) {
+                $join->on('fabrics.id', '=', 'category_fabric.fabric_id');
+              })->where('category_id',$category_id)->where('status',AllStatic::$active)->get(),
             'sizes' => DB::table('sizes')->select('id','size_name','status')->where('status',AllStatic::$active)->get(),
             'colours' => DB::table('colours')->select('id','color_name','status')->where('status',AllStatic::$active)->get()
         ]);

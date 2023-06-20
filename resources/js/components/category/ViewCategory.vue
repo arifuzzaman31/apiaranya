@@ -1,28 +1,38 @@
 <script>
 import Mixin from '../../mixer'
+import Multiselect from '@vueform/multiselect'
+import { Bootstrap4Pagination } from 'laravel-vue-pagination';
 export default {
     mixins:[Mixin],
+    props: ['parentcat','prp_fabric'],
+    components:{
+        Bootstrap4Pagination,
+        Multiselect
+    },
     data(){
         return {
             categories: [],
-            subcategories: [],
             form:{
                 category_name: '',
                 precedence: '',
-                parent_category: 0,
+                parent_category: '',
                 status: 1
             },
             category_id: '',
+            comp_form: {
+                cat_id: '',
+                composition: []
+            },
             url: baseUrl,
             validation_error: {}
         }
     },
     methods: {
-        getCategory(){
+        getCategory(page = 1){
             try{
-                axios.get('get-category').then(
+                axios.get(baseUrl+`get-category?page=${page}&per_page=10`).then(
                     response => {
-                        this.categories = response.data.filter((data) => data.parent_category == 0)
+                        this.categories = response.data
                     }
                 ). catch(e => {
                    console.log(e.response.data)
@@ -53,7 +63,54 @@ export default {
                 }
             }
         },
-        updateCategory(){},
+
+        deleteMenu(id){
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.delete(baseUrl+`category/${id}`).then(
+                        response => {
+                            this.getCategory()
+                            this.successMessage(response.data)
+                        }
+                    ). catch(error => {
+                        console.log(error)
+                    })
+                }
+            })
+        },
+
+        addFabricToCat(item){
+            this.comp_form.cat_id = item.id
+            this.comp_form.composition = item.composition.map(itm => itm.id)
+            $("#catFabricModal").modal('show');
+        },
+
+        updateCompCat(){
+            try{
+                axios.post('fabric-add-category',this.comp_form).then(
+                    response => {
+                        this.successMessage(response.data)
+                        $("#catFabricModal").modal('hide');
+                        this.formReset()
+                        this.getCategory()
+                    }
+                ). catch(e => {
+                   console.log(e.response.data)
+                })
+            }catch(e){
+                if(e.response.status == 422){
+                    this.validation_error = e.response.data.errors
+                }
+            }
+        },
 
         formReset(){
             this.validation_error = {}
@@ -61,8 +118,12 @@ export default {
             this.form = {
                 category_name : '',
                 precedence : '',
-                parent_category: 0,
+                parent_category: '',
                 status : 1
+            }
+            this.comp_form = {
+                cat_id: '',
+                composition: []
             }
         }
     },
@@ -96,25 +157,32 @@ export default {
                             <tr>
                                 <th>SL</th>
                                 <th>Category</th>
-                                <th>Sub Category</th>
+                                <th>Parent Category</th>
+                                <th class="text-center">Priority</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center" v-if="showPermission.includes('menu-edit')">Action</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>36</td>
-                                <td>Kids</td>
-                                <td>Toddlers</td>
-                                <td class="text-center">Active</td>
-                                <td class="text-center" v-if="showPermission.includes('menu-edit')">
-                                   <a v-if="showPermission.includes('menu-edit')" class="btn btn-sm" target="_blank" :href="url+'category/41/edit'">Edit</a>
+                        <tbody v-if="categories.data && categories.data.length > 0">
+                            <tr v-for="(cat,ind) in categories.data" :key="ind">
+                                <td>{{ ++ind }}</td>
+                                <td>{{ cat.category_name }}</td>
+                                <td>{{ cat.subcategory.category_name }}</td>
+                                <td>{{ cat.precedence }}</td>
+                                <td>{{ cat.status == 1 ? 'Active' : 'Deactive' }}</td>
+                                <td class="text-center" v-if="showPermission.includes('menu-edit') || showPermission.includes('menu-delete')">
+                                   <a v-if="showPermission.includes('menu-edit')" class="btn btn-warning btn-sm" target="_blank" :href="url+'category/'+cat.id+'/edit'">Edit</a>
+                                   <a v-if="showPermission.includes('menu-delete')" class="btn btn-danger btn-sm mx-1" @click="deleteMenu(cat.id)">Delete</a>
+                                   <a class="btn btn-success btn-sm" @click="addFabricToCat(cat)">Composition</a>
                                 </td>
                             </tr>	
                           
                         </tbody>
                     </table>
-                        
+                    <Bootstrap4Pagination
+                        :data="categories"
+                        @pagination-change-page="getCategory"
+                    />   
                 </div>
 
             </div>
@@ -125,7 +193,7 @@ export default {
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Category</h5>
+                    <h5 class="modal-title">Create Category</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="formReset">
                         <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                     </button>
@@ -146,14 +214,16 @@ export default {
                             </div>
 
                             <div class="form-group">
+                                <label for="category_name">Parent Category</label>
+                                <select id="product-category" class="form-control" v-model="form.parent_category">
+                                    <option value="">Choose Parent Category</option>
+                                    <option v-for="(value,index) in parentcat" :value="value.id" :key="index">{{ value.category_name }}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="precedence">Precedence</label>
                                 <input type="number" class="form-control" v-model="form.precedence" id="precedence" placeholder="Precedence">
-                                <span
-                                    v-if="validation_error.hasOwnProperty('precedence')"
-                                    class="text-danger"
-                                >
-                                    {{ validation_error.precedence[0] }}
-                                </span>
                             </div>
 
                             <div class="col-lg-3 col-md-3 col-sm-4 col-6">
@@ -177,10 +247,71 @@ export default {
             </div>
         </div>
     </div>
+
+    <div id="catFabricModal" class="modal animated fadeInUp custo-fadeInUp" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Composition Add To Category</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="formReset">
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    
+                    <div class="widget-content widget-content-area">
+                        <form>
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <label for="product-Fabric">Composition</label>
+                                    <Multiselect
+                                        v-model="comp_form.composition"
+                                        placeholder="Select Fabric"
+                                        track-by="name"
+                                        label="name"
+                                        mode="tags"
+                                        :close-on-select="false"
+                                        :search="true"
+                                        :options="prp_fabric"
+                                        :searchable="true"
+                                        >
+                                        <template v-slot:tag="{ option, handleTagRemove, disabled }">
+                                        <div
+                                            class="multiselect-tag is-user"
+                                            :class="{
+                                            'is-disabled': disabled
+                                            }"
+                                        >
+                                            {{ option.name }}
+                                            <span
+                                            v-if="!disabled"
+                                            class="multiselect-tag-remove"
+                                            @mousedown.prevent="handleTagRemove(option, $event)"
+                                            >
+                                            <span class="multiselect-tag-remove-icon"></span>
+                                            </span>
+                                        </div>
+                                        </template>
+                                    </Multiselect>
+                                </div>
+                            </div>
+                        
+                            <div class="modal-footer md-button">
+                                <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12" @click.prevent="formReset()"></i> Discard</button>
+
+                                <button type="button" class="btn btn-primary" @click="updateCompCat()">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
   
 </template>
-
+<style src="@vueform/multiselect/themes/default.css"></style>
 
 <style scoped>
 
