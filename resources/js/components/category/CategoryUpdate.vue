@@ -108,7 +108,7 @@ export default {
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Image Should be (1440 x 900) px, Ratio (16:9)</span>
                     </div>
                     <input type="submit" class="btn btn-info btn-block mb-4 mr-2" style="width: 50%;" @click="openCatMediaModal('one')" value="File Upload" />
-                    <img class="mr-3" width="600" :src="form.image_one" alt="cat image one">
+                    <v-lazy-image class="mr-3" width="600" :src="form.image_one" alt="cat image one" :src-placeholder="url+'demo.png'" />
                 </div>
             </div>
         </div>
@@ -119,7 +119,7 @@ export default {
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Image Should be (720 x 828) px, Ratio (16:24)</span>
                         </div>
                         <input type="submit" class="btn btn-info btn-block mb-4 mr-2" style="width: 50%;" @click="openCatMediaModal('two')" value="File Upload" />
-                        <img class="mr-3" width="600" :src="form.image_two" alt="cat image two">
+                        <v-lazy-image class="mr-3" width="600" :src="form.image_two" alt="cat image two" :src-placeholder="url+'demo.png'" />
                     </div>
                 </div>
             </div>
@@ -130,7 +130,7 @@ export default {
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Image Should be (720 x 828) px, Ratio (16:24)</span>
                     </div>
                     <input type="submit" class="btn btn-info btn-block mb-4 mr-2" style="width: 50%;" @click="openCatMediaModal('three')" value="File Upload" />
-                    <img class="mr-3" width="600" :src="form.image_three" alt="cat image three">
+                    <v-lazy-image class="mr-3" width="600" :src="form.image_three" alt="cat image three" :src-placeholder="url+'demo.png'" />
                 </div> 
             </div>
         </div>
@@ -157,7 +157,7 @@ export default {
                                                 <div class="col-xl-2 col-md-3 col-sm-6 col-12" v-for="(item,ind) in allImages.data" :key="ind">
                                                     <div class="card component-card_9">
                                                         <a href="#" type="button" @click="selectImage(item.file_link)">
-                                                            <img :src="item.file_link" class="card-img-top" :alt="item.product_name" v-if="item.file_type != 'video'">
+                                                            <v-lazy-image class="card-img-top" :src="item.file_link" :alt="item.product_name" v-if="item.file_type != 'video'" :src-placeholder="url+'demo.png'" />
                                                             <video :src="item.file_link" v-else autoplay muted controls class="controlss"></video>  
                                                         </a>
                                                         <div class="card-body">
@@ -175,7 +175,7 @@ export default {
                                                     <input type="text" @keyup="searchMedia()" v-model="media_keyword" class="form-control" id="search" placeholder="Search by Name" />
                                                 </div>
                                                 <div class="col-md-12 d-flex justify-content-center my-2"> 
-                                                    <img :src="form.imageuri" class="card-img-top" :alt="form.imageuri" />
+                                                    <v-lazy-image :src="form.imageuri" class="card-img-top" :alt="form.imageuri" :src-placeholder="url+'demo.png'" />
                                                 </div>
                                             </div>
                                         </div>

@@ -55,7 +55,7 @@ export default {
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Image Should be (1440 x 900) px, Ratio (16:9)</span>
                     </div>
                     <input type="submit" class="btn btn-info btn-block mb-4 mr-2" @click="openUploadModal('one')" value="File Upload" />
-                    <img class="mr-3" width="600" :src="form.image_two" alt="cat image one">
+                    <v-lazy-image width="600" :src="form.category_image_one" alt="cat image one" :src-placeholder="url+'demo.png'" />
                 </div>
             </div>
         </div>
@@ -67,7 +67,7 @@ export default {
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Image Should be (720 x 828) px, Ratio (16:24)</span>
                     </div>
                     <input type="submit" class="btn btn-info btn-block mb-4 mr-2" @click="openUploadModal('two')" value="File Upload" />
-                    <img class="mr-3" width="600" :src="form.image_two" alt="cat image two">
+                    <v-lazy-image width="600" :src="form.category_image_two" alt="cat image one" :src-placeholder="url+'demo.png'" />
                 </div>
             </div>
         </div>
@@ -78,7 +78,7 @@ export default {
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Image Should be (720 x 828) px, Ratio (16:24)</span>
                 </div>
                 <input type="submit" class="btn btn-info btn-block mb-4 mr-2" @click="openUploadModal('three')" value="File Upload" />
-                <img class="mr-3" width="600" :src="form.image_two" alt="cat image three">
+                <v-lazy-image width="600" :src="form.category_image_three" alt="cat image one" :src-placeholder="url+'demo.png'" />
             </div> 
         </div>
     </div>

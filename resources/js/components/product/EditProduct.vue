@@ -305,7 +305,7 @@ export default {
       
         this.form.vat  = this.pr_product.vat_tax_id
         this.form.lead_time  = this.pr_product.lead_time
-        this.form.selectedImages = [this.pr_product.image_one,this.pr_product.image_two,this.pr_product.image_three,this.pr_product.image_four]
+        this.form.selectedImages = [this.pr_product.image_one,this.pr_product.image_two,this.pr_product.image_three,this.pr_product.image_four].filter(entry => entry != null);
         this.form.design_code = this.pr_product.design_code
         this.form.dimention = this.pr_product.dimension
         this.form.weight = this.pr_product.weight
@@ -771,8 +771,8 @@ export default {
                         <div class="col-12 my-2 text-center">
                             <button type="button" class="btn btn-sm btn-info" @click="updateMediaModalOpen()">Upload files</button>
                         </div>
-                        <div class="col-md-3 d-flex justify-content-center" v-for="(itm,index) in this.form.selectedImages" :key="index"> 
-                            <img :src="itm" style="width:80px;height:100px" class="img-fluid rounded" />
+                        <div class="col-md-3 d-flex justify-content-center" v-for="(itm,index) in form.selectedImages" :key="index">
+                            <v-lazy-image :src="itm" style="width:80px;height:100px" class="img-fluid rounded" alt="product-image" />
                             <button type="button" @click="() => this.form.selectedImages.splice(index, 1)" class="close text-danger image-close" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -1169,7 +1169,7 @@ export default {
                                             <div class="col-xl-2 col-md-3 col-sm-6 col-12" v-for="(item,ind) in allImages.data" :key="ind">
                                                 <div class="card component-card_9">
                                                     <a href="#" type="button" @click="selectImage(item)">
-                                                        <img :src="item.file_link" class="card-img-top" :alt="item.product_name">
+                                                        <v-lazy-image class="card-img-top" :src="item.file_link" :alt="item.product_name" :src-placeholder="url+'demo.png'" v-if="item.file_type != 'video'" />
                                                     </a>
                                                     <div class="card-body">
                                                         <h6 class="card-title">{{ item.product_name }}</h6>
@@ -1186,7 +1186,7 @@ export default {
                                                 <input type="text" @keyup="searchMedia()" v-model="media_keyword" class="form-control" id="search" placeholder="Search by Name" />
                                             </div>
                                             <div class="col-md-12 d-flex justify-content-center my-2" v-for="(itm,index) in this.form.selectedImages" :key="index"> 
-                                                <img :src="itm" style="width:80%;height:90%" class="img-fluid rounded" />
+                                                <v-lazy-image :src="itm" style="width:80%;height:90%" class="img-fluid rounded" />
                                                 <button type="button" @click="() => this.form.selectedImages.splice(index, 1)" class="close text-danger image-close" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>

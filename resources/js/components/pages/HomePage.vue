@@ -213,7 +213,7 @@ export default {
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Image Should be (1440 x 900) px, Ratio (16:9)</span>
                                 </div>
                                 <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2 controlss" @click="openPageMediaModal('two')" value="File Upload" />
-                                <img class="mr-3 controlss" width="600" :src="form.image_two" alt="Home image two">
+                                <v-lazy-image class="mr-3 controlss" :src="form.image_two" alt="Home image two" :src-placeholder="url+'demo.png'" />
                                 <p>Back Url: domain/{{ form.back_url_two }}</p>   
                             </div>
 
@@ -222,7 +222,7 @@ export default {
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Image Should be (720 x 828) px, Ratio (16:24)</span>
                                 </div>
                                 <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2 controlss"  @click="openPageMediaModal('three')" value="File Upload" />
-                                <img class="mr-3" width="600" :src="form.image_three" alt="Home image three">
+                                <v-lazy-image width="600" class="mr-3 controlss" :src="form.image_three" alt="Home image three" :src-placeholder="url+'demo.png'" />
                                 <p>Back Url: domain/{{ form.back_url_three }}</p>
                             </div>
 
@@ -231,7 +231,8 @@ export default {
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Image Should be (720 x 828) px, Ratio (16:24)</span>
                                 </div>
                                 <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2 controlss"  @click="openPageMediaModal('four')" value="File Upload" />
-                                <img class="mr-3" width="600" :src="form.image_four" alt="Home image four">
+                          
+                                <v-lazy-image width="600" class="mr-3" :src="form.image_three" alt="Home image four" :src-placeholder="url+'demo.png'" />
                                 <p>Back Url: domain/{{ form.back_url_four }}</p>
                             </div>
 
@@ -240,7 +241,8 @@ export default {
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Image Should be (1440 x 700) px, Ratio (16:9)</span>
                                 </div>
                                 <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2 controlss" @click="openPageMediaModal('five')" value="File Upload" />
-                                <img class="mr-3" width="600" :src="form.image_five" alt="Home image five">
+                              
+                                <v-lazy-image width="600" class="mr-3" :src="form.image_five" alt="Home image five" :src-placeholder="url+'demo.png'" />
                                 <p>Back Url: domain/{{ form.back_url_five }}</p>
                             </div>
 
@@ -289,7 +291,7 @@ export default {
                                                 <div class="col-xl-2 col-md-3 col-sm-6 col-12" v-for="(item,ind) in allImages.data" :key="ind">
                                                     <div class="card component-card_9">
                                                         <a href="#" type="button" @click="selectImage(item.file_link)">
-                                                            <img :src="item.file_link" class="card-img-top" :alt="item.product_name" v-if="item.file_type != 'video'">
+                                                            <v-lazy-image class="card-img-top" :src="item.file_link" :alt="item.product_name" :src-placeholder="url+'demo.png'" v-if="item.file_type != 'video'" />
                                                             <video :src="item.file_link" v-else autoplay muted controls class="controlss"></video>  
                                                         </a>
                                                         <div class="card-body">
@@ -306,8 +308,8 @@ export default {
                                                 <div class="col-md-12"> 
                                                     <input type="text" @keyup="searchMedia()" v-model="media_keyword" class="form-control" id="search" placeholder="Search by Name" />
                                                 </div>
-                                                <div class="col-md-12 d-flex justify-content-center my-2"> 
-                                                    <img :src="filterdata.imageuri" class="card-img-top" :alt="filterdata.imageuri" v-if="filterdata.imagenumb != 'one'">
+                                                <div class="col-md-12 d-flex justify-content-center my-2">
+                                                    <v-lazy-image :src="filterdata.imageuri" class="card-img-top" :alt="filterdata.imageuri" :src-placeholder="url+'demo.png'" v-if="filterdata.imagenumb != 'one'" />
                                                     <video :src="filterdata.imageuri" v-else autoplay muted controls class="controlss"></video>
                                                 </div>
                                             </div>

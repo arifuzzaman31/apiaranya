@@ -57,8 +57,10 @@ export default ({
                 },
                 (error, result) => {
                 if (!error && result && result.event === "success") {
+                    this.filterdata.imgs = []
                     this.filterdata.imgs.push(result.info)
                     this.uploadImage()
+                    this.allImages.data.unshift({'file_link':result.info.secure_url,'product_name':result.info.public_id ,'extension':result.info.format})
                 }
             });
                 widget.open();
@@ -141,9 +143,8 @@ export default ({
             <div class="widget-header">
                 <div class="row" v-if="allImages.data && allImages.data.length > 0">
                     <div class="col-xl-2 col-md-3 col-sm-6 col-12" v-for="(item,ind) in allImages.data" :key="ind">
-                        <!-- <img :src="item.file_link" class="img-fluid" :alt="item.product_name" /> -->
                         <div class="card component-card_9">
-                            <img :src="item.file_link" class="card-img-top" :alt="item.product_name" v-if="item.file_type != 'video'">
+                            <v-lazy-image :src="item.file_link" :alt="item.product_name" :src-placeholder="url+'demo.png'" v-if="item.file_type != 'video'" />
                             <video :src="item.file_link" v-else autoplay muted controls></video>
                             <div class="card-body">
                                 <h6 class="card-title">{{ item.product_name }}</h6>

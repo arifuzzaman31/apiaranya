@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\MediaManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class MediaManagerController extends Controller
 {

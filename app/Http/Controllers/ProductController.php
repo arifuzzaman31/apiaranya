@@ -155,12 +155,15 @@ class ProductController extends Controller
             $product->description         = $request->description;
             $product->lead_time           = $request->lead_time;
             $product->flat_colour         = implode(",",$request->flat_colour);
-            $product->product_image       = $request->selectedImages[0] ?? NULL;
-            $product->image_one           = $request->selectedImages[0] ?? NULL;
-            $product->image_two           = $request->selectedImages[1] ?? NULL;
-            $product->image_three         = $request->selectedImages[2] ?? NULL;
-            $product->image_four          = $request->selectedImages[3] ?? NULL;
-            $product->image_five          = $request->selectedImages[4] ?? NULL;
+            
+            $long = count($request->selectedImages);
+            $product->image_one  = $request->selectedImages[0];
+            $product->product_image = $request->selectedImages[0];
+            $product->image_two = $long >= 2 ? $request->selectedImages[1] : NULL;
+            $product->image_three =  $long >= 3 ? $request->selectedImages[2] : NULL;
+            $product->image_four = $long >= 4 ? $request->selectedImages[3] : NULL;
+            $product->image_five = $long >= 5 ? $request->selectedImages[4] : NULL;
+
             $product->height              = $request->height;
             $product->width               = $request->width;
             $product->length              = $request->length;
@@ -346,28 +349,14 @@ class ProductController extends Controller
             $product->description         = $request->description;
             $product->lead_time           = $request->lead_time;
 
-            $product->product_image       = $request->selectedImages[0] ?? NULL;
-            $product->image_one           = $request->selectedImages[0] ?? NULL;
-            $product->image_two           = $request->selectedImages[1] ?? NULL;
-            $product->image_three         = $request->selectedImages[2] ?? NULL;
-            $product->image_four          = $request->selectedImages[3] ?? NULL;
-            $product->image_five          = $request->selectedImages[4] ?? NULL;
-            if($request->selectedImages[0] != ''){
-                $product->product_image   = $request->selectedImages[0] ?? NULL;;
-                $product->image_one       = $request->selectedImages[0] ?? NULL;;
-            }
-            if($request->selectedImages[1] != ''){
-                $product->image_two       = $request->selectedImages[1] ?? NULL;;
-            }
-            if($request->selectedImages[2] != ''){
-                $product->image_three     = $request->selectedImages[2] ?? NULL;;
-            }
-            if($request->selectedImages[3] != ''){
-                $product->image_four      = $request->selectedImages[3] ?? NULL;;
-            }
-            if($request->image_five != ''){
-                $product->image_five      = $request->image_five ?? NULL;;
-            }
+            $long = count($request->selectedImages);
+            $product->image_one  = $request->selectedImages[0];
+            $product->product_image = $request->selectedImages[0];
+            $product->image_two = $long >= 2 ? $request->selectedImages[1] : NULL;
+            $product->image_three =  $long >= 3 ? $request->selectedImages[2] : NULL;
+            $product->image_four = $long >= 4 ? $request->selectedImages[3] : NULL;
+            $product->image_five = $long >= 5 ? $request->selectedImages[4] : NULL;
+
             $product->height              = $request->height;
             $product->width               = $request->width;
             $product->length              = $request->length;

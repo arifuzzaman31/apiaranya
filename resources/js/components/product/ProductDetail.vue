@@ -25,11 +25,11 @@
                             
                         </div>
                         <div class="d-flex justify-content-around col-md-7 col-12 w-100">
-                            <img class="img-fluid orderImage" :src="product.image_one" alt="product-image" />
-                            <img class="img-fluid orderImage" v-if="product.image_two" :src="product.image_two" alt="product-image" />
-                            <img class="img-fluid orderImage" v-if="product.image_three" :src="product.image_three" alt="product-image" />
-                            <img class="img-fluid orderImage" v-if="product.image_four" :src="product.image_four" alt="product-image" />
-                            <img class="img-fluid orderImage" v-if="product.image_five" :src="product.image_five" alt="product-image" />
+                            <v-lazy-image v-if="product.image_one" :src="product.image_one" class="img-fluid orderImage" alt="product-image" :src-placeholder="url+'demo.png'" />
+                            <v-lazy-image v-if="product.image_two" :src="product.image_two" class="img-fluid orderImage" alt="product-image" :src-placeholder="url+'demo.png'" />
+                            <v-lazy-image v-if="product.image_three" :src="product.image_three" class="img-fluid orderImage" alt="product-image" :src-placeholder="url+'demo.png'" />
+                            <v-lazy-image v-if="product.image_four" :src="product.image_four" class="img-fluid orderImage" alt="product-image" :src-placeholder="url+'demo.png'" />
+                            <v-lazy-image v-if="product.image_five" :src="product.image_five" class="img-fluid orderImage" alt="product-image" :src-placeholder="url+'demo.png'" />
                         </div>
                     </div>
 
