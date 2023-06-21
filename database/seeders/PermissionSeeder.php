@@ -354,6 +354,13 @@ class PermissionSeeder extends Seeder
             ],
             [
                 'group_name' => 'Media-Manager',
+                'permission_name' => 'Add Media',
+                'route_name' => null,
+                'slug' => 'add-media',
+                'status' => 1
+            ],
+            [
+                'group_name' => 'Media-Manager',
                 'permission_name' => 'Media Delete',
                 'route_name' => null,
                 'slug' => 'media-delete',

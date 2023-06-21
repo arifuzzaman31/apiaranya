@@ -107,6 +107,11 @@ class MediaManagerController extends Controller
      */
     public function destroy(MediaManager $mediaManager)
     {
-        //
+        try {
+            $mediaManager->delete();
+            return $this->successMessage('Media Deleted Successfully!');
+        } catch (\Throwable $th) {
+            return $this->errorMessage();
+        }
     }
 }

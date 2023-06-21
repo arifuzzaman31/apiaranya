@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\AllStatic;
 use App\Models\Admin;
 use App\Models\Permission;
 use App\Models\Role;
@@ -17,7 +18,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $role = Role::with('role_permission')->get();
+        $role = Role::with('role_permission')->where('status',AllStatic::$active)->get();
         return view('pages.auth.role',['roles' => $role,'permission' => $this->getPermissionData()]);
     }
 
@@ -33,7 +34,7 @@ class RoleController extends Controller
 
     public function getPermissionData()
     {
-        $permission = Permission::get()->groupBy('group_name');
+        $permission = Permission::where('status',AllStatic::$active)->get()->groupBy('group_name');
         return $permission;
     }
 

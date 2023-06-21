@@ -153,9 +153,12 @@ export default {
                 </div>
             </div>       
             <div class="widget-content widget-content-area">
-                <div class="row col-4 mb-2">
-                    <input id="search" placeholder="Search By Name" type="text" @keyup="searchKeyword()" class="form-control" v-model="keyword" />
-                    <button class="btn btn-danger" @click="formReset()">Clear</button>
+                <div class="row"> 
+
+                    <div class="col-4 d-flex justify-content-between mb-2">
+                        <input id="search" placeholder="Search By Name" type="text" @keyup="searchKeyword()" class="form-control" v-model="keyword" />
+                        <button class="btn btn-danger mx-2" @click="formReset()">Clear</button>
+                    </div>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover mb-4">

@@ -350,7 +350,7 @@ export default {
                             <tbody v-if="orders.data && orders.data.length > 0">
                                 <template v-for="(order,index) in orders.data" :key="order.id">
                                     <tr>
-                                        <td>{{ index+1 }}</td>
+                                        <td>{{ index+1 }}22</td>
                                         <td>{{ order.order_id }}</td>
                                         <td>{{ order.user.name }}</td>
                                         <td>{{ order.total_price }}</td>

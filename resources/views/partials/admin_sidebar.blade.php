@@ -1,15 +1,5 @@
 <div class="sidebar-wrapper sidebar-theme">  
     <nav id="sidebar">
-        <div class="profile-info">
-            <figure class="user-cover-image"></figure>
-            <div class="user-info">
-                <img src="{{ asset('admin-assets/assets/img/headerLogo.png')}}" alt="avatar">
-                <h6 class="">{{ auth()->guard('admin')->user()->name }}</h6>
-                <p class="">{{ auth()->guard('admin')->user()->email }}</p>
-            </div>
-        </div>
-
-        <div class="shadow-bottom"></div>
         <ul class="list-unstyled menu-categories" id="accordionExample">
             <li class="menu @if(request()->is('admin/dashboard')) active @endif">
                 <a href="{{ url('admin/dashboard') }}" aria-expanded="false" class="dropdown-toggle">
@@ -199,34 +189,18 @@
                     <li>
                         <a href="{{ route('category.index') }}"> Category </a>
                     </li>
-                    <li>
-                        <a href="{{ route('category.index') }}"> SubCategory </a>
-                    </li>
                 </ul>
             </li>
             @endif
 
             @if(checkPermission('role-view'))
             <li class="menu @if(request()->is('admin/role')) active @endif">
-                <a href="#employee" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                <a href="{{ route('role.index') }}" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-airplay"><path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path><polygon points="12 15 17 21 7 21 12 15"></polygon></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                         <span>Role & Permission</span>
                     </div>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </div>
                 </a>
-                <ul class="collapse submenu list-unstyled" id="employee" data-parent="#accordionExample">
-                    <li>
-                        <a href="{{ route('role.index') }}"> Role </a>
-                    </li>
-                    @if(checkPermission('employee-view'))
-                    <li>
-                        <a href="{{ route('employee.index') }}"> Employee </a>
-                    </li>
-                    @endif
-                </ul>
             </li>
             @endif
             @if(checkPermission('product-view'))
@@ -315,11 +289,22 @@
                 </a>
             </li>
             @endif
+            @if(checkPermission('employee-view'))
+            <li class="menu @if(request()->is('admin/employee')) active @endif">
+                <a href="{{ route('employee.index') }}" aria-expanded="false" class="dropdown-toggle">
+                    <div class="">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <span>Employee</span>
+                    </div>
+                </a>
+            </li>
+            @endif
+
             @if(checkPermission('campaign-view'))
             <li class="menu @if(request()->is('admin/order-report')) active @endif">
                 <a href="#report" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-terminal"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pie-chart"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
                         <span>Reports</span>
                     </div>
                     <div>
