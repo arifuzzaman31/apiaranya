@@ -167,6 +167,8 @@ class ProductController extends Controller
             $product->height              = $request->height;
             $product->width               = $request->width;
             $product->length              = $request->length;
+            $product->fragile_charge      = $request->fragile_charge;
+            $product->fragile             = $request->fragile;
             $product->unit                = $request->unit;
             $product->weight              = $request->weight;
             $product->has_variation       = $request->has_variation == true ? 1 : 0;
@@ -360,6 +362,8 @@ class ProductController extends Controller
             $product->height              = $request->height;
             $product->width               = $request->width;
             $product->length              = $request->length;
+            $product->fragile_charge      = $request->fragile_charge;
+            $product->fragile             = $request->fragile;
             $product->unit                = $request->unit;
             $product->flat_colour         = implode(",",$request->flat_colour);
             $product->weight              = $request->weight;

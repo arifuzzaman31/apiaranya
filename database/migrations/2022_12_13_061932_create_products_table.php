@@ -31,7 +31,8 @@ class CreateProductsTable extends Migration
             $table->string('height')->nullable();
             $table->string('width')->nullable();
             $table->string('unit')->nullable();
-            $table->string('flat_colour')->nullable();
+            $table->string('fragile')->nullable();
+            $table->double('fragile_charge',8,4)->default(0);
             $table->string('country_of_origin')->nullable();
             $table->string('weight')->nullable();
             $table->string('design_code')->nullable();

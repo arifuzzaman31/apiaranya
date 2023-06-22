@@ -21,6 +21,8 @@
                                 <li  class="list-group-item"><b>L: {{ product.length }} H:{{ product.height }} W:{{ product.width }} </b></li>
                                 <li  class="list-group-item"><b>Weight : {{ product.weight }}</b></li>
                                 <li  class="list-group-item"><b>Lead Time : {{ product.lead_time }}</b></li>
+                                <li  class="list-group-item"><b>Fragile : {{ product.fragile }}</b></li>
+                                <li  class="list-group-item"><b>Fragile Charge : {{ product.fragile_charge }}</b></li>
                             </ul>
                             
                         </div>

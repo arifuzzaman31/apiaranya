@@ -43,6 +43,8 @@ export default {
                 length: '',
                 weight: '',
                 care: [],
+                fragile: 'No',
+                fragile_charge: 0,
                 vat: 1,
                 is_fabric: true,
                 selectfabrics : [],
@@ -180,6 +182,8 @@ export default {
                 weight: '',
                 care: [],
                 vat: 1,
+                fragile: 'No',
+                fragile_charge: 0,
                 is_fabric: true,
                 selectfabrics : [],
                 is_color: true,
@@ -709,7 +713,7 @@ export default {
                 <div class="statbox widget box ">
                     <div class="widget-content ">
                         <div class="form-row">
-                            <div class="col-md-3 mb-3">
+                            <div class="col-md-4 mb-3">
                                 <label for="design_code">Design Code</label>
                                 <input type="text" class="form-control form-control-sm" :class="validation_error.hasOwnProperty('design_code') ? 'is-invalid' : ''" id="design_code" placeholder="Design Code" v-model="form.design_code">
                                 <div
@@ -719,20 +723,44 @@ export default {
                                         {{ validation_error.design_code[0] }}
                                     </div>
                             </div>
+
+                            <div class="form-group col-md-4 mb-3">
+                                <label for="product-LeadTime">Fragile</label>
+                                <select id="product-category" class="form-control form-control-sm" v-model="form.fragile">
+                                    <option value="Yes">Fragile</option>
+                                    <option value="No">Non-Fragile</option>
+                                </select>
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('fragile')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.fragile[0] }}
+                                    </div>
+                            </div>
+                            <div class="form-group col-md-4 mb-3">
+                                <label for="product-fragile_charge">Fragile Charge</label>
+                                <input type="number" class="form-control form-control-sm" :class="validation_error.hasOwnProperty('fragile_charge') ? 'is-invalid' : ''" id="fragile_charge-name" v-model="form.fragile_charge" >
+                                    <div
+                                        v-if="validation_error.hasOwnProperty('fragile_charge')"
+                                        class="invalid-feedback"
+                                    >
+                                        {{ validation_error.fragile_charge[0] }}
+                                    </div>
+                            </div>
                          
-                            <div class="col-md-1 mb-3">
+                            <div class="col-md-2 mb-3">
                                 <label for="length">Length</label>
                                 <input type="number" class="form-control form-control-sm" id="length" placeholder="Enter Length" v-model="form.length" />
                             </div>
-                            <div class="col-md-1 mb-3">
+                            <div class="col-md-2 mb-3">
                                 <label for="height">Height</label>
                                 <input type="number" class="form-control form-control-sm" id="height" placeholder="Enter Height" v-model="form.height" />
                             </div>
-                            <div class="col-md-1 mb-3">
+                            <div class="col-md-2 mb-3">
                                 <label for="width">Width</label>
                                 <input type="number" class="form-control form-control-sm" id="width" placeholder="Enter Width" v-model="form.width" />
                             </div>
-                            <div class="col-md-1 mb-3">
+                            <div class="col-md-2 mb-3">
                                 <label for="unit">Unit</label>
                                 <input type="text" class="form-control form-control-sm" id="unit" placeholder="Enter Width" v-model="form.unit" />
                             </div>
@@ -746,7 +774,7 @@ export default {
                                         {{ validation_error.weight[0] }}
                                     </div>
                             </div>
-                            <div class="form-group col-md-3 mb-3">
+                            <div class="form-group col-md-2 mb-3">
                                 <label for="product-LeadTime">Lead Time</label>
                                 <input type="text" class="form-control form-control-sm" :class="validation_error.hasOwnProperty('lead_time') ? 'is-invalid' : ''" id="LeadTime-name" placeholder="Lead Time" v-model="form.lead_time" >
                                     <div
@@ -756,6 +784,7 @@ export default {
                                         {{ validation_error.lead_time[0] }}
                                     </div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
