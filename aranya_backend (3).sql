@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 08, 2023 at 04:22 PM
+-- Generation Time: Jun 22, 2023 at 07:20 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 7.4.30
 
@@ -196,9 +196,9 @@ INSERT INTO `categories` (`id`, `category_name`, `slug`, `description`, `parent_
 (2, 'Men', 'men', NULL, '0', NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
 (3, 'Kids', 'kids', NULL, '0', 'https://res.cloudinary.com/diyc1dizi/image/upload/v1681021909/aranya-product-v2/DSCF0178.jpg', 'https://res.cloudinary.com/diyc1dizi/image/upload/v1681021922/aranya-product-v2/DSC_8136.jpg', 'https://res.cloudinary.com/diyc1dizi/image/upload/v1680757775/aranya-product-v2/DSC_8201.jpg', NULL, 3, 1, NULL, NULL, NULL),
 (4, 'Home Furnishings', 'home-furnishings', NULL, '0', NULL, NULL, NULL, NULL, 4, 1, NULL, NULL, NULL),
-(5, 'Beauty Collection', 'beauty-collection', NULL, '0', NULL, NULL, NULL, NULL, 5, 1, NULL, NULL, NULL),
+(5, 'Beauty Collection', 'beauty-collection', NULL, '0', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/WhatsApp_Image_2023-01-08_at_1.37.14_PM.jpg', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/319437967_3245517765662624_2055855407411359162_n.jpg', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/newone.jpg', NULL, 5, 1, NULL, NULL, '2023-06-21 04:43:45'),
 (6, 'Accessories', 'accessories', NULL, '0', NULL, NULL, NULL, NULL, 6, 1, NULL, NULL, NULL),
-(7, 'Saree', 'saree', NULL, '1', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya-product/boishakh/ZS001419.jpg', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya-product/boishakh/ZS001485.jpg', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya-product/boishakh/ZS001601.jpg', NULL, 1, 1, NULL, NULL, NULL),
+(7, 'Saree', 'saree', NULL, '1', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/319390021_890191578940618_2653986640703744348_n.jpg', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/319437967_3245517765662624_2055855407411359162_n.jpg', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/Arifuzzaman_joining_year_2022_2.jpg', NULL, 1, 1, NULL, NULL, '2023-06-20 03:08:27'),
 (8, 'Salwar Kameez', 'salwar-kameez', NULL, '1', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya-product/boishakh/ZS001345.jpg', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya-product/boishakh/ZS001299.jpg', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya-product/boishakh/ZS001858.jpg', NULL, 2, 1, NULL, NULL, NULL),
 (9, 'Kurti & Fatua', 'kurti-fatua', NULL, '1', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya-product/boishakh/ZS001819.jpg', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya-product/boishakh/ZS001857.jpg', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya-product/boishakh/ZS001795.jpg', NULL, 3, 1, NULL, NULL, NULL),
 (10, 'Tops & Shirts', 'tops-shirts', NULL, '1', NULL, NULL, NULL, NULL, 4, 1, NULL, NULL, NULL),
@@ -232,7 +232,9 @@ INSERT INTO `categories` (`id`, `category_name`, `slug`, `description`, `parent_
 (38, 'Girls', 'girls', NULL, '3', NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
 (39, 'Boys', 'boys', NULL, '3', NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
 (40, 'Babies', 'babies', NULL, '3', NULL, NULL, NULL, NULL, 3, 1, NULL, NULL, NULL),
-(41, 'Toddlers', 'toddlers', NULL, '3', NULL, NULL, NULL, NULL, 4, 1, NULL, NULL, NULL);
+(41, 'Toddlers', 'toddlers', NULL, '3', NULL, NULL, NULL, NULL, 4, 1, NULL, NULL, NULL),
+(42, 'new test', 'new-test', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, NULL, '2023-06-20 01:11:00', '2023-06-20 01:11:00'),
+(43, 'new-test-1', 'new-test-1', NULL, '2', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/319437967_3245517765662624_2055855407411359162_n.jpg', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/WhatsApp_Image_2023-01-08_at_1.37.14_PM.jpg', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/Arifuzzaman_joining_year_2022_2.jpg', NULL, 12, 1, '2023-06-20 03:36:41', '2023-06-20 01:11:38', '2023-06-20 03:36:41');
 
 -- --------------------------------------------------------
 
@@ -304,7 +306,15 @@ INSERT INTO `category_fabric` (`id`, `category_id`, `fabric_id`, `created_at`, `
 (49, 32, 2, '2023-05-29 05:36:20', '2023-05-29 05:36:20'),
 (50, 22, 26, '2023-06-05 01:31:07', '2023-06-05 01:31:07'),
 (51, 22, 23, '2023-06-05 01:31:07', '2023-06-05 01:31:07'),
-(52, 21, 23, '2023-06-06 04:15:31', '2023-06-06 04:15:31');
+(52, 21, 23, '2023-06-06 04:15:31', '2023-06-06 04:15:31'),
+(53, 39, 30, '2023-06-18 07:47:14', '2023-06-18 07:47:14'),
+(54, 39, 4, '2023-06-18 07:47:14', '2023-06-18 07:47:14'),
+(55, 42, 31, NULL, NULL),
+(56, 42, 23, NULL, NULL),
+(57, 42, 18, NULL, NULL),
+(58, 42, 2, NULL, NULL),
+(59, 5, 1, NULL, NULL),
+(60, 5, 3, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1454,10 +1464,12 @@ INSERT INTO `inventories` (`id`, `product_id`, `colour_id`, `size_id`, `stock`, 
 (708, 127, 20, 20, 97, 564.00000000, 988.00000000, 'D17420', 10, NULL, NULL, '2022-03-11 18:00:00', NULL),
 (709, 127, 19, 23, 65, 754.00000000, 977.00000000, 'C159974', 10, NULL, NULL, '2022-03-11 18:00:00', NULL),
 (710, 127, 19, 20, 89, 744.00000000, 958.00000000, 'C88599', 10, NULL, NULL, '2022-03-11 18:00:00', NULL),
-(711, 128, 15, 20, 998, 45.00000000, 654.00000000, 'C3433', 10, NULL, NULL, '2022-03-11 18:00:00', NULL),
-(712, 128, 15, 19, 978, 49.00000000, 651.00000000, 'C5444', 10, NULL, NULL, '2022-03-11 18:00:00', NULL),
-(713, 128, 8, 20, 965, 98.00000000, 489.00000000, 'D8755', 10, NULL, NULL, '2022-03-11 18:00:00', NULL),
-(714, 128, 8, 19, 896, 67.00000000, 768.00000000, 'R6534', 10, NULL, NULL, '2022-03-11 18:00:00', NULL);
+(717, 128, 15, 20, 998, 45.00000000, 654.00000000, 'C3433', 10, NULL, NULL, '2022-03-11 18:00:00', NULL),
+(718, 128, 15, 19, 978, 49.00000000, 651.00000000, 'C5444', 10, NULL, NULL, '2022-03-11 18:00:00', NULL),
+(719, 128, 8, 20, 965, 98.00000000, 489.00000000, 'D8755', 10, NULL, NULL, '2022-03-11 18:00:00', NULL),
+(720, 128, 8, 19, 896, 67.00000000, 768.00000000, 'R6534', 10, NULL, NULL, '2022-03-11 18:00:00', NULL),
+(726, 129, 0, 0, 455, 654.00000000, 454.00000000, 'D1920', 10, NULL, NULL, '2023-06-21 07:06:45', '2023-06-21 07:06:45'),
+(728, 130, 0, 0, 544, 433.00000000, 455.00000000, 'D19203', 10, NULL, NULL, '2023-06-21 07:39:24', '2023-06-21 07:39:24');
 
 -- --------------------------------------------------------
 
@@ -1483,6 +1495,70 @@ CREATE TABLE `makings` (
 INSERT INTO `makings` (`id`, `making_name`, `slug`, `precedence`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (1, 'Stitched', 'stitched', NULL, 1, NULL, '2023-03-07 04:57:23', '2023-03-11 09:37:43'),
 (2, 'Unstitched', 'unstitched', NULL, 1, NULL, '2023-03-07 04:57:29', '2023-03-11 09:38:01');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `media_managers`
+--
+
+CREATE TABLE `media_managers` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `file_link` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `file_type` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'image/video/gif/pdf',
+  `product_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `extension` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `media_managers`
+--
+
+INSERT INTO `media_managers` (`id`, `file_link`, `file_type`, `product_name`, `extension`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/344799546_270086138812865_8284141398855937484_n.jpg', 'image', '344799546_270086138812865_8284141398855937484_n', 'jpeg', 1, '2023-06-14 05:43:52', '2023-06-21 05:50:57'),
+(2, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/344799546_270086138812865_8284141398855937484_n.jpg', 'image', '344799546_270086138812865_8284141398855937484_n', 'jpg', 1, '2023-06-14 05:43:52', '2023-06-21 05:50:58'),
+(3, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/344799546_270086138812865_8284141398855937484_n.jpg', 'image', '344799546_270086138812865_8284141398855937484_n', 'png', 1, '2023-06-14 05:43:52', '2023-06-21 05:51:00'),
+(4, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/344799546_270086138812865_8284141398855937484_n.jpg', 'image', '344799546_270086138812865_8284141398855937484_n', 'jpg', 1, '2023-06-14 05:43:52', '2023-06-21 05:51:01'),
+(5, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/344799546_270086138812865_8284141398855937484_n.jpg', 'image', '344799546_270086138812865_8284141398855937484_n', 'jpeg', 1, '2023-06-14 05:43:52', '2023-06-21 05:51:02'),
+(6, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/344793903_1032554851457232_917839760543745168_n.jpg', 'image', '344793903_1032554851457232_917839760543745168_n', 'jpeg', 1, '2023-06-14 05:43:52', '2023-06-21 05:51:03'),
+(7, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/344793903_1032554851457232_917839760543745168_n.jpg', 'image', '344793903_1032554851457232_917839760543745168_n', 'jpg', 1, '2023-06-14 05:43:52', '2023-06-21 05:51:04'),
+(8, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/344793903_1032554851457232_917839760543745168_n.jpg', 'image', '344793903_1032554851457232_917839760543745168_n', 'jpeg', 1, '2023-06-14 05:43:52', '2023-06-21 05:51:05'),
+(9, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/344793903_1032554851457232_917839760543745168_n.jpg', 'image', '344793903_1032554851457232_917839760543745168_n', 'png', 1, '2023-06-14 05:43:52', '2023-06-21 05:51:06'),
+(10, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/348356565_761452659098960_1629259595224722098_n.jpg', 'image', '348356565_761452659098960_1629259595224722098_n', 'jpeg', 1, '2023-06-14 05:43:52', '2023-06-21 05:51:08'),
+(11, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/348356565_761452659098960_1629259595224722098_n.jpg', 'image', '348356565_761452659098960_1629259595224722098_n', 'png', 1, '2023-06-14 05:43:52', '2023-06-21 05:51:09'),
+(12, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/348356565_761452659098960_1629259595224722098_n.jpg', 'image', '348356565_761452659098960_1629259595224722098_n', 'jpg', 1, '2023-06-14 05:43:52', '2023-06-21 05:51:10'),
+(13, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/344799546_270086138812865_8284141398855937484_n.jpg', 'image', '344799546_270086138812865_8284141398855937484_n', 'jpeg', 1, '2023-06-14 05:43:52', '2023-06-21 05:51:11'),
+(14, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/WhatsApp_Image_2023-04-17_at_12.58.44_PM.jpg', 'image', 'WhatsApp_Image_2023-04-17_at_12.58.44_PM', 'jpeg', 1, '2023-06-14 05:43:52', '2023-06-21 05:51:12'),
+(15, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/WhatsApp_Image_2023-04-17_at_12.58.44_PM.jpg', 'image', 'WhatsApp_Image_2023-04-17_at_12.58.44_PM', 'jpg', 1, '2023-06-14 05:43:52', '2023-06-21 05:51:13'),
+(16, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/344793903_1032554851457232_917839760543745168_n.jpg', 'image', '344793903_1032554851457232_917839760543745168_n', 'jpeg', 1, '2023-06-14 05:43:52', '2023-06-21 05:51:14'),
+(17, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/WhatsApp_Image_2023-04-17_at_12.58.44_PM_1.jpg', 'image', 'WhatsApp_Image_2023-04-17_at_12.58.44_PM_1', 'png', 1, '2023-06-14 05:43:53', '2023-06-21 05:51:17'),
+(18, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/348356565_761452659098960_1629259595224722098_n.jpg', 'image', '348356565_761452659098960_1629259595224722098_n', 'jpeg', 1, '2023-06-14 05:43:53', '2023-06-21 05:51:18'),
+(19, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/WhatsApp_Image_2023-01-11_at_1.07.38_AM.jpg', 'image', 'WhatsApp_Image_2023-01-11_at_1.07.38_AM', 'jpg', 1, '2023-06-14 05:43:53', '2023-06-21 05:51:19'),
+(20, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/WhatsApp_Image_2023-04-17_at_12.58.44_PM.jpg', 'image', 'WhatsApp_Image_2023-04-17_at_12.58.44_PM', 'png', 1, '2023-06-14 05:43:53', '2023-06-21 05:51:20'),
+(21, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/WhatsApp_Image_2023-01-11_at_1.07.38_AM.jpg', 'image', 'WhatsApp_Image_2023-01-11_at_1.07.38_AM', 'jpeg', 1, '2023-06-14 05:43:53', '2023-06-21 05:51:21'),
+(22, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/WhatsApp_Image_2023-01-10_at_1.16.34_AM.jpg', 'image', 'WhatsApp_Image_2023-01-10_at_1.16.34_AM', 'jpeg', 1, '2023-06-14 05:43:53', '2023-06-21 05:51:22'),
+(23, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/WhatsApp_Image_2023-04-17_at_12.58.44_PM_1.jpg', 'image', 'WhatsApp_Image_2023-04-17_at_12.58.44_PM_1', 'png', 1, '2023-06-14 05:43:53', '2023-06-21 05:51:24'),
+(24, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/338334282_1308641929686659_5561078571324706171_n.jpg', 'image', '338334282_1308641929686659_5561078571324706171_n', 'jpg', 1, '2023-06-14 05:43:53', '2023-06-21 05:51:25'),
+(25, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/319437967_3245517765662624_2055855407411359162_n.jpg', 'image', '319437967_3245517765662624_2055855407411359162_n', 'jpg', 1, '2023-06-14 05:43:54', '2023-06-21 05:51:27'),
+(26, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/319390021_890191578940618_2653986640703744348_n.jpg', 'image', '319390021_890191578940618_2653986640703744348_n', 'jpeg', 1, '2023-06-14 05:43:54', '2023-06-21 05:51:28'),
+(27, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/WhatsApp_Image_2023-01-08_at_1.37.14_PM.jpg', 'image', 'WhatsApp_Image_2023-01-08_at_1.37.14_PM', 'png', 1, '2023-06-14 05:50:05', '2023-06-21 05:51:30'),
+(28, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/WhatsApp_Image_2023-01-08_at_1.37.14_PM.jpg', 'image', 'WhatsApp_Image_2023-01-08_at_1.37.14_PM', 'jpeg', 1, '2023-06-14 05:50:05', '2023-06-21 05:51:32'),
+(29, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/339882854_578553224041986_2971337519162244846_n.jpg', 'image', '339882854_578553224041986_2971337519162244846_n', 'png', 1, '2023-06-14 05:50:05', '2023-06-21 05:51:34'),
+(30, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/WhatsApp_Image_2023-01-08_at_1.37.14_PM.jpg', 'image', 'WhatsApp_Image_2023-01-08_at_1.37.14_PM', 'png', 1, '2023-06-14 05:50:05', '2023-06-21 05:51:35'),
+(32, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/338358173_1182596862442624_5574419802751213332_n.jpg', 'image', '338358173_1182596862442624_5574419802751213332_n', 'png', 1, '2023-06-14 05:50:05', '2023-06-21 05:51:36'),
+(33, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/Arifuzzaman_joining_year_2022_2.jpg', 'image', 'Arifuzzaman_joining_year_2022_2', 'jpeg', 1, '2023-06-14 06:52:15', '2023-06-21 05:51:37'),
+(34, 'https://res.cloudinary.com/diyc1dizi/video/upload/aranya/2022-09-01_13-33-38.mkv', 'video', '2022-09-01_13-33-38', 'mkv', 1, '2023-06-19 03:50:34', '2023-06-21 05:51:39'),
+(35, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/338334282_1308641929686659_5561078571324706171_n.jpg', 'image', '338334282_1308641929686659_5561078571324706171_n', 'jpg', 1, '2023-06-21 02:55:11', NULL),
+(36, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/Arifuzzaman_joining_year_2022.jpg', 'image', 'Arifuzzaman_joining_year_2022', 'jpg', 1, '2023-06-21 02:56:57', NULL),
+(37, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/umberto-GQ4VBpgPzik-unsplash.jpg', 'image', 'umberto-GQ4VBpgPzik-unsplash', 'jpg', 1, '2023-06-21 03:02:04', NULL),
+(38, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/german-lopez-fKDF8bGGklY-unsplash.jpg', 'image', 'german-lopez-fKDF8bGGklY-unsplash', 'jpg', 1, '2023-06-21 03:07:37', NULL),
+(39, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/german-lopez-fKDF8bGGklY-unsplash.jpg', 'image', 'german-lopez-fKDF8bGGklY-unsplash', 'jpg', 1, '2023-06-21 03:07:37', NULL),
+(40, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/hans-ott-AxSaRriVy0E-unsplash.jpg', 'image', 'hans-ott-AxSaRriVy0E-unsplash', 'jpg', 1, '2023-06-21 03:07:38', NULL),
+(41, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/newone.jpg', 'image', 'newone', 'jpg', 1, '2023-06-21 03:12:08', NULL),
+(42, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/gridImg1.png', 'image', 'gridImg1', 'png', 1, '2023-06-21 03:12:09', NULL);
 
 -- --------------------------------------------------------
 
@@ -1556,7 +1632,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (53, '2023_05_09_045400_create_refund_configure_table', 2),
 (54, '2023_05_16_065420_create_roles_table', 3),
 (55, '2023_05_16_065624_create_permissions_table', 3),
-(56, '2023_05_16_065716_create_role_permissions_table', 3);
+(56, '2023_05_16_065716_create_role_permissions_table', 3),
+(57, '2023_06_12_063650_create_shipping_configs_table', 4),
+(58, '2023_06_14_061250_create_media_managers_table', 5);
 
 -- --------------------------------------------------------
 
@@ -2122,7 +2200,7 @@ CREATE TABLE `pages` (
 --
 
 INSERT INTO `pages` (`id`, `page_name`, `page_type`, `image_one`, `back_url_one`, `image_two`, `back_url_two`, `image_three`, `back_url_three`, `image_four`, `back_url_four`, `image_five`, `back_url_five`, `image_six`, `back_url_six`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'home', 'home', 'https://res.cloudinary.com/diyc1dizi/video/upload/v1679551684/aranya-product/boishakh/Loop_For_Website.mp4', NULL, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya-product/boishakh/ZS001406.jpg', 'saree', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya-product/boishakh/ZS001793.jpg', 'panjabi', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya-product/boishakh/ZS001125.jpg', 'saree', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya-product/boishakh/ZS001819.jpg', 'kurti-fatua', NULL, NULL, 1, NULL, '2023-03-12 08:28:58', '2023-03-12 08:29:00');
+(1, 'home', 'home', 'https://res.cloudinary.com/diyc1dizi/video/upload/v1679551684/aranya-product/boishakh/Loop_For_Website.mp4', NULL, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya-product/boishakh/ZS001406.jpg', 'saree', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya-product/boishakh/ZS001793.jpg', 'panjabi', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/Arifuzzaman_joining_year_2022_2.jpg', 'boys', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/319437967_3245517765662624_2055855407411359162_n.jpg', NULL, NULL, NULL, 1, NULL, '2023-03-12 08:28:58', '2023-06-19 03:44:42');
 
 -- --------------------------------------------------------
 
@@ -2382,7 +2460,14 @@ INSERT INTO `permissions` (`id`, `group_name`, `permission_name`, `slug`, `route
 (40, 'Campaign', 'Item Drop From Campaign', 'product-remove-campaign', NULL, 1, '2023-05-20 23:12:12', '2023-05-20 23:12:12'),
 (41, 'Refund', 'Refund View', 'refund-view', NULL, 1, '2023-05-21 11:33:41', '2023-05-21 11:33:42'),
 (42, 'Report', 'Report View', 'report-view', NULL, 1, '2023-05-30 06:09:33', '2023-05-30 06:09:34'),
-(43, 'Report', 'Order Report', 'order-report', NULL, 1, '2023-05-30 06:10:19', '2023-05-30 06:10:21');
+(43, 'Report', 'Order Report', 'order-report', NULL, 1, '2023-05-30 06:10:19', '2023-05-30 06:10:21'),
+(44, 'Shipping', 'Shipping View', 'shipping-view', NULL, 1, '2023-06-13 09:37:27', '2023-06-13 09:37:28'),
+(45, 'Shipping', 'Add Shipping', 'add-shipping', NULL, 1, '2023-06-13 09:48:10', '2023-06-13 09:48:13'),
+(46, 'Shipping', 'Edit Shipping', 'edit-shipping', NULL, 1, '2023-06-13 09:48:11', '2023-06-13 09:48:14'),
+(47, 'Shipping', 'Delete Shipping', 'delete-shipping', NULL, 1, '2023-06-13 09:48:12', '2023-06-13 09:48:16'),
+(48, 'Media-Manager', 'Media View', 'media-view', NULL, 1, '2023-06-14 06:00:20', '2023-06-14 06:00:21'),
+(49, 'Media-Manager', 'Media Delete', 'media-delete', NULL, 1, '2023-06-14 06:00:29', '2023-06-14 06:00:30'),
+(50, 'Media-Manager', 'Add Media', 'add-media', NULL, 1, '2023-06-21 05:03:19', '2023-06-21 05:03:20');
 
 -- --------------------------------------------------------
 
@@ -2430,7 +2515,10 @@ INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `n
 (21, 'App\\Models\\User', 1, 'admin@suparadmin.com', '46355d7478fbe4f1e9b4a2917b6c696d867a6c62961e56b1b3065f5a54d67528', '[\"*\"]', '2023-04-17 11:53:38', '2023-04-15 06:00:48', '2023-04-17 11:53:38'),
 (22, 'App\\Models\\User', 1, 'admin@suparadmin.com', 'fb1b75354762537179ba20ba682dbb119a81a52dabc67ae88c1387ac80cfda84', '[\"*\"]', '2023-04-30 05:24:22', '2023-04-30 05:24:11', '2023-04-30 05:24:22'),
 (23, 'App\\Models\\User', 1, 'admin@suparadmin.com', 'e1f91ee988a2180f1d5e2f3dbdb1a9536b0145e3580f21021ad5ea57519ab323', '[\"*\"]', '2023-05-01 06:27:01', '2023-05-01 06:24:14', '2023-05-01 06:27:01'),
-(24, 'App\\Models\\User', 4, 'API TOKEN', '197d77fc45a76139147b9a767e0156e7f90dc1bc3b1bd269635f5e9fb128706f', '[\"*\"]', NULL, '2023-05-03 09:30:40', '2023-05-03 09:30:40');
+(24, 'App\\Models\\User', 4, 'API TOKEN', '197d77fc45a76139147b9a767e0156e7f90dc1bc3b1bd269635f5e9fb128706f', '[\"*\"]', NULL, '2023-05-03 09:30:40', '2023-05-03 09:30:40'),
+(25, 'App\\Models\\User', 68, 'social@gmail.com', 'f33f03e63a853109912b3b7973100124ecc9fe96d25cb0accf781e745e6b1869', '[\"*\"]', NULL, '2023-06-13 07:26:21', '2023-06-13 07:26:21'),
+(26, 'App\\Models\\User', 68, 'social@gmail.com', '9bca1a22b1b7f0f0c7919c4fb7bfc5ebd836aeb80231f1ae2e07ba6a4f2011e0', '[\"*\"]', NULL, '2023-06-13 07:27:46', '2023-06-13 07:27:46'),
+(27, 'App\\Models\\User', 68, 'social@gmail.com', 'f3e151e5b3a1e0834b5806e139ac31c6e246df35bd978994ca5c9101b0d39168', '[\"*\"]', '2023-06-15 00:57:49', '2023-06-14 23:55:55', '2023-06-15 00:57:49');
 
 -- --------------------------------------------------------
 
@@ -2603,7 +2691,9 @@ INSERT INTO `products` (`id`, `product_name`, `slug`, `category_id`, `sub_catego
 (125, 'Tribal Flare Choker', 'tribal-flare-choker', 6, 32, 1, NULL, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya-product-v2/J0400004MA1116/web.png', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya-product-v2/J0400004MA1116/web.png', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, 'J0400004MA1116', NULL, 'Sterling silver coins have been attached to this choker that has been woven delicately with Terracotta, Rudrakha and wooden beads. The colours are relfections of natural dyes of Indigo and Madder.', 1, 0, 0, '2023-05-29 05:36:20', NULL, '2023-05-29 05:36:20'),
 (126, 'Riley Tyler', 'riley-tyler', 4, 22, 1, NULL, 'https://res.cloudinary.com/diyc1dizi/image/upload/v1685950062/aranya/344793903_1032554851457232_917839760543745168_n.jpg', 'https://res.cloudinary.com/diyc1dizi/image/upload/v1685950062/aranya/344793903_1032554851457232_917839760543745168_n.jpg', NULL, NULL, NULL, NULL, '45', '56', '43', 'inch', NULL, '0.2 kg', 'WAX234344CC', 'Off-White,Olive', '<p>Click the&nbsp;<strong>Add product</strong>&nbsp;button near the&nbsp;<em>Products</em>&nbsp;label. Follow carefully the instructions below:</p><ul><li>On the&nbsp;<em>Add Products</em>&nbsp;to Your App, go to the&nbsp;<em>Facebook Login for business</em>&nbsp;and click the&nbsp;<strong>Set-Up</strong>&nbsp;button</li></ul>', 1, 0, 1, '2023-06-05 01:31:07', NULL, '2023-06-05 01:31:07'),
 (127, 'Riley Tyler', 'riley-tyler', 4, 22, 1, NULL, 'https://res.cloudinary.com/diyc1dizi/image/upload/v1685950062/aranya/344793903_1032554851457232_917839760543745168_n.jpg', 'https://res.cloudinary.com/diyc1dizi/image/upload/v1685950062/aranya/344793903_1032554851457232_917839760543745168_n.jpg', NULL, NULL, NULL, NULL, '45', '56', '43', 'inch', NULL, '0.2 kg', 'WAX234344CC', 'Off-White,Olive', '<p>Click the&nbsp;<strong>Add product</strong>&nbsp;button near the&nbsp;<em>Products</em>&nbsp;label. Follow carefully the instructions below:</p><ul><li>On the&nbsp;<em>Add Products</em>&nbsp;to Your App, go to the&nbsp;<em>Facebook Login for business</em>&nbsp;and click the&nbsp;<strong>Set-Up</strong>&nbsp;button</li></ul>', 1, 0, 1, '2023-06-05 01:33:57', NULL, '2023-06-05 01:33:57'),
-(128, 'Clayton Hardin', 'clayton-hardin', 4, 21, 1, NULL, 'https://res.cloudinary.com/diyc1dizi/image/upload/v1686046295/aranya/shutterstock-776572006.jpg', 'https://res.cloudinary.com/diyc1dizi/image/upload/v1686046295/aranya/shutterstock-776572006.jpg', NULL, NULL, NULL, NULL, '254', '240', '230', 'mm', NULL, '0.1kg', 'WRGGFFF12344', 'White,Teal', '<p><span style=\"color: rgb(35, 35, 35);\">Empowering community through open source technology.</span></p>', 1, 0, 1, '2023-06-06 04:15:31', NULL, '2023-06-06 04:15:31');
+(128, 'Clayton Hardin', 'clayton-hardin', 4, 21, 1, NULL, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/338334282_1308641929686659_5561078571324706171_n.jpg', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/338334282_1308641929686659_5561078571324706171_n.jpg', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/gridImg1.png', NULL, NULL, NULL, '254', '240', '230', 'mm', NULL, '0.1kg', 'WRGGFFF12344', 'White,Teal', '<p><span style=\"color: rgb(35, 35, 35);\">Empowering community through open source technology.</span></p>', 1, 0, 1, '2023-06-06 04:15:31', NULL, '2023-06-21 05:33:37'),
+(129, 'Dahlia Ortiz', 'dahlia-ortiz', 3, 39, 2, 'Hilda Parrish', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/WhatsApp_Image_2023-01-08_at_1.37.14_PM.jpg', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/WhatsApp_Image_2023-01-08_at_1.37.14_PM.jpg', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/338334282_1308641929686659_5561078571324706171_n.jpg', NULL, NULL, NULL, '45', '43', '32', 'inch', NULL, '0.2 kg', 'QS033SF35R2244', 'Gray,Purple,Green', '<p><span style=\"color: rgb(35, 38, 41);\">just to add a little something: Bootstrap also provides the&nbsp;</span><strong style=\"color: rgb(35, 38, 41);\"><em>sr-only</em></strong><span style=\"color: rgb(35, 38, 41);\">&nbsp;class to hide \"accessibility\" elements.</span></p>', 1, 0, 0, '2023-06-18 07:47:14', NULL, '2023-06-21 07:06:45'),
+(130, 'Dahlia Ortiz new', 'dahlia-ortiz-new', 4, 24, 1, NULL, 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/german-lopez-fKDF8bGGklY-unsplash.jpg', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/german-lopez-fKDF8bGGklY-unsplash.jpg', 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya/gridImg1.png', NULL, NULL, NULL, '34', '43', '23', 'cm', NULL, '0.4kg', 'Fugiat consequuntur', 'Manjit', '<p><span style=\"color: rgb(68, 68, 68);\">The given output shows that all the specified values from an array are successfully removed.</span></p>', 1, 0, 0, '2023-06-21 07:38:52', NULL, '2023-06-21 07:39:24');
 
 -- --------------------------------------------------------
 
@@ -2765,7 +2855,9 @@ INSERT INTO `product_brands` (`id`, `product_id`, `brand_id`, `created_at`, `upd
 (125, 125, 1, '2023-05-29 05:36:20', '2023-05-29 05:36:20'),
 (126, 126, 1, '2023-06-05 01:31:07', '2023-06-05 01:31:07'),
 (127, 127, 1, '2023-06-05 01:33:57', '2023-06-05 01:33:57'),
-(128, 128, 1, '2023-06-06 04:15:31', '2023-06-06 04:15:31');
+(128, 128, 1, '2023-06-06 04:15:31', '2023-06-06 04:15:31'),
+(129, 129, 1, '2023-06-18 07:47:14', '2023-06-18 07:47:14'),
+(130, 130, 1, '2023-06-21 07:38:52', '2023-06-21 07:38:52');
 
 -- --------------------------------------------------------
 
@@ -2788,7 +2880,9 @@ CREATE TABLE `product_cares` (
 INSERT INTO `product_cares` (`id`, `product_id`, `care_id`, `created_at`, `updated_at`) VALUES
 (1, 126, 3, '2023-06-05 01:31:08', '2023-06-05 01:31:08'),
 (2, 127, 3, '2023-06-05 01:33:58', '2023-06-05 01:33:58'),
-(3, 128, 4, '2023-06-06 04:15:31', '2023-06-06 04:15:31');
+(3, 128, 4, '2023-06-06 04:15:31', '2023-06-06 04:15:31'),
+(4, 129, 2, '2023-06-18 07:47:14', '2023-06-18 07:47:14'),
+(5, 130, 3, '2023-06-21 07:38:52', '2023-06-21 07:38:52');
 
 -- --------------------------------------------------------
 
@@ -3146,7 +3240,9 @@ INSERT INTO `product_designers` (`id`, `product_id`, `designer_id`, `created_at`
 (123, 125, 7, '2023-05-29 05:36:20', '2023-05-29 05:36:20'),
 (124, 126, 16, '2023-06-05 01:31:07', '2023-06-05 01:31:07'),
 (125, 127, 16, '2023-06-05 01:33:57', '2023-06-05 01:33:57'),
-(126, 128, 15, '2023-06-06 04:15:31', '2023-06-06 04:15:31');
+(126, 128, 15, '2023-06-06 04:15:31', '2023-06-06 04:15:31'),
+(127, 129, 14, '2023-06-18 07:47:14', '2023-06-18 07:47:14'),
+(128, 130, 13, '2023-06-21 07:38:52', '2023-06-21 07:38:52');
 
 -- --------------------------------------------------------
 
@@ -3294,7 +3390,10 @@ INSERT INTO `product_embellishments` (`id`, `product_id`, `embellishment_id`, `c
 (125, 125, 15, '2023-05-29 05:36:20', '2023-05-29 05:36:20'),
 (126, 126, 18, '2023-06-05 01:31:07', '2023-06-05 01:31:07'),
 (127, 127, 18, '2023-06-05 01:33:57', '2023-06-05 01:33:57'),
-(128, 128, 15, '2023-06-06 04:15:31', '2023-06-06 04:15:31');
+(128, 128, 15, '2023-06-06 04:15:31', '2023-06-06 04:15:31'),
+(129, 129, 18, '2023-06-18 07:47:14', '2023-06-18 07:47:14'),
+(130, 130, 16, '2023-06-21 07:38:52', '2023-06-21 07:38:52'),
+(131, 130, 12, '2023-06-21 07:38:52', '2023-06-21 07:38:52');
 
 -- --------------------------------------------------------
 
@@ -3442,7 +3541,12 @@ INSERT INTO `product_fabrics` (`id`, `product_id`, `fabric_id`, `created_at`, `u
 (125, 126, 23, '2023-06-05 01:31:07', '2023-06-05 01:31:07'),
 (126, 127, 26, '2023-06-05 01:33:57', '2023-06-05 01:33:57'),
 (127, 127, 23, '2023-06-05 01:33:57', '2023-06-05 01:33:57'),
-(128, 128, 23, '2023-06-06 04:15:31', '2023-06-06 04:15:31');
+(128, 128, 23, '2023-06-06 04:15:31', '2023-06-06 04:15:31'),
+(129, 129, 30, '2023-06-18 07:47:14', '2023-06-18 07:47:14'),
+(130, 129, 4, '2023-06-18 07:47:14', '2023-06-18 07:47:14'),
+(131, 130, 28, '2023-06-21 07:38:52', '2023-06-21 07:38:52'),
+(132, 130, 23, '2023-06-21 07:38:52', '2023-06-21 07:38:52'),
+(133, 130, 2, '2023-06-21 07:38:52', '2023-06-21 07:38:52');
 
 -- --------------------------------------------------------
 
@@ -3468,7 +3572,9 @@ INSERT INTO `product_fits` (`id`, `product_id`, `fit_id`, `created_at`, `updated
 (3, 46, 1, '2023-05-29 05:36:17', '2023-05-29 05:36:17'),
 (4, 126, 1, '2023-06-05 01:31:08', '2023-06-05 01:31:08'),
 (5, 127, 1, '2023-06-05 01:33:58', '2023-06-05 01:33:58'),
-(6, 128, 1, '2023-06-06 04:15:31', '2023-06-06 04:15:31');
+(6, 128, 1, '2023-06-06 04:15:31', '2023-06-06 04:15:31'),
+(7, 129, 1, '2023-06-18 07:47:14', '2023-06-18 07:47:14'),
+(8, 130, 1, '2023-06-21 07:38:52', '2023-06-21 07:38:52');
 
 -- --------------------------------------------------------
 
@@ -3685,7 +3791,11 @@ INSERT INTO `product_ingredients` (`id`, `product_id`, `ingredients_id`, `create
 (194, 124, 7, '2023-05-29 05:36:20', '2023-05-29 05:36:20'),
 (195, 126, 10, '2023-06-05 01:31:08', '2023-06-05 01:31:08'),
 (196, 127, 10, '2023-06-05 01:33:58', '2023-06-05 01:33:58'),
-(197, 128, 10, '2023-06-06 04:15:31', '2023-06-06 04:15:31');
+(197, 128, 10, '2023-06-06 04:15:31', '2023-06-06 04:15:31'),
+(198, 129, 9, '2023-06-18 07:47:14', '2023-06-18 07:47:14'),
+(199, 130, 8, '2023-06-21 07:38:52', '2023-06-21 07:38:52'),
+(200, 130, 10, '2023-06-21 07:38:52', '2023-06-21 07:38:52'),
+(201, 130, 7, '2023-06-21 07:38:52', '2023-06-21 07:38:52');
 
 -- --------------------------------------------------------
 
@@ -3713,7 +3823,9 @@ INSERT INTO `product_makings` (`id`, `product_id`, `making_id`, `created_at`, `u
 (5, 87, 1, '2023-05-29 05:36:19', '2023-05-29 05:36:19'),
 (6, 126, 2, '2023-06-05 01:31:07', '2023-06-05 01:31:07'),
 (7, 127, 2, '2023-06-05 01:33:57', '2023-06-05 01:33:57'),
-(8, 128, 2, '2023-06-06 04:15:31', '2023-06-06 04:15:31');
+(8, 128, 2, '2023-06-06 04:15:31', '2023-06-06 04:15:31'),
+(9, 129, 1, '2023-06-18 07:47:14', '2023-06-18 07:47:14'),
+(10, 130, 1, '2023-06-21 07:38:52', '2023-06-21 07:38:52');
 
 -- --------------------------------------------------------
 
@@ -3808,7 +3920,9 @@ INSERT INTO `product_seasons` (`id`, `product_id`, `season_id`, `created_at`, `u
 (72, 126, 7, '2023-06-05 01:31:07', '2023-06-05 01:31:07'),
 (73, 127, 7, '2023-06-05 01:33:57', '2023-06-05 01:33:57'),
 (74, 128, 11, '2023-06-06 04:15:31', '2023-06-06 04:15:31'),
-(75, 128, 8, '2023-06-06 04:15:31', '2023-06-06 04:15:31');
+(75, 128, 8, '2023-06-06 04:15:31', '2023-06-06 04:15:31'),
+(76, 129, 12, '2023-06-18 07:47:14', '2023-06-18 07:47:14'),
+(77, 130, 11, '2023-06-21 07:38:52', '2023-06-21 07:38:52');
 
 -- --------------------------------------------------------
 
@@ -4292,7 +4406,9 @@ CREATE TABLE `product_tags` (
 
 INSERT INTO `product_tags` (`id`, `product_id`, `keyword_name`, `code`, `status`, `created_at`, `updated_at`) VALUES
 (1, 126, 'newdress', NULL, 1, '2023-06-05 01:31:08', '2023-06-05 01:31:08'),
-(2, 127, 'newdress', NULL, 1, '2023-06-05 01:33:58', '2023-06-05 01:33:58');
+(2, 127, 'newdress', NULL, 1, '2023-06-05 01:33:58', '2023-06-05 01:33:58'),
+(3, 129, 'err,yttt', NULL, 1, '2023-06-18 07:47:14', '2023-06-18 07:47:14'),
+(4, 130, 'gfdgdfg,ertrt', NULL, 1, '2023-06-21 07:38:52', '2023-06-21 07:38:52');
 
 -- --------------------------------------------------------
 
@@ -4467,7 +4583,9 @@ INSERT INTO `product_vendors` (`id`, `product_id`, `vendor_id`, `created_at`, `u
 (125, 125, 2, '2023-05-29 05:36:20', '2023-05-29 05:36:20'),
 (126, 126, 2, '2023-06-05 01:31:07', '2023-06-05 01:31:07'),
 (127, 127, 2, '2023-06-05 01:33:57', '2023-06-05 01:33:57'),
-(128, 128, 2, '2023-06-06 04:15:31', '2023-06-06 04:15:31');
+(128, 128, 2, '2023-06-06 04:15:31', '2023-06-06 04:15:31'),
+(129, 129, 1, '2023-06-18 07:47:14', '2023-06-18 07:47:14'),
+(130, 130, 2, '2023-06-21 07:38:52', '2023-06-21 07:38:52');
 
 -- --------------------------------------------------------
 
@@ -4596,7 +4714,16 @@ INSERT INTO `role_permissions` (`id`, `role_id`, `permission_id`, `created_at`, 
 (64, 1, 13, '2023-05-22 23:31:45', '2023-05-22 23:31:45'),
 (65, 1, 12, '2023-05-22 23:31:45', '2023-05-22 23:31:45'),
 (66, 1, 31, '2023-05-22 23:31:45', '2023-05-22 23:31:45'),
-(67, 1, 30, '2023-05-22 23:31:45', '2023-05-22 23:31:45');
+(67, 1, 30, '2023-05-22 23:31:45', '2023-05-22 23:31:45'),
+(68, 1, 44, '2023-06-13 03:48:54', '2023-06-13 03:48:54'),
+(69, 1, 45, '2023-06-13 03:48:54', '2023-06-13 03:48:54'),
+(70, 1, 46, '2023-06-13 03:48:54', '2023-06-13 03:48:54'),
+(71, 1, 47, '2023-06-13 03:48:54', '2023-06-13 03:48:54'),
+(72, 1, 42, '2023-06-13 03:48:54', '2023-06-13 03:48:54'),
+(73, 1, 43, '2023-06-13 03:48:54', '2023-06-13 03:48:54'),
+(74, 1, 48, '2023-06-14 06:02:20', '2023-06-14 06:02:22'),
+(75, 1, 49, '2023-06-14 06:02:37', '2023-06-14 06:02:39'),
+(76, 1, 50, '2023-06-21 02:54:45', '2023-06-21 02:54:45');
 
 -- --------------------------------------------------------
 
@@ -4633,6 +4760,31 @@ INSERT INTO `seasons` (`id`, `season_name`, `slug`, `precedence`, `status`, `del
 (11, 'S118', 's118', NULL, 1, NULL, '2023-03-11 09:43:36', '2023-03-11 09:43:36'),
 (12, 'S119', 's119', NULL, 1, NULL, '2023-03-11 09:43:53', '2023-03-11 09:43:53'),
 (13, 'S120', 's120', NULL, 1, NULL, '2023-03-11 09:44:10', '2023-03-11 09:44:10');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shipping_configs`
+--
+
+CREATE TABLE `shipping_configs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `country_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `insidecity_shipping_charge` int(11) NOT NULL DEFAULT 0,
+  `outsidecity_shipping_charge` int(11) NOT NULL DEFAULT 0,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `shipping_configs`
+--
+
+INSERT INTO `shipping_configs` (`id`, `country_name`, `insidecity_shipping_charge`, `outsidecity_shipping_charge`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Bangladesh', 250, 200, 1, '2023-06-13 06:42:22', NULL),
+(2, 'India', 290, 230, 1, '2023-06-13 00:42:08', NULL),
+(3, 'Sri Lanka', 270, 350, 1, '2023-06-13 02:17:54', NULL);
 
 -- --------------------------------------------------------
 
@@ -4693,10 +4845,10 @@ CREATE TABLE `users` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `date_of_birth` date DEFAULT NULL,
+  `date_of_birth` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `gender` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `occupation` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint(4) DEFAULT 1 COMMENT '0 for dissable the user',
@@ -4777,7 +4929,8 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `name`, `email`, `email_ve
 (64, 'Layne Hane', 'Tracey Von', 'Coby Anderson', 'reinger.guy@example.com', '2023-05-25 05:15:59', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NULL, '45107 Larkin Burgs\nChelseabury, FL 35719', NULL, NULL, NULL, 1, NULL, 'R5S5upxMDv', '2023-07-09 18:16:50', '2023-05-25 05:16:00'),
 (65, 'Mr. Vincenzo Yundt III', 'Frida Littel', 'Mandy Adams', 'maya14@example.net', '2023-05-25 05:15:59', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NULL, '52228 Stehr Spurs Suite 583\nMraztown, AK 91817-4364', NULL, NULL, NULL, 1, NULL, 'GGFnqVVyEc', '2023-01-09 18:16:50', '2023-05-25 05:16:00'),
 (66, 'Sven Blick', 'Kory Turcotte', 'Jennings Jacobson', 'pmayert@example.org', '2023-05-25 05:15:59', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NULL, '74515 McDermott Causeway\nGerhardborough, AL 77525-4047', NULL, NULL, NULL, 1, NULL, 'yutksnybeR', '2023-06-09 18:16:50', '2023-05-25 05:16:00'),
-(67, 'Jesse Champlin', 'Anita Yost DVM', 'Prof. Abe Beahan', 'trantow.jovani@example.com', '2023-05-25 05:15:59', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NULL, '7900 Jaylon Forge\nMarquiseberg, NV 59110', NULL, NULL, NULL, 1, NULL, '00mFX14iKL', '2023-02-09 18:16:50', '2023-05-25 05:16:00');
+(67, 'Jesse Champlin', 'Anita Yost DVM', 'Prof. Abe Beahan', 'trantow.jovani@example.com', '2023-05-25 05:15:59', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NULL, '7900 Jaylon Forge\nMarquiseberg, NV 59110', NULL, NULL, NULL, 1, NULL, '00mFX14iKL', '2023-02-09 18:16:50', '2023-05-25 05:16:00'),
+(68, NULL, NULL, 'social', 'social@gmail.com', NULL, NULL, '01569875551', 'atul park, kolkata', '28-06-1994', 'Male', 'Graphics design', 1, NULL, NULL, '2023-06-13 07:26:21', '2023-06-15 00:10:07');
 
 -- --------------------------------------------------------
 
@@ -4795,7 +4948,7 @@ CREATE TABLE `user_billing_infos` (
   `city` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `post_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `post_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `street_address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -4888,7 +5041,7 @@ CREATE TABLE `user_shipping_infos` (
   `city` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `post_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `post_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `street_address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -5107,6 +5260,12 @@ ALTER TABLE `makings`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `media_managers`
+--
+ALTER TABLE `media_managers`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
@@ -5285,6 +5444,13 @@ ALTER TABLE `seasons`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `shipping_configs`
+--
+ALTER TABLE `shipping_configs`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `country_name` (`country_name`);
+
+--
 -- Indexes for table `sizes`
 --
 ALTER TABLE `sizes`
@@ -5371,13 +5537,13 @@ ALTER TABLE `cares`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `category_fabric`
 --
 ALTER TABLE `category_fabric`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `colours`
@@ -5449,7 +5615,7 @@ ALTER TABLE `ingredients`
 -- AUTO_INCREMENT for table `inventories`
 --
 ALTER TABLE `inventories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=715;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=729;
 
 --
 -- AUTO_INCREMENT for table `makings`
@@ -5458,10 +5624,16 @@ ALTER TABLE `makings`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `media_managers`
+--
+ALTER TABLE `media_managers`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -5491,19 +5663,19 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
 
 --
 -- AUTO_INCREMENT for table `product_artists`
@@ -5515,13 +5687,13 @@ ALTER TABLE `product_artists`
 -- AUTO_INCREMENT for table `product_brands`
 --
 ALTER TABLE `product_brands`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
 
 --
 -- AUTO_INCREMENT for table `product_cares`
 --
 ALTER TABLE `product_cares`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `product_colours`
@@ -5539,43 +5711,43 @@ ALTER TABLE `product_consignments`
 -- AUTO_INCREMENT for table `product_designers`
 --
 ALTER TABLE `product_designers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
 
 --
 -- AUTO_INCREMENT for table `product_embellishments`
 --
 ALTER TABLE `product_embellishments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
 
 --
 -- AUTO_INCREMENT for table `product_fabrics`
 --
 ALTER TABLE `product_fabrics`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
 
 --
 -- AUTO_INCREMENT for table `product_fits`
 --
 ALTER TABLE `product_fits`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `product_ingredients`
 --
 ALTER TABLE `product_ingredients`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=198;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202;
 
 --
 -- AUTO_INCREMENT for table `product_makings`
 --
 ALTER TABLE `product_makings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `product_seasons`
 --
 ALTER TABLE `product_seasons`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT for table `product_sizes`
@@ -5587,7 +5759,7 @@ ALTER TABLE `product_sizes`
 -- AUTO_INCREMENT for table `product_tags`
 --
 ALTER TABLE `product_tags`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `product_varieties`
@@ -5599,7 +5771,7 @@ ALTER TABLE `product_varieties`
 -- AUTO_INCREMENT for table `product_vendors`
 --
 ALTER TABLE `product_vendors`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
 
 --
 -- AUTO_INCREMENT for table `refund_configure`
@@ -5617,13 +5789,19 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `role_permissions`
 --
 ALTER TABLE `role_permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT for table `seasons`
 --
 ALTER TABLE `seasons`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `shipping_configs`
+--
+ALTER TABLE `shipping_configs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `sizes`
@@ -5635,7 +5813,7 @@ ALTER TABLE `sizes`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `user_billing_infos`
