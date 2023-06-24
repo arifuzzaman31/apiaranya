@@ -185,7 +185,7 @@ export default {
                 </div>       
                 <div class="widget-content widget-content-area">
                     <div class="d-flex flex-row col-4 mb-2">
-                        <input id="search" placeholder="Search By Name" type="text" class="form-control"  @keyup.prevent="onPress" v-model="keyword.key" />
+                        <input id="search" placeholder="Search By Name" type="text" class="form-control form-control-sm"  @keyup.prevent="onPress" v-model="keyword.key" />
                         <button type="button" class="btn btn-danger btn-sm mx-3" @click="clearfilter">CLEAR</button>
                     </div>
                     <div class="table-responsive">

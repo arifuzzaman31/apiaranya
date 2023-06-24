@@ -20,6 +20,8 @@ export default {
             keyword: '',
             employee_id: '',
             url: baseUrl,
+            limit: 3,
+            keepLength: false,
             validation_error : {}
         }
     },
@@ -155,7 +157,7 @@ export default {
             <div class="widget-content widget-content-area">
                 <div class="row"> 
                     <div class="col-4 d-flex justify-content-between mb-2">
-                        <input id="search" placeholder="Search By Name" type="text" @keyup="searchKeyword()" class="form-control" v-model="keyword" />
+                        <input id="search" placeholder="Search By Name" type="text" @keyup="searchKeyword()" class="form-control form-control-sm" v-model="keyword" />
                         <button class="btn btn-danger mx-2" @click="formReset()">Clear</button>
                     </div>
                 </div>
@@ -187,6 +189,8 @@ export default {
                     </table>
                         <Bootstrap4Pagination
                             :data="employee"
+                            :limit="limit"
+                            :keep-length="keepLength"
                             @pagination-change-page="getEmployee"
                         />
                 </div>

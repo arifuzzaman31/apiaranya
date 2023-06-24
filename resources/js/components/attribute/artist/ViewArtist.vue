@@ -174,7 +174,7 @@ export default {
                 </div>       
                 <div class="widget-content widget-content-area">
                     <div class="row col-4 mb-2">
-                        <input id="search" placeholder="Search By Name" type="text" class="form-control"  @keyup.prevent="onPress" v-model="keyword.key" />
+                        <input id="search" placeholder="Search By Name" type="text" class="form-control form-control-sm"  @keyup.prevent="onPress" v-model="keyword.key" />
                     </div>
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover mb-4">

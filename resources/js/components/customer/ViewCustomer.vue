@@ -45,12 +45,11 @@ export default {
             key:'',
             url : baseUrl
         })
-
         // const {userOrders,getUserOrder} = useOrder();
         
         const getCustomer = async(page = 1) => {
             try{
-                await axios.get(baseUrl+`get-customer?page=${page}&keyword=${keyword.key}&per_page=10`)
+                await axios.get(baseUrl+`get-customer?page=${page}&keyword=${keyword.key}&per_page=12`)
                 .then(response => {
                     customers.value = response.data
                 }).catch(error => {
@@ -100,7 +99,7 @@ export default {
 <template>  
 <div class="widget-content widget-content-area">
     <div class="row col-4">
-        <input id="search" placeholder="Search By Name, Email or Phone" type="text" class="form-control"  @keyup.prevent="onPress" v-model="keyword.key" />
+        <input id="search" placeholder="Search By Name, Email or Phone" type="text" class="form-control form-control-sm"  @keyup.prevent="onPress" v-model="keyword.key" />
     </div>
     <div class="table-responsive mt-4">
         <table class="table table-bordered table-hover mb-4">
@@ -137,6 +136,8 @@ export default {
         </table>
             <Bootstrap4Pagination
                 :data="customers"
+                :limit="'3'"
+                :keep-length="false"
                 @pagination-change-page="getCustomer"
             />
     </div>

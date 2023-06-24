@@ -1,5 +1,4 @@
 /******/ (() => { // webpackBootstrap
-<<<<<<< HEAD
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./node_modules/@vue/compiler-core/dist/compiler-core.esm-bundler.js":
@@ -19795,6 +19794,8 @@ __webpack_require__.r(__webpack_exports__);
         refund_status: '',
         reason: ''
       },
+      limit: 3,
+      keepLength: false,
       url: baseUrl
     };
   },
@@ -20220,8 +20221,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, "Refund", 8 /* PROPS */, _hoisted_25)])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
   }), 128 /* KEYED_FRAGMENT */))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tbody", _hoisted_26, _hoisted_28))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Bootstrap4Pagination, {
     data: $data.refund_items,
+    limit: $data.limit,
+    "keep-length": $data.keepLength,
     onPaginationChangePage: $options.getRefundItem
-  }, null, 8 /* PROPS */, ["data", "onPaginationChangePage"])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal content"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [_hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, null, 8 /* PROPS */, ["data", "limit", "keep-length", "onPaginationChangePage"])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal content"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [_hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "close",
     "data-dismiss": "modal",
@@ -25563,10 +25566,5 @@ app.component('view-config', _components_refund_ViewConfig_vue__WEBPACK_IMPORTED
 app.mount('#app');
 })();
 
-=======
-/******/ 	"use strict";
-/******/ 	
-/******/ 	
->>>>>>> d573977e07cad0503b80271bda5b35f57ec3e2d5
 /******/ })()
 ;

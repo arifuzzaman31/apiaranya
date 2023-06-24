@@ -20,6 +20,8 @@ export default {
                 from: '',
                 to: ''
             },
+            limit: 3,
+            keepLength: false,
             url : baseUrl
         }
     },
@@ -69,13 +71,13 @@ export default {
             <div class="widget-content widget-content-area">
                 <div class="row mb-2">
                     <div class="col-md-2 col-lg-2 col-12">
-                        <input type="text" onfocus="(this.type='date')" v-model="filterdata.from" class="form-control" placeholder="Start Date">
+                        <input type="text" onfocus="(this.type='date')" v-model="filterdata.from" class="form-control form-control-sm" placeholder="Start Date">
                     </div>
                     <div class="col-md-2 col-lg-2 col-12">
-                        <input type="text" onfocus="(this.type='date')" v-model="filterdata.to" @change="getOrderReport()" class="form-control" placeholder="End Date">
+                        <input type="text" onfocus="(this.type='date')" v-model="filterdata.to" @change="getOrderReport()" class="form-control form-control-sm" placeholder="End Date">
                     </div>
                     <div class="col-md-2 col-lg-2 col-12">
-                        <select id="product-camp" class="form-control" @change="getOrderReport()" v-model="filterdata.payment_status">
+                        <select id="product-camp" class="form-control form-control-sm" @change="getOrderReport()" v-model="filterdata.payment_status">
                             <option selected="" value="">Choose...</option>
                             <option value="1">Paid</option>
                             <option value="0">Unpaid</option>
@@ -84,7 +86,7 @@ export default {
                         </select>
                     </div>
                     <div class="col-md-2 col-lg-2 col-12">
-                        <select id="product-camp" class="form-control" @change="getOrderReport()" v-model="filterdata.order_state">
+                        <select id="product-camp" class="form-control form-control-sm" @change="getOrderReport()" v-model="filterdata.order_state">
                             <option selected="" value="">Choose...</option>
                             <option value="0">Pending</option>
                             <option value="1">Processing</option>
@@ -140,6 +142,8 @@ export default {
                     </table>
                         <Bootstrap4Pagination
                             :data="orders"
+                            :limit="limit"
+                            :keep-length="keepLength"
                             @pagination-change-page="getOrderReport"
                         />
                 </div>

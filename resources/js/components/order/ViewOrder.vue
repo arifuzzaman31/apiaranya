@@ -36,6 +36,8 @@ export default {
                 order_state: '',
                 status: ''
             },
+            limit: 3,
+            keepLength: false,
             url: baseUrl
         }
     },
@@ -407,6 +409,8 @@ export default {
                         </table>
                             <Bootstrap4Pagination
                                 :data="orders"
+                                :limit="limit"
+                                :keep-length="keepLength"
                                 @pagination-change-page="getOrder"
                             />
                     </div>

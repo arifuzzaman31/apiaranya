@@ -49,6 +49,8 @@ export default {
             },
             singleproduct: null,
             file: null,
+            limit: 3,
+            keepLength: false,
             button_name: 'Upload',
             validation_error: {},
             url: baseUrl
@@ -259,7 +261,7 @@ export default {
                 <div class="row d-flex align-items-center">
                     <div class="col-md-2 col-lg-1 col-4 mb-3">
                         <label for="search">Per-Page</label>
-                        <select id="product-perpage" class="form-control" @change="getProduct()" v-model="filterdata.per_page">
+                        <select id="product-perpage" class="form-control form-control-sm" @change="getProduct()" v-model="filterdata.per_page">
                             <option value="10">10</option>
                             <option value="25">25</option>
                             <option value="50">50</option>
@@ -268,11 +270,11 @@ export default {
                     </div>
                     <div class="col-md-4 col-lg-3 col-12 mb-3">
                         <label for="search">Search</label>
-                        <input type="text" @keyup="searchProduct()" v-model="keyword" class="form-control" id="search" placeholder="Search by Name & sku" >
+                        <input type="text" @keyup="searchProduct()" v-model="keyword" class="form-control form-control-sm" id="search" placeholder="Search by Name & sku" >
                     </div>
                     <div class="col-md-4 col-lg-3 col-12 mb-3">
                         <label for="max_amount">Category</label>
-                        <select id="product-category" class="form-control" @change="getSubCategories()" v-model="filterdata.category">
+                        <select id="product-category" class="form-control form-control-sm" @change="getSubCategories()" v-model="filterdata.category">
                             <option selected="" value="">Choose...</option>
                             <option v-for="(value,index) in allcategories" :value="value.id" :key="index">{{ value.category_name }}</option>
                         </select>
@@ -280,7 +282,7 @@ export default {
 
                     <div class="col-md-4 col-lg-3 col-12 mb-3">
                         <label for="max_amount">Sub Category</label>
-                        <select id="product-subcategory" class="form-control" @change="getProduct()" v-model="filterdata.subcategory">
+                        <select id="product-subcategory" class="form-control form-control-sm" @change="getProduct()" v-model="filterdata.subcategory">
                             <option selected="" value="">Choose...</option>
                             <option v-for="(value,index) in allsubcategories" :value="value.id" :key="index">{{ value.category_name }}</option>
                         </select>
@@ -288,7 +290,7 @@ export default {
 
                     <div class="col-md-4 col-lg-3 col-12 mb-3">
                         <label for="max_amount">Campaign</label>
-                        <select id="product-camp" class="form-control" @change="getProduct()" v-model="filterdata.camp_id">
+                        <select id="product-camp" class="form-control form-control-sm" @change="getProduct()" v-model="filterdata.camp_id">
                             <option selected="" value="">Choose...</option>
                             <option v-for="(value,index) in allcampaign" :value="value.id" :key="index">{{ value.campaign_name }}</option>
                         </select>
@@ -325,7 +327,7 @@ export default {
                     </tr>
                 </thead>
                 <tbody>
-                    <template v-for="(product,index) in allproduct.data" :key="index" >
+                    <template v-for="(product) in allproduct.data" :key="product.id" >
                         <tr>
                             <td class="checkbox-column">
                                 <label class="new-control new-checkbox checkbox-primary" style="height: 18px; margin: 0 auto;">
@@ -357,6 +359,8 @@ export default {
     <Bootstrap4Pagination
         :data="allproduct"
         @pagination-change-page="getProduct"
+        :limit="limit"
+        :keep-length="keepLength"
     />
     <product-detail :product="singleproduct"></product-detail>
     

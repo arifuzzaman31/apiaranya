@@ -28,6 +28,8 @@ export default {
                 refund_status: '',
                 reason: ''
             },
+            limit: 3,
+            keepLength: false,
             url: baseUrl
         }
     },
@@ -182,6 +184,8 @@ export default {
                         </table>
                             <Bootstrap4Pagination
                                 :data="refund_items"
+                                :limit="limit"
+                                :keep-length="keepLength"
                                 @pagination-change-page="getRefundItem"
                             />
                     </div>

@@ -22,6 +22,8 @@ export default {
                 status: true
             },
             url: baseUrl,
+            limit: 3,
+            keepLength: false,
             validation_error: {},
         }
     },
@@ -203,6 +205,8 @@ export default {
                 </table>
                     <Bootstrap4Pagination
                         :data="campaigns"
+                        :limit="limit"
+                        :keep-length="keepLength"
                         @pagination-change-page="getCampaign"
                     />
                     </div>
