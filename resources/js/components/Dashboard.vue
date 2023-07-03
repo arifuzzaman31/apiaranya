@@ -111,7 +111,7 @@
                             <th><div class="th-content">OrderID</div></th>
                             <th><div class="th-content">Customer</div></th>
                             <th><div class="th-content">Price</div></th>
-                            <th><div class="th-content">P-Type</div></th>
+                            <th><div class="th-content">Payment Type</div></th>
                             <th><div class="th-content">Payment</div></th>
                         </tr>
                     </thead>
