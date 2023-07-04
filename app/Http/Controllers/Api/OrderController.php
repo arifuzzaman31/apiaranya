@@ -26,7 +26,7 @@ class OrderController extends Controller
         try {
             //return response()->json($request->all());
             DB::beginTransaction();
-            // $order_id   = date('Ymd');
+            $order_id   = str_shuffle(uniqueString().date('Ymd'));
             $shipCharge = 0;
             if($request->data['deliveryMethod'] == 'outSideDhaka'){
                 $shipCharge += 200;
@@ -36,7 +36,7 @@ class OrderController extends Controller
             }
 
             $order = new Order();
-            $order->order_id    =   date('Ymd').time();
+            $order->order_id    =   $order_id;
             $order->shipping_method   =  $request->shipping_method;
             $order->user_id           = $request->isGuestCheckout == false ? Auth::user()->id : 0;
             $order->vat_rate               = 0;

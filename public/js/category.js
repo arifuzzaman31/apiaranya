@@ -20597,7 +20597,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "class": "btn btn-warning btn-sm",
       target: "_blank",
       href: $data.url + 'category/' + cat.id + '/edit'
-    }, "Edit", 8 /* PROPS */, _hoisted_19)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.showPermission.includes('menu-delete') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
+    }, "Add Image", 8 /* PROPS */, _hoisted_19)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.showPermission.includes('menu-delete') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
       key: 1,
       "class": "btn btn-danger btn-sm mx-1",
       onClick: function onClick($event) {

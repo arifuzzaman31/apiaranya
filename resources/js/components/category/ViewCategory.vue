@@ -171,7 +171,7 @@ export default {
                                 <td>{{ cat.precedence }}</td>
                                 <td>{{ cat.status == 1 ? 'Active' : 'Deactive' }}</td>
                                 <td class="text-center" v-if="showPermission.includes('menu-edit') || showPermission.includes('menu-delete')">
-                                   <a v-if="showPermission.includes('menu-edit')" class="btn btn-warning btn-sm" target="_blank" :href="url+'category/'+cat.id+'/edit'">Edit</a>
+                                   <a v-if="showPermission.includes('menu-edit')" class="btn btn-warning btn-sm" target="_blank" :href="url+'category/'+cat.id+'/edit'">Add Image</a>
                                    <a v-if="showPermission.includes('menu-delete')" class="btn btn-danger btn-sm mx-1" @click="deleteMenu(cat.id)">Delete</a>
                                    <a class="btn btn-success btn-sm" @click="addFabricToCat(cat)">Composition</a>
                                 </td>

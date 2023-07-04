@@ -67,11 +67,11 @@
     @include('partials.footer-assets')
 
     <script>
-        $( document ).ready(function() {
-            $(".active").parents(".menu").children("a").removeClass('collapsed');
-            $(".active").parents(".menu").children("a").removeAttr('area-expanded');
-            $(".active").parents(".menu").children("a").attr('area-expanded',true);
-            $(".active").parents(".menu").children("a").attr('data-active',true);
+        $(document).ready(function() {
+            $(".active").parents(".menu-categories").children("a").removeClass('collapse');
+            $(".active").parents(".menu-categories").children("a").removeAttr('aria-expanded');
+            $(".active").parents(".menu-categories").children("a").attr('aria-expanded',true);
+            $(".active").parents(".menu-categories").children("a").attr('data-active',true);
             $(".active").parents().addClass('show');
         });
         window.userPermission = "{{ auth()->guard('admin')->user()->role->role_permission->pluck('slug')  ?? [] }}";
