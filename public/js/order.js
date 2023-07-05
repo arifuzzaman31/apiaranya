@@ -21781,7 +21781,7 @@ __webpack_require__.r(__webpack_exports__);
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
-        timer: 3000,
+        timer: 1500,
         timerProgressBar: true,
         onOpen: function onOpen(toast) {
           toast.addEventListener('mouseenter', Swal.stopTimer);

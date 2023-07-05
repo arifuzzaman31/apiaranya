@@ -4,7 +4,7 @@ import Multiselect from '@vueform/multiselect'
 import { Bootstrap4Pagination } from 'laravel-vue-pagination';
 export default {
     mixins:[Mixin],
-    props: ['parentcat','prp_fabric'],
+    props: ['prp_fabric'],
     components:{
         Bootstrap4Pagination,
         Multiselect
@@ -12,10 +12,11 @@ export default {
     data(){
         return {
             categories: [],
+            parentcat: [],
             form:{
                 category_name: '',
                 precedence: '',
-                parent_category: '',
+                parent_category: 0,
                 status: 1
             },
             category_id: '',
@@ -44,15 +45,25 @@ export default {
             }
         },
 
+        getParentCat(){
+            axios.get(baseUrl+`get-category?no_paginate=yes&parent_category=yes`).then(
+                response => {
+                    this.parentcat = response.data
+                }
+            ). catch(error => {
+                console.log(error)
+            })
+        },
+
         storeCategory(){
             try{
                 axios.post('category',this.form).then(
                     response => {
-                        console.log(response.data)
-                        this.successMessage(response.data)
-                        $("#cateModal").modal('hide');
                         this.formReset()
                         this.getCategory()
+                        this.getParentCat()
+                        this.successMessage(response.data)
+                        $("#cateModal").modal('hide');
                     }
                 ). catch(e => {
                    console.log(e.response.data)
@@ -78,6 +89,7 @@ export default {
                     axios.delete(baseUrl+`category/${id}`).then(
                         response => {
                             this.getCategory()
+                            this.getParentCat()
                             this.successMessage(response.data)
                         }
                     ). catch(error => {
@@ -100,6 +112,7 @@ export default {
                         this.successMessage(response.data)
                         $("#catFabricModal").modal('hide');
                         this.formReset()
+                        this.getParentCat()
                         this.getCategory()
                     }
                 ). catch(e => {
@@ -118,7 +131,7 @@ export default {
             this.form = {
                 category_name : '',
                 precedence : '',
-                parent_category: '',
+                parent_category: 0,
                 status : 1
             }
             this.comp_form = {
@@ -129,6 +142,7 @@ export default {
     },
     mounted(){
         this.getCategory()
+        this.getParentCat()
     },
     computed: {
         showPermission() {
@@ -216,7 +230,7 @@ export default {
                             <div class="form-group">
                                 <label for="category_name">Parent Category</label>
                                 <select id="product-category" class="form-control" v-model="form.parent_category">
-                                    <option value="">Choose Parent Category</option>
+                                    <option value="0">Choose Parent Category</option>
                                     <option v-for="(value,index) in parentcat" :value="value.id" :key="index">{{ value.category_name }}</option>
                                 </select>
                             </div>

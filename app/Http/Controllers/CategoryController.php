@@ -37,11 +37,14 @@ class CategoryController extends Controller
     {
         $perPage = $request->per_page ?? 20;
         $noPagination = $request->get('no_paginate');
+        $parentCategory = $request->get('parent_category');
         $cate = Category::with('subcategory:id,category_name','composition')
                 ->where('status',AllStatic::$active)->orderBy('created_at','desc');
         
         if($noPagination != ''){
-            
+            if($parentCategory != ''){
+                $cate = $cate->where('parent_category',AllStatic::$inactive);
+            }
             $cate = $cate->latest()->get();
             
         } else {
@@ -96,7 +99,7 @@ class CategoryController extends Controller
             $category = new Category();
             $category->category_name    = $request->category_name;
             $category->slug             = Str::slug($request->category_name);
-            $category->parent_category  = $request->parent_category;
+            $category->parent_category  = $request->parent_category ?? 0;
             $category->category_video   = $request->video_link;
             $category->precedence       = $request->precedence ?? 0;
             $category->status           = $request->status ? 1 : 0;

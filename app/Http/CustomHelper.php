@@ -9,16 +9,6 @@ use Illuminate\Support\Facades\DB;
         return App\Models\Category::select(['id','category_name','parent_category','slug'])
                 ->where('parent_category',AllStatic::$inactive)
                 ->orderBy('id')->get();
-        
-        return array(
-            '1' => 'women',
-            '2' => 'men',
-            '3' => 'kids',
-            '4' => 'accessories',
-            '5' => 'home',
-            '6' => 'beauty',
-            '7' => 'food'
-        );
     }
 
     function getComposition(){

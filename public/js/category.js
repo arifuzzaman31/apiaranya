@@ -19893,7 +19893,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mixins: [_mixer__WEBPACK_IMPORTED_MODULE_0__["default"]],
-  props: ['parentcat', 'prp_fabric'],
+  props: ['prp_fabric'],
   components: {
     Bootstrap4Pagination: laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_1__.Bootstrap4Pagination,
     Multiselect: _vueform_multiselect__WEBPACK_IMPORTED_MODULE_2__["default"]
@@ -19901,10 +19901,11 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       categories: [],
+      parentcat: [],
       form: {
         category_name: '',
         precedence: '',
-        parent_category: '',
+        parent_category: 0,
         status: 1
       },
       category_id: '',
@@ -19932,15 +19933,23 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
     },
-    storeCategory: function storeCategory() {
+    getParentCat: function getParentCat() {
       var _this2 = this;
+      axios.get(baseUrl + "get-category?no_paginate=yes&parent_category=yes").then(function (response) {
+        _this2.parentcat = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    storeCategory: function storeCategory() {
+      var _this3 = this;
       try {
         axios.post('category', this.form).then(function (response) {
-          console.log(response.data);
-          _this2.successMessage(response.data);
+          _this3.formReset();
+          _this3.getCategory();
+          _this3.getParentCat();
+          _this3.successMessage(response.data);
           $("#cateModal").modal('hide');
-          _this2.formReset();
-          _this2.getCategory();
         })["catch"](function (e) {
           console.log(e.response.data);
         });
@@ -19951,7 +19960,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     deleteMenu: function deleteMenu(id) {
-      var _this3 = this;
+      var _this4 = this;
       Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -19963,8 +19972,9 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         if (result.isConfirmed) {
           axios["delete"](baseUrl + "category/".concat(id)).then(function (response) {
-            _this3.getCategory();
-            _this3.successMessage(response.data);
+            _this4.getCategory();
+            _this4.getParentCat();
+            _this4.successMessage(response.data);
           })["catch"](function (error) {
             console.log(error);
           });
@@ -19979,13 +19989,14 @@ __webpack_require__.r(__webpack_exports__);
       $("#catFabricModal").modal('show');
     },
     updateCompCat: function updateCompCat() {
-      var _this4 = this;
+      var _this5 = this;
       try {
         axios.post('fabric-add-category', this.comp_form).then(function (response) {
-          _this4.successMessage(response.data);
+          _this5.successMessage(response.data);
           $("#catFabricModal").modal('hide');
-          _this4.formReset();
-          _this4.getCategory();
+          _this5.formReset();
+          _this5.getParentCat();
+          _this5.getCategory();
         })["catch"](function (e) {
           console.log(e.response.data);
         });
@@ -20001,7 +20012,7 @@ __webpack_require__.r(__webpack_exports__);
       this.form = {
         category_name: '',
         precedence: '',
-        parent_category: '',
+        parent_category: 0,
         status: 1
       };
       this.comp_form = {
@@ -20012,6 +20023,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.getCategory();
+    this.getParentCat();
   },
   computed: {
     showPermission: function showPermission() {
@@ -20481,7 +20493,7 @@ var _hoisted_35 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   "for": "category_name"
 }, "Parent Category", -1 /* HOISTED */);
 var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: ""
+  value: "0"
 }, "Choose Parent Category", -1 /* HOISTED */);
 var _hoisted_37 = ["value"];
 var _hoisted_38 = {
@@ -20634,7 +20646,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
       return $data.form.parent_category = $event;
     })
-  }, [_hoisted_36, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.parentcat, function (value, index) {
+  }, [_hoisted_36, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.parentcat, function (value, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: value.id,
       key: index
@@ -20758,7 +20770,7 @@ __webpack_require__.r(__webpack_exports__);
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
-        timer: 3000,
+        timer: 1500,
         timerProgressBar: true,
         onOpen: function onOpen(toast) {
           toast.addEventListener('mouseenter', Swal.stopTimer);
