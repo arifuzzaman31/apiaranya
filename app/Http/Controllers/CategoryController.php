@@ -169,7 +169,7 @@ class CategoryController extends Controller
             $category->composition()->sync($request->composition);
             return response()->json(['status' => 'success', 'message' => 'Composition Updated Successfully!']);
         } catch (\Throwable $th) {
-            return $th;
+            // return $th;
             return response()->json(['status' => 'error', 'message' => 'Something went wrong!']);
         }
         
@@ -187,6 +187,7 @@ class CategoryController extends Controller
             if(!empty($category->product)){
                 return response()->json(['status' => 'error', 'message' => 'Category Has Many Product!']);
             }
+            $category->composition()->detach();
             $category->delete();
             return response()->json(['status' => 'success', 'message' => 'Category Deleted Successfully!']);
         } catch (\Throwable $th) {

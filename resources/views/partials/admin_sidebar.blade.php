@@ -1,5 +1,5 @@
 <div class="sidebar-wrapper sidebar-theme">  
-    <nav id="sidebar" style="height: 80vh;overflow-y: auto;overflow-x: hidden;">
+    <nav id="sidebar" style="height: 80vh;overflow-y: auto;">
         <ul class="list-unstyled menu-categories" id="accordionExample">
             <li class="menu @if(request()->is('admin/dashboard')) active @endif">
                 <a href="{{ url('admin/dashboard') }}" aria-expanded="false" class="dropdown-toggle">

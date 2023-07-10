@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\AllStatic;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
@@ -26,7 +27,7 @@ class ProductController extends Controller
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
         $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric',
-        'product_size','product_colour','inventory:product_id,colour_id,size_id,stock,mrp,sku']);
+        'product_size','product_colour','inventory:product_id,colour_id,size_id,stock,mrp,sku'])->where('status',AllStatic::$active);
 
         if($camp_id != ''){
             $product = $product->join('campaign_products','products.id','campaign_products.product_id')

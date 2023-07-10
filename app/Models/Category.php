@@ -34,7 +34,7 @@ class Category extends Model
 
     public function composition()
     {
-        return $this->belongsToMany(Fabric::class,'category_fabric');
+        return $this->belongsToMany(Fabric::class,'category_fabric')->withTimestamps();
     }
 
 }

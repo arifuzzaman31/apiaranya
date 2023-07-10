@@ -130,7 +130,7 @@ class CampaignController extends Controller
             return response()->json(['status' => 'success', 'message' => 'Product Has Added to Campaign!']);
         }catch (\Throwable $th) {
             DB::rollback();
-            return $this->errorMessage();
+            return $th;
             return response()->json(['status' => 'error', 'message' => $th]);
         }
     }
