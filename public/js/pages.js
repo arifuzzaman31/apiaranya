@@ -19714,17 +19714,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _mixer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixer */ "./resources/js/mixer.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mixins: [_mixer__WEBPACK_IMPORTED_MODULE_0__["default"]],
   data: function data() {
-    return {
+    var _ref;
+    return _ref = {
       form: {
         image_one: '',
         back_url_one: '',
@@ -19745,16 +19750,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         imagenumb: '',
         back_url: '',
         state: 'home'
-      },
-      allcategories: [],
-      allImages: [],
-      allsubcategories: [],
-      page: 1,
-      target_state: '',
-      media_keyword: '',
-      allfiltersubcategories: [],
-      validation_error: {}
-    };
+      }
+    }, _defineProperty(_ref, "filterdata", {
+      imgs: []
+    }), _defineProperty(_ref, "allcategories", []), _defineProperty(_ref, "allImages", []), _defineProperty(_ref, "allsubcategories", []), _defineProperty(_ref, "page", 1), _defineProperty(_ref, "target_state", ''), _defineProperty(_ref, "media_keyword", ''), _defineProperty(_ref, "allfiltersubcategories", []), _defineProperty(_ref, "validation_error", {}), _ref;
   },
   methods: {
     setImage: function setImage(numb, uri) {
@@ -19816,8 +19815,64 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     setImageState: function setImageState(name) {
       this.filterdata.imagenumb = name;
     },
-    getCategory: function getCategory() {
+    getCloudWidget: function getCloudWidget() {
       var _this3 = this;
+      var widget = window.cloudinary.createUploadWidget({
+        cloud_name: clName,
+        upload_preset: clPreset,
+        sources: ["local", "camera", "google_drive", "facebook", "dropbox", "instagram", "unsplash"],
+        folder: "aranya",
+        //upload files to the specified folder
+
+        styles: {
+          palette: {
+            window: "#10173a",
+            sourceBg: "#20304b",
+            windowBorder: "#7171D0",
+            tabIcon: "#79F7FF",
+            inactiveTabIcon: "#8E9FBF",
+            menuIcons: "#CCE8FF",
+            link: "#72F1FF",
+            action: "#5333FF",
+            inProgress: "#00ffcc",
+            complete: "#33ff00",
+            error: "#cc3333",
+            textDark: "#000000",
+            textLight: "#ffffff"
+          },
+          fonts: {
+            "default": null,
+            "sans-serif": {
+              url: null,
+              active: true
+            }
+          }
+        }
+      }, function (error, result) {
+        if (!error && result && result.event === "success") {
+          _this3.filterdata.imgs = [];
+          _this3.filterdata.imgs.push(result.info);
+          _this3.uploadImage();
+          _this3.allImages.data.unshift({
+            'file_link': result.info.secure_url,
+            'product_name': result.info.public_id,
+            'extension': result.info.format
+          });
+        }
+      });
+      widget.open();
+    },
+    uploadImage: function uploadImage() {
+      var _this4 = this;
+      axios.post(baseUrl + 'media-manager', this.filterdata).then(function (response) {
+        if (response.data.status == 'success') {
+          // this.successMessage(response.data)
+          _this4.filterdata.imgs = [];
+        }
+      });
+    },
+    getCategory: function getCategory() {
+      var _this5 = this;
       axios.get(baseUrl + 'get-category?no_paginate=yes').then(function (response) {
         var res = response.data.filter(function (data) {
           return data.parent_category == 0;
@@ -19825,15 +19880,15 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         var subcat = response.data.filter(function (data) {
           return data.parent_category != 0;
         });
-        _this3.allcategories = res;
-        _this3.allfiltersubcategories = subcat;
+        _this5.allcategories = res;
+        _this5.allfiltersubcategories = subcat;
       });
     },
     getSubCategories: function getSubCategories() {
-      var _this4 = this;
+      var _this6 = this;
       this.filterdata.categoryname = this.filterdata.category.slug;
       var filterData = this.allfiltersubcategories.filter(function (data) {
-        return data.parent_category == _this4.filterdata.category.id;
+        return data.parent_category == _this6.filterdata.category.id;
       });
       this.allsubcategories = filterData;
       this.form.back_url = this.filterdata.category.slug + '/' + this.filterdata.subcategory;
@@ -19855,13 +19910,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       $("#pageMediaModal").modal('show');
     },
     getImageData: function getImageData() {
-      var _this5 = this;
+      var _this7 = this;
       axios.get(baseUrl + "media-manager/create?page=".concat(this.page, "&per_page=10&keyword=").concat(this.media_keyword)).then(function (result) {
-        if (_this5.page == 1) {
-          _this5.allImages = result.data;
+        if (_this7.page == 1) {
+          _this7.allImages = result.data;
         } else {
-          var _this5$allImages$data;
-          (_this5$allImages$data = _this5.allImages.data).push.apply(_this5$allImages$data, _toConsumableArray(result.data.data));
+          var _this7$allImages$data;
+          (_this7$allImages$data = _this7.allImages.data).push.apply(_this7$allImages$data, _toConsumableArray(result.data.data));
         }
       })["catch"](function (errors) {
         console.log(errors);
@@ -20542,12 +20597,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $options.loadMore();
     }),
     "class": "btn btn-primary mt-4"
-  }, "Load More")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_46, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, "Load More")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_46, [$options.showPermission.includes('add-media') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+    key: 0,
+    onClick: _cache[10] || (_cache[10] = function ($event) {
+      return $options.getCloudWidget();
+    }),
+    "class": "btn btn-primary btn-block mb-2 mr-3"
+  }, "Add File")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
-    onKeyup: _cache[10] || (_cache[10] = function ($event) {
+    onKeyup: _cache[11] || (_cache[11] = function ($event) {
       return $options.searchMedia();
     }),
-    "onUpdate:modelValue": _cache[11] || (_cache[11] = function ($event) {
+    "onUpdate:modelValue": _cache[12] || (_cache[12] = function ($event) {
       return $data.media_keyword = $event;
     }),
     "class": "form-control",

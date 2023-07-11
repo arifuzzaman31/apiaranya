@@ -13,7 +13,10 @@ export default {
             },
             allImages: [],
             page: 1,
-            media_keyword: ''
+            media_keyword: '',
+            filterdata: {
+                imgs: []
+            }
         }
     },
 
@@ -37,6 +40,66 @@ export default {
 
             return true;
         },
+
+        getCloudWidget(){
+                const widget = window.cloudinary.createUploadWidget(
+                    { cloud_name: clName,
+                        upload_preset: clPreset,
+                        sources: [
+                            "local",
+                            "camera",
+                            "google_drive",
+                            "facebook",
+                            "dropbox",
+                            "instagram",
+                            "unsplash"
+                        ],
+                        folder: "aranya", //upload files to the specified folder
+                        
+                        styles: {
+                            palette: {
+                                window: "#10173a",
+                                sourceBg: "#20304b",
+                                windowBorder: "#7171D0",
+                                tabIcon: "#79F7FF",
+                                inactiveTabIcon: "#8E9FBF",
+                                menuIcons: "#CCE8FF",
+                                link: "#72F1FF",
+                                action: "#5333FF",
+                                inProgress: "#00ffcc",
+                                complete: "#33ff00",
+                                error: "#cc3333",
+                                textDark: "#000000",
+                                textLight: "#ffffff"
+                            },
+                            fonts: {
+                                default: null,
+                                "sans-serif": {
+                                    url: null,
+                                    active: true
+                                }
+                            }
+                        }
+                    },
+                    (error, result) => {
+                    if (!error && result && result.event === "success") {
+                        this.filterdata.imgs = []
+                        this.filterdata.imgs.push(result.info)
+                        this.uploadImage()
+                        this.allImages.data.unshift({'file_link':result.info.secure_url,'product_name':result.info.public_id ,'extension':result.info.format})
+                    }
+                });
+                    widget.open();
+            },
+
+            uploadImage(){
+                axios.post(baseUrl+'media-manager',this.filterdata).then(response => {
+                    if(response.data.status == 'success'){
+                        // this.successMessage(response.data)
+                        this.filterdata.imgs = []
+                    }
+                })
+            },
 
         openCatMediaModal(serial){
             this.form.imagenumb = serial
@@ -172,6 +235,7 @@ export default {
                                         <div class="col-md-3">
                                             <div class="row"> 
                                                 <div class="col-md-12"> 
+                                                    <button @click="getCloudWidget()" class="btn btn-primary btn-block mb-2 mr-3">Add File</button>
                                                     <input type="text" @keyup="searchMedia()" v-model="media_keyword" class="form-control" id="search" placeholder="Search by Name" />
                                                 </div>
                                                 <div class="col-md-12 d-flex justify-content-center my-2"> 

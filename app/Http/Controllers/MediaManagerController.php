@@ -28,7 +28,12 @@ class MediaManagerController extends Controller
     {
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
         $keyword   = $request->get('keyword');
+        $type   = $request->get('type');
         $imgdata = DB::table('media_managers')->orderBy('created_at','desc');
+        
+        if($type != ''){
+            $imgdata = $imgdata->where('file_type',$type);
+        }
         if($keyword != ''){
             $imgdata = $imgdata->where('product_name','like','%'.$keyword.'%');
             $imgdata = $imgdata->orWhere('extension','like','%'.$keyword.'%');

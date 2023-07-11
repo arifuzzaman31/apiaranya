@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
 use App\Models\CampaignProduct;
 use App\Models\Product;
+use AmrShawky\LaravelCurrency\Facade\Currency;
 
 class ProductController extends Controller
 {
@@ -27,7 +28,7 @@ class ProductController extends Controller
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
         $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric',
-        'product_size','product_colour','inventory:product_id,colour_id,size_id,stock,mrp,sku'])->where('status',AllStatic::$active);
+        'product_size','product_colour','inventory'])->where('status',AllStatic::$active);
 
         if($camp_id != ''){
             $product = $product->join('campaign_products','products.id','campaign_products.product_id')
@@ -83,6 +84,20 @@ class ProductController extends Controller
         } else {
             $product = $product->latest()->paginate($dataQty);
         }
+        if($request->get('cu_code') == 'USD'){
+            $product->map(function($itm){
+                return $itm->inventory->map(function($tt){
+                    return $tt->mrp = Currency::convert()->from('BDT')->to('USD')
+                            ->round(2)->date('Y-m-d')->amount($tt->mrp)->get();
+                });
+            });
+
+            $product->map(function($itm){
+                return $itm->vat->tax_percentage = Currency::convert()->from('BDT')->to('USD')
+                ->round(2)->date('Y-m-d')->amount($itm->vat->tax_percentage)->get();
+            });
+        }
+        // return $product;
         return ProductResource::collection($product);
     }
 
@@ -98,7 +113,7 @@ class ProductController extends Controller
             $tak_some   = $request->get('take_some');
             
             $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric',
-            'product_size','product_colour','inventory:product_id,colour_id,size_id,stock,mrp,sku'])
+            'product_size','product_colour','inventory'])
                         ->where('category_id',$cat)
                         ->orderBy('id','desc');
                     if($subcat != '' && $subcat != null){
@@ -125,6 +140,18 @@ class ProductController extends Controller
             } else {
                 $product = $product->paginate($dataQty);
             }
+            if($request->get('cu_code') == 'USD'){
+                $product->map(function($itm){
+                    return $itm->inventory->map(function($tt){
+                        return $tt->mrp = Currency::convert()->from('BDT')->to('USD')
+                                ->round(2)->date('Y-m-d')->amount($tt->mrp)->get();
+                    });
+                });
+                $product->map(function($itm){
+                    return $itm->vat->tax_percentage = Currency::convert()->from('BDT')->to('USD')
+                    ->round(2)->date('Y-m-d')->amount($itm->vat->tax_percentage)->get();
+                });
+            }
     
             return ProductResource::collection($product);
         } catch (\Throwable $th) {
@@ -133,17 +160,30 @@ class ProductController extends Controller
         
     }
 
-    public function getProductById($id)
+    public function getProductById(Request $request,$id)
     {
         try {
             //code...
-            $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric','inventory:id,product_id,size_id,stock,cpu,mrp,sku',
+            $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric','inventory',
                 'product_size','product_colour','discount',
                 'vat:id,tax_name,tax_percentage','product_vendor','product_brand','product_designer','product_embellishment',
                 'product_making','product_season','product_variety','product_fit','product_artist','product_consignment',
                 'product_ingredient','product_care'])->find($id);
+            if($request->get('cu_code') == 'USD'){
+                $product->inventory->map(function($itm){
+                    return $itm->mrp = Currency::convert()->from('BDT')->to('USD')
+                            ->round(2)->date('Y-m-d')->amount($itm->mrp)->get();    
+                });
+
+                // $product->map(function($itm){
+                $product->vat->tax_percentage = Currency::convert()->from('BDT')->to('USD')
+                    ->round(2)->date('Y-m-d')->amount($product->vat->tax_percentage)->get();
+                // });
+            
+            }
             return new ProductResource($product);
         } catch (\Throwable $th) {
+            // return $th;
             return $this->errorMessage();
         }
     }

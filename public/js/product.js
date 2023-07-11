@@ -20437,7 +20437,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       allsubcategories: [],
       allfiltersubcategories: [],
       media_keyword: '',
-      validation_error: {}
+      validation_error: {},
+      filterdata: {
+        imgs: []
+      }
     };
   },
   methods: {
@@ -20502,16 +20505,72 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.tages.push(tag);
       this.form.tages.push(tag);
     },
-    makeAttrComb: function makeAttrComb() {
+    getCloudWidget: function getCloudWidget() {
       var _this4 = this;
+      var widget = window.cloudinary.createUploadWidget({
+        cloud_name: clName,
+        upload_preset: clPreset,
+        sources: ["local", "camera", "google_drive", "facebook", "dropbox", "instagram", "unsplash"],
+        folder: "aranya",
+        //upload files to the specified folder
+
+        styles: {
+          palette: {
+            window: "#10173a",
+            sourceBg: "#20304b",
+            windowBorder: "#7171D0",
+            tabIcon: "#79F7FF",
+            inactiveTabIcon: "#8E9FBF",
+            menuIcons: "#CCE8FF",
+            link: "#72F1FF",
+            action: "#5333FF",
+            inProgress: "#00ffcc",
+            complete: "#33ff00",
+            error: "#cc3333",
+            textDark: "#000000",
+            textLight: "#ffffff"
+          },
+          fonts: {
+            "default": null,
+            "sans-serif": {
+              url: null,
+              active: true
+            }
+          }
+        }
+      }, function (error, result) {
+        if (!error && result && result.event === "success") {
+          _this4.filterdata.imgs = [];
+          _this4.filterdata.imgs.push(result.info);
+          _this4.uploadImage();
+          _this4.allImages.data.unshift({
+            'file_link': result.info.secure_url,
+            'product_name': result.info.public_id,
+            'extension': result.info.format
+          });
+        }
+      });
+      widget.open();
+    },
+    uploadImage: function uploadImage() {
+      var _this5 = this;
+      axios__WEBPACK_IMPORTED_MODULE_2___default().post(baseUrl + 'media-manager', this.filterdata).then(function (response) {
+        if (response.data.status == 'success') {
+          // this.successMessage(response.data)
+          _this5.filterdata.imgs = [];
+        }
+      });
+    },
+    makeAttrComb: function makeAttrComb() {
+      var _this6 = this;
       this.combine = true;
       this.form.attrqty = [];
       if (this.choose_colours.length > 0 && this.form.is_color && this.form.is_size && this.choose_sizes.length > 0) {
         new Set(_toConsumableArray(this.choose_colours));
         new Set(_toConsumableArray(this.choose_sizes));
         this.choose_colours.map(function (item) {
-          _this4.choose_sizes.map(function (it) {
-            _this4.form.attrqty.push({
+          _this6.choose_sizes.map(function (it) {
+            _this6.form.attrqty.push({
               colour_id: item,
               size_id: it,
               cpu: '',
@@ -20526,7 +20585,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
           new Set(_toConsumableArray(this.choose_colours));
           this.choose_sizes = [];
           this.choose_colours.map(function (item) {
-            _this4.form.attrqty.push({
+            _this6.form.attrqty.push({
               colour_id: item,
               size_id: '',
               cpu: '',
@@ -20539,7 +20598,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
           new Set(_toConsumableArray(this.choose_sizes));
           this.choose_colours = [];
           this.choose_sizes.map(function (it) {
-            _this4.form.attrqty.push({
+            _this6.form.attrqty.push({
               colour_id: '',
               size_id: it,
               cpu: '',
@@ -20599,19 +20658,25 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         mrp: '',
         qty: '',
         sku: ''
-      }]), _this$form), this.allsubcategories = [], this.allfiltersubcategories = [], this.page = 1, this.validation_error = {};
+      }]), _this$form), this.allsubcategories = [];
+      this.allfiltersubcategories = [];
+      this.page = 1;
+      this.validation_error = {};
+      this.filterdata = {
+        imgs: []
+      };
     },
     mediaModalOpen: function mediaModalOpen() {
       $("#mediaModal").modal('show');
     },
     getImageData: function getImageData() {
-      var _this5 = this;
+      var _this7 = this;
       axios__WEBPACK_IMPORTED_MODULE_2___default().get(baseUrl + "media-manager/create?page=".concat(this.page, "&per_page=10&keyword=").concat(this.media_keyword)).then(function (result) {
-        if (_this5.page == 1) {
-          _this5.allImages = result.data;
+        if (_this7.page == 1) {
+          _this7.allImages = result.data;
         } else {
-          var _this5$allImages$data;
-          (_this5$allImages$data = _this5.allImages.data).push.apply(_this5$allImages$data, _toConsumableArray(result.data.data));
+          var _this7$allImages$data;
+          (_this7$allImages$data = _this7.allImages.data).push.apply(_this7$allImages$data, _toConsumableArray(result.data.data));
         }
       })["catch"](function (errors) {
         console.log(errors);
@@ -20637,9 +20702,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     }
   },
   mounted: function mounted() {
-    var _this6 = this;
+    var _this8 = this;
     this.prp_colour.map(function (color) {
-      _this6.list_colour.push({
+      _this8.list_colour.push({
         'value': color.color_name,
         'name': color.color_name
       });
@@ -20742,7 +20807,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       media_keyword: '',
       allsubcategories: [],
       allfiltersubcategories: [],
-      validation_error: {}
+      validation_error: {},
+      filterdata: {
+        imgs: []
+      }
     };
   },
   methods: {
@@ -20902,16 +20970,77 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         discount_amount: '',
         discount_type: 1,
         max_amount: 0
-      }, _defineProperty(_this$form, "discount_type", 1), _defineProperty(_this$form, "description", ''), _defineProperty(_this$form, "attrqty", []), _this$form), this.tages = [], this.allsubcategories = [], this.validation_error = {};
+      }, _defineProperty(_this$form, "discount_type", 1), _defineProperty(_this$form, "description", ''), _defineProperty(_this$form, "attrqty", []), _this$form), this.tages = [];
+      this.allsubcategories = [];
+      this.validation_error = {};
+      this.filterdata = {
+        imgs: []
+      };
+    },
+    getCloudWidget: function getCloudWidget() {
+      var _this7 = this;
+      var widget = window.cloudinary.createUploadWidget({
+        cloud_name: clName,
+        upload_preset: clPreset,
+        sources: ["local", "camera", "google_drive", "facebook", "dropbox", "instagram", "unsplash"],
+        folder: "aranya",
+        //upload files to the specified folder
+
+        styles: {
+          palette: {
+            window: "#10173a",
+            sourceBg: "#20304b",
+            windowBorder: "#7171D0",
+            tabIcon: "#79F7FF",
+            inactiveTabIcon: "#8E9FBF",
+            menuIcons: "#CCE8FF",
+            link: "#72F1FF",
+            action: "#5333FF",
+            inProgress: "#00ffcc",
+            complete: "#33ff00",
+            error: "#cc3333",
+            textDark: "#000000",
+            textLight: "#ffffff"
+          },
+          fonts: {
+            "default": null,
+            "sans-serif": {
+              url: null,
+              active: true
+            }
+          }
+        }
+      }, function (error, result) {
+        if (!error && result && result.event === "success") {
+          _this7.filterdata.imgs = [];
+          _this7.filterdata.imgs.push(result.info);
+          _this7.uploadImage();
+          _this7.allImages.data.unshift({
+            'file_link': result.info.secure_url,
+            'product_name': result.info.public_id,
+            'extension': result.info.format
+          });
+        }
+      });
+      widget.open();
+    },
+    uploadImage: function uploadImage() {
+      var _this8 = this;
+      axios__WEBPACK_IMPORTED_MODULE_2___default().post(baseUrl + 'media-manager', this.filterdata).then(function (response) {
+        if (response.data.status == 'success') {
+          // this.successMessage(response.data)
+          _this8.filterdata.imgs = [];
+        }
+      });
     },
     getImageData: function getImageData() {
-      var _this7 = this;
+      var _this9 = this;
       axios__WEBPACK_IMPORTED_MODULE_2___default().get(baseUrl + "media-manager/create?page=".concat(this.page, "&per_page=10&keyword=").concat(this.media_keyword)).then(function (result) {
-        if (_this7.page == 1) {
-          _this7.allImages = result.data;
+        if (_this9.page == 1) {
+          _this9.allImages = result.data;
         } else {
-          var _this7$allImages$data;
-          (_this7$allImages$data = _this7.allImages.data).push.apply(_this7$allImages$data, _toConsumableArray(result.data.data));
+          var _this9$allImages$data;
+          (_this9$allImages$data = _this9.allImages.data).push.apply(_this9$allImages$data, _toConsumableArray(result.data.data));
         }
       })["catch"](function (errors) {
         console.log(errors);
@@ -23323,12 +23452,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $options.loadMore();
     }),
     "class": "btn btn-primary mt-4"
-  }, "Load More")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_252, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_253, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_254, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, "Load More")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_252, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_253, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_254, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[40] || (_cache[40] = function ($event) {
+      return $options.getCloudWidget();
+    }),
+    "class": "btn btn-primary btn-block mb-2 mr-3"
+  }, "Add File"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
-    onKeyup: _cache[40] || (_cache[40] = function ($event) {
+    onKeyup: _cache[41] || (_cache[41] = function ($event) {
       return $options.searchMedia();
     }),
-    "onUpdate:modelValue": _cache[41] || (_cache[41] = function ($event) {
+    "onUpdate:modelValue": _cache[42] || (_cache[42] = function ($event) {
       return $data.media_keyword = $event;
     }),
     "class": "form-control",
@@ -24867,12 +25001,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $options.loadMore();
     }),
     "class": "btn btn-primary mt-4"
-  }, "Load More")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_207, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_208, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_209, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, "Load More")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_207, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_208, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_209, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[34] || (_cache[34] = function ($event) {
+      return $options.getCloudWidget();
+    }),
+    "class": "btn btn-primary btn-block mb-2 mr-3"
+  }, "Add File"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
-    onKeyup: _cache[34] || (_cache[34] = function ($event) {
+    onKeyup: _cache[35] || (_cache[35] = function ($event) {
       return $options.searchMedia();
     }),
-    "onUpdate:modelValue": _cache[35] || (_cache[35] = function ($event) {
+    "onUpdate:modelValue": _cache[36] || (_cache[36] = function ($event) {
       return $data.media_keyword = $event;
     }),
     "class": "form-control",

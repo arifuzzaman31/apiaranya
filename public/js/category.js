@@ -19734,7 +19734,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       },
       allImages: [],
       page: 1,
-      media_keyword: ''
+      media_keyword: '',
+      filterdata: {
+        imgs: []
+      }
     };
   },
   methods: {
@@ -19754,19 +19757,75 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       }
       return true;
     },
+    getCloudWidget: function getCloudWidget() {
+      var _this = this;
+      var widget = window.cloudinary.createUploadWidget({
+        cloud_name: clName,
+        upload_preset: clPreset,
+        sources: ["local", "camera", "google_drive", "facebook", "dropbox", "instagram", "unsplash"],
+        folder: "aranya",
+        //upload files to the specified folder
+
+        styles: {
+          palette: {
+            window: "#10173a",
+            sourceBg: "#20304b",
+            windowBorder: "#7171D0",
+            tabIcon: "#79F7FF",
+            inactiveTabIcon: "#8E9FBF",
+            menuIcons: "#CCE8FF",
+            link: "#72F1FF",
+            action: "#5333FF",
+            inProgress: "#00ffcc",
+            complete: "#33ff00",
+            error: "#cc3333",
+            textDark: "#000000",
+            textLight: "#ffffff"
+          },
+          fonts: {
+            "default": null,
+            "sans-serif": {
+              url: null,
+              active: true
+            }
+          }
+        }
+      }, function (error, result) {
+        if (!error && result && result.event === "success") {
+          _this.filterdata.imgs = [];
+          _this.filterdata.imgs.push(result.info);
+          _this.uploadImage();
+          _this.allImages.data.unshift({
+            'file_link': result.info.secure_url,
+            'product_name': result.info.public_id,
+            'extension': result.info.format
+          });
+        }
+      });
+      widget.open();
+    },
+    uploadImage: function uploadImage() {
+      var _this2 = this;
+      axios.post(baseUrl + 'media-manager', this.filterdata).then(function (response) {
+        if (response.data.status == 'success') {
+          // this.successMessage(response.data)
+          _this2.filterdata.imgs = [];
+        }
+      });
+    },
     openCatMediaModal: function openCatMediaModal(serial) {
       this.form.imagenumb = serial;
       $("#catMediaModal").modal('show');
     },
     getImageData: function getImageData() {
-      var _this = this;
+      var _this3 = this;
       axios.get(baseUrl + "media-manager/create?page=".concat(this.page, "&per_page=10&keyword=").concat(this.media_keyword)).then(function (result) {
-        if (_this.page == 1) {
-          _this.allImages = result.data;
+        if (_this3.page == 1) {
+          _this3.allImages = result.data;
           console.log(result.data);
         } else {
-          var _this$allImages$data;
-          (_this$allImages$data = _this.allImages.data).push.apply(_this$allImages$data, _toConsumableArray(result.data.data));
+          var _this3$allImages$data;
+          (_this3$allImages$data = _this3.allImages.data).push.apply(_this3$allImages$data, _toConsumableArray(result.data.data));
         }
       })["catch"](function (errors) {
         console.log(errors);
@@ -19784,20 +19843,20 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       this.getImageData();
     },
     updateImage: function updateImage() {
-      var _this2 = this;
+      var _this4 = this;
       axios.put(baseUrl + 'category/' + this.categorydata.id, this.form).then(function (response) {
         if (response.data.status == 'success') {
-          _this2.getCatData();
-          _this2.successMessage(response.data);
+          _this4.getCatData();
+          _this4.successMessage(response.data);
         }
       });
     },
     getCatData: function getCatData() {
-      var _this3 = this;
+      var _this5 = this;
       axios.get(baseUrl + 'category/' + this.categorydata.id).then(function (response) {
-        _this3.form.image_one = response.data.category_image_one;
-        _this3.form.image_two = response.data.category_image_two;
-        _this3.form.image_three = response.data.category_image_three;
+        _this5.form.image_one = response.data.category_image_one;
+        _this5.form.image_two = response.data.category_image_two;
+        _this5.form.image_three = response.data.category_image_three;
       });
     }
   },
@@ -20245,12 +20304,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $options.loadMore();
     }),
     "class": "btn btn-primary mt-4"
-  }, "Load More")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, "Load More")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[5] || (_cache[5] = function ($event) {
+      return $options.getCloudWidget();
+    }),
+    "class": "btn btn-primary btn-block mb-2 mr-3"
+  }, "Add File"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
-    onKeyup: _cache[5] || (_cache[5] = function ($event) {
+    onKeyup: _cache[6] || (_cache[6] = function ($event) {
       return $options.searchMedia();
     }),
-    "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+    "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
       return $data.media_keyword = $event;
     }),
     "class": "form-control",
