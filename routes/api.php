@@ -34,7 +34,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('order/cancel',[OrderController::class,'orderCancel']);
     Route::post('order-item-cliam-refund', [OrderController::class, 'orderItemRefundClaim']);
     Route::post('profile-update', [AuthController::class, 'profileUpdate']);
-    Route::post('customer-address-add', [OrderController::class, 'addCustAddr']);
+    Route::post('customer-address-add', [AuthController::class, 'storeUserAddress']);
     Route::get('get-user-address',[AuthController::class,'getUserAddress']);
 });
 

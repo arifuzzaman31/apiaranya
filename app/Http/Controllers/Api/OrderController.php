@@ -445,37 +445,4 @@ class OrderController extends Controller
         return false;
         return view('email.order_invoice',['order_info' => $order]);
     }
-
-    public function addCustAddr(Request $request)
-    {
-        try {
-            $billing = new UserBillingInfo();
-            $billing->first_name = $request->data['first_name_billing'];
-            $billing->last_name = $request->data['last_name_billing'];
-            $billing->country = $request->data['country_billing'];
-            $billing->city = $request->data['city_billing'];
-            $billing->email = $request->data['email_billing'];
-            $billing->phone = $request->data['phone_billing'];
-            $billing->post_code = $request->data['post_code_billing'];
-            $billing->street_address = $request->data['street_address_billing'];
-            $billing->apartment = $request->data['apartment_address_billing'];
-            $billing->save();
-
-            $shipping = new UserShippingInfo();
-            $shipping->first_name = $request->data['first_name_shipping'];
-            $shipping->last_name = $request->data['last_name_shipping'];
-            $shipping->country = $request->data['country_shipping'];
-            $shipping->city = $request->data['city_shipping'];
-            $shipping->email = $request->data['email_shipping'];
-            $shipping->phone = $request->data['phone_shipping'];
-            $shipping->post_code = $request->data['post_code_shipping'];
-            $shipping->street_address = $request->data['street_address_shipping'];
-            $shipping->apartment = $request->data['apartment_address_shipping'];
-            $shipping->save();
-
-            return $this->successMessage('User Address added Successful!');
-        } catch (\Throwable $th) {
-            return $this->errorMessage();
-        }
-    }
 }

@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class AddressBook extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['user_id','first_name','last_name','country','city','email','phone','post_code','apartment','street_address'];
 }
