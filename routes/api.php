@@ -35,6 +35,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('order-item-cliam-refund', [OrderController::class, 'orderItemRefundClaim']);
     Route::post('profile-update', [AuthController::class, 'profileUpdate']);
     Route::post('customer-address-add', [OrderController::class, 'addCustAddr']);
+    Route::get('get-user-address',[AuthController::class,'getUserAddress']);
 });
 
 Route::get('order-details/{id}', [OrderController::class, 'orderDetails']);
@@ -60,8 +61,8 @@ Route::get('category-list',[CategoryController::class,'allCategoryList']);
 // get Campain data
 Route::get('all-campaign',[FrontController::class,'getCampaing']);
 
-Route::get('category-fabric/{cat_id}',[FrontController::class,'getCategoryFabric']);
 
+Route::get('category-fabric/{cat_id}',[FrontController::class,'getCategoryFabric']);
 
 // user reset password
 Route::post('user-password-email-reset-link', [AuthController::class, 'sendEmailLink'])->name('user-password-email-reset-link');

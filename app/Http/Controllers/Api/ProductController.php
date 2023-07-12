@@ -28,7 +28,7 @@ class ProductController extends Controller
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
         $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric',
-        'product_size','product_colour','inventory'])->where('status',AllStatic::$active);
+        'product_size','product_colour','inventory:product_id,colour_id,size_id,stock,mrp,sku'])->where('status',AllStatic::$active);
 
         if($camp_id != ''){
             $product = $product->join('campaign_products','products.id','campaign_products.product_id')
@@ -113,7 +113,7 @@ class ProductController extends Controller
             $tak_some   = $request->get('take_some');
             
             $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric',
-            'product_size','product_colour','inventory'])
+            'product_size','product_colour','inventory:product_id,colour_id,size_id,stock,mrp,sku'])
                         ->where('category_id',$cat)
                         ->orderBy('id','desc');
                     if($subcat != '' && $subcat != null){
@@ -164,7 +164,7 @@ class ProductController extends Controller
     {
         try {
             //code...
-            $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric','inventory',
+            $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric','inventory:id,product_id,size_id,stock,cpu,mrp,sku',
                 'product_size','product_colour','discount',
                 'vat:id,tax_name,tax_percentage','product_vendor','product_brand','product_designer','product_embellishment',
                 'product_making','product_season','product_variety','product_fit','product_artist','product_consignment',

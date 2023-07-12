@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\AddressBook;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -279,6 +280,44 @@ class AuthController extends Controller
         } catch (\Throwable $th) {
 		    return $th;
             return $this->errorMessage();
+        }
+        
+    }
+
+    public function getUserAddress()
+    {
+        try {
+            $data = AddressBook::where('user_id',Auth::user()->id)->get();
+            return response()->json($data);
+
+        } catch (\Throwable $th) {
+            return $this->errorMessage();
+        }
+    }
+
+    public function storeUserAddress(Request $request)
+    {
+        try {
+            $address = new AddressBook();
+            $address->first_name    = $request->first_name;
+            $address->last_name     = $request->last_name;
+            $address->country       = $request->country;
+            $address->city          = $request->city;
+            $address->email         = $request->email;
+            $address->phone         = $request->phone;
+            $address->post_code     = $request->post_code;
+            $address->apartment     = $request->apartment;
+            $address->street_address = $request->street_address;
+            $address->save();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'New Address Added!',
+                'last_address'  => $address
+            ], 200);
+
+        } catch (\Throwable $th) {
+            //throw $th;
         }
         
     }
