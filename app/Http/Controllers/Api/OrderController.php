@@ -101,6 +101,22 @@ class OrderController extends Controller
             $billing->apartment = $request->data['apartment_address_billing'];
             $billing->save();
 
+            $useraddr = DB::table('address_books')->where('user_id',Auth::user()->id)->count();
+            if($useraddr == 0){
+                 DB::table('address_books')->insert([
+                    'user_id'       => Auth::user()->id,
+                    'first_name'    => $request->data['first_name_billing'],
+                    'last_name'     => $request->data['last_name_billing'],
+                    'country'       => $request->data['country_billing'],
+                    'city'          => $request->data['city_billing'],
+                    'email'         => $request->data['email_billing'],
+                    'phone'         => $request->data['phone_billing'],
+                    'post_code'     => $request->data['post_code_billing'],
+                    'apartment'     => $request->data['street_address_billing'],
+                    'street_address' => $request->data['apartment_address_billing']
+                ]);
+            }
+
             if($request->isSameAddress == false)
             {
                 $shipping = new UserShippingInfo();
