@@ -40,22 +40,28 @@ class OrderController extends Controller
             $order->shipping_method   =  $request->shipping_method;
             $order->user_id           = $request->isGuestCheckout == false ? Auth::user()->id : 0;
             $order->vat_rate               = 0;
-            $order->vat_amount             = (float)($request->totalPriceWithTax - $request->totalPrice);
+            $order->charge_vat_rate        = 0;
+            $order->vat_amount             = (float)($request->totalPriceWithTaxOrg - $request->totalPriceOrg);
+            $order->charge_vat_amount      = (float)($request->totalPriceWithTax - $request->totalPrice);
             $order->payment_method         = 0;
             $order->payment_via            = $request->data['paymentMethod'] == 'online' ? 1 : 0;
             $order->shipping_amount        = $shipCharge;
+            $order->charge_shipping_amount = $shipCharge;
             $order->total_item             = $request->totalAmount ? $request->totalAmount : 1;
-            $order->total_price            = (float)$request->totalPrice;
+            $order->total_price            = (float)$request->totalPriceOrg;
+            $order->charge_total_price     = (float)$request->totalPrice;
             $order->coupon_discount        = $request->coupon_discount ? $request->coupon_discount : 0;
             $order->coupon                 = $request->coupon_code;
             $order->discount               = 0;
             $order->payment_status         = 0;
             $order->delivery_type          = $shipCharge == 0 ? 1 : 0;
-            $order->order_position          = $request->data['paymentMethod'] != 'online' ? 1 : 0;
+            $order->order_position         = $request->data['paymentMethod'] != 'online' ? 1 : 0;
             $order->order_date             = date('Y-m-d');
             $order->requested_delivery_date = date('Y-m-d', strtotime("+1 day"));
             $order->status                 = 1;
             $order->is_same_address        = $request->isSameAddress == false ? 0 : 1;
+            $order->charged_currency       = $request->selectedCurrency;
+            $order->exchange_rate          = (float)$request->currentConversionRate;
             $order->save();
 
             foreach ($request->cart as $value) {
@@ -73,12 +79,18 @@ class OrderController extends Controller
                 $details->colour_id           = 0;
                 $details->user_id             = $request->isGuestCheckout == false ? Auth::user()->id : 0;
                 $details->quantity            = $value['amount'];
-                $details->selling_price       = $value['price'];
+                $details->selling_price       = $value['priceOrg'];
+                $details->charge_selling_price = $value['price'];
                 $details->vat_rate            = $value['taxAmount'];
-                $details->vat_amount          = (float)($value['vatAmountParticularProduct']);
+                $details->charge_vat_rate     = $value['taxAmount'];
+                $details->vat_amount          = (float)($value['vatAmountParticularProductOrg']);
+                $details->charge_vat_amount   = (float)($value['vatAmountParticularProduct']);
                 $details->buying_price        = (float)$decrese->cpu;
                 $details->total_buying_price  = (float)($decrese->cpu * $value['amount']);
-                $details->total_selling_price = (float)$value['totalPrice'];
+                $details->total_selling_price = (float)$value['totalPriceOrg'];
+                $details->total_charge_selling_price = (float)$value['totalPrice'];
+                $details->charged_currency    = $value['selectedCurrency'];
+                $details->exchange_rate       = (float)$value['currentConversionRate'];
                 $details->unit_discount       = 0;
                 $details->total_discount      = 0;
                 $details->save();
@@ -101,8 +113,8 @@ class OrderController extends Controller
             $billing->apartment = $request->data['apartment_address_billing'];
             $billing->save();
 
-            $useraddr = DB::table('address_books')->where('user_id',Auth::user()->id)->count();
-            if($useraddr == 0){
+            $useraddr = DB::table('address_books')->where('user_id',Auth::user()->id)->first();
+            if(empty($useraddr)){
                  DB::table('address_books')->insert([
                     'user_id'       => Auth::user()->id,
                     'first_name'    => $request->data['first_name_billing'],
@@ -113,7 +125,8 @@ class OrderController extends Controller
                     'phone'         => $request->data['phone_billing'],
                     'post_code'     => $request->data['post_code_billing'],
                     'apartment'     => $request->data['street_address_billing'],
-                    'street_address' => $request->data['apartment_address_billing']
+                    'street_address' => $request->data['apartment_address_billing'],
+                    'created_at' => now()
                 ]);
             }
 
@@ -137,6 +150,9 @@ class OrderController extends Controller
             DB::table('payments')->insert([
                 'order_id' => $order->id,
                 'amount' => (($order->total_price + $order->shipping_amount + $order->vat_amount) - ($order->discount + $order->coupon_discount)),
+                'charge_amount' => ($order->charge_total_price + $order->charge_shipping_amount + $order->charge_vat_amount),
+                'charged_currency' => $value['selectedCurrency'],
+                'exchange_rate' => (float)$value['currentConversionRate'],
                 'payment_status' => 0,
                 'created_at'    => date("Y-m-d H:i:s")
             ]);
@@ -164,7 +180,7 @@ class OrderController extends Controller
         } catch (\Throwable $th) {
             \DB::rollback();
             // return $th;
-            return response()->json(['status' => 'error', 'message' => $th]);
+            return response()->json(['status' => 'error', 'message' => $th->getMessage()]);
         }
     }
     

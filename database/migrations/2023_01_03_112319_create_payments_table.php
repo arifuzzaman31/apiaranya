@@ -18,6 +18,9 @@ class CreatePaymentsTable extends Migration
             $table->foreignId('order_id');
             $table->string('transaction_id');
             $table->double('amount',8,2);
+            $table->double('charge_amount',8,2)->comment = "its converted amount by changing currency";
+            $table->string('charged_currency')->default('BDT');
+            $table->float('exchange_rate')->nullable();
             $table->string('payment_type')->nullable();
             $table->tinyInteger('payment_status')->nullable();
             $table->softDeletes();

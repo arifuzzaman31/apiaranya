@@ -20,8 +20,11 @@ class CreateOrdersTable extends Migration
             $table->foreignId('user_id');
             $table->json('order_data')->default(new Expression('(JSON_ARRAY())'))->change();
             $table->double('total_price',8, 4);
+            $table->double('charge_total_price',8, 4);
             $table->double('vat_rate')->default(0)->comment   = "vat rate in percentage '%'";
+            $table->double('charge_vat_rate')->default(0)->comment   = "transform vat rate in percentage '%'";
             $table->double('vat_amount')->default(0)->comment = "value added vat amount";
+            $table->double('charge_vat_amount')->default(0)->comment = "transform value added vat amount";
             $table->integer('total_item')->default(0);
             $table->string('shipping_method')->nullable();
             $table->string('payment_via')->nullable()->comment = "0 for COD,1 Online";
@@ -29,6 +32,7 @@ class CreateOrdersTable extends Migration
             $table->string('payment_method_name')->nullable()->comment = "ssl,amex,stripe";
             $table->string('transaction_id')->nullable();
             $table->double('discount')->default(0);
+            $table->double('charge_discount')->default(0);
             $table->double('coupon_discount')->default(0);
             $table->tinyInteger('payment_status')->default(0)->comment = "0 not paid ,1 = paid ,2 = faild, 3 = cancel";
             $table->string('validation_id')->nullable();
@@ -37,6 +41,9 @@ class CreateOrdersTable extends Migration
             $table->date('requested_delivery_date')->nullable();
             $table->date('payment_date')->nullable();
             $table->integer('shipping_amount')->default(0);
+            $table->integer('charge_shipping_amount')->default(0);
+            $table->string('charged_currency')->default(0);
+            $table->float('exchange_rate')->nullable();
             $table->string('tracking_id')->nullable();
             $table->longText('payment_info')->nullable();
             $table->tinyInteger('status')->default(1)->comment = "0=cancel, 1=active, 2=On-hold";
