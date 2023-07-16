@@ -89,8 +89,8 @@ class OrderController extends Controller
                 $details->total_buying_price  = (float)($decrese->cpu * $value['amount']);
                 $details->total_selling_price = (float)$value['totalPriceOrg'];
                 $details->total_charge_selling_price = (float)$value['totalPrice'];
-                $details->charged_currency    = $value['selectedCurrency'];
-                $details->exchange_rate       = (float)$value['currentConversionRate'];
+                $details->charged_currency    = $request->selectedCurrency;
+                $details->exchange_rate       = (float)$request->currentConversionRate;
                 $details->unit_discount       = 0;
                 $details->total_discount      = 0;
                 $details->save();
@@ -151,8 +151,8 @@ class OrderController extends Controller
                 'order_id' => $order->id,
                 'amount' => (($order->total_price + $order->shipping_amount + $order->vat_amount) - ($order->discount + $order->coupon_discount)),
                 'charge_amount' => ($order->charge_total_price + $order->charge_shipping_amount + $order->charge_vat_amount),
-                'charged_currency' => $value['selectedCurrency'],
-                'exchange_rate' => (float)$value['currentConversionRate'],
+                'charged_currency' => $request->selectedCurrency,
+                'exchange_rate' => (float)$request->currentConversionRate,
                 'payment_status' => 0,
                 'created_at'    => date("Y-m-d H:i:s")
             ]);
@@ -179,7 +179,7 @@ class OrderController extends Controller
 
         } catch (\Throwable $th) {
             \DB::rollback();
-            // return $th;
+            return $th;
             return response()->json(['status' => 'error', 'message' => $th->getMessage()]);
         }
     }

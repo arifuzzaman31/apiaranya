@@ -1,6 +1,7 @@
 <script>
 import axios from 'axios';
 import Mixin from '../../mixer';
+import country from '../../country.js';
 import { Bootstrap4Pagination } from 'laravel-vue-pagination';
 export default {
     name: 'shipping',
@@ -22,6 +23,7 @@ export default {
             filterdata : {
                 refund_status: ''
             },
+            countries: null,
             charge : {
                 id: '',
                 country_name: '',
@@ -133,6 +135,7 @@ export default {
     },
 
     mounted(){
+        this.countries = country
         this.getShippingData()
     },
     computed: {
@@ -165,6 +168,7 @@ export default {
                             <button type="button" class="btn btn-danger" @click="filterClear()">CLEAR</button>
                         </div>
                     </div>
+           
                     <div class="table-responsive" style="min-height: 60vh;">
                         <table class="table table-bordered table-hover mb-4">
                             <thead>
@@ -220,17 +224,16 @@ export default {
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="widget-content">
+                        <div class="widget-content widget-content-area">
                             <form>
                                 <div>
                                     <div class="form-group">
                                         <label for="">Select Country</label>
                                         <select class="form-control" v-model="charge.country_name" :disabled="charge.id != ''">
                                             <option value="">Select Action</option>
-                                            <option value="Bangladesh">Bangladesh</option>
-                                            <option value="India">India</option>
-                                            <option value="Sri Lanka">Sri Lanka</option>
-                                            <option value="Indonesia">Indonesia</option>
+                                            
+                                            <option :value="cunt.name" v-for="cunt in countries" :key="cunt.code">{{ cunt.name }} ({{ cunt.code }})</option>
+                                         
                                         </select>
                                         <span
                                         v-if="validation_error.hasOwnProperty('country_name')"
@@ -240,13 +243,13 @@ export default {
                                     </span>
                                     </div>
                                     <div class="form-group">
-                                        <label for="inside_city">Amount (Inside City)</label>
+                                        <label for="inside_city">Amount</label>
                                         <input type="number" v-model="charge.inside_city" class="form-control" id="inside_city" />
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label for="outside_city">Amount (Outside City)</label>
                                         <input type="number" v-model="charge.outside_city" class="form-control" id="outside_city" />
-                                    </div>
+                                    </div> -->
                                     <div class="col-lg-3 col-md-3 col-sm-4 col-6">
                                         <label class="switch s-icons s-outline  s-outline-success  mb-4 mr-2">
                                             <input v-model="charge.status" type="checkbox" :checked="charge.status" id="charge-status">

@@ -41,6 +41,8 @@ class ProductResource extends JsonResource
             'p_width'           => $this->width,
             'p_unit'            => $this->unit,
             'p_weight'          => $this->weight,
+            'fragile'           => $this->fragile,
+            'fragile_charge'    => $this->fragile_charge,
             'p_care'            => $this->care,
             'p_design_code'     => $this->design_code,
             'p_sizes'           => $this->whenLoaded('product_size'),

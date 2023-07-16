@@ -46,6 +46,7 @@ export default {
         this.order_status.order_id = this.order.id;
         this.order_status.payment_status = this.order.payment_status;
         this.order_status.order_position = this.order.order_position;
+        console.log(this.details)
     },
     computed: {
         showPermission() {
@@ -233,10 +234,10 @@ export default {
                                                 }}
                                             </td>
                                             <!-- <img :src="detail.product.product_image" height="40" width="40" class="mx-1" /> -->
-                                            <td>{{ detail.selling_price }}</td>
+                                            <td>{{ detail.charge_selling_price }}</td>
                                             <td>{{ detail.quantity }}</td>
                                             <td class="text-right">
-                                                {{ detail.total_selling_price }}
+                                                {{ detail.total_charge_selling_price }}
                                             </td>
                                         </tr>
                                     </tbody>
@@ -256,16 +257,16 @@ export default {
                                         </p>
                                     </div>
                                     <div class="col-md-3">
-                                        <h6>Logistic</h6>
-                                        <!-- <p>Delivery By BirdWings</p> -->
+                                        <h6>Currency</h6>
+                                        <p>{{ order.charged_currency }}</p>
                                     </div>
                                     <div class="col-md-2">
                                         <h6>Sub Total</h6>
-                                        <p>{{ order.total_price }}</p>
+                                        <p>{{ order.charge_total_price }}</p>
                                     </div>
                                     <div class="col-md-1">
                                         <h6>VAT</h6>
-                                        <p>{{ order.vat_amount }}</p>
+                                        <p>{{ order.charge_vat_amount }}</p>
                                     </div>
                                     <div class="col-md-2">
                                         <h6>Shipping Cost</h6>
@@ -275,9 +276,9 @@ export default {
                                         <h6>Grand Total</h6>
                                         <p class="text-warning">
                                             {{
-                                                order.total_price +
+                                                order.charge_total_price +
                                                 order.shipping_amount +
-                                                order.vat_amount
+                                                order.charge_vat_amount
                                             }}
                                         </p>
                                     </div>

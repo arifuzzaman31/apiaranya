@@ -20101,7 +20101,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _mixer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixer */ "./resources/js/mixer.js");
-/* harmony import */ var laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! laravel-vue-pagination */ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.es.js");
+/* harmony import */ var _country_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../country.js */ "./resources/js/country.js");
+/* harmony import */ var laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! laravel-vue-pagination */ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.es.js");
+
 
 
 
@@ -20109,7 +20111,7 @@ __webpack_require__.r(__webpack_exports__);
   name: 'shipping',
   mixins: [_mixer__WEBPACK_IMPORTED_MODULE_1__["default"]],
   components: {
-    Bootstrap4Pagination: laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_2__.Bootstrap4Pagination
+    Bootstrap4Pagination: laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_3__.Bootstrap4Pagination
   },
   data: function data() {
     return {
@@ -20124,6 +20126,7 @@ __webpack_require__.r(__webpack_exports__);
       filterdata: {
         refund_status: ''
       },
+      countries: null,
       charge: {
         id: '',
         country_name: '',
@@ -20219,6 +20222,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
+    this.countries = _country_js__WEBPACK_IMPORTED_MODULE_2__["default"];
     this.getShippingData();
   },
   computed: {
@@ -20858,7 +20862,7 @@ var _hoisted_34 = {
   "class": "modal-body"
 };
 var _hoisted_35 = {
-  "class": "widget-content"
+  "class": "widget-content widget-content-area"
 };
 var _hoisted_36 = {
   "class": "form-group"
@@ -20867,38 +20871,34 @@ var _hoisted_37 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   "for": ""
 }, "Select Country", -1 /* HOISTED */);
 var _hoisted_38 = ["disabled"];
-var _hoisted_39 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<option value=\"\">Select Action</option><option value=\"Bangladesh\">Bangladesh</option><option value=\"India\">India</option><option value=\"Sri Lanka\">Sri Lanka</option><option value=\"Indonesia\">Indonesia</option>", 5);
-var _hoisted_44 = [_hoisted_39];
-var _hoisted_45 = {
+var _hoisted_39 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: ""
+}, "Select Action", -1 /* HOISTED */);
+var _hoisted_40 = ["value"];
+var _hoisted_41 = {
   key: 0,
   "class": "text-danger"
 };
-var _hoisted_46 = {
+var _hoisted_42 = {
   "class": "form-group"
 };
-var _hoisted_47 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_43 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "inside_city"
-}, "Amount (Inside City)", -1 /* HOISTED */);
-var _hoisted_48 = {
-  "class": "form-group"
-};
-var _hoisted_49 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "outside_city"
-}, "Amount (Outside City)", -1 /* HOISTED */);
-var _hoisted_50 = {
+}, "Amount", -1 /* HOISTED */);
+var _hoisted_44 = {
   "class": "col-lg-3 col-md-3 col-sm-4 col-6"
 };
-var _hoisted_51 = {
+var _hoisted_45 = {
   "class": "switch s-icons s-outline s-outline-success mb-4 mr-2"
 };
-var _hoisted_52 = ["checked"];
-var _hoisted_53 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_46 = ["checked"];
+var _hoisted_47 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "slider round"
 }, null, -1 /* HOISTED */);
-var _hoisted_54 = {
+var _hoisted_48 = {
   "class": "modal-footer md-button"
 };
-var _hoisted_55 = {
+var _hoisted_49 = {
   "class": "btn btn-default",
   "data-dismiss": "modal"
 };
@@ -20964,48 +20964,790 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.charge.country_name = $event;
     }),
     disabled: $data.charge.id != ''
-  }, _hoisted_44, 8 /* PROPS */, _hoisted_38), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.charge.country_name]]), $data.validation_error.hasOwnProperty('country_name') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_45, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.validation_error.country_name[0]), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_46, [_hoisted_47, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, [_hoisted_39, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.countries, function (cunt) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+      value: cunt.name,
+      key: cunt.code
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(cunt.name) + " (" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(cunt.code) + ")", 9 /* TEXT, PROPS */, _hoisted_40);
+  }), 128 /* KEYED_FRAGMENT */))], 8 /* PROPS */, _hoisted_38), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.charge.country_name]]), $data.validation_error.hasOwnProperty('country_name') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_41, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.validation_error.country_name[0]), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [_hoisted_43, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "number",
     "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
       return $data.charge.inside_city = $event;
     }),
     "class": "form-control",
     id: "inside_city"
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.charge.inside_city]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_48, [_hoisted_49, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    type: "number",
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.charge.inside_city]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"form-group\">\r\n                                        <label for=\"outside_city\">Amount (Outside City)</label>\r\n                                        <input type=\"number\" v-model=\"charge.outside_city\" class=\"form-control\" id=\"outside_city\" />\r\n                                    </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_45, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
-      return $data.charge.outside_city = $event;
-    }),
-    "class": "form-control",
-    id: "outside_city"
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.charge.outside_city]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_51, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
       return $data.charge.status = $event;
     }),
     type: "checkbox",
     checked: $data.charge.status,
     id: "charge-status"
-  }, null, 8 /* PROPS */, _hoisted_52), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.charge.status]]), _hoisted_53])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_54, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", _hoisted_55, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  }, null, 8 /* PROPS */, _hoisted_46), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.charge.status]]), _hoisted_47])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_48, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", _hoisted_49, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
     "class": "flaticon-cancel-12",
-    onClick: _cache[9] || (_cache[9] = function () {
+    onClick: _cache[8] || (_cache[8] = function () {
       return $options.formReset && $options.formReset.apply($options, arguments);
     })
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Discard")]), $data.charge.id == '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
     key: 0,
     type: "button",
-    onClick: _cache[10] || (_cache[10] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+    onClick: _cache[9] || (_cache[9] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
       return $options.addShppingCharge();
     }, ["prevent"])),
     "class": "btn btn-primary"
   }, "Add")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
     key: 1,
     type: "button",
-    onClick: _cache[11] || (_cache[11] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+    onClick: _cache[10] || (_cache[10] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
       return _ctx.updateShppingCharge();
     }, ["prevent"])),
     "class": "btn btn-primary"
   }, "Update"))])])])])])])])])]);
 }
+
+/***/ }),
+
+/***/ "./resources/js/country.js":
+/*!*********************************!*\
+  !*** ./resources/js/country.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ([{
+  name: 'Afghanistan',
+  code: 'AF'
+}, {
+  name: 'Åland Islands',
+  code: 'AX'
+}, {
+  name: 'Albania',
+  code: 'AL'
+}, {
+  name: 'Algeria',
+  code: 'DZ'
+}, {
+  name: 'American Samoa',
+  code: 'AS'
+}, {
+  name: 'AndorrA',
+  code: 'AD'
+}, {
+  name: 'Angola',
+  code: 'AO'
+}, {
+  name: 'Anguilla',
+  code: 'AI'
+}, {
+  name: 'Antarctica',
+  code: 'AQ'
+}, {
+  name: 'Antigua and Barbuda',
+  code: 'AG'
+}, {
+  name: 'Argentina',
+  code: 'AR'
+}, {
+  name: 'Armenia',
+  code: 'AM'
+}, {
+  name: 'Aruba',
+  code: 'AW'
+}, {
+  name: 'Australia',
+  code: 'AU'
+}, {
+  name: 'Austria',
+  code: 'AT'
+}, {
+  name: 'Azerbaijan',
+  code: 'AZ'
+}, {
+  name: 'Bahamas',
+  code: 'BS'
+}, {
+  name: 'Bahrain',
+  code: 'BH'
+}, {
+  name: 'Bangladesh',
+  code: 'BD'
+}, {
+  name: 'Barbados',
+  code: 'BB'
+}, {
+  name: 'Belarus',
+  code: 'BY'
+}, {
+  name: 'Belgium',
+  code: 'BE'
+}, {
+  name: 'Belize',
+  code: 'BZ'
+}, {
+  name: 'Benin',
+  code: 'BJ'
+}, {
+  name: 'Bermuda',
+  code: 'BM'
+}, {
+  name: 'Bhutan',
+  code: 'BT'
+}, {
+  name: 'Bolivia',
+  code: 'BO'
+}, {
+  name: 'Bosnia and Herzegovina',
+  code: 'BA'
+}, {
+  name: 'Botswana',
+  code: 'BW'
+}, {
+  name: 'Bouvet Island',
+  code: 'BV'
+}, {
+  name: 'Brazil',
+  code: 'BR'
+}, {
+  name: 'British Indian Ocean Territory',
+  code: 'IO'
+}, {
+  name: 'Brunei Darussalam',
+  code: 'BN'
+}, {
+  name: 'Bulgaria',
+  code: 'BG'
+}, {
+  name: 'Burkina Faso',
+  code: 'BF'
+}, {
+  name: 'Burundi',
+  code: 'BI'
+}, {
+  name: 'Cambodia',
+  code: 'KH'
+}, {
+  name: 'Cameroon',
+  code: 'CM'
+}, {
+  name: 'Canada',
+  code: 'CA'
+}, {
+  name: 'Cape Verde',
+  code: 'CV'
+}, {
+  name: 'Cayman Islands',
+  code: 'KY'
+}, {
+  name: 'Central African Republic',
+  code: 'CF'
+}, {
+  name: 'Chad',
+  code: 'TD'
+}, {
+  name: 'Chile',
+  code: 'CL'
+}, {
+  name: 'China',
+  code: 'CN'
+}, {
+  name: 'Christmas Island',
+  code: 'CX'
+}, {
+  name: 'Cocos (Keeling) Islands',
+  code: 'CC'
+}, {
+  name: 'Colombia',
+  code: 'CO'
+}, {
+  name: 'Comoros',
+  code: 'KM'
+}, {
+  name: 'Congo',
+  code: 'CG'
+}, {
+  name: 'Congo, The Democratic Republic of the',
+  code: 'CD'
+}, {
+  name: 'Cook Islands',
+  code: 'CK'
+}, {
+  name: 'Costa Rica',
+  code: 'CR'
+}, {
+  name: 'Cote D\'Ivoire',
+  code: 'CI'
+}, {
+  name: 'Croatia',
+  code: 'HR'
+}, {
+  name: 'Cuba',
+  code: 'CU'
+}, {
+  name: 'Cyprus',
+  code: 'CY'
+}, {
+  name: 'Czech Republic',
+  code: 'CZ'
+}, {
+  name: 'Denmark',
+  code: 'DK'
+}, {
+  name: 'Djibouti',
+  code: 'DJ'
+}, {
+  name: 'Dominica',
+  code: 'DM'
+}, {
+  name: 'Dominican Republic',
+  code: 'DO'
+}, {
+  name: 'Ecuador',
+  code: 'EC'
+}, {
+  name: 'Egypt',
+  code: 'EG'
+}, {
+  name: 'El Salvador',
+  code: 'SV'
+}, {
+  name: 'Equatorial Guinea',
+  code: 'GQ'
+}, {
+  name: 'Eritrea',
+  code: 'ER'
+}, {
+  name: 'Estonia',
+  code: 'EE'
+}, {
+  name: 'Ethiopia',
+  code: 'ET'
+}, {
+  name: 'Falkland Islands (Malvinas)',
+  code: 'FK'
+}, {
+  name: 'Faroe Islands',
+  code: 'FO'
+}, {
+  name: 'Fiji',
+  code: 'FJ'
+}, {
+  name: 'Finland',
+  code: 'FI'
+}, {
+  name: 'France',
+  code: 'FR'
+}, {
+  name: 'French Guiana',
+  code: 'GF'
+}, {
+  name: 'French Polynesia',
+  code: 'PF'
+}, {
+  name: 'French Southern Territories',
+  code: 'TF'
+}, {
+  name: 'Gabon',
+  code: 'GA'
+}, {
+  name: 'Gambia',
+  code: 'GM'
+}, {
+  name: 'Georgia',
+  code: 'GE'
+}, {
+  name: 'Germany',
+  code: 'DE'
+}, {
+  name: 'Ghana',
+  code: 'GH'
+}, {
+  name: 'Gibraltar',
+  code: 'GI'
+}, {
+  name: 'Greece',
+  code: 'GR'
+}, {
+  name: 'Greenland',
+  code: 'GL'
+}, {
+  name: 'Grenada',
+  code: 'GD'
+}, {
+  name: 'Guadeloupe',
+  code: 'GP'
+}, {
+  name: 'Guam',
+  code: 'GU'
+}, {
+  name: 'Guatemala',
+  code: 'GT'
+}, {
+  name: 'Guernsey',
+  code: 'GG'
+}, {
+  name: 'Guinea',
+  code: 'GN'
+}, {
+  name: 'Guinea-Bissau',
+  code: 'GW'
+}, {
+  name: 'Guyana',
+  code: 'GY'
+}, {
+  name: 'Haiti',
+  code: 'HT'
+}, {
+  name: 'Heard Island and Mcdonald Islands',
+  code: 'HM'
+}, {
+  name: 'Holy See (Vatican City State)',
+  code: 'VA'
+}, {
+  name: 'Honduras',
+  code: 'HN'
+}, {
+  name: 'Hong Kong',
+  code: 'HK'
+}, {
+  name: 'Hungary',
+  code: 'HU'
+}, {
+  name: 'Iceland',
+  code: 'IS'
+}, {
+  name: 'India',
+  code: 'IN'
+}, {
+  name: 'Indonesia',
+  code: 'ID'
+}, {
+  name: 'Iran, Islamic Republic Of',
+  code: 'IR'
+}, {
+  name: 'Iraq',
+  code: 'IQ'
+}, {
+  name: 'Ireland',
+  code: 'IE'
+}, {
+  name: 'Isle of Man',
+  code: 'IM'
+}, {
+  name: 'Israel',
+  code: 'IL'
+}, {
+  name: 'Italy',
+  code: 'IT'
+}, {
+  name: 'Jamaica',
+  code: 'JM'
+}, {
+  name: 'Japan',
+  code: 'JP'
+}, {
+  name: 'Jersey',
+  code: 'JE'
+}, {
+  name: 'Jordan',
+  code: 'JO'
+}, {
+  name: 'Kazakhstan',
+  code: 'KZ'
+}, {
+  name: 'Kenya',
+  code: 'KE'
+}, {
+  name: 'Kiribati',
+  code: 'KI'
+}, {
+  name: 'Korea, Democratic People\'S Republic of',
+  code: 'KP'
+}, {
+  name: 'Korea, Republic of',
+  code: 'KR'
+}, {
+  name: 'Kuwait',
+  code: 'KW'
+}, {
+  name: 'Kyrgyzstan',
+  code: 'KG'
+}, {
+  name: 'Lao People\'S Democratic Republic',
+  code: 'LA'
+}, {
+  name: 'Latvia',
+  code: 'LV'
+}, {
+  name: 'Lebanon',
+  code: 'LB'
+}, {
+  name: 'Lesotho',
+  code: 'LS'
+}, {
+  name: 'Liberia',
+  code: 'LR'
+}, {
+  name: 'Libyan Arab Jamahiriya',
+  code: 'LY'
+}, {
+  name: 'Liechtenstein',
+  code: 'LI'
+}, {
+  name: 'Lithuania',
+  code: 'LT'
+}, {
+  name: 'Luxembourg',
+  code: 'LU'
+}, {
+  name: 'Macao',
+  code: 'MO'
+}, {
+  name: 'Macedonia, The Former Yugoslav Republic of',
+  code: 'MK'
+}, {
+  name: 'Madagascar',
+  code: 'MG'
+}, {
+  name: 'Malawi',
+  code: 'MW'
+}, {
+  name: 'Malaysia',
+  code: 'MY'
+}, {
+  name: 'Maldives',
+  code: 'MV'
+}, {
+  name: 'Mali',
+  code: 'ML'
+}, {
+  name: 'Malta',
+  code: 'MT'
+}, {
+  name: 'Marshall Islands',
+  code: 'MH'
+}, {
+  name: 'Martinique',
+  code: 'MQ'
+}, {
+  name: 'Mauritania',
+  code: 'MR'
+}, {
+  name: 'Mauritius',
+  code: 'MU'
+}, {
+  name: 'Mayotte',
+  code: 'YT'
+}, {
+  name: 'Mexico',
+  code: 'MX'
+}, {
+  name: 'Micronesia, Federated States of',
+  code: 'FM'
+}, {
+  name: 'Moldova, Republic of',
+  code: 'MD'
+}, {
+  name: 'Monaco',
+  code: 'MC'
+}, {
+  name: 'Mongolia',
+  code: 'MN'
+}, {
+  name: 'Montserrat',
+  code: 'MS'
+}, {
+  name: 'Morocco',
+  code: 'MA'
+}, {
+  name: 'Mozambique',
+  code: 'MZ'
+}, {
+  name: 'Myanmar',
+  code: 'MM'
+}, {
+  name: 'Namibia',
+  code: 'NA'
+}, {
+  name: 'Nauru',
+  code: 'NR'
+}, {
+  name: 'Nepal',
+  code: 'NP'
+}, {
+  name: 'Netherlands',
+  code: 'NL'
+}, {
+  name: 'Netherlands Antilles',
+  code: 'AN'
+}, {
+  name: 'New Caledonia',
+  code: 'NC'
+}, {
+  name: 'New Zealand',
+  code: 'NZ'
+}, {
+  name: 'Nicaragua',
+  code: 'NI'
+}, {
+  name: 'Niger',
+  code: 'NE'
+}, {
+  name: 'Nigeria',
+  code: 'NG'
+}, {
+  name: 'Niue',
+  code: 'NU'
+}, {
+  name: 'Norfolk Island',
+  code: 'NF'
+}, {
+  name: 'Northern Mariana Islands',
+  code: 'MP'
+}, {
+  name: 'Norway',
+  code: 'NO'
+}, {
+  name: 'Oman',
+  code: 'OM'
+}, {
+  name: 'Pakistan',
+  code: 'PK'
+}, {
+  name: 'Palau',
+  code: 'PW'
+}, {
+  name: 'Palestinian Territory, Occupied',
+  code: 'PS'
+}, {
+  name: 'Panama',
+  code: 'PA'
+}, {
+  name: 'Papua New Guinea',
+  code: 'PG'
+}, {
+  name: 'Paraguay',
+  code: 'PY'
+}, {
+  name: 'Peru',
+  code: 'PE'
+}, {
+  name: 'Philippines',
+  code: 'PH'
+}, {
+  name: 'Pitcairn',
+  code: 'PN'
+}, {
+  name: 'Poland',
+  code: 'PL'
+}, {
+  name: 'Portugal',
+  code: 'PT'
+}, {
+  name: 'Puerto Rico',
+  code: 'PR'
+}, {
+  name: 'Qatar',
+  code: 'QA'
+}, {
+  name: 'Reunion',
+  code: 'RE'
+}, {
+  name: 'Romania',
+  code: 'RO'
+}, {
+  name: 'Russian Federation',
+  code: 'RU'
+}, {
+  name: 'RWANDA',
+  code: 'RW'
+}, {
+  name: 'Saint Helena',
+  code: 'SH'
+}, {
+  name: 'Saint Kitts and Nevis',
+  code: 'KN'
+}, {
+  name: 'Saint Lucia',
+  code: 'LC'
+}, {
+  name: 'Saint Pierre and Miquelon',
+  code: 'PM'
+}, {
+  name: 'Saint Vincent and the Grenadines',
+  code: 'VC'
+}, {
+  name: 'Samoa',
+  code: 'WS'
+}, {
+  name: 'San Marino',
+  code: 'SM'
+}, {
+  name: 'Sao Tome and Principe',
+  code: 'ST'
+}, {
+  name: 'Saudi Arabia',
+  code: 'SA'
+}, {
+  name: 'Senegal',
+  code: 'SN'
+}, {
+  name: 'Serbia and Montenegro',
+  code: 'CS'
+}, {
+  name: 'Seychelles',
+  code: 'SC'
+}, {
+  name: 'Sierra Leone',
+  code: 'SL'
+}, {
+  name: 'Singapore',
+  code: 'SG'
+}, {
+  name: 'Slovakia',
+  code: 'SK'
+}, {
+  name: 'Slovenia',
+  code: 'SI'
+}, {
+  name: 'Solomon Islands',
+  code: 'SB'
+}, {
+  name: 'Somalia',
+  code: 'SO'
+}, {
+  name: 'South Africa',
+  code: 'ZA'
+}, {
+  name: 'South Georgia and the South Sandwich Islands',
+  code: 'GS'
+}, {
+  name: 'Spain',
+  code: 'ES'
+}, {
+  name: 'Sri Lanka',
+  code: 'LK'
+}, {
+  name: 'Sudan',
+  code: 'SD'
+}, {
+  name: 'Suriname',
+  code: 'SR'
+}, {
+  name: 'Svalbard and Jan Mayen',
+  code: 'SJ'
+}, {
+  name: 'Swaziland',
+  code: 'SZ'
+}, {
+  name: 'Sweden',
+  code: 'SE'
+}, {
+  name: 'Switzerland',
+  code: 'CH'
+}, {
+  name: 'Syrian Arab Republic',
+  code: 'SY'
+}, {
+  name: 'Taiwan, Province of China',
+  code: 'TW'
+}, {
+  name: 'Tajikistan',
+  code: 'TJ'
+}, {
+  name: 'Tanzania, United Republic of',
+  code: 'TZ'
+}, {
+  name: 'Thailand',
+  code: 'TH'
+}, {
+  name: 'Timor-Leste',
+  code: 'TL'
+}, {
+  name: 'Togo',
+  code: 'TG'
+}, {
+  name: 'Tokelau',
+  code: 'TK'
+}, {
+  name: 'Tonga',
+  code: 'TO'
+}, {
+  name: 'Trinidad and Tobago',
+  code: 'TT'
+}, {
+  name: 'Tunisia',
+  code: 'TN'
+}, {
+  name: 'Turkey',
+  code: 'TR'
+}, {
+  name: 'Turkmenistan',
+  code: 'TM'
+}, {
+  name: 'Turks and Caicos Islands',
+  code: 'TC'
+}, {
+  name: 'Tuvalu',
+  code: 'TV'
+}, {
+  name: 'Uganda',
+  code: 'UG'
+}, {
+  name: 'Ukraine',
+  code: 'UA'
+}, {
+  name: 'United Arab Emirates',
+  code: 'AE'
+}, {
+  name: 'United Kingdom',
+  code: 'GB'
+}, {
+  name: 'United States',
+  code: 'US'
+}, {
+  name: 'United States Minor Outlying Islands',
+  code: 'UM'
+}, {
+  name: 'Uruguay',
+  code: 'UY'
+}, {
+  name: 'Uzbekistan',
+  code: 'UZ'
+}, {
+  name: 'Vanuatu',
+  code: 'VU'
+}, {
+  name: 'Venezuela',
+  code: 'VE'
+}, {
+  name: 'Viet Nam',
+  code: 'VN'
+}, {
+  name: 'Virgin Islands, British',
+  code: 'VG'
+}, {
+  name: 'Virgin Islands, U.S.',
+  code: 'VI'
+}, {
+  name: 'Wallis and Futuna',
+  code: 'WF'
+}, {
+  name: 'Western Sahara',
+  code: 'EH'
+}, {
+  name: 'Yemen',
+  code: 'YE'
+}, {
+  name: 'Zambia',
+  code: 'ZM'
+}, {
+  name: 'Zimbabwe',
+  code: 'ZW'
+}]);
 
 /***/ }),
 

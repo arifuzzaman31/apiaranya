@@ -84,19 +84,6 @@ class ProductController extends Controller
         } else {
             $product = $product->latest()->paginate($dataQty);
         }
-        if($request->get('cu_code') == 'USD'){
-            $product->map(function($itm){
-                return $itm->inventory->map(function($tt){
-                    return $tt->mrp = Currency::convert()->from('BDT')->to('USD')
-                            ->round(2)->date('Y-m-d')->amount($tt->mrp)->get();
-                });
-            });
-
-            $product->map(function($itm){
-                return $itm->vat->tax_percentage = Currency::convert()->from('BDT')->to('USD')
-                ->round(2)->date('Y-m-d')->amount($itm->vat->tax_percentage)->get();
-            });
-        }
         // return $product;
         return ProductResource::collection($product);
     }
@@ -140,18 +127,6 @@ class ProductController extends Controller
             } else {
                 $product = $product->paginate($dataQty);
             }
-            if($request->get('cu_code') == 'USD'){
-                $product->map(function($itm){
-                    return $itm->inventory->map(function($tt){
-                        return $tt->mrp = Currency::convert()->from('BDT')->to('USD')
-                                ->round(2)->date('Y-m-d')->amount($tt->mrp)->get();
-                    });
-                });
-                $product->map(function($itm){
-                    return $itm->vat->tax_percentage = Currency::convert()->from('BDT')->to('USD')
-                    ->round(2)->date('Y-m-d')->amount($itm->vat->tax_percentage)->get();
-                });
-            }
     
             return ProductResource::collection($product);
         } catch (\Throwable $th) {
@@ -169,18 +144,6 @@ class ProductController extends Controller
                 'vat:id,tax_name,tax_percentage','product_vendor','product_brand','product_designer','product_embellishment',
                 'product_making','product_season','product_variety','product_fit','product_artist','product_consignment',
                 'product_ingredient','product_care'])->find($id);
-            if($request->get('cu_code') == 'USD'){
-                $product->inventory->map(function($itm){
-                    return $itm->mrp = Currency::convert()->from('BDT')->to('USD')
-                            ->round(2)->date('Y-m-d')->amount($itm->mrp)->get();    
-                });
-
-                // $product->map(function($itm){
-                $product->vat->tax_percentage = Currency::convert()->from('BDT')->to('USD')
-                    ->round(2)->date('Y-m-d')->amount($product->vat->tax_percentage)->get();
-                // });
-            
-            }
             return new ProductResource($product);
         } catch (\Throwable $th) {
             // return $th;

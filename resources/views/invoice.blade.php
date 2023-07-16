@@ -137,8 +137,8 @@
             <td style="@if($key%2 != 0) border: none @endif" >{{ $key+1 }}</td>
             <td style="@if($key%2 != 0) border: none @endif">{{ $value->product->product_name }}</td>
             <td style="@if($key%2 != 0) border: none @endif">{{ $value->quantity }}</td>
-            <td style="@if($key%2 != 0) border: none @endif">{{ $value->selling_price }}</td>
-            <td style="@if($key%2 != 0) border: none @endif ;text-align: right">{{ $value->total_selling_price }}</td>
+            <td style="@if($key%2 != 0) border: none @endif">{{ $value->charge_selling_price }}</td>
+            <td style="@if($key%2 != 0) border: none @endif ;text-align: right">{{ $value->total_charge_selling_price }}</td>
         </tr>
       @endforeach
     </table>
@@ -172,7 +172,7 @@
             text-align: right;
           "
         >
-          SubTotal : <strong>{{ $order_info->total_price }}</strong>
+          SubTotal : <strong>{{ $order_info->charge_total_price }}</strong>
         </td>
 
         <!-- <td style="border: none; text-align: right; color: #8a858e">invoice</td> -->
@@ -203,7 +203,7 @@
             text-align: right;
           "
         >
-          Tax : <strong>{{ $order_info->vat_amount }}</strong>
+          Tax : <strong>{{ $order_info->charge_vat_rate }}</strong>
         </td>
 
         <!-- <td style="border: none; text-align: right; color: #8a858e">invoice</td> -->
@@ -265,7 +265,7 @@
             text-align: right;
           "
         >
-          Total Amount : <strong>{{ $order_info->total_price + $order_info->vat_amount + $order_info->shipping_amount }}</strong>
+          Total Amount : <strong>{{ $order_info->charge_total_price + $order_info->charge_vat_amount + $order_info->shipping_amount }}</strong>
         </td>
 
         <!-- <td style="border: none; text-align: right; color: #8a858e">invoice</td> -->
