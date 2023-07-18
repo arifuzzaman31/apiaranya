@@ -30,6 +30,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MediaManagerController;
+use App\Http\Controllers\ReportController;
 
 Route::redirect('/', 'admin/dashboard');
 Route::get('/me', [AdminLoginController::class, 'getUser']);
@@ -157,6 +158,10 @@ Route::controller(DashboardController::class)
         Route::get('get-order-info', 'getOrderInfo');
         Route::get('order-report-data', 'getOrderReport');
     });
-Route::view('order-report', 'pages.report.order_report')->name('order-report');
+Route::view('order-report', 'pages.report.order_report')->name('order.report');
+Route::controller(ReportController::class)->group(function(){
+    Route::view('stock-report', 'pages.report.stock_report')->name('stock.report');
+    Route::get('get-stock-report', 'stockReport');
+});
 
 ?>

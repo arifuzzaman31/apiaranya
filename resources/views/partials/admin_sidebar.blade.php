@@ -314,7 +314,10 @@
                 <ul class="collapse submenu list-unstyled" id="report" data-parent="#accordionExample">
               
                     <li>
-                        <a href="{{ route('order-report') }}">Order Report </a>
+                        <a href="{{ route('order.report') }}">Order Report </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('stock.report') }}">Stock Report </a>
                     </li>
                    
                 </ul>
