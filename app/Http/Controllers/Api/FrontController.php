@@ -31,9 +31,9 @@ class FrontController extends Controller
             ->get();
     }
 
-    public function shippingData()
+    public function shippingData($countryname = 'Bangladesh')
     {
-        return DB::table('shipping_configs') 
+        return DB::table('shipping_configs')->where('country_name',$countryname) 
             ->where('status',AllStatic::$active)
             ->get();
     }

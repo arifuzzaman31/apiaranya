@@ -32,7 +32,6 @@ export default {
                 inside_city_e_courier: 0,
                 outside_city_pathao: 0,
                 outside_city_e_courier: 0,
-               
                 status: 1
             },
             url: baseUrl
@@ -41,7 +40,7 @@ export default {
 
     methods: {
         getShippingData(page = 1){
-            axios.get(baseUrl+`get-shipping-data?page=${page}&per_page=10&keyword=${this.search}`)
+            axios.get(baseUrl+`get-shipping-data?page=${page}&per_page=12&keyword=${this.search}`)
             .then(result => {
                 this.shipping_infos = result.data;
             })
@@ -70,20 +69,27 @@ export default {
             this.formReset()
             this.charge.id = item.id
             this.charge.country_name = item.country_name
-            this.charge.inside_city = item.insidecity_shipping_charge
-            this.charge.outside_city = item.outsidecity_shipping_charge
+            if(item.country_name == 'Bangladesh'){
+                let dt = JSON.parse(item.shipping_charge);
+                this.charge.inside_city_pathao = dt['inside_city']['pathao']
+                this.charge.inside_city_e_courier = dt['inside_city']['e_courier']
+                this.charge.outside_city_pathao = dt['outside_city']['pathao']
+                this.charge.outside_city_e_courier = dt['outside_city']['e_courier']
+            }else{
+                this.charge.amount = JSON.parse(item.shipping_charge)['amount']
+            }
+            
             this.charge.status = item.status
             $("#addShippingModal").modal('show');
         },
 
         addShppingCharge(){
-            alert()
             axios.post(baseUrl+`add-shipping-charge`,this.charge).then(
                 response => {
-                    // $("#addShippingModal").modal('hide');
-                    // this.getShippingData()
-                    // this.successMessage(response.data)
-                    console.log(response.data)
+                    $("#addShippingModal").modal('hide');
+                    this.getShippingData()
+                    this.successMessage(response.data)
+                    // console.log(response.data)
                 }
             ). catch(error => {
                 if(error.response.status == 422){
@@ -122,9 +128,12 @@ export default {
             this.search = '';
             this.charge = {
                 id: '',
+                amount: 0,
                 country_name: '',
-                inside_city: 0,
-                outside_city: 0,
+                inside_city_pathao: 0,
+                inside_city_e_courier: 0,
+                outside_city_pathao: 0,
+                outside_city_e_courier: 0,
                 status: 1
             }
             
@@ -181,8 +190,7 @@ export default {
                                 <tr>
                                     <th>ID</th>
                                     <th>Country</th>
-                                    <th>Inside City</th>
-                                    <th>Outside city</th>
+                                    <th>Amount</th>
                                     <th>status</th>
                                     <th v-if="showPermission.includes('delete-shipping') && showPermission.includes('edit-shipping')" class="text-center">Action</th>
                                 </tr>
@@ -192,8 +200,13 @@ export default {
                                     <tr>
                                         <td>{{ index+1 }}</td>
                                         <td>{{ item.country_name }}</td>
-                                        <td>{{ item.insidecity_shipping_charge }}</td>
-                                        <td>{{ item.outsidecity_shipping_charge }}</td>
+                                        <td>
+                                            <p v-if="item.country_name == 'Bangladesh'">
+                                                Inside City: Pathao={{ JSON.parse(item.shipping_charge)['inside_city']['pathao'] }}, E-courier=Pathao={{ JSON.parse(item.shipping_charge)['inside_city']['e_courier'] }}
+                                                <br>Outside City: Pathao={{ JSON.parse(item.shipping_charge)['outside_city']['pathao'] }}, E-courier={{ JSON.parse(item.shipping_charge)['outside_city']['e_courier'] }}
+                                            </p>
+                                            <p v-else> {{ JSON.parse(item.shipping_charge)['amount'] }}</p>
+                                        </td>
                                         <td>{{ item.status == 1 ? 'Active' : 'Deactive' }}</td>
                                         <td class="text-center" v-if="showPermission.includes('delete-shipping') && showPermission.includes('edit-shipping')">
                                             <button type="button" v-if="showPermission.includes('edit-shipping')" class="btn btn-sm btn-info" @click="editShipping(item)">Edit</button>
@@ -209,8 +222,10 @@ export default {
                                  
                             </tbody>
                         </table>
-                            <Bootstrap4Pagination
+                        <Bootstrap4Pagination
                                 :data="shipping_infos"
+                                :limit="'1'"
+                                :keep-length="'false'"
                                 @pagination-change-page="getShippingData"
                             />
                     </div>
@@ -283,8 +298,7 @@ export default {
                                     </div>
                                     <div class="modal-footer md-button">
                                         <button class="btn btn-default" data-dismiss="modal"><i class="flaticon-cancel-12" @click="formReset"></i>Discard</button>
-                                        <button type="button" @click.prevent="addShppingCharge()" v-if="charge.id == ''" class="btn btn-primary">Add</button>
-                                        <button type="button" @click.prevent="updateShppingCharge()" v-else class="btn btn-primary">Update</button>
+                                        <button type="button" @click.prevent="addShppingCharge()" class="btn btn-primary">{{ charge.id == '' ? 'Add' : 'Update' }}</button>
                                     </div>
                                 </div>  
                             </form>

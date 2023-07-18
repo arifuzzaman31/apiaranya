@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\AttributeExport;
 use App\Models\AttributeValue;
-use App\Models\Brand;
-use App\Models\Category;
+use App\Models\ShippingConfig;
 use App\Models\Page;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -145,31 +144,34 @@ class PagesController extends Controller
 
     public function storeShippingCharge(Request $request)
     {
-        return $request->all();
         $request->validate([
-            'country_name'  => 'required|unique:shipping_configs'
+            'country_name'  => 'required|unique:shipping_configs,country_name,'.$request->id
         ]);
         
-        if($request->amount == ''){
-            // $data = [
-            //     // inside_city: {
-            //     //     pathao: 0,
-            //     //     e_courier: 0
-            //     // },
-            //     // outside_city: {
-            //     //     pathao: 0,
-            //     //     e_courier: 0
-            //     // },
-            //     'inside_city'   =>  $request->inside_city,
-            // ]
+        if($request->country_name == 'Bangladesh'){
+            $data = [
+                'inside_city'   => [
+                    'pathao'    => $request->inside_city_pathao,
+                    'e_courier' => $request->inside_city_e_courier
+                ],
+                'outside_city'  => [
+                    'pathao'    => $request->outside_city_pathao,
+                    'e_courier' => $request->outside_city_e_courier
+                ],
+            ];
+        } else {
+            $data = ['amount' => $request->amount];
         }
-        try{
-            DB::table('shipping_configs')->insert([
+
+        try {
+            ShippingConfig::updateOrCreate([
+                'id'    =>  $request->id
+            ],[
                 'country_name'  => $request->country_name,
-                'insidecity_shipping_charge' => $request->inside_city,
-                'status'    => $request->status ? 1 : 0,
-                'created_at' => now(),
+                'shipping_charge' => json_encode($data),
+                'status'    => $request->status ? 1 : 0
             ]);
+
             return $this->successMessage("Shipping Charge Added!");
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error', 'message' =>  $th->getMessage()]);
