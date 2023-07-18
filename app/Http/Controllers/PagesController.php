@@ -145,14 +145,28 @@ class PagesController extends Controller
 
     public function storeShippingCharge(Request $request)
     {
+        return $request->all();
         $request->validate([
             'country_name'  => 'required|unique:shipping_configs'
         ]);
+        
+        if($request->amount == ''){
+            // $data = [
+            //     // inside_city: {
+            //     //     pathao: 0,
+            //     //     e_courier: 0
+            //     // },
+            //     // outside_city: {
+            //     //     pathao: 0,
+            //     //     e_courier: 0
+            //     // },
+            //     'inside_city'   =>  $request->inside_city,
+            // ]
+        }
         try{
             DB::table('shipping_configs')->insert([
                 'country_name'  => $request->country_name,
                 'insidecity_shipping_charge' => $request->inside_city,
-                'outsidecity_shipping_charge' => $request->outside_city,
                 'status'    => $request->status ? 1 : 0,
                 'created_at' => now(),
             ]);

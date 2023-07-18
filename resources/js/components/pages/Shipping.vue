@@ -26,9 +26,13 @@ export default {
             countries: null,
             charge : {
                 id: '',
+                amount: 0,
                 country_name: '',
-                inside_city: 0,
-                outside_city: 0,
+                inside_city_pathao: 0,
+                inside_city_e_courier: 0,
+                outside_city_pathao: 0,
+                outside_city_e_courier: 0,
+               
                 status: 1
             },
             url: baseUrl
@@ -73,11 +77,13 @@ export default {
         },
 
         addShppingCharge(){
+            alert()
             axios.post(baseUrl+`add-shipping-charge`,this.charge).then(
                 response => {
-                    $("#addShippingModal").modal('hide');
-                    this.getShippingData()
-                    this.successMessage(response.data)
+                    // $("#addShippingModal").modal('hide');
+                    // this.getShippingData()
+                    // this.successMessage(response.data)
+                    console.log(response.data)
                 }
             ). catch(error => {
                 if(error.response.status == 422){
@@ -218,7 +224,7 @@ export default {
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Add Shipping Charge</h5>
+                        <h5 class="modal-title ml-3">Add Shipping Charge</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"  @click="formReset">
                             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                         </button>
@@ -242,19 +248,38 @@ export default {
                                         {{ validation_error.country_name[0] }}
                                     </span>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="inside_city">Amount</label>
-                                        <input type="number" v-model="charge.inside_city" class="form-control" id="inside_city" />
+                                    <div class="form-group" v-if="charge.country_name !== 'Bangladesh'">
+                                        <label for="amount">Amount</label>
+                                        <input type="number" v-model="charge.amount" class="form-control" id="amount" />
                                     </div>
-                                    <!-- <div class="form-group">
-                                        <label for="outside_city">Amount (Outside City)</label>
-                                        <input type="number" v-model="charge.outside_city" class="form-control" id="outside_city" />
-                                    </div> -->
-                                    <div class="col-lg-3 col-md-3 col-sm-4 col-6">
-                                        <label class="switch s-icons s-outline  s-outline-success  mb-4 mr-2">
-                                            <input v-model="charge.status" type="checkbox" :checked="charge.status" id="charge-status">
-                                            <span class="slider round"></span>
-                                        </label>
+                                    <p v-if="charge.country_name == 'Bangladesh'" class="text-bold mt-2">Inside Capital</p>
+                                    <div class="d-flex justify-content-between" v-if="charge.country_name == 'Bangladesh'">
+                                        <div class="form-group">
+                                            <label for="inside_citypathao">Amount (Pathao)</label>
+                                            <input type="number" v-model="charge.inside_city_pathao" class="form-control" id="inside_citypathao" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inside_citye_courier">Amount (E-Courier)</label>
+                                            <input type="number" v-model="charge.inside_city_e_courier" class="form-control" id="inside_citye_courier" />
+                                        </div>
+                                    </div>
+                                    <p class="text-bold mt-2" v-if="charge.country_name == 'Bangladesh'">Outside Capital</p>
+                                    <div class="d-flex justify-content-between" v-if="charge.country_name == 'Bangladesh'">
+                                        <div class="form-group">
+                                            <label for="outside_citypathao">Amount (Pathao)</label>
+                                            <input type="number" v-model="charge.outside_city_pathao" class="form-control" id="outside_citypathao" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="outside_citye_courier">Amount (E-Courier)</label>
+                                            <input type="number" v-model="charge.outside_city_e_courier" class="form-control" id="outside_citye_courier" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <select class="form-control" v-model="charge.status">
+                                            <option value="1">Active</option>
+                                            <option value="0">Deactive</option>
+                                        </select>
+                            
                                     </div>
                                     <div class="modal-footer md-button">
                                         <button class="btn btn-default" data-dismiss="modal"><i class="flaticon-cancel-12" @click="formReset"></i>Discard</button>
