@@ -162,6 +162,8 @@ Route::view('order-report', 'pages.report.order_report')->name('order.report');
 Route::controller(ReportController::class)->group(function(){
     Route::view('stock-report', 'pages.report.stock_report')->name('stock.report');
     Route::get('get-stock-report', 'stockReport');
+    Route::view('payment-report', 'pages.report.payment_report')->name('payment.report');
+    Route::get('get-payment-report', 'paymentReport');
 });
 
 ?>

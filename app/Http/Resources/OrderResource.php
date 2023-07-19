@@ -46,6 +46,7 @@ class OrderResource extends JsonResource
             'tracking_id'       => $this->tracking_id,
             'status'            => $this->status,
             'charged_currency'  => $this->charged_currency,
+            // 'customer_note'     => $this->user_note,
             'status_text'       => orderStatus($this->status),
             'created_date'      => date('j M Y', strtotime($this->created_at)),
         ];

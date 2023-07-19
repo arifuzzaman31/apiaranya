@@ -31,11 +31,12 @@ class FrontController extends Controller
             ->get();
     }
 
-    public function shippingData($countryname = 'Bangladesh')
+    public function shippingData()
     {
-        return DB::table('shipping_configs')->where('country_name',$countryname) 
+        $data = DB::table('shipping_configs') 
             ->where('status',AllStatic::$active)
             ->get();
+        return response()->json($data);
     }
 
     public function allAttribute($category_id)

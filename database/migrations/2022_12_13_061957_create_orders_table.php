@@ -45,6 +45,7 @@ class CreateOrdersTable extends Migration
             $table->string('charged_currency')->default(0);
             $table->float('exchange_rate')->nullable();
             $table->string('tracking_id')->nullable();
+            $table->longText('user_note')->nullable();
             $table->longText('payment_info')->nullable();
             $table->tinyInteger('status')->default(1)->comment = "0=cancel, 1=active, 2=On-hold";
             $table->tinyInteger('is_same_address')->default(0);

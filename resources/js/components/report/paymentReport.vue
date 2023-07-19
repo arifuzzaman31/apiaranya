@@ -11,7 +11,8 @@ export default {
     },
     data(){
         return {
-            stockData: [],
+            paymentData: [],
+            search: '',
             filterdata : {
                 from: '',
                 to: ''
@@ -23,31 +24,32 @@ export default {
     },
 
     methods: {
-        getStockReport(page = 1){
-            axios.get(baseUrl+`get-stock-report?page=${page}&per_page=10&from=${this.filterdata.from}&to=${this.filterdata.to}`)
+        getPaymentReport(page = 1){
+            axios.get(baseUrl+`get-payment-report?page=${page}&per_page=10&keyword=${this.search}&from=${this.filterdata.from}&to=${this.filterdata.to}`)
             .then(result => {
-                this.stockData = result.data;
+                this.paymentData = result.data;
             })
             .catch(errors => {
                 console.log(errors);
             });  
         },
         filterClear(){
+            this.search = ''
             this.filterdata = {
                 payment_status : '',
                 from: '',
                 to: '',
                 order_state: ''
             }
-            this.getStockReport()
+            this.getPaymentReport()
         },
         getSearch(){
             if(this.search.length < 3) return ;
-            this.getStockReport()
+            this.getPaymentReport()
         },
     },
     mounted(){
-        this.getStockReport()
+        this.getPaymentReport()
     }
 }
 </script>
@@ -59,7 +61,7 @@ export default {
             <div class="widget-header">
                 <div class="row">
                     <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
-                        <h4>Stock Report</h4>
+                        <h4>Payment Report</h4>
                     </div>                          
                 </div>
             </div>       
@@ -69,15 +71,24 @@ export default {
                         <input type="text" onfocus="(this.type='date')" v-model="filterdata.from" class="form-control form-control-sm" placeholder="Start Date">
                     </div>
                     <div class="col-md-2 col-lg-2 col-12">
-                        <input type="text" onfocus="(this.type='date')" v-model="filterdata.to" @change="getStockReport()" class="form-control form-control-sm" placeholder="End Date">
+                        <input type="text" onfocus="(this.type='date')" v-model="filterdata.to" @change="getPaymentReport()" class="form-control form-control-sm" placeholder="End Date">
                     </div>
                     <div class="col-md-2 col-lg-2 col-12">
-                        <select id="product-camp" class="form-control form-control-sm" @change="getStockReport()" v-model="filterdata.payment_status">
+                        <select id="product-camp" class="form-control form-control-sm" @change="getPaymentReport()" v-model="filterdata.payment_status">
                             <option selected="" value="">Choose...</option>
                             <option value="1">Paid</option>
                             <option value="0">Unpaid</option>
                             <option value="2">Failed</option>
                             <option value="3">Cancel</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-12">
+                        <select id="product-camp" class="form-control form-control-sm" @change="getPaymentReport()" v-model="filterdata.order_state">
+                            <option selected="" value="">Choose...</option>
+                            <option value="0">Pending</option>
+                            <option value="1">Processing</option>
+                            <option value="2">On Delivery</option>
+                            <option value="3">Delivered</option>
                         </select>
                     </div>
 
@@ -89,42 +100,32 @@ export default {
                     <table class="table table-bordered table-hover mb-4">
                         <thead>
                             <tr>
-                                <th>SKU</th>
-                                <th>Product</th>
-                                <th class="text-center">Category</th>
-                                <th class="text-center">Sub Category</th>
-                                <th class="text-center">Brand</th>
-                                <th>Current Stock</th>
+                                <th>SL</th>
+                                <th class="text-center">gateway Name</th>
+                                <th class="text-center">Amount</th>
                             </tr>
                         </thead>
-                        <tbody v-if="stockData.data && stockData.data.length > 0">
-                            <template v-for="(item,index) in stockData.data" :key="index">
+                        <tbody v-if="paymentData.data && paymentData.data.length > 0">
+                            <template v-for="(item,index) in paymentData.data" :key="index">
                                 <tr>
-                                    <td>{{ item.sku }}</td>
-                                    <td>{{ item.product.product_name }}</td>
-                                    <td class="text-center">{{ item.product.category.category_name }}</td>
-                                    <td class="text-center">{{ item.product.subcategory.category_name }}</td>
-                                    <td class="text-center">
-                                        <p v-for="brand in item.product.product_brand" :key="brand.id">
-                                            {{ brand.brand_name }}
-                                        </p>
-                                    </td>
-                                    <td>{{ item.stock }}</td>
+                                    <td>{{ index+1 }}</td>
+                                    <td>{{ item.gatewayname }}</td>
+                                    <td class="text-center">{{ item.paid_total }}</td>
                                 </tr>					
                             </template>
                         </tbody>
                         <tbody v-else class="text-center mt-3">
                             <tr>
-                                <td colspan="6">No Order Found</td>
+                                <td colspan="3">No Data Found</td>
                             </tr>
                                 
                         </tbody>
                     </table>
                         <Bootstrap4Pagination
-                            :data="stockData"
+                            :data="paymentData"
                             :limit="limit"
                             :keep-length="keepLength"
-                            @pagination-change-page="getStockReport"
+                            @pagination-change-page="getPaymentReport"
                         />
                 </div>
                 

@@ -319,6 +319,9 @@
                     <li>
                         <a href="{{ route('stock.report') }}">Stock Report </a>
                     </li>
+                    <li>
+                        <a href="{{ route('payment.report') }}">Payment Report </a>
+                    </li>
                    
                 </ul>
             </li>

@@ -62,6 +62,7 @@ class OrderController extends Controller
             $order->is_same_address        = $request->isSameAddress == false ? 0 : 1;
             $order->charged_currency       = $request->selectedCurrency;
             $order->exchange_rate          = (float)$request->currentConversionRate;
+            $order->user_note              = $request->data['orderNote'];
             $order->save();
 
             foreach ($request->cart as $value) {
@@ -179,7 +180,7 @@ class OrderController extends Controller
 
         } catch (\Throwable $th) {
             \DB::rollback();
-            return $th;
+            //return $th;
             return response()->json(['status' => 'error', 'message' => $th->getMessage()]);
         }
     }
@@ -326,6 +327,7 @@ class OrderController extends Controller
                 $order->payment_date = $request->tran_date;
                 $order->payment_info = json_encode($request->all());
                 $order->update();
+                
                 DB::table('payments')->where('order_id', $order->id)->update([
                     'payment_type' => 'sslCommerz-'.$request->card_type,
                     'transaction_id' => $request->bank_tran_id,
