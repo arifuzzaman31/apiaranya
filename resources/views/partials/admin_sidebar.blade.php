@@ -300,7 +300,7 @@
             </li>
             @endif
 
-            @if(checkPermission('campaign-view'))
+            @if(checkPermission('report-view') && FALSE)
             <li class="menu @if(request()->is('admin/order-report')) active @endif">
                 <a href="#report" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
