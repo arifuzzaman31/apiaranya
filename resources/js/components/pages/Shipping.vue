@@ -68,7 +68,7 @@ export default {
         editShipping(item){
             this.formReset()
             this.charge.id = item.id
-            this.charge.country_name = item.country_name
+            this.charge.country_name = item.country_name+' code '+item.country_code
             if(item.country_name == 'Bangladesh'){
                 let dt = JSON.parse(item.shipping_charge);
                 this.charge.inside_city_pathao = dt['inside_city']['pathao']
@@ -81,6 +81,10 @@ export default {
             
             this.charge.status = item.status
             $("#addShippingModal").modal('show');
+        },
+
+        setCode(){
+
         },
 
         addShppingCharge(){
@@ -190,6 +194,7 @@ export default {
                                 <tr>
                                     <th>ID</th>
                                     <th>Country</th>
+                                    <th>Code</th>
                                     <th>Amount</th>
                                     <th>status</th>
                                     <th v-if="showPermission.includes('delete-shipping') && showPermission.includes('edit-shipping')" class="text-center">Action</th>
@@ -200,6 +205,7 @@ export default {
                                     <tr>
                                         <td>{{ index+1 }}</td>
                                         <td>{{ item.country_name }}</td>
+                                        <td>{{ item.country_code }}</td>
                                         <td>
                                             <p v-if="item.country_name == 'Bangladesh'">
                                                 Inside City: Pathao={{ JSON.parse(item.shipping_charge)['inside_city']['pathao'] }}, E-courier=Pathao={{ JSON.parse(item.shipping_charge)['inside_city']['e_courier'] }}
@@ -250,12 +256,13 @@ export default {
                                 <div>
                                     <div class="form-group">
                                         <label for="">Select Country</label>
-                                        <select class="form-control" v-model="charge.country_name" :disabled="charge.id != ''">
+                                        <select class="form-control" v-model="charge.country_name" v-if="charge.id == ''">
                                             <option value="">Select Action</option>
                                             
-                                            <option :value="cunt.name" v-for="cunt in countries" :key="cunt.code">{{ cunt.name }} ({{ cunt.code }})</option>
+                                            <option :value="cunt.name+' code '+cunt.code" v-for="cunt in countries" :key="cunt.code">{{ cunt.name }} ({{ cunt.code }})</option>
                                          
                                         </select>
+                                        <input type="text" class="form-control" v-model="charge.country_name" v-else disabled />
                                         <span
                                         v-if="validation_error.hasOwnProperty('country_name')"
                                         class="text-danger"
@@ -263,12 +270,12 @@ export default {
                                         {{ validation_error.country_name[0] }}
                                     </span>
                                     </div>
-                                    <div class="form-group" v-if="charge.country_name !== 'Bangladesh'">
+                                    <div class="form-group" v-if="charge.country_name !== 'Bangladesh code BD'">
                                         <label for="amount">Amount</label>
                                         <input type="number" v-model="charge.amount" class="form-control" id="amount" />
                                     </div>
-                                    <p v-if="charge.country_name == 'Bangladesh'" class="text-bold mt-2">Inside Capital</p>
-                                    <div class="d-flex justify-content-between" v-if="charge.country_name == 'Bangladesh'">
+                                    <p v-if="charge.country_name == 'Bangladesh code BD'" class="text-bold mt-2">Inside Capital</p>
+                                    <div class="d-flex justify-content-between" v-if="charge.country_name == 'Bangladesh code BD'">
                                         <div class="form-group">
                                             <label for="inside_citypathao">Amount (Pathao)</label>
                                             <input type="number" v-model="charge.inside_city_pathao" class="form-control" id="inside_citypathao" />
@@ -278,8 +285,8 @@ export default {
                                             <input type="number" v-model="charge.inside_city_e_courier" class="form-control" id="inside_citye_courier" />
                                         </div>
                                     </div>
-                                    <p class="text-bold mt-2" v-if="charge.country_name == 'Bangladesh'">Outside Capital</p>
-                                    <div class="d-flex justify-content-between" v-if="charge.country_name == 'Bangladesh'">
+                                    <p class="text-bold mt-2" v-if="charge.country_name == 'Bangladesh code BD'">Outside Capital</p>
+                                    <div class="d-flex justify-content-between" v-if="charge.country_name == 'Bangladesh code BD'">
                                         <div class="form-group">
                                             <label for="outside_citypathao">Amount (Pathao)</label>
                                             <input type="number" v-model="charge.outside_city_pathao" class="form-control" id="outside_citypathao" />

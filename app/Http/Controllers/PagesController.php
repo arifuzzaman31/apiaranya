@@ -148,7 +148,9 @@ class PagesController extends Controller
             'country_name'  => 'required|unique:shipping_configs,country_name,'.$request->id
         ]);
         
-        if($request->country_name == 'Bangladesh'){
+        $cntry = explode("code",$request->country_name);
+
+        if(trim($cntry[0]) == 'Bangladesh'){
             $data = [
                 'inside_city'   => [
                     'pathao'    => $request->inside_city_pathao,
@@ -162,12 +164,14 @@ class PagesController extends Controller
         } else {
             $data = ['amount' => $request->amount];
         }
-
+        
+        
         try {
             ShippingConfig::updateOrCreate([
                 'id'    =>  $request->id
             ],[
-                'country_name'  => $request->country_name,
+                'country_name'  => trim($cntry[0]),
+                'country_code'  => trim($cntry[1]),
                 'shipping_charge' => json_encode($data),
                 'status'    => $request->status ? 1 : 0
             ]);

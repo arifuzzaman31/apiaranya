@@ -9,5 +9,5 @@ class ShippingConfig extends Model
 {
     use HasFactory;
     protected $table = 'shipping_configs';
-    protected $fillable = ['country_name','shipping_charge','status'];
+    protected $fillable = ['country_name','country_code','shipping_charge','status'];
 }

@@ -16,8 +16,8 @@ class CreateShippingConfigsTable extends Migration
         Schema::create('shipping_configs', function (Blueprint $table) {
             $table->id();
             $table->string('country_name')->unique();
-            $table->integer('insidecity_shipping_charge')->default(0);
-            $table->integer('outsidecity_shipping_charge')->default(0);
+            $table->text('country_code');
+            $table->json('shipping_charge')->default(0);
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
