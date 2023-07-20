@@ -63,6 +63,7 @@ class ProductResource extends JsonResource
             'p_consignment'     => $this->whenLoaded('product_consignment'),
             'p_ingredient'      => $this->whenLoaded('product_ingredient'),
             'p_care'            => $this->whenLoaded('product_care'),
+            'p_tag'             => $this->whenLoaded('tag'),
             'country_of_origin' => $this->country_of_origin,
             'status'            => $this->status,
             'status_text'       => $this->status == 1 ? 'Active' : 'Deactive',
