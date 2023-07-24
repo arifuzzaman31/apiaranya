@@ -365,6 +365,27 @@ class PermissionSeeder extends Seeder
                 'route_name' => null,
                 'slug' => 'media-delete',
                 'status' => 1
+            ],
+            [
+                'group_name' => 'Information',
+                'permission_name' => 'Add Info',
+                'route_name' => null,
+                'slug' => 'add-info',
+                'status' => 1
+            ],
+            [
+                'group_name' => 'Information',
+                'permission_name' => 'Edit Info',
+                'route_name' => null,
+                'slug' => 'edit-info',
+                'status' => 1
+            ],
+            [
+                'group_name' => 'Information',
+                'permission_name' => 'Info Delete',
+                'route_name' => null,
+                'slug' => 'delete-info',
+                'status' => 1
             ]
         ];
 

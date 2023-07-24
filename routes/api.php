@@ -68,3 +68,5 @@ Route::get('category-fabric/{cat_id}',[FrontController::class,'getCategoryFabric
 Route::post('user-password-email-reset-link', [AuthController::class, 'sendEmailLink'])->name('user-password-email-reset-link');
 
 Route::post('user-reset-password', [AuthController::class, 'storeResetPassword']);
+
+Route::get('information/{slug?}',[PageController::class, 'getInfo']);

@@ -92,6 +92,9 @@ Route::controller(PagesController::class)
         Route::post('add-shipping-charge','storeShippingCharge');
         Route::get('get-shipping-data','getShippingData');
         Route::delete('remove-shipping-data/{id}','deleteShipping');
+        Route::get('information','getInformation')->name('information');
+        Route::post('add-information','storeInformation');
+        Route::delete('remove-information-data/{id}','deleteInformation');
 });
 
 Route::view('refund','pages.refund.refund')->name('refund');

@@ -170,6 +170,9 @@
                     <li>
                         <a href="{{ route('shipping') }}"> Shipping </a>
                     </li>
+                    <li>
+                        <a href="{{ route('information') }}"> Information </a>
+                    </li>
                 </ul>
             </li>
             @endif

@@ -9,7 +9,7 @@ use App\Models\Page;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Traits\ProductTrait;
-use DB;
+use DB,Str;
 
 class PagesController extends Controller
 {
@@ -210,20 +210,37 @@ class PagesController extends Controller
      * @param  \App\Models\AttributeValue  $attributeValue
      * @return \Illuminate\Http\Response
      */
-    public function show(AttributeValue $attributeValue)
+    public function getInformation()
     {
-        //
+        $cont = DB::table('informations')->get();
+        return view('pages.page.information',['content' => $cont]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\AttributeValue  $attributeValue
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(AttributeValue $attributeValue)
+
+    public function storeInformation(Request $request)
     {
-        //
+        try {
+            DB::table('informations')
+                ->updateOrInsert(
+                    ['id'    =>  $request->id],
+                    [
+                        'title'    => $request->title,
+                        'slug'     => Str::slug($request->title),
+                        'back_link'  => config('app.front_url').Str::slug($request->title),
+                        'content'  => $request->content,
+                        'status'   => $request->status,
+                        'created_at' => now()
+                    ]
+                );
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Information Added Successfully!'
+            ], 200);
+
+        } catch (\Throwable $th) {
+            return $this->errorMessage();
+        }
     }
 
     /**
@@ -233,9 +250,14 @@ class PagesController extends Controller
      * @param  \App\Models\AttributeValue  $attributeValue
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, AttributeValue $attributeValue)
+    public function deleteInformation($id)
     {
-        //
+        try {
+            DB::table('informations')->where('id',$id)->delete();
+            return $this->successMessage('Information Deleted Successfully!');
+        } catch (\Throwable $th) {
+            return $this->errorMessage();
+        }
     }
 
     /**
