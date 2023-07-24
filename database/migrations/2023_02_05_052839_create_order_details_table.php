@@ -24,12 +24,16 @@ class CreateOrderDetailsTable extends Migration
             $table->foreignId('fabric_id')->nullable()->default(0);
             $table->foreignId('user_id')->comment = "customer_id";
             $table->integer('quantity');
-            $table->double('selling_price',8,4);
+            $table->double('selling_price',8,4)->comment= "original BDT currency";
+            $table->double('charge_selling_price',8,4)->comment= "converted currency";
             $table->double('vat_rate',8,4)->default(0);
-            $table->double('vat_amount',8,4)->default(0);
+            $table->double('charge_vat_rate',8,4)->default(0);
+            $table->double('vat_amount',8,4)->default(0)->comment= "original BDT currency";
+            $table->double('charge_vat_amount',8,4)->default(0)->comment= "converted currency";
             $table->double('buying_price',8,4);
             $table->double('total_buying_price',8,4);
-            $table->double('total_selling_price',8,4);
+            $table->double('total_selling_price',8,4)->comment= "original BDT currency";
+            $table->double('total_charge_selling_price',8,4)->comment= "converted currency";
             $table->double('unit_discount')->default(0);
             $table->double('total_discount')->default(0);
             $table->tinyInteger('is_claim_refund')->default(0)->comment = "0 for No Claim, 1 for claimed";
@@ -39,6 +43,8 @@ class CreateOrderDetailsTable extends Migration
             $table->longText('refund_claim_reason')->nullable();
             $table->longText('refund_reject_reason')->nullable();
             $table->longText('refund_info')->nullable();
+            $table->string('charged_currency')->default('BDT');
+            $table->float('exchange_rate')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->softDeletes();
             $table->timestamps();

@@ -19,8 +19,8 @@ class CreateOrdersTable extends Migration
             $table->string('order_id');
             $table->foreignId('user_id');
             $table->json('order_data')->default(new Expression('(JSON_ARRAY())'))->change();
-            $table->double('total_price',8, 4);
-            $table->double('charge_total_price',8, 4);
+            $table->double('total_price',8, 4)->comment   = "original BDT currency";
+            $table->double('charge_total_price',8, 4)->comment   = "converted currency";
             $table->double('vat_rate')->default(0)->comment   = "vat rate in percentage '%'";
             $table->double('charge_vat_rate')->default(0)->comment   = "transform vat rate in percentage '%'";
             $table->double('vat_amount')->default(0)->comment = "value added vat amount";

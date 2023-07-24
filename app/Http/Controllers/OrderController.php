@@ -32,7 +32,6 @@ class OrderController extends Controller
      */
     public function getOrder(Request $request)
     {
-        // return $request->get('date_range');
         $noPagination = $request->get('no_paginate');
         $taken = $request->get('take_some');
         $keyword   = $request->get('keyword');
@@ -43,7 +42,11 @@ class OrderController extends Controller
         $to   = $request->get('to');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
-        $order = Order::with(['user','delivery'])->orderBy('id','desc');
+        $order = Order::with(['user','delivery'])->withCount([
+            'order_details as buying_sum' => function($query) {
+                $query->select(\DB::raw('SUM(total_buying_price)'));
+            }
+        ])->orderBy('id','desc');
       
         if($keyword != ''){
             $order = $order->where('order_id','like','%'.$keyword.'%');

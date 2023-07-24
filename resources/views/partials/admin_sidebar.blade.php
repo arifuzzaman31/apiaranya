@@ -1,5 +1,5 @@
 <div class="sidebar-wrapper sidebar-theme">  
-    <nav id="sidebar" style="height: 80vh;overflow-y: auto;">
+    <nav id="sidebar" style="height: 92%;overflow-y: auto;">
         <ul class="list-unstyled menu-categories" id="accordionExample">
             <li class="menu @if(request()->is('admin/dashboard')) active @endif">
                 <a href="{{ url('admin/dashboard') }}" aria-expanded="false" class="dropdown-toggle">
@@ -303,7 +303,7 @@
             </li>
             @endif
 
-            @if(checkPermission('report-view') && FALSE)
+            @if(checkPermission('report-view'))
             <li class="menu @if(request()->is('admin/order-report')) active @endif">
                 <a href="#report" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
@@ -324,6 +324,12 @@
                     </li>
                     <li>
                         <a href="{{ route('payment.report') }}">Payment Report </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('individual-customer.report') }}">Individual Customer Report </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('invoice.report') }}">Invoice Report </a>
                     </li>
                    
                 </ul>
