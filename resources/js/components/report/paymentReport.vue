@@ -12,8 +12,8 @@ export default {
     data(){
         return {
             paymentData: [],
-            search: '',
             filterdata : {
+                payment_status : '',
                 from: '',
                 to: ''
             },
@@ -25,7 +25,7 @@ export default {
 
     methods: {
         getPaymentReport(page = 1){
-            axios.get(baseUrl+`get-payment-report?page=${page}&per_page=10&keyword=${this.search}&from=${this.filterdata.from}&to=${this.filterdata.to}`)
+            axios.get(baseUrl+`get-payment-report?page=${page}&per_page=14&payment_status=${this.filterdata.payment_status}&from=${this.filterdata.from}&to=${this.filterdata.to}`)
             .then(result => {
                 this.paymentData = result.data;
             })
@@ -34,19 +34,13 @@ export default {
             });  
         },
         filterClear(){
-            this.search = ''
             this.filterdata = {
                 payment_status : '',
                 from: '',
-                to: '',
-                order_state: ''
+                to: ''
             }
             this.getPaymentReport()
-        },
-        getSearch(){
-            if(this.search.length < 3) return ;
-            this.getPaymentReport()
-        },
+        }
     },
     mounted(){
         this.getPaymentReport()
@@ -75,7 +69,7 @@ export default {
                     </div>
                     <div class="col-md-2 col-lg-2 col-12">
                         <select id="product-camp" class="form-control form-control-sm" @change="getPaymentReport()" v-model="filterdata.payment_status">
-                            <option selected="" value="">Choose...</option>
+                            <option value="">Choose...</option>
                             <option value="1">Paid</option>
                             <option value="0">Unpaid</option>
                             <option value="2">Failed</option>
@@ -83,44 +77,46 @@ export default {
                         </select>
                     </div>
                     <div class="col-md-2 col-lg-2 col-12">
-                        <select id="product-camp" class="form-control form-control-sm" @change="getPaymentReport()" v-model="filterdata.order_state">
-                            <option selected="" value="">Choose...</option>
-                            <option value="0">Pending</option>
-                            <option value="1">Processing</option>
-                            <option value="2">On Delivery</option>
-                            <option value="3">Delivered</option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-2 col-lg-2 col-12">
                         <button type="button" class="btn btn-danger" @click="filterClear()">CLEAR</button>
                     </div>
                 </div>
                 <div class="table-responsive" style="min-height: 60vh;">
                     <table class="table table-bordered table-hover mb-4">
-                        <thead>
-                            <tr>
-                                <th>SL</th>
-                                <th class="text-center">gateway Name</th>
-                                <th class="text-center">Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody v-if="paymentData.data && paymentData.data.length > 0">
-                            <template v-for="(item,index) in paymentData.data" :key="index">
+                            <thead>
                                 <tr>
-                                    <td>{{ index+1 }}</td>
-                                    <td>{{ item.gatewayname }}</td>
-                                    <td class="text-center">{{ item.paid_total }}</td>
-                                </tr>					
-                            </template>
-                        </tbody>
-                        <tbody v-else class="text-center mt-3">
-                            <tr>
-                                <td colspan="3">No Data Found</td>
-                            </tr>
-                                
-                        </tbody>
-                    </table>
+                                    <th>OrderID</th>
+                                    <th>Order Date</th>
+                                    <th class="text-center">Customer</th>
+                                    <th class="text-center">Email</th>
+                                    <th class="text-center">Phone</th>
+                                    <th class="text-center">Payment</th>
+                                    <th>Address</th>
+                                    <th class="text-center">Payment Gateway</th>
+                                </tr>
+                            </thead>
+                            <tbody v-if="paymentData.data && paymentData.data.length > 0">
+                                <template v-for="(item,index) in paymentData.data" :key="index">
+                                    <tr>
+                                        <td>{{ item.id }}</td>
+                                        <td>{{ item.order_date }}</td>
+                                        <td class="text-center">{{ item.user.name }}</td>
+                                        <td class="text-center">{{ item.user.email }}</td>
+                                        <td class="text-center">
+                                                {{ item.user.phone }}
+                                        </td>
+                                        <td>{{ item.total_price }}</td>
+                                        <td>{{ item.user.address }}</td>
+                                        <td>{{ item.payment_method_name }}</td>
+                                    </tr>					
+                                </template>
+                            </tbody>
+                            <tbody v-else class="text-center mt-3">
+                                <tr>
+                                    <td colspan="13">No Order Found</td>
+                                </tr>
+                                    
+                            </tbody>
+                        </table>
                         <Bootstrap4Pagination
                             :data="paymentData"
                             :limit="limit"

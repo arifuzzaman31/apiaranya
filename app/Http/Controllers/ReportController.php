@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\AllStatic;
 use App\Models\Inventory;
 use App\Models\Order;
 use App\Models\OrderDetails;
@@ -32,14 +33,38 @@ class ReportController extends Controller
 
     public function individualCustomerReport(Request $request)
     {
+        $byposition   = $request->get('byposition');
+        $paymentStatus   = $request->get('payment_status');
+        $from   = $request->get('from');
+        $to   = $request->get('to');
+        $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
-        return Order::with('user:id,name,phone,address')
+        $order = Order::with('user:id,name,phone,address,email')
             ->withCount([
                 'order_details as invoice_sum' => function($query) {
                     $query->select(DB::raw('SUM(total_selling_price)'));
+                },
+                'order_details as refund_count' => function($query) {
+                    $query->select(DB::raw('COUNT(is_refunded)'))->where('is_refunded',AllStatic::$active);
+                },
+                'order_details as refunded_amount' => function($query) {
+                    $query->select(DB::raw('SUM(total_selling_price)'))->where('is_refunded',AllStatic::$active);
                 }
-            ])
-                ->get();
+            ]);
+
+            if($byposition != ''){
+                $order = $order->where('order_position',$byposition);
+            }
+
+            if($paymentStatus != ''){
+                $order = $order->where('payment_status',$paymentStatus);
+            }
+            
+            if($from != '' && $to != ''){
+                $order = $order->whereBetween('order_date',[$from,$to]);
+            }
+            $order = $order->paginate($dataQty);
+        return response()->json($order);
     }
 
     public function makePdf()

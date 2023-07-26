@@ -25,7 +25,7 @@ export default {
 
     methods: {
         getOrder(page = 1){
-            axios.get(baseUrl+`get-order?page=${page}&per_page=10&byposition=${this.filterdata.order_state}&payment_status=${this.filterdata.payment_status}&status=${this.filterdata.status}`)
+            axios.get(baseUrl+`get-order?page=${page}&per_page=14&byposition=${this.filterdata.order_state}&payment_status=${this.filterdata.payment_status}&status=${this.filterdata.status}`)
             .then(result => {
                 this.orders = result.data;
             })
@@ -142,14 +142,9 @@ export default {
                                         <td>{{ order.total_price }}</td>
                                         <td>{{ order.total_price - order.buying_sum}}</td>
                                         <td class="text-center">
-                                            <span v-if="order.payment_method == 0">COD</span>
-                                            <span v-if="order.payment_method == 1">MPAY</span>
-                                            <span v-if="order.payment_method == 2">POS</span>
-                                            <span v-if="order.payment_method == 3">CCRD</span>
-                                            <span v-if="order.payment_method == 4">BOD</span>
+                                            {{ order.payment_via == 0 ? 'COD' : 'Online' }}
                                         </td>
                                         <td>{{ order.payment_method_name }}</td>
-                                        
                                     </tr>					
                                 </template>
                             </tbody>
@@ -167,9 +162,9 @@ export default {
                                 @pagination-change-page="getOrder"
                             />
                     </div>
-                    <div class="float-right">
+                    <!-- <div class="float-right">
                         <a target="_blank" :href="url+`get-order-excel?byposition=${filterdata.order_state}&status=${filterdata.status}`" type="button" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>  Excel</a>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

@@ -169,8 +169,9 @@ Route::controller(ReportController::class)->group(function(){
     Route::view('stock-report', 'pages.report.stock_report')->name('stock.report');
     Route::get('get-stock-report', 'stockReport');
     Route::view('payment-report', 'pages.report.payment_report')->name('payment.report');
-    Route::get('get-payment-report', 'paymentReport');
+    Route::get('get-payment-report', 'individualCustomerReport');
     Route::view('individual-customer', 'pages.report.individual_customer')->name('individual-customer.report');
+    Route::view('customer-refund-report', 'pages.report.customer_refund_customer')->name('customer-refund.report');
     Route::get('get-individual-customer-report', 'individualCustomerReport');
     Route::view('invoice-report', 'pages.report.invoice_report')->name('invoice.report');
 });

@@ -14,7 +14,8 @@ export default {
             customerData: [],
             filterdata : {
                 from: '',
-                to: ''
+                to: '',
+                order_state: ''
             },
             limit: 3,
             keepLength: false,
@@ -24,7 +25,7 @@ export default {
 
     methods: {
         getIndividualCustomerReport(page = 1){
-            axios.get(baseUrl+`get-individual-customer-report?page=${page}&per_page=10&from=${this.filterdata.from}&to=${this.filterdata.to}`)
+            axios.get(baseUrl+`get-individual-customer-report?page=${page}&byposition=${this.filterdata.order_state}&per_page=10&from=${this.filterdata.from}&to=${this.filterdata.to}`)
             .then(result => {
                 this.customerData = result.data;
             })
@@ -34,7 +35,6 @@ export default {
         },
         filterClear(){
             this.filterdata = {
-                payment_status : '',
                 from: '',
                 to: '',
                 order_state: ''
@@ -72,12 +72,12 @@ export default {
                         <input type="text" onfocus="(this.type='date')" v-model="filterdata.to" @change="getIndividualCustomerReport()" class="form-control form-control-sm" placeholder="End Date">
                     </div>
                     <div class="col-md-2 col-lg-2 col-12">
-                        <select id="product-camp" class="form-control form-control-sm" @change="getIndividualCustomerReport()" v-model="filterdata.payment_status">
-                            <option selected="" value="">Choose...</option>
-                            <option value="1">Paid</option>
-                            <option value="0">Unpaid</option>
-                            <option value="2">Failed</option>
-                            <option value="3">Cancel</option>
+                        <select id="product-camp" class="form-control form-control-sm" @change="getIndividualCustomerReport()" v-model="filterdata.order_state">
+                                <option value="">Choose...</option>
+                                <option value="0">Pending</option>
+                                <option value="1">Processing</option>
+                                <option value="2">On Delivery</option>
+                                <option value="3">Delivered</option>
                         </select>
                     </div>
 
@@ -92,6 +92,7 @@ export default {
                                 <th>OrderID</th>
                                 <th>Order Date</th>
                                 <th class="text-center">Customer</th>
+                                <th class="text-center">Email</th>
                                 <th class="text-center">Phone</th>
                                 <th class="text-center">Payment</th>
                                 <th>Address</th>
@@ -99,27 +100,41 @@ export default {
                                 <th>Spend Amount</th>
                                 <th>Cancel Item</th>
                                 <th>Refund</th>
+                                <th class="text-center">Payment Method</th>
+                                <th class="text-center">Payment Gateway</th>
                             </tr>
                         </thead>
                         <tbody v-if="customerData.data && customerData.data.length > 0">
                             <template v-for="(item,index) in customerData.data" :key="index">
                                 <tr>
-                                    <td>{{ item.sku }}</td>
-                                    <td>{{ item.product.product_name }}</td>
-                                    <td class="text-center">{{ item.product.category.category_name }}</td>
-                                    <td class="text-center">{{ item.product.subcategory.category_name }}</td>
+                                    <td>{{ item.id }}</td>
+                                    <td>{{ item.order_date }}</td>
+                                    <td class="text-center">{{ item.user.name }}</td>
+                                    <td class="text-center">{{ item.user.email }}</td>
                                     <td class="text-center">
-                                        <p v-for="brand in item.product.product_brand" :key="brand.id">
-                                            {{ brand.brand_name }}
-                                        </p>
+                                            {{ item.user.phone }}
                                     </td>
-                                    <td>{{ item.stock }}</td>
+                                    <td>{{ item.total_price }}</td>
+                                    <td>{{ item.user.address }}</td>
+                                    <td>
+                                        <span v-if="item.order_position == 0">Pending</span>
+                                        <span v-if="item.order_position == 1">Processing</span>
+                                        <span v-if="item.order_position == 2">On Delivery</span>
+                                        <span v-if="item.order_position == 3">Delivered</span>
+                                    </td>
+                                    <td>{{ item.total_price }}</td>
+                                    <td>{{ item.refund_count }}</td>
+                                    <td>{{ item.refunded_amount }}</td>
+                                    <td class="text-center">
+                                        {{ item.payment_via == 0 ? 'COD' : 'Online' }}
+                                    </td>
+                                    <td>{{ item.payment_method_name }}</td>
                                 </tr>					
                             </template>
                         </tbody>
                         <tbody v-else class="text-center mt-3">
                             <tr>
-                                <td colspan="6">No Order Found</td>
+                                <td colspan="13">No Order Found</td>
                             </tr>
                                 
                         </tbody>

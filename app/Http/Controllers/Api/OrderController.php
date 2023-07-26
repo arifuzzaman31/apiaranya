@@ -468,8 +468,15 @@ class OrderController extends Controller
         
     }
     
-    public function invoiceToMail($order_id)
+    public function invoiceToMail($order_id = '')
     {
+        $orders = DB::table('order_details')
+                ->join('orders', 'order_details.order_id', '=', 'orders.id')
+                ->join('users', 'order_details.user_id', '=', 'users.id')
+                ->select('order_details.*', 'orders.order_date', 'users.name')
+                // ->groupBy('order_details.order_id')
+                ->get();
+        return $orders;
         $order = Order::with('order_details.product','user_billing_info')->find($order_id);
         if($order->user_billing_info->email != ''){
 
