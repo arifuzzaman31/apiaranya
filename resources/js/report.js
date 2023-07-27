@@ -6,6 +6,8 @@ import StockReport from './components/report/StockReport.vue';
 import paymentReport from './components/report/paymentReport.vue';
 import IndividualCustomerReport from './components/report/IndividualCustomerReport.vue';
 import InvoiceReport from './components/report/InvoiceReport.vue';
+import CustomerRefundReport from './components/report/CustomerRefundReport.vue';
+import CustomerLifetimeReport from './components/report/CustomerLifetimeReport.vue';
 
 const app = createApp({})
 
@@ -14,4 +16,6 @@ app.component('stock-report', StockReport)
 app.component('payment-report', paymentReport)
 app.component('individual-customer-report', IndividualCustomerReport)
 app.component('invoice-report', InvoiceReport)
+app.component('customer-refund-report', CustomerRefundReport)
+app.component('customer-lifetime-report', CustomerLifetimeReport)
 app.mount('#app')

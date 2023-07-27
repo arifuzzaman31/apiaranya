@@ -326,6 +326,9 @@
                         <a href="{{ route('payment.report') }}">Payment Report </a>
                     </li>
                     <li>
+                        <a href="{{ route('customer-lifetime.report') }}">Customer Lifetime Value </a>
+                    </li>
+                    <li>
                         <a href="{{ route('customer-refund.report') }}">Customer Refund Report </a>
                     </li>
                     <li>

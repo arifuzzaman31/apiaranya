@@ -171,9 +171,12 @@ Route::controller(ReportController::class)->group(function(){
     Route::view('payment-report', 'pages.report.payment_report')->name('payment.report');
     Route::get('get-payment-report', 'individualCustomerReport');
     Route::view('individual-customer', 'pages.report.individual_customer')->name('individual-customer.report');
-    Route::view('customer-refund-report', 'pages.report.customer_refund_customer')->name('customer-refund.report');
+    Route::view('customer-refund-report', 'pages.report.customer_refund_report')->name('customer-refund.report');
+    Route::get('get-customer-refund-report', 'customerRefundReport');
     Route::get('get-individual-customer-report', 'individualCustomerReport');
     Route::view('invoice-report', 'pages.report.invoice_report')->name('invoice.report');
+    Route::view('customer-lifetime-report', 'pages.report.customer_lifetime_report')->name('customer-lifetime.report');
+    Route::get('get-customer-lifetime-report', 'customerLifetimeReport');
 });
 
 ?>
