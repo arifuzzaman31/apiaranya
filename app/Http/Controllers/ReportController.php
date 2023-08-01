@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Order;
 use App\Http\AllStatic;
 use App\Models\Inventory;
-use App\Models\Order;
-use App\Models\User;
 use App\Models\OrderDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,13 +14,126 @@ class ReportController extends Controller
 {
     public function stockReport(Request $request)
     {
-        // return $request->from;
-        $data = Inventory::with('product.category','product.subcategory','product.product_brand')
-                ->paginate(10);
-                // if($request->from != '' && $request->to != ''){
-                //     $data = $data->whereBetween('created_at', [$request->from,$request->to]);
-                // }
-        return response()->json($data);
+        try {
+            $from   = $request->get('date_from');
+            $to   = $request->get('date_to');
+            $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
+
+            $data = Inventory::with('product.category:id,category_name','product.subcategory:id,category_name',
+                'product.product_brand:id,brand_name','product.product_fabric:id,fabric_name','colour:id,color_name',
+                'product.product_size:id,size_name','product.product_designer:id,designer_name','product.product_embellishment:id,embellishment_name',
+                'product.product_making:id,making_name','product.product_season:id,season_name','product.product_variety:id,variety_name',
+                'product.product_fit:id,fit_name','product.product_artist:id,artist_name','product.product_consignment:id,consignment_name',
+                'product.product_ingredient:id,ingredient_name')
+                ->selectRaw('order_details.product_id, sum(quantity) as sales_quantity,inventories.stock as current_stock,inventories.sku as p_sku,inventories.colour_id,inventories.size_id,inventories.created_at')
+                ->leftJoin('order_details', 'inventories.product_id', '=', 'order_details.product_id')
+                ->whereColumn('inventories.product_id', 'order_details.product_id')
+                ->whereColumn('inventories.colour_id', 'order_details.colour_id')
+                ->whereColumn('inventories.size_id', 'order_details.size_id')
+                ->groupBy('p_sku')
+                ->groupBy('order_details.product_id')
+                ->groupBy('current_stock')
+                ->groupBy('inventories.colour_id')
+                ->groupBy('inventories.size_id')
+                ->groupBy('inventories.created_at')
+                ->orderByDesc('sales_quantity');
+                if($from != '' && $to != ''){
+                    // $data->whereBetween('inventories.created_at', [$from." 00:00:00",$to." 23:59:59"]);
+                    $data = $data->whereHas('product', function ($q) use ($from,$to) {
+                        $q->whereBetween('created_at', [$from." 00:00:00",$to." 23:59:59"]);
+                    });
+                }
+                $data = $data->paginate($dataQty);
+             
+
+            return response()->json($data);
+
+        } catch (\Throwable $th) {
+            // return $th;
+            return $this->errorMessage();
+        }
+    }
+
+    public function salesReport(Request $request)
+    {
+        try {
+            $from   = $request->get('date_from');
+            $to   = $request->get('date_to');
+            $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
+
+            $data = Inventory::with('product.category:id,category_name','product.subcategory:id,category_name',
+                'product.product_brand:id,brand_name','product.product_fabric:id,fabric_name','colour:id,color_name',
+                'product.product_size:id,size_name','product.product_designer:id,designer_name','product.product_embellishment:id,embellishment_name',
+                'product.product_making:id,making_name','product.product_season:id,season_name','product.product_variety:id,variety_name',
+                'product.product_fit:id,fit_name','product.product_artist:id,artist_name','product.product_consignment:id,consignment_name',
+                'product.product_ingredient:id,ingredient_name')
+                ->selectRaw('order_details.product_id, sum(quantity) as sales_quantity,sum(total_selling_price) as total_selling_amount,sum(vat_amount) as total_vat_amount,ROUND(sum(total_buying_price),3) as total_buying_amount,ROUND(sum(total_selling_price - total_buying_price),3) as profit,inventories.stock as current_stock,inventories.sku as p_sku,inventories.colour_id,inventories.size_id,inventories.created_at')
+                ->leftJoin('order_details', 'inventories.product_id', '=', 'order_details.product_id')
+                ->whereColumn('inventories.product_id', 'order_details.product_id')
+                ->whereColumn('inventories.colour_id', 'order_details.colour_id')
+                ->whereColumn('inventories.size_id', 'order_details.size_id')
+                ->groupBy('p_sku')
+                ->groupBy('order_details.product_id')
+                ->groupBy('current_stock')
+                ->groupBy('inventories.colour_id')
+                ->groupBy('inventories.size_id')
+                ->groupBy('inventories.created_at')
+                ->orderByDesc('sales_quantity');
+                if($from != '' && $to != ''){
+                    $data = $data->whereHas('product', function ($q) use ($from,$to) {
+                        $q->whereBetween('created_at', [$from." 00:00:00",$to." 23:59:59"]);
+                    });
+                }
+                $data = $data->paginate($dataQty);
+            return response()->json($data);
+        } catch (\Throwable $th) {
+            return $this->errorMessage();
+            return $th;
+        }
+    }
+
+    public function campaignReport(Request $request)
+    {
+        try {
+            $from   = $request->get('date_from');
+            $to   = $request->get('date_to');
+            $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
+
+            $data = Inventory::with('product.category:id,category_name','product.subcategory:id,category_name',
+                'product.product_brand:id,brand_name','product.product_fabric:id,fabric_name','colour:id,color_name',
+                'product.product_size:id,size_name','product.product_designer:id,designer_name','product.product_embellishment:id,embellishment_name',
+                'product.product_making:id,making_name','product.product_season:id,season_name','product.product_variety:id,variety_name',
+                'product.product_fit:id,fit_name','product.product_artist:id,artist_name','product.product_consignment:id,consignment_name',
+                'product.product_ingredient:id,ingredient_name','product.campaign:id,campaign_name,campaign_start_date,campaign_expire_date')
+                ->selectRaw('order_details.product_id, sum(quantity) as sales_quantity,sum(total_selling_price) as total_selling_amount,
+                sum(vat_amount) as total_vat_amount,ROUND(sum(total_buying_price),3) as total_buying_amount,
+                ROUND(sum(total_selling_price - total_buying_price),3) as profit,inventories.stock as current_stock,
+                inventories.sku as p_sku,inventories.colour_id,inventories.size_id,inventories.created_at')
+                ->join('order_details', 'inventories.product_id', '=', 'order_details.product_id')
+                ->whereColumn('inventories.product_id', 'order_details.product_id')
+                ->whereColumn('inventories.colour_id', 'order_details.colour_id')
+                ->whereColumn('inventories.size_id', 'order_details.size_id')
+                ->groupBy('p_sku')
+                ->groupBy('order_details.product_id')
+                ->groupBy('current_stock')
+                ->groupBy('inventories.colour_id')
+                ->groupBy('inventories.size_id')
+                ->groupBy('inventories.created_at')
+                ->orderByDesc('sales_quantity')
+                ->whereHas('product', function ($query) {
+                     $query->has('campaign');
+                });
+                if($from != '' && $to != ''){
+                    $data = $data->whereHas('product', function ($q) use ($from,$to) {
+                        $q->whereBetween('created_at', [$from." 00:00:00",$to." 23:59:59"]);
+                    });
+                }
+                $data = $data->paginate($dataQty);
+            return response()->json($data);
+        } catch (\Throwable $th) {
+            return $this->errorMessage();
+            return $th;
+        }
     }
 
     public function paymentReport(Request $request)

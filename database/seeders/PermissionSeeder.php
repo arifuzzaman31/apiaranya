@@ -311,13 +311,6 @@ class PermissionSeeder extends Seeder
                 'status' => 1
             ],
             [
-                'group_name' => 'Report',
-                'permission_name' => 'Order Report',
-                'route_name' => null,
-                'slug' => 'order-report',
-                'status' => 1
-            ],
-            [
                 'group_name' => 'Shipping',
                 'permission_name' => 'Shipping View',
                 'route_name' => null,
@@ -385,6 +378,62 @@ class PermissionSeeder extends Seeder
                 'permission_name' => 'Info Delete',
                 'route_name' => null,
                 'slug' => 'delete-info',
+                'status' => 1
+            ],
+            [
+                'group_name' => 'Report',
+                'permission_name' => 'Invoice Report',
+                'route_name' => null,
+                'slug' => 'invoice-report',
+                'status' => 1
+            ],
+            [
+                'group_name' => 'Report',
+                'permission_name' => 'Individual Customer Report',
+                'route_name' => null,
+                'slug' => 'individual-customer-report',
+                'status' => 1
+            ],
+            [
+                'group_name' => 'Report',
+                'permission_name' => 'Customer Refund Report',
+                'route_name' => null,
+                'slug' => 'customer-refund-report',
+                'status' => 1
+            ],
+            [
+                'group_name' => 'Report',
+                'permission_name' => 'Customer Lifetime Value',
+                'route_name' => null,
+                'slug' => 'customer-lifetime-value-report',
+                'status' => 1
+            ],
+            [
+                'group_name' => 'Report',
+                'permission_name' => 'Payment Report',
+                'route_name' => null,
+                'slug' => 'payment-report',
+                'status' => 1
+            ],
+            [
+                'group_name' => 'Report',
+                'permission_name' => 'Stock Report',
+                'route_name' => null,
+                'slug' => 'stock-report',
+                'status' => 1
+            ],
+            [
+                'group_name' => 'Report',
+                'permission_name' => 'Campaign Report',
+                'route_name' => null,
+                'slug' => 'campaign-report',
+                'status' => 1
+            ],
+            [
+                'group_name' => 'Report',
+                'permission_name' => 'Sales Report',
+                'route_name' => null,
+                'slug' => 'sales-report',
                 'status' => 1
             ]
         ];

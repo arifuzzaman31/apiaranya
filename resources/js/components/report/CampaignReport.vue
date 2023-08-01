@@ -4,14 +4,15 @@ import Mixin from '../../mixer';
 import { Bootstrap4Pagination } from 'laravel-vue-pagination';
 
 export default {
-    name: 'report',
+    name: 'campaignreport',
     mixins: [Mixin],
     components:{
         Bootstrap4Pagination
     },
     data(){
         return {
-            stockData: [],
+            campaignData: [],
+            search: '',
             filterdata : {
                 from: '',
                 to: ''
@@ -23,31 +24,30 @@ export default {
     },
 
     methods: {
-        getStockReport(page = 1){
-            axios.get(baseUrl+`get-stock-report?page=${page}&per_page=7&date_from=${this.filterdata.from}&date_to=${this.filterdata.to}`)
+        getCampaignReport(page = 1){
+            axios.get(baseUrl+`get-campaign-report?page=${page}&per_page=10&date_from=${this.filterdata.from}&date_to=${this.filterdata.to}`)
             .then(result => {
-                this.stockData = result.data;
+                this.campaignData = result.data;
             })
             .catch(errors => {
                 console.log(errors);
             });  
         },
         filterClear(){
+            this.search = ''
             this.filterdata = {
-                payment_status : '',
                 from: '',
-                to: '',
-                order_state: ''
+                to: ''
             }
-            this.getStockReport()
+            this.getCampaignReport()
         },
         getSearch(){
             if(this.search.length < 3) return ;
-            this.getStockReport()
+            this.getCampaignReport()
         },
     },
     mounted(){
-        this.getStockReport()
+        this.getCampaignReport()
     }
 }
 </script>
@@ -59,7 +59,7 @@ export default {
             <div class="widget-header">
                 <div class="row">
                     <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
-                        <h4>Stock Report</h4>
+                        <h4>Campaign Report</h4>
                     </div>                          
                 </div>
             </div>       
@@ -69,11 +69,11 @@ export default {
                         <input type="text" onfocus="(this.type='date')" v-model="filterdata.from" class="form-control form-control-sm" placeholder="Start Date">
                     </div>
                     <div class="col-md-2 col-lg-2 col-12">
-                        <input type="text" onfocus="(this.type='date')" v-model="filterdata.to" @change="getStockReport()" class="form-control form-control-sm" placeholder="End Date">
+                        <input type="text" onfocus="(this.type='date')" v-model="filterdata.to" @change="getCampaignReport()" class="form-control form-control-sm" placeholder="End Date">
                     </div>
 
                     <div class="col-md-2 col-lg-2 col-12">
-                        <button type="button" class="btn btn-danger" @click="filterClear()">CLEAR</button>
+                        <button type="button" class="btn btn-danger mt-1" @click="filterClear()">CLEAR</button>
                     </div>
                 </div>
                 <div class="table-responsive" style=" overflow-x: auto">
@@ -102,12 +102,20 @@ export default {
                                 <th>Design code</th>
                                 <th>Composition</th>
                                 <th>Sales Quantity</th>
-                                <th>Current Stock</th>
-                                <th>created at</th>
+                                <th>Total Buying Amount</th>
+                                <th>Total Sales Amount</th>
+                                <th>Discount</th>
+                                <th>Amount without VAT</th>
+                                <th>Amount with VAT</th>
+                                <th>Profit</th>
+                                <th>Campaign ID</th>
+                                <th>Campaign staring date</th>
+                                <th>Campaign name</th>
+                                <th>Campaign end date</th>
                             </tr>
                         </thead>
-                        <tbody v-if="stockData.data && stockData.data.length > 0">
-                            <template v-for="(item,index) in stockData.data" :key="index">
+                        <tbody v-if="campaignData.data && campaignData.data.length > 0">
+                            <template v-for="(item,index) in campaignData.data" :key="index">
                                 <tr>
                                     <td>{{ item.p_sku }}</td>
                                     <td>{{ item.product.category.category_name }}</td>
@@ -203,23 +211,31 @@ export default {
                                         </span>
                                     </td>
                                     <td> {{ item.sales_quantity }}</td>
-                                    <td> {{ item.current_stock }}</td>
-                                    <td> {{ dateToString(item.product.created_at) }}</td>
+                                    <td> {{ item.total_buying_amount }}</td>
+                                    <td> {{ item.total_selling_amount }}</td>
+                                    <td> 0</td>
+                                    <td> {{ item.total_selling_amount }}</td>
+                                    <td> {{ item.total_selling_amount+item.total_vat_amount }}</td>
+                                    <td> {{ item.profit }}</td>
+                                    <td> {{ item.product.campaign[0].id }}</td>
+                                    <td> {{ dateToString(item.product.campaign[0].campaign_start_date)  }}</td>
+                                    <td> {{ item.product.campaign[0].campaign_name  }}</td>
+                                    <td> {{ dateToString(item.product.campaign[0].campaign_expire_date)  }}</td>
                                 </tr>					
                             </template>
                         </tbody>
-                        <tbody v-else class="text-center mt-3">
+                        <tbody v-else class="mt-3">
                             <tr>
-                                <td colspan="24">No Order Found</td>
+                                <td colspan="32">No Data Found</td>
                             </tr>
                                 
                         </tbody>
                     </table>
                         <Bootstrap4Pagination
-                            :data="stockData"
+                            :data="campaignData"
                             :limit="limit"
                             :keep-length="keepLength"
-                            @pagination-change-page="getStockReport"
+                            @pagination-change-page="getCampaignReport"
                         />
                 </div>
                 
@@ -228,6 +244,3 @@ export default {
     </div>
 </div>
 </template>
-<style>
-
-</style>

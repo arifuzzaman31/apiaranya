@@ -24,7 +24,7 @@ export default {
 
     methods: {
         getCustomerLifetimeReport(page = 1){
-            axios.get(baseUrl+`get-customer-lifetime-report?page=${page}&per_page=3&from=${this.filterdata.from}&to=${this.filterdata.to}`)
+            axios.get(baseUrl+`get-customer-lifetime-report?page=${page}&per_page=12&from=${this.filterdata.from}&to=${this.filterdata.to}`)
             .then(result => {
                 this.lifetimeData = result.data;
             })

@@ -74,4 +74,9 @@ class OrderDetails extends Model
 
         ]);
     }
+
+    public function inventory()
+    {
+        return $this->hasMany(Inventory::class,'product_id');
+    }
 }

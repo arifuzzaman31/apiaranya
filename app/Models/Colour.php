@@ -21,4 +21,9 @@ class Colour extends Model
     {
         return $this->hasOne(OrderDetails::class);
     }
+
+    public function inventory()
+    {
+        return $this->hasOne(Inventory::class);
+    }
 }

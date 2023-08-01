@@ -315,29 +315,46 @@
                     </div>
                 </a>
                 <ul class="collapse submenu list-unstyled" id="report" data-parent="#accordionExample">
-              
-                    <li>
-                        <a href="{{ route('order.report') }}">Order Report </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('stock.report') }}">Stock Report </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('payment.report') }}">Payment Report </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('customer-lifetime.report') }}">Customer Lifetime Value </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('customer-refund.report') }}">Customer Refund Report </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('individual-customer.report') }}">Individual Customer Report </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('invoice.report') }}">Invoice Report </a>
-                    </li>
-                   
+                    @if(checkPermission('sales-report'))
+                        <li>
+                            <a href="{{ route('sales.report') }}">Sales Report </a>
+                        </li>
+                    @endif
+                    @if(checkPermission('campaign-report'))
+                        <li>
+                            <a href="{{ route('campaign.report') }}">Campaign Report </a>
+                        </li>
+                    @endif
+                    @if(checkPermission('stock-report'))
+                        <li>
+                            <a href="{{ route('stock.report') }}">Stock Report </a>
+                        </li>
+                    @endif
+                    @if(checkPermission('payment-report'))
+                        <li>
+                            <a href="{{ route('payment.report') }}">Payment Report </a>
+                        </li>
+                    @endif
+                    @if(checkPermission('customer-lifetime-value-report'))
+                        <li>
+                            <a href="{{ route('customer-lifetime.report') }}">Customer Lifetime Value </a>
+                        </li>
+                    @endif
+                    @if(checkPermission('customer-refund-report'))
+                        <li>
+                            <a href="{{ route('customer-refund.report') }}">Customer Refund Report </a>
+                        </li>
+                    @endif
+                    @if(checkPermission('individual-customer-report'))
+                        <li>
+                            <a href="{{ route('individual-customer.report') }}">Individual Customer Report </a>
+                        </li>
+                    @endif
+                    @if(checkPermission('invoice-report'))
+                        <li>
+                            <a href="{{ route('invoice.report') }}">Invoice Report </a>
+                        </li>
+                    @endif
                 </ul>
             </li>
             @endif
