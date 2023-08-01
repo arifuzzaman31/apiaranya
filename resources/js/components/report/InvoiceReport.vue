@@ -105,8 +105,8 @@ export default {
                             <button type="button" class="btn btn-danger" @click="filterClear()">CLEAR</button>
                         </div>
                     </div>
-                    <div class="table-responsive" style="min-height: 60vh;">
-                        <table class="table table-bordered table-hover mb-4">
+                    <div class="table-responsive" style=" overflow-x: auto">
+                        <table class="table table-responsive table-bordered table-hover mb-4" style="overflow-x: auto">
                             <thead>
                                 <tr>
                                     <th>OrderID</th>
