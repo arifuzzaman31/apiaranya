@@ -20481,11 +20481,14 @@ var _hoisted_9 = {
 var _hoisted_10 = {
   "class": "table-responsive",
   style: {
-    "min-height": "60vh"
+    "overflow-x": "auto"
   }
 };
 var _hoisted_11 = {
-  "class": "table table-bordered table-hover mb-4"
+  "class": "table table-responsive table-bordered table-hover mb-4",
+  style: {
+    "overflow-x": "auto"
+  }
 };
 var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
   "class": "text-center"
@@ -20604,11 +20607,14 @@ var _hoisted_9 = {
 var _hoisted_10 = {
   "class": "table-responsive",
   style: {
-    "min-height": "60vh"
+    "overflow-x": "auto"
   }
 };
 var _hoisted_11 = {
-  "class": "table table-bordered table-hover mb-4"
+  "class": "table table-responsive table-bordered table-hover mb-4",
+  style: {
+    "overflow-x": "auto"
+  }
 };
 var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "OrderID"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Order Date"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
   "class": "text-center"
@@ -20740,11 +20746,14 @@ var _hoisted_16 = {
 var _hoisted_17 = {
   "class": "table-responsive",
   style: {
-    "min-height": "60vh"
+    "overflow-x": "auto"
   }
 };
 var _hoisted_18 = {
-  "class": "table table-bordered table-hover mb-4"
+  "class": "table table-responsive table-bordered table-hover mb-4",
+  style: {
+    "overflow-x": "auto"
+  }
 };
 var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "OrderID"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Order Date"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
   "class": "text-center"
@@ -20913,11 +20922,14 @@ var _hoisted_27 = {
 var _hoisted_28 = {
   "class": "table-responsive",
   style: {
-    "min-height": "60vh"
+    "overflow-x": "auto"
   }
 };
 var _hoisted_29 = {
-  "class": "table table-bordered table-hover mb-4"
+  "class": "table table-responsive table-bordered table-hover mb-4",
+  style: {
+    "overflow-x": "auto"
+  }
 };
 var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "OrderID"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Order Date"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Customer"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Phone"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Email"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Address"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Delivery"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Item Qty"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Amount"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Profit"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
   "class": "text-center"
@@ -21450,11 +21462,14 @@ var _hoisted_16 = {
 var _hoisted_17 = {
   "class": "table-responsive",
   style: {
-    "min-height": "60vh"
+    "overflow-x": "auto"
   }
 };
 var _hoisted_18 = {
-  "class": "table table-bordered table-hover mb-4"
+  "class": "table table-responsive table-bordered table-hover mb-4",
+  style: {
+    "overflow-x": "auto"
+  }
 };
 var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "OrderID"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Order Date"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
   "class": "text-center"
