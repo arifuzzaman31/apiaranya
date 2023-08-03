@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\Report\CampaignReportExport;
 use App\Models\User;
 use App\Models\Order;
 use App\Http\AllStatic;
@@ -94,9 +95,14 @@ class ReportController extends Controller
 
     public function campaignReport(Request $request)
     {
-        try {
-            $from   = $request->get('date_from');
-            $to   = $request->get('date_to');
+        
+        // if($request->excel == 'yes')
+        // {
+            // }
+            try {
+                $from   = $request->get('date_from');
+                $to   = $request->get('date_to');
+                return \Excel::download(new CampaignReportExport($from,$to),'campaign_report_list.xlsx');
             $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
             $data = Inventory::with('product.category:id,category_name','product.subcategory:id,category_name',
@@ -128,11 +134,12 @@ class ReportController extends Controller
                         $q->whereBetween('created_at', [$from." 00:00:00",$to." 23:59:59"]);
                     });
                 }
+
                 $data = $data->paginate($dataQty);
             return response()->json($data);
         } catch (\Throwable $th) {
-            return $this->errorMessage();
             return $th;
+            return $this->errorMessage();
         }
     }
 
