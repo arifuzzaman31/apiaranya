@@ -106,7 +106,7 @@ export default {
                         </div>
                     </div>
                     <div class="table-responsive" style=" overflow-x: auto">
-                        <table class="table table-responsive table-bordered table-hover mb-4" style="overflow-x: auto">
+                        <table class="table table-bordered table-hover mb-4" style="overflow-x: auto">
                             <thead>
                                 <tr>
                                     <th>OrderID</th>
@@ -163,7 +163,7 @@ export default {
                                 @pagination-change-page="getOrder"
                             />
                             
-                            <a target="_blank" :href="url+`get-order?byposition=${filterdata.order_state}&payment_status=${filterdata.payment_status}&status=${filterdata.status}`" type="button" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>  Excel</a>
+                            <a target="_blank" :href="url+`get-order?invoicexcel=yes&byposition=${filterdata.order_state}&payment_status=${filterdata.payment_status}&status=${filterdata.status}`" type="button" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>  Excel</a>
                         
                         </div>
                     </div>

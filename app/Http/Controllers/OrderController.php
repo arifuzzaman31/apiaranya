@@ -40,6 +40,12 @@ class OrderController extends Controller
         $status   = $request->get('status');
         $from   = $request->get('from');
         $to   = $request->get('to');
+        if($request->excel == 'yes'){
+            return Excel::download(new OrderExport($request->keyword,$request->byposition,$request->status),'order_list.xlsx');
+        }
+        if($request->invoicexcel == 'yes'){
+            return Excel::download(new OrderExport($request->keyword,$request->byposition,$request->status,'invoice'),'invoice_report.xlsx');
+        }
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
         $order = Order::with(['user','delivery'])->withCount([
@@ -191,12 +197,6 @@ class OrderController extends Controller
     public function show(Order $order,$id)
     {
         response()->json(Order::find(2));
-    }
-
-
-    public function getOrderExcel(Request $request)
-    {
-        return Excel::download(new OrderExport($request->keyword,$request->byposition,$request->status),'order_list.xlsx');
     }
 
     /**

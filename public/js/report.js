@@ -21050,7 +21050,7 @@ var _hoisted_28 = {
   }
 };
 var _hoisted_29 = {
-  "class": "table table-responsive table-bordered table-hover mb-4",
+  "class": "table table-bordered table-hover mb-4",
   style: {
     "overflow-x": "auto"
   }
@@ -21161,7 +21161,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onPaginationChangePage: $options.getOrder
   }, null, 8 /* PROPS */, ["data", "limit", "keep-length", "onPaginationChangePage"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     target: "_blank",
-    href: $data.url + "get-order?byposition=".concat($data.filterdata.order_state, "&payment_status=").concat($data.filterdata.payment_status, "&status=").concat($data.filterdata.status),
+    href: $data.url + "get-order?invoicexcel=yes&byposition=".concat($data.filterdata.order_state, "&payment_status=").concat($data.filterdata.payment_status, "&status=").concat($data.filterdata.status),
     type: "button",
     "class": "btn btn-primary"
   }, [_hoisted_43, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Excel")], 8 /* PROPS */, _hoisted_42)])])])])])]);

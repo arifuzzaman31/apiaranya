@@ -117,7 +117,6 @@ Route::controller(OrderController::class)
     ->group(function () {
         Route::get('order','index')->name('order');
         Route::get('get-order','getOrder')->name('get-order');
-        Route::get('get-order-excel','getOrderExcel')->name('get-order-excel');
         Route::post('update/order/status/{id?}','updateOrderStatus');
         // Route::get('orders-details/{id}','orderDetails');
         Route::post('order/cancel','orderCancel');
