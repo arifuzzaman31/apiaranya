@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Exports\Report\CampaignReportExport;
+use App\Exports\Report\LifetimeReportExport;
+use App\Exports\Report\SalesReportExport;
+use App\Exports\Report\StockReportExport;
+use App\Exports\Report\RefundReportExport;
+use App\Exports\Report\IndividualReportExport;
+use App\Exports\Report\PaymentReportExport;
 use App\Models\User;
 use App\Models\Order;
 use App\Http\AllStatic;
@@ -18,6 +24,9 @@ class ReportController extends Controller
         try {
             $from   = $request->get('date_from');
             $to   = $request->get('date_to');
+            if($request->excel == 'yes'){
+                return \Excel::download(new StockReportExport($from,$to),'stock_report.xlsx');
+            }
             $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
             $data = Inventory::with('product.category:id,category_name','product.subcategory:id,category_name',
@@ -60,6 +69,9 @@ class ReportController extends Controller
         try {
             $from   = $request->get('date_from');
             $to   = $request->get('date_to');
+            if($request->excel == 'yes'){
+                return \Excel::download(new SalesReportExport($from,$to),'sales_report.xlsx');
+            }
             $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
             $data = Inventory::with('product.category:id,category_name','product.subcategory:id,category_name',
@@ -102,7 +114,9 @@ class ReportController extends Controller
             try {
                 $from   = $request->get('date_from');
                 $to   = $request->get('date_to');
-                return \Excel::download(new CampaignReportExport($from,$to),'campaign_report_list.xlsx');
+                if($request->excel == 'yes'){
+                    return \Excel::download(new CampaignReportExport($from,$to),'campaign_report_list.xlsx');
+                }
             $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
             $data = Inventory::with('product.category:id,category_name','product.subcategory:id,category_name',
@@ -158,6 +172,12 @@ class ReportController extends Controller
         $paymentStatus   = $request->get('payment_status');
         $from   = $request->get('from');
         $to   = $request->get('to');
+        if($request->excel == 'yes'){
+            return \Excel::download(new IndividualReportExport($from,$to),'individual_customer_report.xlsx');
+        }
+        if($request->paymentexcel == 'yes'){
+            return \Excel::download(new PaymentReportExport($from,$to),'payment_report.xlsx');
+        }
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
         $order = Order::with('user:id,name,phone,address,email')
@@ -192,6 +212,9 @@ class ReportController extends Controller
     {
         $from   = $request->get('from');
         $to   = $request->get('to');
+        if($request->excel == 'yes'){
+            return \Excel::download(new RefundReportExport($from,$to),'customer_refund_report.xlsx');
+        }
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
         $order = OrderDetails::with(['user:id,name,phone,address,email','order:id,order_date,total_price,payment_via,payment_method_name'])
@@ -208,6 +231,9 @@ class ReportController extends Controller
     {
         $from   = $request->get('from');
         $to   = $request->get('to');
+        if($request->excel == 'yes'){
+            return \Excel::download(new LifetimeReportExport($from,$to),'customer_lifetime_value_report.xlsx');
+        }
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
         $user = User::withCount([

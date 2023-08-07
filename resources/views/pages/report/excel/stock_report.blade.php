@@ -1,48 +1,40 @@
 <table>
 	<thead>
 	  <tr>
-	  	<th>SKU</th>
-		<th>Category</th>
-		<th>Sub Category</th>
-		<th>Brand</th>
-		<th>Vendor</th>
-		<th>Designer</th>
-		<th>Embellishment</th>
-		<th>Making</th>
-		<th>Season</th>
-		<th>Variety</th>
-		<th>Fit</th>
-		<th>Artist</th>
-		<th>Consignment</th>
-		<th>Ingredients</th>
-		<th>Fragile</th>
-		<th>Fragile Charge</th>
-		<th>Weight</th>
-		<th>Lead Time</th>
-		<th>Color</th>
-		<th>Design code</th>
-		<th>Composition</th>
-		<th>Sales Quantity</th>
-		<th>Total Buying Amount</th>
-		<th>Total Sales Amount</th>
-		<th>Discount</th>
-		<th>Amount without VAT</th>
-		<th>Amount with VAT</th>
-		<th>Profit</th>
-		<th>Campaign ID</th>
-		<th>Campaign staring date</th>
-		<th>Campaign name</th>
-		<th>Campaign end date</th>
+        <th>SKU</th>
+        <th>Category</th>
+        <th>Sub Category</th>
+        <th>Brand</th>
+        <th>Vendor</th>
+        <th>Designer</th>
+        <th>Embellishment</th>
+        <th>Making</th>
+        <th>Season</th>
+        <th>Variety</th>
+        <th>Fit</th>
+        <th>Artist</th>
+        <th>Consignment</th>
+        <th>Ingredients</th>
+        <th>Fragile</th>
+        <th>Fragile Charge</th>
+        <th>Weight</th>
+        <th>Lead Time</th>
+        <th>Color</th>
+        <th>Design code</th>
+        <th>Composition</th>
+        <th>Sales Quantity</th>
+        <th>Current Stock</th>
+        <th>created at</th>
 	  </tr>
 	</thead>
 	<tbody>
     
-	@foreach($campaigndata as $item)
-		<tr>
-			<td>{{ $item->p_sku }}</td>
-			<td>{{ $item->product->category->category_name }}</td>
-			<td>{{ $item->product->subcategory->category_name }}</td>
-			<td>
+	@foreach($stockdata as $item)
+        <tr>
+            <td>{{ $item->p_sku }}</td>
+            <td>{{ $item->product->category->category_name }}</td>
+            <td>{{ $item->product->subcategory->category_name }}</td>
+            <td>
 				@if($item->product->product_brand && count($item->product->product_brand) > 0)
 					@foreach($item->product->product_brand as $brand)
 					<p>
@@ -141,11 +133,11 @@
 					@endforeach
 				@endif
 			</td>
-			<td> {{ $item->fragile ? 'Yes' : 'No' }}</td>
-			<td> {{ $item->fragile_charge }}</td>
-			<td> {{ $item->weight }}</td>
-			<td> {{ $item->lead_time }}</td>
-			<td> @if($item->colour && $item->colour->color_name)<p>{{ $item->colour->color_name }}</p>@endif</td>
+            <td> {{ $item->fragile ? 'Yes' : 'No' }}</td>
+            <td> {{ $item->fragile_charge }}</td>
+            <td> {{ $item->weight }}</td>
+            <td> {{ $item->lead_time }}</td>
+            <td> @if($item->colour && $item->colour->color_name)<p>{{ $item->colour->color_name }}</p>@endif</td>
 			<td> {{ $item->design_code }}</td>
 			<td>
 				@if($item->product->product_fabric && count($item->product->product_fabric) > 0)
@@ -156,18 +148,10 @@
 					@endforeach
 				@endif
 			</td>
-			<td> {{ $item->sales_quantity }}</td>
-			<td> {{ $item->total_buying_amount }}</td>
-			<td> {{ $item->total_selling_amount }}</td>
-			<td> 0</td>
-			<td> {{ $item->total_selling_amount }}</td>
-			<td> {{ $item->total_selling_amount+$item->total_vat_amount }}</td>
-			<td> {{ $item->profit }}</td>
-			<td> {{ $item->product->campaign[0]->id }}</td>
-			<td> {{ $item->product->campaign[0]->campaign_start_date  }}</td>
-			<td> {{ $item->product->campaign[0]->campaign_name  }}</td>
-			<td> {{ $item->product->campaign[0]->campaign_expire_date }}</td>
-		</tr>	
+            <td> {{ $item->sales_quantity }}</td>
+            <td> {{ $item->current_stock }}</td>
+            <td> {{ $item->product->created_at }}</td>
+        </tr>	
 	@endforeach
 	</tbody>
 </table>

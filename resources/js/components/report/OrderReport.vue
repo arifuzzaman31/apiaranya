@@ -140,12 +140,14 @@ export default {
                                 
                         </tbody>
                     </table>
+                    <div class="d-flex justify-content-between">
                         <Bootstrap4Pagination
                             :data="orders"
                             :limit="limit"
                             :keep-length="keepLength"
                             @pagination-change-page="getOrderReport"
                         />
+                        </div>
                 </div>
                 
             </div>

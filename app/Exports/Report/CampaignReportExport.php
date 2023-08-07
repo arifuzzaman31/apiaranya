@@ -5,8 +5,10 @@ namespace App\Exports\Report;
 use App\Models\Inventory;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class CampaignReportExport implements FromView
+class CampaignReportExport implements FromView,WithStyles
 {
     protected $fromdate,$todate;
 
@@ -44,13 +46,30 @@ class CampaignReportExport implements FromView
             ->orderByDesc('sales_quantity')
             ->whereHas('product', function ($query) {
                  $query->has('campaign');
-            });
-            // if($this->fromdate != '' && $this->todate != ''){
-            //     $data = $data->whereHas('product', function ($q){
-            //         $q->whereBetween('created_at', [$this->fromdate." 00:00:00",$this->todate." 23:59:59"]);
-            //     });
-            // }
-            $data->get();
+            })->get();
             return view('pages.report.excel.campaign_report',['campaigndata' => $data]);
+    }
+    public function styles(Worksheet $sheet)
+    {
+        return [
+            // Style the first row as bold text.
+            1 => [
+                'font'      => ['bold' => true, 'size' => 13, 'color' => ['argb' => 'FFFF9900']],
+                'fill'      => [
+                    'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                    'color'    => ['rgb' => 'f3f7f0'],
+                ],
+                'alignment' => [
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                ],
+                'borders' => [
+                    'allBorders' => [
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                        'color' => ['rgb' => 'E1E1E1'],
+                    ],
+                ],
+            ],
+        ];
     }
 }
