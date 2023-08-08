@@ -80,6 +80,10 @@ export default {
                     <table class="table table-responsive table-bordered table-hover mb-4" style="overflow-x: auto">
                         <thead>
                             <tr>
+                                <th>Campaign ID</th>
+                                <th>Campaign staring date</th>
+                                <th>Campaign name</th>
+                                <th>Campaign end date</th>
                                 <th>SKU</th>
                                 <th>Category</th>
                                 <th>Sub Category</th>
@@ -108,15 +112,15 @@ export default {
                                 <th>Amount without VAT</th>
                                 <th>Amount with VAT</th>
                                 <th>Profit</th>
-                                <th>Campaign ID</th>
-                                <th>Campaign staring date</th>
-                                <th>Campaign name</th>
-                                <th>Campaign end date</th>
                             </tr>
                         </thead>
                         <tbody v-if="campaignData.data && campaignData.data.length > 0">
                             <template v-for="(item,index) in campaignData.data" :key="index">
                                 <tr>
+                                    <td> {{ item.product.campaign[0].id }}</td>
+                                    <td> {{ dateToString(item.product.campaign[0].campaign_start_date)  }}</td>
+                                    <td> {{ item.product.campaign[0].campaign_name  }}</td>
+                                    <td> {{ dateToString(item.product.campaign[0].campaign_expire_date)  }}</td>
                                     <td>{{ item.p_sku }}</td>
                                     <td>{{ item.product.category.category_name }}</td>
                                     <td>{{ item.product.subcategory.category_name }}</td>
@@ -217,10 +221,6 @@ export default {
                                     <td> {{ item.total_selling_amount }}</td>
                                     <td> {{ item.total_selling_amount+item.total_vat_amount }}</td>
                                     <td> {{ item.profit }}</td>
-                                    <td> {{ item.product.campaign[0].id }}</td>
-                                    <td> {{ dateToString(item.product.campaign[0].campaign_start_date)  }}</td>
-                                    <td> {{ item.product.campaign[0].campaign_name  }}</td>
-                                    <td> {{ dateToString(item.product.campaign[0].campaign_expire_date)  }}</td>
                                 </tr>					
                             </template>
                         </tbody>

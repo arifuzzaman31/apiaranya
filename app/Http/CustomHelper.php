@@ -44,11 +44,15 @@ use Illuminate\Support\Facades\DB;
     }
 
     function checkPermission($permission){
-        $value = Cache::rememberForever('admin_permission', function () {
-            // $value = auth()->guard('admin')->user()->role->role_permission->pluck('slug');
-             return auth()->guard('admin')->user()->role->role_permission->pluck('slug');
-        });
+        $value = getPermission();
         return in_array($permission,[...$value]);
+    }
+
+    function getPermission(){
+        return Cache::rememberForever('admin_permission', function () {
+            // $value = auth()->guard('admin')->user()->role->role_permission->pluck('slug');
+             return auth()->guard('admin')->user()->role->role_permission->pluck('slug') ?? [] ;
+        });
     }
 
     function paymentMethodType($status){

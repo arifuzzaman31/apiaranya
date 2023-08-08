@@ -55,7 +55,11 @@ class OrderController extends Controller
         ])->orderBy('id','desc');
       
         if($keyword != ''){
-            $order = $order->where('order_id','like','%'.$keyword.'%');
+            $order = $order->where('id','like','%'.$keyword.'%')
+            ->orWhereHas('user', function ($q) use ($keyword) {
+                $q->where('name','like','%'.$keyword.'%')
+                    ->orWhere('phone','like','%'.$keyword.'%');
+            });
         }
 
         if($payment_status != ''){

@@ -17,6 +17,7 @@ export default {
                 order_state: '',
                 status: ''
             },
+            search: '',
             limit: 3,
             keepLength: false,
             url: baseUrl
@@ -25,7 +26,7 @@ export default {
 
     methods: {
         getOrder(page = 1){
-            axios.get(baseUrl+`get-order?page=${page}&per_page=14&byposition=${this.filterdata.order_state}&payment_status=${this.filterdata.payment_status}&status=${this.filterdata.status}`)
+            axios.get(baseUrl+`get-order?page=${page}&per_page=10&keyword=${this.search}&byposition=${this.filterdata.order_state}&payment_status=${this.filterdata.payment_status}&status=${this.filterdata.status}`)
             .then(result => {
                 this.orders = result.data;
             })
@@ -44,11 +45,16 @@ export default {
         },
 
         filterClear(){
+            this.search = ''
             this.filterdata = {
                 payment_status : '',
                 status : '',
                 order_state: ''
             }
+            this.getOrder()
+        },
+        getSearch(){
+            if(this.search.length < 3) return ;
             this.getOrder()
         },
 
@@ -73,7 +79,10 @@ export default {
                 <div class="widget-content widget-content-area">
                     <div class="row mb-2">
                         <div class="col-md-3 col-lg-3 col-12">
-                            <select id="product-camp" class="form-control" @change="getOrder()" v-model="filterdata.order_state">
+                            <input type="text" v-model="search" @keyup="getSearch()" class="form-control form-control-sm" placeholder="OrderID,Name,Phone">
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-12">
+                            <select id="product-camp" class="form-control  form-control-sm" @change="getOrder()" v-model="filterdata.order_state">
                                 <option selected="" value="">Choose...</option>
                                 <option value="0">Pending</option>
                                 <option value="1">Processing</option>
@@ -83,7 +92,7 @@ export default {
                         </div>
 
                         <div class="col-md-2 col-lg-2 col-12">
-                            <select id="product-camp" class="form-control" @change="getOrder()" v-model="filterdata.status">
+                            <select id="product-camp" class="form-control  form-control-sm" @change="getOrder()" v-model="filterdata.status">
                                 <option selected="" value="">Choose...</option>
                                 <option value="1">Active</option>
                                 <option value="0">Cancel</option>
@@ -92,7 +101,7 @@ export default {
                         </div>
 
                         <div class="col-md-2 col-lg-2 col-12">
-                            <select id="product-camp" class="form-control" @change="getOrder()" v-model="filterdata.payment_status">
+                            <select id="product-camp" class="form-control  form-control-sm" @change="getOrder()" v-model="filterdata.payment_status">
                                 <option selected="" value="">Choose...</option>
                                 <option value="1">Paid</option>
                                 <option value="0">Unpaid</option>

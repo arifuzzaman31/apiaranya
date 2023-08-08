@@ -28,13 +28,13 @@ class BrandController extends Controller
     {
         $noPagination = $request->get('no_paginate');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 10;
-        $Vendor = Brand::orderBy('id','desc');
+        $brand = Brand::orderBy('id','desc');
         if($noPagination != ''){
-            $Vendor = $Vendor->get();
+            $brand = $brand->get();
         } else {
-            $Vendor = $Vendor->paginate($dataQty);
+            $brand = $brand->paginate($dataQty);
         }
-        return response()->json($Vendor);
+        return response()->json($brand);
     }
 
     /**

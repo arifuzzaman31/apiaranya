@@ -17,6 +17,7 @@ export default {
                 to: '',
                 order_state: ''
             },
+            search: '',
             limit: 3,
             keepLength: false,
             url : baseUrl
@@ -25,7 +26,7 @@ export default {
 
     methods: {
         getIndividualCustomerReport(page = 1){
-            axios.get(baseUrl+`get-individual-customer-report?page=${page}&byposition=${this.filterdata.order_state}&per_page=10&from=${this.filterdata.from}&to=${this.filterdata.to}`)
+            axios.get(baseUrl+`get-individual-customer-report?page=${page}&keyword=${this.search}&byposition=${this.filterdata.order_state}&per_page=10&from=${this.filterdata.from}&to=${this.filterdata.to}`)
             .then(result => {
                 this.customerData = result.data;
             })
@@ -34,6 +35,7 @@ export default {
             });  
         },
         filterClear(){
+            this.search = ''
             this.filterdata = {
                 from: '',
                 to: '',
@@ -65,6 +67,9 @@ export default {
             </div>       
             <div class="widget-content widget-content-area">
                 <div class="row mb-2">
+                    <div class="col-md-3 col-lg-3 col-12">
+                        <input type="text" v-model="search" @keyup="getSearch()" class="form-control form-control-sm" placeholder="Customer Name">
+                    </div>
                     <div class="col-md-2 col-lg-2 col-12">
                         <input type="text" onfocus="(this.type='date')" v-model="filterdata.from" class="form-control form-control-sm" placeholder="Start Date">
                     </div>

@@ -8,6 +8,7 @@
         <th>Phone</th>
         <th>Payment</th>
         <th>Address</th>
+        <th>Amount</th>
         <th>Payment Gateway</th>
 	  </tr>
 	</thead>
@@ -22,6 +23,7 @@
             <td>{{ $item->user->phone }}</td>
             <td>{{ $item->total_price }}</td>
             <td>{{ $item->user->address }}</td>
+            <td>{{ $item->total_price }}</td>
             <td>{{ $item->payment_method_name }}</td>
         </tr>
 	@endforeach

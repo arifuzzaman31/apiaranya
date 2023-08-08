@@ -91,6 +91,7 @@ export default {
                                     <th class="text-center">Phone</th>
                                     <th class="text-center">Payment</th>
                                     <th>Address</th>
+                                    <th>Amount</th>
                                     <th class="text-center">Payment Gateway</th>
                                 </tr>
                             </thead>
@@ -106,6 +107,7 @@ export default {
                                         </td>
                                         <td>{{ item.total_price }}</td>
                                         <td>{{ item.user.address }}</td>
+                                        <td>{{ item.total_price }}</td>
                                         <td>{{ item.payment_method_name }}</td>
                                     </tr>					
                                 </template>

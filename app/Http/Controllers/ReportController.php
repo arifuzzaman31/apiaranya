@@ -24,6 +24,10 @@ class ReportController extends Controller
         try {
             $from   = $request->get('date_from');
             $to   = $request->get('date_to');
+            $category   = $request->get('category');
+            $subcategory   = $request->get('subcategory');
+            $brand   = $request->get('brand');
+            $keyword   = $request->get('keyword');
             if($request->excel == 'yes'){
                 return \Excel::download(new StockReportExport($from,$to),'stock_report.xlsx');
             }
@@ -47,6 +51,26 @@ class ReportController extends Controller
                 ->groupBy('inventories.size_id')
                 ->groupBy('inventories.created_at')
                 ->orderByDesc('sales_quantity');
+                if($category != '' ){
+                    $data = $data->whereHas('product', function ($q) use ($category,$subcategory) {
+                        $q->where('category_id',$category)
+                        ->where('sub_category_id',$subcategory);
+                        
+                    });
+                }
+                if($brand != ''){
+                    $data = $data->whereHas('product', function ($q) use ($brand) {
+                        $q->whereHas('product_brand', function ($q) use ($brand){
+                            $q->where('brand_id',$brand);
+                        });
+                    });
+                }
+                if($keyword != ''){
+                    $data = $data->where('sku','like','%'.$keyword.'%')
+                    ->orWhereHas('product', function ($q) use ($keyword) {
+                        $q->where('design_code','like','%'.$keyword.'%');
+                    });
+                }
                 if($from != '' && $to != ''){
                     // $data->whereBetween('inventories.created_at', [$from." 00:00:00",$to." 23:59:59"]);
                     $data = $data->whereHas('product', function ($q) use ($from,$to) {
@@ -69,12 +93,16 @@ class ReportController extends Controller
         try {
             $from   = $request->get('date_from');
             $to   = $request->get('date_to');
+            $category   = $request->get('category');
+            $subcategory   = $request->get('subcategory');
+            $brand   = $request->get('brand');
+            $keyword   = $request->get('keyword');
             if($request->excel == 'yes'){
                 return \Excel::download(new SalesReportExport($from,$to),'sales_report.xlsx');
             }
             $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
-            $data = Inventory::with('product.category:id,category_name','product.subcategory:id,category_name',
+            $data = Inventory::with('product:id,design_code,category_id,sub_category_id','product.category:id,category_name','product.subcategory:id,category_name',
                 'product.product_brand:id,brand_name','product.product_fabric:id,fabric_name','colour:id,color_name',
                 'product.product_size:id,size_name','product.product_designer:id,designer_name','product.product_embellishment:id,embellishment_name',
                 'product.product_making:id,making_name','product.product_season:id,season_name','product.product_variety:id,variety_name',
@@ -97,11 +125,31 @@ class ReportController extends Controller
                         $q->whereBetween('created_at', [$from." 00:00:00",$to." 23:59:59"]);
                     });
                 }
+                if($category != '' ){
+                    $data = $data->whereHas('product', function ($q) use ($category,$subcategory) {
+                        $q->where('category_id',$category)
+                        ->where('sub_category_id',$subcategory);
+                        
+                    });
+                }
+                if($brand != ''){
+                    $data = $data->whereHas('product', function ($q) use ($brand) {
+                        $q->whereHas('product_brand', function ($q) use ($brand){
+                            $q->where('brand_id',$brand);
+                        });
+                    });
+                }
+                if($keyword != ''){
+                    $data = $data->where('sku','like','%'.$keyword.'%')
+                    ->orWhereHas('product', function ($q) use ($keyword) {
+                        $q->where('design_code','like','%'.$keyword.'%');
+                    });
+                }
                 $data = $data->paginate($dataQty);
             return response()->json($data);
         } catch (\Throwable $th) {
-            return $this->errorMessage();
             return $th;
+            return $this->errorMessage();
         }
     }
 
@@ -170,6 +218,7 @@ class ReportController extends Controller
     {
         $byposition   = $request->get('byposition');
         $paymentStatus   = $request->get('payment_status');
+        $keyword   = $request->get('keyword');
         $from   = $request->get('from');
         $to   = $request->get('to');
         if($request->excel == 'yes'){
@@ -192,6 +241,12 @@ class ReportController extends Controller
                     $query->select(DB::raw('SUM(total_selling_price)'))->where('is_refunded',AllStatic::$active);
                 }
             ]);
+
+            if($keyword != ''){
+                $order = $order->whereHas('user', function ($q) use ($keyword) {
+                    $q->where('name','like','%'.$keyword.'%');
+                });
+            }
 
             if($byposition != ''){
                 $order = $order->where('order_position',$byposition);

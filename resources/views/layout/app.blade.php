@@ -74,7 +74,7 @@
             $(".active").parents(".menu-categories").children("a").attr('data-active',true);
             $(".active").parents().addClass('show');
         });
-        window.userPermission = "{{ auth()->guard('admin')->user()->role->role_permission->pluck('slug')  ?? [] }}";
+        window.userPermission = "{{ getPermission() }}";
     </script>
     
     @stack('script')

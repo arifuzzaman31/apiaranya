@@ -14,8 +14,16 @@ export default {
             stockData: [],
             filterdata : {
                 from: '',
-                to: ''
+                to: '',
+                category: '',
+                subcategory: 0,
+                brand: ''
             },
+            allbrands: [],
+            allcategories: [],
+            allsubcategories: [],
+            allfiltersubcategories: [],
+            search: '',
             limit: 3,
             keepLength: false,
             url : baseUrl
@@ -24,7 +32,7 @@ export default {
 
     methods: {
         getStockReport(page = 1){
-            axios.get(baseUrl+`get-stock-report?page=${page}&per_page=7&date_from=${this.filterdata.from}&date_to=${this.filterdata.to}`)
+            axios.get(baseUrl+`get-stock-report?page=${page}&per_page=7&keyword=${this.search}&category=${this.filterdata.category}&subcategory=${this.filterdata.subcategory}&brand=${this.filterdata.brand}&date_from=${this.filterdata.from}&date_to=${this.filterdata.to}`)
             .then(result => {
                 this.stockData = result.data;
             })
@@ -33,11 +41,13 @@ export default {
             });  
         },
         filterClear(){
+            this.search = ''
             this.filterdata = {
-                payment_status : '',
                 from: '',
                 to: '',
-                order_state: ''
+                category: '',
+                subcategory: 0,
+                brand: ''
             }
             this.getStockReport()
         },
@@ -45,8 +55,29 @@ export default {
             if(this.search.length < 3) return ;
             this.getStockReport()
         },
+        getCategory() {
+            axios.get(baseUrl+'get-category?no_paginate=yes').then(response => {
+                let res = response.data.filter(data => data.parent_category == 0)
+                let subcat = response.data.filter(data => data.parent_category !== 0)
+                this.allcategories = res
+                this.allfiltersubcategories = subcat
+            })
+        },
+        getSubCategories() {
+            const filterData = (this.allfiltersubcategories).filter((data) => data.parent_category == this.filterdata.category)
+            this.allsubcategories = filterData
+            this.filterdata.subcategory=0;
+            if(filterData.length == 0) this.getStockReport()
+        },
+        getBrand(){
+            axios.get(baseUrl+'brands/create?no_paginate=yes').then(response => {
+                this.allbrands = response.data;
+            })
+        }
     },
     mounted(){
+        this.getCategory()
+        this.getBrand()
         this.getStockReport()
     }
 }
@@ -65,6 +96,30 @@ export default {
             </div>       
             <div class="widget-content widget-content-area">
                 <div class="row mb-2">
+                    <div class="col-md-3 col-lg-3 my-1 col-12">
+                        <input type="text" v-model="search" @keyup="getSearch()" class="form-control form-control-sm" placeholder="SKU, Design Code">
+                    </div>
+                    
+                    <div class="col-md-3 col-lg-3 my-1 col-12">
+                        <select id="product-category" class="form-control form-control-sm" @change="getSubCategories()" v-model="filterdata.category">
+                            <option selected="" value="">Choose Category</option>
+                            <option v-for="(value,index) in allcategories" :value="value.id" :key="index">{{ value.category_name }}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 col-lg-3 my-1 col-12">
+                        <select id="product-subcategory" class="form-control form-control-sm" @change="getStockReport()" v-model="filterdata.subcategory">
+                            <option selected="" value="0">Choose Sub Category</option>
+                            <option v-for="(value,index) in allsubcategories" :value="value.id" :key="index">{{ value.category_name }}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 col-lg-3 my-1 col-12">
+                        <select id="product-brand" class="form-control form-control-sm" @change="getStockReport()" v-model="filterdata.brand">
+                            <option selected="" value="">Choose Brand</option>
+                            <option v-for="(value,index) in allbrands" :value="value.id" :key="index">{{ value.brand_name }}</option>
+                        </select>
+                    </div>
                     <div class="col-md-2 col-lg-2 col-12">
                         <input type="text" onfocus="(this.type='date')" v-model="filterdata.from" class="form-control form-control-sm" placeholder="Start Date">
                     </div>
