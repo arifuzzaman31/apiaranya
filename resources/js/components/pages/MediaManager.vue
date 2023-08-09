@@ -133,14 +133,14 @@ export default ({
                 }).then((result) => {
                 if (result.isConfirmed) {
                     this.deleteFromCloud(item.cld_public_id)
-                    // axios.delete(baseUrl+`media-manager/${item.id}`).then(
-                    //     response => {
-                    //         // this.getImageData()
-                    //         this.successMessage(response.data)
-                    //     }
-                    // ). catch(error => {
-                    //     this.validationError()
-                    // })
+                    axios.delete(baseUrl+`media-manager/${item.id}`).then(
+                        response => {
+                            this.getImageData()
+                            this.successMessage(response.data)
+                        }
+                    ). catch(error => {
+                        this.validationError()
+                    })
                 }
             })
         },
