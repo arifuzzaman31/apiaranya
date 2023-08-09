@@ -106,6 +106,8 @@ export default ({
                 const response = await axios.delete(`https://api.cloudinary.com/v1_1/${cloudName}/resources/image/upload/${publicId}`, {
                 headers: {
                     'Authorization': `Basic ${btoa(`${apiKey}:${apiSecret}`)}`,
+                    'Access-Control-Allow-Origin': '*',
+                    'Origin': 'https://backend.aranya.com.bd',
                 },
                 params: {
                     timestamp,

@@ -20528,7 +20528,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
               _context.next = 9;
               return axios["delete"]("https://api.cloudinary.com/v1_1/".concat(cloudName, "/resources/image/upload/").concat(publicId), {
                 headers: {
-                  'Authorization': "Basic ".concat(btoa("".concat(apiKey, ":").concat(apiSecret)))
+                  'Authorization': "Basic ".concat(btoa("".concat(apiKey, ":").concat(apiSecret))),
+                  'Access-Control-Allow-Origin': '*',
+                  'Origin': 'https://backend.aranya.com.bd'
                 },
                 params: {
                   timestamp: timestamp,
