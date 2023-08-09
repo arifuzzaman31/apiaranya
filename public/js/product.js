@@ -20144,50 +20144,42 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     },
     getCloudWidget: function getCloudWidget() {
       var _this2 = this;
-      var widget = window.cloudinary.createUploadWidget({
+      this.formReset();
+      $("#openCldWgt").modal('show');
+      window.ml = cloudinary.openMediaLibrary({
         cloud_name: clName,
-        upload_preset: clPreset,
-        sources: ["local", "camera", "google_drive", "facebook", "dropbox", "instagram", "unsplash"],
-        folder: "aranya",
-        //upload files to the specified folder
-
-        styles: {
-          palette: {
-            window: "#10173a",
-            sourceBg: "#20304b",
-            windowBorder: "#7171D0",
-            tabIcon: "#79F7FF",
-            inactiveTabIcon: "#8E9FBF",
-            menuIcons: "#CCE8FF",
-            link: "#72F1FF",
-            action: "#5333FF",
-            inProgress: "#00ffcc",
-            complete: "#33ff00",
-            error: "#cc3333",
-            textDark: "#000000",
-            textLight: "#ffffff"
-          },
-          fonts: {
-            "default": null,
-            "sans-serif": {
-              url: null,
-              active: true
-            }
-          }
-        }
-      }, function (error, result) {
-        if (!error && result && result.event === "success") {
-          _this2.filterdata.imgs = [];
-          _this2.filterdata.imgs.push(result.info);
-          _this2.uploadImage();
-          _this2.allImages.data.unshift({
-            'file_link': result.info.secure_url,
-            'product_name': result.info.public_id,
-            'extension': result.info.format
+        api_key: clPreset,
+        remove_header: true,
+        multiple: true,
+        max_files: "4",
+        insert_caption: "Insert",
+        inline_container: "#widget_container",
+        default_transformations: [[]],
+        button_class: "myBtn",
+        button_caption: "Select Image or Video"
+      }, {
+        insertHandler: function insertHandler(data) {
+          console.log("Hello World");
+          data.assets.forEach(function (asset) {
+            console.log("Inserted asset:", JSON.stringify(asset, null, 2));
           });
         }
       });
-      widget.open();
+      ml.on("upload", function (data) {
+        if (data.event === "queues-end") {
+          // log the first uploaded file's public_id:
+          var result = data.info.files;
+          result.forEach(function (asset) {
+            _this2.filterdata.imgs.push(asset.uploadInfo);
+            _this2.allImages.data.unshift({
+              'file_link': asset.uploadInfo.secure_url,
+              'product_name': asset.uploadInfo.public_id,
+              'extension': asset.uploadInfo.format
+            });
+          });
+          _this2.uploadImage();
+        }
+      });
     },
     uploadImage: function uploadImage() {
       var _this3 = this;
@@ -20204,6 +20196,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     },
     loadMore: function loadMore() {
       this.getImageData(this.page++);
+    },
+    formReset: function formReset() {
+      this.filterdata.imgs = [];
+      var myNode = document.getElementById("widget_container");
+      while (myNode.firstChild) {
+        myNode.removeChild(myNode.lastChild);
+      }
     }
   },
   mounted: function mounted() {
@@ -21493,7 +21492,11 @@ var _hoisted_17 = {
   "class": "card-text"
 };
 var _hoisted_18 = {
-  "class": "col-md-3"
+  "class": "col-md-3",
+  style: {
+    "max-height": "75vh",
+    "overflow-y": "auto"
+  }
 };
 var _hoisted_19 = {
   "class": "row"
@@ -21511,10 +21514,65 @@ var _hoisted_21 = /*#__PURE__*/_withScopeId(function () {
     "class": "flaticon-cancel-12"
   }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Select & Close")])], -1 /* HOISTED */);
 });
+var _hoisted_22 = {
+  id: "openCldWgt",
+  "class": "modal animated fadeInUp custo-fadeInUp",
+  role: "dialog"
+};
+var _hoisted_23 = {
+  "class": "modal-dialog modal-xl"
+};
+var _hoisted_24 = {
+  "class": "modal-content"
+};
+var _hoisted_25 = {
+  "class": "modal-header"
+};
+var _hoisted_26 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", {
+    "class": "modal-title ml-3"
+  }, "Cloudinary Media Widget", -1 /* HOISTED */);
+});
+var _hoisted_27 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+    "aria-hidden": "true",
+    xmlns: "http://www.w3.org/2000/svg",
+    width: "24",
+    height: "24",
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    "stroke-width": "2",
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "class": "feather feather-x"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("line", {
+    x1: "18",
+    y1: "6",
+    x2: "6",
+    y2: "18"
+  }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("line", {
+    x1: "6",
+    y1: "6",
+    x2: "18",
+    y2: "18"
+  })], -1 /* HOISTED */);
+});
+var _hoisted_28 = [_hoisted_27];
+var _hoisted_29 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "modal-body"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    id: "widget_container",
+    style: {
+      "height": "80vh"
+    }
+  })], -1 /* HOISTED */);
+});
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_v_lazy_image = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("v-lazy-image");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal content"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [$data.allImages.data && $data.allImages.data.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_11, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.allImages.data, function (item, ind) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal content"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [$data.allImages.data && $data.allImages.data.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_11, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.allImages.data, function (item, ind) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       "class": "col-xl-2 col-md-3 col-sm-6 col-12",
       key: ind
@@ -21561,7 +21619,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "form-control",
     id: "search",
     placeholder: "Search by Name"
-  }, null, 544 /* HYDRATE_EVENTS, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.media_keyword]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "viewimage", {}, undefined, true)])])])])]), _hoisted_21])])])])]);
+  }, null, 544 /* HYDRATE_EVENTS, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.media_keyword]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "viewimage", {}, undefined, true)])])])])]), _hoisted_21])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [_hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    type: "button",
+    "class": "close",
+    "data-dismiss": "modal",
+    "aria-label": "Close",
+    onClick: _cache[4] || (_cache[4] = function () {
+      return $options.formReset && $options.formReset.apply($options, arguments);
+    })
+  }, _hoisted_28)]), _hoisted_29])])])], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -23436,11 +23502,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           key: index
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
           src: itm,
+          "class": "rounded",
           style: {
-            "width": "80%",
-            "height": "90%"
-          },
-          "class": "img-fluid rounded"
+            "width": "70%"
+          }
         }, null, 8 /* PROPS */, _hoisted_235), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
           type: "button",
           onClick: function onClick() {

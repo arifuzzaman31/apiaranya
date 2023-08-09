@@ -1151,7 +1151,7 @@ export default {
         <media-helper :setImg="selectImage">
             <template v-slot:viewimage>
                 <div class="col-md-12 d-flex justify-content-center my-2" v-for="(itm,index) in this.form.selectedImages" :key="index"> 
-                    <img :src="itm" style="width:80%;height:90%" class="img-fluid rounded" />
+                    <img :src="itm" class="rounded" style="width:70%" />
                     <button type="button" @click="() => this.form.selectedImages.splice(index, 1)" class="close text-danger image-close" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

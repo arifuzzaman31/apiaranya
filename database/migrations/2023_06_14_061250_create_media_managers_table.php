@@ -18,6 +18,7 @@ class CreateMediaManagersTable extends Migration
             $table->string('file_link');
             $table->string('file_type')->nullable();
             $table->string('product_name')->nullable();
+            $table->string('cld_public_id')->nullable();
             $table->string('extension')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();

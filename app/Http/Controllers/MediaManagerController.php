@@ -58,6 +58,7 @@ class MediaManagerController extends Controller
                     'file_link' => 'https://res.cloudinary.com/diyc1dizi/'.$value['resource_type'].'/'.'upload/'.$value['public_id'].'.'.$value['format'],
                     'file_type' => $value['resource_type'],
                     'product_name' =>  array_values(array_slice(explode('/',$value['public_id']), -1))[0],
+                    'cld_public_id' =>  $value['public_id'],
                     'extension' => $value['format'],
                     'created_at' => now()
                 ]);

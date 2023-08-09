@@ -16,54 +16,40 @@ export default ({
     },
     methods: {
         getCloudWidget(){
-            const widget = window.cloudinary.createUploadWidget(
-                { cloud_name: clName,
-                    upload_preset: clPreset,
-                    sources: [
-                        "local",
-                        "camera",
-                        "google_drive",
-                        "facebook",
-                        "dropbox",
-                        "instagram",
-                        "unsplash"
-                    ],
-                    folder: "aranya", //upload files to the specified folder
-                    
-                    styles: {
-                        palette: {
-                            window: "#10173a",
-                            sourceBg: "#20304b",
-                            windowBorder: "#7171D0",
-                            tabIcon: "#79F7FF",
-                            inactiveTabIcon: "#8E9FBF",
-                            menuIcons: "#CCE8FF",
-                            link: "#72F1FF",
-                            action: "#5333FF",
-                            inProgress: "#00ffcc",
-                            complete: "#33ff00",
-                            error: "#cc3333",
-                            textDark: "#000000",
-                            textLight: "#ffffff"
-                        },
-                        fonts: {
-                            default: null,
-                            "sans-serif": {
-                                url: null,
-                                active: true
-                            }
-                        }
+            this.formReset()
+            $("#openCldWgt").modal('show');
+            window.ml = cloudinary.openMediaLibrary(
+                { 
+                    cloud_name: clName,
+                    api_key: clPreset,
+                    remove_header: true,
+                    multiple: true,
+                    max_files: "4",
+                    insert_caption: "Insert",
+                    inline_container: "#widget_container",
+                    default_transformations: [[]],
+                    button_class: "myBtn",
+                    button_caption: "Select Image or Video"
+                },
+                {
+                    insertHandler: function (data) {
+                    console.log("Hello World");
+                    data.assets.forEach(asset => { console.log("Inserted asset:",
+                        JSON.stringify(asset, null, 2)) })
                     }
                 },
-                (error, result) => {
-                if (!error && result && result.event === "success") {
-                    this.filterdata.imgs = []
-                    this.filterdata.imgs.push(result.info)
+            );
+            ml.on("upload", (data) => {
+                if (data.event === "queues-end") {
+                    // log the first uploaded file's public_id:
+                    let result = data.info.files
+                    result.forEach(asset => {
+                        this.filterdata.imgs.push(asset.uploadInfo)
+                        this.allImages.data.unshift({'file_link':asset.uploadInfo.secure_url,'product_name':asset.uploadInfo.public_id ,'extension':asset.uploadInfo.format})
+                    })
                     this.uploadImage()
-                    this.allImages.data.unshift({'file_link':result.info.secure_url,'product_name':result.info.public_id ,'extension':result.info.format})
                 }
             });
-                widget.open();
         },
 
         uploadImage(){
@@ -112,6 +98,14 @@ export default ({
         },
         loadMore(){
             this.getImageData(this.page++)
+        },
+        formReset(){
+            this.filterdata.imgs = []
+
+            const myNode = document.getElementById("widget_container");
+                while (myNode.firstChild) {
+                    myNode.removeChild(myNode.lastChild);
+                }
         }
 
     },
@@ -138,7 +132,7 @@ export default ({
                 </div>
             </div>
         </div>
-
+        
         <div class="statbox widget">
             <div class="widget-header">
                 <div class="row" v-if="allImages.data && allImages.data.length > 0">
@@ -159,6 +153,21 @@ export default ({
                     </div>
                 </div>
                 <button  v-if="allImages.data && allImages.data.length > 0 && page < allImages.last_page" @click="loadMore()" class="btn btn-primary mt-4">Load More</button>
+            </div>
+        </div>
+    </div>
+    <div id="openCldWgt" class="modal animated fadeInUp custo-fadeInUp" role="dialog">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title ml-3">Cloudinary Media Widget</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"  @click="formReset">
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="widget_container" style="height: 80vh;"></div>
+                </div>
             </div>
         </div>
     </div>

@@ -1,58 +1,74 @@
 <template>
   <div id="pageMediaModal" class="modal animated fadeInUp custo-fadeInBottom" role="dialog">
-            <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Add Media</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                        </button>
-                    </div>
-            
-                    <div class="modal-body">
-                        <div class="widget-content">
-                            <div class="statbox widget">
-                                <div class="widget-header">
-                                    <div class="row"> 
-                                        <div class="col-md-9 border-right" style="height: 75vh;overflow-y: auto;">
-                                            <div class="row" v-if="allImages.data && allImages.data.length > 0">
-                                                <div class="col-xl-2 col-md-3 col-sm-6 col-12" v-for="(item,ind) in allImages.data" :key="ind">
-                                                    <div class="card component-card_9">
-                                                        <a href="#" type="button" @click="setImg(item.file_link)">
-                                                            <v-lazy-image class="card-img-top" :src="item.file_link" :alt="item.product_name" :src-placeholder="url+'demo.png'" v-if="item.file_type != 'video'" />
-                                                            <video :src="item.file_link" v-else autoplay muted controls class="controlss"></video>  
-                                                        </a>
-                                                        <div class="card-body">
-                                                            <h6 class="card-title">{{ item.product_name }}</h6>
-                                                            <p class="card-text">{{ item.extension }}</p>
-                                                        </div>
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Media</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+        
+                <div class="modal-body">
+                    <div class="widget-content">
+                        <div class="statbox widget">
+                            <div class="widget-header">
+                                <div class="row"> 
+                                    <div class="col-md-9 border-right" style="height: 75vh;overflow-y: auto;">
+                                        <div class="row" v-if="allImages.data && allImages.data.length > 0">
+                                            <div class="col-xl-2 col-md-3 col-sm-6 col-12" v-for="(item,ind) in allImages.data" :key="ind">
+                                                <div class="card component-card_9">
+                                                    <a href="#" type="button" @click="setImg(item.file_link)">
+                                                        <v-lazy-image class="card-img-top" :src="item.file_link" :alt="item.product_name" :src-placeholder="url+'demo.png'" v-if="item.file_type != 'video'" />
+                                                        <video :src="item.file_link" v-else autoplay muted controls class="controlss"></video>  
+                                                    </a>
+                                                    <div class="card-body">
+                                                        <h6 class="card-title">{{ item.product_name }}</h6>
+                                                        <p class="card-text">{{ item.extension }}</p>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button v-if="allImages.data && allImages.data.length > 0 && page < allImages.last_page" @click="loadMore()" class="btn btn-primary mt-4">Load More</button>
                                         </div>
-                                        <div class="col-md-3">
-                                            <div class="row"> 
-                                                <div class="col-md-12"> 
-                                                    <button @click="getCloudWidget()" v-if="showPermission.includes('add-media')" class="btn btn-primary btn-block mb-2 mr-3">Add File</button>
-                                                    <input type="text" @keyup="searchMedia()" v-model="media_keyword" class="form-control" id="search" placeholder="Search by Name" />
-                                                </div>
-                                                <slot name="viewimage"></slot>
+                                        <button v-if="allImages.data && allImages.data.length > 0 && page < allImages.last_page" @click="loadMore()" class="btn btn-primary mt-4">Load More</button>
+                                    </div>
+                                    <div class="col-md-3"  style="max-height: 75vh;overflow-y: auto;">
+                                        <div class="row"> 
+                                            <div class="col-md-12"> 
+                                                <button @click="getCloudWidget()" v-if="showPermission.includes('add-media')" class="btn btn-primary btn-block mb-2 mr-3">Add File</button>
+                                                <input type="text" @keyup="searchMedia()" v-model="media_keyword" class="form-control" id="search" placeholder="Search by Name" />
                                             </div>
+                                            <slot name="viewimage"></slot>
                                         </div>
                                     </div>
-                                    
                                 </div>
+                                
                             </div>
-                            <div class="mt-2 d-flex justify-content-center">
-                                <button class="btn btn-info" data-dismiss="modal"><i class="flaticon-cancel-12"></i>Select & Close</button>
-                            </div>
+                        </div>
+                        <div class="mt-2 d-flex justify-content-center">
+                            <button class="btn btn-info" data-dismiss="modal"><i class="flaticon-cancel-12"></i>Select & Close</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    
+    <div id="openCldWgt" class="modal animated fadeInUp custo-fadeInUp" role="dialog">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title ml-3">Cloudinary Media Widget</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"  @click="formReset">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="widget_container" style="height: 80vh;"></div>
+            </div>
+        </div>
+    </div>
+</div>
 </template>
 
 <script>
@@ -83,54 +99,40 @@ export default {
             });  
         },
         getCloudWidget(){
-            const widget = window.cloudinary.createUploadWidget(
-                { cloud_name: clName,
-                    upload_preset: clPreset,
-                    sources: [
-                        "local",
-                        "camera",
-                        "google_drive",
-                        "facebook",
-                        "dropbox",
-                        "instagram",
-                        "unsplash"
-                    ],
-                    folder: "aranya", //upload files to the specified folder
-                    
-                    styles: {
-                        palette: {
-                            window: "#10173a",
-                            sourceBg: "#20304b",
-                            windowBorder: "#7171D0",
-                            tabIcon: "#79F7FF",
-                            inactiveTabIcon: "#8E9FBF",
-                            menuIcons: "#CCE8FF",
-                            link: "#72F1FF",
-                            action: "#5333FF",
-                            inProgress: "#00ffcc",
-                            complete: "#33ff00",
-                            error: "#cc3333",
-                            textDark: "#000000",
-                            textLight: "#ffffff"
-                        },
-                        fonts: {
-                            default: null,
-                            "sans-serif": {
-                                url: null,
-                                active: true
-                            }
-                        }
+            this.formReset()
+            $("#openCldWgt").modal('show');
+            window.ml = cloudinary.openMediaLibrary(
+                { 
+                    cloud_name: clName,
+                    api_key: clPreset,
+                    remove_header: true,
+                    multiple: true,
+                    max_files: "4",
+                    insert_caption: "Insert",
+                    inline_container: "#widget_container",
+                    default_transformations: [[]],
+                    button_class: "myBtn",
+                    button_caption: "Select Image or Video"
+                },
+                {
+                    insertHandler: function (data) {
+                    console.log("Hello World");
+                    data.assets.forEach(asset => { console.log("Inserted asset:",
+                        JSON.stringify(asset, null, 2)) })
                     }
                 },
-                (error, result) => {
-                if (!error && result && result.event === "success") {
-                    this.filterdata.imgs = []
-                    this.filterdata.imgs.push(result.info)
+            );
+            ml.on("upload", (data) => {
+                if (data.event === "queues-end") {
+                    // log the first uploaded file's public_id:
+                    let result = data.info.files
+                    result.forEach(asset => {
+                        this.filterdata.imgs.push(asset.uploadInfo)
+                        this.allImages.data.unshift({'file_link':asset.uploadInfo.secure_url,'product_name':asset.uploadInfo.public_id ,'extension':asset.uploadInfo.format})
+                    })
                     this.uploadImage()
-                    this.allImages.data.unshift({'file_link':result.info.secure_url,'product_name':result.info.public_id ,'extension':result.info.format})
                 }
             });
-                widget.open();
         },
         uploadImage(){
             axios.post(baseUrl+'media-manager',this.filterdata).then(response => {
@@ -147,6 +149,14 @@ export default {
         loadMore(){
             this.getImageData(this.page++)
         },
+        formReset(){
+            this.filterdata.imgs = []
+
+            const myNode = document.getElementById("widget_container");
+                while (myNode.firstChild) {
+                    myNode.removeChild(myNode.lastChild);
+                }
+        }
     },
     mounted(){
         this.getImageData()
