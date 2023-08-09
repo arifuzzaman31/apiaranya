@@ -20092,6 +20092,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           _this2.uploadImage();
         }
       });
+      ml.on("delete", function (data) {
+        data.assets.forEach(function (asset) {
+          _this2.filterdata.imgs.push(asset.public_id);
+        });
+        _this2.destroyImage();
+      });
     },
     uploadImage: function uploadImage() {
       var _this3 = this;
@@ -20100,6 +20106,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           // this.successMessage(response.data)
           _this3.filterdata.imgs = [];
         }
+      });
+    },
+    destroyImage: function destroyImage() {
+      axios.put(baseUrl + 'media-manager/1', this.filterdata).then(function (response) {
+        console.log(response.data);
+      })["catch"](function (e) {
+        console.log(e);
       });
     },
     searchMedia: function searchMedia() {

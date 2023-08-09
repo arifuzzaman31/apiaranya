@@ -1,6 +1,6 @@
 <script>
 import Mixin from "../../mixer"
-
+import Sha1 from '../../Sha1'
 export default ({
     mixins: [Mixin],
     data(){
@@ -50,6 +50,13 @@ export default ({
                     this.uploadImage()
                 }
             });
+
+            ml.on("delete", (data) => {
+                data.assets.forEach(asset => {
+                    this.filterdata.imgs.push(asset.public_id)
+                })
+                this.destroyImage();
+            });
         },
 
         uploadImage(){
@@ -58,6 +65,14 @@ export default ({
                     // this.successMessage(response.data)
                     this.filterdata.imgs = []
                 }
+            })
+        },
+
+        destroyImage(){
+            axios.put(baseUrl+'media-manager/1',this.filterdata).then(response => {
+                console.log(response.data)
+            }).catch(e => {
+                console.log(e)
             })
         },
 
@@ -74,7 +89,37 @@ export default ({
                 console.log(errors);
             });  
         },
-        deleteMedia(id){
+        generateSignature(timestamp, publicId, apiKey, apiSecret) {
+            const message = `public_id=${publicId}&timestamp=${timestamp}${apiSecret}`;
+            return Sha1.hash(message);
+        },
+        async deleteFromCloud(cld_public_id){
+            const cloudName = clName;
+            const apiKey = clPreset;
+            const apiSecret = "q6yG70R-Aa8eI1PdHTeL-nAcVmY";
+            const publicId = cld_public_id;
+
+            const timestamp = Math.floor(Date.now() / 1000);
+            const signature = this.generateSignature(timestamp, publicId, apiKey, apiSecret);
+
+            try {
+                const response = await axios.delete(`https://api.cloudinary.com/v1_1/${cloudName}/resources/image/upload/${publicId}`, {
+                headers: {
+                    'Authorization': `Basic ${btoa(`${apiKey}:${apiSecret}`)}`,
+                },
+                params: {
+                    timestamp,
+                    signature,
+                },
+                });
+
+                console.log('File deleted successfully', response.data);
+            } catch (error) {
+                console.error('Error deleting file', error);
+            }
+        },
+        deleteMedia(item) {
+                
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -85,14 +130,15 @@ export default ({
                 confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.delete(baseUrl+`media-manager/${id}`).then(
-                        response => {
-                            this.getImageData()
-                            this.successMessage(response.data)
-                        }
-                    ). catch(error => {
-                        this.validationError()
-                    })
+                    this.deleteFromCloud(item.cld_public_id)
+                    // axios.delete(baseUrl+`media-manager/${item.id}`).then(
+                    //     response => {
+                    //         // this.getImageData()
+                    //         this.successMessage(response.data)
+                    //     }
+                    // ). catch(error => {
+                    //     this.validationError()
+                    // })
                 }
             })
         },
@@ -144,7 +190,7 @@ export default ({
                                 <h6 class="card-title">{{ item.product_name }}</h6>
                                 <div class="d-flex justify-content-between"> 
                                     <p class="card-text">{{ item.extension }}</p>
-                                    <a href="#" type="button" @click.prevent="deleteMedia(item.id)" v-if="showPermission.includes('media-delete')">
+                                    <a href="#" type="button" @click.prevent="deleteMedia(item)" v-if="showPermission.includes('media-delete')">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-muted"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                                     </a>
                                 </div>

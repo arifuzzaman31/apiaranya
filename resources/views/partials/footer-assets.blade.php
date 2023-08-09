@@ -4,6 +4,7 @@
 <script src="{{ asset('admin-assets/bootstrap/js/bootstrap.min.js')}}"></script>
 <script src="{{ asset('admin-assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
 <script src="{{ asset('admin-assets/assets/js/app.js')}}"></script>
+
 <!-- <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script> -->
 <script src="https://media-library.cloudinary.com/global/all.js"></script>
 <script>
@@ -15,7 +16,7 @@
     });
 </script>
 <script src="{{ asset('admin-assets/assets/js/custom.js')}}"></script>
-<!-- END GLOBAL MANDATORY SCRIPTS aygazbangladesh@gmail.com-->
+<!-- END GLOBAL MANDATORY SCRIPTS aygazbangladesh@gmail.com United2021!-->
 
 <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 <script src="{{ asset('admin-assets/assets/js/scrollspyNav.js')}}"></script>

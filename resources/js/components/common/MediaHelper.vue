@@ -133,6 +133,12 @@ export default {
                     this.uploadImage()
                 }
             });
+            ml.on("delete", (data) => {
+                data.assets.forEach(asset => {
+                    this.filterdata.imgs.push(asset.public_id)
+                })
+                this.destroyImage();
+            });
         },
         uploadImage(){
             axios.post(baseUrl+'media-manager',this.filterdata).then(response => {
@@ -142,6 +148,14 @@ export default {
                 }
             })
         },
+        destroyImage(){
+            axios.put(baseUrl+'media-manager/1',this.filterdata).then(response => {
+                console.log(response.data)
+            }).catch(e => {
+                console.log(e)
+            })
+        },
+        
         searchMedia(){
             if(this.media_keyword.length > 3) return;
             this.getImageData()

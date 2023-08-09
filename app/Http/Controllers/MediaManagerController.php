@@ -87,11 +87,10 @@ class MediaManagerController extends Controller
      * @param  \App\Models\MediaManager  $mediaManager
      * @return \Illuminate\Http\Response
      */
-    public function edit(MediaManager $mediaManager)
+    public function edit(Request $request)
     {
-        //
     }
-
+    
     /**
      * Update the specified resource in storage.
      *
@@ -102,6 +101,12 @@ class MediaManagerController extends Controller
     public function update(Request $request, MediaManager $mediaManager)
     {
         //
+        try {
+            DB::table('media_managers')->whereIn('cld_public_id',$request->imgs)->delete();
+            return $this->successMessage('Media Deleted Successfully!');
+        } catch (\Throwable $th) {
+            return $this->errorMessage();
+        }
     }
 
     /**

@@ -20180,6 +20180,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           _this2.uploadImage();
         }
       });
+      ml.on("delete", function (data) {
+        data.assets.forEach(function (asset) {
+          _this2.filterdata.imgs.push(asset.public_id);
+        });
+        _this2.destroyImage();
+      });
     },
     uploadImage: function uploadImage() {
       var _this3 = this;
@@ -20188,6 +20194,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           // this.successMessage(response.data)
           _this3.filterdata.imgs = [];
         }
+      });
+    },
+    destroyImage: function destroyImage() {
+      axios.put(baseUrl + 'media-manager/1', this.filterdata).then(function (response) {
+        console.log(response.data);
+      })["catch"](function (e) {
+        console.log(e);
       });
     },
     searchMedia: function searchMedia() {
@@ -20392,12 +20405,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _mixer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixer */ "./resources/js/mixer.js");
+/* harmony import */ var _Sha1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Sha1 */ "./resources/js/Sha1.js");
+/* harmony import */ var _Sha1__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_Sha1__WEBPACK_IMPORTED_MODULE_1__);
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mixins: [_mixer__WEBPACK_IMPORTED_MODULE_0__["default"]],
@@ -20451,6 +20471,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           _this.uploadImage();
         }
       });
+      ml.on("delete", function (data) {
+        data.assets.forEach(function (asset) {
+          _this.filterdata.imgs.push(asset.public_id);
+        });
+        _this.destroyImage();
+      });
     },
     uploadImage: function uploadImage() {
       var _this2 = this;
@@ -20459,6 +20485,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           // this.successMessage(response.data)
           _this2.filterdata.imgs = [];
         }
+      });
+    },
+    destroyImage: function destroyImage() {
+      axios.put(baseUrl + 'media-manager/1', this.filterdata).then(function (response) {
+        console.log(response.data);
+      })["catch"](function (e) {
+        console.log(e);
       });
     },
     getImageData: function getImageData() {
@@ -20474,8 +20507,52 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         console.log(errors);
       });
     },
-    deleteMedia: function deleteMedia(id) {
+    generateSignature: function generateSignature(timestamp, publicId, apiKey, apiSecret) {
+      var message = "public_id=".concat(publicId, "&timestamp=").concat(timestamp).concat(apiSecret);
+      return _Sha1__WEBPACK_IMPORTED_MODULE_1___default().hash(message);
+    },
+    deleteFromCloud: function deleteFromCloud(cld_public_id) {
       var _this4 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var cloudName, apiKey, apiSecret, publicId, timestamp, signature, response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              cloudName = clName;
+              apiKey = clPreset;
+              apiSecret = "q6yG70R-Aa8eI1PdHTeL-nAcVmY";
+              publicId = cld_public_id;
+              timestamp = Math.floor(Date.now() / 1000);
+              signature = _this4.generateSignature(timestamp, publicId, apiKey, apiSecret);
+              _context.prev = 6;
+              _context.next = 9;
+              return axios["delete"]("https://api.cloudinary.com/v1_1/".concat(cloudName, "/resources/image/upload/").concat(publicId), {
+                headers: {
+                  'Authorization': "Basic ".concat(btoa("".concat(apiKey, ":").concat(apiSecret)))
+                },
+                params: {
+                  timestamp: timestamp,
+                  signature: signature
+                }
+              });
+            case 9:
+              response = _context.sent;
+              console.log('File deleted successfully', response.data);
+              _context.next = 16;
+              break;
+            case 13:
+              _context.prev = 13;
+              _context.t0 = _context["catch"](6);
+              console.error('Error deleting file', _context.t0);
+            case 16:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[6, 13]]);
+      }))();
+    },
+    deleteMedia: function deleteMedia(item) {
+      var _this5 = this;
       Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -20486,12 +20563,15 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         confirmButtonText: 'Yes, delete it!'
       }).then(function (result) {
         if (result.isConfirmed) {
-          axios["delete"](baseUrl + "media-manager/".concat(id)).then(function (response) {
-            _this4.getImageData();
-            _this4.successMessage(response.data);
-          })["catch"](function (error) {
-            _this4.validationError();
-          });
+          _this5.deleteFromCloud(item.cld_public_id);
+          // axios.delete(baseUrl+`media-manager/${item.id}`).then(
+          //     response => {
+          //         // this.getImageData()
+          //         this.successMessage(response.data)
+          //     }
+          // ). catch(error => {
+          //     this.validationError()
+          // })
         }
       });
     },
@@ -21417,7 +21497,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       href: "#",
       type: "button",
       onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
-        return $options.deleteMedia(item.id);
+        return $options.deleteMedia(item);
       }, ["prevent"])
     }, _hoisted_18, 8 /* PROPS */, _hoisted_16)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])]);
   }), 128 /* KEYED_FRAGMENT */))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.allImages.data && $data.allImages.data.length > 0 && $data.page < $data.allImages.last_page ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
@@ -22044,6 +22124,208 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "btn btn-primary"
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.id == '' ? 'Add' : 'Update'), 1 /* TEXT */)])])])])])])])])]);
 }
+
+/***/ }),
+
+/***/ "./resources/js/Sha1.js":
+/*!******************************!*\
+  !*** ./resources/js/Sha1.js ***!
+  \******************************/
+/***/ ((module) => {
+
+"use strict";
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+/* SHA-1 (FIPS 180-4) implementation in JavaScript                    (c) Chris Veness 2002-2017  */
+/*                                                                                   MIT Licence  */
+/* www.movable-type.co.uk/scripts/sha1.html                                                       */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+
+
+
+/**
+ * SHA-1 hash function reference implementation.
+ *
+ * This is an annotated direct implementation of FIPS 180-4, without any optimisations. It is
+ * intended to aid understanding of the algorithm rather than for production use.
+ *
+ * While it could be used where performance is not critical, I would recommend using the ‘Web
+ * Cryptography API’ (developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest) for the browser,
+ * or the ‘crypto’ library (nodejs.org/api/crypto.html#crypto_class_hash) in Node.js.
+ *
+ * See csrc.nist.gov/groups/ST/toolkit/secure_hashing.html
+ *     csrc.nist.gov/groups/ST/toolkit/examples.html
+ */
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+var Sha1 = /*#__PURE__*/function () {
+  function Sha1() {
+    _classCallCheck(this, Sha1);
+  }
+  _createClass(Sha1, null, [{
+    key: "hash",
+    value:
+    /**
+     * Generates SHA-1 hash of string.
+     *
+     * @param   {string} msg - (Unicode) string to be hashed.
+     * @param   {Object} [options]
+     * @param   {string} [options.msgFormat=string] - Message format: 'string' for JavaScript string
+     *   (gets converted to UTF-8 for hashing); 'hex-bytes' for string of hex bytes ('616263' ≡ 'abc') .
+     * @param   {string} [options.outFormat=hex] - Output format: 'hex' for string of contiguous
+     *   hex bytes; 'hex-w' for grouping hex bytes into groups of (4 byte / 8 character) words.
+     * @returns {string} Hash of msg as hex character string.
+     */
+    function hash(msg, options) {
+      var defaults = {
+        msgFormat: 'string',
+        outFormat: 'hex'
+      };
+      var opt = Object.assign(defaults, options);
+      switch (opt.msgFormat) {
+        default: // default is to convert string to UTF-8, as SHA only deals with byte-streams
+        case 'string':
+          msg = utf8Encode(msg);
+          break;
+        case 'hex-bytes':
+          msg = hexBytesToString(msg);
+          break;
+        // mostly for running tests
+      }
+
+      // constants [§4.2.1]
+      var K = [0x5a827999, 0x6ed9eba1, 0x8f1bbcdc, 0xca62c1d6];
+
+      // initial hash value [§5.3.1]
+      var H = [0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476, 0xc3d2e1f0];
+
+      // PREPROCESSING [§6.1.1]
+
+      msg += String.fromCharCode(0x80); // add trailing '1' bit (+ 0's padding) to string [§5.1.1]
+
+      // convert string msg into 512-bit/16-integer blocks arrays of ints [§5.2.1]
+      var l = msg.length / 4 + 2; // length (in 32-bit integers) of msg + ‘1’ + appended length
+      var N = Math.ceil(l / 16); // number of 16-integer-blocks required to hold 'l' ints
+      var M = new Array(N);
+      for (var i = 0; i < N; i++) {
+        M[i] = new Array(16);
+        for (var j = 0; j < 16; j++) {
+          // encode 4 chars per integer, big-endian encoding
+          M[i][j] = msg.charCodeAt(i * 64 + j * 4 + 0) << 24 | msg.charCodeAt(i * 64 + j * 4 + 1) << 16 | msg.charCodeAt(i * 64 + j * 4 + 2) << 8 | msg.charCodeAt(i * 64 + j * 4 + 3) << 0;
+        } // note running off the end of msg is ok 'cos bitwise ops on NaN return 0
+      }
+      // add length (in bits) into final pair of 32-bit integers (big-endian) [§5.1.1]
+      // note: most significant word would be (len-1)*8 >>> 32, but since JS converts
+      // bitwise-op args to 32 bits, we need to simulate this by arithmetic operators
+      M[N - 1][14] = (msg.length - 1) * 8 / Math.pow(2, 32);
+      M[N - 1][14] = Math.floor(M[N - 1][14]);
+      M[N - 1][15] = (msg.length - 1) * 8 & 0xffffffff;
+
+      // HASH COMPUTATION [§6.1.2]
+
+      for (var _i = 0; _i < N; _i++) {
+        var W = new Array(80);
+
+        // 1 - prepare message schedule 'W'
+        for (var t = 0; t < 16; t++) W[t] = M[_i][t];
+        for (var _t = 16; _t < 80; _t++) W[_t] = Sha1.ROTL(W[_t - 3] ^ W[_t - 8] ^ W[_t - 14] ^ W[_t - 16], 1);
+
+        // 2 - initialise five working variables a, b, c, d, e with previous hash value
+        var a = H[0],
+          b = H[1],
+          c = H[2],
+          d = H[3],
+          e = H[4];
+
+        // 3 - main loop (use JavaScript '>>> 0' to emulate UInt32 variables)
+        for (var _t2 = 0; _t2 < 80; _t2++) {
+          var s = Math.floor(_t2 / 20); // seq for blocks of 'f' functions and 'K' constants
+          var T = Sha1.ROTL(a, 5) + Sha1.f(s, b, c, d) + e + K[s] + W[_t2] >>> 0;
+          e = d;
+          d = c;
+          c = Sha1.ROTL(b, 30) >>> 0;
+          b = a;
+          a = T;
+        }
+
+        // 4 - compute the new intermediate hash value (note 'addition modulo 2^32' – JavaScript
+        // '>>> 0' coerces to unsigned UInt32 which achieves modulo 2^32 addition)
+        H[0] = H[0] + a >>> 0;
+        H[1] = H[1] + b >>> 0;
+        H[2] = H[2] + c >>> 0;
+        H[3] = H[3] + d >>> 0;
+        H[4] = H[4] + e >>> 0;
+      }
+
+      // convert H0..H4 to hex strings (with leading zeros)
+      for (var h = 0; h < H.length; h++) H[h] = ('00000000' + H[h].toString(16)).slice(-8);
+
+      // concatenate H0..H4, with separator if required
+      var separator = opt.outFormat == 'hex-w' ? ' ' : '';
+      return H.join(separator);
+
+      /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+
+      function utf8Encode(str) {
+        try {
+          return new TextEncoder().encode(str, 'utf-8').reduce(function (prev, curr) {
+            return prev + String.fromCharCode(curr);
+          }, '');
+        } catch (e) {
+          // no TextEncoder available?
+          return unescape(encodeURIComponent(str)); // monsur.hossa.in/2012/07/20/utf-8-in-javascript.html
+        }
+      }
+
+      function hexBytesToString(hexStr) {
+        // convert string of hex numbers to a string of chars (eg '616263' -> 'abc').
+        var str = hexStr.replace(' ', ''); // allow space-separated groups
+        return str == '' ? '' : str.match(/.{2}/g).map(function (_byte) {
+          return String.fromCharCode(parseInt(_byte, 16));
+        }).join('');
+      }
+    }
+
+    /**
+     * Function 'f' [§4.1.1].
+     * @private
+     */
+  }, {
+    key: "f",
+    value: function f(s, x, y, z) {
+      switch (s) {
+        case 0:
+          return x & y ^ ~x & z;
+        // Ch()
+        case 1:
+          return x ^ y ^ z;
+        // Parity()
+        case 2:
+          return x & y ^ x & z ^ y & z;
+        // Maj()
+        case 3:
+          return x ^ y ^ z;
+        // Parity()
+      }
+    }
+
+    /**
+     * Rotates left (circular left shift) value x by n positions [§3.2.5].
+     * @private
+     */
+  }, {
+    key: "ROTL",
+    value: function ROTL(x, n) {
+      return x << n | x >>> 32 - n;
+    }
+  }]);
+  return Sha1;
+}();
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+if ( true && module.exports) module.exports = Sha1; // ≡ export default Sha1
 
 /***/ }),
 
