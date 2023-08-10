@@ -20159,7 +20159,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         button_caption: "Select Image or Video"
       }, {
         insertHandler: function insertHandler(data) {
-          console.log("Hello World");
           data.assets.forEach(function (asset) {
             console.log("Inserted asset:", JSON.stringify(asset, null, 2));
           });

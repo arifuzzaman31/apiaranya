@@ -41,7 +41,6 @@ export default ({
             );
             ml.on("upload", (data) => {
                 if (data.event === "queues-end") {
-                    // log the first uploaded file's public_id:
                     let result = data.info.files
                     result.forEach(asset => {
                         this.filterdata.imgs.push(asset.uploadInfo)
@@ -89,37 +88,37 @@ export default ({
                 console.log(errors);
             });  
         },
-        generateSignature(timestamp, publicId, apiKey, apiSecret) {
-            const message = `public_id=${publicId}&timestamp=${timestamp}${apiSecret}`;
-            return Sha1.hash(message);
-        },
-        async deleteFromCloud(cld_public_id){
-            const cloudName = clName;
-            const apiKey = clPreset;
-            const apiSecret = "q6yG70R-Aa8eI1PdHTeL-nAcVmY";
-            const publicId = cld_public_id;
+        // generateSignature(timestamp, publicId, apiKey, apiSecret) {
+        //     const message = `public_id=${publicId}&timestamp=${timestamp}${apiSecret}`;
+        //     return Sha1.hash(message);
+        // },
+        // async deleteFromCloud(cld_public_id){
+        //     const cloudName = clName;
+        //     const apiKey = clPreset;
+        //     const apiSecret = "q6yG70R-Aa8eI1PdHTeL-nAcVmY";
+        //     const publicId = cld_public_id;
 
-            const timestamp = Math.floor(Date.now() / 1000);
-            const signature = this.generateSignature(timestamp, publicId, apiKey, apiSecret);
+        //     const timestamp = Math.floor(Date.now() / 1000);
+        //     const signature = this.generateSignature(timestamp, publicId, apiKey, apiSecret);
 
-            try {
-                const response = await axios.delete(`https://api.cloudinary.com/v1_1/${cloudName}/resources/image/upload/${publicId}`, {
-                headers: {
-                    'Authorization': `Basic ${btoa(`${apiKey}:${apiSecret}`)}`,
-                    'Access-Control-Allow-Origin': '*',
-                    'Origin': 'https://backend.aranya.com.bd',
-                },
-                params: {
-                    timestamp,
-                    signature,
-                },
-                });
+        //     try {
+        //         const response = await axios.delete(`https://api.cloudinary.com/v1_1/${cloudName}/resources/image/upload/${publicId}`, {
+        //         headers: {
+        //             'Authorization': `Basic ${btoa(`${apiKey}:${apiSecret}`)}`,
+        //             'Access-Control-Allow-Origin': '*',
+        //             'Origin': 'https://backend.aranya.com.bd',
+        //         },
+        //         params: {
+        //             timestamp,
+        //             signature,
+        //         },
+        //         });
 
-                console.log('File deleted successfully', response.data);
-            } catch (error) {
-                console.error('Error deleting file', error);
-            }
-        },
+        //         console.log('File deleted successfully', response.data);
+        //     } catch (error) {
+        //         console.error('Error deleting file', error);
+        //     }
+        // },
         deleteMedia(item) {
                 
             Swal.fire({
@@ -132,7 +131,7 @@ export default ({
                 confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                 if (result.isConfirmed) {
-                    this.deleteFromCloud(item.cld_public_id)
+                    // this.deleteFromCloud(item.cld_public_id)
                     axios.delete(baseUrl+`media-manager/${item.id}`).then(
                         response => {
                             this.getImageData()

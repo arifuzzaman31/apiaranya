@@ -116,7 +116,6 @@ export default {
                 },
                 {
                     insertHandler: function (data) {
-                    console.log("Hello World");
                     data.assets.forEach(asset => { console.log("Inserted asset:",
                         JSON.stringify(asset, null, 2)) })
                     }
