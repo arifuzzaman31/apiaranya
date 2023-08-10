@@ -24,7 +24,7 @@
             <th>pattern</th>
             <th>shipping</th>
             <th>shipping_weight</th>
-            <th>style[0]</th>
+            <th>style</th>
         </tr>
     </thead>
     <tbody>

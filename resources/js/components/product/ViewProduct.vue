@@ -362,7 +362,7 @@ export default {
         :limit="limit"
         :keep-length="keepLength"
     />
-    <product-detail :product="singleproduct"></product-detail>
+    <product-detail v-if="singleproduct" :product="singleproduct"></product-detail>
     
     <div id="addToCampModal" class="modal animated fadeInUp custo-fadeInUp" role="dialog">
         <div class="modal-dialog">

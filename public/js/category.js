@@ -19730,7 +19730,8 @@ __webpack_require__.r(__webpack_exports__);
         image_two: '',
         image_three: '',
         imagenumb: ''
-      }
+      },
+      url: baseUrl
     };
   },
   methods: {
@@ -19816,7 +19817,8 @@ __webpack_require__.r(__webpack_exports__);
         image_two: '',
         image_three: '',
         image_four: ''
-      }
+      },
+      url: baseUrl
     };
   },
   methods: {
@@ -20037,7 +20039,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       },
       allImages: [],
       media_keyword: '',
-      page: 1
+      page: 1,
+      url: baseUrl
     };
   },
   methods: {
@@ -20212,7 +20215,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     width: "600",
     src: $data.form.image_one,
     alt: "cat image one",
-    "src-placeholder": _ctx.url + 'demo.png'
+    "src-placeholder": $data.url + 'demo.png'
   }, null, 8 /* PROPS */, ["src", "src-placeholder"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "submit",
     "class": "btn btn-info btn-block mb-4 mr-2",
@@ -20228,7 +20231,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     width: "600",
     src: $data.form.image_two,
     alt: "cat image two",
-    "src-placeholder": _ctx.url + 'demo.png'
+    "src-placeholder": $data.url + 'demo.png'
   }, null, 8 /* PROPS */, ["src", "src-placeholder"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "submit",
     "class": "btn btn-info btn-block mb-4 mr-2",
@@ -20244,7 +20247,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     width: "600",
     src: $data.form.image_three,
     alt: "cat image three",
-    "src-placeholder": _ctx.url + 'demo.png'
+    "src-placeholder": $data.url + 'demo.png'
   }, null, 8 /* PROPS */, ["src", "src-placeholder"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "submit",
     onClick: _cache[3] || (_cache[3] = function ($event) {
@@ -20259,7 +20262,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         src: $data.form.imageuri,
         "class": "card-img-top",
         alt: $data.form.imageuri,
-        "src-placeholder": _ctx.url + 'demo.png'
+        "src-placeholder": $data.url + 'demo.png'
       }, null, 8 /* PROPS */, ["src", "alt", "src-placeholder"])])];
     }),
     _: 1 /* STABLE */
@@ -20333,7 +20336,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     width: "600",
     src: $data.form.category_image_one,
     alt: "cat image one",
-    "src-placeholder": _ctx.url + 'demo.png'
+    "src-placeholder": $data.url + 'demo.png'
   }, null, 8 /* PROPS */, ["src", "src-placeholder"])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "submit",
     "class": "btn btn-info btn-block mb-4 mr-2",
@@ -20345,7 +20348,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     width: "600",
     src: $data.form.category_image_two,
     alt: "cat image one",
-    "src-placeholder": _ctx.url + 'demo.png'
+    "src-placeholder": $data.url + 'demo.png'
   }, null, 8 /* PROPS */, ["src", "src-placeholder"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "submit",
     "class": "btn btn-info btn-block mb-4 mr-2",
@@ -20357,7 +20360,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     width: "600",
     src: $data.form.category_image_three,
     alt: "cat image one",
-    "src-placeholder": _ctx.url + 'demo.png'
+    "src-placeholder": $data.url + 'demo.png'
   }, null, 8 /* PROPS */, ["src", "src-placeholder"])])])])]);
 }
 
@@ -20907,7 +20910,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "class": "card-img-top",
       src: item.file_link,
       alt: item.product_name,
-      "src-placeholder": _ctx.url + 'demo.png'
+      "src-placeholder": $data.url + 'demo.png'
     }, null, 8 /* PROPS */, ["src", "alt", "src-placeholder"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("video", {
       key: 1,
       src: item.file_link,

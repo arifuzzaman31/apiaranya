@@ -20125,7 +20125,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       },
       allImages: [],
       media_keyword: '',
-      page: 1
+      page: 1,
+      url: baseUrl
     };
   },
   methods: {
@@ -21163,7 +21164,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['product']
+  props: ['product'],
+  data: function data() {
+    return {
+      url: baseUrl
+    };
+  }
 });
 
 /***/ }),
@@ -21599,7 +21605,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "class": "card-img-top",
       src: item.file_link,
       alt: item.product_name,
-      "src-placeholder": _ctx.url + 'demo.png'
+      "src-placeholder": $data.url + 'demo.png'
     }, null, 8 /* PROPS */, ["src", "alt", "src-placeholder"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("video", {
       key: 1,
       src: item.file_link,
@@ -25180,31 +25186,31 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     src: $props.product.image_one,
     "class": "img-fluid orderImage",
     alt: "product-image",
-    "src-placeholder": _ctx.url + 'demo.png'
+    "src-placeholder": $data.url + 'demo.png'
   }, null, 8 /* PROPS */, ["src", "src-placeholder"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.product.image_two ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_v_lazy_image, {
     key: 1,
     src: $props.product.image_two,
     "class": "img-fluid orderImage",
     alt: "product-image",
-    "src-placeholder": _ctx.url + 'demo.png'
+    "src-placeholder": $data.url + 'demo.png'
   }, null, 8 /* PROPS */, ["src", "src-placeholder"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.product.image_three ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_v_lazy_image, {
     key: 2,
     src: $props.product.image_three,
     "class": "img-fluid orderImage",
     alt: "product-image",
-    "src-placeholder": _ctx.url + 'demo.png'
+    "src-placeholder": $data.url + 'demo.png'
   }, null, 8 /* PROPS */, ["src", "src-placeholder"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.product.image_four ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_v_lazy_image, {
     key: 3,
     src: $props.product.image_four,
     "class": "img-fluid orderImage",
     alt: "product-image",
-    "src-placeholder": _ctx.url + 'demo.png'
+    "src-placeholder": $data.url + 'demo.png'
   }, null, 8 /* PROPS */, ["src", "src-placeholder"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.product.image_five ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_v_lazy_image, {
     key: 4,
     src: $props.product.image_five,
     "class": "img-fluid orderImage",
     alt: "product-image",
-    "src-placeholder": _ctx.url + 'demo.png'
+    "src-placeholder": $data.url + 'demo.png'
   }, null, 8 /* PROPS */, ["src", "src-placeholder"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_22, [$props.product.product_fabric && $props.product.product_fabric.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, [_hoisted_24, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.product.product_fabric, function (pf) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
       key: pf.id
@@ -25841,9 +25847,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onPaginationChangePage: $options.getProduct,
     limit: $data.limit,
     "keep-length": $data.keepLength
-  }, null, 8 /* PROPS */, ["data", "onPaginationChangePage", "limit", "keep-length"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_product_detail, {
+  }, null, 8 /* PROPS */, ["data", "onPaginationChangePage", "limit", "keep-length"]), $data.singleproduct ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_product_detail, {
+    key: 0,
     product: $data.singleproduct
-  }, null, 8 /* PROPS */, ["product"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_61, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_62, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal content"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [_hoisted_64, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_65, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_66, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+  }, null, 8 /* PROPS */, ["product"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_61, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_62, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal content"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [_hoisted_64, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_65, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_66, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
     onSubmit: _cache[18] || (_cache[18] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
       return $options.addToCampaign();
     }, ["prevent"]))

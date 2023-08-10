@@ -271,12 +271,9 @@ class ProductController extends Controller
                 ]);
             }
             DB::commit();
-            if(is_file(public_path('product.csv')))
+            if(is_file(public_path('excel/product.csv')))
             {
-                // 1. possibility
-                //Storage::delete($file);
-                // 2. possibility
-                unlink(public_path('product.csv'));
+                unlink(public_path('excel/product.csv'));
             }
             public_path(Excel::store(new AddProduct, 'product.csv'));
             return $this->successMessage($this->fieldname.' Added Successfully!');
@@ -486,13 +483,11 @@ class ProductController extends Controller
             }
 
             DB::commit();
-            if(is_file(public_path('product.csv')))
+            if(is_file(public_path('excel/product.csv')))
             {
-                // 1. possibility
-                //Storage::delete($file);
-                // 2. possibility
-                unlink(public_path('product.csv'));
+                unlink(public_path('excel/product.csv'));
             }
+    
             public_path(Excel::store(new AddProduct, 'product.csv'));
             return $this->successMessage($this->fieldname.' Successfully Updated!');
         } catch (\Throwable $th) {
