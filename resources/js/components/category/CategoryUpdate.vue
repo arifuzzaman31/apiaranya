@@ -14,7 +14,8 @@ export default {
                 image_two: '',
                 image_three: '',
                 imagenumb: ''
-            }
+            },
+            url: baseUrl
         }
     },
 

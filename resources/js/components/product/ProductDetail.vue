@@ -99,7 +99,12 @@
 
 <script>
 export default {
-props: ['product']
+props: ['product'],
+data(){
+    return {
+        url: baseUrl
+    }
+}
 }
 </script>
 

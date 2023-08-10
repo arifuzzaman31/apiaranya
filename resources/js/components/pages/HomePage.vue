@@ -27,6 +27,7 @@ export default {
                 back_url: '',
                 state: 'home'
             },
+            url: baseUrl,
             allcategories: [],
             allsubcategories: [],
             target_state: '',

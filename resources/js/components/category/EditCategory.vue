@@ -18,7 +18,7 @@ export default {
                 image_three: '',
                 image_four: ''
             },
-            
+            url: baseUrl 
         }
     },
     methods: {

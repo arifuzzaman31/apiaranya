@@ -82,6 +82,7 @@ export default {
             allImages: [],
             media_keyword: '',
             page: 1,
+            url: baseUrl
         }
     },
     methods: {
