@@ -1,6 +1,5 @@
 <script>
 import Mixin from "../../mixer"
-import Sha1 from '../../Sha1'
 export default ({
     mixins: [Mixin],
     data(){
