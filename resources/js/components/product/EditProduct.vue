@@ -73,7 +73,7 @@ export default {
     methods: {
         updateForm () {
              axios.put(baseUrl+'product/'+this.form.id,this.form).then(response => {
-                console.log(response)
+                console.log(response.data)
                 if(response.data.status == 'success'){
                     this.clearForm()
                     this.successMessage(response.data)
