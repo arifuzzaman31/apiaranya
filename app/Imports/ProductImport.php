@@ -20,7 +20,7 @@ class ProductImport implements ToCollection
     public function collection(Collection $rows)
     {
         unset($rows[0]);
-      //   return count($rows);
+        return count($rows);
         $data = array_filter($rows->toArray(),function ($number) {
                  return $number[0] !== null;
              });
@@ -46,7 +46,7 @@ class ProductImport implements ToCollection
                if($row[25] != ''){
                try {
                   DB::beginTransaction();
-                  $imglink = 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya-product-v2/';
+                  // $imglink = 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya-product-v2/';
       
                   $product = Product::create([
                       'product_name' => $row[2], 
@@ -55,12 +55,12 @@ class ProductImport implements ToCollection
                       'sub_category_id' => (int)$row[6], 
                       'vat_tax_id' => $row[35], //not found
                       'lead_time' => $row[15], 
-                      'product_image' => $imglink.$row[1].'/'.$row[25].'.png', 
-                      'image_one' => $imglink.$row[1].'/'.$row[25].'.png',
-                      'image_two' => $row[26] !='' ? $imglink.$row[1].'/'.$row[26].'.png' : '', 
-                      'image_three' => $row[27] !='' ? $imglink.$row[1].'/'.$row[27].'.png' : '', 
-                      'image_four' => $row[28] !='' ? $imglink.$row[1].'/'.$row[28].'.png' : '', 
-                      'image_five' => $row[29] !='' ? $imglink.$row[1].'/'.$row[29].'.png' : '', 
+                      'product_image' => $row[25], 
+                      'image_one' =>   $row[25],
+                      'image_two' => $row[26] !='' ? $row[26] : '', 
+                      'image_three' => $row[27] !='' ? $row[27] : '', 
+                      'image_four' => $row[28] !='' ? $row[28] : '', 
+                      'image_five' => $row[29] !='' ? $row[29] : '', 
                       'height' => $row[30] != '' ? explode(",",$row[30])[0] : NULL,
                       'width' => $row[30] != '' ? explode(",",$row[30])[1] : NULL,
                       'length' => $row[30] != '' ? explode(",",$row[30])[2] : NULL,

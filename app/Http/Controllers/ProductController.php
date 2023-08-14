@@ -14,15 +14,12 @@ use App\Models\ProductTag;
 use Illuminate\Http\Request;
 use App\Traits\ProductTrait;
 use DB,Str,Excel;
+use App\Events\ProductProcessed;
 
 class ProductController extends Controller
 {
     use ProductTrait;
     public $fieldname = 'Product';
-
-    public function testa(){ 
-         return public_path(Excel::store(new AddProduct, 'product.csv'));
-    }
 
     /**
      * Display a listing of the resource.
@@ -271,11 +268,6 @@ class ProductController extends Controller
                 ]);
             }
             DB::commit();
-            // if(is_file(public_path('excel/product.csv')))
-            // {
-            //     unlink(public_path('excel/product.csv'));
-            // }
-            // public_path(Excel::store(new AddProduct, 'product.csv'));
             return $this->successMessage($this->fieldname.' Added Successfully!');
         } catch (\Throwable $th) {
             DB::rollback();
@@ -483,12 +475,6 @@ class ProductController extends Controller
             }
 
             DB::commit();
-            // if(is_file(public_path('excel/product.csv')))
-            // {
-            //     unlink(public_path('excel/product.csv'));
-            // }
-    
-            // public_path(Excel::store(new AddProduct, 'product.csv'));
             return $this->successMessage($this->fieldname.' Successfully Updated!');
         } catch (\Throwable $th) {
             DB::rollback();
@@ -501,20 +487,35 @@ class ProductController extends Controller
 
     public function bulkUpload(Request $request)
     {
+        return $this->successMessage('Service Not Available.');
         $this->validate($request, [
             'file'   => 'required|mimes:xls,xlsx'
         ]);
-
-        $path = $request->file('file')->getRealPath();
-        // return $data = Excel::load($path, function($reader) {})->get();
-        Excel::import(new ProductImport, $path);
-        // $data = Excel::toCollection(new ProductImport,$request->file('file'));
-        // $data = Excel::toArray(new ProductImport,$request->file('file'));
-        // $data = array_filter($data->toArray(),function ($number) {
-        //     return $number[0] !== null;
-        // });
-        // return count($data[0]);
-        return $this->successMessage('Excel Data Imported Successfully.');
+        try {
+            // $request->file('file')->store('import');
+            $request->file('file')->storeAs(
+                'import', 'product.' . $request->file('file')->getClientOriginalExtension()
+              );
+              ProductProcessed::dispatch();
+            // $path = public_path('excel\import\product.xlsx');
+            // dd($path);
+            //   event(new ProductProcessed());
+            // $request->image->move(public_path('import'), $myimage);
+            // $path = $request->file('file')->getRealPath();
+            // Excel::queueImport(new ProductImport, $path);
+            // return $data = Excel::load($path, function($reader) {})->get();
+         
+            // $data = Excel::toArray(new ProductImport,$request->file('file'));
+            // $data = array_filter($data->toArray(),function ($number) {
+            //     return $number[0] !== null;
+            // });
+            // return count($data[0]);
+    
+            return $this->successMessage('Excel Data Imported Successfully.');
+            //code...
+        } catch (\Throwable $th) {
+            return $th;
+        }
     }
 
     /**

@@ -738,7 +738,7 @@ export default {
                             </div>
                             <div class="col-md-2 mb-3">
                                 <label for="unit">Unit</label>
-                                <input type="text" class="form-control form-control-sm" id="unit" placeholder="Enter Width" v-model="form.unit" />
+                                <input type="text" class="form-control form-control-sm" id="unit" placeholder="Enter Unit" v-model="form.unit" />
                             </div>
                             <div class="col-md-2 mb-3">
                                 <label for="weight">Weight</label>
