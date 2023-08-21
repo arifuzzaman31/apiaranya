@@ -23,6 +23,9 @@ class CreatePaymentsTable extends Migration
             $table->float('exchange_rate')->nullable();
             $table->string('payment_type')->nullable();
             $table->tinyInteger('payment_status')->nullable();
+            $table->tinyInteger('is_refunded')->default(0)->comment = "0 for refund not done, 1 for refund done, 2 for reject";
+            $table->date('refund_date')->nullable();
+            $table->longText('refund_info')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

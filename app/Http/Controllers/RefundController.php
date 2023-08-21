@@ -42,7 +42,7 @@ class RefundController extends Controller
     {
         $from   = $request->get('from');
         $keyword   = $request->get('keyword');
-        $details = OrderDetails::with(['user','product:id,product_name,slug','order:id,payment_status','size','fabric']);
+        $details = OrderDetails::with(['user','product:id,product_name','order:id,payment_status','size','fabric']);
 
         if($from != '' && $from == 'request-refund'){
             $details = $details->where('is_refunded',AllStatic::$inactive)->where('is_claim_refund',AllStatic::$active);
@@ -84,8 +84,8 @@ class RefundController extends Controller
             // $order_detail->update();
             // return response()->json(['status' => 'success','message' => 'Refund Approved!']);
 
-            $bank_tran_id=urlencode($order_detail->transaction_id);
-            $refund_amount=urlencode(($order_detail->selling_price + $order_detail->vat_amount));
+            $bank_tran_id=urlencode($order_detail->order->transaction_id);
+            $refund_amount=urlencode(($order_detail->total_selling_price + $order_detail->vat_amount));
             $refund_remarks=urlencode('Out of Stock');
             $store_id=urlencode(config('app.storeid'));
             $store_passwd=urlencode(config('app.storepassw'));
@@ -111,23 +111,23 @@ class RefundController extends Controller
 
                 # TO CONVERT AS OBJECT
                 $result = json_decode($result);
-
+		
                 # TRANSACTION INFO
                 $status = $result->status;
                 $bank_tran_id = $result->bank_tran_id;
-                $trans_id = $result->trans_id;
-                $refund_ref_id = $result->refund_ref_id;
+                //$trans_id = $result->trans_id;
+                //$refund_ref_id = $result->refund_ref_id ?? $result->refund_ref_id;
                 $errorReason = $result->errorReason;
 
                 # API AUTHENTICATION
                 $APIConnect = $result->APIConnect;
 
-                // DB::table('payments')->where('order_id', $order->id)->update([
-                //     'is_refunded' => AllStatic::$active,
-                //     'refund_date' => date("Y-m-d"),
-                //     'refund_info' => json_encode($result),
-                //     'updated_at'    => date("Y-m-d H:i:s")
-                // ]);
+                DB::table('payments')->where('order_id', $order_detail->order_id)->update([
+                     'is_refunded' => AllStatic::$active,
+                     'refund_date' => date("Y-m-d"),
+                     'refund_info' => json_encode($result),
+                     'updated_at'    => date("Y-m-d H:i:s")
+                 ]);
             
                 $order_detail->is_refunded = AllStatic::$active;
                 $order_detail->refund_date = date("Y-m-d");
@@ -140,7 +140,7 @@ class RefundController extends Controller
             
 
         } catch (\Throwable $th) {
-            // return $th;
+            return $th;
             return $this->errorMessage();
         }
     }
