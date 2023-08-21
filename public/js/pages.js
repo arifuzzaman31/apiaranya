@@ -20428,7 +20428,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   },
   methods: {
     getCloudWidget: function getCloudWidget() {
-      var _this = this;
+      var _this2 = this;
       this.formReset();
       $("#openCldWgt").modal('show');
       window.ml = cloudinary.openMediaLibrary({
@@ -20444,39 +20444,45 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         button_caption: "Select Image or Video"
       }, {
         insertHandler: function insertHandler(data) {
-          console.log("Hello World");
+          var _this = this;
           data.assets.forEach(function (asset) {
-            console.log("Inserted asset:", JSON.stringify(asset, null, 2));
+            _this.filterdata.imgs.push(asset);
+            _this.allImages.data.unshift({
+              'file_link': asset.secure_url,
+              'product_name': asset.public_id,
+              'extension': asset.format
+            });
           });
+          this.uploadImage();
         }
       });
       ml.on("upload", function (data) {
         if (data.event === "queues-end") {
           var result = data.info.files;
           result.forEach(function (asset) {
-            _this.filterdata.imgs.push(asset.uploadInfo);
-            _this.allImages.data.unshift({
+            _this2.filterdata.imgs.push(asset.uploadInfo);
+            _this2.allImages.data.unshift({
               'file_link': asset.uploadInfo.secure_url,
               'product_name': asset.uploadInfo.public_id,
               'extension': asset.uploadInfo.format
             });
           });
-          _this.uploadImage();
+          _this2.uploadImage();
         }
       });
       ml.on("delete", function (data) {
         data.assets.forEach(function (asset) {
-          _this.filterdata.imgs.push(asset.public_id);
+          _this2.filterdata.imgs.push(asset.public_id);
         });
-        _this.destroyImage();
+        _this2.destroyImage();
       });
     },
     uploadImage: function uploadImage() {
-      var _this2 = this;
+      var _this3 = this;
       axios.post(baseUrl + 'media-manager', this.filterdata).then(function (response) {
         if (response.data.status == 'success') {
           // this.successMessage(response.data)
-          _this2.filterdata.imgs = [];
+          _this3.filterdata.imgs = [];
         }
       });
     },
@@ -20488,13 +20494,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       });
     },
     getImageData: function getImageData() {
-      var _this3 = this;
+      var _this4 = this;
       axios.get(baseUrl + "media-manager/create?page=".concat(this.page, "&per_page=10&keyword=").concat(this.search)).then(function (result) {
-        if (_this3.page == 1) {
-          _this3.allImages = result.data;
+        if (_this4.page == 1) {
+          _this4.allImages = result.data;
         } else {
-          var _this3$allImages$data;
-          (_this3$allImages$data = _this3.allImages.data).push.apply(_this3$allImages$data, _toConsumableArray(result.data.data));
+          var _this4$allImages$data;
+          (_this4$allImages$data = _this4.allImages.data).push.apply(_this4$allImages$data, _toConsumableArray(result.data.data));
         }
       })["catch"](function (errors) {
         console.log(errors);
@@ -20529,7 +20535,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     //     }
     // },
     deleteMedia: function deleteMedia(item) {
-      var _this4 = this;
+      var _this5 = this;
       Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -20542,10 +20548,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         if (result.isConfirmed) {
           // this.deleteFromCloud(item.cld_public_id)
           axios["delete"](baseUrl + "media-manager/".concat(item.id)).then(function (response) {
-            _this4.getImageData();
-            _this4.successMessage(response.data);
+            _this5.getImageData();
+            _this5.successMessage(response.data);
           })["catch"](function (error) {
-            _this4.validationError();
+            _this5.validationError();
           });
         }
       });

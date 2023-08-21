@@ -487,32 +487,20 @@ class ProductController extends Controller
 
     public function bulkUpload(Request $request)
     {
-        return $this->successMessage('Service Not Available.');
         $this->validate($request, [
             'file'   => 'required|mimes:xls,xlsx'
         ]);
         try {
-            // $request->file('file')->store('import');
-            $request->file('file')->storeAs(
-                'import', 'product.' . $request->file('file')->getClientOriginalExtension()
-              );
-              ProductProcessed::dispatch();
-            // $path = public_path('excel\import\product.xlsx');
-            // dd($path);
-            //   event(new ProductProcessed());
-            // $request->image->move(public_path('import'), $myimage);
-            // $path = $request->file('file')->getRealPath();
-            // Excel::queueImport(new ProductImport, $path);
+            $path = $request->file('file')->getRealPath();
             // return $data = Excel::load($path, function($reader) {})->get();
-         
+            Excel::import(new ProductImport, $path);
+            // $data = Excel::toCollection(new ProductImport,$request->file('file'));
             // $data = Excel::toArray(new ProductImport,$request->file('file'));
             // $data = array_filter($data->toArray(),function ($number) {
             //     return $number[0] !== null;
             // });
             // return count($data[0]);
-    
             return $this->successMessage('Excel Data Imported Successfully.');
-            //code...
         } catch (\Throwable $th) {
             return $th;
         }

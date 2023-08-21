@@ -32,9 +32,12 @@ export default ({
                 },
                 {
                     insertHandler: function (data) {
-                    console.log("Hello World");
-                    data.assets.forEach(asset => { console.log("Inserted asset:",
-                        JSON.stringify(asset, null, 2)) })
+                        
+                        data.assets.forEach(asset => {
+                            this.filterdata.imgs.push(asset)
+                            this.allImages.data.unshift({'file_link':asset.secure_url,'product_name':asset.public_id ,'extension':asset.format})
+                        })
+                        this.uploadImage()
                     }
                 },
             );
@@ -55,6 +58,7 @@ export default ({
                 })
                 this.destroyImage();
             });
+          
         },
 
         uploadImage(){

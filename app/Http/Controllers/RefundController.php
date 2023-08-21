@@ -42,7 +42,7 @@ class RefundController extends Controller
     {
         $from   = $request->get('from');
         $keyword   = $request->get('keyword');
-        $details = OrderDetails::with(['user','product','order:id,payment_status','size','fabric']);
+        $details = OrderDetails::with(['user','product:id,product_name,slug','order:id,payment_status','size','fabric']);
 
         if($from != '' && $from == 'request-refund'){
             $details = $details->where('is_refunded',AllStatic::$inactive)->where('is_claim_refund',AllStatic::$active);

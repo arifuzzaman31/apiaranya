@@ -20860,7 +20860,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     updateForm: function updateForm() {
       var _this = this;
       axios__WEBPACK_IMPORTED_MODULE_2___default().put(baseUrl + 'product/' + this.form.id, this.form).then(function (response) {
-        console.log(response);
+        console.log(response.data);
         if (response.data.status == 'success') {
           _this.clearForm();
           _this.successMessage(response.data);
@@ -23137,7 +23137,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "text",
     "class": "form-control form-control-sm",
     id: "unit",
-    placeholder: "Enter Width",
+    placeholder: "Enter Unit",
     "onUpdate:modelValue": _cache[23] || (_cache[23] = function ($event) {
       return $data.form.unit = $event;
     })
@@ -24661,7 +24661,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "text",
     "class": "form-control form-control-sm",
     id: "unit",
-    placeholder: "Enter Width",
+    placeholder: "Enter Unit",
     "onUpdate:modelValue": _cache[23] || (_cache[23] = function ($event) {
       return $data.form.unit = $event;
     })

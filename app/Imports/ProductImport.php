@@ -20,7 +20,7 @@ class ProductImport implements ToCollection
     public function collection(Collection $rows)
     {
         unset($rows[0]);
-        return count($rows);
+      //   return count($rows);
         $data = array_filter($rows->toArray(),function ($number) {
                  return $number[0] !== null;
              });
@@ -46,7 +46,7 @@ class ProductImport implements ToCollection
                if($row[25] != ''){
                try {
                   DB::beginTransaction();
-                  // $imglink = 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya-product-v2/';
+                  $imglink = 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya-product-v2/';
       
                   $product = Product::create([
                       'product_name' => $row[2], 
@@ -55,8 +55,8 @@ class ProductImport implements ToCollection
                       'sub_category_id' => (int)$row[6], 
                       'vat_tax_id' => $row[35], //not found
                       'lead_time' => $row[15], 
-                      'product_image' => $row[25], 
-                      'image_one' =>   $row[25],
+                      'product_image' => $row[25] !='' ? $row[25] : '',
+                      'image_one' => $row[25] !='' ? $row[25] : '',
                       'image_two' => $row[26] !='' ? $row[26] : '', 
                       'image_three' => $row[27] !='' ? $row[27] : '', 
                       'image_four' => $row[28] !='' ? $row[28] : '', 

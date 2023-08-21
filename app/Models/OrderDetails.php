@@ -24,7 +24,12 @@ class OrderDetails extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class)->withDefault([
+            'id'    => 0,
+            'product_name' => 'N/A',
+            'slug' => 'N/A'
+
+        ]);
     }
     
     public function category()
