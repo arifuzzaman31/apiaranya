@@ -304,7 +304,7 @@ class ReportController extends Controller
             'order_details as refunded_amount' => function($query) {
                 $query->select(DB::raw('SUM(total_selling_price)'))->where('is_refunded',AllStatic::$active);
             },
-            'order_details as count_order' => function($query) {
+            'order as count_order' => function($query) {
                 $query->select(DB::raw('COUNT(*)'));
             }
         ])->having('count_order', '>', 0);

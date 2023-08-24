@@ -79,7 +79,7 @@ export default {
                                         <h5>
                                             Invoice
                                             <span class="text-warning"
-                                                >#G-Store:{{ order.id }}</span
+                                                >#AO-order:{{ order.id }}</span
                                             >
                                         </h5>
                                         <p class="text-secondary">

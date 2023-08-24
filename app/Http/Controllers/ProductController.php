@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\StockExport;
 use App\Http\AllStatic;
 use App\Imports\ProductImport;
+use App\Imports\StockUpdateImport;
 use App\Models\Product;
 use App\Models\Inventory;
 use App\Models\Discount;
@@ -490,17 +491,25 @@ class ProductController extends Controller
         $this->validate($request, [
             'file'   => 'required|mimes:xls,xlsx'
         ]);
+        // return $this->successMessage($request->file_from);
         try {
             $path = $request->file('file')->getRealPath();
-            // return $data = Excel::load($path, function($reader) {})->get();
-            Excel::import(new ProductImport, $path);
-            // $data = Excel::toCollection(new ProductImport,$request->file('file'));
-            // $data = Excel::toArray(new ProductImport,$request->file('file'));
-            // $data = array_filter($data->toArray(),function ($number) {
-            //     return $number[0] !== null;
-            // });
-            // return count($data[0]);
-            return $this->successMessage('Excel Data Imported Successfully.');
+            if($request->file_from == 'stockUpdate'){
+                Excel::import(new StockUpdateImport, $path);
+                
+                $msg = 'Stock Updated Successfully';
+            }else{
+                // return $data = Excel::load($path, function($reader) {})->get();
+                Excel::import(new ProductImport, $path);
+                // $data = Excel::toCollection(new ProductImport,$request->file('file'));
+                // $data = Excel::toArray(new ProductImport,$request->file('file'));
+                // $data = array_filter($data->toArray(),function ($number) {
+                //     return $number[0] !== null;
+                // });
+                // return count($data[0]);
+                $msg = 'Excel Data Imported Successfully';
+            }
+            return $this->successMessage($msg); 
         } catch (\Throwable $th) {
             return $th;
         }

@@ -344,7 +344,17 @@ export default {
                                     {{ validation_error.sub_category[0] }}
                                 </div>
                             </div>
+                            </div>
 
+                            <div class="row mt-2">
+                                <div id="tooltips" class="col-lg-12 layout-spacing col-md-12">
+                                    <div class="widget-content ">
+                                        <label for="editor-container">Description</label>
+                                        <QuillEditor theme="snow" v-model:content="form.description" contentType="html" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
                             <div class="col-md-12 mb-3">
                             <label for="product-Vendor">Vendor</label>
                              <Multiselect
@@ -803,22 +813,6 @@ export default {
                             </div>
                          
                             <div class="col-md-2 mb-3">
-                                <label for="length">Length</label>
-                                <input type="number" class="form-control form-control-sm" id="length" placeholder="Enter Length" v-model="form.length" />
-                            </div>
-                            <div class="col-md-2 mb-3">
-                                <label for="height">Height</label>
-                                <input type="number" class="form-control form-control-sm" id="height" placeholder="Enter Height" v-model="form.height" />
-                            </div>
-                            <div class="col-md-2 mb-3">
-                                <label for="width">Width</label>
-                                <input type="number" class="form-control form-control-sm" id="width" placeholder="Enter Width" v-model="form.width" />
-                            </div>
-                            <div class="col-md-2 mb-3">
-                                <label for="unit">Unit</label>
-                                <input type="text" class="form-control form-control-sm" id="unit" placeholder="Enter Unit" v-model="form.unit" />
-                            </div>
-                            <div class="col-md-2 mb-3">
                                 <label for="weight">Weight</label>
                                 <input type="text" class="form-control form-control-sm" :class="validation_error.hasOwnProperty('weight') ? 'is-invalid' : ''" id="weight" placeholder="Example: 0.45 kg" v-model="form.weight" >
                                 <div
@@ -827,6 +821,18 @@ export default {
                                     >
                                         {{ validation_error.weight[0] }}
                                     </div>
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <label for="width">Width</label>
+                                <input type="number" class="form-control form-control-sm" id="width" placeholder="Enter Width" v-model="form.width" />
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <label for="height">Height</label>
+                                <input type="number" class="form-control form-control-sm" id="height" placeholder="Enter Height" v-model="form.height" />
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <label for="length">Length</label>
+                                <input type="number" class="form-control form-control-sm" id="length" placeholder="Enter Length" v-model="form.length" />
                             </div>
                             <div class="form-group col-md-2 mb-3">
                                 <label for="product-LeadTime">Lead Time</label>
@@ -838,6 +844,11 @@ export default {
                                         {{ validation_error.lead_time[0] }}
                                     </div>
                             </div>
+                            <div class="col-md-2 mb-3">
+                                <label for="unit">Unit</label>
+                                <input type="text" class="form-control form-control-sm" id="unit" placeholder="Enter Unit" v-model="form.unit" />
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -1138,19 +1149,7 @@ export default {
                 </div>
             </div>
         </div>
-    
-        <div class="row mt-2">
-            <div id="tooltips" class="col-lg-12 layout-spacing col-md-12">
-                <div class="statbox widget box ">
-                    <div class="widget-content ">
-                        <label for="editor-container">Description</label>
-                        <QuillEditor theme="snow" v-model:content="form.description" contentType="html" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-        <button class="btn btn-success" type="submit">Update</button>
+        <button class="btn btn-success mt-1" type="submit">Update</button>
     </form>
         <media-helper :setImg="selectImage">
             <template v-slot:viewimage>

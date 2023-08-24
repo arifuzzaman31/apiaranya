@@ -117,8 +117,13 @@ export default {
                 },
                 {
                     insertHandler: function (data) {
-                    data.assets.forEach(asset => { console.log("Inserted asset:",
-                        JSON.stringify(asset, null, 2)) })
+                    data.assets.forEach(asset => {
+                        // console.log(typeof asset)
+                        // this.filterdata.imgs.push(asset)
+                        // [...this.filterdata.imgs,asset];
+                        this.allImages?.data.unshift({'file_link':asset.secure_url,'product_name':asset.public_id ,'extension':asset.format})
+                     })
+                    //  this.uploadImage()
                     }
                 },
             );
@@ -130,7 +135,7 @@ export default {
                         this.filterdata.imgs.push(asset.uploadInfo)
                         this.allImages.data.unshift({'file_link':asset.uploadInfo.secure_url,'product_name':asset.uploadInfo.public_id ,'extension':asset.uploadInfo.format})
                     })
-                    this.uploadImage()
+                    // this.uploadImage()
                 }
             });
             ml.on("delete", (data) => {

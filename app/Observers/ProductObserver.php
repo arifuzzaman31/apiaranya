@@ -16,11 +16,11 @@ class ProductObserver
      */
     public function created(Product $product)
     {
-        if(is_file(public_path('excel/product.csv')))
-        {
-            unlink(public_path('excel/product.csv'));
-        }
-        public_path(Excel::store(new AddProduct, 'product.csv'));
+        // if(is_file(public_path('excel/product.csv')))
+        // {
+        //     unlink(public_path('excel/product.csv'));
+        // }
+        // public_path(Excel::store(new AddProduct, 'product.csv'));
     }
 
     /**
@@ -31,7 +31,7 @@ class ProductObserver
      */
     public function updated(Product $product)
     {
-        $this->created($product);
+        // $this->created($product);
     }
 
     /**
@@ -42,7 +42,7 @@ class ProductObserver
      */
     public function deleted(Product $product)
     {
-        $this->created($product);
+        // $this->created($product);
     }
 
     /**

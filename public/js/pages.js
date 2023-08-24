@@ -20144,7 +20144,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       });
     },
     getCloudWidget: function getCloudWidget() {
-      var _this2 = this;
+      var _this3 = this;
       this.formReset();
       $("#openCldWgt").modal('show');
       window.ml = cloudinary.openMediaLibrary({
@@ -20160,39 +20160,51 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         button_caption: "Select Image or Video"
       }, {
         insertHandler: function insertHandler(data) {
+          var _this2 = this;
           data.assets.forEach(function (asset) {
-            console.log("Inserted asset:", JSON.stringify(asset, null, 2));
+            var _this2$allImages;
+            // console.log(typeof asset)
+            // this.filterdata.imgs.push(asset)
+            // [...this.filterdata.imgs,asset];
+            (_this2$allImages = _this2.allImages) === null || _this2$allImages === void 0 ? void 0 : _this2$allImages.data.unshift({
+              'file_link': asset.secure_url,
+              'product_name': asset.public_id,
+              'extension': asset.format
+            });
           });
+          //  this.uploadImage()
         }
       });
+
       ml.on("upload", function (data) {
         if (data.event === "queues-end") {
           // log the first uploaded file's public_id:
           var result = data.info.files;
           result.forEach(function (asset) {
-            _this2.filterdata.imgs.push(asset.uploadInfo);
-            _this2.allImages.data.unshift({
+            _this3.filterdata.imgs.push(asset.uploadInfo);
+            _this3.allImages.data.unshift({
               'file_link': asset.uploadInfo.secure_url,
               'product_name': asset.uploadInfo.public_id,
               'extension': asset.uploadInfo.format
             });
           });
-          _this2.uploadImage();
+          // this.uploadImage()
         }
       });
+
       ml.on("delete", function (data) {
         data.assets.forEach(function (asset) {
-          _this2.filterdata.imgs.push(asset.public_id);
+          _this3.filterdata.imgs.push(asset.public_id);
         });
-        _this2.destroyImage();
+        _this3.destroyImage();
       });
     },
     uploadImage: function uploadImage() {
-      var _this3 = this;
+      var _this4 = this;
       axios.post(baseUrl + 'media-manager', this.filterdata).then(function (response) {
         if (response.data.status == 'success') {
           // this.successMessage(response.data)
-          _this3.filterdata.imgs = [];
+          _this4.filterdata.imgs = [];
         }
       });
     },

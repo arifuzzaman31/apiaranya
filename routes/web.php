@@ -38,3 +38,5 @@ Route::post('ssl-failed',[OdController::class,'sslCommerzFailed'])->name('ssl.fa
 Route::post('ssl-cancel',[OdController::class,'sslCommerzCancel'])->name('ssl.cancel');
 
 Route::get('invoice',[OdController::class,'invoiceToMail'])->name('invoice');
+
+Route::get('courier',[OdController::class, 'sendEcorier']);

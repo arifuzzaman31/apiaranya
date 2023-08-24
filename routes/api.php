@@ -70,3 +70,5 @@ Route::post('user-password-email-reset-link', [AuthController::class, 'sendEmail
 Route::post('user-reset-password', [AuthController::class, 'storeResetPassword']);
 
 Route::get('information/{slug?}',[PageController::class, 'getInfo']);
+
+
