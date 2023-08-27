@@ -23,6 +23,6 @@ class EcorierController extends Controller
 
     public function getEcoPackage()
     {
-        return response()->json($this->courier->getPackages());;
+        return response()->json($this->courier->getPackages());
     }
 }
