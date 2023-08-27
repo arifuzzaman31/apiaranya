@@ -516,73 +516,18 @@ class OrderController extends Controller
         return view('email.order_invoice',['order_info' => $order]);
     }
 
-    public function sendEcorier()
+    public function sendEcorier($orderData)
     {
-        $url = 'https://staging.ecourier.com.bd/api/packages';
-        $header = [
-            'API-KEY:frz3',
-            'API-SECRET:4vqsZ',
-            'USER-ID:H7546',
-            'Content-Type:application/json'
-        ];
-        $handle = curl_init();
-        curl_setopt($handle, CURLOPT_URL, $url );
-        curl_setopt($handle, CURLOPT_TIMEOUT, 30);
-        curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, 30);
-        curl_setopt($handle, CURLOPT_POST, 1 );
-        curl_setopt($handle, CURLOPT_HTTPHEADER,$header);
-        curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, FALSE); # KEEP IT FALSE IF YOU RUN FROM LOCAL PC
-
-
-        $content = curl_exec($handle);
-
-        $code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-        
-        return $code;
-        // $courier = Courier::getInstance();
-        // $courier->setProvider(ECourier::class, 'local'); /* local/production */
-        // $courier->setConfig([
-        //     'API-KEY' => 'frz3',
-        //     'API-SECRET' => '4vqsZ',
-        //     'USER-ID' => 'H7546',
-        // ]);
-        // $courier->setParams(['city'=>'Dhaka']);
-        // return $thanas = $courier->getThanas();
-        // $courier->setConfig([
-        //     'API-KEY' => env('ECOURIER_API_KEY'),
-        //     'API-SECRET' => env('ECOURIER_API_SECRET'),
-        //     'USER-ID' => env('ECOURIER_USER_ID'),
-        // ]);
-
-        // return $courier->getPackages();
-        // $orderData = array(
-        //     'recipient_name' => 'XXXXX',
-        //     'recipient_mobile' => '017XXXXX',
-        //     'recipient_city' => 'Dhaka',
-        //     'recipient_area' => 'Badda',
-        //     'recipient_thana' => 'Badda',
-        //     'recipient_address' => 'Full Address',
-        //     'package_code' => '#XXXX',
-        //     'product_price' => '1500',
-        //     'payment_method' => 'COD',
-        //     'recipient_landmark' => 'DBBL ATM',
-        //     'parcel_type' => 'BOX',
-        //     'requested_delivery_time' => '2019-07-05',
-        //     'delivery_hour' => 'any',
-        //     'recipient_zip' => '1212',
-        //     'pick_hub' => '18490',
-        //     'product_id' => 'DAFS',
-        //     'pick_address' => 'Gudaraghat new mobile',
-        //     'comments' => 'Please handle carefully',
-        //     'number_of_item' => '3',
-        //     'actual_product_price' => '1200',
-        //     'pgwid' => 'XXX',
-        //     'pgwtxn_id' => 'XXXXXX'
-        // );
+        $courier = Courier::getInstance();
+        $courier->setProvider(ECourier::class, 'local'); /* local/production */
+        $courier->setConfig([
+            'API-KEY' => env('ECOURIER_API_KEY'),
+            'API-SECRET' => env('ECOURIER_API_SECRET'),
+            'USER-ID' => env('ECOURIER_USER_ID')
+        ]);
 
         $courier->setParams($orderData);
         $response = $courier->placeOrder();
-
+        return true;
     }
 }

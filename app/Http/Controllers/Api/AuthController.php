@@ -46,6 +46,8 @@ class AuthController extends Controller
                 'password' => Hash::make($request->password)
             ]);
 
+            \Mail::to($request->email)->send(new \App\Mail\RegisterMail(['email' => $request->email,'name' => $request->name]));
+
             return response()->json([
                 'status' => true,
                 'message' => 'User Created Successfully',

@@ -20139,6 +20139,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           var _this$allImages$data;
           (_this$allImages$data = _this.allImages.data).push.apply(_this$allImages$data, _toConsumableArray(result.data.data));
         }
+        // this.allImages.data.map(itm => [...itm,{isSelected:true}])
       })["catch"](function (errors) {
         console.log(errors);
       });
@@ -20749,7 +20750,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       $("#pageMediaModal").modal('show');
     },
     selectImage: function selectImage(item) {
-      // console.log(item)
       if (this.form.selectedImages && this.form.selectedImages.length < 4) {
         this.form.selectedImages.push(item);
         new Set(_toConsumableArray(this.form.selectedImages));
@@ -21514,7 +21514,7 @@ var _hoisted_11 = {
   "class": "row"
 };
 var _hoisted_12 = {
-  "class": "card component-card_9"
+  "class": "card component-card_2 mb-1"
 };
 var _hoisted_13 = ["onClick"];
 var _hoisted_14 = ["src"];
@@ -28158,7 +28158,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.controlss[data-v-1ab1ecf9]{\r\n    width: 80% !important;\n}\n.modal-dialog[data-v-1ab1ecf9] {\r\n  min-width: 92%;\r\n  height: 80%;\r\n  bottom: 0;\r\n  padding: 0;\r\n  top:40;\n}\n.modal-content[data-v-1ab1ecf9] {\r\n  height: auto;\r\n  min-width: 100%;\r\n  min-height: 100%;\r\n  border-radius: 0;\r\n  bottom: 0;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.controlss[data-v-1ab1ecf9]{\r\n    width: 80% !important;\n}\n.modal-dialog[data-v-1ab1ecf9] {\r\n  min-width: 92%;\r\n  height: 80%;\r\n  bottom: 0;\r\n  padding: 0;\r\n  top:40;\n}\n.component-card_selected[data-v-1ab1ecf9] {\r\n    box-shadow: 4px 6px 10px -3px #bfc9d4;\n}\n.modal-content[data-v-1ab1ecf9] {\r\n  height: auto;\r\n  min-width: 100%;\r\n  min-height: 100%;\r\n  border-radius: 0;\r\n  bottom: 0;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

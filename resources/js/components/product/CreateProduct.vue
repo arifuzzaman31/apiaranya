@@ -205,7 +205,6 @@ export default {
         },
 
         selectImage(item){
-            // console.log(item)
             if(this.form.selectedImages && this.form.selectedImages.length < 4){
                 this.form.selectedImages.push(item)
                 new Set([...this.form.selectedImages])

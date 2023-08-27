@@ -18,7 +18,7 @@
                                     <div class="col-md-9 border-right" style="height: 75vh;overflow-y: auto;">
                                         <div class="row" v-if="allImages.data && allImages.data.length > 0">
                                             <div class="col-xl-2 col-md-3 col-sm-6 col-12" v-for="(item,ind) in allImages.data" :key="ind">
-                                                <div class="card component-card_9">
+                                                <div class="card component-card_2 mb-1">
                                                     <a href="#" type="button" @click="setImg(item.file_link)">
                                                         <v-lazy-image class="card-img-top" :src="item.file_link" :alt="item.product_name" :src-placeholder="url+'demo.png'" v-if="item.file_type != 'video'" />
                                                         <video :src="item.file_link" v-else autoplay muted controls class="controlss"></video>  
@@ -94,6 +94,7 @@ export default {
                 } else {
                     this.allImages.data.push(...result.data.data)
                 }
+                // this.allImages.data.map(itm => [...itm,{isSelected:true}])
             })
             .catch(errors => {
                 console.log(errors);
@@ -199,7 +200,9 @@ export default {
   padding: 0;
   top:40;
 }
-
+.component-card_selected {
+    box-shadow: 4px 6px 10px -3px #bfc9d4;
+}
 .modal-content {
   height: auto;
   min-width: 100%;

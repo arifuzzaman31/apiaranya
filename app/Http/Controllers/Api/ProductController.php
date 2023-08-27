@@ -139,7 +139,7 @@ class ProductController extends Controller
     {
         try {
             //code...
-            $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric:id,fabric_name,fabric_code,slug','inventory:id,product_id,size_id,stock,cpu,mrp,sku',
+            $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric:id,fabric_name,fabric_code,slug','inventory:id,product_id,colour_id,size_id,stock,cpu,mrp,sku',
                 'product_size','product_colour','discount',
                 'vat:id,tax_name,tax_percentage','product_vendor:id,vendor_name,slug','product_brand:id,brand_name,slug','product_designer:id,designer_name,slug','product_embellishment:id,embellishment_name,slug',
                 'product_making:id,making_name,slug','product_season:id,season_name,slug','product_variety','product_fit:id,fit_name,slug','product_artist','product_consignment',
