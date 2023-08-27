@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Api\OrderController as OdController;
-use App\Http\Controllers\Api\EcorierController;
 
 // use App\Http\Controllers\Payment\SslController;
 
@@ -39,5 +38,3 @@ Route::post('ssl-failed',[OdController::class,'sslCommerzFailed'])->name('ssl.fa
 Route::post('ssl-cancel',[OdController::class,'sslCommerzCancel'])->name('ssl.cancel');
 
 Route::get('invoice',[OdController::class,'invoiceToMail'])->name('invoice');
-
-Route::get('courier',[EcorierController::class, 'getEcoPackage']);

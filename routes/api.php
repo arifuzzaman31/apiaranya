@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\PageController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\FrontController;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\EcorierController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,4 +72,4 @@ Route::post('user-reset-password', [AuthController::class, 'storeResetPassword']
 
 Route::get('information/{slug?}',[PageController::class, 'getInfo']);
 
-
+Route::get('e-courier-package',[EcorierController::class, 'getEcoPackage']);
