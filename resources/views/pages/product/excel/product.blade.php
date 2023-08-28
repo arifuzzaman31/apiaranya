@@ -35,16 +35,16 @@
             <td>{{ strip_tags($value->description) }}</td>
             <td>in stock</td>
             <td>new</td>
-            <td>{{ $value->inventory[0]->mrp }} BDT</td>
+            <td>{{ $value->inventory[0] ? $value->inventory[0]->mrp : '---'}} BDT</td>
             <td>{{ $value->image_one }}</td>
             <td>{{ $value->image_one }}</td>
-            <td>{{ $value->product_brand[0]->brand_name }}</td>
+            <td>{{ $value->product_brand[0] ? $value->product_brand[0]->brand_name : '---'}}</td>
             <td>{{ $value->subcategory->id != 0 ? $value->category->category_name.'>'.$value->subcategory->category_name : $value->category->category_name }}
             </td>
             <td>{{ $value->subcategory->id != 0 ? $value->category->category_name.'>'.$value->subcategory->category_name : $value->category->category_name }}
             </td>
-            <td>{{ $value->inventory[0]->stock }}</td>
-            <td>{{ $value->inventory[0]->mrp }}</td>
+            <td>{{ $value->inventory[0] ? $value->inventory[0]->stock : '---' }}</td>
+            <td>{{ $value->inventory[0] ? $value->inventory[0]->mrp : '---' }}</td>
             <td></td>
             <td></td>
             <td></td>

@@ -4,7 +4,7 @@ namespace App\Imports;
 
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class StockUpdateImport implements ToCollection
 {
@@ -30,7 +30,7 @@ class StockUpdateImport implements ToCollection
                 //throw $th;
                 DB::rollBack();
                 return $th;
-    
+
             }
         }
     }

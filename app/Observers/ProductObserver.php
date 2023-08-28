@@ -4,7 +4,7 @@ namespace App\Observers;
 
 use App\Models\Product;
 use App\Exports\AddProduct;
-use Excel;
+use Maatwebsite\Excel\Excel;
 
 class ProductObserver
 {
@@ -16,11 +16,11 @@ class ProductObserver
      */
     public function created(Product $product)
     {
-        // if(is_file(public_path('excel/product.csv')))
-        // {
-        //     unlink(public_path('excel/product.csv'));
-        // }
-        // public_path(Excel::store(new AddProduct, 'product.csv'));
+        if(is_file(public_path('excel/product.csv')))
+        {
+            unlink(public_path('excel/product.csv'));
+        }
+        public_path(Excel::store(new AddProduct, 'product.csv'));
     }
 
     /**

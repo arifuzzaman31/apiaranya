@@ -14,7 +14,9 @@ use App\Models\CategoryFabric;
 use App\Models\ProductTag;
 use Illuminate\Http\Request;
 use App\Traits\ProductTrait;
-use DB,Str,Excel;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Maatwebsite\Excel\Excel;
 use App\Events\ProductProcessed;
 
 class ProductController extends Controller
@@ -102,7 +104,7 @@ class ProductController extends Controller
         if($keyword != ''){
             $product = $product->whereHas('inventory', function ($q) use ($keyword) {
                 $q->where('sku','like','%'.$keyword.'%');
-            }); 
+            });
             $product = $product->orWhere('product_name','like','%'.$keyword.'%');
             $product = $product->orWhere('design_code','like','%'.$keyword.'%');
         }
@@ -153,14 +155,14 @@ class ProductController extends Controller
             $product->description         = $request->description;
             $product->lead_time           = $request->lead_time;
             $product->flat_colour         = implode(",",$request->flat_colour);
-            
+
             $long = count($request->selectedImages);
-            $product->image_one  = $request->selectedImages[0];
-            $product->product_image = $request->selectedImages[0];
-            $product->image_two = $long >= 2 ? $request->selectedImages[1] : NULL;
-            $product->image_three =  $long >= 3 ? $request->selectedImages[2] : NULL;
-            $product->image_four = $long >= 4 ? $request->selectedImages[3] : NULL;
-            $product->image_five = $long >= 5 ? $request->selectedImages[4] : NULL;
+            $product->image_one  = $request->selectedImages[0] ?? null;
+            $product->product_image = $request->selectedImages[0] ?? null;
+            $product->image_two = $long >= 2 ? ($request->selectedImages[1] ?? null) : NULL;
+            $product->image_three =  $long >= 3 ? ($request->selectedImages[2] ?? null) : NULL;
+            $product->image_four = $long >= 4 ? ($request->selectedImages[3] ?? null) : NULL;
+            $product->image_five = $long >= 5 ? ($request->selectedImages[4] ?? null) : NULL;
 
             $product->height              = $request->height;
             $product->width               = $request->width;
@@ -176,14 +178,14 @@ class ProductController extends Controller
 
             $colorIds = array_filter(array_column($request->attrqty, 'colour_id'));
             $sizeIds = array_filter(array_column($request->attrqty, 'size_id'));
-            
+
             if($request->is_color && !empty($colorIds)){
                 $cid = array_unique($colorIds);
                 $product->product_colour()->attach($cid);
             }
-            
+
             if($request->is_size && !empty($sizeIds)){
-               
+
                 $product->product_size()->attach(array_unique($sizeIds));
             }
 
@@ -191,7 +193,7 @@ class ProductController extends Controller
 
                 $product->product_fabric()->attach($request->selectfabrics);
             }
-            
+
             if($request->attrqty && !empty($request->attrqty)){
                 foreach($request->attrqty as $value){
                     if($value['qty'] != '' && $value['sku'] != '' && $value['cpu'] != '' && $value['mrp'] != ''){
@@ -205,64 +207,64 @@ class ProductController extends Controller
                                 'cpu' => $value['cpu'],
                                 'mrp' => $value['mrp'],
                                 'warning_amount' => 10
-                        ]);  
+                        ]);
                     }
                 }
             }
 
             if(!empty($request->vendor)){
-               
+
                 $product->product_vendor()->attach($request->vendor);
             }
             if(!empty($request->brand)){
-               
+
                 $product->product_brand()->attach($request->brand);
             }
             if(!empty($request->designer)){
-               
+
                 $product->product_designer()->attach($request->designer);
             }
             if(!empty($request->embellishment)){
-               
+
                 $product->product_embellishment()->attach($request->embellishment);
             }
             if(!empty($request->making)){
-               
+
                 $product->product_making()->attach($request->making);
             }
             if(!empty($request->season)){
-               
+
                 $product->product_season()->attach($request->season);
             }
             if(!empty($request->variety)){
-               
+
                 $product->product_variety()->attach($request->variety);
             }
             if(!empty($request->fit)){
-               
+
                 $product->product_fit()->attach($request->fit);
             }
             if(!empty($request->artist)){
-               
+
                 $product->product_artist()->attach($request->artist);
             }
             if(!empty($request->consignment)){
-               
+
                 $product->product_consignment()->attach($request->consignment);
             }
             if(!empty($request->ingredients)){
-               
+
                 $product->product_ingredient()->attach($request->ingredients);
             }
             if(!empty($request->care)){
-               
+
                 $product->product_care()->attach($request->care);
             }
 
             if(!empty($request->tages)){
-               
+
                 $str = implode(',', $request->tages);
-               
+
                 ProductTag::create([
                     'product_id' => $product->id,
                     'keyword_name' => $str
@@ -363,14 +365,14 @@ class ProductController extends Controller
 
             $colorIds = array_column($request->attrqty, 'colour_id');
             $sizeIds = array_filter(array_column($request->attrqty, 'size_id'));
-            
+
             if($request->is_color && !empty($colorIds)){
                 $cid = array_unique(array_merge(...$colorIds), SORT_REGULAR);
                 $product->product_colour()->sync($cid);
             }
-            
+
             if($request->is_size && !empty($sizeIds)){
-               
+
                 $product->product_size()->sync($sizeIds);
             }
 
@@ -378,7 +380,7 @@ class ProductController extends Controller
 
                 $product->product_fabric()->sync($request->fabrics);
             }
-            
+
             if($request->attrqty && !empty($request->attrqty)){
                 DB::table('inventories')->where('product_id',$product->id)->delete();
                 foreach($request->attrqty as $value){
@@ -410,62 +412,62 @@ class ProductController extends Controller
                             $stock->save();
                         }
                     }
-              
+
                 }
-            
+
             }
 
             if(!empty($request->vendor)){
-               
+
                 $product->product_vendor()->sync($request->vendor);
             }
             if(!empty($request->brand)){
-               
+
                 $product->product_brand()->sync($request->brand);
             }
             if(!empty($request->designer)){
-               
+
                 $product->product_designer()->sync($request->designer);
             }
             if(!empty($request->embellishment)){
-               
+
                 $product->product_embellishment()->sync($request->embellishment);
             }
             if(!empty($request->making)){
-               
+
                 $product->product_making()->sync($request->making);
             }
             if(!empty($request->season)){
-               
+
                 $product->product_season()->sync($request->season);
             }
             if(!empty($request->variety)){
-               
+
                 $product->product_variety()->sync($request->variety);
             }
             if(!empty($request->fit)){
-               
+
                 $product->product_fit()->sync($request->fit);
             }
             if(!empty($request->artist)){
-               
+
                 $product->product_artist()->sync($request->artist);
             }
             if(!empty($request->consignment)){
-               
+
                 $product->product_consignment()->sync($request->consignment);
             }
             if(!empty($request->ingredients)){
-               
+
                 $product->product_ingredient()->sync($request->ingredients);
             }
             if(!empty($request->care)){
-               
+
                 $product->product_care()->sync($request->care);
             }
 
             if(!empty($request->tags)){
-               
+
                 $str = implode(',', $request->tags);
 
                 DB::table('product_tags')
@@ -496,7 +498,7 @@ class ProductController extends Controller
             $path = $request->file('file')->getRealPath();
             if($request->file_from == 'stockUpdate'){
                 Excel::import(new StockUpdateImport, $path);
-                
+
                 $msg = 'Stock Updated Successfully';
             }else{
                 // return $data = Excel::load($path, function($reader) {})->get();
@@ -509,7 +511,7 @@ class ProductController extends Controller
                 // return count($data[0]);
                 $msg = 'Excel Data Imported Successfully';
             }
-            return $this->successMessage($msg); 
+            return $this->successMessage($msg);
         } catch (\Throwable $th) {
             return $th;
         }

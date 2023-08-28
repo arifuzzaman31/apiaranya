@@ -47,55 +47,55 @@ class ProductImport implements ToCollection
                try {
                   DB::beginTransaction();
                   $imglink = 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya-product-v2/';
-      
+
                   $product = Product::create([
-                      'product_name' => $row[2], 
-                      'slug' => Str::slug($row[2]), 
-                      'category_id' => (int) $row[5], 
-                      'sub_category_id' => (int)$row[6], 
+                      'product_name' => $row[2],
+                      'slug' => Str::slug($row[2]),
+                      'category_id' => (int) $row[5],
+                      'sub_category_id' => (int)$row[6],
                       'vat_tax_id' => $row[35], //not found
-                      'lead_time' => $row[15], 
+                      'lead_time' => $row[15],
                       'product_image' => $row[25] !='' ? $row[25] : '',
                       'image_one' => $row[25] !='' ? $row[25] : '',
-                      'image_two' => $row[26] !='' ? $row[26] : '', 
-                      'image_three' => $row[27] !='' ? $row[27] : '', 
-                      'image_four' => $row[28] !='' ? $row[28] : '', 
-                      'image_five' => $row[29] !='' ? $row[29] : '', 
+                      'image_two' => $row[26] !='' ? $row[26] : '',
+                      'image_three' => $row[27] !='' ? $row[27] : '',
+                      'image_four' => $row[28] !='' ? $row[28] : '',
+                      'image_five' => $row[29] !='' ? $row[29] : '',
                       'height' => $row[30] != '' ? explode(",",$row[30])[0] : NULL,
                       'width' => $row[30] != '' ? explode(",",$row[30])[1] : NULL,
                       'length' => $row[30] != '' ? explode(",",$row[30])[2] : NULL,
                       'unit' => $row[31] != '' ? $row[31] : NULL,
-                      // 'country_of_origin' => $row[0], 
-                      'weight' => $row[32], 
-                      'design_code' => $row[1], 
-                      'description' => $row[3], 
-                      'status' => 1, 
+                      // 'country_of_origin' => $row[0],
+                      'weight' => $row[32],
+                      'design_code' => $row[1],
+                      'description' => $row[3],
+                      'status' => 1,
                       'is_discount' => 0,
                       'has_variation' => $row[8] != '' ? $row[8] : 0
                   ]);
-                  
+
                   $this->putCombAttr($row,$product);
-                  if(!empty($row[19])){ 
+                  if(!empty($row[19])){
                      $pc = explode(",",$row[19]);
                      $product->product_colour()->attach($pc);
                   }
-                  
+
                   if(!empty($row[12])){
                      $ps = explode(",",$row[12]);
                       $product->product_size()->attach($ps);
                   }
-      
+
                   if(!empty($row[11])){
                      $pb = explode(",",$row[11]);
                      $product->product_fabric()->attach($pb);
-      
+
                      $cid = (int)$row[6] != '' ? (int)$row[6] : (int) $row[5];
-      
+
                       foreach($pb as $fab){
                           $chk = CategoryFabric::where(
                               ['category_id' =>  $cid,'fabric_id' => $fab]
                               )->first();
-      
+
                           if(empty($chk)){
                               CategoryFabric::create([
                                   'category_id' => $cid,
@@ -152,26 +152,26 @@ class ProductImport implements ToCollection
                      $pca = explode(",",$row[33]);
                      $product->product_care()->attach($pca);
                   }
-      
+
                   if(!empty($row[34])){
-      
+
                       ProductTag::create([
                           'product_id' => $product->id,
                           'keyword_name' => $row[34]
                       ]);
                   }
-      
+
                   DB::commit();
                } catch (\Throwable $th) {
                   //throw $th;
                   DB::rollBack();
                   // return $th;
-      
+
                }
             }
             }
          // dd($row[2]);
-            
+
 
         }
     }
@@ -203,7 +203,7 @@ class ProductImport implements ToCollection
             'mrp'         => (float)$row[23],
             'stock'       => (int)$row[24]
          ]);
-            
+
       }
     }
 }
