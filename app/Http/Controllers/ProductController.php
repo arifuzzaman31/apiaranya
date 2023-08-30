@@ -494,21 +494,28 @@ class ProductController extends Controller
             'file'   => 'required|mimes:xls,xlsx'
         ]);
         // return $this->successMessage($request->file_from);
+        // dd($request->file('file'));
+        $data = \Excel::toCollection(new ProductImport,$request->file('file'));
+        $data = array_filter($data->toArray(),function ($number) {
+            return $number[0] !== null;
+        });
+        dd($data);
         try {
             $path = $request->file('file')->getRealPath();
+            // dd($path);
             if ($request->file_from == 'stockUpdate') {
-                Excel::import(new StockUpdateImport, $path);
+                \Excel::import(new StockUpdateImport, $path);
 
                 $msg = 'Stock Updated Successfully';
             } else {
-                // return $data = Excel::load($path, function($reader) {})->get();
-                Excel::import(new ProductImport, $path);
+                $data = Excel::load($path, function($reader) {})->get();
+                // \Excel::import(new ProductImport, $path);
                 // $data = Excel::toCollection(new ProductImport,$request->file('file'));
-                // $data = Excel::toArray(new ProductImport,$request->file('file'));
-                // $data = array_filter($data->toArray(),function ($number) {
-                //     return $number[0] !== null;
-                // });
-                // return count($data[0]);
+                // // $data = Excel::toArray(new ProductImport,$request->file('file'));
+                $data = array_filter($data->toArray(),function ($number) {
+                    return $number[0] !== null;
+                });
+                return count($data);
                 $msg = 'Excel Data Imported Successfully';
             }
             return $this->successMessage($msg);

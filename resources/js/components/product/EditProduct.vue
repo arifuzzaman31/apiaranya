@@ -814,7 +814,7 @@ export default {
 
                             <div class="col-md-2 mb-3">
                                 <label for="weight">Weight</label>
-                                <input type="text" class="form-control form-control-sm" :class="validation_error.hasOwnProperty('weight') ? 'is-invalid' : ''" id="weight" placeholder="Example: 0.45 kg" v-model="form.weight" >
+                                <input type="number" class="form-control form-control-sm" :class="validation_error.hasOwnProperty('weight') ? 'is-invalid' : ''" id="weight" placeholder="Example: 0.45 kg" v-model="form.weight" >
                                 <div
                                         v-if="validation_error.hasOwnProperty('weight')"
                                         class="invalid-feedback"

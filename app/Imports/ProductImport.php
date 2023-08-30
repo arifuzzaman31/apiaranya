@@ -20,7 +20,7 @@ class ProductImport implements ToCollection
     public function collection(Collection $rows)
     {
         unset($rows[0]);
-      //   return count($rows); eta na view ta hocce
+        return count($rows);
         $data = array_filter($rows->toArray(),function ($number) {
                  return $number[0] !== null;
              });
@@ -46,7 +46,6 @@ class ProductImport implements ToCollection
                if($row[25] != ''){
                try {
                   DB::beginTransaction();
-                  $imglink = 'https://res.cloudinary.com/diyc1dizi/image/upload/aranya-product-v2/';
 
                   $product = Product::create([
                       'product_name' => $row[2],

@@ -63,7 +63,7 @@ export default {
                 axios.get(baseUrl+`get-product?page=${page}&per_page=${this.filterdata.per_page}&camp_id=${this.filterdata.camp_id}&category=${this.filterdata.category}&subcategory=${this.filterdata.subcategory}&keyword=${this.keyword}`)
                 .then(response => {
                     this.allproduct = response.data
-                  
+
                     if(this.isCheckAll){
                         const ids = response.data.data.map(v=> v.id);
                         this.addTocamp.product.push(...ids);
@@ -179,9 +179,17 @@ export default {
             })
         },
 
-        handleFileUpload(from_file){
-            this.file = this.$refs.file.files[0];
-            this.file_from = from_file;
+        handleBulkFileUpload(){
+            // console.log(this.$refs.bulkfile);
+            this.file = this.$refs.bulkfile.files[0];
+            this.file_from = 'bulkUpdate';
+            document.getElementById("excel-file").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> ' + this.file.name;
+        },
+
+        handleStockFileUpload(){
+            // console.log(this.$refs.stockfile);
+            this.file = this.$refs.stockfile.files[0];
+            this.file_from = 'stockUpdate';
             document.getElementById("excel-file").innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> ' + this.file.name;
         },
 
@@ -208,7 +216,7 @@ export default {
                 }
                 else
                 {
-                    this.successMessage(response.data);   
+                    this.successMessage(response.data);
                     formData = new FormData();
                     this.button_name = "Upload";
                     this.file = null;
@@ -216,12 +224,12 @@ export default {
                 }
             })
             .catch(err => {
-                    if (err.response.status == 422) 
+                    if (err.response.status == 422)
                     {
                         this.validation_error = err.response.data.errors;
                         this.validationError();
-                    } 
-                    else 
+                    }
+                    else
                     {
                         this.successMessage(err);
                     }
@@ -312,7 +320,7 @@ export default {
 
                     <div class="col-md-4 col-lg-3 col-12">
                     </div>
-                </div>                 
+                </div>
             </div>
         </div>
         <div class="table-responsive">
@@ -370,7 +378,7 @@ export default {
         :keep-length="keepLength"
     />
     <product-detail v-if="singleproduct" :product="singleproduct"></product-detail>
-    
+
     <div id="addToCampModal" class="modal animated fadeInUp custo-fadeInUp" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -408,7 +416,7 @@ export default {
                                         {{ validation_error.discount_amount[0] }}
                                     </span>
                                 </div>
-                            
+
                                 <div class="form-row mt-1">
                                     <label for="discount_type">Discount Type</label>
                                     <select class="form-control tagging" id="discount_type" v-model="addTocamp.discount_type">
@@ -426,7 +434,7 @@ export default {
                                     <label for="max_amount">Maximum</label>
                                     <input type="number" class="form-control" id="max_amount" placeholder="Maximum amount" v-model="addTocamp.max_amount" >
                                 </div>
-                            
+
                             <div class="modal-footer md-button">
                                 <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
                                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -453,7 +461,7 @@ export default {
                                     <p>Upload Product According To Excel Format</p> <br>
                                     <span class="btn btn-primary btn-file">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                                        <input type="file" id="file" ref="file" v-on:change="handleFileUpload('bulkUpload')"/>
+                                        <input type="file" id="bulkfile" ref="bulkfile" v-on:change="handleBulkFileUpload()"/>
                                     </span><br>
                                     <span class="fileinput-new mt-2" id="excel-file"></span>
                                 </div>
@@ -463,7 +471,7 @@ export default {
                                 >
                                     {{ validation_error.file[0] }}
                                 </span>
-                                
+
                             </form>
                         </div>
                     </div>
@@ -490,7 +498,7 @@ export default {
                                     <p>Upload Stock Update To Excel Format</p> <br>
                                     <span class="btn btn-primary btn-file">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                                        <input type="file" id="file" ref="file" v-on:change="handleFileUpload('stockUpdate')"/>
+                                        <input type="file" id="stockfile" ref="stockfile" v-on:change="handleStockFileUpload()"/>
                                     </span><br>
                                     <span class="fileinput-new mt-2" id="excel-file"></span>
                                 </div>
@@ -500,7 +508,7 @@ export default {
                                 >
                                     {{ validation_error.file[0] }}
                                 </span>
-                                
+
                             </form>
                         </div>
                     </div>

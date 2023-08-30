@@ -72,7 +72,7 @@ class OrderController extends Controller
             foreach ($request->cart as $value) {
 
                 $product = Product::find($value['id']);
-                $decrese = Inventory::where(['product_id' => $value['id'],'colour_id' => $value['colour_id'],'size_id' => $value['size_id']])->first();
+                $decrese = Inventory::where(['product_id' => $value['id'],'colour_id' => $value['color_id'],'size_id' => $value['size_id']])->first();
                 $details = new OrderDetails();
 
                 $details->order_id            = $order->id;
@@ -81,7 +81,7 @@ class OrderController extends Controller
                 $details->fabric_id           = 0;
                 $details->product_id          = $value['id'];
                 $details->size_id             = $value['size_id'] ?? 0;
-                $details->colour_id           = $value['colour_id'] ?? 0;
+                $details->colour_id           = $value['color_id'] ?? 0;
                 $details->user_id             = $request->isGuestCheckout == false ? Auth::user()->id : 0;
                 $details->quantity            = $value['amount'];
                 $details->selling_price       = $value['priceOrg'];
@@ -102,8 +102,8 @@ class OrderController extends Controller
                 $details->total_discount      = 0;
                 $details->save();
 
-                // $decrese->stock -= $value['amount'];
-                // $decrese->update();
+                $decrese->stock -= $value['amount'];
+                $decrese->update();
             }
 
             $billing = new UserBillingInfo();
