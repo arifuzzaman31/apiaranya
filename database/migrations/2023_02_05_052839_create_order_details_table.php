@@ -43,6 +43,8 @@ class CreateOrderDetailsTable extends Migration
             $table->longText('refund_claim_reason')->nullable();
             $table->longText('refund_reject_reason')->nullable();
             $table->longText('refund_info')->nullable();
+            $table->double('total_fragile_amount',8, 4)->default(0);
+            $table->double('charge_fragile_amount',8, 4)->default(0);
             $table->string('charged_currency')->default('BDT');
             $table->float('exchange_rate')->nullable();
             $table->tinyInteger('status')->default(1);

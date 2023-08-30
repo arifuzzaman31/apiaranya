@@ -67,7 +67,7 @@ export default {
             allsubcategories: [],
             allfiltersubcategories: [],
             validation_error: {},
-  
+
         }
     },
     methods: {
@@ -94,7 +94,7 @@ export default {
         removeCatChild(index) {
             this.form.attrqty.splice(index, 1);
         },
-       
+
         getCategory() {
              axios.get(baseUrl+'get-category?no_paginate=yes').then(response => {
                 const cat = response.data
@@ -211,7 +211,7 @@ export default {
         updateMediaModalOpen(){
             $("#pageMediaModal").modal('show');
         },
-      
+
         selectImage(item){
             if(this.form.selectedImages && this.form.selectedImages.length < 4){
                 this.form.selectedImages.push(item)
@@ -235,7 +235,7 @@ export default {
         this.form.fragile = this.pr_product.fragile
         this.form.fragile_charge = this.pr_product.fragile_charge
         this.form.has_variation = this.pr_product.has_variation == 1 ? true : false
-   
+
         const vids = this.pr_product.product_vendor.map(v=> v.id);
         this.form.vendor.push(...vids);
         const brids = this.pr_product.product_brand.map(v=> v.id);
@@ -283,7 +283,7 @@ export default {
             }
         })
         this.form.attrqty.push(...arr);
-      
+
         this.form.vat  = this.pr_product.vat_tax_id
         this.form.lead_time  = this.pr_product.lead_time
         this.form.selectedImages = [this.pr_product.image_one,this.pr_product.image_two,this.pr_product.image_three,this.pr_product.image_four].filter(entry => entry != null);
@@ -294,9 +294,9 @@ export default {
             let in_tag = this.pr_product.tag.keyword_name.split(",")
             this.tages.push(...in_tag); this.form.tags.push(...in_tag)
         }
-        
+
         this.form.description = this.pr_product.description
-        
+
     }
 }
 </script>
@@ -317,7 +317,7 @@ export default {
                                         {{ validation_error.product_name[0] }}
                                     </div>
                             </div>
-                            
+
                             <div class="form-group col-md-4">
                                 <label for="product-category">Category </label>
                                 <select id="product-category" class="form-control" @change="getSubCategories()" v-model="form.category">
@@ -386,7 +386,7 @@ export default {
                                 </div>
                                 </template>
                             </Multiselect>
-                        </div> 
+                        </div>
 
                         <div class="col-md-12 mb-3">
                             <label for="product-Brand">Brand</label>
@@ -419,7 +419,7 @@ export default {
                                 </div>
                                 </template>
                             </Multiselect>
-                        </div> 
+                        </div>
 
                         <div class="col-md-12 mb-3">
                             <label for="product-Designer">Designer</label>
@@ -452,7 +452,7 @@ export default {
                                 </div>
                                 </template>
                             </Multiselect>
-                        </div> 
+                        </div>
 
                         <div class="col-md-12 mb-3">
                             <label for="product-Embellishment">Embellishment</label>
@@ -754,7 +754,7 @@ export default {
                 </div>
             </div>
         </div>
-    
+
         <div id="tooltips" class="mb-2">
             <div class="statbox widget box ">
                 <div class="widget-content ">
@@ -811,7 +811,7 @@ export default {
                                         {{ validation_error.fragile_charge[0] }}
                                     </div>
                             </div>
-                         
+
                             <div class="col-md-2 mb-3">
                                 <label for="weight">Weight</label>
                                 <input type="text" class="form-control form-control-sm" :class="validation_error.hasOwnProperty('weight') ? 'is-invalid' : ''" id="weight" placeholder="Example: 0.45 kg" v-model="form.weight" >
@@ -848,13 +848,13 @@ export default {
                                 <label for="unit">Unit</label>
                                 <input type="text" class="form-control form-control-sm" id="unit" placeholder="Enter Unit" v-model="form.unit" />
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <div class="statbox widget box-shadow">
             <div class="widget-content">
                 <div class="form-row">
@@ -935,11 +935,11 @@ export default {
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex">
                             <h5>Attribute</h5>
-                        </div>                 
-                    </div>                  
+                        </div>
+                    </div>
                 </div>
             </div>
-            
+
             <div class="statbox widget box box-shadow" v-if="form.has_variation">
                 <div class="widget-content ">
                     <div class="row text-center">
@@ -947,7 +947,7 @@ export default {
                             <b>Colour</b>
                         </div>
                         <div class="col-2  text-success">
-                           <b>Size</b> 
+                           <b>Size</b>
                         </div>
                         <div class="col-2  text-success">
                             <b>SKU</b>
@@ -996,7 +996,7 @@ export default {
                                 </div>
                                 </template>
                             </Multiselect>
-                           
+
                         </div>
                         <div class="form-group col-md-2">
                             <select id="product-category" class="form-control" v-model="qt.size_id">
@@ -1049,7 +1049,7 @@ export default {
                         <div class="col-3 text-success">
                             <b>Qty</b>
                         </div>
-                        
+
                     </div>
                     <div class="row" v-for="(qt,index) in form.attrqty" :key="index">
                         <div class="form-group col-md-3">
@@ -1064,15 +1064,15 @@ export default {
                         <div class="form-group col-md-3">
                             <input type="number"  class="form-control" id="qty" v-model="qt.qty" placeholder="qty" required>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
-            
+
             <div class="statbox widget box box-shadow">
                 <div class="widget-content ">
                     <div class="form-row">
-                       
+
                         <div class="col-md-12 mb-3">
                             <label for="product-Fabric">Composition</label>
                             <Multiselect
@@ -1123,8 +1123,8 @@ export default {
                             :close-on-select="false"
                             :searchable="true"
                             :options="tages"
-                            :multiple="true" 
-                            :taggable="true" 
+                            :multiple="true"
+                            :taggable="true"
                             @tag="addTag"
                             >
                             <template v-slot:tag="{ option, handleTagRemove, disabled }">
@@ -1153,7 +1153,7 @@ export default {
     </form>
         <media-helper :setImg="selectImage">
             <template v-slot:viewimage>
-                <div class="col-md-12 d-flex justify-content-center my-2" v-for="(itm,index) in this.form.selectedImages" :key="index"> 
+                <div class="col-md-12 d-flex justify-content-center my-2" v-for="(itm,index) in this.form.selectedImages" :key="index">
                     <v-lazy-image :src="itm" style="width:80%;height:90%" class="img-fluid rounded" />
                     <button type="button" @click="() => this.form.selectedImages.splice(index, 1)" class="close text-danger image-close" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -1164,6 +1164,12 @@ export default {
 </template>
 <style src="@vueform/multiselect/themes/default.css"></style>
 <style scoped>
+.col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
+    position: relative;
+    width: 100%;
+    padding-right: 0px;
+    padding-left: 15px;
+}
   .multiselect-tag.is-user {
     padding: 5px 8px;
     border-radius: 22px;

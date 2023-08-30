@@ -55,6 +55,8 @@ class OrderController extends Controller
             $order->coupon_discount        = $request->coupon_discount ? $request->coupon_discount : 0;
             $order->coupon                 = $request->coupon_code;
             $order->discount               = 0;
+            $order->total_fragile_amount   = 0;
+            $order->charge_fragile_amount  = 0;
             $order->payment_status         = 0;
             $order->delivery_type          = $shipCharge == 0 ? 1 : 0;
             $order->order_position         = $request->data['paymentMethod'] != 'online' ? 1 : 0;
@@ -68,9 +70,9 @@ class OrderController extends Controller
             $order->save();
 
             foreach ($request->cart as $value) {
-              
+
                 $product = Product::find($value['id']);
-                $decrese = Inventory::where(['product_id' => $value['id'],'size_id' => $value['size_id']])->first();
+                $decrese = Inventory::where(['product_id' => $value['id'],'colour_id' => $value['colour_id'],'size_id' => $value['size_id']])->first();
                 $details = new OrderDetails();
 
                 $details->order_id            = $order->id;
@@ -78,8 +80,8 @@ class OrderController extends Controller
                 $details->sub_category_id     = $product->sub_category_id ? $product->sub_category_id :0 ;
                 $details->fabric_id           = 0;
                 $details->product_id          = $value['id'];
-                $details->size_id             = $value['size_id'];
-                $details->colour_id           = 0;
+                $details->size_id             = $value['size_id'] ?? 0;
+                $details->colour_id           = $value['colour_id'] ?? 0;
                 $details->user_id             = $request->isGuestCheckout == false ? Auth::user()->id : 0;
                 $details->quantity            = $value['amount'];
                 $details->selling_price       = $value['priceOrg'];
@@ -88,6 +90,8 @@ class OrderController extends Controller
                 $details->charge_vat_rate     = $value['taxAmount'];
                 $details->vat_amount          = (float)($value['vatAmountParticularProductOrg']);
                 $details->charge_vat_amount   = (float)($value['vatAmountParticularProduct']);
+                $details->total_fragile_amount   = 0;
+                $details->charge_fragile_amount  = 0;
                 $details->buying_price        = (float)$decrese->cpu;
                 $details->total_buying_price  = (float)($decrese->cpu * $value['amount']);
                 $details->total_selling_price = (float)$value['totalPriceOrg'];
@@ -97,7 +101,7 @@ class OrderController extends Controller
                 $details->unit_discount       = 0;
                 $details->total_discount      = 0;
                 $details->save();
-                
+
                 // $decrese->stock -= $value['amount'];
                 // $decrese->update();
             }
@@ -154,19 +158,19 @@ class OrderController extends Controller
 
             DB::table('payments')->insert([
                 'order_id' => $order->id,
-                'amount' => (($order->total_price + $order->shipping_amount + $order->vat_amount) - ($order->discount + $order->coupon_discount)),
-                'charge_amount' => ($order->charge_total_price + $order->charge_shipping_amount + $order->charge_vat_amount),
+                'amount' => (($order->total_price + $order->shipping_amount + $order->vat_amount+$order->total_fragile_amount) - ($order->discount + $order->coupon_discount)),
+                'charge_amount' => ($order->charge_total_price + $order->charge_shipping_amount + $order->charge_vat_amount+$order->charge_fragile_amount),
                 'charged_currency' => $request->selectedCurrency,
                 'exchange_rate' => (float)$request->currentConversionRate,
                 'payment_status' => 0,
                 'created_at'    => date("Y-m-d H:i:s")
             ]);
-            
+
             DB::table('deliveries')->insert([
                 'order_id' => $order->id,
                 'created_at'    => date("Y-m-d H:i:s")
             ]);
-            
+
             DB::commit();
             //$this->invoiceToMail($order->id);
             $courierData = [
@@ -213,12 +217,12 @@ class OrderController extends Controller
             return response()->json(['status' => 'error', 'message' => $th->getMessage()]);
         }
     }
-    
+
     public function sslCommerz($order_id,$backUri)
     {
         $order = Order::with('user','user_billing_info')->find($order_id);
         $order_details = OrderDetails::with('product:id,product_name')->where('order_id', $order_id)->get();
-        
+
         $post_data = array();
         if(config('app.payment_mode') == 'sandbox'){
             $storeid = "limme601b86f8e6dd4";
@@ -229,13 +233,13 @@ class OrderController extends Controller
         }
         $post_data['store_id'] = $storeid;
         $post_data['store_passwd'] = $storepass;
-        $post_data['total_amount'] = (($order->total_price + $order->shipping_amount + $order->vat_amount) - ($order->discount + $order->coupon_discount));
+        $post_data['total_amount'] = (($order->total_price + $order->shipping_amount + $order->vat_amount+$order->total_fragile_amount) - ($order->discount + $order->coupon_discount));
         $post_data['currency'] = "BDT";
         $post_data['tran_id'] = $order_id;
         $post_data['success_url'] = route('ssl.success');
         $post_data['fail_url']     = config('app.front_url');
         $post_data['cancel_url']   = config('app.front_url');
-    
+
         # CUSTOMER INFORMATION
         $post_data['cus_name'] = $order->user_billing_info->first_name;
         $post_data['cus_email'] = $order->user_billing_info->email;
@@ -247,7 +251,7 @@ class OrderController extends Controller
         $post_data['cus_country'] = "Bangladesh";
         $post_data['cus_phone'] = $order->user_billing_info->phone;
         $post_data['cus_fax'] = "";
-    
+
         # SHIPMENT INFORMATION
         $post_data['ship_name'] = "Aranya";
         $post_data['shipping_method'] = "NO";
@@ -257,16 +261,16 @@ class OrderController extends Controller
         $post_data['ship_state'] = "Dhaka";
         $post_data['ship_postcode'] = "1000";
         $post_data['ship_country'] = "Bangladesh";
-    
+
         # OPTIONAL PARAMETERS
         $post_data['value_a'] = $backUri;
         $post_data['value_b '] = "ref002";
         $post_data['value_c'] = "ref003";
         $post_data['value_d'] = "ref004";
-    
+
         # EMI STATUS
         $post_data['emi_option'] = "1";
-    
+
         # CART PARAMETERS
         $product_name = [];
 
@@ -287,12 +291,12 @@ class OrderController extends Controller
         $post_data['product_amount'] = $order->total_price;
         $post_data['vat'] = $order->vat_rate;
         $post_data['discount_amount'] = ($order->discount + $order->coupon_discount);
-        $post_data['convenience_fee'] = $order->shipping_amount;
-    
+        $post_data['convenience_fee'] = ($order->shipping_amount+$order->total_fragile_amount);
+
         //$post_data['allowed_bin'] = "3,4";
         //$post_data['allowed_bin'] = "470661";
         //$post_data['allowed_bin'] = "470661,376947";
-    
+
         // dd($post_data);
         # REQUEST SEND TO SSLCOMMERZ
         if (config('app.payment_mode') == 'sandbox') {
@@ -324,12 +328,12 @@ class OrderController extends Controller
             echo "FAILED TO CONNECT WITH SSLCOMMERZ API";
             exit;
         }
-        
+
         // dd($content);
         # PARSE THE JSON RESPONSE
         $sslcz = json_decode($sslcommerzResponse, true );
         // var_dump($sslcz); exit;
-    
+
         if (isset($sslcz['GatewayPageURL']) && $sslcz['GatewayPageURL'] != "") {
             // return redirect()->to($sslcz['GatewayPageURL']);
              return json_encode(['status' => 'success', 'data' => $sslcz['GatewayPageURL'], 'logo' => $sslcz['storeLogo']]);
@@ -356,7 +360,7 @@ class OrderController extends Controller
                 $order->payment_date = $request->tran_date;
                 $order->payment_info = json_encode($request->all());
                 $order->update();
-                
+
                 DB::table('payments')->where('order_id', $order->id)->update([
                     'payment_type' => 'sslCommerz-'.$request->card_type,
                     'transaction_id' => $request->bank_tran_id,
@@ -394,7 +398,7 @@ class OrderController extends Controller
         $message = '';
 
         // if(!Auth::check()){
-               
+
         //     Auth::loginUsingId($request->value_a);
         // }
         DB::table('orders')->where('id',$request->tran_id)->update([
@@ -405,7 +409,7 @@ class OrderController extends Controller
 
             $message = 'Payment failed for order #'.$request->tran_id.' due to ' . $request->error. '.';
 
-        } 
+        }
         else {
 
             $message = 'Something went wrong and your payment failed  for order #'.$request->tran_id.'.';
@@ -423,7 +427,7 @@ class OrderController extends Controller
         // return "Cancelled";
         // // return $request->all();
         // if(!Auth::check()){
-               
+
         //     Auth::loginUsingId($request->value_a);
         // }
         DB::table('orders')->where('id',$request->tran_id)->update([
@@ -453,7 +457,7 @@ class OrderController extends Controller
             }
         }
         return response()->json(['status' => 'error','message' => 'Cancellation Not Allowed!']);
-        
+
     }
 
     public function orderList(Request $request)
@@ -494,9 +498,9 @@ class OrderController extends Controller
         }
 
         return response()->json(['status' => 'error','message' => 'Refund Not Allowed!']);
-        
+
     }
-    
+
     public function invoiceToMail($order_id = '')
     {
         $orders = DB::table('order_details')

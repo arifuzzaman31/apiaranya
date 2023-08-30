@@ -95,7 +95,7 @@ export default {
         removeCatChild(index) {
             this.form.attrqty.splice(index, 1);
         },
-       
+
         getCategory() {
              axios.get(baseUrl+'get-category?no_paginate=yes').then(response => {
                 const cat = response.data
@@ -122,7 +122,7 @@ export default {
         },
 
         makeAttrComb(){
-            this.combine = true 
+            this.combine = true
             this.form.attrqty = []
             if(this.choose_colours.length > 0 && this.form.is_color && this.form.is_size && this.choose_sizes.length > 0){
                 new Set([...this.choose_colours])
@@ -147,8 +147,8 @@ export default {
                     })
                 }
             }
-            
-            
+
+
         },
 
         clearForm() {
@@ -198,7 +198,7 @@ export default {
             this.allsubcategories= []
             this.allfiltersubcategories = []
             this.validation_error = {}
-           
+
         },
         mediaModalOpen(){
             $("#pageMediaModal").modal('show');
@@ -238,7 +238,7 @@ export default {
                                         {{ validation_error.product_name[0] }}
                                     </div>
                             </div>
-                            
+
                             <div class="form-group col-md-4">
                                 <label for="product-category">Category </label>
                                 <select id="product-category" class="form-control" @change="getSubCategories()" v-model="form.category">
@@ -307,7 +307,7 @@ export default {
                                 </div>
                                 </template>
                             </Multiselect>
-                        </div> 
+                        </div>
 
                         <div class="col-md-12 mb-3">
                             <label for="product-Brand">Brand</label>
@@ -340,7 +340,7 @@ export default {
                                 </div>
                                 </template>
                             </Multiselect>
-                        </div> 
+                        </div>
 
                         <div class="col-md-12 mb-3">
                             <label for="product-Designer">Designer</label>
@@ -373,7 +373,7 @@ export default {
                                 </div>
                                 </template>
                             </Multiselect>
-                        </div> 
+                        </div>
 
                         <div class="col-md-12 mb-3">
                             <label for="product-Embellishment">Embellishment</label>
@@ -675,7 +675,7 @@ export default {
                 </div>
             </div>
         </div>
-    
+
         <div id="tooltips" class="mb-2">
             <div class="statbox widget box ">
                 <div class="widget-content ">
@@ -683,7 +683,7 @@ export default {
                         <div class="col-12 my-2 text-center">
                             <button type="button" class="btn btn-sm btn-info" @click="mediaModalOpen()">Upload files</button>
                         </div>
-                        <div class="col-md-3 d-flex justify-content-center" v-for="(itm,index) in this.form.selectedImages" :key="index"> 
+                        <div class="col-md-3 d-flex justify-content-center" v-for="(itm,index) in this.form.selectedImages" :key="index">
                             <img :src="itm" style="width:80px;height:100px" class="img-fluid rounded" />
                             <button type="button" @click="() => this.form.selectedImages.splice(index, 1)" class="close text-danger image-close" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -732,10 +732,10 @@ export default {
                                         {{ validation_error.fragile_charge[0] }}
                                     </div>
                             </div>
-                         
+
                             <div class="col-md-2 mb-3">
                                 <label for="weight">Weight</label>
-                                <input type="text" class="form-control form-control-sm" :class="validation_error.hasOwnProperty('weight') ? 'is-invalid' : ''" id="weight" placeholder="Example: 0.45 kg" v-model="form.weight" >
+                                <input type="number" class="form-control form-control-sm" :class="validation_error.hasOwnProperty('weight') ? 'is-invalid' : ''" id="weight" placeholder="Example: 0.45 kg" v-model="form.weight" >
                                 <div
                                         v-if="validation_error.hasOwnProperty('weight')"
                                         class="invalid-feedback"
@@ -769,7 +769,7 @@ export default {
                                 <label for="unit">Unit</label>
                                 <input type="text" class="form-control form-control-sm" id="unit" placeholder="Enter Unit" v-model="form.unit" />
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -869,13 +869,13 @@ export default {
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
-                    </div>                 
-                </div>         
+                    </div>
+                </div>
             </div>
         </div>
-        
+
         <div class="statbox widget box box-shadow" v-if="form.has_variation">
                 <div class="widget-content ">
                         <div class="row" v-show="form.has_variation">
@@ -915,7 +915,7 @@ export default {
                                     </div>
                                     </template>
                                 </Multiselect>
-                            
+
                             </div>
                         </div>
                         <div class="row">
@@ -957,7 +957,7 @@ export default {
                             </Multiselect>
                            </div>
                         </div>
-                   
+
                     <button class="btn btn-success btn-sm" type="button" @click.prevent="makeAttrComb()">Add</button>
                 </div>
             </div>
@@ -969,7 +969,7 @@ export default {
                             <b>Colour</b>
                         </div>
                         <div class="col-2  text-success"  v-show="form.is_size">
-                           <b>Size</b> 
+                           <b>Size</b>
                         </div>
                         <div class="col-2  text-success">
                             <b>SKU</b>
@@ -988,7 +988,7 @@ export default {
                         </div>
                     </div>
                     <div class="row" v-for="(qt,index) in form.attrqty" :key="index">
-                        <div class="form-group col-md-2 col-sm-2" v-show="form.is_color">
+                        <div class="form-group col-md-2 col-sm-2" v-show="form.is_color" >
                             <select id="product-category" class="form-control form-control-sm" v-model="qt.colour_id">
                                 <option value="">Choose Colour...</option>
                                 <option v-for="(value,index) in prp_colour" :value="value.value" :key="index">{{ value.name }}</option>
@@ -1044,7 +1044,7 @@ export default {
                         <div class="col-3 text-success">
                             <b>Qty</b>
                         </div>
-                        
+
                     </div>
                     <div class="row" v-for="(qt,index) in form.attrqty" :key="index">
                         <div class="form-group col-md-3">
@@ -1059,7 +1059,7 @@ export default {
                         <div class="form-group col-md-3">
                             <input type="number"  class="form-control" id="qty" v-model="qt.qty" placeholder="qty" required>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -1067,7 +1067,7 @@ export default {
             <div class="statbox widget box box-shadow">
                 <div class="widget-content ">
                     <div class="form-row">
-                       
+
                         <div class="col-md-12 mb-3">
                             <label for="product-Fabric">Composition</label>
                             <Multiselect
@@ -1118,8 +1118,8 @@ export default {
                             :close-on-select="false"
                             :searchable="true"
                             :options="tages"
-                            :multiple="true" 
-                            :taggable="true" 
+                            :multiple="true"
+                            :taggable="true"
                             @tag="addTag"
                             >
                             <template v-slot:tag="{ option, handleTagRemove, disabled }">
@@ -1149,7 +1149,7 @@ export default {
     </form>
         <media-helper :setImg="selectImage">
             <template v-slot:viewimage>
-                <div class="col-md-12 d-flex justify-content-center my-2" v-for="(itm,index) in this.form.selectedImages" :key="index"> 
+                <div class="col-md-12 d-flex justify-content-center my-2" v-for="(itm,index) in this.form.selectedImages" :key="index">
                     <img :src="itm" class="rounded" style="width:70%" />
                     <button type="button" @click="() => this.form.selectedImages.splice(index, 1)" class="close text-danger image-close" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -1160,6 +1160,14 @@ export default {
 </template>
 <style src="@vueform/multiselect/themes/default.css"></style>
 <style scoped>
+
+.col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
+    position: relative;
+    width: 100%;
+    padding-right: 0px;
+    padding-left: 15px;
+}
+
 .image-close {
   position: absolute;
   font-size: 1.9rem;

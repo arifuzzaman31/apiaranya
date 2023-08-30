@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
                     <h4>Product</h4>
-                </div>                 
+                </div>
             </div>
         </div>
     </div>
@@ -17,7 +17,7 @@
      :prp_fabric="{{$fabric}}" :prp_fit="{{$fit}}" :prp_ingredient="{{$ingredient}}" :prp_making="{{$making}}"
      :prp_season="{{$season}}" :prp_colour="{{$colour}}" :prp_size="{{$size}}" :prp_variety="{{$variety}}" :flat_colour="{{ $flat_colour }}" :prp_tax="{{$tax}}"
     />
-</div>    
+</div>
 
 <!-- end modal -->
 @endsection

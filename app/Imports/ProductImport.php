@@ -20,7 +20,7 @@ class ProductImport implements ToCollection
     public function collection(Collection $rows)
     {
         unset($rows[0]);
-      //   return count($rows);
+      //   return count($rows); eta na view ta hocce
         $data = array_filter($rows->toArray(),function ($number) {
                  return $number[0] !== null;
              });

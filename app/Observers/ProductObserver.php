@@ -16,11 +16,10 @@ class ProductObserver
      */
     public function created(Product $product)
     {
-        if(is_file(public_path('excel/product.csv')))
-        {
+        if (is_file(public_path('excel/product.csv'))) {
             unlink(public_path('excel/product.csv'));
         }
-        public_path(Excel::store(new AddProduct, 'product.csv'));
+        public_path(Excel::store(new AddProduct(), 'product.csv'));
     }
 
     /**

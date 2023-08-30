@@ -64,7 +64,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('pages.product.create_product',$this->attrForProd());
+        return view('pages.product.create_product', $this->attrForProd());
     }
 
     public function getProduct(Request $request)
@@ -76,13 +76,13 @@ class ProductController extends Controller
         $subcategory   = $request->get('subcategory');
         $camp_id   = $request->get('camp_id');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
-        $product = Product::with(['vat','category:id,category_name','subcategory','inventory','product_size','product_colour','discount']);
+        $product = Product::with(['vat', 'category:id,category_name', 'subcategory', 'inventory', 'product_size', 'product_colour', 'discount']);
 
-        if($camp_id != ''){
-            $product = $product->join('campaign_products','products.id','campaign_products.product_id')
-                ->where('campaign_id',$camp_id);
+        if ($camp_id != '') {
+            $product = $product->join('campaign_products', 'products.id', 'campaign_products.product_id')
+                ->where('campaign_id', $camp_id);
 
-            if($noPagination != ''){
+            if ($noPagination != '') {
                 $product = $product->get();
             } else {
                 $product = $product->paginate($dataQty);
@@ -90,25 +90,25 @@ class ProductController extends Controller
             return $product;
         }
 
-        if($discount != ''){
-            $product = $product->where('is_discount',0);
+        if ($discount != '') {
+            $product = $product->where('is_discount', 0);
         }
 
-        if($category != '' ){
-            $product = $product->where('category_id',$category);
-            if($subcategory != ''){
-                $product = $product->where('sub_category_id',$subcategory);
+        if ($category != '') {
+            $product = $product->where('category_id', $category);
+            if ($subcategory != '') {
+                $product = $product->where('sub_category_id', $subcategory);
             }
         }
 
-        if($keyword != ''){
+        if ($keyword != '') {
             $product = $product->whereHas('inventory', function ($q) use ($keyword) {
-                $q->where('sku','like','%'.$keyword.'%');
+                $q->where('sku', 'like', '%' . $keyword . '%');
             });
-            $product = $product->orWhere('product_name','like','%'.$keyword.'%');
-            $product = $product->orWhere('design_code','like','%'.$keyword.'%');
+            $product = $product->orWhere('product_name', 'like', '%' . $keyword . '%');
+            $product = $product->orWhere('design_code', 'like', '%' . $keyword . '%');
         }
-        if($noPagination != ''){
+        if ($noPagination != '') {
             $product = $product->latest()->get();
         } else {
             $product = $product->latest()->paginate($dataQty);
@@ -118,10 +118,10 @@ class ProductController extends Controller
 
     public function getProductBySearch(Request $request)
     {
-        $product = Product::orderBy('id','desc');
-        if($request->keyword != ''){
-            $product = $product->where('product_name','like','%'.$request->keyword.'%');
-        }else{
+        $product = Product::orderBy('id', 'desc');
+        if ($request->keyword != '') {
+            $product = $product->where('product_name', 'like', '%' . $request->keyword . '%');
+        } else {
             $product = $product->latest()->take(20);
         }
         $product = $product->get();
@@ -154,7 +154,7 @@ class ProductController extends Controller
             $product->vat_tax_id          = $request->vat;
             $product->description         = $request->description;
             $product->lead_time           = $request->lead_time;
-            $product->flat_colour         = implode(",",$request->flat_colour);
+            $product->flat_colour         = implode(",", $request->flat_colour);
 
             $long = count($request->selectedImages);
             $product->image_one  = $request->selectedImages[0] ?? null;
@@ -179,24 +179,24 @@ class ProductController extends Controller
             $colorIds = array_filter(array_column($request->attrqty, 'colour_id'));
             $sizeIds = array_filter(array_column($request->attrqty, 'size_id'));
 
-            if($request->is_color && !empty($colorIds)){
+            if ($request->is_color && !empty($colorIds)) {
                 $cid = array_unique($colorIds);
                 $product->product_colour()->attach($cid);
             }
 
-            if($request->is_size && !empty($sizeIds)){
+            if ($request->is_size && !empty($sizeIds)) {
 
                 $product->product_size()->attach(array_unique($sizeIds));
             }
 
-            if($request->is_fabric && $request->selectfabrics){
+            if ($request->is_fabric && $request->selectfabrics) {
 
                 $product->product_fabric()->attach($request->selectfabrics);
             }
 
-            if($request->attrqty && !empty($request->attrqty)){
-                foreach($request->attrqty as $value){
-                    if($value['qty'] != '' && $value['sku'] != '' && $value['cpu'] != '' && $value['mrp'] != ''){
+            if ($request->attrqty && !empty($request->attrqty)) {
+                foreach ($request->attrqty as $value) {
+                    if ($value['qty'] != '' && $value['sku'] != '' && $value['cpu'] != '' && $value['mrp'] != '') {
                         DB::table('inventories')
                             ->insert([
                                 'product_id' => $product->id,
@@ -207,61 +207,61 @@ class ProductController extends Controller
                                 'cpu' => $value['cpu'],
                                 'mrp' => $value['mrp'],
                                 'warning_amount' => 10
-                        ]);
+                            ]);
                     }
                 }
             }
 
-            if(!empty($request->vendor)){
+            if (!empty($request->vendor)) {
 
                 $product->product_vendor()->attach($request->vendor);
             }
-            if(!empty($request->brand)){
+            if (!empty($request->brand)) {
 
                 $product->product_brand()->attach($request->brand);
             }
-            if(!empty($request->designer)){
+            if (!empty($request->designer)) {
 
                 $product->product_designer()->attach($request->designer);
             }
-            if(!empty($request->embellishment)){
+            if (!empty($request->embellishment)) {
 
                 $product->product_embellishment()->attach($request->embellishment);
             }
-            if(!empty($request->making)){
+            if (!empty($request->making)) {
 
                 $product->product_making()->attach($request->making);
             }
-            if(!empty($request->season)){
+            if (!empty($request->season)) {
 
                 $product->product_season()->attach($request->season);
             }
-            if(!empty($request->variety)){
+            if (!empty($request->variety)) {
 
                 $product->product_variety()->attach($request->variety);
             }
-            if(!empty($request->fit)){
+            if (!empty($request->fit)) {
 
                 $product->product_fit()->attach($request->fit);
             }
-            if(!empty($request->artist)){
+            if (!empty($request->artist)) {
 
                 $product->product_artist()->attach($request->artist);
             }
-            if(!empty($request->consignment)){
+            if (!empty($request->consignment)) {
 
                 $product->product_consignment()->attach($request->consignment);
             }
-            if(!empty($request->ingredients)){
+            if (!empty($request->ingredients)) {
 
                 $product->product_ingredient()->attach($request->ingredients);
             }
-            if(!empty($request->care)){
+            if (!empty($request->care)) {
 
                 $product->product_care()->attach($request->care);
             }
 
-            if(!empty($request->tages)){
+            if (!empty($request->tages)) {
 
                 $str = implode(',', $request->tages);
 
@@ -271,10 +271,10 @@ class ProductController extends Controller
                 ]);
             }
             DB::commit();
-            return $this->successMessage($this->fieldname.' Added Successfully!');
+            return $this->successMessage($this->fieldname . ' Added Successfully!');
         } catch (\Throwable $th) {
             DB::rollback();
-            return $th;
+            dd($th);
             return $this->errorMessage('Something went wrong!');
         }
     }
@@ -287,19 +287,21 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return Product::with(['category:id,category_name','subcategory:id,category_name','inventory.colour','inventory.size',
-        'vat:id,tax_name,tax_percentage',
-        'tag:id,keyword_name','product_fabric:id,fabric_code,fabric_name','product_vendor:id,vendor_name',
-        'product_brand:id,brand_name','product_designer:id,designer_name,designer_sort_name','product_embellishment:id,embellishment_name',
-        'product_making:id,making_name','product_season:id,season_name','product_variety:id,variety_name','product_fit:id,fit_name',
-        'product_artist:id,artist_name','product_consignment:id,consignment_name','product_ingredient:id,ingredient_name',
-        'product_care:id,care_name'])
+        return Product::with([
+            'category:id,category_name', 'subcategory:id,category_name', 'inventory.colour', 'inventory.size',
+            'vat:id,tax_name,tax_percentage',
+            'tag:id,keyword_name', 'product_fabric:id,fabric_code,fabric_name', 'product_vendor:id,vendor_name',
+            'product_brand:id,brand_name', 'product_designer:id,designer_name,designer_sort_name', 'product_embellishment:id,embellishment_name',
+            'product_making:id,making_name', 'product_season:id,season_name', 'product_variety:id,variety_name', 'product_fit:id,fit_name',
+            'product_artist:id,artist_name', 'product_consignment:id,consignment_name', 'product_ingredient:id,ingredient_name',
+            'product_care:id,care_name'
+        ])
             ->find($product->id);
     }
 
     public function exportProductStock()
     {
-        return Excel::download(new StockExport(),'stock_list.xlsx');
+        return Excel::download(new StockExport(), 'stock_list.xlsx');
     }
 
     /**
@@ -310,12 +312,13 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $products = Product::with(['product_vendor:id','product_brand:id','product_designer:id','product_making:id','product_season:id',
-                    'product_embellishment:id','inventory','product_size','product_colour','discount','product_fabric:id',
-                    'product_variety:id','product_fit:id','product_artist:id','product_consignment:id','product_ingredient:id','product_care:id','tag'
-                    ])
-        ->find($product->id);
-        return view('pages.product.edit',['product' => $products,'attrs' => json_encode($this->attrForProd())]);
+        $products = Product::with([
+            'product_vendor:id', 'product_brand:id', 'product_designer:id', 'product_making:id', 'product_season:id',
+            'product_embellishment:id', 'inventory', 'product_size', 'product_colour', 'discount', 'product_fabric:id',
+            'product_variety:id', 'product_fit:id', 'product_artist:id', 'product_consignment:id', 'product_ingredient:id', 'product_care:id', 'tag'
+        ])
+            ->find($product->id);
+        return view('pages.product.edit', ['product' => $products, 'attrs' => json_encode($this->attrForProd())]);
     }
 
     /**
@@ -357,7 +360,7 @@ class ProductController extends Controller
             $product->fragile_charge      = $request->fragile_charge;
             $product->fragile             = $request->fragile;
             $product->unit                = $request->unit;
-            $product->flat_colour         = implode(",",$request->flat_colour);
+            $product->flat_colour         = implode(",", $request->flat_colour);
             $product->weight              = $request->weight;
             $product->design_code         = $request->design_code;
             $product->status              =  AllStatic::$active;
@@ -366,28 +369,27 @@ class ProductController extends Controller
             $colorIds = array_column($request->attrqty, 'colour_id');
             $sizeIds = array_filter(array_column($request->attrqty, 'size_id'));
 
-            if($request->is_color && !empty($colorIds)){
+            if ($request->is_color && !empty($colorIds)) {
                 $cid = array_unique(array_merge(...$colorIds), SORT_REGULAR);
                 $product->product_colour()->sync($cid);
             }
 
-            if($request->is_size && !empty($sizeIds)){
+            if ($request->is_size && !empty($sizeIds)) {
 
                 $product->product_size()->sync($sizeIds);
             }
 
-            if($request->is_fabric && !empty($request->fabrics)){
+            if ($request->is_fabric && !empty($request->fabrics)) {
 
                 $product->product_fabric()->sync($request->fabrics);
             }
 
-            if($request->attrqty && !empty($request->attrqty)){
-                DB::table('inventories')->where('product_id',$product->id)->delete();
-                foreach($request->attrqty as $value){
-                    if($value['qty'] != '' && $value['sku'] != '' && $value['cpu'] != '' && $value['mrp'] != ''){
-                        if(!empty($value['colour_id'])){
-                            foreach($value['colour_id'] as $sizestock)
-                            {
+            if ($request->attrqty && !empty($request->attrqty)) {
+                DB::table('inventories')->where('product_id', $product->id)->delete();
+                foreach ($request->attrqty as $value) {
+                    if ($value['qty'] != '' && $value['sku'] != '' && $value['cpu'] != '' && $value['mrp'] != '') {
+                        if (!empty($value['colour_id'])) {
+                            foreach ($value['colour_id'] as $sizestock) {
                                 DB::table('inventories')
                                     ->insert([
                                         'product_id' => $product->id,
@@ -398,7 +400,7 @@ class ProductController extends Controller
                                         'cpu' => $value['cpu'],
                                         'mrp' => $value['mrp'],
                                         'warning_amount' => 10
-                                ]);
+                                    ]);
                             }
                         } else {
                             $stock  = new Inventory();
@@ -412,73 +414,71 @@ class ProductController extends Controller
                             $stock->save();
                         }
                     }
-
                 }
-
             }
 
-            if(!empty($request->vendor)){
+            if (!empty($request->vendor)) {
 
                 $product->product_vendor()->sync($request->vendor);
             }
-            if(!empty($request->brand)){
+            if (!empty($request->brand)) {
 
                 $product->product_brand()->sync($request->brand);
             }
-            if(!empty($request->designer)){
+            if (!empty($request->designer)) {
 
                 $product->product_designer()->sync($request->designer);
             }
-            if(!empty($request->embellishment)){
+            if (!empty($request->embellishment)) {
 
                 $product->product_embellishment()->sync($request->embellishment);
             }
-            if(!empty($request->making)){
+            if (!empty($request->making)) {
 
                 $product->product_making()->sync($request->making);
             }
-            if(!empty($request->season)){
+            if (!empty($request->season)) {
 
                 $product->product_season()->sync($request->season);
             }
-            if(!empty($request->variety)){
+            if (!empty($request->variety)) {
 
                 $product->product_variety()->sync($request->variety);
             }
-            if(!empty($request->fit)){
+            if (!empty($request->fit)) {
 
                 $product->product_fit()->sync($request->fit);
             }
-            if(!empty($request->artist)){
+            if (!empty($request->artist)) {
 
                 $product->product_artist()->sync($request->artist);
             }
-            if(!empty($request->consignment)){
+            if (!empty($request->consignment)) {
 
                 $product->product_consignment()->sync($request->consignment);
             }
-            if(!empty($request->ingredients)){
+            if (!empty($request->ingredients)) {
 
                 $product->product_ingredient()->sync($request->ingredients);
             }
-            if(!empty($request->care)){
+            if (!empty($request->care)) {
 
                 $product->product_care()->sync($request->care);
             }
 
-            if(!empty($request->tags)){
+            if (!empty($request->tags)) {
 
                 $str = implode(',', $request->tags);
 
                 DB::table('product_tags')
-                ->updateOrInsert(
-                    ['product_id' => $product->id],
-                    ['keyword_name' => $str]
-                );
+                    ->updateOrInsert(
+                        ['product_id' => $product->id],
+                        ['keyword_name' => $str]
+                    );
             }
 
             DB::commit();
-            return $this->successMessage($this->fieldname.' Successfully Updated!');
+            return $this->successMessage($this->fieldname . ' Successfully Updated!');
         } catch (\Throwable $th) {
             DB::rollback();
             return $th;
@@ -496,11 +496,11 @@ class ProductController extends Controller
         // return $this->successMessage($request->file_from);
         try {
             $path = $request->file('file')->getRealPath();
-            if($request->file_from == 'stockUpdate'){
+            if ($request->file_from == 'stockUpdate') {
                 Excel::import(new StockUpdateImport, $path);
 
                 $msg = 'Stock Updated Successfully';
-            }else{
+            } else {
                 // return $data = Excel::load($path, function($reader) {})->get();
                 Excel::import(new ProductImport, $path);
                 // $data = Excel::toCollection(new ProductImport,$request->file('file'));
@@ -527,9 +527,9 @@ class ProductController extends Controller
     {
         try {
             DB::beginTransaction();
-            Inventory::where('product_id',$product->id)->delete();
-            Discount::where('product_id',$product->id)->delete();
-            ProductTag::where('product_id',$product->id)->delete();
+            Inventory::where('product_id', $product->id)->delete();
+            Discount::where('product_id', $product->id)->delete();
+            ProductTag::where('product_id', $product->id)->delete();
             $product->product_colour()->detach();
             $product->product_fabric()->detach();
             $product->product_size()->detach();
@@ -549,7 +549,7 @@ class ProductController extends Controller
             $product->delete();
 
             DB::commit();
-            return response()->json(['status' => 'success', 'message' => $this->fieldname.' Deleted Successfully!']);
+            return response()->json(['status' => 'success', 'message' => $this->fieldname . ' Deleted Successfully!']);
         } catch (\Throwable $th) {
             DB::rollback();
             return response()->json(['status' => 'error', 'message' =>  $th->getMessage()]);
