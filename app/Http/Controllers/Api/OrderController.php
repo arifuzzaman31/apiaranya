@@ -529,6 +529,7 @@ class OrderController extends Controller
 
         $courier->setParams($orderData);
         $response = $courier->placeOrder();
+        \Log::info($response);
         return true;
     }
 }
