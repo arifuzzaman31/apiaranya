@@ -29,13 +29,6 @@ class OrderController extends Controller
             //return response()->json($request->all());
             DB::beginTransaction();
             $order_id   = str_shuffle(uniqueString().date('Ymd'));
-            $shipCharge = 0;
-            if($request->data['deliveryMethod'] == 'outSideDhaka'){
-                $shipCharge += 200;
-            }
-            if($request->data['deliveryMethod'] == 'insideDhaka'){
-                $shipCharge += 100;
-            }
 
             $order = new Order();
             $order->order_id    =   $order_id;
@@ -47,18 +40,19 @@ class OrderController extends Controller
             $order->charge_vat_amount      = (float)($request->totalPriceWithTax - $request->totalPrice);
             $order->payment_method         = 0;
             $order->payment_via            = $request->data['paymentMethod'] == 'online' ? 1 : 0;
-            $order->shipping_amount        = $shipCharge;
-            $order->charge_shipping_amount = $shipCharge;
+            $order->shipping_amount        = $request->shippingCost;
+            $order->charge_shipping_amount = $request->shippingCost;
             $order->total_item             = $request->totalAmount ? $request->totalAmount : 1;
             $order->total_price            = (float)$request->totalPriceOrg;
             $order->charge_total_price     = (float)$request->totalPrice;
             $order->coupon_discount        = $request->coupon_discount ? $request->coupon_discount : 0;
             $order->coupon                 = $request->coupon_code;
             $order->discount               = 0;
-            $order->total_fragile_amount   = 0;
-            $order->charge_fragile_amount  = 0;
+            $order->total_fragile_amount   = $request->totalFragileCharge;
+            $order->charge_fragile_amount  = $request->totalFragileCharge;
             $order->payment_status         = 0;
-            $order->delivery_type          = $shipCharge == 0 ? 1 : 0;
+            $order->delivery_type          = $request->shippingCost == 0 ? 1 : 0;
+            $order->delivery_platform      = $request->data['deliveryMethod'];
             $order->order_position         = $request->data['paymentMethod'] != 'online' ? 1 : 0;
             $order->order_date             = date('Y-m-d');
             $order->requested_delivery_date = date('Y-m-d', strtotime("+1 day"));
@@ -90,8 +84,8 @@ class OrderController extends Controller
                 $details->charge_vat_rate     = $value['taxAmount'];
                 $details->vat_amount          = (float)($value['vatAmountParticularProductOrg']);
                 $details->charge_vat_amount   = (float)($value['vatAmountParticularProduct']);
-                $details->total_fragile_amount   = 0;
-                $details->charge_fragile_amount  = 0;
+                $details->total_fragile_amount = $value['totalFragileCharge'];
+                $details->charge_fragile_amount = $value['totalFragileCharge'];
                 $details->buying_price        = (float)$decrese->cpu;
                 $details->total_buying_price  = (float)($decrese->cpu * $value['amount']);
                 $details->total_selling_price = (float)$value['totalPriceOrg'];
@@ -172,32 +166,35 @@ class OrderController extends Controller
             ]);
 
             DB::commit();
-            //$this->invoiceToMail($order->id);
+            $this->invoiceToMail($order->id);
             $courierData = [
                 'recipient_name' => $request->data['first_name_billing'],
                 'recipient_mobile' => $request->data['phone_billing'],
                 'recipient_city' => $request->data['city_billing'],
                 'recipient_area' => $request->data['city_billing'],
-                'recipient_thana' => 'Badda',
-                'recipient_address' => 'Full Address',
-                'package_code' => '#XXXX',
-                'product_price' => '1500',
+                'recipient_thana' => $request->data['city_billing'],
+                'recipient_address' => $billing,
+                'package_code' => '#1234',
+                'product_price' => $order->total_price,
                 'payment_method' => 'COD',
                 'recipient_landmark' => 'DBBL ATM',
                 'parcel_type' => 'BOX',
-                'requested_delivery_time' => '2019-07-05',
+                'requested_delivery_time' => $order->requested_delivery_date,
                 'delivery_hour' => 'any',
                 'recipient_zip' => '1212',
                 'pick_hub' => '18490',
                 'product_id' => 'DAFS',
                 'pick_address' => 'Gudaraghat new mobile',
                 'comments' => 'Please handle carefully',
-                'number_of_item' => '3',
-                'actual_product_price' => '1200',
+                'number_of_item' => $request->totalAmount,
+                'actual_product_price' => $order->total_price,
                 'pgwid' => 'XXX',
                 'pgwtxn_id' => 'XXXXXX'
             ];
-            // $this->sendEcorier($courierData);
+            if($request->data['deliveryMethod'] == 'E-Courier'){
+
+                $this->sendEcorier($courierData);
+            }
             if($request->data['paymentMethod'] == 'online'){
                 $backUri = $request->backUri ? $request->backUri : 'https://staging.aranya.com.bd';
                 return response()->json(['status' => 'success', 'type' => 'online', 'message' => 'Order Created', 'payment' => $this->sslCommerz($order->id,$backUri)], 200);

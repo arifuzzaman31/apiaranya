@@ -9,15 +9,13 @@ use App\Imports\StockUpdateImport;
 use App\Models\Product;
 use App\Models\Inventory;
 use App\Models\Discount;
-use App\Exports\AddProduct;
-use App\Models\CategoryFabric;
 use App\Models\ProductTag;
 use Illuminate\Http\Request;
 use App\Traits\ProductTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Maatwebsite\Excel\Excel;
-use App\Events\ProductProcessed;
+use App\Exports\AddProduct;
+use Excel;
 
 class ProductController extends Controller
 {
@@ -271,6 +269,11 @@ class ProductController extends Controller
                 ]);
             }
             DB::commit();
+            if(is_file(public_path('product.csv')))
+            {
+                unlink(public_path('product.csv'));
+            }
+            public_path(\Excel::store(new AddProduct, 'product.csv'));
             return $this->successMessage($this->fieldname . ' Added Successfully!');
         } catch (\Throwable $th) {
             DB::rollback();
@@ -478,6 +481,11 @@ class ProductController extends Controller
             }
 
             DB::commit();
+            if(is_file(public_path('product.csv')))
+            {
+                unlink(public_path('product.csv'));
+            }
+            public_path(\Excel::store(new AddProduct, 'product.csv'));
             return $this->successMessage($this->fieldname . ' Successfully Updated!');
         } catch (\Throwable $th) {
             DB::rollback();
@@ -495,11 +503,11 @@ class ProductController extends Controller
         ]);
         // return $this->successMessage($request->file_from);
         // dd($request->file('file'));
-        $data = \Excel::toCollection(new ProductImport,$request->file('file'));
-        $data = array_filter($data->toArray(),function ($number) {
-            return $number[0] !== null;
-        });
-        dd($data);
+        // $data = \Excel::toCollection(new ProductImport,$request->file('file'));
+        // $data = array_filter($data->toArray(),function ($number) {
+        //     return $number[0] !== null;
+        // });
+        // dd($data);
         try {
             $path = $request->file('file')->getRealPath();
             // dd($path);
@@ -508,14 +516,14 @@ class ProductController extends Controller
 
                 $msg = 'Stock Updated Successfully';
             } else {
-                $data = Excel::load($path, function($reader) {})->get();
-                // \Excel::import(new ProductImport, $path);
-                // $data = Excel::toCollection(new ProductImport,$request->file('file'));
+                // $data = Excel::load($path, function($reader) {})->get();
+                \Excel::import(new ProductImport, $path);
+                // $data = \Excel::toCollection(new ProductImport,$request->file('file'));
                 // // $data = Excel::toArray(new ProductImport,$request->file('file'));
-                $data = array_filter($data->toArray(),function ($number) {
-                    return $number[0] !== null;
-                });
-                return count($data);
+                // $data = array_filter($data->toArray(),function ($number) {
+                //     return $number[0] !== null;
+                // });
+                // dd($data[0]);
                 $msg = 'Excel Data Imported Successfully';
             }
             return $this->successMessage($msg);
@@ -556,6 +564,11 @@ class ProductController extends Controller
             $product->delete();
 
             DB::commit();
+            if(is_file(public_path('product.csv')))
+            {
+                unlink(public_path('product.csv'));
+            }
+            public_path(\Excel::store(new AddProduct, 'product.csv'));
             return response()->json(['status' => 'success', 'message' => $this->fieldname . ' Deleted Successfully!']);
         } catch (\Throwable $th) {
             DB::rollback();

@@ -41,6 +41,7 @@ class CreateOrdersTable extends Migration
             $table->date('requested_delivery_date')->nullable();
             $table->date('payment_date')->nullable();
             $table->integer('shipping_amount')->default(0);
+            $table->string('delivery_platform')->nullable();
             $table->integer('charge_shipping_amount')->default(0);
             $table->double('total_fragile_amount',8, 4)->default(0);
             $table->double('charge_fragile_amount',8, 4)->default(0);

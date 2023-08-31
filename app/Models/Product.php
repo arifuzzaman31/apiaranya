@@ -11,7 +11,10 @@ class Product extends Model
 {
     use HasFactory,SoftDeletes,Notifiable;
 
-    protected $fillable = ['product_name', 'slug', 'category_id', 'sub_category_id', 'vat_tax_id', 'lead_time', 'product_image', 'image_one', 'image_two', 'image_three', 'image_four', 'image_five', 'flat_colour', 'length','height','width','unit', 'country_of_origin', 'weight', 'design_code', 'description', 'status', 'is_discount'];
+    protected $fillable = ['product_name', 'slug', 'category_id', 'sub_category_id', 'vat_tax_id', 'lead_time', 'product_image',
+     'image_one', 'image_two', 'image_three', 'image_four', 'image_five', 'flat_colour', 'length','height','width',
+     'unit', 'country_of_origin', 'weight', 'design_code', 'description', 'status', 'is_discount','fragile','fragile_charge'
+    ];
 
     public function category()
     {

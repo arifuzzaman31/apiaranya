@@ -3,8 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Auth\Events\Registered;
-use App\Events\ProductProcessed;
-use App\Listeners\StoreProductListener;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
@@ -20,9 +18,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        ProductProcessed::class => [
-            StoreProductListener::class,
-        ]
+        // ProductProcessed::class => [
+        //     StoreProductListener::class,
+        // ]
     ];
 
     /**
@@ -32,6 +30,6 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        
+
     }
 }
