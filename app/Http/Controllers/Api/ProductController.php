@@ -20,7 +20,7 @@ class ProductController extends Controller
         $keyword   = $request->get('keyword');
         $tak_some   = $request->get('take_some');
         $q_category   = $request->get('category');
-        $q_sub_category   = $request->get('sub_category');
+        $q_sub_category = $request->get('sub_category');
         $camp_id   = $request->get('camp_id');
         $attrname   = $request->get('attrname');
         $attrid   = $request->get('attrid');
@@ -28,7 +28,7 @@ class ProductController extends Controller
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
         $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric',
-        'product_size','product_colour','inventory:product_id,colour_id,size_id,stock,mrp,sku'])->where('status',AllStatic::$active);
+        'product_size','product_colour','inventory:product_id,colour_id,size_id,stock,mrp,sku']);
 
         if($camp_id != ''){
             $product = $product->join('campaign_products','products.id','campaign_products.product_id')
@@ -58,7 +58,7 @@ class ProductController extends Controller
         if($attrname != '' && $attrid != ''){
             $product = $product->whereHas('product_'.$attrname, function ($q) use ($attrname,$attrid) {
                 $q->where($attrname.'_id', $attrid);
-            }); 
+            });
         }
 
         if($keyword != ''){
@@ -76,13 +76,13 @@ class ProductController extends Controller
         if($tak_some != ''){
             $product = $product->latest()->take($tak_some);
         }
-        
+
         if($noPagination != ''){
-            
-            $product = $product->latest()->get();
-            
+
+            $product = $product->where('status',AllStatic::$active)->latest()->get();
+
         } else {
-            $product = $product->latest()->paginate($dataQty);
+            $product = $product->where('status',AllStatic::$active)->latest()->paginate($dataQty);
         }
         // return $product;
         return ProductResource::collection($product);
@@ -96,9 +96,10 @@ class ProductController extends Controller
             $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
             $attrname   = $request->get('attrname');
             $attrid   = $request->get('attrid');
+            $pid   = $request->get('p_id');
             $pricerange   = $request->get('range');
             $tak_some   = $request->get('take_some');
-            
+
             $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric',
             'product_size','product_colour','inventory:product_id,colour_id,size_id,stock,mrp,sku'])
                         ->where('category_id',$cat)
@@ -106,10 +107,13 @@ class ProductController extends Controller
                     if($subcat != '' && $subcat != null){
                         $product = $product->where('sub_category_id',$subcat);
                     }
+                    if($pid != ''){
+                        $product = $product->where('id','!=',$pid);
+                    }
             if($attrname != '' && $attrid != ''){
                 $product = $product->whereHas('product_'.$attrname, function ($q) use ($attrname,$attrid) {
                     $q->where($attrname.'_id', $attrid);
-                }); 
+                });
             }
 
             if($pricerange != ''){
@@ -127,12 +131,12 @@ class ProductController extends Controller
             } else {
                 $product = $product->paginate($dataQty);
             }
-    
+
             return ProductResource::collection($product);
         } catch (\Throwable $th) {
             return $this->errorMessage();
         }
-        
+
     }
 
     public function getProductById(Request $request,$id)

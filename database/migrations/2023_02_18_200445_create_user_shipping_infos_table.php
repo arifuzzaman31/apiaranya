@@ -24,7 +24,7 @@ class CreateUserShippingInfosTable extends Migration
             $table->string('email');
             $table->string('phone');
             $table->string('post_code')->nullable();
-            $table->string('apartment')->nullable();
+            $table->text('apartment')->nullable();
             $table->string('street_address');
             $table->timestamps();
         });

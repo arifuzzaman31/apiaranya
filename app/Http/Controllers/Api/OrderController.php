@@ -90,7 +90,7 @@ class OrderController extends Controller
                 $details->total_buying_price  = (float)($decrese->cpu * $value['amount']);
                 $details->total_selling_price = (float)$value['totalPriceOrg'];
                 $details->total_charge_selling_price = (float)$value['totalPrice'];
-                $details->charged_currency    = $request->selectedCurrency;
+                $details->charged_currency    = $request->selectedCurrency ?? 'BDT';
                 $details->exchange_rate       = (float)$request->currentConversionRate;
                 $details->unit_discount       = 0;
                 $details->total_discount      = 0;
@@ -168,32 +168,52 @@ class OrderController extends Controller
             DB::commit();
             $this->invoiceToMail($order->id);
             $courierData = [
-                'recipient_name' => $request->data['first_name_billing'],
-                'recipient_mobile' => $request->data['phone_billing'],
-                'recipient_city' => $request->data['city_billing'],
-                'recipient_area' => $request->data['city_billing'],
-                'recipient_thana' => $request->data['city_billing'],
-                'recipient_address' => $billing,
-                'package_code' => '#1234',
+                'recipient_name' => "$request->data['first_name_billing']",
+                'recipient_mobile' => "$request->data['phone_billing']",
+                'recipient_city' => "$request->data['city_billing']",
+                'recipient_area' => "$request->data['city_billing']",
+                'recipient_thana' => "$request->data['city_billing']",
+                'recipient_address' => "$billing",
+                'package_code' => "#2416",
                 'product_price' => $order->total_price,
                 'payment_method' => 'COD',
                 'recipient_landmark' => 'DBBL ATM',
                 'parcel_type' => 'BOX',
                 'requested_delivery_time' => $order->requested_delivery_date,
                 'delivery_hour' => 'any',
-                'recipient_zip' => '1212',
+                'recipient_zip' => $request->data['post_code_billing'],
                 'pick_hub' => '18490',
-                'product_id' => 'DAFS',
-                'pick_address' => 'Gudaraghat new mobile',
+                'product_id' => "$order_id",
+                'pick_address' => "$billing",
                 'comments' => 'Please handle carefully',
-                'number_of_item' => $request->totalAmount,
+                'number_of_item' => "$request->totalAmount",
                 'actual_product_price' => $order->total_price,
-                'pgwid' => 'XXX',
-                'pgwtxn_id' => 'XXXXXX'
+                'pgwid' => '8888',
+                'pgwtxn_id' => "$order_id",
+                'is_fragile' => $request->totalFragileCharge > 0 ? 1 : 0,
+                'sending_type' => 1,
+                'is_ipay' => 0
+
             ];
             if($request->data['deliveryMethod'] == 'E-Courier'){
 
-                $this->sendEcorier($courierData);
+                $courier = Courier::getInstance();
+                $courier->setProvider(ECourier::class, 'local'); /* local/production */
+                $courier->setConfig([
+                    'API-KEY' => env('ECOURIER_API_KEY'),
+                    'API-SECRET' => env('ECOURIER_API_SECRET'),
+                    'USER-ID' => env('ECOURIER_USER_ID')
+                ]);
+
+                $courier->setParams($courierData);
+                $resp = $courier->placeOrder();
+                if($resp->response_code == 200){
+                    DB::table('orders')->where('id', $order->id)->update([
+                        'tracking_id' => $resp->ID,
+                        'updated_at'    => date("Y-m-d H:i:s")
+                    ]);
+                }
+                // \Log::info($response);
             }
             if($request->data['paymentMethod'] == 'online'){
                 $backUri = $request->backUri ? $request->backUri : 'https://staging.aranya.com.bd';
@@ -529,6 +549,9 @@ class OrderController extends Controller
 
         $courier->setParams($orderData);
         $response = $courier->placeOrder();
+        if($response->response_code == 200){
+
+        }
         \Log::info($response);
         return true;
     }
