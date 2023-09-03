@@ -96,8 +96,8 @@ class OrderController extends Controller
                 $details->total_discount      = 0;
                 $details->save();
 
-                $decrese->stock -= $value['amount'];
-                $decrese->update();
+                //$decrese->stock -= $value['amount'];
+                //$decrese->update();
             }
 
             $billing = new UserBillingInfo();
@@ -193,8 +193,8 @@ class OrderController extends Controller
                 'is_fragile' => $request->totalFragileCharge > 0 ? 1 : 0,
                 'sending_type' => 1,
                 'is_ipay' => 0
-
             ];
+
             if($request->data['deliveryMethod'] == 'E-Courier'){
 
                 $courier = Courier::getInstance();
