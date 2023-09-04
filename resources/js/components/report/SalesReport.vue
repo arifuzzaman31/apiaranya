@@ -38,7 +38,7 @@ export default {
             })
             .catch(errors => {
                 console.log(errors);
-            });  
+            });
         },
         filterClear(){
             this.search = ''
@@ -91,15 +91,15 @@ export default {
                 <div class="row">
                     <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
                         <h4>Sales Report</h4>
-                    </div>                          
+                    </div>
                 </div>
-            </div>       
+            </div>
             <div class="widget-content widget-content-area">
                 <div class="row mb-2">
                     <div class="col-md-3 col-lg-3 my-1 col-12">
                         <input type="text" v-model="search" @keyup="getSearch()" class="form-control form-control-sm" placeholder="SKU, Design Code">
                     </div>
-                    
+
                     <div class="col-md-3 col-lg-3 my-1 col-12">
                         <select id="product-category" class="form-control form-control-sm" @change="getSubCategories()" v-model="filterdata.category">
                             <option selected="" value="">Choose Category</option>
@@ -249,8 +249,8 @@ export default {
                                             </p>
                                         </span>
                                     </td>
-                                    <td> {{ item.fragile ? 'Yes' : 'No' }}</td>
-                                    <td> {{ item.fragile_charge }}</td>
+                                    <td> {{ item.product.fragile }}</td>
+                                    <td> {{ item.product.fragile_charge }}</td>
                                     <td> {{ item.weight }}</td>
                                     <td> {{ item.lead_time }}</td>
                                     <td> <p v-if="item.colour && item.colour.color_name">{{ item.colour.color_name }}</p></td>
@@ -269,13 +269,13 @@ export default {
                                     <td> {{ item.total_selling_amount }}</td>
                                     <td> {{ item.total_selling_amount+item.total_vat_amount }}</td>
                                     <td> {{ item.profit }}</td>
-                                </tr>					
+                                </tr>
                             </template>
                         </tbody>
                         <tbody v-else class="mt-3">
                             <tr>
                                 <td colspan="24">No Order Found</td>
-                            </tr>  
+                            </tr>
                         </tbody>
                     </table>
                     <div class="d-flex justify-content-between">
@@ -288,7 +288,7 @@ export default {
                         <a target="_blank" :href="url+`get-sales-report?excel=yes&date_from=${filterdata.from}&date_to=${filterdata.to}`" type="button" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>  Excel</a>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>

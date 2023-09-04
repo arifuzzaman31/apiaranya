@@ -165,31 +165,31 @@ class OrderController extends Controller
                 'created_at'    => date("Y-m-d H:i:s")
             ]);
 
-            DB::commit();
+
             $this->invoiceToMail($order->id);
             $courierData = [
-                'recipient_name' => "$request->data['first_name_billing']",
-                'recipient_mobile' => "$request->data['phone_billing']",
-                'recipient_city' => "$request->data['city_billing']",
-                'recipient_area' => "$request->data['city_billing']",
-                'recipient_thana' => "$request->data['city_billing']",
-                'recipient_address' => "$billing",
-                'package_code' => "#2416",
+                'recipient_name' => $request->data['first_name_billing'],
+                'recipient_mobile' => $request->data['phone_billing'],
+                'recipient_city' => $request->data['city_billing'],
+                'recipient_area' => $request->data['city_billing'],
+                'recipient_thana' => $request->data['city_billing'],
+                'recipient_address' => "$request->data['city_billing'],$request->data['country_billing']",
+                'package_code' => "$request->eQuerierPackagesCode",
                 'product_price' => $order->total_price,
                 'payment_method' => 'COD',
                 'recipient_landmark' => 'DBBL ATM',
                 'parcel_type' => 'BOX',
                 'requested_delivery_time' => $order->requested_delivery_date,
                 'delivery_hour' => 'any',
-                'recipient_zip' => $request->data['post_code_billing'],
+                'recipient_zip' => $request->data['post_code_billing'] ?? 'N/A',
                 'pick_hub' => '18490',
                 'product_id' => "$order_id",
-                'pick_address' => "$billing",
+                'pick_address' => "dfgfhgfghfh",
                 'comments' => 'Please handle carefully',
-                'number_of_item' => "$request->totalAmount",
+                'number_of_item' => $request->totalAmount,
                 'actual_product_price' => $order->total_price,
                 'pgwid' => '8888',
-                'pgwtxn_id' => "$order_id",
+                'pgwtxn_id' => $order_id,
                 'is_fragile' => $request->totalFragileCharge > 0 ? 1 : 0,
                 'sending_type' => 1,
                 'is_ipay' => 0
@@ -207,14 +207,21 @@ class OrderController extends Controller
 
                 $courier->setParams($courierData);
                 $resp = $courier->placeOrder();
-                if($resp->response_code == 200){
-                    DB::table('orders')->where('id', $order->id)->update([
-                        'tracking_id' => $resp->ID,
-                        'updated_at'    => date("Y-m-d H:i:s")
-                    ]);
+                $result = json_decode(json_encode($resp),true);
+                $datas = json_decode($result['response']);
+                if ($datas !== null && isset($datas->ID)) {
+
+                if($result['statusCode'] == 200){
+                            DB::table('orders')->where('id', $order->id)->update([
+                                'tracking_id' => $datas->ID,
+                                'updated_at'    => date("Y-m-d H:i:s")
+                            ]);
+                        }
                 }
                 // \Log::info($response);
             }
+
+            DB::commit();
             if($request->data['paymentMethod'] == 'online'){
                 $backUri = $request->backUri ? $request->backUri : 'https://staging.aranya.com.bd';
                 return response()->json(['status' => 'success', 'type' => 'online', 'message' => 'Order Created', 'payment' => $this->sslCommerz($order->id,$backUri)], 200);

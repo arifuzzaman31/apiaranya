@@ -517,7 +517,9 @@ class ProductController extends Controller
                 $msg = 'Stock Updated Successfully';
             } else {
                 // $data = Excel::load($path, function($reader) {})->get();
-                \Excel::import(new ProductImport, $path);
+
+                \Excel::import(new ProductImport, $request->file('file')->store('app'));
+
                 // $data = \Excel::toCollection(new ProductImport,$request->file('file'));
                 // // $data = Excel::toArray(new ProductImport,$request->file('file'));
                 // $data = array_filter($data->toArray(),function ($number) {

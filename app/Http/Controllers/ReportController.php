@@ -33,7 +33,7 @@ class ReportController extends Controller
             }
             $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
-            $data = Inventory::with('product.category:id,category_name','product.subcategory:id,category_name',
+            $data = Inventory::with('product.category:id,category_name,fragile,fragile_charge','product.subcategory:id,category_name',
                 'product.product_brand:id,brand_name','product.product_fabric:id,fabric_name','colour:id,color_name',
                 'product.product_size:id,size_name','product.product_designer:id,designer_name','product.product_embellishment:id,embellishment_name',
                 'product.product_making:id,making_name','product.product_season:id,season_name','product.product_variety:id,variety_name',
@@ -55,7 +55,7 @@ class ReportController extends Controller
                     $data = $data->whereHas('product', function ($q) use ($category,$subcategory) {
                         $q->where('category_id',$category)
                         ->where('sub_category_id',$subcategory);
-                        
+
                     });
                 }
                 if($brand != ''){
@@ -78,7 +78,7 @@ class ReportController extends Controller
                     });
                 }
                 $data = $data->paginate($dataQty);
-             
+
 
             return response()->json($data);
 
@@ -102,7 +102,7 @@ class ReportController extends Controller
             }
             $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
-            $data = Inventory::with('product:id,design_code,category_id,sub_category_id','product.category:id,category_name','product.subcategory:id,category_name',
+            $data = Inventory::with('product:id,design_code,category_id,sub_category_id,fragile,fragile_charge','product.category:id,category_name','product.subcategory:id,category_name',
                 'product.product_brand:id,brand_name','product.product_fabric:id,fabric_name','colour:id,color_name',
                 'product.product_size:id,size_name','product.product_designer:id,designer_name','product.product_embellishment:id,embellishment_name',
                 'product.product_making:id,making_name','product.product_season:id,season_name','product.product_variety:id,variety_name',
@@ -129,7 +129,7 @@ class ReportController extends Controller
                     $data = $data->whereHas('product', function ($q) use ($category,$subcategory) {
                         $q->where('category_id',$category)
                         ->where('sub_category_id',$subcategory);
-                        
+
                     });
                 }
                 if($brand != ''){
@@ -155,10 +155,6 @@ class ReportController extends Controller
 
     public function campaignReport(Request $request)
     {
-        
-        // if($request->excel == 'yes')
-        // {
-            // }
             try {
                 $from   = $request->get('date_from');
                 $to   = $request->get('date_to');
@@ -167,7 +163,7 @@ class ReportController extends Controller
                 }
             $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
-            $data = Inventory::with('product.category:id,category_name','product.subcategory:id,category_name',
+            $data = Inventory::with('product.category:id,category_name,fragile,fragile_charge','product.subcategory:id,category_name',
                 'product.product_brand:id,brand_name','product.product_fabric:id,fabric_name','colour:id,color_name',
                 'product.product_size:id,size_name','product.product_designer:id,designer_name','product.product_embellishment:id,embellishment_name',
                 'product.product_making:id,making_name','product.product_season:id,season_name','product.product_variety:id,variety_name',
@@ -255,7 +251,7 @@ class ReportController extends Controller
             if($paymentStatus != ''){
                 $order = $order->where('payment_status',$paymentStatus);
             }
-            
+
             if($from != '' && $to != ''){
                 $order = $order->whereBetween('order_date',[$from,$to]);
             }
@@ -311,7 +307,7 @@ class ReportController extends Controller
         if($from != '' && $to != ''){
             $user = $user->whereBetween('created_at',[$from,$to]);
         }
-            
+
         $user = $user->paginate($dataQty);
         return response()->json($user);
     }
@@ -321,6 +317,6 @@ class ReportController extends Controller
         $customPaper = array(0,0,1020,1440);
         $pdf = \PDF::loadView('pages.report.pdf.invoice_report')->setPaper($customPaper, 'portrait');
         return $pdf->download('invoice-report.pdf');
-       
+
     }
 }
