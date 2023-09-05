@@ -20027,7 +20027,6 @@ __webpack_require__.r(__webpack_exports__);
       order_status: {
         order_id: '',
         order_position: '',
-        tracking_id: '',
         date: '',
         order_modify: '',
         payment_status: ''
@@ -20137,7 +20136,6 @@ __webpack_require__.r(__webpack_exports__);
       axios__WEBPACK_IMPORTED_MODULE_0___default().get(baseUrl + "order-shipment/".concat(data.id)).then(function (result) {
         _this7.order_status.order_id = result.data.id;
         _this7.order_status.order_position = result.data.order_position;
-        _this7.order_status.tracking_id = result.data.tracking_id;
         $("#orderStatusModal").modal('show');
       })["catch"](function (errors) {
         console.log(errors);
@@ -21330,73 +21328,65 @@ var _hoisted_98 = {
 };
 var _hoisted_99 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-    "for": "tracking"
-  }, "Tracking ID", -1 /* HOISTED */);
-});
-var _hoisted_100 = {
-  "class": "form-group"
-};
-var _hoisted_101 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": ""
   }, "Order Status", -1 /* HOISTED */);
 });
-var _hoisted_102 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_100 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     value: "0"
   }, "Pending", -1 /* HOISTED */);
 });
-var _hoisted_103 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_101 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     value: "1"
   }, "Processing", -1 /* HOISTED */);
 });
-var _hoisted_104 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_102 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     value: "2"
   }, "Ready To Delivery", -1 /* HOISTED */);
 });
-var _hoisted_105 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_103 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     value: "3"
   }, "Delivered", -1 /* HOISTED */);
 });
-var _hoisted_106 = [_hoisted_102, _hoisted_103, _hoisted_104, _hoisted_105];
-var _hoisted_107 = {
+var _hoisted_104 = [_hoisted_100, _hoisted_101, _hoisted_102, _hoisted_103];
+var _hoisted_105 = {
   "class": "form-group"
 };
-var _hoisted_108 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_106 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": ""
   }, "Date", -1 /* HOISTED */);
 });
-var _hoisted_109 = {
+var _hoisted_107 = {
   "class": "modal-footer md-button"
 };
-var _hoisted_110 = {
+var _hoisted_108 = {
   "class": "btn",
   "data-dismiss": "modal"
 };
-var _hoisted_111 = {
+var _hoisted_109 = {
   id: "orderModifyModal",
   "class": "modal animated fadeInUp custo-fadeInUp",
   role: "dialog"
 };
-var _hoisted_112 = {
+var _hoisted_110 = {
   "class": "modal-dialog modal-dialog-centered"
 };
-var _hoisted_113 = {
+var _hoisted_111 = {
   "class": "modal-content"
 };
-var _hoisted_114 = {
+var _hoisted_112 = {
   "class": "modal-header"
 };
-var _hoisted_115 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_113 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", {
     "class": "modal-title"
   }, "Order", -1 /* HOISTED */);
 });
-var _hoisted_116 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_114 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
     "aria-hidden": "true",
     xmlns: "http://www.w3.org/2000/svg",
@@ -21421,67 +21411,67 @@ var _hoisted_116 = /*#__PURE__*/_withScopeId(function () {
     y2: "18"
   })], -1 /* HOISTED */);
 });
-var _hoisted_117 = [_hoisted_116];
-var _hoisted_118 = {
+var _hoisted_115 = [_hoisted_114];
+var _hoisted_116 = {
   "class": "modal-body"
 };
-var _hoisted_119 = {
+var _hoisted_117 = {
   "class": "widget-content"
 };
-var _hoisted_120 = {
+var _hoisted_118 = {
   method: "post"
 };
-var _hoisted_121 = {
+var _hoisted_119 = {
   "class": "form-group"
 };
-var _hoisted_122 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_120 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": ""
   }, "Order", -1 /* HOISTED */);
 });
-var _hoisted_123 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_121 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     value: "0"
   }, "Cancel", -1 /* HOISTED */);
 });
-var _hoisted_124 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_122 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     value: "1"
   }, "Active", -1 /* HOISTED */);
 });
-var _hoisted_125 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_123 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     value: "2"
   }, "On-Hold", -1 /* HOISTED */);
 });
-var _hoisted_126 = [_hoisted_123, _hoisted_124, _hoisted_125];
-var _hoisted_127 = {
+var _hoisted_124 = [_hoisted_121, _hoisted_122, _hoisted_123];
+var _hoisted_125 = {
   "class": "modal-footer md-button"
 };
-var _hoisted_128 = {
+var _hoisted_126 = {
   "class": "btn",
   "data-dismiss": "modal"
 };
-var _hoisted_129 = {
+var _hoisted_127 = {
   id: "paymentStatusModal",
   "class": "modal animated fadeInUp custo-fadeInUp",
   role: "dialog"
 };
-var _hoisted_130 = {
+var _hoisted_128 = {
   "class": "modal-dialog modal-dialog-centered"
 };
-var _hoisted_131 = {
+var _hoisted_129 = {
   "class": "modal-content"
 };
-var _hoisted_132 = {
+var _hoisted_130 = {
   "class": "modal-header"
 };
-var _hoisted_133 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_131 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", {
     "class": "modal-title"
   }, "Payment Status", -1 /* HOISTED */);
 });
-var _hoisted_134 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_132 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
     "aria-hidden": "true",
     xmlns: "http://www.w3.org/2000/svg",
@@ -21506,39 +21496,39 @@ var _hoisted_134 = /*#__PURE__*/_withScopeId(function () {
     y2: "18"
   })], -1 /* HOISTED */);
 });
-var _hoisted_135 = [_hoisted_134];
-var _hoisted_136 = {
+var _hoisted_133 = [_hoisted_132];
+var _hoisted_134 = {
   "class": "modal-body"
 };
-var _hoisted_137 = {
+var _hoisted_135 = {
   "class": "widget-content"
 };
-var _hoisted_138 = {
+var _hoisted_136 = {
   method: "post"
 };
-var _hoisted_139 = {
+var _hoisted_137 = {
   "class": "form-group"
 };
-var _hoisted_140 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_138 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": ""
   }, "Payment", -1 /* HOISTED */);
 });
-var _hoisted_141 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_139 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     value: "1"
   }, "Paid", -1 /* HOISTED */);
 });
-var _hoisted_142 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_140 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     value: "0"
   }, "Unpaid", -1 /* HOISTED */);
 });
-var _hoisted_143 = [_hoisted_141, _hoisted_142];
-var _hoisted_144 = {
+var _hoisted_141 = [_hoisted_139, _hoisted_140];
+var _hoisted_142 = {
   "class": "modal-footer md-button"
 };
-var _hoisted_145 = {
+var _hoisted_143 = {
   "class": "btn",
   "data-dismiss": "modal"
 };
@@ -21668,84 +21658,75 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[11] || (_cache[11] = function () {
       return $options.formReset && $options.formReset.apply($options, arguments);
     })
-  }, _hoisted_94)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_95, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_96, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_97, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_98, [_hoisted_99, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    id: "tracking",
-    type: "text",
-    name: "txt",
-    "onUpdate:modelValue": _cache[12] || (_cache[12] = function ($event) {
-      return $data.order_status.tracking_id = $event;
-    }),
-    placeholder: "Tracking ID",
-    "class": "form-control"
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.order_status.tracking_id]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_100, [_hoisted_101, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  }, _hoisted_94)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_95, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_96, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_97, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_98, [_hoisted_99, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "class": "form-control",
-    "onUpdate:modelValue": _cache[13] || (_cache[13] = function ($event) {
+    "onUpdate:modelValue": _cache[12] || (_cache[12] = function ($event) {
       return $data.order_status.order_position = $event;
     })
-  }, _hoisted_106, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.order_status.order_position]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_107, [_hoisted_108, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, _hoisted_104, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.order_status.order_position]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_105, [_hoisted_106, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     id: "date",
-    "onUpdate:modelValue": _cache[14] || (_cache[14] = function ($event) {
+    "onUpdate:modelValue": _cache[13] || (_cache[13] = function ($event) {
       return $data.order_status.date = $event;
     }),
     "class": "form-control flatpickr-input active",
     type: "date",
     placeholder: "Select Date.."
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.order_status.date]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_109, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", _hoisted_110, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.order_status.date]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_107, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", _hoisted_108, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
     "class": "flaticon-cancel-12",
-    onClick: _cache[15] || (_cache[15] = function () {
+    onClick: _cache[14] || (_cache[14] = function () {
       return $options.formReset && $options.formReset.apply($options, arguments);
     })
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Discard")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
-    onClick: _cache[16] || (_cache[16] = function ($event) {
+    onClick: _cache[15] || (_cache[15] = function ($event) {
       return $options.updateStatus($data.order_status.order_id);
     }),
     "class": "btn btn-primary"
-  }, "Update")])])])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_111, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_112, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal content"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_113, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_114, [_hoisted_115, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, "Update")])])])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_109, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_110, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal content"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_111, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_112, [_hoisted_113, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "close",
     "data-dismiss": "modal",
     "aria-label": "Close",
-    onClick: _cache[17] || (_cache[17] = function () {
+    onClick: _cache[16] || (_cache[16] = function () {
       return $options.formReset && $options.formReset.apply($options, arguments);
     })
-  }, _hoisted_117)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_118, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_119, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_120, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_121, [_hoisted_122, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  }, _hoisted_115)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_116, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_117, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_118, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_119, [_hoisted_120, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "class": "form-control",
-    "onUpdate:modelValue": _cache[18] || (_cache[18] = function ($event) {
+    "onUpdate:modelValue": _cache[17] || (_cache[17] = function ($event) {
       return $data.order_status.order_modify = $event;
     })
-  }, _hoisted_126, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.order_status.order_modify]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_127, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", _hoisted_128, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  }, _hoisted_124, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.order_status.order_modify]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_125, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", _hoisted_126, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
     "class": "flaticon-cancel-12",
-    onClick: _cache[19] || (_cache[19] = function () {
+    onClick: _cache[18] || (_cache[18] = function () {
       return $options.formReset && $options.formReset.apply($options, arguments);
     })
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Discard")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
-    onClick: _cache[20] || (_cache[20] = function ($event) {
+    onClick: _cache[19] || (_cache[19] = function ($event) {
       return $options.orderModify($data.order_status.order_id);
     }),
     "class": "btn btn-primary"
-  }, "Update")])])])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_129, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_130, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal content"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_131, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_132, [_hoisted_133, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, "Update")])])])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_127, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_128, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Modal content"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_129, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_130, [_hoisted_131, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "close",
     "data-dismiss": "modal",
     "aria-label": "Close",
-    onClick: _cache[21] || (_cache[21] = function () {
+    onClick: _cache[20] || (_cache[20] = function () {
       return $options.formReset && $options.formReset.apply($options, arguments);
     })
-  }, _hoisted_135)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_136, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_137, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_138, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_139, [_hoisted_140, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  }, _hoisted_133)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_134, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_135, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_136, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_137, [_hoisted_138, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "class": "form-control",
-    "onUpdate:modelValue": _cache[22] || (_cache[22] = function ($event) {
+    "onUpdate:modelValue": _cache[21] || (_cache[21] = function ($event) {
       return $data.order_status.payment_status = $event;
     })
-  }, _hoisted_143, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.order_status.payment_status]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_144, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", _hoisted_145, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  }, _hoisted_141, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.order_status.payment_status]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_142, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", _hoisted_143, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
     "class": "flaticon-cancel-12",
-    onClick: _cache[23] || (_cache[23] = function () {
+    onClick: _cache[22] || (_cache[22] = function () {
       return $options.formReset && $options.formReset.apply($options, arguments);
     })
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Discard")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
-    onClick: _cache[24] || (_cache[24] = function ($event) {
+    onClick: _cache[23] || (_cache[23] = function ($event) {
       return $options.paymentModify($data.order_status.order_id);
     }),
     "class": "btn btn-primary"
@@ -21909,7 +21890,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#bar-progress[data-v-0b465e8d] {\r\n    width: 100%;\r\n    display: inline-flex;\r\n    justify-content: center;\n}\n#bar-progress .step[data-v-0b465e8d] {\r\n    display: inline-block;\n}\n#bar-progress .step .number-container[data-v-0b465e8d] {\r\n    display: inline-block;\r\n    border: solid 1px #000;\r\n    border-radius: 50%;\r\n    width: 24px;\r\n    height: 24px;\n}\n#bar-progress .step.step-active .number-container[data-v-0b465e8d] {\r\n    background-color: #000;\n}\n#bar-progress .step .number-container .number[data-v-0b465e8d] {\r\n    font-weight: 700;\r\n    font-size: .8em;\r\n    line-height: 1.85em;\r\n    display: block;\r\n    text-align: center;\n}\n#bar-progress .step.step-active .number-container .number[data-v-0b465e8d] {\r\n    color: white;\n}\n#bar-progress .step h5[data-v-0b465e8d] {\r\n    display: inline;\r\n    font-weight: 100;\r\n    font-size: .8em;\r\n    margin-left: 10px;\r\n    text-transform: uppercase;\n}\n#bar-progress .seperator[data-v-0b465e8d] {\r\n    display: block;\r\n    width: 20px;\r\n    height: 1px;\r\n    background-color: rgba(0, 0, 0, .2);\r\n    margin: auto 20px;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#bar-progress[data-v-0b465e8d] {\n    width: 100%;\n    display: inline-flex;\n    justify-content: center;\n}\n#bar-progress .step[data-v-0b465e8d] {\n    display: inline-block;\n}\n#bar-progress .step .number-container[data-v-0b465e8d] {\n    display: inline-block;\n    border: solid 1px #000;\n    border-radius: 50%;\n    width: 24px;\n    height: 24px;\n}\n#bar-progress .step.step-active .number-container[data-v-0b465e8d] {\n    background-color: #000;\n}\n#bar-progress .step .number-container .number[data-v-0b465e8d] {\n    font-weight: 700;\n    font-size: .8em;\n    line-height: 1.85em;\n    display: block;\n    text-align: center;\n}\n#bar-progress .step.step-active .number-container .number[data-v-0b465e8d] {\n    color: white;\n}\n#bar-progress .step h5[data-v-0b465e8d] {\n    display: inline;\n    font-weight: 100;\n    font-size: .8em;\n    margin-left: 10px;\n    text-transform: uppercase;\n}\n#bar-progress .seperator[data-v-0b465e8d] {\n    display: block;\n    width: 20px;\n    height: 1px;\n    background-color: rgba(0, 0, 0, .2);\n    margin: auto 20px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

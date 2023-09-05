@@ -20131,13 +20131,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   },
   methods: {
     getImageData: function getImageData() {
-      var _this = this;
+      var _this2 = this;
       axios.get(baseUrl + "media-manager/create?page=".concat(this.page, "&per_page=10&keyword=").concat(this.media_keyword)).then(function (result) {
-        if (_this.page == 1) {
-          _this.allImages = result.data;
+        if (_this2.page == 1) {
+          _this2.allImages = result.data;
         } else {
-          var _this$allImages$data;
-          (_this$allImages$data = _this.allImages.data).push.apply(_this$allImages$data, _toConsumableArray(result.data.data));
+          var _this2$allImages$data;
+          (_this2$allImages$data = _this2.allImages.data).push.apply(_this2$allImages$data, _toConsumableArray(result.data.data));
         }
         // this.allImages.data.map(itm => [...itm,{isSelected:true}])
       })["catch"](function (errors) {
@@ -20148,6 +20148,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       var _this3 = this;
       this.formReset();
       $("#openCldWgt").modal('show');
+      var _this = this;
       window.ml = cloudinary.openMediaLibrary({
         cloud_name: clName,
         api_key: clPreset,
@@ -20161,22 +20162,18 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         button_caption: "Select Image or Video"
       }, {
         insertHandler: function insertHandler(data) {
-          var _this2 = this;
           data.assets.forEach(function (asset) {
-            var _this2$allImages;
-            // console.log(typeof asset)
-            // this.filterdata.imgs.push(asset)
-            // [...this.filterdata.imgs,asset];
-            (_this2$allImages = _this2.allImages) === null || _this2$allImages === void 0 ? void 0 : _this2$allImages.data.unshift({
+            var _this$allImages;
+            _this.filterdata.imgs.push(asset);
+            (_this$allImages = _this.allImages) === null || _this$allImages === void 0 ? void 0 : _this$allImages.data.unshift({
               'file_link': asset.secure_url,
               'product_name': asset.public_id,
               'extension': asset.format
             });
           });
-          //  this.uploadImage()
+          _this.uploadImage();
         }
       });
-
       ml.on("upload", function (data) {
         if (data.event === "queues-end") {
           // log the first uploaded file's public_id:
@@ -20444,6 +20441,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       var _this2 = this;
       this.formReset();
       $("#openCldWgt").modal('show');
+      var _this = this;
       window.ml = cloudinary.openMediaLibrary({
         cloud_name: clName,
         api_key: clPreset,
@@ -20451,22 +20449,22 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         multiple: true,
         max_files: "4",
         insert_caption: "Insert",
-        inline_container: "#widget_container",
+        inline_container: "#widget_container_manager",
         default_transformations: [[]],
         button_class: "myBtn",
         button_caption: "Select Image or Video"
       }, {
         insertHandler: function insertHandler(data) {
-          var _this = this;
           data.assets.forEach(function (asset) {
+            var _this$allImages;
             _this.filterdata.imgs.push(asset);
-            _this.allImages.data.unshift({
+            (_this$allImages = _this.allImages) === null || _this$allImages === void 0 ? void 0 : _this$allImages.data.unshift({
               'file_link': asset.secure_url,
               'product_name': asset.public_id,
               'extension': asset.format
             });
           });
-          this.uploadImage();
+          _this.uploadImage();
         }
       });
       ml.on("upload", function (data) {
@@ -20574,7 +20572,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     },
     formReset: function formReset() {
       this.filterdata.imgs = [];
-      var myNode = document.getElementById("widget_container");
+      var myNode = document.getElementById("widget_container_manager");
       while (myNode.firstChild) {
         myNode.removeChild(myNode.lastChild);
       }
@@ -21457,7 +21455,7 @@ var _hoisted_25 = [_hoisted_24];
 var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "modal-body"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  id: "widget_container",
+  id: "widget_container_manager",
   style: {
     "height": "80vh"
   }
@@ -24981,7 +24979,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.controlss[data-v-1ab1ecf9]{\r\n    width: 80% !important;\n}\n.modal-dialog[data-v-1ab1ecf9] {\r\n  min-width: 92%;\r\n  height: 80%;\r\n  bottom: 0;\r\n  padding: 0;\r\n  top:40;\n}\n.component-card_selected[data-v-1ab1ecf9] {\r\n    box-shadow: 4px 6px 10px -3px #bfc9d4;\n}\n.modal-content[data-v-1ab1ecf9] {\r\n  height: auto;\r\n  min-width: 100%;\r\n  min-height: 100%;\r\n  border-radius: 0;\r\n  bottom: 0;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.controlss[data-v-1ab1ecf9]{\n    width: 80% !important;\n}\n.modal-dialog[data-v-1ab1ecf9] {\n  min-width: 92%;\n  height: 80%;\n  bottom: 0;\n  padding: 0;\n  top:40;\n}\n.component-card_selected[data-v-1ab1ecf9] {\n    box-shadow: 4px 6px 10px -3px #bfc9d4;\n}\n.modal-content[data-v-1ab1ecf9] {\n  height: auto;\n  min-width: 100%;\n  min-height: 100%;\n  border-radius: 0;\n  bottom: 0;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

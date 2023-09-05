@@ -53,7 +53,7 @@ class OrderController extends Controller
                 $query->select(\DB::raw('SUM(total_buying_price)'));
             }
         ])->orderBy('id','desc');
-      
+
         if($keyword != ''){
             $order = $order->where('id','like','%'.$keyword.'%')
             ->orWhereHas('user', function ($q) use ($keyword) {
@@ -73,7 +73,7 @@ class OrderController extends Controller
         if($status != ''){
             $order = $order->where('status',$status);
         }
-        
+
         if($from != '' && $to != ''){
             $order = $order->whereBetween('order_date',[$from,$to]);
         }
@@ -154,7 +154,6 @@ class OrderController extends Controller
             DB::beginTransaction();
             $order = Order::find($request->order_id);
             $order->order_position = $request->order_position;
-            $order->tracking_id = $request->tracking_id;
             $order->update();
 
             $delivery = Delivery::where('order_id',$request->order_id)->first();
@@ -176,7 +175,6 @@ class OrderController extends Controller
                     $delivery->delivery_state = AllStatic::$delivered;
                     $delivery->delivery_value = deliveryPosition(AllStatic::$delivered);
                 }
-                $delivery->tracking_id = $request->tracking_id;
                 $delivery->update();
             }
             DB::commit();

@@ -24,7 +24,7 @@ class RefundController extends Controller
     {
         try {
             // return response()->json(['status' => 'success', 'message' => 'Refund Updated Successful!']);
-            
+
             DB::table('refund_configure')
                 ->where('id',$request->id)
                 ->update([
@@ -50,8 +50,8 @@ class RefundController extends Controller
 
         if($from != '' && $from == 'approve-refund'){
             $details = $details->where('is_refunded',AllStatic::$active)->where('is_claim_refund',AllStatic::$active);
-        } 
-      
+        }
+
         if($from != '' && $from == 'reject-refund'){
             $details = $details->where('is_refunded',AllStatic::$failed)->where('is_claim_refund',AllStatic::$active);
         }
@@ -75,6 +75,7 @@ class RefundController extends Controller
             if($request->refund_status == 2) {
                 $order_detail->is_refunded = AllStatic::$failed;
                 $order_detail->refund_reject_reason = $request->reason;
+                $order_detail->refund_date = date("Y-m-d");
                 $order_detail->update();
                 return response()->json(['status' => 'success','message' => 'Refund Request Rejected!']);
             }
@@ -111,7 +112,7 @@ class RefundController extends Controller
 
                 # TO CONVERT AS OBJECT
                 $result = json_decode($result);
-		
+
                 # TRANSACTION INFO
                 $status = $result->status;
                 $bank_tran_id = $result->bank_tran_id;
@@ -128,7 +129,7 @@ class RefundController extends Controller
                      'refund_info' => json_encode($result),
                      'updated_at'    => date("Y-m-d H:i:s")
                  ]);
-            
+
                 $order_detail->is_refunded = AllStatic::$active;
                 $order_detail->refund_date = date("Y-m-d");
                 $order_detail->refund_info = json_encode($result);
@@ -137,10 +138,10 @@ class RefundController extends Controller
             } else {
                 return $this->errorMessage();
             }
-            
+
 
         } catch (\Throwable $th) {
-            return $th;
+            // return $th;
             return $this->errorMessage();
         }
     }

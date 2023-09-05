@@ -17,27 +17,27 @@ export default ({
         getCloudWidget(){
             this.formReset()
             $("#openCldWgt").modal('show');
+            const _this = this;
             window.ml = cloudinary.openMediaLibrary(
-                { 
+                {
                     cloud_name: clName,
                     api_key: clPreset,
                     remove_header: true,
                     multiple: true,
                     max_files: "4",
                     insert_caption: "Insert",
-                    inline_container: "#widget_container",
+                    inline_container: "#widget_container_manager",
                     default_transformations: [[]],
                     button_class: "myBtn",
                     button_caption: "Select Image or Video"
                 },
                 {
                     insertHandler: function (data) {
-                        
                         data.assets.forEach(asset => {
-                            this.filterdata.imgs.push(asset)
-                            this.allImages.data.unshift({'file_link':asset.secure_url,'product_name':asset.public_id ,'extension':asset.format})
+                            _this.filterdata.imgs.push(asset)
+                            _this.allImages?.data.unshift({'file_link':asset.secure_url,'product_name':asset.public_id ,'extension':asset.format})
                         })
-                        this.uploadImage()
+                        _this.uploadImage()
                     }
                 },
             );
@@ -58,7 +58,7 @@ export default ({
                 })
                 this.destroyImage();
             });
-          
+
         },
 
         uploadImage(){
@@ -89,7 +89,7 @@ export default ({
             })
             .catch(errors => {
                 console.log(errors);
-            });  
+            });
         },
         // generateSignature(timestamp, publicId, apiKey, apiSecret) {
         //     const message = `public_id=${publicId}&timestamp=${timestamp}${apiSecret}`;
@@ -123,7 +123,7 @@ export default ({
         //     }
         // },
         deleteMedia(item) {
-                
+
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -152,7 +152,7 @@ export default ({
         formReset(){
             this.filterdata.imgs = []
 
-            const myNode = document.getElementById("widget_container");
+            const myNode = document.getElementById("widget_container_manager");
                 while (myNode.firstChild) {
                     myNode.removeChild(myNode.lastChild);
                 }
@@ -182,7 +182,7 @@ export default ({
                 </div>
             </div>
         </div>
-        
+
         <div class="statbox widget">
             <div class="widget-header">
                 <div class="row" v-if="allImages.data && allImages.data.length > 0">
@@ -192,7 +192,7 @@ export default ({
                             <video :src="item.file_link" v-else autoplay muted controls></video>
                             <div class="card-body">
                                 <h6 class="card-title">{{ item.product_name }}</h6>
-                                <div class="d-flex justify-content-between"> 
+                                <div class="d-flex justify-content-between">
                                     <p class="card-text">{{ item.extension }}</p>
                                     <a href="#" type="button" @click.prevent="deleteMedia(item)" v-if="showPermission.includes('media-delete')">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-muted"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
@@ -216,7 +216,7 @@ export default ({
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div id="widget_container" style="height: 80vh;"></div>
+                    <div id="widget_container_manager" style="height: 80vh;"></div>
                 </div>
             </div>
         </div>

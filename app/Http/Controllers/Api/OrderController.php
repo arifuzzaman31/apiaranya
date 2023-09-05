@@ -216,6 +216,9 @@ class OrderController extends Controller
                                 'tracking_id' => $datas->ID,
                                 'updated_at'    => date("Y-m-d H:i:s")
                             ]);
+                            DB::table('deliveries')->where('order_id', $order->id)->update([
+                                'tracking_id' => $datas->ID
+                            ]);
                         }
                 }
                 // \Log::info($response);

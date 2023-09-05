@@ -25,7 +25,6 @@ export default {
             order_status: {
                 order_id: '',
                 order_position: '',
-                tracking_id: '',
                 date: '',
                 order_modify: '',
                 payment_status: ''
@@ -50,7 +49,7 @@ export default {
             })
             .catch(errors => {
                 console.log(errors);
-            });  
+            });
         },
 
         getSearch(){
@@ -142,7 +141,7 @@ export default {
             })
             .catch(errors => {
                 console.log(errors);
-            });  
+            });
         },
 
         orderStatus(data){
@@ -150,12 +149,11 @@ export default {
             .then(result => {
                 this.order_status.order_id = result.data.id
                 this.order_status.order_position = result.data.order_position
-                this.order_status.tracking_id = result.data.tracking_id
                 $("#orderStatusModal").modal('show');
             })
             .catch(errors => {
                 console.log(errors);
-            });  
+            });
         },
 
         refundOrder(id){
@@ -179,11 +177,11 @@ export default {
                         console.log(error)
                     })
                 }
-            }) 
+            })
         },
 
         orderDetailModal(order) {
-            
+
             axios.get(baseUrl+`orders-details/${order.id}`)
             .then(result => {
                 this.order_id = order.id
@@ -195,7 +193,7 @@ export default {
             })
             .catch(errors => {
                 console.log(errors);
-            });  
+            });
         },
 
         formReset(){
@@ -205,7 +203,7 @@ export default {
                 progress_detail : [],
                 status : true
             }
-            
+
         },
 
         filterClear(){
@@ -289,15 +287,15 @@ export default {
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
                             <h4>Order</h4>
-                        </div>                          
+                        </div>
                     </div>
-                </div>       
+                </div>
                 <div class="widget-content widget-content-area">
                     <div class="row mb-2">
                         <div class="col-md-3 col-lg-3 col-12">
                             <input id="search" @keyup="getSearch()" placeholder="Search By OrderID" type="text" class="form-control"  v-model="search" />
                         </div>
-                      
+
                         <div class="col-md-3 col-lg-3 col-12">
                             <select id="product-camp" class="form-control" @change="getOrder()" v-model="filterdata.order_state">
                                 <option selected="" value="">Choose...</option>
@@ -326,7 +324,7 @@ export default {
                                 <option value="3">Cancel</option>
                             </select>
                         </div>
-                        
+
                         <div class="col-md-2 col-lg-2 col-12">
                             <button type="button" class="btn btn-danger" @click="filterClear()">CLEAR</button>
                         </div>
@@ -397,14 +395,14 @@ export default {
                                                 </div>
                                             </div>
                                         </td>
-                                    </tr>					
+                                    </tr>
                                 </template>
                             </tbody>
                             <tbody v-else class="text-center mt-3">
                                 <tr>
                                     <td colspan="12">No Order Found</td>
                                 </tr>
-                                 
+
                             </tbody>
                         </table>
                             <Bootstrap4Pagination
@@ -438,7 +436,7 @@ export default {
                                 <div class="col-md-4 text-left">
                                     <h6 class="text-success">Billing Info</h6>
                                     <p v-if="(shipment_info.user_billing_info.first_name != '') || (shipment_info.user_billing_info.last_name != '')">Name: {{ shipment_info.user_billing_info.first_name }} {{ shipment_info.user_billing_info.last_name }}</p>
-                                 
+
                                     <p>Phone: {{ shipment_info.user_billing_info.phone }}</p>
                                     <p>Email: {{ shipment_info.user_billing_info.email }}</p>
                                     <p>Street Address: {{ shipment_info.user_billing_info.street_address }}</p>
@@ -493,12 +491,12 @@ export default {
                                     </tbody>
                                 </table>
                             </div>
-                
-                            
+
+
                                 <div class="modal-footer md-button">
                                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"  @click="formReset"></i>Discard</button>
                                 </div>
-                           
+
                         </div>
                     </div>
                 </div>
@@ -520,10 +518,6 @@ export default {
                             <form method="post">
                                 <div>
                                     <div class="form-group">
-                                        <label for="tracking">Tracking ID</label>
-                                        <input id="tracking" type="text" name="txt" v-model="order_status.tracking_id" placeholder="Tracking ID" class="form-control">
-                                    </div>
-                                    <div class="form-group">
                                         <label for="">Order Status</label>
                                         <select class="form-control" v-model="order_status.order_position">
                                             <option value="0">Pending</option>
@@ -540,7 +534,7 @@ export default {
                                         <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12" @click="formReset"></i>Discard</button>
                                         <button type="button" @click="updateStatus(order_status.order_id)" class="btn btn-primary">Update</button>
                                     </div>
-                                </div>  
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -574,7 +568,7 @@ export default {
                                         <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12" @click="formReset"></i>Discard</button>
                                         <button type="button" @click="orderModify(order_status.order_id)" class="btn btn-primary">Update</button>
                                     </div>
-                                </div>  
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -607,7 +601,7 @@ export default {
                                         <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12" @click="formReset"></i>Discard</button>
                                         <button type="button" @click="paymentModify(order_status.order_id)" class="btn btn-primary">Update</button>
                                     </div>
-                                </div>  
+                                </div>
                             </form>
                         </div>
                     </div>
