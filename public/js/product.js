@@ -22288,7 +22288,7 @@ var _hoisted_110 = {
 var _hoisted_111 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "weight"
-  }, "Weight", -1 /* HOISTED */);
+  }, "Weight (gm)", -1 /* HOISTED */);
 });
 var _hoisted_112 = {
   key: 0,
@@ -23142,7 +23142,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "number",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-control form-control-sm", $data.validation_error.hasOwnProperty('weight') ? 'is-invalid' : '']),
     id: "weight",
-    placeholder: "Example: 0.45 kg",
+    placeholder: "Example: 100gm",
     "onUpdate:modelValue": _cache[21] || (_cache[21] = function ($event) {
       return $data.form.weight = $event;
     })
@@ -23933,7 +23933,7 @@ var _hoisted_109 = {
 var _hoisted_110 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "weight"
-  }, "Weight", -1 /* HOISTED */);
+  }, "Weight (gm)", -1 /* HOISTED */);
 });
 var _hoisted_111 = {
   key: 0,
@@ -24666,7 +24666,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "number",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-control form-control-sm", $data.validation_error.hasOwnProperty('weight') ? 'is-invalid' : '']),
     id: "weight",
-    placeholder: "Example: 0.45 kg",
+    placeholder: "Example: 200gm",
     "onUpdate:modelValue": _cache[21] || (_cache[21] = function ($event) {
       return $data.form.weight = $event;
     })
