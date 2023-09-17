@@ -48,7 +48,7 @@ class OrderController extends Controller
             $order->coupon_discount        = $request->coupon_discount ? $request->coupon_discount : 0;
             $order->coupon                 = $request->coupon_code;
             $order->discount               = 0;
-            $order->total_fragile_amount   = $request->totalFragileCharge;
+            $order->total_fragile_amount   = $request->totalFragileChargeOrg;
             $order->charge_fragile_amount  = $request->totalFragileCharge;
             $order->payment_status         = 0;
             $order->delivery_type          = $request->shippingCost == 0 ? 1 : 0;
@@ -80,11 +80,11 @@ class OrderController extends Controller
                 $details->quantity            = $value['amount'];
                 $details->selling_price       = $value['priceOrg'];
                 $details->charge_selling_price = $value['price'];
-                $details->vat_rate            = $value['taxAmount'];
+                $details->vat_rate            = $product->vat->tax_percentage;
                 $details->charge_vat_rate     = $value['taxAmount'];
                 $details->vat_amount          = (float)($value['vatAmountParticularProductOrg']);
                 $details->charge_vat_amount   = (float)($value['vatAmountParticularProduct']);
-                $details->total_fragile_amount = $value['totalFragileCharge'];
+                $details->total_fragile_amount = $value['totalFragileChargeOrg'];
                 $details->charge_fragile_amount = $value['totalFragileCharge'];
                 $details->buying_price        = (float)$decrese->cpu;
                 $details->total_buying_price  = (float)($decrese->cpu * $value['amount']);

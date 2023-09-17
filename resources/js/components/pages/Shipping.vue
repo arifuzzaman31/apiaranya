@@ -46,7 +46,7 @@ export default {
             })
             .catch(errors => {
                 console.log(errors);
-            });  
+            });
         },
 
         getSearch(){
@@ -62,23 +62,23 @@ export default {
             })
             .catch(errors => {
                 console.log(errors);
-            });  
+            });
         },
 
         editShipping(item){
             this.formReset()
             this.charge.id = item.id
             this.charge.country_name = item.country_name+' code '+item.country_code
-            if(item.country_name == 'Bangladesh'){
-                let dt = JSON.parse(item.shipping_charge);
-                this.charge.inside_city_pathao = dt['inside_city']['pathao']
-                this.charge.inside_city_e_courier = dt['inside_city']['e_courier']
-                this.charge.outside_city_pathao = dt['outside_city']['pathao']
-                this.charge.outside_city_e_courier = dt['outside_city']['e_courier']
-            }else{
-                this.charge.amount = JSON.parse(item.shipping_charge)['amount']
-            }
-            
+            // if(item.country_name == 'Bangladesh'){
+            //     let dt = JSON.parse(item.shipping_charge);
+            //     this.charge.inside_city_pathao = dt['inside_city']['pathao']
+            //     this.charge.inside_city_e_courier = dt['inside_city']['e_courier']
+            //     this.charge.outside_city_pathao = dt['outside_city']['pathao']
+            //     this.charge.outside_city_e_courier = dt['outside_city']['e_courier']
+            // }else{
+            //     this.charge.amount = JSON.parse(item.shipping_charge)['amount']
+            // }
+
             this.charge.status = item.status
             $("#addShippingModal").modal('show');
         },
@@ -140,7 +140,7 @@ export default {
                 outside_city_e_courier: 0,
                 status: 1
             }
-            
+
         },
 
         filterClear(){
@@ -174,20 +174,20 @@ export default {
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
                             <h4>Shipping Charge</h4>
                             <button class="btn btn-primary mb-2 mr-3" v-if="showPermission.includes('add-shipping')" data-toggle="modal" data-target="#addShippingModal" @click="formReset">Add New</button>
-                        </div>                          
+                        </div>
                     </div>
-                </div>       
+                </div>
                 <div class="widget-content widget-content-area">
                     <div class="row mb-2">
                         <div class="col-md-3 col-lg-3 col-12">
                             <input id="search" @keyup="getSearch()" placeholder="Search By Country Name" type="text" class="form-control"  v-model="search" />
                         </div>
-                        
+
                         <div class="col-md-2 col-lg-2 col-12">
                             <button type="button" class="btn btn-danger" @click="filterClear()">CLEAR</button>
                         </div>
                     </div>
-           
+
                     <div class="table-responsive" style="min-height: 60vh;">
                         <table class="table table-bordered table-hover mb-4">
                             <thead>
@@ -195,7 +195,7 @@ export default {
                                     <th>ID</th>
                                     <th>Country</th>
                                     <th>Code</th>
-                                    <th>Amount</th>
+                                    <!-- <th>Amount</th> -->
                                     <th>status</th>
                                     <th v-if="showPermission.includes('delete-shipping') && showPermission.includes('edit-shipping')" class="text-center">Action</th>
                                 </tr>
@@ -206,26 +206,26 @@ export default {
                                         <td>{{ index+1 }}</td>
                                         <td>{{ item.country_name }}</td>
                                         <td>{{ item.country_code }}</td>
-                                        <td>
+                                        <!-- <td>
                                             <p v-if="item.country_name == 'Bangladesh'">
                                                 Inside City: Pathao={{ JSON.parse(item.shipping_charge)['inside_city']['pathao'] }}, E-courier=Pathao={{ JSON.parse(item.shipping_charge)['inside_city']['e_courier'] }}
                                                 <br>Outside City: Pathao={{ JSON.parse(item.shipping_charge)['outside_city']['pathao'] }}, E-courier={{ JSON.parse(item.shipping_charge)['outside_city']['e_courier'] }}
                                             </p>
                                             <p v-else> {{ JSON.parse(item.shipping_charge)['amount'] }}</p>
-                                        </td>
+                                        </td> -->
                                         <td>{{ item.status == 1 ? 'Active' : 'Deactive' }}</td>
                                         <td class="text-center" v-if="showPermission.includes('delete-shipping') && showPermission.includes('edit-shipping')">
                                             <button type="button" v-if="showPermission.includes('edit-shipping')" class="btn btn-sm btn-info" @click="editShipping(item)">Edit</button>
                                             <button type="button" v-if="showPermission.includes('delete-shipping')" class="btn btn-sm btn-danger ml-2" @click="deleteShipping(item.id)">Delete</button>
                                         </td>
-                                    </tr>					
+                                    </tr>
                                 </template>
                             </tbody>
                             <tbody v-else class="text-center mt-3">
                                 <tr>
                                     <td colspan="7">No Data Found</td>
                                 </tr>
-                                 
+
                             </tbody>
                         </table>
                         <Bootstrap4Pagination
@@ -235,7 +235,7 @@ export default {
                                 @pagination-change-page="getShippingData"
                             />
                     </div>
-                   
+
                 </div>
             </div>
         </div>
@@ -258,9 +258,9 @@ export default {
                                         <label for="">Select Country</label>
                                         <select class="form-control" v-model="charge.country_name" v-if="charge.id == ''">
                                             <option value="">Select Action</option>
-                                            
+
                                             <option :value="cunt.name+' code '+cunt.code" v-for="cunt in countries" :key="cunt.code">{{ cunt.name }} ({{ cunt.code }})</option>
-                                         
+
                                         </select>
                                         <input type="text" class="form-control" v-model="charge.country_name" v-else disabled />
                                         <span
@@ -270,7 +270,7 @@ export default {
                                         {{ validation_error.country_name[0] }}
                                     </span>
                                     </div>
-                                    <div class="form-group" v-if="charge.country_name !== 'Bangladesh code BD'">
+                                    <!-- <div class="form-group" v-if="charge.country_name !== 'Bangladesh code BD'">
                                         <label for="amount">Amount</label>
                                         <input type="number" v-model="charge.amount" class="form-control" id="amount" />
                                     </div>
@@ -295,19 +295,19 @@ export default {
                                             <label for="outside_citye_courier">Amount (E-Courier)</label>
                                             <input type="number" v-model="charge.outside_city_e_courier" class="form-control" id="outside_citye_courier" />
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="form-group">
                                         <select class="form-control" v-model="charge.status">
                                             <option value="1">Active</option>
                                             <option value="0">Deactive</option>
                                         </select>
-                            
+
                                     </div>
                                     <div class="modal-footer md-button">
                                         <button class="btn btn-default" data-dismiss="modal"><i class="flaticon-cancel-12" @click="formReset"></i>Discard</button>
                                         <button type="button" @click.prevent="addShppingCharge()" class="btn btn-primary">{{ charge.id == '' ? 'Add' : 'Update' }}</button>
                                     </div>
-                                </div>  
+                                </div>
                             </form>
                         </div>
                     </div>

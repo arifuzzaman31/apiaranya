@@ -78,7 +78,7 @@ class PagesController extends Controller
                             $hp->back_url_six = $request->categoryname;
                         }
                     break;
-                
+
                 default:
                     # code...
                     return false;
@@ -125,7 +125,7 @@ class PagesController extends Controller
             'vendor'    => DB::table('vendors')->select('id', 'vendor_name', 'status')->get()->toArray(),
             'tax'    => DB::table('vat_taxes')->select('id', 'tax_percentage as tax_name')->get()->toArray(),
         ];
-        
+
         $export = new AttributeExport($plate);
         return Excel::download($export, 'attribute-list.xlsx');
 
@@ -147,25 +147,27 @@ class PagesController extends Controller
         $request->validate([
             'country_name'  => 'required|unique:shipping_configs,country_name,'.$request->id
         ]);
-        
+
         $cntry = explode("code",$request->country_name);
 
-        if(trim($cntry[0]) == 'Bangladesh'){
-            $data = [
-                'inside_city'   => [
-                    'pathao'    => $request->inside_city_pathao,
-                    'e_courier' => $request->inside_city_e_courier
-                ],
-                'outside_city'  => [
-                    'pathao'    => $request->outside_city_pathao,
-                    'e_courier' => $request->outside_city_e_courier
-                ],
-            ];
-        } else {
-            $data = ['amount' => $request->amount];
-        }
-        
-        
+         $data = ['amount' => 0];
+
+        // if(trim($cntry[0]) == 'Bangladesh'){
+        //     $data = [
+        //         'inside_city'   => [
+        //             'pathao'    => $request->inside_city_pathao,
+        //             'e_courier' => $request->inside_city_e_courier
+        //         ],
+        //         'outside_city'  => [
+        //             'pathao'    => $request->outside_city_pathao,
+        //             'e_courier' => $request->outside_city_e_courier
+        //         ],
+        //     ];
+        // } else {
+        //     $data = ['amount' => $request->amount];
+        // }
+
+
         try {
             ShippingConfig::updateOrCreate([
                 'id'    =>  $request->id
@@ -200,7 +202,7 @@ class PagesController extends Controller
         if($keyword != ''){
             $shipp = $shipp->where('country_name','like','%'.$keyword.'%');
         }
-        
+
         return $shipp->paginate($dataQty);
     }
 
