@@ -35,7 +35,7 @@ class OrderResource extends JsonResource
             'charge_discount'   => $this->charge_discount,
             'coupon_discount'   => $this->coupon_discount,
             'is_claim_refund'   => $this->is_claim_refund,
-            'refund_claim_date' => date('j M Y', strtotime($this->refund_claim_date)),
+            'refund_claim_date' => $this->refund_claim_date != null ? date('j M Y', strtotime($this->refund_claim_date)) : '',
             'payment_status'    => $this->payment_status,
             'order_position'    => $this->order_position,
             'payment_status_text' => paymentStatusText($this->payment_status),
