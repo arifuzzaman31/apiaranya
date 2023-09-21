@@ -84,8 +84,8 @@ class OrderController extends Controller
                 $details->charge_vat_rate     = $value['taxAmount'];
                 $details->vat_amount          = (float)($value['vatAmountParticularProductOrg']);
                 $details->charge_vat_amount   = (float)($value['vatAmountParticularProduct']);
-                $details->total_fragile_amount = $value['totalFragileChargeOrg'];
-                $details->charge_fragile_amount = $value['totalFragileCharge'];
+                $details->total_fragile_amount = (float) $value['totalFragileChargeOrg'];
+                $details->charge_fragile_amount = (float) $value['totalFragileCharge'];
                 $details->buying_price        = (float)$decrese->cpu;
                 $details->total_buying_price  = (float)($decrese->cpu * $value['amount']);
                 $details->total_selling_price = (float)$value['totalPriceOrg'];
