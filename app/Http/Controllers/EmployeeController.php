@@ -41,13 +41,14 @@ class EmployeeController extends Controller
             $emp->password = Hash::make($request->password);
             $emp->role_id = $request->role;
             $emp->save();
+            \Cache::forget('admin_permission');
             return $this->successMessage('Employee Created Successfully!');
         } catch (\Throwable $th) {
             return $th;
             return $this->errorMessage();
         }
     }
-  
+
     public function update(Request $request,$id)
     {
         $this->validate($request,[
@@ -62,6 +63,7 @@ class EmployeeController extends Controller
             $emp->email = $request->email;
             $emp->role_id = $request->role;
             $emp->update();
+            \Cache::forget('admin_permission');
             return $this->successMessage('Employee Updated Successfully!');
         } catch (\Throwable $th) {
             return $th;
