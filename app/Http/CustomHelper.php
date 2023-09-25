@@ -35,7 +35,7 @@ use Illuminate\Support\Facades\DB;
                 # code...
                 $text = "Delivered";
                 break;
-            
+
             default:
                 $text = "Pending";
                 break;
@@ -49,10 +49,10 @@ use Illuminate\Support\Facades\DB;
     }
 
     function getPermission(){
-        return Cache::rememberForever('admin_permission', function () {
+        // return Cache::remember('admin_permission',60, function () {
             // $value = auth()->guard('admin')->user()->role->role_permission->pluck('slug');
              return auth()->guard('admin')->user()->role->role_permission->pluck('slug') ?? [] ;
-        });
+        // });
     }
 
     function paymentMethodType($status){
@@ -75,7 +75,7 @@ use Illuminate\Support\Facades\DB;
                 # code...
                 $text = "BOD";
                 break;
-            
+
             default:
                 $text = "COD";
                 break;
@@ -94,7 +94,7 @@ use Illuminate\Support\Facades\DB;
                 # code...
                 $text = "On-Hold";
                 break;
-            
+
             default:
                 $text = "Active";
                 break;
@@ -117,7 +117,7 @@ use Illuminate\Support\Facades\DB;
                 # code...
                 $text = "Cancel";
                 break;
-            
+
             default:
                 $text = "Unpaid";
                 break;
@@ -131,7 +131,7 @@ use Illuminate\Support\Facades\DB;
 
     function rangDivider()
     {
-        
+
     }
 
 ?>

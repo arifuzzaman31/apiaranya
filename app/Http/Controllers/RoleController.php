@@ -60,10 +60,11 @@ class RoleController extends Controller
             $role->role_name = $request->role_name;
             $role->save();
 
-            if(($request->role_name != '') && !empty($request->role_permissions)){  
+            if(($request->role_name != '') && !empty($request->role_permissions)){
                 $role->role_permission()->attach($request->role_permissions);
             }
             Cache::forget('admin_permission');
+            Cache::flush();
             return $this->successMessage('Role Added Successfully!');
         } catch (\Throwable $th) {
             return $th;
@@ -108,10 +109,11 @@ class RoleController extends Controller
             $role->role_name = $request->role_name;
             $role->update();
 
-            if(($request->role_name != '') && !empty($request->role_permissions)){  
+            if(($request->role_name != '') && !empty($request->role_permissions)){
                 $role->role_permission()->sync($request->role_permissions);
             }
             Cache::forget('admin_permission');
+            Cache::flush();
             return $this->successMessage('Role Updated Successfully!');
         } catch (\Throwable $th) {
             return $th;
@@ -131,10 +133,11 @@ class RoleController extends Controller
             $user = Admin::where('role_id',$role->id)->first();
             if($user){
                 return response()->json(['status' => 'error','message' => 'Employee Has this Role!']);
-            }              
+            }
             $role->role_permission()->detach();
             $role->delete();
             Cache::forget('admin_permission');
+            Cache::flush();
             return $this->successMessage('Role Deleted Successfully!');
         } catch (\Throwable $th) {
             return $this->errorMessage();

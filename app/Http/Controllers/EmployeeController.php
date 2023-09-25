@@ -6,6 +6,7 @@ use App\Models\Admin;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Cache;
 
 class EmployeeController extends Controller
 {
@@ -41,7 +42,8 @@ class EmployeeController extends Controller
             $emp->password = Hash::make($request->password);
             $emp->role_id = $request->role;
             $emp->save();
-            \Cache::forget('admin_permission');
+            Cache::forget('admin_permission');
+            Cache::flush();
             return $this->successMessage('Employee Created Successfully!');
         } catch (\Throwable $th) {
             return $th;
@@ -63,7 +65,8 @@ class EmployeeController extends Controller
             $emp->email = $request->email;
             $emp->role_id = $request->role;
             $emp->update();
-            \Cache::forget('admin_permission');
+            Cache::forget('admin_permission');
+            Cache::flush();
             return $this->successMessage('Employee Updated Successfully!');
         } catch (\Throwable $th) {
             return $th;
@@ -77,6 +80,8 @@ class EmployeeController extends Controller
         try {
             $emp = Admin::find($id);
             $emp->delete();
+            Cache::forget('admin_permission');
+            Cache::flush();
             return $this->successMessage('Employee Deleted Successfully!');
         } catch (\Throwable $th) {
             return $this->errorMessage();

@@ -341,7 +341,7 @@ export default {
                                     <th>P-Type</th>
                                     <th>Payment</th>
                                     <th>PaymentBy</th>
-                                    <th>Refund Claim Date</th>
+                                    <!-- <th>Refund Claim Date</th> -->
                                     <th>Order Status</th>
                                     <th class="text-center">Progress</th>
                                     <th class="text-center">Action</th>
@@ -366,7 +366,7 @@ export default {
                                             <span v-if="order.payment_status == 3" class="badge badge-danger">Cancel</span>
                                         </td>
                                         <td>{{ order.payment_method_name }}</td>
-                                        <td>{{ order.refund_claim_date }}</td>
+                                        <!-- <td>{{ order.refund_claim_date }}</td> -->
                                         <td>
                                             <span v-if="order.status == 0" class="badge badge-danger">Cancel</span>
                                             <span v-if="order.status == 1" class="badge badge-primary">Active</span>

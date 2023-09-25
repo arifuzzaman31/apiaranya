@@ -32,7 +32,7 @@ export default {
                 case 'three':
                     this.form.image_three = uri
                     break;
-            
+
                 default:
                     break;
             }
@@ -43,7 +43,7 @@ export default {
         openCatMediaModal(serial){
             this.form.imageuri = ''
             this.form.imagenumb = serial
-            $("#catMediaModal").modal('show');
+            $("#pageMediaModal").modal('show');
         },
 
         selectImage(item){
@@ -59,7 +59,7 @@ export default {
                 }
             })
         },
-        
+
 
         getCatData(){
             axios.get(baseUrl+'category/'+this.categorydata.id).then(response => {
@@ -83,7 +83,7 @@ export default {
 <template>
 <div id="tabsBordered" class="col-lg-12 col-12 layout-spacing">
     <div class="statbox widget box box-shadow">
-            <div class="widget-header"> 
+            <div class="widget-header">
                 <div class="d-flex flex-column justify-content-center align-items-center" >
                     <div class="icon-container mb-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Image Should be (1440 x 900) px, Ratio (16:9)</span>
@@ -112,7 +112,7 @@ export default {
                     </div>
                     <input type="submit" class="btn btn-info btn-block mb-4 mr-2" style="width: 50%;" @click="openCatMediaModal('three')" value="File Upload" />
                     <v-lazy-image class="mr-3" width="600" :src="form.image_three" alt="cat image three" :src-placeholder="url+'demo.png'" />
-                </div> 
+                </div>
             </div>
         </div>
         <button type="submit" @click="updateImage()" class="btn btn-success my-2">Update</button>
@@ -120,12 +120,12 @@ export default {
 
     <media-helper :setImg="selectImage">
         <template v-slot:viewimage>
-            <div class="col-md-12 d-flex justify-content-center my-2"> 
+            <div class="col-md-12 d-flex justify-content-center my-2">
                 <v-lazy-image :src="form.imageuri" class="card-img-top" :alt="form.imageuri" :src-placeholder="url+'demo.png'" />
             </div>
         </template>
     </media-helper>
-  
+
 </template>
 <style scoped>
 .controlss{

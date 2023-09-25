@@ -66,7 +66,7 @@ export default {
                         this.updateFormdata.imageuri = uri
                         this.updateFormdata.imagenumb = 'five'
                         break;
-                
+
                     default:
                         break;
                 }
@@ -75,7 +75,7 @@ export default {
             updateImage(){
                 axios.post(baseUrl+'update-home-image',this.updateFormdata).then(response => {
                     if(response.data.status == 'success'){
-                        // this.getHomeData()
+                        this.getHomeData()
                         this.clearFilter()
                         this.successMessage(response.data)
                     }
@@ -96,6 +96,10 @@ export default {
                     this.form.back_url_five = response.data.back_url_five
                     this.form.back_url_six = response.data.back_url_six
                 })
+            },
+
+            setStateNumb(numb){
+                this.updateFormdata.imagenumb = numb
             },
 
             getCategory() {
@@ -163,11 +167,11 @@ export default {
                 <div class="row mb-4 mt-3">
                     <div class="col-sm-3 col-12">
                         <div class="nav flex-column nav-pills mb-sm-0 mb-3 text-center mx-auto" id="v-border-pills-tab" role="tablist" aria-orientation="vertical">
-                            <a class="nav-link active" id="v-border-pills-home-tab" data-toggle="pill" href="#v-border-pills-home" role="tab" aria-controls="v-border-pills-home" aria-selected="false">Video</a>
-                            <a class="nav-link text-center" id="v-border-pills-profile-tab" data-toggle="pill" href="#v-border-pills-profile" role="tab" aria-controls="v-border-pills-profile" aria-selected="false">Image 1</a>
-                            <a class="nav-link text-center" id="v-border-pills-messages-tab" data-toggle="pill" href="#v-border-pills-messages" role="tab" aria-controls="v-border-pills-messages" aria-selected="false">Image 2</a>
-                            <a class="nav-link text-center" id="v-border-pills-settings-tab" data-toggle="pill" href="#v-border-pills-settings" role="tab" aria-controls="v-border-pills-settings" aria-selected="true">Image 3</a>
-                            <a class="nav-link text-center" id="v-border-pills-image5-tab" data-toggle="pill" href="#v-border-pills-image5" role="tab" aria-controls="v-border-pills-image5" aria-selected="true">Image 4</a>
+                            <a @click="setStateNumb('one')" class="nav-link active" id="v-border-pills-home-tab" data-toggle="pill" href="#v-border-pills-home" role="tab" aria-controls="v-border-pills-home" aria-selected="false">Video</a>
+                            <a @click="setStateNumb('two')" class="nav-link text-center" id="v-border-pills-profile-tab" data-toggle="pill" href="#v-border-pills-profile" role="tab" aria-controls="v-border-pills-profile" aria-selected="false">Image 1</a>
+                            <a @click="setStateNumb('three')" class="nav-link text-center" id="v-border-pills-messages-tab" data-toggle="pill" href="#v-border-pills-messages" role="tab" aria-controls="v-border-pills-messages" aria-selected="false">Image 2</a>
+                            <a @click="setStateNumb('four')" class="nav-link text-center" id="v-border-pills-settings-tab" data-toggle="pill" href="#v-border-pills-settings" role="tab" aria-controls="v-border-pills-settings" aria-selected="true">Image 3</a>
+                            <a @click="setStateNumb('five')" class="nav-link text-center" id="v-border-pills-image5-tab" data-toggle="pill" href="#v-border-pills-image5" role="tab" aria-controls="v-border-pills-image5" aria-selected="true">Image 4</a>
                         </div>
                     </div>
 
@@ -179,8 +183,8 @@ export default {
                                 </div>
                                 <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2 controlss" @click="openPageMediaModal('one')" value="File Upload" />
                                 <!-- <img class="mr-3" :src="form.image_one" alt="Home image one" />  -->
-                                <video :src="form.image_one" autoplay muted controls class="controlss"></video>  
-                                                                 
+                                <video :src="form.image_one" autoplay muted controls class="controlss"></video>
+
                             </div>
 
                             <div class="tab-pane fade" id="v-border-pills-profile" role="tabpanel" aria-labelledby="v-border-pills-profile-tab">
@@ -189,7 +193,7 @@ export default {
                                 </div>
                                 <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2 controlss" @click="openPageMediaModal('two')" value="File Upload" />
                                 <v-lazy-image class="mr-3 controlss" :src="form.image_two" alt="Home image two" :src-placeholder="url+'demo.png'" />
-                                <p>Back Url: domain/{{ form.back_url_two }}</p>   
+                                <p>Back Url: domain/{{ form.back_url_two }}</p>
                             </div>
 
                             <div class="tab-pane fade" id="v-border-pills-messages" role="tabpanel" aria-labelledby="v-border-pills-messages-tab">
@@ -206,7 +210,7 @@ export default {
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Image Should be (720 x 828) px, Ratio (16:24)</span>
                                 </div>
                                 <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2 controlss"  @click="openPageMediaModal('four')" value="File Upload" />
-                          
+
                                 <v-lazy-image width="600" class="mr-3" :src="form.image_four" alt="Home image four" :src-placeholder="url+'demo.png'" />
                                 <p>Back Url: domain/{{ form.back_url_four }}</p>
                             </div>
@@ -216,14 +220,14 @@ export default {
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Image Should be (1440 x 700) px, Ratio (16:9)</span>
                                 </div>
                                 <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2 controlss" @click="openPageMediaModal('five')" value="File Upload" />
-                              
+
                                 <v-lazy-image width="600" class="mr-3" :src="form.image_five" alt="Home image five" :src-placeholder="url+'demo.png'" />
                                 <p>Back Url: domain/{{ form.back_url_five }}</p>
                             </div>
 
                         </div>
                     </div>
-                    
+
                     <div class="col-sm-3 col-12">
                         <p class="text-success" style="font-size:17px">Create Back Link</p>
                         <div class="my-2">
@@ -239,7 +243,7 @@ export default {
                             </select>
                         </div>
                         <button type="submit" @click="updateImage()" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block my-2">Update</button>
-                       
+
                     </div>
                 </div>
             </div>

@@ -26,7 +26,7 @@ class PagesController extends Controller
 
     public function homeImageUpdate(Request $request)
     {
-        // return response()->json($request->all());
+        //return response()->json($request->all());
         try {
             $hp = Page::where('page_name','home')->first();
             switch ($request->imagenumb) {
