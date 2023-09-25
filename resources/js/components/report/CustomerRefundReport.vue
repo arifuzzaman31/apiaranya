@@ -16,6 +16,7 @@ export default {
                 from: '',
                 to: '',
             },
+            search: '',
             limit: 3,
             keepLength: false,
             url : baseUrl
@@ -24,7 +25,7 @@ export default {
 
     methods: {
         getCustomerRefundReport(page = 1){
-            axios.get(baseUrl+`get-customer-refund-report?page=${page}&per_page=14&from=${this.filterdata.from}&to=${this.filterdata.to}`)
+            axios.get(baseUrl+`get-customer-refund-report?page=${page}&per_page=14&keyword=${this.search}&from=${this.filterdata.from}&to=${this.filterdata.to}`)
             .then(result => {
                 this.refundData = result.data;
             })
@@ -37,6 +38,7 @@ export default {
                 from: '',
                 to: ''
             }
+            this.search = ''
             this.getCustomerRefundReport()
         },
         getSearch(){
@@ -63,6 +65,9 @@ export default {
             </div>
             <div class="widget-content widget-content-area">
                 <div class="row mb-2">
+                    <div class="col-md-3 col-lg-3 col-12">
+                        <input type="text" v-model="search" @keyup="getSearch()" class="form-control form-control-sm" placeholder="Customer Name,Phone">
+                    </div>
                     <div class="col-md-2 col-lg-3 col-12">
                         <input type="text" onfocus="(this.type='date')" v-model="filterdata.from" class="form-control form-control-sm" placeholder="Start Date">
                     </div>

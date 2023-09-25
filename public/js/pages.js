@@ -20349,6 +20349,9 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     setStateNumb: function setStateNumb(numb) {
+      this.updateFormdata.category = '';
+      this.updateFormdata.categoryname = '';
+      this.updateFormdata.subcategory = '';
       this.updateFormdata.imagenumb = numb;
     },
     getCategory: function getCategory() {
@@ -21271,7 +21274,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     src: $data.form.image_two,
     alt: "Home image two",
     "src-placeholder": $data.url + 'demo.png'
-  }, null, 8 /* PROPS */, ["src", "src-placeholder"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Back Url: domain/" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.back_url_two), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, $options.showPermission.includes('page-update') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("input", {
+  }, null, 8 /* PROPS */, ["src", "src-placeholder"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Back Url: domain/" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.back_url_two.split('?')[0]), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, $options.showPermission.includes('page-update') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("input", {
     key: 0,
     type: "submit",
     "class": "btn btn-info btn-block mb-4 mr-2 controlss",
@@ -21285,7 +21288,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     src: $data.form.image_three,
     alt: "Home image three",
     "src-placeholder": $data.url + 'demo.png'
-  }, null, 8 /* PROPS */, ["src", "src-placeholder"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Back Url: domain/" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.back_url_three), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [_hoisted_18, $options.showPermission.includes('page-update') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("input", {
+  }, null, 8 /* PROPS */, ["src", "src-placeholder"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Back Url: domain/" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.back_url_three.split('?')[0]), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [_hoisted_18, $options.showPermission.includes('page-update') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("input", {
     key: 0,
     type: "submit",
     "class": "btn btn-info btn-block mb-4 mr-2 controlss",
@@ -21299,7 +21302,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     src: $data.form.image_four,
     alt: "Home image four",
     "src-placeholder": $data.url + 'demo.png'
-  }, null, 8 /* PROPS */, ["src", "src-placeholder"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Back Url: domain/" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.back_url_four), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, $options.showPermission.includes('page-update') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("input", {
+  }, null, 8 /* PROPS */, ["src", "src-placeholder"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Back Url: domain/" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.back_url_four.split('?')[0]), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, $options.showPermission.includes('page-update') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("input", {
     key: 0,
     type: "submit",
     "class": "btn btn-info btn-block mb-4 mr-2 controlss",
@@ -21313,7 +21316,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     src: $data.form.image_five,
     alt: "Home image five",
     "src-placeholder": $data.url + 'demo.png'
-  }, null, 8 /* PROPS */, ["src", "src-placeholder"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Back Url: domain/" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.back_url_five), 1 /* TEXT */)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  }, null, 8 /* PROPS */, ["src", "src-placeholder"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Back Url: domain/" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.form.back_url_five.split('?')[0]), 1 /* TEXT */)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     id: "product-category",
     "class": "form-control",
     onChange: _cache[10] || (_cache[10] = function ($event) {
@@ -21335,7 +21338,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, [_hoisted_26, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.allsubcategories, function (value, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
-      value: value.slug,
+      value: value.slug + '?cat=' + $data.updateFormdata.category.id + '&sub_cat=' + value.id,
       key: index
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(value.category_name), 9 /* TEXT, PROPS */, _hoisted_27);
   }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.updateFormdata.subcategory]])]), $options.showPermission.includes('page-update') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {

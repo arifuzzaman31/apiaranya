@@ -123,7 +123,7 @@ class Product extends Model
 
     public function campaign()
     {
-        return $this->belongsToMany(Campaign::class,'campaign_products')->withTimestamps();
+        return $this->belongsToMany(Campaign::class);
     }
 
     public function order_details()

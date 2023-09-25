@@ -241,6 +241,7 @@ class ReportController extends Controller
             if($keyword != ''){
                 $order = $order->whereHas('user', function ($q) use ($keyword) {
                     $q->where('name','like','%'.$keyword.'%');
+                    $q->orWhere('phone','like','%'.$keyword.'%');
                 });
             }
 
@@ -263,6 +264,7 @@ class ReportController extends Controller
     {
         $from   = $request->get('from');
         $to   = $request->get('to');
+        $keyword   = $request->get('keyword');
         if($request->excel == 'yes'){
             return \Excel::download(new RefundReportExport($from,$to),'customer_refund_report.xlsx');
         }
@@ -274,6 +276,12 @@ class ReportController extends Controller
             if($from != '' && $to != ''){
                 $order = $order->whereBetween('refund_claim_date',[$from,$to]);
             }
+            if($keyword != ''){
+                $order = $order->whereHas('user', function ($q) use ($keyword) {
+                    $q->where('name','like','%'.$keyword.'%');
+                    $q->orWhere('phone','like','%'.$keyword.'%');
+                });
+            }
             $order = $order->paginate($dataQty);
         return response()->json($order);
     }
@@ -282,6 +290,7 @@ class ReportController extends Controller
     {
         $from   = $request->get('from');
         $to   = $request->get('to');
+        $keyword   = $request->get('keyword');
         if($request->excel == 'yes'){
             return \Excel::download(new LifetimeReportExport($from,$to),'customer_lifetime_value_report.xlsx');
         }
@@ -306,6 +315,10 @@ class ReportController extends Controller
         ])->having('count_order', '>', 0);
         if($from != '' && $to != ''){
             $user = $user->whereBetween('created_at',[$from,$to]);
+        }
+        if($keyword != ''){
+            $user->where('name','like','%'.$keyword.'%')
+                ->orWhere('phone','like','%'.$keyword.'%');
         }
 
         $user = $user->paginate($dataQty);

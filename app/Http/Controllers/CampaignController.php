@@ -62,7 +62,7 @@ class CampaignController extends Controller
         $campaign = Campaign::orderBy('id','desc');
         if($status != ''){
             $campaign = $campaign->where('status',AllStatic::$active);
-        } 
+        }
         if($noPagination != ''){
             $campaign = $campaign->get();
         } else {
@@ -89,42 +89,42 @@ class CampaignController extends Controller
             $camp->campaign_expire_date = $request->expire_at;
             $camp->status = AllStatic::$active;
             $camp->save();
-            
+
             return response()->json(['status' => 'success', 'message' => $this->fieldname.' Created Successfully!']);
         }catch (\Throwable $th) {
-            
+
             return response()->json(['status' => 'error', 'message' => $th]);
         }
     }
 
-    
+
     public function storeAddtoCamp(Request $request)
     {
         $request->validate([
             'campaign' => 'required',
-            'discount_type' => 'required',
-            'discount_amount' => 'required',
+            // 'discount_type' => 'required',
+            // 'discount_amount' => 'required',
             'product' => 'required|array|min:1'
         ]);
 
         try{
             DB::beginTransaction();
 
-            if(!empty($request->product)){
-                foreach($request->product as $value){
-                    $disc = new Discount();
-                    $disc->product_id  =  $value;
-                    $disc->discount_amount  =  $request->discount_amount;
-                    $disc->discount_type  =   $request->discount_type;
-                    $disc->max_amount  =   $request->max_amount;
-                    $disc->status = AllStatic::$active;
-                    $disc->save();
-                }
-            }
+            // if(!empty($request->product)){
+                // foreach($request->product as $value){
+                //     $disc = new Discount();
+                //     $disc->product_id  =  $value;
+                //     $disc->discount_amount  =  $request->discount_amount;
+                //     $disc->discount_type  =   $request->discount_type;
+                //     $disc->max_amount  =   $request->max_amount;
+                //     $disc->status = AllStatic::$active;
+                //     $disc->save();
+                // }
+            // }
 
             $camp = Campaign::find($request->campaign);
-            $camp->product()->sync($request->product);
-            $camp->save();
+            $camp->product()->syncWithoutDetaching($request->product);
+            // $camp->save();
 
             DB::commit();
             return response()->json(['status' => 'success', 'message' => 'Product Has Added to Campaign!']);

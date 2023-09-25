@@ -99,6 +99,9 @@ export default {
             },
 
             setStateNumb(numb){
+                this.updateFormdata.category = ''
+                this.updateFormdata.categoryname = ''
+                this.updateFormdata.subcategory = ''
                 this.updateFormdata.imagenumb = numb
             },
 
@@ -193,7 +196,7 @@ export default {
                                 </div>
                                 <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2 controlss" @click="openPageMediaModal('two')" value="File Upload" />
                                 <v-lazy-image class="mr-3 controlss" :src="form.image_two" alt="Home image two" :src-placeholder="url+'demo.png'" />
-                                <p>Back Url: domain/{{ form.back_url_two }}</p>
+                                <p>Back Url: domain/{{ form.back_url_two.split('?')[0] }}</p>
                             </div>
 
                             <div class="tab-pane fade" id="v-border-pills-messages" role="tabpanel" aria-labelledby="v-border-pills-messages-tab">
@@ -202,7 +205,7 @@ export default {
                                 </div>
                                 <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2 controlss"  @click="openPageMediaModal('three')" value="File Upload" />
                                 <v-lazy-image width="600" class="mr-3 controlss" :src="form.image_three" alt="Home image three" :src-placeholder="url+'demo.png'" />
-                                <p>Back Url: domain/{{ form.back_url_three }}</p>
+                                <p>Back Url: domain/{{ form.back_url_three.split('?')[0] }}</p>
                             </div>
 
                             <div class="tab-pane fade" id="v-border-pills-settings" role="tabpanel" aria-labelledby="v-border-pills-settings-tab">
@@ -212,7 +215,7 @@ export default {
                                 <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2 controlss"  @click="openPageMediaModal('four')" value="File Upload" />
 
                                 <v-lazy-image width="600" class="mr-3" :src="form.image_four" alt="Home image four" :src-placeholder="url+'demo.png'" />
-                                <p>Back Url: domain/{{ form.back_url_four }}</p>
+                                <p>Back Url: domain/{{ form.back_url_four.split('?')[0] }}</p>
                             </div>
 
                             <div class="tab-pane fade" id="v-border-pills-image5" role="tabpanel" aria-labelledby="v-border-pills-image5-tab">
@@ -222,7 +225,7 @@ export default {
                                 <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2 controlss" @click="openPageMediaModal('five')" value="File Upload" />
 
                                 <v-lazy-image width="600" class="mr-3" :src="form.image_five" alt="Home image five" :src-placeholder="url+'demo.png'" />
-                                <p>Back Url: domain/{{ form.back_url_five }}</p>
+                                <p>Back Url: domain/{{ form.back_url_five.split('?')[0] }}</p>
                             </div>
 
                         </div>
@@ -239,7 +242,7 @@ export default {
                         <div>
                             <select id="product-updateFormdata" class="form-control" v-model="updateFormdata.subcategory">
                                 <option value="">Choose...</option>
-                                <option v-for="(value,index) in allsubcategories" :value="value.slug" :key="index">{{ value.category_name }}</option>
+                                <option v-for="(value,index) in allsubcategories" :value="value.slug+'?cat='+updateFormdata.category.id+'&sub_cat='+value.id" :key="index">{{ value.category_name }}</option>
                             </select>
                         </div>
                         <button type="submit" @click="updateImage()" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block my-2">Update</button>

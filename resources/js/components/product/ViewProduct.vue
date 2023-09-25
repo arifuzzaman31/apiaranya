@@ -151,6 +151,7 @@ export default {
                 alert('Please, Select Product');
                 return ;
             }
+            this.validation_error = {}
             $("#addToCampModal").modal('show')
         },
 
@@ -176,6 +177,10 @@ export default {
                 this.successMessage(response.data)
             }).catch(error => {
                 console.log(error)
+                if(error.response.status == '422'){
+                    this.validation_error = error.response.data.errors;
+                    // this.validationError()
+                }
             })
         },
 
@@ -406,7 +411,7 @@ export default {
                                 </span>
                             </div>
 
-                                <div class="form-row">
+                               <!--  <div class="form-row">
                                     <label for="discount_amount">Discount Amount</label>
                                     <input type="number" v-model="addTocamp.discount_amount" class="form-control" id="discount_amount" placeholder="Discount Amount" >
                                     <span
@@ -433,7 +438,7 @@ export default {
                                 <div class="form-row mt-1" v-if="addTocamp.discount_type == 'percentage'">
                                     <label for="max_amount">Maximum</label>
                                     <input type="number" class="form-control" id="max_amount" placeholder="Maximum amount" v-model="addTocamp.max_amount" >
-                                </div>
+                                </div> -->
 
                             <div class="modal-footer md-button">
                                 <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
