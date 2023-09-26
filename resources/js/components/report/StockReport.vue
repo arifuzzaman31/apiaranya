@@ -102,21 +102,21 @@ export default {
 
                     <div class="col-md-3 col-lg-3 my-1 col-12">
                         <select id="product-category" class="form-control form-control-sm" @change="getSubCategories()" v-model="filterdata.category">
-                            <option selected="" value="">Choose Category</option>
+                            <option selected="" value="">Category</option>
                             <option v-for="(value,index) in allcategories" :value="value.id" :key="index">{{ value.category_name }}</option>
                         </select>
                     </div>
 
                     <div class="col-md-3 col-lg-3 my-1 col-12">
                         <select id="product-subcategory" class="form-control form-control-sm" @change="getStockReport()" v-model="filterdata.subcategory">
-                            <option selected="" value="0">Choose Sub Category</option>
+                            <option selected="" value="0">Sub Category</option>
                             <option v-for="(value,index) in allsubcategories" :value="value.id" :key="index">{{ value.category_name }}</option>
                         </select>
                     </div>
 
                     <div class="col-md-3 col-lg-3 my-1 col-12">
                         <select id="product-brand" class="form-control form-control-sm" @change="getStockReport()" v-model="filterdata.brand">
-                            <option selected="" value="">Choose Brand</option>
+                            <option selected="" value="">Brand</option>
                             <option v-for="(value,index) in allbrands" :value="value.id" :key="index">{{ value.brand_name }}</option>
                         </select>
                     </div>

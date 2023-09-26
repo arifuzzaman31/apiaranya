@@ -161,7 +161,7 @@ export default {
                                         </td>
                                         <td>{{ order.total_item }}</td>
                                         <td>{{ order.total_price }}</td>
-                                        <td>{{ order.total_price - order.buying_sum}}</td>
+                                        <td>{{ formatPrice(order.total_price - order.buying_sum)}}</td>
                                         <td class="text-center">
                                             {{ order.payment_via == 0 ? 'COD' : 'Online' }}
                                         </td>
