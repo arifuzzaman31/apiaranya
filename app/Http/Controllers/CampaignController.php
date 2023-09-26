@@ -130,7 +130,7 @@ class CampaignController extends Controller
             return response()->json(['status' => 'success', 'message' => 'Product Has Added to Campaign!']);
         }catch (\Throwable $th) {
             DB::rollback();
-            return $th;
+            // return $th;
             return response()->json(['status' => 'error', 'message' => $th]);
         }
     }
@@ -138,7 +138,7 @@ class CampaignController extends Controller
     public function removeCampProduct(Request $request)
     {
         try {
-            // return $request->all();
+            // return $request->product;
             //code...
             $camp = Campaign::find($request->camp_id);
             $camp->product()->detach($request->product);

@@ -272,13 +272,19 @@ export default {
 .hide {
     visibility: hidden;
 }
+.col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    /* padding-left: 15px; */
+}
 </style>
 <template>
     <div class="container-fluid mt-3">
         <div class="statbox widget box box-shadow mb-4">
             <div class="widget-header">
                 <div class="row d-flex align-items-center">
-                    <div class="col-md-2 col-lg-1 col-4 mb-3">
+                    <div class="col-md-2 col-lg-2 col-4 mb-3">
                         <label for="search">Per-Page</label>
                         <select id="product-perpage" class="form-control form-control-sm" @change="getProduct()" v-model="filterdata.per_page">
                             <option value="10">10</option>
@@ -287,46 +293,57 @@ export default {
                             <option value="100">100</option>
                         </select>
                     </div>
-                    <div class="col-md-4 col-lg-3 col-12 mb-3">
+                    <div class="col-md-4 col-lg-4 col-12 mb-3">
                         <label for="search">Search</label>
                         <input type="text" @keyup="searchProduct()" v-model="keyword" class="form-control form-control-sm" id="search" placeholder="Search by Name & sku" >
                     </div>
-                    <div class="col-md-4 col-lg-3 col-12 mb-3">
-                        <label for="max_amount">Category</label>
-                        <select id="product-category" class="form-control form-control-sm" @change="getSubCategories()" v-model="filterdata.category">
-                            <option selected="" value="">Choose...</option>
-                            <option v-for="(value,index) in allcategories" :value="value.id" :key="index">{{ value.category_name }}</option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-4 col-lg-3 col-12 mb-3">
-                        <label for="max_amount">Sub Category</label>
-                        <select id="product-subcategory" class="form-control form-control-sm" @change="getProduct()" v-model="filterdata.subcategory">
-                            <option selected="" value="">Choose...</option>
-                            <option v-for="(value,index) in allsubcategories" :value="value.id" :key="index">{{ value.category_name }}</option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-4 col-lg-3 col-12 mb-3">
+                    <div class="col-md-4 col-lg-6 col-12 mb-3">
                         <label for="max_amount">Campaign</label>
                         <select id="product-camp" class="form-control form-control-sm" @change="getProduct()" v-model="filterdata.camp_id">
                             <option selected="" value="">Choose...</option>
                             <option v-for="(value,index) in allcampaign" :value="value.id" :key="index">{{ value.campaign_name }}</option>
                         </select>
                     </div>
-                    <div class="col-md-6 col-lg-6 col-12">
-                        <button type="button" class="btn btn-danger btn-sm" @click="filterClear()">CLEAR</button>
-                        <button type="button" v-if="showPermission.includes('add-to-campaign')" class="btn btn-success btn-sm mx-1" @click="openCampModal()">Add To Campaign</button>
-                        <button type="button" v-if="showPermission.includes('bulk-upload')" class="btn btn-primary btn-sm mx-1" data-toggle="modal" data-target="#bulkUpload">Bulk Upload</button>
-                        <a type="button" :href="url+'all-attr-download'" class="btn btn-primary btn-sm mx-1">Attr Sheet</a>
-                        <a type="button" v-if="showPermission.includes('stock-sheet')" :href="url+'product-stock-download'" class="btn btn-secondary mx-1 btn-sm">Stock Sheet</a>
-                        <a type="button" v-if="showPermission.includes('stock-sheet')"  data-toggle="modal" data-target="#stockUpdate" class="btn btn-info btn-sm">Stock Update</a>
+                    <div class="col-md-4 col-lg-5 col-12 mb-3">
+                        <label for="max_amount"></label>
+                        <select id="product-category" class="form-control form-control-sm" @change="getSubCategories()" v-model="filterdata.category">
+                            <option selected="" value="">Category</option>
+                            <option v-for="(value,index) in allcategories" :value="value.id" :key="index">{{ value.category_name }}</option>
+                        </select>
                     </div>
 
-                    <div class="col-md-4 col-lg-3 col-12">
+                    <div class="col-md-4 col-lg-5 col-12 mb-3">
+                        <label for="max_amount"></label>
+                        <select id="product-subcategory" class="form-control form-control-sm" @change="getProduct()" v-model="filterdata.subcategory">
+                            <option selected="" value="">Sub Category</option>
+                            <option v-for="(value,index) in allsubcategories" :value="value.id" :key="index">{{ value.category_name }}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 col-lg-2 col-12">
+                        <button type="button" class="btn btn-danger btn-md w-100" @click="filterClear()" style="height:90vh;max-height:42px;">CLEAR</button>
+                    </div>
                     </div>
                 </div>
+                <div class="row mt-2">
+                        <div class="col-md-3 w-100 mx-1">
+                            <button type="button" v-if="showPermission.includes('add-to-campaign')" class="btn btn-success btn-md w-100" @click="openCampModal()">Add To Campaign</button>
+                        </div>
+                        <div class="col">
+                            <button type="button" v-if="showPermission.includes('bulk-upload')" class="btn btn-primary btn-md w-100 " data-toggle="modal" data-target="#bulkUpload">Bulk Upload</button>
+                         </div>
+
+                        <div class="col">
+                            <a type="button" :href="url+'all-attr-download'" class="btn btn-primary btn-md w-100">Attr Sheet</a>
+                        </div>
+                        <div class="col">
+                            <a type="button" v-if="showPermission.includes('stock-sheet')" :href="url+'product-stock-download'" class="btn btn-secondary btn-md w-100">Stock Sheet</a>
+                        </div>
+                        <div class="col mr-1">
+                            <a type="button" v-if="showPermission.includes('stock-sheet')"  data-toggle="modal" data-target="#stockUpdate" class="btn btn-info btn-md w-100">Stock Update</a>
+                        </div>
             </div>
+
         </div>
         <div class="table-responsive">
             <table class="table table-bordered table-hover table-striped table-checkable table-highlight-head mb-4">
@@ -527,3 +544,4 @@ export default {
     </div>
 </div>
 </template>
+
