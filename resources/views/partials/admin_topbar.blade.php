@@ -30,7 +30,7 @@
                 </svg>
                 <form class="form-inline search-full form-inline search" role="search">
                     <div class="search-bar">
-                        <input type="text" class="form-control search-form-control  ml-lg-auto" placeholder="Search...">
+
                     </div>
                 </form>
             </li>
