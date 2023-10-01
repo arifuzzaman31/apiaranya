@@ -20053,7 +20053,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getSearch: function getSearch() {
-      if (this.search.length < 3) return;
+      if (this.search.length < 1) return;
       this.getOrder();
     },
     cancelOrder: function cancelOrder(order) {
@@ -20961,10 +20961,10 @@ var _hoisted_6 = {
   "class": "row mb-2"
 };
 var _hoisted_7 = {
-  "class": "col-md-3 col-lg-3 col-12"
+  "class": "col-md-3 col-lg-4 col-12"
 };
 var _hoisted_8 = {
-  "class": "col-md-3 col-lg-3 col-12"
+  "class": "col-md-3 col-lg-2 col-12"
 };
 var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<option selected=\"\" value=\"\" data-v-0b465e8d>Choose...</option><option value=\"0\" data-v-0b465e8d>Pending</option><option value=\"1\" data-v-0b465e8d>Processing</option><option value=\"2\" data-v-0b465e8d>On Delivery</option><option value=\"3\" data-v-0b465e8d>Delivered</option>", 5);
 var _hoisted_14 = [_hoisted_9];
@@ -21539,7 +21539,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onKeyup: _cache[0] || (_cache[0] = function ($event) {
       return $options.getSearch();
     }),
-    placeholder: "Search By OrderID",
+    placeholder: "OrderID,Name,Phone,Email",
     type: "text",
     "class": "form-control",
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {

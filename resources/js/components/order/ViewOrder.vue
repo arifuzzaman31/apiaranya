@@ -53,7 +53,7 @@ export default {
         },
 
         getSearch(){
-            if(this.search.length < 3) return ;
+            if(this.search.length < 1) return ;
             this.getOrder()
         },
 
@@ -292,11 +292,11 @@ export default {
                 </div>
                 <div class="widget-content widget-content-area">
                     <div class="row mb-2">
-                        <div class="col-md-3 col-lg-3 col-12">
-                            <input id="search" @keyup="getSearch()" placeholder="Search By OrderID" type="text" class="form-control"  v-model="search" />
+                        <div class="col-md-3 col-lg-4 col-12">
+                            <input id="search" @keyup="getSearch()" placeholder="OrderID,Name,Phone,Email" type="text" class="form-control"  v-model="search" />
                         </div>
 
-                        <div class="col-md-3 col-lg-3 col-12">
+                        <div class="col-md-3 col-lg-2 col-12">
                             <select id="product-camp" class="form-control" @change="getOrder()" v-model="filterdata.order_state">
                                 <option selected="" value="">Choose...</option>
                                 <option value="0">Pending</option>
