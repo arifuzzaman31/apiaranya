@@ -65,13 +65,13 @@ export default {
             </div>
             <div class="widget-content widget-content-area">
                 <div class="row mb-2">
-                    <div class="col-md-2 col-lg-2 col-12">
-                        <input type="text" v-model="search" @keyup="getSearch()" class="form-control form-control-sm" placeholder="Customer Name,Phone">
+                    <div class="col-md-4 col-lg-4 col-12">
+                        <input type="text" v-model="search" @keyup="getSearch()" class="form-control form-control-sm" placeholder="Customer Name,Phone,Email">
                     </div>
-                    <div class="col-md-2 col-lg-2 col-12">
+                    <div class="col-md-3 col-lg-3 col-12">
                         <input type="text" onfocus="(this.type='date')" v-model="filterdata.from" class="form-control form-control-sm" placeholder="Start Date">
                     </div>
-                    <div class="col-md-2 col-lg-2 col-12">
+                    <div class="col-md-3 col-lg-3 col-12">
                         <input type="text" onfocus="(this.type='date')" v-model="filterdata.to" @change="getCustomerLifetimeReport()" class="form-control form-control-sm" placeholder="End Date">
                     </div>
 

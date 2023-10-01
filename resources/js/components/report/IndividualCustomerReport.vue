@@ -68,7 +68,7 @@ export default {
             <div class="widget-content widget-content-area">
                 <div class="row mb-2">
                     <div class="col-md-3 col-lg-3 col-12">
-                        <input type="text" v-model="search" @keyup="getSearch()" class="form-control form-control-sm" placeholder="Customer Name,Phone">
+                        <input type="text" v-model="search" @keyup="getSearch()" class="form-control form-control-sm" placeholder="Customer Name,Phone,Email">
                     </div>
                     <div class="col-md-2 col-lg-2 col-12">
                         <input type="text" onfocus="(this.type='date')" v-model="filterdata.from" class="form-control form-control-sm" placeholder="Start Date">

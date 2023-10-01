@@ -40,6 +40,7 @@ class OrderController extends Controller
         $status   = $request->get('status');
         $from   = $request->get('from');
         $to   = $request->get('to');
+        $to = date('Y-m-d', strtotime("+1 day", strtotime($to)));
         if($request->excel == 'yes'){
             return Excel::download(new OrderExport($request->keyword,$request->byposition,$request->status),'order_list.xlsx');
         }
@@ -58,7 +59,8 @@ class OrderController extends Controller
             $order = $order->where('id','like','%'.$keyword.'%')
             ->orWhereHas('user', function ($q) use ($keyword) {
                 $q->where('name','like','%'.$keyword.'%')
-                    ->orWhere('phone','like','%'.$keyword.'%');
+                    ->orWhere('phone','like','%'.$keyword.'%')
+                    ->orWhere('email','like','%'.$keyword.'%');
             });
         }
 

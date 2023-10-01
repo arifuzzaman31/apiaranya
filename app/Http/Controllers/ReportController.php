@@ -24,6 +24,7 @@ class ReportController extends Controller
         try {
             $from   = $request->get('date_from');
             $to   = $request->get('date_to');
+            $to = date('Y-m-d', strtotime("+1 day", strtotime($to)));
             $category   = $request->get('category');
             $subcategory   = $request->get('subcategory');
             $brand   = $request->get('brand');
@@ -91,6 +92,7 @@ class ReportController extends Controller
         try {
             $from   = $request->get('date_from');
             $to   = $request->get('date_to');
+            $to = date('Y-m-d', strtotime("+1 day", strtotime($to)));
             $category   = $request->get('category');
             $subcategory   = $request->get('subcategory');
             $brand   = $request->get('brand');
@@ -152,7 +154,7 @@ class ReportController extends Controller
                 $data = $data->paginate($dataQty);
             return response()->json($data);
         } catch (\Throwable $th) {
-            return $th;
+            // return $th;
             return $this->errorMessage();
         }
     }
@@ -162,6 +164,7 @@ class ReportController extends Controller
             try {
                 $from   = $request->get('date_from');
                 $to   = $request->get('date_to');
+                $to = date('Y-m-d', strtotime("+1 day", strtotime($to)));
                 if($request->excel == 'yes'){
                     return \Excel::download(new CampaignReportExport($from,$to),'campaign_report_list.xlsx');
                 }
@@ -209,6 +212,7 @@ class ReportController extends Controller
     {
         $from   = $request->get('date_from');
         $to   = $request->get('date_to');
+        $to = date('Y-m-d', strtotime("+1 day", strtotime($to)));
         $data = DB::table('orders')
             ->selectRaw('IFNULL(payment_method_name, "COD") as gatewayname, sum(total_price) as paid_total')
             ->groupBy('payment_method_name');
@@ -228,6 +232,7 @@ class ReportController extends Controller
         $keyword   = $request->get('keyword');
         $from   = $request->get('from');
         $to   = $request->get('to');
+        $to = date('Y-m-d', strtotime("+1 day", strtotime($to)));
         if($request->excel == 'yes'){
             return \Excel::download(new IndividualReportExport($from,$to),'individual_customer_report.xlsx');
         }
@@ -252,7 +257,8 @@ class ReportController extends Controller
             if($keyword != ''){
                 $order = $order->whereHas('user', function ($q) use ($keyword) {
                     $q->where('name','like','%'.$keyword.'%');
-                    $q->orWhere('phone','like','%'.$keyword.'%');
+                    $q->orWhere('phone','like','%'.$keyword.'%')
+                    ->orWhere('email','like','%'.$keyword.'%');
                 });
             }
 
@@ -275,6 +281,7 @@ class ReportController extends Controller
     {
         $from   = $request->get('from');
         $to   = $request->get('to');
+        $to = date('Y-m-d', strtotime("+1 day", strtotime($to)));
         $keyword   = $request->get('keyword');
         if($request->excel == 'yes'){
             return \Excel::download(new RefundReportExport($from,$to),'customer_refund_report.xlsx');
@@ -290,7 +297,8 @@ class ReportController extends Controller
             if($keyword != ''){
                 $order = $order->whereHas('user', function ($q) use ($keyword) {
                     $q->where('name','like','%'.$keyword.'%');
-                    $q->orWhere('phone','like','%'.$keyword.'%');
+                    $q->orWhere('phone','like','%'.$keyword.'%')
+                    ->orWhere('email','like','%'.$keyword.'%');
                 });
             }
             $order = $order->paginate($dataQty);
@@ -301,6 +309,7 @@ class ReportController extends Controller
     {
         $from   = $request->get('from');
         $to   = $request->get('to');
+        $to = date('Y-m-d', strtotime("+1 day", strtotime($to)));
         $keyword   = $request->get('keyword');
         if($request->excel == 'yes'){
             return \Excel::download(new LifetimeReportExport($from,$to),'customer_lifetime_value_report.xlsx');
@@ -329,7 +338,8 @@ class ReportController extends Controller
         }
         if($keyword != ''){
             $user->where('name','like','%'.$keyword.'%')
-                ->orWhere('phone','like','%'.$keyword.'%');
+                ->orWhere('phone','like','%'.$keyword.'%')
+                ->orWhere('email','like','%'.$keyword.'%');
         }
 
         $user = $user->paginate($dataQty);

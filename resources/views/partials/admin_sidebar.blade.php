@@ -1,4 +1,4 @@
-<div class="sidebar-wrapper sidebar-theme">  
+<div class="sidebar-wrapper sidebar-theme">
     <nav id="sidebar" style="height: 92%;overflow-y: auto;">
         <ul class="list-unstyled menu-categories" id="accordionExample">
             <li class="menu @if(request()->is('admin/dashboard')) active @endif">
@@ -7,7 +7,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                         <span>Dashboard</span>
                     </div>
-                </a> 
+                </a>
             </li>
 
             <li class="menu md-visible menu-heading">
@@ -85,7 +85,7 @@
                     </div>
                 </a>
             </li>
-         
+
             @if(checkPermission('attribute-view'))
             <li class="menu  @if(request()->is('admin/colour') || request()->is('admin/sizes')) || request()->is('admin/fabrics')) active @endif">
                 <a href="#attrs" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -253,7 +253,7 @@
                         <a href="{{ route('approve-refund') }}">Approved Refund </a>
                     </li>
                     @endif
-                    
+
                     @if(checkPermission('reject-refund-view'))
                     <li>
                         <a href="{{ route('reject-refund') }}">Reject Refund </a>
@@ -359,7 +359,7 @@
             </li>
             @endif
         </ul>
-        
+
     </nav>
 
 </div>

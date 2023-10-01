@@ -20595,13 +20595,13 @@ var _hoisted_6 = {
   "class": "row mb-2"
 };
 var _hoisted_7 = {
-  "class": "col-md-2 col-lg-2 col-12"
+  "class": "col-md-4 col-lg-4 col-12"
 };
 var _hoisted_8 = {
-  "class": "col-md-2 col-lg-2 col-12"
+  "class": "col-md-3 col-lg-3 col-12"
 };
 var _hoisted_9 = {
-  "class": "col-md-2 col-lg-2 col-12"
+  "class": "col-md-3 col-lg-3 col-12"
 };
 var _hoisted_10 = {
   "class": "col-md-2 col-lg-2 col-12"
@@ -20683,7 +20683,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $options.getSearch();
     }),
     "class": "form-control form-control-sm",
-    placeholder: "Customer Name,Phone"
+    placeholder: "Customer Name,Phone,Email"
   }, null, 544 /* HYDRATE_EVENTS, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.search]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     onfocus: "(this.type='date')",
@@ -20861,7 +20861,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $options.getSearch();
     }),
     "class": "form-control form-control-sm",
-    placeholder: "Customer Name,Phone"
+    placeholder: "Customer Name,Phone,Email"
   }, null, 544 /* HYDRATE_EVENTS, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.search]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     onfocus: "(this.type='date')",
@@ -21056,7 +21056,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $options.getSearch();
     }),
     "class": "form-control form-control-sm",
-    placeholder: "Customer Name,Phone"
+    placeholder: "Customer Name,Phone,Email"
   }, null, 544 /* HYDRATE_EVENTS, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.search]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     onfocus: "(this.type='date')",
@@ -21268,7 +21268,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $options.getSearch();
     }),
     "class": "form-control form-control-sm",
-    placeholder: "OrderID,Name,Phone"
+    placeholder: "OrderID,Name,Phone,Email"
   }, null, 544 /* HYDRATE_EVENTS, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.search]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     id: "product-camp",
     "class": "form-control form-control-sm",
