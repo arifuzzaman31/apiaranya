@@ -735,7 +735,7 @@ export default {
 
                             <div class="col-md-2 mb-3">
                                 <label for="weight">Weight (gm)</label>
-                                <input type="number" class="form-control form-control-sm" :class="validation_error.hasOwnProperty('weight') ? 'is-invalid' : ''" id="weight" placeholder="Example: 100gm" v-model="form.weight" >
+                                <input type="number" step=any class="form-control form-control-sm" :class="validation_error.hasOwnProperty('weight') ? 'is-invalid' : ''" id="weight" placeholder="Example: 100" v-model="form.weight" >
                                 <div
                                         v-if="validation_error.hasOwnProperty('weight')"
                                         class="invalid-feedback"
@@ -745,15 +745,15 @@ export default {
                             </div>
                             <div class="col-md-2 mb-3">
                                 <label for="width">Width</label>
-                                <input type="number" class="form-control form-control-sm" id="width" placeholder="Enter Width" v-model="form.width" />
+                                <input type="number" step=any class="form-control form-control-sm" id="width" placeholder="Enter Width" v-model="form.width" />
                             </div>
                             <div class="col-md-2 mb-3">
                                 <label for="height">Height</label>
-                                <input type="number" class="form-control form-control-sm" id="height" placeholder="Enter Height" v-model="form.height" />
+                                <input type="number" step=any class="form-control form-control-sm" id="height" placeholder="Enter Height" v-model="form.height" />
                             </div>
                             <div class="col-md-2 mb-3">
                                 <label for="length">Length</label>
-                                <input type="number" class="form-control form-control-sm" id="length" placeholder="Enter Length" v-model="form.length" />
+                                <input type="number" step=any class="form-control form-control-sm" id="length" placeholder="Enter Length" v-model="form.length" />
                             </div>
                             <div class="form-group col-md-2 mb-3">
                                 <label for="product-LeadTime">Lead Time</label>
