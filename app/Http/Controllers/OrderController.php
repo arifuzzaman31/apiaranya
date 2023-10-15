@@ -108,8 +108,9 @@ class OrderController extends Controller
     {
         if($request->from == 'pdf'){
             $orderdata = Order::find($id);
-            $pdf = \PDF::loadView('invoice',['order_info' => $orderdata]);
-            return $pdf->download('invoice-'.$orderdata->order_id.'.pdf');
+            return $pdf = view('invoice',['order_info' => $orderdata]);
+            // $pdf = \PDF::loadView('invoice',['order_info' => $orderdata]);
+            return $pdf->download('invoice-'.$orderdata->id.'.pdf');
         }
         $order = Order::with('user','delivery','user_shipping_info','user_billing_info')->find($id);
         $details = OrderDetails::with(['product','colour','size','fabric'])->where('order_id',$id)->get();

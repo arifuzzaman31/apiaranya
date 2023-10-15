@@ -67,7 +67,7 @@ export default {
             <div class="col-md-2 bg-light shadow-lg p-3 bg-white rounded mt-1">
                 Second, but last
             </div>
-            
+
             </div> -->
             <div class="overflow-hidden">
                 <div class="row gx-2">
@@ -197,14 +197,13 @@ export default {
                                             {{
                                                 order.user_billing_info
                                                     .street_address
-                                            }}
-                                            <br />
-                                            {{
+                                            }}</p>
+                                           <p> {{
                                                 order.user_billing_info
                                                     .post_code
-                                            }}, <br />
-                                            {{ order.user_billing_info.city }},
-                                            {{ order.delivery.country }}
+                                            }}</p>
+                                            <p>{{ order.user_billing_info.city }}</p>
+                                            <p>{{ order.delivery.country }}
                                         </p>
                                     </div>
                                 </div>
@@ -276,9 +275,9 @@ export default {
                                         <h6>Grand Total</h6>
                                         <p class="text-warning">
                                             {{
-                                                order.charge_total_price +
+                                                (order.charge_total_price +
                                                 order.shipping_amount +
-                                                order.charge_vat_amount
+                                                order.charge_vat_amount).toFixed(2)
                                             }}
                                         </p>
                                     </div>

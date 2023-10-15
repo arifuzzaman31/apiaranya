@@ -36,7 +36,7 @@
 
                 <div class="widget-content">
                     <div class="tabs tab-content">
-                        <div id="content_1" class="tabcontent"> 
+                        <div id="content_1" class="tabcontent">
                             <total-earning :totalEarning="totalEarning" height="303"/>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
 
                 <div class="widget-content">
                     <div class="tabs tab-content">
-                        <div id="content_1" class="tabcontent"> 
+                        <div id="content_1" class="tabcontent">
                             <customer-of-month :chartData="chartData" />
                         </div>
                     </div>
@@ -83,7 +83,7 @@
 
                 <div class="widget-content">
                     <div class="tabs tab-content">
-                        <div id="content_1" class="tabcontent"> 
+                        <div id="content_1" class="tabcontent">
                            <sales-of-month :totalEarning="totalSaleMonth" height="358" />
                         </div>
                     </div>
@@ -106,7 +106,6 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th><div class="th-content">SL</div></th>
                             <th><div class="th-content">OrderID</div></th>
                             <th><div class="th-content">Customer</div></th>
                             <th><div class="th-content">Price</div></th>
@@ -115,10 +114,9 @@
                         </tr>
                     </thead>
                     <tbody v-if="orders && orders.length > 0">
-                        <template v-for="(order,index) in orders" :key="order.id">
+                        <template v-for="order in orders" :key="order.id">
                             <tr>
-                                <td>{{ index+1 }}</td>
-                                <td>{{ order.order_id }}</td>
+                                <td>{{ order.id }}</td>
                                 <td>{{ order.user.name }}</td>
                                 <td>{{ order.total_price }}</td>
                                 <td class="text-center">
@@ -131,7 +129,7 @@
                                     <span v-if="order.payment_status == 2" class="badge badge-light">Failed</span>
                                     <span v-if="order.payment_status == 3" class="badge badge-danger">Cancel</span>
                                 </td>
-                            </tr>					
+                            </tr>
                         </template>
                     </tbody>
                 </table>
@@ -148,7 +146,7 @@ import TopProductSale from './chart/TopProductSale.vue'
 import TotalEarning from './chart/TotalEarning.vue'
 
 export default {
-    components: { 
+    components: {
         'total-earning' : TotalEarning,
         'top-product' : TopProductSale,
         'customer-of-month': CustomerOfMonth,
@@ -180,7 +178,7 @@ export default {
             })
             .catch(errors => {
                 console.log(errors);
-            });  
+            });
         },
 
         getOrderInfo(){
@@ -247,7 +245,7 @@ export default {
                             'rgb(102, 255, 102)'
                         ],
                         borderWidth: 1
-                       
+
                     }
                     ]
                 };

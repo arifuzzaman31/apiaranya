@@ -74,7 +74,9 @@ class ProductImport implements ToCollection
                             'fragile' => 0,
                             'fragile_charge' => 0,
                             'vat_tax_id' => $row[35],
-                            'has_variation' => $row[8] != '' ? $row[8] : 0
+                            'has_variation' => $row[8] != '' ? $row[8] : 0,
+                            'flat_colour' => $row[36] != '' ? $row[36] : NULL,
+                            'fragile' => $row[37] != '' ? 1 : 0
                         ]);
 
                         $this->putCombAttr($row,$product);

@@ -84,7 +84,7 @@ export default {
                         this.validationError();
                     }
                 })
-                
+
             }catch(e){
                 if(e.response.status == 422){
                     errors.value = e.response.data.errors;
@@ -136,7 +136,7 @@ export default {
               })
           }catch(e){
               if(e.response.status == 422){
-                  
+
               }
           }
       },
@@ -162,9 +162,9 @@ export default {
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
                             <h4>Campaign</h4>
                             <button class="btn btn-primary mb-2" v-if="showPermission.includes('campaign-create')" data-toggle="modal" data-target="#createCampModal" @click="formReset">Add New</button>
-                        </div>                          
+                        </div>
                     </div>
-                </div>       
+                </div>
                 <div class="widget-content widget-content-area">
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover mb-4">
@@ -174,7 +174,7 @@ export default {
                             <th>Campaign Name</th>
                             <th>Start Date</th>
                             <th>Expire Date</th>
-                            <th class="text-center">Status</th>
+                            <!-- <th class="text-center">Status</th> -->
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -185,12 +185,12 @@ export default {
                                 <td>{{ campaign.campaign_name }}</td>
                                 <td>{{ campaign.campaign_start_date }}</td>
                                 <td>{{ campaign.campaign_expire_date }}</td>
-                                <td class="text-center">
+                                <!-- <td class="text-center">
                                     <label class="switch s-success  mb-4 mx-5">
                                         <input type="checkbox" :checked="campaign.status == 1 ? true : false" disabled>
                                         <span class="slider round"></span>
                                     </label>
-                                </td>
+                                </td> -->
                                 <td>
                                 <ul class="table-controls d-flex justify-content-around">
                                     <li v-if="showPermission.includes('campaign-edit')"><a href="javascript:void(0);" @click="editCamp(campaign)" type="button" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 text-success"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a></li>
@@ -199,7 +199,7 @@ export default {
                                     <li v-if="showPermission.includes('campaign-delete')"><a href="javascript:void(0);" @click="deleteCampaign(campaign.id)" title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-danger"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a></li>
                                 </ul>
                             </td>
-                            </tr>					
+                            </tr>
                         </template>
                     </tbody>
                 </table>
@@ -260,17 +260,17 @@ export default {
                                     </span>
                                 </div>
 
-                                <div class="col-lg-3 col-md-3 col-sm-4 col-6">
+                                <!-- <div class="col-lg-3 col-md-3 col-sm-4 col-6">
                                 <label for="siz-status">Status</label>
                                     <label class="switch s-icons s-outline  s-outline-success  mb-4 mr-2">
                                         <input v-model="form.status" type="checkbox" :checked="form.status" id="siz-status">
                                         <span class="slider round"></span>
                                     </label>
-                                </div>
+                                </div> -->
 
                                 <div class="modal-footer md-button">
                                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12" @click="formReset"></i> Discard</button>
-            
+
                                     <button type="submit" class="btn btn-primary">Submit</button>
 
                                 </div>
@@ -328,17 +328,17 @@ export default {
                                     </span>
                                 </div>
 
-                                <div class="col-lg-3 col-md-3 col-sm-4 col-6">
+                                <!-- <div class="col-lg-3 col-md-3 col-sm-4 col-6">
                                 <label for="siz-status">Status</label>
                                     <label class="switch s-icons s-outline  s-outline-success  mb-4 mr-2">
                                         <input v-model="form.status" type="checkbox" :checked="form.status" id="siz-status">
                                         <span class="slider round"></span>
                                     </label>
-                                </div>
+                                </div> -->
 
                                 <div class="modal-footer md-button">
                                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12" @click="formReset"></i> Discard</button>
-            
+
                                     <button type="submit" class="btn btn-primary">Submit</button>
 
                                 </div>
@@ -349,7 +349,7 @@ export default {
             </div>
         </div>
     </div>
-    
+
 </template>
 
 

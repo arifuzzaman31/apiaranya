@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Invoice-{{$order_info->order_id}}</title>
+    <title>Invoice-{{$order_info->id}}</title>
     <style>
       body{
         width: 100%;
@@ -15,9 +15,9 @@
         width: 98%;
         max-width: 800px;
         margin: 0 auto;
-      
+
       }
-   
+
       td,
       th {
         border: 1px solid #dddddd;
@@ -47,7 +47,7 @@
     <table>
       <tr>
         <td style="border: none; color: #8a858e">
-          Invoice ID: <strong>#{{ $order_info->order_id }}</strong>
+          Invoice ID: <strong>#{{ $order_info->id }}</strong>
         </td>
         <th style="border: none"></th>
 
@@ -94,7 +94,7 @@
         <td style="border: none"></td>
 
         <td style="border: none; text-align: right; color: #8a858e">
-          ID: #{{ $order_info->order_id }}
+          ID: #{{ $order_info->id }}
         </td>
       </tr>
       <tr>
@@ -144,7 +144,7 @@
     </table>
     <table
     style="margin-top: 1rem;"
-     
+
     >
       <tr>
         <th style="border: none"></th>
@@ -203,7 +203,7 @@
             text-align: right;
           "
         >
-          Tax : <strong>{{ $order_info->charge_vat_rate }}</strong>
+          VAT : <strong>{{ $order_info->charge_vat_amount }}</strong>
         </td>
 
         <!-- <td style="border: none; text-align: right; color: #8a858e">invoice</td> -->
