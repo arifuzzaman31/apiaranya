@@ -162,7 +162,7 @@ export default {
                             </div>
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" v-if="order.user_id !==0">
                                         <h6>Customer Info</h6>
                                         <p>
                                             Name: {{ order.user.name }} <br />
@@ -175,7 +175,7 @@ export default {
                                     </div>
                                     <div class="col-md-3">
                                         <h6>Shipping Address</h6>
-                                        <p v-if="order.is_same_address != 1">
+                                        <p>
                                             {{
                                                 order.user_shipping_info
                                                     .street_address
@@ -189,9 +189,9 @@ export default {
                                                 order.user_shipping_info.country
                                             }}
                                         </p>
-                                        <p v-else>Same as Billing Address</p>
+                                        <!-- <p v-else>Same as Billing Address</p> -->
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-3" v-if="order.payment_via == 1">
                                         <h6>Billing Address</h6>
                                         <p>
                                             {{
