@@ -149,10 +149,10 @@ export default {
                                     <tr>
                                         <td>{{ order.id }}</td>
                                         <td>{{ dateToString(order.order_date) }}</td>
-                                        <td>{{ order.user.name }}</td>
-                                        <td>{{ order.user.phone }}</td>
-                                        <td>{{ order.user.email }}</td>
-                                        <td>{{ order.user.address }}</td>
+                                        <td>{{ order.user_shipping_info.full_name }}</td>
+                                        <td>{{ order.user_shipping_info.phone }}</td>
+                                        <td>{{ order.user_shipping_info.email }}</td>
+                                        <td>{{ order.user_shipping_info.street_address }}</td>
                                         <td class="text-center">
                                             <span v-if="order.order_position == 0">Pending</span>
                                             <span v-if="order.order_position == 1">Processing</span>

@@ -7,7 +7,7 @@
     <title>Invoice</title>
     <style>
       body{
-        background-color: #f6f6f6; 
+        background-color: #f6f6f6;
       }
       table {
         font-family: arial, sans-serif;
@@ -15,7 +15,7 @@
         width: 90%;
         max-width: 800px;
         margin: 0 auto;
-      
+
       }
 
       td,
@@ -47,7 +47,7 @@
     <table>
       <tr>
         <td style="border: none; color: #8a858e">
-          Invoice ID: <strong>#{{ $order_info->order_id }}</strong>
+          Invoice ID: <strong>#{{ $order_info->id }}</strong>
         </td>
         <th style="border: none"></th>
 
@@ -83,22 +83,22 @@
     <table>
       <tr>
         <td style="border: none; color: #8a858e">
-          To: <strong style="color: #3092cb">{{ $order_info->user_billing_info->first_name != 'N/A' ? $order_info->user_billing_info->full_name : 'Unknown'}}</strong>
+          To: <strong style="color: #3092cb">{{ $order_info->user_billing_info->full_name }}</strong>
         </td>
         <th style="border: none"></th>
 
         <td style="border: none; text-align: right; color: #8a858e">Invoice</td>
       </tr>
       <tr style="background-color: #fff">
-        <td style="border: none; color: #8a858e">{{ $order_info->user_billing_info->street_address != 'N/A' ? $order_info->user_billing_info->street_address : ''}}, {{ $order_info->user_billing_info->city != 'N/A' ?  $order_info->user_billing_info->city : ''}}</td>
+        <td style="border: none; color: #8a858e">{{ $order_info->user_billing_info->street_address }}, {{ $order_info->user_billing_info->city }}</td>
         <td style="border: none"></td>
 
-        <td style="border: none; text-align: right; color: #8a858e">
-          ID: #{{ $order_info->order_id }}
-        </td>
+        {{-- <td style="border: none; text-align: right; color: #8a858e">
+          ID: #{{ $order_info->id }}
+        </td> --}}
       </tr>
       <tr>
-        <td style="border: none; color: #8a858e">{{ $order_info->user_billing_info->country != 'N/A' ? $order_info->user_billing_info->country : ''}}</td>
+        <td style="border: none; color: #8a858e">{{ $order_info->user_billing_info->country }}</td>
         <td style="border: none"></td>
 
         <td style="border: none; text-align: right; color: #8a858e">
@@ -106,7 +106,7 @@
         </td>
       </tr>
       <tr style="background-color: #fff">
-        <td style="border: none; color: #8a858e">{{ $order_info->user_billing_info->phone != 'N/A' ? $order_info->user_billing_info->phone : ''}}</td>
+        <td style="border: none; color: #8a858e">{{ $order_info->user_billing_info->phone }}</td>
         <td style="border: none"></td>
 
         <td style="border: none; text-align: right; color: #8a858e">
@@ -137,14 +137,14 @@
             <td style="@if($key%2 != 0) border: none @endif" >{{ $key+1 }}</td>
             <td style="@if($key%2 != 0) border: none @endif">{{ $value->product->product_name }}</td>
             <td style="@if($key%2 != 0) border: none @endif">{{ $value->quantity }}</td>
-            <td style="@if($key%2 != 0) border: none @endif">{{ $value->selling_price }}</td>
-            <td style="@if($key%2 != 0) border: none @endif ;text-align: right">{{ $value->total_selling_price }}</td>
+            <td style="@if($key%2 != 0) border: none @endif">{{ $value->charge_selling_price }}</td>
+            <td style="@if($key%2 != 0) border: none @endif ;text-align: right">{{ $value->total_charge_selling_price }}</td>
         </tr>
       @endforeach
     </table>
     <table
     style="margin-top: 1rem;"
-     
+
     >
       <tr>
         <th style="border: none"></th>
@@ -172,7 +172,7 @@
             text-align: right;
           "
         >
-          SubTotal : <strong>{{ $order_info->total_price }}</strong>
+          SubTotal : <strong>{{ $order_info->charge_total_price }}</strong>
         </td>
 
         <!-- <td style="border: none; text-align: right; color: #8a858e">invoice</td> -->
@@ -203,7 +203,7 @@
             text-align: right;
           "
         >
-          Tax : <strong>{{ $order_info->vat_amount }}</strong>
+          VAT : <strong>{{ $order_info->charge_vat_amount }}</strong>
         </td>
 
         <!-- <td style="border: none; text-align: right; color: #8a858e">invoice</td> -->
@@ -234,7 +234,7 @@
             text-align: right;
           "
         >
-          Shipping Charge : <strong>{{ $order_info->shipping_amount }}</strong>
+          Shipping Charge : <strong>{{ $order_info->charge_shipping_amount }}</strong>
         </td>
 
         <!-- <td style="border: none; text-align: right; color: #8a858e">invoice</td> -->
@@ -265,7 +265,7 @@
             text-align: right;
           "
         >
-          Total Amount : <strong>{{ $order_info->total_price + $order_info->vat_amount + $order_info->shipping_amount }}</strong>
+          Total Amount : <strong>{{ $order_info->charge_total_price + $order_info->charge_vat_amount + $order_info->charge_shipping_amount }}</strong>
         </td>
 
         <!-- <td style="border: none; text-align: right; color: #8a858e">invoice</td> -->

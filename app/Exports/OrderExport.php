@@ -23,7 +23,7 @@ class OrderExport implements FromView,WithStyles
     */
     public function view(): View
     {
-        $order = Order::with('user','delivery','user_billing_info','order_details')->orderBy('updated_at','desc');
+        $order = Order::with('user','delivery','user_billing_info','user_shipping_info','order_details')->orderBy('updated_at','desc');
 
         if($this->byposition != ''){
             $order = $order->where('order_position',$this->byposition);
@@ -33,11 +33,11 @@ class OrderExport implements FromView,WithStyles
             $order = $order->where('status',$this->status);
         }
 
-        if ($this->keyword != '') 
+        if ($this->keyword != '')
         {
             $order = $order->where('order_id','like','%'.$this->keyword.'%');
         }
-      
+
       	$order =  $order->get();
         if($this->invoice == 'invoice'){
             return view('pages.report.excel.invoice_excel',['orders' => $order]);

@@ -49,7 +49,7 @@ class OrderController extends Controller
         }
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
-        $order = Order::with(['user','delivery'])->withCount([
+        $order = Order::with(['user','delivery','user_shipping_info'])->withCount([
             'order_details as buying_sum' => function($query) {
                 $query->select(\DB::raw('SUM(total_buying_price)'));
             }
@@ -57,8 +57,8 @@ class OrderController extends Controller
 
         if($keyword != ''){
             $order = $order->where('id','like','%'.$keyword.'%')
-            ->orWhereHas('user', function ($q) use ($keyword) {
-                $q->where('name','like','%'.$keyword.'%')
+            ->orWhereHas('user_shipping_info', function ($q) use ($keyword) {
+                $q->where('last_name','like','%'.$keyword.'%')
                     ->orWhere('phone','like','%'.$keyword.'%')
                     ->orWhere('email','like','%'.$keyword.'%');
             });
@@ -106,9 +106,23 @@ class OrderController extends Controller
 
     public function orderDetails(Request $request,$id)
     {
+
         if($request->from == 'pdf'){
-            $orderdata = Order::find($id);
-            return $pdf = view('invoice',['order_info' => $orderdata]);
+           $orderdata = Order::find($id);
+        //    select('order_details.*', 'inventories.product_id','products.product_name','products.weight',
+        //    'inventories.colour_id', 'inventories.size_id','inventories.sku')
+        //                 ->join('order_details', 'orders.id', '=', 'order_details.order_id')
+        //                 ->join('inventories', function ($join) {
+        //                     $join->on('order_details.product_id', '=', 'inventories.product_id')
+        //                         ->whereColumn('order_details.colour_id', 'inventories.colour_id')
+        //                         ->whereColumn('order_details.size_id', 'inventories.size_id');
+        //                 })
+        //                 ->join('products', function ($join) {
+        //                     $join->on('order_details.product_id', '=', 'products.id');
+        //                 })
+        //                 ->where('orders.id', $id)
+        //                 ->first();
+            $pdf = view('invoice',['order_info' => $orderdata]);
             // $pdf = \PDF::loadView('invoice',['order_info' => $orderdata]);
             return $pdf->download('invoice-'.$orderdata->id.'.pdf');
         }

@@ -179,13 +179,13 @@ export default {
                                             {{
                                                 order.user_shipping_info
                                                     .street_address
-                                            }}
-                                            <br />
-                                            {{ order.delivery.post_code }},
-                                            <br />
-                                            {{
+                                            }}</p>
+                                            <p>{{ order.delivery.post_code }}
+                                        </p>
+                                        <p>{{
                                                 order.user_shipping_info.city
-                                            }},{{
+                                            }}</p>
+                                        <p>{{
                                                 order.user_shipping_info.country
                                             }}
                                         </p>

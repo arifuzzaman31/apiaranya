@@ -352,7 +352,7 @@ export default {
                                     <tr>
                                         <td>{{ index+1 }}</td>
                                         <td>{{ order.id }}</td>
-                                        <td>{{ order.user.name }}</td>
+                                        <td>{{ order.user_shipping_info.full_name }}</td>
                                         <td>{{ order.total_price }}</td>
                                         <td>{{ order.shipping_amount }}</td>
                                         <td>
@@ -433,9 +433,9 @@ export default {
 
                         <div class="widget-content widget-content-area">
                             <div class="row d-flex justify-content-between">
-                                <div class="col-md-4 text-left">
+                                <div class="col-md-4 text-left" v-if="order.payment_via == 1">
                                     <h6 class="text-success">Billing Info</h6>
-                                    <p v-if="(shipment_info.user_billing_info.first_name != '') || (shipment_info.user_billing_info.last_name != '')">Name: {{ shipment_info.user_billing_info.first_name }} {{ shipment_info.user_billing_info.last_name }}</p>
+                                    <p>Name: {{ shipment_info.user_billing_info.full_name }}</p>
 
                                     <p>Phone: {{ shipment_info.user_billing_info.phone }}</p>
                                     <p>Email: {{ shipment_info.user_billing_info.email }}</p>
@@ -444,7 +444,7 @@ export default {
                                     <p>City: {{ shipment_info.user_billing_info.city }}</p>
                                     <p>Country: {{ shipment_info.user_billing_info.country }}</p>
                                 </div>
-                                <div class="col-md-4 text-right" v-if="shipment_info.is_same_address != 0">
+                                <div class="col-md-4 text-right">
                                     <h6 class="text-success">Shipping Info</h6>
                                     <p v-if="(shipment_info.user_shipping_info.first_name != '') || (shipment_info.user_shipping_info.last_name != '')">Name: {{ shipment_info.user_shipping_info.first_name }} {{ shipment_info.user_shipping_info.last_name }}</p>
                                     <p>Phone: {{ shipment_info.user_shipping_info.phone }}</p>
@@ -454,10 +454,10 @@ export default {
                                     <p>City: {{ shipment_info.user_shipping_info.city }}</p>
                                     <p>Country: {{ shipment_info.user_shipping_info.country }}</p>
                                 </div>
-                                <div class="col-md-4 text-right" v-else>
+                                <!-- <div class="col-md-4 text-right" v-else>
                                     <h6 class="text-success">Shipping Info</h6>
                                     <p class="text-info">As Per Billing Info</p>
-                                </div>
+                                </div> -->
                             </div>
                             <div>
                                 <table class="table table-bordered table-hover mb-4">

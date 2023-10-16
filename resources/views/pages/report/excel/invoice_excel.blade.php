@@ -16,15 +16,15 @@
 	  </tr>
 	</thead>
 	<tbody>
-  
+
 	@foreach($orders as $order)
 	  <tr>
             <td>{{ $order->id }}</td>
             <td>{{ $order->order_date }}</td>
-            <td>{{ $order->user->name }}</td>
-            <td>{{ $order->user->phone }}</td>
-            <td>{{ $order->user->email }}</td>
-            <td>{{ $order->user->address }}</td>
+            <td>{{ $order->user_shipping_info->full_name }}</td>
+            <td>{{ $order->user_shipping_info->phone }}</td>
+            <td>{{ $order->user_shipping_info->email }}</td>
+            <td>{{ $order->user_shipping_info->street_address }}</td>
             <td>
                 @if($order->order_position == 0)<p>Pending</p>@endif
                 @if($order->order_position == 1)<p>Processing</p>@endif

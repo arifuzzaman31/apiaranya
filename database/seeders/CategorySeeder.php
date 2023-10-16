@@ -21,7 +21,7 @@ class CategorySeeder extends Seeder
             (2,'Men','men',null,0,null,null,null,null,2),
             (3,'Kids','kids',null,0,null,null,null,null,3),
             (4,'Home Furnishings','home-furnishings',null,0,null,null,null,null,4),
-            (5,'Beauty Collection','beauty-collection',null,0,null,null,null,null,5),
+            (5,'Beauty','beauty',null,0,null,null,null,null,5),
             (6,'Accessories','accessories',null,0,null,null,null,null,6),
 
             (7,'Saree','saree',null,1,null,null,null,null,1),
@@ -59,7 +59,7 @@ class CategorySeeder extends Seeder
             (36,'Shawls','shawls',null,6,null,null,null,null,10),
 
             (37,'Jewellery','jewellery',null,0,null,null,null,null,7),
-            
+
             (38,'Girls','girls',null,3,null,null,null,null,1),
             (39,'Boys','boys',null,3,null,null,null,null,2),
             (40,'Babies','babies',null,3,null,null,null,null,3),

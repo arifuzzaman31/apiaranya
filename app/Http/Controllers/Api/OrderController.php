@@ -40,7 +40,7 @@ class OrderController extends Controller
             $order->charge_vat_amount      = (float)($request->totalPriceWithTax - $request->totalPrice);
             $order->payment_method         = 0;
             $order->payment_via            = $request->data['paymentMethod'] == 'online' ? 1 : 0;
-            $order->shipping_amount        = $request->shippingCost;
+            $order->shipping_amount        = $request->shippingCostOrg;
             $order->charge_shipping_amount = $request->shippingCost;
             $order->total_item             = $request->totalAmount ? $request->totalAmount : 1;
             $order->total_price            = (float)$request->totalPriceOrg;
@@ -536,7 +536,7 @@ class OrderController extends Controller
                 ->select('order_details.*', 'orders.order_date', 'users.name')
                 // ->groupBy('order_details.order_id')
                 ->get();
-        return $orders;
+        // return $orders;
         $order = Order::with('order_details.product','user_billing_info')->find($order_id);
         if($order->user_billing_info->email != ''){
 
