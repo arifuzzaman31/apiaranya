@@ -1008,13 +1008,13 @@ export default {
                             <input type="text"  class="form-control" id="sku" v-model="qt.sku" placeholder="SKU" required>
                         </div>
                         <div class="form-group col-md-1">
-                            <input type="text"  class="form-control" id="sku" v-model="qt.cpu" placeholder="CPU" required>
+                            <input type="text" step=any class="form-control" id="sku" v-model="qt.cpu" placeholder="CPU" required>
                         </div>
                         <div class="form-group col-md-1">
-                            <input type="number" class="form-control" id="sku" v-model="qt.mrp" placeholder="MRP" required>
+                            <input type="number" step=any class="form-control" id="sku" v-model="qt.mrp" placeholder="MRP" required>
                         </div>
                         <div class="form-group col-md-2">
-                            <input type="number"  class="form-control" id="qty" v-model="qt.qty" placeholder="qty" required>
+                            <input type="number" class="form-control" id="qty" v-model="qt.qty" placeholder="qty" required>
                         </div>
                         <div class="form-group col-md-1 text-center" v-if="index != 0">
                             <a
@@ -1056,10 +1056,10 @@ export default {
                             <input type="text"  class="form-control" id="sku" v-model="qt.sku" placeholder="SKU" required>
                         </div>
                         <div class="form-group col-md-3">
-                            <input type="number"  class="form-control" id="sku" v-model="qt.cpu" placeholder="CPU" required>
+                            <input type="number" step=any class="form-control" id="cpue" v-model="qt.cpu" placeholder="CPU" required>
                         </div>
                         <div class="form-group col-md-3">
-                            <input type="number"  class="form-control" id="sku" v-model="qt.mrp" placeholder="MRP" required>
+                            <input type="number" step=any class="form-control" id="mrpe" v-model="qt.mrp" placeholder="MRP" required>
                         </div>
                         <div class="form-group col-md-3">
                             <input type="number"  class="form-control" id="qty" v-model="qt.qty" placeholder="qty" required>
