@@ -224,7 +224,7 @@ export default {
                                             }},{{
                                                 order.user_billing_info.post_code
                                             }}</p>
-                                            <p>{{ order.user_billing_info.city }},{{ order.delivery.country }}
+                                            <p>{{ order.user_billing_info.city }},{{ order.user_billing_info.country }}
                                         </p>
                                     </div>
                                 </div>
