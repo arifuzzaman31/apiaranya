@@ -352,7 +352,9 @@ export default {
                                     <tr>
                                         <td>{{ index+1 }}</td>
                                         <td>{{ order.id }}</td>
-                                        <td>{{ order.user_shipping_info.last_name }}</td>
+                                        <td>{{
+                                                order.user_shipping_info.first_name
+                                            }} {{ order.user_shipping_info.last_name }}</td>
                                         <td>{{ order.total_price }}</td>
                                         <td>{{ order.shipping_amount }}</td>
                                         <td>
@@ -435,8 +437,7 @@ export default {
                             <div class="row d-flex justify-content-between">
                                 <div class="col-md-4 text-left" v-if="order.payment_via == 1">
                                     <h6 class="text-success">Billing Info</h6>
-                                    <p>Name: {{ shipment_info.user_billing_info.last_name }}</p>
-
+                                    <p>Name: {{ order.user_billing_info.first_name }} {{ shipment_info.user_billing_info.last_name }}</p>
                                     <p>Phone: {{ shipment_info.user_billing_info.phone }}</p>
                                     <p>Email: {{ shipment_info.user_billing_info.email }}</p>
                                     <p>Street Address: {{ shipment_info.user_billing_info.street_address }}</p>

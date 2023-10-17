@@ -177,6 +177,8 @@ export default {
                                         <h6>Shipping Address</h6>
                                         <p>
                                             {{
+                                                order.user_shipping_info.first_name
+                                            }} {{
                                                 order.user_shipping_info.last_name
                                             }}</p>
                                             <p>
@@ -204,6 +206,8 @@ export default {
                                         <h6>Billing Address</h6>
                                         <p>
                                             {{
+                                                order.user_billing_info.first_name
+                                            }} {{
                                                 order.user_billing_info.last_name
                                             }}</p>
                                             <p>

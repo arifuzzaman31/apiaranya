@@ -149,7 +149,9 @@ export default {
                                     <tr>
                                         <td>{{ order.id }}</td>
                                         <td>{{ dateToString(order.order_date) }}</td>
-                                        <td>{{ order.user_shipping_info.last_name }}</td>
+                                        <td>{{
+                                                order.user_shipping_info.first_name
+                                            }} {{ order.user_shipping_info.last_name }}</td>
                                         <td>{{ order.user_shipping_info.phone }}</td>
                                         <td>{{ order.user_shipping_info.email }}</td>
                                         <td>{{ order.user_shipping_info.street_address }}</td>
