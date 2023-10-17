@@ -204,7 +204,7 @@ export default {
                                         <h6>Billing Address</h6>
                                         <p>
                                             {{
-                                                order.user_billing_info.full_name
+                                                order.user_billing_info.last_name
                                             }}</p>
                                             <p>
                                             {{

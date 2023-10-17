@@ -435,7 +435,7 @@ export default {
                             <div class="row d-flex justify-content-between">
                                 <div class="col-md-4 text-left" v-if="order.payment_via == 1">
                                     <h6 class="text-success">Billing Info</h6>
-                                    <p>Name: {{ shipment_info.user_billing_info.full_name }}</p>
+                                    <p>Name: {{ shipment_info.user_billing_info.last_name }}</p>
 
                                     <p>Phone: {{ shipment_info.user_billing_info.phone }}</p>
                                     <p>Email: {{ shipment_info.user_billing_info.email }}</p>
