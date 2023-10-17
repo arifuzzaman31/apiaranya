@@ -177,15 +177,24 @@ export default {
                                         <h6>Shipping Address</h6>
                                         <p>
                                             {{
-                                                order.user_shipping_info
-                                                    .street_address
+                                                order.user_shipping_info.last_name
                                             }}</p>
-                                            <p>{{ order.delivery.post_code }}
+                                            <p>
+                                            {{
+                                                order.user_shipping_info.phone
+                                            }}</p>
+                                            <p>
+                                            {{
+                                                order.user_shipping_info.email
+                                            }}</p>
+                                        <p>
+                                            {{
+                                                order.user_shipping_info.street_address
+                                            }},{{ order.delivery.post_code }}
                                         </p>
                                         <p>{{
                                                 order.user_shipping_info.city
-                                            }}</p>
-                                        <p>{{
+                                            }},{{
                                                 order.user_shipping_info.country
                                             }}
                                         </p>
@@ -195,15 +204,23 @@ export default {
                                         <h6>Billing Address</h6>
                                         <p>
                                             {{
-                                                order.user_billing_info
-                                                    .street_address
+                                                order.user_billing_info.full_name
                                             }}</p>
-                                           <p> {{
-                                                order.user_billing_info
-                                                    .post_code
+                                            <p>
+                                            {{
+                                                order.user_billing_info.phone
                                             }}</p>
-                                            <p>{{ order.user_billing_info.city }}</p>
-                                            <p>{{ order.delivery.country }}
+                                            <p>
+                                            {{
+                                                order.user_billing_info.email
+                                            }}</p>
+                                        <p>
+                                            {{
+                                                order.user_billing_info.street_address
+                                            }},{{
+                                                order.user_billing_info.post_code
+                                            }}</p>
+                                            <p>{{ order.user_billing_info.city }},{{ order.delivery.country }}
                                         </p>
                                     </div>
                                 </div>

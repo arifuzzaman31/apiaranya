@@ -53,7 +53,7 @@ class OrderController extends Controller
             $order->payment_status         = 0;
             $order->delivery_type          = $request->shippingCost == 0 ? 1 : 0;
             $order->delivery_platform      = $request->data['deliveryMethod'];
-            $order->order_position         = $request->data['paymentMethod'] != 'online' ? 1 : 0;
+            $order->order_position         = $request->data['paymentMethod'] == 'online' ? 1 : 0;
             $order->order_date             = date('Y-m-d');
             $order->requested_delivery_date = date('Y-m-d', strtotime("+1 day"));
             $order->status                 = 1;
@@ -235,7 +235,7 @@ class OrderController extends Controller
                     'process_value' => deliveryPosition(AllStatic::$processing),
                     'created_at'    => date("Y-m-d H:i:s")
                 ]);
-                return response()->json(['status' => 'success','type' => 'cash', 'order_id' => $order->order_id], 200);
+                return response()->json(['status' => 'success','type' => 'cash', 'order_id' => $order->id], 200);
             }
 
         } catch (\Throwable $th) {

@@ -124,7 +124,7 @@
         </td>
         <th style="border: none"></th>
 
-        <td style="border: none; color: #272627cc;text-align:right">{{ $order_info->payment_via == 1 ? 'Cash on delivery' : 'Online Paid'}}</td>
+        <td style="border: none; color: #272627cc;text-align:right">{{ $order_info->payment_via == 1 ? 'Online Paid' : 'Cash on delivery'}}</td>
       </tr>
       <tr style="border: none; background-color: #fff">
         <td style="border: none; color: #272627cc;">
@@ -166,7 +166,7 @@
 
 
 
-    <div style="width: 95%;max-width: 800px;">
+    <div style="width: 98%;max-width: 400px;float: right">
     <table
     style="margin-top: .5rem;width:90vh;max-width:400px;float: right;background-color: #3b5576;color:#fff"
 
@@ -189,9 +189,10 @@
         <td style="border: none;text-align: right">{{ $order_info->charge_total_price + $order_info->charge_vat_amount }}</td>
      </tr>
     </table>
-    <p style="border: none; color: #272627cc;font-size:19px;font-weight:bolder">CUSTOMER NOTE</p>
-    <p style="font-size: 17px">{{ $order_info->user_note }} fghgjfhgj</p>
+
 </div>
+<p style="border: none;margin-left:4px; color: #272627cc;font-size:16px;font-weight:bolder">CUSTOMER NOTE</p>
+    <p style="margin-left:4px;font-size: 16px">{{ $order_info->user_note }}</p>
     </div>
   </body>
 </html>

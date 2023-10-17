@@ -352,7 +352,7 @@ export default {
                                     <tr>
                                         <td>{{ index+1 }}</td>
                                         <td>{{ order.id }}</td>
-                                        <td>{{ order.user_shipping_info.full_name }}</td>
+                                        <td>{{ order.user_shipping_info.last_name }}</td>
                                         <td>{{ order.total_price }}</td>
                                         <td>{{ order.shipping_amount }}</td>
                                         <td>
@@ -446,7 +446,7 @@ export default {
                                 </div>
                                 <div class="col-md-4 text-right">
                                     <h6 class="text-success">Shipping Info</h6>
-                                    <p>Name: {{ shipment_info.user_shipping_info.full_name }}</p>
+                                    <p>Name: {{ shipment_info.user_shipping_info.last_name }}</p>
                                     <p>Phone: {{ shipment_info.user_shipping_info.phone }}</p>
                                     <p>Email: {{ shipment_info.user_shipping_info.email }}</p>
                                     <p>Street Address: {{ shipment_info.user_shipping_info.street_address }}</p>
