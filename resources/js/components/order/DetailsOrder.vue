@@ -47,6 +47,7 @@ export default {
         this.order_status.payment_status = this.order.payment_status;
         this.order_status.order_position = this.order.order_position;
         console.log(this.details)
+        console.log(this.order)
     },
     computed: {
         showPermission() {

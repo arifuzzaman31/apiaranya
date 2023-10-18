@@ -40,7 +40,7 @@ class OrderController extends Controller
             $order->charge_vat_amount      = (float)($request->totalPriceWithTax - $request->totalPrice);
             $order->payment_method         = 0;
             $order->payment_via            = $request->data['paymentMethod'] == 'online' ? 1 : 0;
-            $order->shipping_amount        = $request->shippingCostOrg;
+            $order->shipping_amount        = $request->shippingCost;
             $order->charge_shipping_amount = $request->shippingCost;
             $order->total_item             = $request->totalAmount ? $request->totalAmount : 1;
             $order->total_price            = (float)$request->totalPriceOrg;
@@ -154,7 +154,7 @@ class OrderController extends Controller
                 'order_id' => $order->id,
                 'amount' => (($order->total_price + $order->shipping_amount + $order->vat_amount+$order->total_fragile_amount) - ($order->discount + $order->coupon_discount)),
                 'charge_amount' => ($order->charge_total_price + $order->charge_shipping_amount + $order->charge_vat_amount+$order->charge_fragile_amount),
-                'charged_currency' => $request->selectedCurrency,
+                'charged_currency' => $request->selectedCurrency ?? 'BDT',
                 'exchange_rate' => (float)$request->currentConversionRate,
                 'payment_status' => 0,
                 'created_at'    => date("Y-m-d H:i:s")
@@ -166,7 +166,7 @@ class OrderController extends Controller
             ]);
 
 
-            $this->invoiceToMail($order->id);
+           // $this->invoiceToMail($order->id);
             $courierData = [
                 'recipient_name' => $request->data['first_name_billing'],
                 'recipient_mobile' => $request->data['phone_billing'],

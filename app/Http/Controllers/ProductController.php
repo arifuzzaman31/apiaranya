@@ -15,6 +15,8 @@ use App\Traits\ProductTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Exports\AddProduct;
+use App\Jobs\ProductCSVData;
+use Illuminate\Support\Facades\Bus;
 use Excel;
 
 class ProductController extends Controller
@@ -277,7 +279,7 @@ class ProductController extends Controller
             return $this->successMessage($this->fieldname . ' Added Successfully!');
         } catch (\Throwable $th) {
             DB::rollback();
-            dd($th);
+            // dd($th);
             return $this->errorMessage('Something went wrong!');
         }
     }
@@ -501,13 +503,8 @@ class ProductController extends Controller
         $this->validate($request, [
             'file'   => 'required|mimes:xls,xlsx'
         ]);
-        // return $this->successMessage($request->file_from);
-        // dd($request->file('file'));
-        // $data = \Excel::toCollection(new ProductImport,$request->file('file'));
-        // $data = array_filter($data->toArray(),function ($number) {
-        //     return $number[0] !== null;
-        // });
-        // dd($data);
+
+
         try {
             //$path = $request->file('file')->getRealPath();
             // dd($path);
@@ -517,6 +514,25 @@ class ProductController extends Controller
                 $msg = 'Stock Updated Successfully';
             } else {
                 // $data = Excel::load($path, function($reader) {})->get();
+
+                // if( $request->has('file') ) {
+                //     $csv    = file($request->file);
+                //     $chunks = array_chunk($csv, 50);
+                //     // return $chunks;
+                //     $header = [];
+                //     $batch  = Bus::batch([])->dispatch();
+
+                //     foreach ($chunks as $key => $chunk) {
+                //         return $chunk;
+                //     $data = array_map('str_getcsv', $chunk);
+                //         if($key == 0){
+                //             $header = $data[0];
+                //             unset($data[0]);
+                //         }
+                //         $batch->add(new ProductCSVData($data, $header));
+                //     }
+
+                // }
 
                 \Excel::import(new ProductImport, $request->file('file')->store('app'));
 
@@ -530,7 +546,7 @@ class ProductController extends Controller
             }
             return $this->successMessage($msg);
         } catch (\Throwable $th) {
-            return $th;
+            return $th->getMessage();
         }
     }
 
