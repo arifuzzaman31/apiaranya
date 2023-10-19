@@ -30,7 +30,7 @@ class MediaManagerController extends Controller
         $keyword   = $request->get('keyword');
         $type   = $request->get('type');
         $imgdata = DB::table('media_managers')->orderBy('created_at','desc');
-        
+
         if($type != ''){
             $imgdata = $imgdata->where('file_type',$type);
         }
@@ -38,7 +38,7 @@ class MediaManagerController extends Controller
             $imgdata = $imgdata->where('product_name','like','%'.$keyword.'%');
             $imgdata = $imgdata->orWhere('extension','like','%'.$keyword.'%');
         }
-        
+
         return response()->json($imgdata->paginate($dataQty));
     }
 
@@ -90,7 +90,7 @@ class MediaManagerController extends Controller
     public function edit(Request $request)
     {
     }
-    
+
     /**
      * Update the specified resource in storage.
      *

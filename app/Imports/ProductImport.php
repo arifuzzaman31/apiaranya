@@ -24,9 +24,9 @@ class ProductImport implements ToCollection
         $data = array_filter($rows->toArray(),function ($number) {
                  return $number[0] !== null;
              });
+            //  dd($data[2]);
         foreach($data as $row)
         {
-            // dd($row);
             $ch = Product::where('design_code',$row[1])->first();
                 if($ch){
                     $this->putCombAttr($row,$ch);
@@ -168,6 +168,19 @@ class ProductImport implements ToCollection
 
     public function putCombAttr($row,$ch)
     {
+        // foreach([25,26,27,28,29] as $value)
+        // {
+        //     if($row[$value] !=''){
+        //         DB::table('media_managers')->insert([
+        //             'file_link' => $row[$value],
+        //             'file_type' => 'image',
+        //             'product_name' =>  explode('.',$row[$value])[0],
+        //             'cld_public_id' =>  $value['public_id'],
+        //             'extension' => explode('.',$row[$value])[1],
+        //             'created_at' => now()
+        //         ]);
+        //     }
+        // }
       $pc = explode(",",$row[19]);
       if(!empty($pc)){
          foreach($pc as $vl)
@@ -175,7 +188,7 @@ class ProductImport implements ToCollection
             Inventory::create([
                'product_id'  => $ch->id,
                'colour_id'   => $vl ? $vl : 0,
-               'size_id'     => $row[12] ? $row[12] : 0,
+               'size_id'     => $row[12] != '' ? $row[12] : 0,
                'sku'         => $row[0],
                'cpu'         => (float)$row[22],
                'mrp'         => (float)$row[23],
@@ -187,7 +200,7 @@ class ProductImport implements ToCollection
          Inventory::create([
             'product_id'  => $ch->id,
             'colour_id'   => 0,
-            'size_id'     => $row[12] ? $row[12] : 0,
+            'size_id'     => $row[12] != '' ? $row[12] : 0,
             'sku'         => $row[0],
             'cpu'         => (float)$row[22],
             'mrp'         => (float)$row[23],
