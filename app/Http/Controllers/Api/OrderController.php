@@ -198,7 +198,7 @@ class OrderController extends Controller
             if($request->data['deliveryMethod'] == 'E-Courier'){
 
                 $courier = Courier::getInstance();
-                $courier->setProvider(ECourier::class, 'production'); /* local/production */
+                $courier->setProvider(ECourier::class, 'local'); /* local/production */
                 $courier->setConfig([
                     'API-KEY' => env('ECOURIER_API_KEY'),
                     'API-SECRET' => env('ECOURIER_API_SECRET'),

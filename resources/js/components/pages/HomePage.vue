@@ -196,7 +196,7 @@ export default {
                                 </div>
                                 <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2 controlss" @click="openPageMediaModal('two')" value="File Upload" />
                                 <v-lazy-image class="mr-3 controlss" :src="form.image_two" alt="Home image two" :src-placeholder="url+'demo.png'" />
-                                <p>Back Url: domain/{{ form.back_url_two.split('?')[0] }}</p>
+                                <p>Back Url: domain/{{ form.back_url_two }}</p>
                             </div>
 
                             <div class="tab-pane fade" id="v-border-pills-messages" role="tabpanel" aria-labelledby="v-border-pills-messages-tab">
@@ -205,7 +205,7 @@ export default {
                                 </div>
                                 <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2 controlss"  @click="openPageMediaModal('three')" value="File Upload" />
                                 <v-lazy-image width="600" class="mr-3 controlss" :src="form.image_three" alt="Home image three" :src-placeholder="url+'demo.png'" />
-                                <p>Back Url: domain/{{ form.back_url_three.split('?')[0] }}</p>
+                                <p>Back Url: domain/{{ form.back_url_three }}</p>
                             </div>
 
                             <div class="tab-pane fade" id="v-border-pills-settings" role="tabpanel" aria-labelledby="v-border-pills-settings-tab">
@@ -215,7 +215,7 @@ export default {
                                 <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2 controlss"  @click="openPageMediaModal('four')" value="File Upload" />
 
                                 <v-lazy-image width="600" class="mr-3" :src="form.image_four" alt="Home image four" :src-placeholder="url+'demo.png'" />
-                                <p>Back Url: domain/{{ form.back_url_four.split('?')[0] }}</p>
+                                <p>Back Url: domain/{{ form.back_url_four }}</p>
                             </div>
 
                             <div class="tab-pane fade" id="v-border-pills-image5" role="tabpanel" aria-labelledby="v-border-pills-image5-tab">
@@ -225,7 +225,7 @@ export default {
                                 <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2 controlss" @click="openPageMediaModal('five')" value="File Upload" />
 
                                 <v-lazy-image width="600" class="mr-3" :src="form.image_five" alt="Home image five" :src-placeholder="url+'demo.png'" />
-                                <p>Back Url: domain/{{ form.back_url_five.split('?')[0] }}</p>
+                                <p>Back Url: domain/{{ form.back_url_five}}</p>
                             </div>
 
                         </div>
