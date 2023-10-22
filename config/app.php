@@ -29,10 +29,10 @@ return [
     'env' => env('APP_ENV', 'production'),
     'clname' => 'diyc1dizi',
     'clpreset' => 'webable',
-    'front_url' => 'https://staging.aranya.com.bd/',
+    'front_url' => 'https://aranya.com.bd/',
     'payment_mode' => 'production',
-    'storeid' => 'aranyalive@ssl',
-    'storepassw' => '2CiHZ4Q3fc#aQ6V',
+    'storeid' => 'aranyalive',
+    'storepassw' => 'aranyalive35826',
 
     /*
     |--------------------------------------------------------------------------

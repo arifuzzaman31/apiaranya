@@ -226,7 +226,7 @@ class OrderController extends Controller
 
             DB::commit();
             if($request->data['paymentMethod'] == 'online'){
-                $backUri = $request->backUri ? $request->backUri : 'https://staging.aranya.com.bd';
+                $backUri = $request->backUri ? $request->backUri : 'https://aranya.com.bd';
                 return response()->json(['status' => 'success', 'type' => 'online', 'message' => 'Order Created', 'payment' => $this->sslCommerz($order->id,$backUri)], 200);
             } else {
                 DB::table('deliveries')->where('order_id', $order->id)->update([
