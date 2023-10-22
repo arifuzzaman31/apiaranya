@@ -24,7 +24,9 @@ class CategoryController extends Controller
 
     public function allCategoryList()
     {
-        $category = Category::with('children')->where('parent_category',AllStatic::$inactive)->get();
+        //$category = Category::with('children')->where('parent_category',AllStatic::$inactive)->get();
+        $category = Category::with('children')->where('parent_category',AllStatic::$inactive)
+                ->where('status',AllStatic::$active)->get();
         return response()->json($category);
     }
 }

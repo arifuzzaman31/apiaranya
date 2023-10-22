@@ -53,6 +53,7 @@ Route::controller(CategoryController::class)
         Route::get('edit-category','editCategory')->name('edit-category');
         Route::get('update-category-image/{id}','updateCategoryImage')->name('update-category-image');
         Route::post('fabric-add-category','updateCompCat');
+        Route::post('edit-category','updateCat');
 
 });
 
@@ -110,7 +111,7 @@ Route::post('order-item-refund',[RefundController::class,'orderItemRefund']);
 Route::get('get-product',[ProductController::class,'getProduct']);
 Route::get('get-product/search',[ProductController::class,'getProductBySearch']);
 Route::post('product-import',[ProductController::class,'bulkUpload']);
-Route::get('product-stock-download',[ProductController::class,'exportProductStock']); 
+Route::get('product-stock-download',[ProductController::class,'exportProductStock']);
 
 //Order
 Route::controller(OrderController::class)
@@ -150,7 +151,7 @@ Route::controller(PagesController::class)
     ->group(function () {
     Route::get('home-page','homePage')->name('home-page');
     Route::post('update-home-image','homeImageUpdate');
-    Route::get('get-home-pagedata','homeImageData'); 
+    Route::get('get-home-pagedata','homeImageData');
     Route::get('all-attr-download','exportAllAttr');
 });
 

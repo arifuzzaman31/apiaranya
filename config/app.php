@@ -30,9 +30,9 @@ return [
     'clname' => 'diyc1dizi',
     'clpreset' => 'webable',
     'front_url' => 'https://staging.aranya.com.bd/',
-    'payment_mode' => 'sandbox',
-    'storeid' => 'limme601b86f8e6dd4',
-    'storepassw' => 'limme601b86f8e6dd4@ssl',
+    'payment_mode' => 'production',
+    'storeid' => 'aranyalive@ssl',
+    'storepassw' => '2CiHZ4Q3fc#aQ6V',
 
     /*
     |--------------------------------------------------------------------------

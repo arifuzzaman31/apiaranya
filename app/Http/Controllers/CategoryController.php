@@ -38,15 +38,14 @@ class CategoryController extends Controller
         $perPage = $request->per_page ?? 20;
         $noPagination = $request->get('no_paginate');
         $parentCategory = $request->get('parent_category');
-        $cate = Category::with('subcategory:id,category_name','composition')
-                ->where('status',AllStatic::$active)->orderBy('created_at','desc');
-        
+        $cate = Category::with('subcategory:id,category_name','composition')->orderBy('created_at','desc');
+
         if($noPagination != ''){
             if($parentCategory != ''){
                 $cate = $cate->where('parent_category',AllStatic::$inactive);
             }
             $cate = $cate->latest()->get();
-            
+
         } else {
             $cate = $cate->latest()->paginate($perPage);
         }
@@ -103,11 +102,11 @@ class CategoryController extends Controller
             $category->category_video   = $request->video_link;
             $category->precedence       = $request->precedence ?? 0;
             $category->status           = $request->status ? 1 : 0;
-          
+
             // $category->category_image_one   = $request->category_image_one;
             // $category->category_image_one   = $request->category_image_one;
             // $category->category_image_one   = $request->category_image_one;
-            
+
             $category->save();
             return response()->json(['status' => 'success', 'message' => 'Category Added Successfully!']);
         } catch (\Throwable $th) {
@@ -159,7 +158,25 @@ class CategoryController extends Controller
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error', 'message' => 'Something went wrong!']);
         }
-        
+
+    }
+
+    public function updateCat(Request $request)
+    {
+        try {
+            $category = Category::find($request->id);
+            $category->category_name = $request->category_name;
+            $category->slug = Str::slug($request->category_name);
+            $category->parent_category  = $request->parent_category ?? 0;
+            $category->precedence       = $request->precedence ?? 0;
+            $category->status           = $request->status ? 1 : 0;
+            $category->update();
+            return response()->json(['status' => 'success', 'message' => 'Category Updated Successfully!']);
+        } catch (\Throwable $th) {
+            // return $th;
+            return response()->json(['status' => 'error', 'message' => 'Something went wrong!']);
+        }
+
     }
 
     public function updateCompCat(Request $request)
@@ -172,7 +189,7 @@ class CategoryController extends Controller
             // return $th;
             return response()->json(['status' => 'error', 'message' => 'Something went wrong!']);
         }
-        
+
     }
 
     /**

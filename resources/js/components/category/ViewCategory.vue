@@ -14,6 +14,7 @@ export default {
             categories: [],
             parentcat: [],
             form:{
+                id:'',
                 category_name: '',
                 precedence: '',
                 parent_category: 0,
@@ -100,7 +101,7 @@ export default {
         },
 
         addFabricToCat(item){
-            this.comp_form.cat_id = item.id
+            this.comp_form.id = item.id
             this.comp_form.composition = item.composition.map(itm => itm.id)
             $("#catFabricModal").modal('show');
         },
@@ -125,10 +126,40 @@ export default {
             }
         },
 
+        renameCate(item){
+            this.category_id = item.id
+            this.form.id = item.id
+            this.form.category_name = item.category_name
+            this.form.parent_category = item.parent_category
+            this.form.status = item.status == 1 ? true : false
+            $("#cateModal").modal('show');
+        },
+
+        updateCategory(){
+            try{
+                axios.post('edit-category',this.form).then(
+                    response => {
+                        this.successMessage(response.data)
+                        $("#cateModal").modal('hide');
+                        this.formReset()
+                        this.getParentCat()
+                        this.getCategory()
+                    }
+                ). catch(e => {
+                   console.log(e.response.data)
+                })
+            }catch(e){
+                if(e.response.status == 422){
+                    this.validation_error = e.response.data.errors
+                }
+            }
+        },
+
         formReset(){
             this.validation_error = {}
             this.category_id = '';
             this.form = {
+                id:'',
                 category_name : '',
                 precedence : '',
                 parent_category: 0,
@@ -159,7 +190,7 @@ export default {
                 <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between mx-3">
                     <h4>Category</h4>
                     <button class="btn btn-primary mb-2 mr-3" v-if="showPermission.includes('menu-create')" data-toggle="modal" data-target="#cateModal" @click="formReset">Add New</button>
-                </div>                 
+                </div>
             </div>
         </div>
         <div id="tableHover" class="col-lg-12 col-12 layout-spacing">
@@ -186,17 +217,18 @@ export default {
                                 <td>{{ cat.status == 1 ? 'Active' : 'Deactive' }}</td>
                                 <td class="text-center" v-if="showPermission.includes('menu-edit') || showPermission.includes('menu-delete')">
                                    <a v-if="showPermission.includes('menu-edit')" class="btn btn-warning btn-sm" target="_blank" :href="url+'category/'+cat.id+'/edit'">Add Image</a>
+                                   <a v-if="showPermission.includes('menu-edit')" class="btn btn-info mx-1 btn-sm" @click="renameCate(cat)">Rename</a>
                                    <a v-if="showPermission.includes('menu-delete')" class="btn btn-danger btn-sm mx-1" @click="deleteMenu(cat.id)">Delete</a>
                                    <a class="btn btn-success btn-sm" @click="addFabricToCat(cat)">Composition</a>
                                 </td>
-                            </tr>	
-                          
+                            </tr>
+
                         </tbody>
                     </table>
                     <Bootstrap4Pagination
                         :data="categories"
                         @pagination-change-page="getCategory"
-                    />   
+                    />
                 </div>
 
             </div>
@@ -207,13 +239,14 @@ export default {
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Create Category</h5>
+                    <h5 class="modal-title" v-if="category_id == ''">Create Category</h5>
+                    <h5 class="modal-title" v-else>Update Category</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="formReset">
                         <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                     </button>
                 </div>
                 <div class="modal-body">
-                    
+
                     <div class="widget-content widget-content-area">
                         <form>
                             <div class="form-group">
@@ -247,10 +280,10 @@ export default {
                                         <span class="slider round"></span>
                                     </label>
                             </div>
-                        
+
                             <div class="modal-footer md-button">
                                 <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12" @click.prevent="formReset()"></i> Discard</button>
-        
+
                                 <button v-if="category_id == ''" type="button" class="btn btn-primary" @click.prevent="storeCategory()">Submit</button>
 
                                 <button v-else type="button" class="btn btn-primary" @click.prevent="updateCategory()">Update</button>
@@ -273,7 +306,7 @@ export default {
                     </button>
                 </div>
                 <div class="modal-body">
-                    
+
                     <div class="widget-content widget-content-area">
                         <form>
                             <div class="form-row">
@@ -310,7 +343,7 @@ export default {
                                     </Multiselect>
                                 </div>
                             </div>
-                        
+
                             <div class="modal-footer md-button">
                                 <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12" @click.prevent="formReset()"></i> Discard</button>
 
@@ -323,7 +356,7 @@ export default {
         </div>
     </div>
 </div>
-  
+
 </template>
 <style src="@vueform/multiselect/themes/default.css"></style>
 

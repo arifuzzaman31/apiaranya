@@ -23395,6 +23395,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       type: "number",
       "class": "form-control form-control-sm",
       id: "sku",
+      step: "any",
       "onUpdate:modelValue": function onUpdateModelValue($event) {
         return qt.cpu = $event;
       },
@@ -23405,7 +23406,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
       type: "number",
       "class": "form-control form-control-sm",
-      id: "sku",
+      id: "mrp",
+      step: "any",
       "onUpdate:modelValue": function onUpdateModelValue($event) {
         return qt.mrp = $event;
       },
@@ -23448,8 +23450,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       required: ""
     }, null, 8 /* PROPS */, _hoisted_211), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, qt.sku]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_212, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
       type: "number",
+      step: "any",
       "class": "form-control",
-      id: "sku",
+      id: "cpu",
       "onUpdate:modelValue": function onUpdateModelValue($event) {
         return qt.cpu = $event;
       },
@@ -23457,8 +23460,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       required: ""
     }, null, 8 /* PROPS */, _hoisted_213), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, qt.cpu]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_214, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
       type: "number",
+      step: "any",
       "class": "form-control",
-      id: "sku",
+      id: "mrps",
       "onUpdate:modelValue": function onUpdateModelValue($event) {
         return qt.mrp = $event;
       },
@@ -24842,6 +24846,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       required: ""
     }, null, 8 /* PROPS */, _hoisted_152), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, qt.sku]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_153, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
       type: "text",
+      step: "any",
       "class": "form-control",
       id: "sku",
       "onUpdate:modelValue": function onUpdateModelValue($event) {
@@ -24851,6 +24856,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       required: ""
     }, null, 8 /* PROPS */, _hoisted_154), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, qt.cpu]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_155, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
       type: "number",
+      step: "any",
       "class": "form-control",
       id: "sku",
       "onUpdate:modelValue": function onUpdateModelValue($event) {
@@ -24895,8 +24901,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       required: ""
     }, null, 8 /* PROPS */, _hoisted_167), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, qt.sku]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_168, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
       type: "number",
+      step: "any",
       "class": "form-control",
-      id: "sku",
+      id: "cpue",
       "onUpdate:modelValue": function onUpdateModelValue($event) {
         return qt.cpu = $event;
       },
@@ -24904,8 +24911,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       required: ""
     }, null, 8 /* PROPS */, _hoisted_169), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, qt.cpu]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_170, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
       type: "number",
+      step: "any",
       "class": "form-control",
-      id: "sku",
+      id: "mrpe",
       "onUpdate:modelValue": function onUpdateModelValue($event) {
         return qt.mrp = $event;
       },

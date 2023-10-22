@@ -198,7 +198,7 @@ class OrderController extends Controller
             if($request->data['deliveryMethod'] == 'E-Courier'){
 
                 $courier = Courier::getInstance();
-                $courier->setProvider(ECourier::class, 'local'); /* local/production */
+                $courier->setProvider(ECourier::class, 'production'); /* local/production */
                 $courier->setConfig([
                     'API-KEY' => env('ECOURIER_API_KEY'),
                     'API-SECRET' => env('ECOURIER_API_SECRET'),
@@ -329,8 +329,8 @@ class OrderController extends Controller
         if (config('app.payment_mode') == 'sandbox') {
             $direct_api_url = "https://sandbox.sslcommerz.com/gwprocess/v4/api.php";
         } else {
-            $direct_api_url = "https://sandbox.sslcommerz.com/gwprocess/v4/api.php";
-            //$direct_api_url = "https://securepay.sslcommerz.com/gwprocess/v4/api.php";
+            // $direct_api_url = "https://sandbox.sslcommerz.com/gwprocess/v4/api.php";
+            $direct_api_url = "https://securepay.sslcommerz.com/gwprocess/v4/api.php";
         }
 
         $handle = curl_init();
