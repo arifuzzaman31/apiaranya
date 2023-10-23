@@ -36,14 +36,14 @@
                     <td>{{ strip_tags($value->description) }}</td>
                     <td>in stock</td>
                     <td>new</td>
-                    <td>{{ $value->inventory ? $value->inventory[0]->mrp : 1 }} BDT</td>
+                    <td>{{ $value->inventory[0]->mrp}} BDT</td>
                     <td>{{ $value->image_one }}</td>
                     <td>{{ $value->image_one }}</td>
-                    <td>{{ $value->product_brand ? $value->product_brand[0]->brand_name : 1}}</td>
-                    <td>Apparel & Accessories > Clothing </td>
-                    <td>Apparel & Accessories > Clothing</td>
-                    <td>{{ $value->inventory ? $value->inventory[0]->stock : 1}}</td>
-                    <td>{{ $value->inventory ? $value->inventory[0]->mrp }} BDT</td>
+                    <td>{{ $value->product_brand[0]->brand_name }}</td>
+                    <td>Apparel &amp; Accessories &gt; Clothing</td>
+                    <td>Apparel &amp; Accessories &gt; Clothing</td>
+                    <td>{{ $value->inventory[0]->stock }}</td>
+                    <td>{{ $value->inventory[0]->mrp }} BDT</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -53,7 +53,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>{{ $value->weight > 0 ? $value->weight : 1 }} g</td>
+                    <td>{{ $value->weight }} g</td>
                 </tr>
             @endif
         @endforeach

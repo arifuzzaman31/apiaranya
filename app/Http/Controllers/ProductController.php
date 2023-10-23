@@ -481,8 +481,8 @@ class ProductController extends Controller
                         ['keyword_name' => $str]
                     );
             }
-
             DB::commit();
+
             if(is_file(public_path('product.csv')))
             {
                 unlink(public_path('product.csv'));
