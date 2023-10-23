@@ -36,25 +36,24 @@
                     <td>{{ strip_tags($value->description) }}</td>
                     <td>in stock</td>
                     <td>new</td>
-                    <td>{{ $value->inventory[0]->mrp }} BDT</td>
+                    <td>{{ $value->inventory ? $value->inventory[0]->mrp : 1 }} BDT</td>
                     <td>{{ $value->image_one }}</td>
                     <td>{{ $value->image_one }}</td>
-                    <td>{{ $value->product_brand[0]->brand_name }}</td>
-                    <td>{{ $value->subcategory->id != 0 ? $value->category->category_name.'>'.$value->subcategory->category_name : $value->category->category_name }}
-                    </td>
-                    <td>{{ $value->subcategory->id != 0 ? $value->category->category_name.'>'.$value->subcategory->category_name : $value->category->category_name }}
-                    </td>
-                    <td>{{ $value->inventory[0]->stock }}</td>
-                    <td>{{ $value->inventory[0]->mrp }}</td>
+                    <td>{{ $value->product_brand ? $value->product_brand[0]->brand_name : 1}}</td>
+                    <td>Apparel & Accessories > Clothing </td>
+                    <td>Apparel & Accessories > Clothing</td>
+                    <td>{{ $value->inventory ? $value->inventory[0]->stock : 1}}</td>
+                    <td>{{ $value->inventory ? $value->inventory[0]->mrp }} BDT</td>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td>{{ $value->flat_colour }}</td>
                     <td></td>
+                    <td>all ages</td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>{{ $value->weight }}</td>
+                    <td>{{ $value->weight > 0 ? $value->weight : 1 }} g</td>
                 </tr>
             @endif
         @endforeach

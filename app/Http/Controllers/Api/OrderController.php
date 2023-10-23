@@ -164,8 +164,6 @@ class OrderController extends Controller
                 'order_id' => $order->id,
                 'created_at'    => date("Y-m-d H:i:s")
             ]);
-
-
             $this->invoiceToMail($order->id);
             $courierData = [
                 'recipient_name' => $request->data['first_name_billing'],
