@@ -168,7 +168,7 @@ code {
   max-width: 58.333333%;
   margin-left: 80px; }
 
-/* 
+/*
 =====================
     Navigation Bar
 =====================
@@ -179,7 +179,7 @@ code {
 .navbar {
   padding: 0;
   min-height: 80px;
-  background: #445ede;
+  background: #3c5676;
   -webkit-transition: .3s ease all;
   transition: .3s ease all;
   -webkit-box-shadow: 0 4px 6px 0 rgba(85, 85, 85, 0.08), 0 1px 20px 0 rgba(0, 0, 0, 0.07), 0px 1px 11px 0px rgba(0, 0, 0, 0.07);
@@ -217,7 +217,7 @@ code {
   justify-content: space-around;
   background: #fff;
   border-right: 1px solid #445ede;
-  background-image: linear-gradient(to right, #445ede 0%, #304aca 100%); }
+  background-image: linear-gradient(to right, #3c5676 0%, #3c5676 100%); }
   .header-container .navbar-nav.theme-brand .theme-logo {
     align-self: center;
     opacity: 1;
@@ -744,7 +744,7 @@ code {
       color: #56478e;
       fill: rgba(86, 71, 142, 0.34); }
 
-/* 
+/*
 ===============
     Sidebar
 ===============
@@ -911,7 +911,7 @@ code {
     justify-content: space-between;
     cursor: pointer;
     font-size: 13px;
-    color: #3b3f5c;
+    color: #3c5676;
     padding: 14px 10px;
     font-weight: 600;
     transition: .600s;
@@ -982,7 +982,7 @@ code {
   font-weight: 700; }
 
 #sidebar ul.menu-categories li.menu.active > .dropdown-toggle {
-  background: #304aca; }
+  background: #3c5676; }
   #sidebar ul.menu-categories li.menu.active > .dropdown-toggle svg.feather-chevron-right {
     transform: rotate(90deg); }
   #sidebar ul.menu-categories li.menu.active > .dropdown-toggle[aria-expanded="false"] svg {
@@ -1164,7 +1164,7 @@ code {
   -webkit-animation-name: e-fadeInUp;
   animation-name: e-fadeInUp; }
 
-/*  
+/*
     ======================
         Footer-wrapper
     ======================
@@ -1198,7 +1198,7 @@ code {
   height: 15px;
   vertical-align: text-top; }
 
-/*  
+/*
     ======================
         MEDIA QUERIES
     ======================

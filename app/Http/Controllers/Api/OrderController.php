@@ -166,7 +166,7 @@ class OrderController extends Controller
             ]);
 
 
-           // $this->invoiceToMail($order->id);
+            $this->invoiceToMail($order->id);
             $courierData = [
                 'recipient_name' => $request->data['first_name_billing'],
                 'recipient_mobile' => $request->data['phone_billing'],
