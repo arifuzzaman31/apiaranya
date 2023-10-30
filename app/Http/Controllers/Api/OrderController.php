@@ -134,8 +134,6 @@ class OrderController extends Controller
                 }
             }
 
-            // if($request->isSameAddress == false)
-            // {
                 $shipping = new UserShippingInfo();
                 $shipping->user_id = $request->isGuestCheckout == false ? Auth::user()->id : 0;
                 $shipping->order_id = $order->id; //orderID
@@ -149,7 +147,7 @@ class OrderController extends Controller
                 $shipping->street_address = $request->data['street_address_shipping'];
                 $shipping->apartment = $request->data['apartment_address_shipping'];
                 $shipping->save();
-            // }
+
 
             DB::table('payments')->insert([
                 'order_id' => $order->id,
@@ -220,7 +218,7 @@ class OrderController extends Controller
                             ]);
                         }
                 }
-                // \Log::info($response);
+
             }
 
             DB::commit();
