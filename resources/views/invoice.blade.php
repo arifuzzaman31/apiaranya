@@ -7,13 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Invoice-{{$order_info->id}}</title>
     <style>
-    @font-face {
-        font-family: myFirstFont;
-        src: url({{asset('admin-assets/font/Poppins-Medium.ttf')}});
-    }
     body {
         width: 100%;
-        font-family: 'myFirstFont';
     }
 
     table {

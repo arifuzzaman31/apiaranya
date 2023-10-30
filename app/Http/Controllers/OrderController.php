@@ -107,28 +107,19 @@ class OrderController extends Controller
     public function orderDetails(Request $request,$id)
     {
 
-        if($request->from == 'pdf'){
-           $orderdata = Order::find($id);
-        //    select('order_details.*', 'inventories.product_id','products.product_name','products.weight',
-        //    'inventories.colour_id', 'inventories.size_id','inventories.sku')
-        //                 ->join('order_details', 'orders.id', '=', 'order_details.order_id')
-        //                 ->join('inventories', function ($join) {
-        //                     $join->on('order_details.product_id', '=', 'inventories.product_id')
-        //                         ->whereColumn('order_details.colour_id', 'inventories.colour_id')
-        //                         ->whereColumn('order_details.size_id', 'inventories.size_id');
-        //                 })
-        //                 ->join('products', function ($join) {
-        //                     $join->on('order_details.product_id', '=', 'products.id');
-        //                 })
-        //                 ->where('orders.id', $id)
-        //                 ->first();
-            //return view('invoice',['order_info' => $orderdata]);
-            $pdf = \PDF::loadView('invoice',['order_info' => $orderdata]);
-            return $pdf->download('invoice-'.$orderdata->id.'.pdf');
+        try{
+            if($request->from == 'pdf'){
+               $orderdata = Order::find($id);
+               // return view('invoice',['order_info' => $orderdata]);
+                $pdf = \PDF::loadView('invoice',['order_info' => $orderdata]);
+                return $pdf->download('invoice-'.$orderdata->id.'.pdf');
+            }
+            $order = Order::with('user','delivery','user_shipping_info','user_billing_info')->find($id);
+            $details = OrderDetails::with(['product','colour','size','fabric'])->where('order_id',$id)->get();
+            return view('pages.order.order_details',['details' => $details,'order' => $order]);
+        } catch (\Throwable $th) {
+                return $th->getMessage();
         }
-        $order = Order::with('user','delivery','user_shipping_info','user_billing_info')->find($id);
-        $details = OrderDetails::with(['product','colour','size','fabric'])->where('order_id',$id)->get();
-        return view('pages.order.order_details',['details' => $details,'order' => $order]);
     }
 
     public function orderCancel(Request $request)
