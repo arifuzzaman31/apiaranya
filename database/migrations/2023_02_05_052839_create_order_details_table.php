@@ -23,6 +23,7 @@ class CreateOrderDetailsTable extends Migration
             $table->foreignId('size_id')->nullable()->default(0);
             $table->foreignId('fabric_id')->nullable()->default(0);
             $table->foreignId('user_id')->comment = "customer_id";
+            $table->string('item_sku')->default('SIMPLE ITEM')->comment = "Item Sku";
             $table->integer('quantity');
             $table->double('selling_price',8,4)->comment= "original BDT currency";
             $table->double('charge_selling_price',8,4)->comment= "converted currency";
