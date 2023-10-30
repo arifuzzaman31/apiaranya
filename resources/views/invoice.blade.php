@@ -7,8 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Invoice-{{$order_info->id}}</title>
     <style>
+    @font-face {
+        font-family: myFirstFont;
+        src: url({{asset('admin-assets/font/Poppins-Medium.ttf')}});
+    }
     body {
         width: 100%;
+        font-family: 'myFirstFont';
     }
 
     table {
@@ -113,7 +118,7 @@
                 <td style="border: none; color: #272627cc;text-align:right">
                     {{ $order_info->payment_via == 1 ? 'Online Paid' : 'Cash on delivery'}}</td>
             </tr>
-            <tr style="border: none; background-color: #fff">
+            <tr style="border: none; background-color: #fff;max-width:70%">
                 <td style="border: none; color: #272627cc;">
                     Address:
                     {{ $order_info->user_shipping_info->street_address }},{{ $order_info->user_shipping_info->city }},{{ $order_info->user_shipping_info->country }}
@@ -186,8 +191,10 @@
             </table>
 
         </div>
+        @if($order_info->user_note)
         <p style="border: none;margin-left:4px; color: #272627cc;font-size:15px;font-weight:bolder">CUSTOMER NOTE</p>
         <p style="margin-left:4px;font-size: 15px">{{ $order_info->user_note }}</p>
+        @endif
     </div>
 </body>
 
