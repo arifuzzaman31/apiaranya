@@ -236,6 +236,7 @@ export default {
                                         <tr>
                                             <th>#</th>
                                             <th>Product</th>
+                                            <th>SKU</th>
                                             <th>Unit Price</th>
                                             <th>Qty</th>
                                             <th class="text-right">
@@ -254,7 +255,7 @@ export default {
                                                     detail.product.product_name
                                                 }}
                                             </td>
-                                            <!-- <img :src="detail.product.product_image" height="40" width="40" class="mx-1" /> -->
+                                            <td>{{ detail.item_sku }}</td>
                                             <td>{{ detail.charge_selling_price }}</td>
                                             <td>{{ detail.quantity }}</td>
                                             <td class="text-right">
