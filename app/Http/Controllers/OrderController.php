@@ -122,7 +122,7 @@ class OrderController extends Controller
         //                 })
         //                 ->where('orders.id', $id)
         //                 ->first();
-            return view('invoice',['order_info' => $orderdata]);
+            //return view('invoice',['order_info' => $orderdata]);
             $pdf = \PDF::loadView('invoice',['order_info' => $orderdata]);
             return $pdf->download('invoice-'.$orderdata->id.'.pdf');
         }
