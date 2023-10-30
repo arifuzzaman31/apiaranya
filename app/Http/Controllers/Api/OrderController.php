@@ -77,6 +77,7 @@ class OrderController extends Controller
                 $details->size_id             = $value['size_id'] ?? 0;
                 $details->colour_id           = $value['color_id'] ?? 0;
                 $details->user_id             = $request->isGuestCheckout == false ? Auth::user()->id : 0;
+                $details->item_sku            = $decrese->sku ?? 0;
                 $details->quantity            = $value['amount'];
                 $details->selling_price       = $value['priceOrg'];
                 $details->charge_selling_price = $value['price'];
