@@ -112,10 +112,18 @@ class CampaignController extends Controller
 
             // if(!empty($request->product)){
                 // foreach($request->product as $value){
+                    Discount::updateOrCreate(
+                        ['product_id' => 'Oakland', 'type' => 'San Diego'],
+                        [
+                            'discount_amount' => $request->discount_amount,'discount_type' => $request->discount_type,
+                            'max_amount' => 'Oakland','status' => AllStatic::$active
+                        ]
+                    );
                 //     $disc = new Discount();
                 //     $disc->product_id  =  $value;
                 //     $disc->discount_amount  =  $request->discount_amount;
                 //     $disc->discount_type  =   $request->discount_type;
+                //     $disc->type  =   $request->type;
                 //     $disc->max_amount  =   $request->max_amount;
                 //     $disc->status = AllStatic::$active;
                 //     $disc->save();
@@ -124,6 +132,7 @@ class CampaignController extends Controller
 
             $camp = Campaign::find($request->campaign);
             $camp->product()->syncWithoutDetaching($request->product);
+            // $camp->product()->sync($request->product);
             // $camp->save();
 
             DB::commit();

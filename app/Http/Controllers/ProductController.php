@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Exports\AddProduct;
 use App\Jobs\ProductCSVData;
+use App\Models\Campaign;
 use Illuminate\Support\Facades\Bus;
 use Excel;
 
@@ -79,8 +80,9 @@ class ProductController extends Controller
         $product = Product::with(['vat', 'category:id,category_name', 'subcategory', 'inventory', 'product_size', 'product_colour', 'discount']);
 
         if ($camp_id != '') {
-            $product = $product->join('campaign_products', 'products.id', 'campaign_products.product_id')
-                ->where('campaign_id', $camp_id);
+            $product = Product::with(['campaign','vat', 'category:id,category_name', 'subcategory', 'inventory.discount'])
+                ->whereHas('campaign');
+                // ->where('campaign.id', $camp_id);
 
             if ($noPagination != '') {
                 $product = $product->get();

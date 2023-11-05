@@ -115,7 +115,7 @@ export default {
             this.form.campaign_meta_image = camp.campaign_meta_image
             this.form.start_at = camp.campaign_start_date
             this.form.expire_at = camp.campaign_expire_date
-            this.form.status = camp.status
+            this.form.status = camp.status = 1 ? true : false
             $("#updateCampModal").modal('show');
         },
 
@@ -174,8 +174,8 @@ export default {
                             <th>Campaign Name</th>
                             <th>Start Date</th>
                             <th>Expire Date</th>
-                            <!-- <th class="text-center">Status</th> -->
-                            <th>Action</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -185,12 +185,12 @@ export default {
                                 <td>{{ campaign.campaign_name }}</td>
                                 <td>{{ campaign.campaign_start_date }}</td>
                                 <td>{{ campaign.campaign_expire_date }}</td>
-                                <!-- <td class="text-center">
+                                <td class="text-center">
                                     <label class="switch s-success  mb-4 mx-5">
                                         <input type="checkbox" :checked="campaign.status == 1 ? true : false" disabled>
                                         <span class="slider round"></span>
                                     </label>
-                                </td> -->
+                                </td>
                                 <td>
                                 <ul class="table-controls d-flex justify-content-around">
                                     <li v-if="showPermission.includes('campaign-edit')"><a href="javascript:void(0);" @click="editCamp(campaign)" type="button" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 text-success"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a></li>
@@ -216,7 +216,6 @@ export default {
         </div>
         <div id="createCampModal" class="modal animated fadeInUp custo-fadeInUp" role="dialog">
             <div class="modal-dialog">
-                <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Campaign</h5>
@@ -239,7 +238,7 @@ export default {
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="campdate">Campaign Start Date</label>
+                                    <label for="campdate">Start Date</label>
                                     <input v-model="form.start_at" class="form-control" type="date" placeholder="Select Date.." />
                                     <span
                                         v-if="validation_error.hasOwnProperty('start_at')"
@@ -250,7 +249,7 @@ export default {
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="Campaign_name">Campaign End Date</label>
+                                    <label for="Campaign_name">End Date</label>
                                     <input v-model="form.expire_at" class="form-control" type="date" placeholder="Select Date.." />
                                     <span
                                         v-if="validation_error.hasOwnProperty('expire_at')"
@@ -260,13 +259,13 @@ export default {
                                     </span>
                                 </div>
 
-                                <!-- <div class="col-lg-3 col-md-3 col-sm-4 col-6">
+                                <div class="col-lg-3 col-md-3 col-sm-4 col-6">
                                 <label for="siz-status">Status</label>
                                     <label class="switch s-icons s-outline  s-outline-success  mb-4 mr-2">
                                         <input v-model="form.status" type="checkbox" :checked="form.status" id="siz-status">
                                         <span class="slider round"></span>
                                     </label>
-                                </div> -->
+                                </div>
 
                                 <div class="modal-footer md-button">
                                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12" @click="formReset"></i> Discard</button>
@@ -280,6 +279,7 @@ export default {
                 </div>
             </div>
         </div>
+
 
         <!-- for Edit -->
         <div id="updateCampModal" class="modal animated fadeInUp custo-fadeInUp" role="dialog">
@@ -328,13 +328,13 @@ export default {
                                     </span>
                                 </div>
 
-                                <!-- <div class="col-lg-3 col-md-3 col-sm-4 col-6">
+                                <div class="col-lg-3 col-md-3 col-sm-4 col-6">
                                 <label for="siz-status">Status</label>
                                     <label class="switch s-icons s-outline  s-outline-success  mb-4 mr-2">
                                         <input v-model="form.status" type="checkbox" :checked="form.status" id="siz-status">
                                         <span class="slider round"></span>
                                     </label>
-                                </div> -->
+                                </div>
 
                                 <div class="modal-footer md-button">
                                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12" @click="formReset"></i> Discard</button>

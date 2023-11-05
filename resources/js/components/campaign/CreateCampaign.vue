@@ -44,7 +44,7 @@ export default {
     },
     methods:{
         saveData() {
-            
+
                axios.post(baseUrl+'campaign',this.form).then(
                   response => {
                     this.successMessage(response.data)
@@ -53,10 +53,10 @@ export default {
                   }
               ). catch(error => {
                     this.validation_error = error.response.data.errors;
-                    
+
                     this.validationError()
               })
-              
+
         },
         getProduct() {
             try{
@@ -86,7 +86,7 @@ export default {
         },
         addToCamp(prod){
             this.addcamp.product.push(prod)
-    
+
             this.allproduct = this.allproduct.filter(item => item.id !== prod.id);
         },
         remToCamp(prod){
@@ -103,7 +103,7 @@ export default {
             .then(response => {
                 if(response.data.status === 'not-found')
                 {
-                    this.allproduct = []; 
+                    this.allproduct = [];
                 }
                 else
                 {
@@ -125,7 +125,7 @@ export default {
                     this.allcampaign = response.data;
                   }
               )
-           
+
         },
         discount(type, discount, main_amount) {
             if (type === "2") {
@@ -160,7 +160,7 @@ export default {
 <div>
     <div class="row">
         <div id="tooltips" class="col-lg-12 layout-spacing col-md-12">
-            <div class="statbox widget box box-shadow">     
+            <div class="statbox widget box box-shadow">
                 <div class="widget-content widget-content-area">
                     <form @submit.prevent="saveCampData()">
                         <div class="form-row mb-4">
@@ -210,7 +210,7 @@ export default {
 
 <div class="row">
     <div id="tooltips" class="col-lg-12 layout-spacing col-md-12">
-        <div class="statbox widget box box-shadow">     
+        <div class="statbox widget box box-shadow">
             <div class="widget-content widget-content-area">
                 <div class="row">
                     <div class="form-group col-md-3 col-lg-3 col-12">
@@ -231,7 +231,7 @@ export default {
                             <option value="percentage">Percentage</option>
                         </select>
                     </div>
-                        
+
                     <div class="form-group col-md-3 col-lg-3 col-12">
                         <label for="campaign-disc-amount">Discount Amount </label>
                         <input type="number" class="form-control" placeholder="Amount">
@@ -239,7 +239,7 @@ export default {
                     <div class="form-group col-md-3 col-lg-3 col-12" v-if="addcamp.discount.type == 'percentage'">
                         <label for="campaign-disc-amount">Maximum Amount </label>
                         <input type="number" class="form-control" placeholder="Maximum Amount">
-                      </div>  
+                      </div>
                 </div>
 
                     <!-- <div class="form-row">
@@ -261,8 +261,8 @@ export default {
                                 :limit="15"
                                 :limit-text="limitText"
                                 :max-height="600"
-                                :show-no-results="false" 
-                                :hide-selected="true" 
+                                :show-no-results="false"
+                                :hide-selected="true"
                                 @search-change="asyncFind"
                                 :options="allproduct"
                                 :searchable="true"
@@ -285,11 +285,11 @@ export default {
                                 </div>
                                 </template>
                             </Multiselect>
-                        </div> 
-                        
+                        </div>
+
                     </div> -->
 
-                    <!-- <div class="row" style="margin-top: 20px;">	
+                    <!-- <div class="row" style="margin-top: 20px;">
 						<div class="col-md-12">
                             <div class="table-responsive" v-if="addcamp.product.length > 0">
                                 <table class="table table-border table-condensed table-strip">
@@ -308,8 +308,8 @@ export default {
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>							
-                        </div>		
+                            </div>
+                        </div>
                     </div>
                              -->
             </div>
@@ -318,7 +318,7 @@ export default {
 </div>
 <div class="row">
     <div id="tooltips" class="col-lg-6 layout-spacing col-md-6">
-        <div class="statbox widget box box-shadow">     
+        <div class="statbox widget box box-shadow">
             <div class="widget-content widget-content-area">
                 <div class="row">
                     <div class="col-md-4 col-lg-3 col-6 mb-2" v-for="prod in allproduct" :key="prod.id">
@@ -342,7 +342,7 @@ export default {
         </div>
     </div>
     <div id="tooltips" class="col-lg-6 layout-spacing col-md-6">
-        <div class="statbox widget box box-shadow">     
+        <div class="statbox widget box box-shadow">
             <div class="widget-content widget-content-area">
                 <div class="row">
                     <div class="col-md-4 col-lg-3 col-6 mb-2" v-for="prod in addcamp.product" :key="prod.id">

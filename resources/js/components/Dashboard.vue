@@ -117,7 +117,8 @@
                         <template v-for="order in orders" :key="order.id">
                             <tr>
                                 <td>{{ order.id }}</td>
-                                <td>{{ order.user.name }}</td>
+                                <td>{{ order.user_shipping_info.first_name
+                                    }} {{ order.user_shipping_info.last_name }}</td>
                                 <td>{{ order.total_price }}</td>
                                 <td class="text-center">
                                     <span v-if="order.payment_status == 0" class="badge badge-primary">COD</span>

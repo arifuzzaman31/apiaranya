@@ -15,25 +15,25 @@ class FrontController extends Controller
     {
         $status = $request->get('status');
         $campaign = Campaign::where('campaign_expire_date','>=',date('Y-m-d'))->orderBy('id','desc');
-        if($status != ''){
-            $campaign = $campaign->where('status',AllStatic::$active);
-        } 
+        $campaign = $campaign->where('status',AllStatic::$active);
+        // if($status != ''){
+        // }
         $campaign = $campaign->get();
-        
+
         return CampaignResource::collection($campaign);
     }
 
     public function getCategoryFabric($cat_id)
     {
         return DB::table('fabrics')
-            ->join('category_fabric','fabrics.id','category_fabric.fabric_id') 
+            ->join('category_fabric','fabrics.id','category_fabric.fabric_id')
             ->where('category_id',$cat_id)
             ->get();
     }
 
     public function shippingData()
     {
-        $data = DB::table('shipping_configs') 
+        $data = DB::table('shipping_configs')
             ->where('status',AllStatic::$active)
             ->get();
         return response()->json($data);

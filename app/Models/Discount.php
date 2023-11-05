@@ -9,9 +9,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Discount extends Model
 {
     use HasFactory;
-
+    protected $table = 'discounts';
     public function product()
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function inventory()
+    {
+        return $this->belongsTo(Inventory::class,'disc_sku','sku');
+    }
 }
+

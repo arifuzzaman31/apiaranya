@@ -19,17 +19,19 @@
 
     }
 
-    td,
+    td{
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px 3px;
+        font-size: 12px;
+    }
     th {
         border: 1px solid #dddddd;
         text-align: left;
         padding: 8px 3px;
-        font-size: 14px;
+	font-weight: 500;
+        font-size: 12px;
     }
-
-    /* tr:nth-child(even) {
-        background-color: #dddddd;
-      } */
     a {
         text-decoration: none;
     }
@@ -79,12 +81,12 @@
         margin: 0 auto;" />
         <table>
             <tr>
-                <td style="border: none; color: #272627cc;font-size:15px;font-weight:bolder">
+                <td style="border: none; color: #272627cc;font-size:12px;font-weight:bolder">
                     INVOICE NO: #{{$order_info->id}}
                 </td>
                 <th style="border: none"></th>
 
-                <td style="border: none; color: #272627cc;font-size:15px;font-weight:bolder;text-align:right"> DATE:
+                <td style="border: none; color: #272627cc;font-size:12px;font-weight:bolder;text-align:right">DATE:
                     {{ date("j M,Y",strtotime($order_info->order_date)) }}</td>
             </tr>
             <tr style="border: none; background-color: #fff">
@@ -101,7 +103,7 @@
                 </td>
                 <th style="border: none"></th>
 
-                <td style="border: none; color: #272627cc;font-size:15px;font-weight:bolder;text-align:right"> PAYMENT
+                <td style="border: none; color: #272627cc;font-size:12px;font-weight:bolder;text-align:right">PAYMENT
                     METHOD</td>
             </tr>
             <tr style="border: none; background-color: #fff">
@@ -113,10 +115,14 @@
                 <td style="border: none; color: #272627cc;text-align:right">
                     {{ $order_info->payment_via == 1 ? 'Online Paid' : 'Cash on delivery'}}</td>
             </tr>
-            <tr style="border: none; background-color: #fff;max-width:70%">
+            <tr style="border: none; background-color: #fff;width:25%;text-wrap: balance;">
                 <td style="border: none; color: #272627cc;">
-                    Address:
-                    {{ $order_info->user_shipping_info->street_address }},{{ $order_info->user_shipping_info->city }},{{ $order_info->user_shipping_info->country }}
+                    <span style="width: 20%;text-wrap: balance;">
+
+                        Address:
+                        <p>{{ $order_info->user_shipping_info->street_address }},</p>
+			<p>{{ $order_info->user_shipping_info->city }},{{ $order_info->user_shipping_info->country }}</p>
+                    </span>
                 </td>
                 <th style="border: none"></th>
 
@@ -126,20 +132,20 @@
 
         <table style="margin-top: 2rem">
             <tr style="background-color: #3b5576; border: none">
-                <th style="border: none; color: #ffffff">PRODUCT </th>
-                <th style="border: none; color: #ffffff;text-align:center">WEIGHT</th>
-                <th style="border: none; color: #ffffff;text-align:center">SIZE</th>
-                <th style="border: none; color: #ffffff;text-align:center">SKU</th>
-                <th style="border: none; color: #ffffff;text-align:center">VAT</th>
-                <th style="border: none; color: #ffffff;text-align:center">VAT AMOUNT</th>
-                <th style="border: none; color: #ffffff;text-align:center">QTY</th>
-                <th style="border: none; color: #ffffff;text-align:center">PRICE</th>
-                <th style="border: none; color: #ffffff ;text-align: right;">SUBTOTAL</th>
+                <th scope="col" style="border: none; color: #ffffff">PRODUCT </th>
+                <th scope="col" style="border: none; color: #ffffff;text-align:center">WEIGHT</th>
+                <th scope="col" style="border: none; color: #ffffff;text-align:center">SIZE</th>
+                <th scope="col" style="border: none; color: #ffffff;text-align:center">SKU</th>
+                <th scope="col" style="border: none; color: #ffffff;text-align:center">VAT</th>
+                <th scope="col" style="border: none; color: #ffffff;text-align:center">VAT AMOUNT</th>
+                <th scope="col" style="border: none; color: #ffffff;text-align:center">QTY</th>
+                <th scope="col" style="border: none; color: #ffffff;text-align:center">PRICE</th>
+                <th scope="col" style="border: none; color: #ffffff ;text-align: right;">SUBTOTAL</th>
             </tr>
             @foreach($order_info->order_details as $key => $value)
 
             <tr>
-                <td style="border: none;">{{ $value->product->product_name }}</td>
+                <td style="border: none;max-width: 15%;text-wrap: wrap;">{{ $value->product->product_name }}</td>
                 <td style="border: none;text-align:center">{{ $value->product->weight??0 }}</td>
                 <td style="border: none;text-align:center">{{ $value->size->size_name}}</td>
                 <td style="border: none;text-align:center">{{ $value->item_sku}}</td>

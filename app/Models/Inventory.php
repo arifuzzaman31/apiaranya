@@ -31,4 +31,8 @@ class Inventory extends Model
     {
         return $this->belongsTo(OrderDetails::class,'product_id');
     }
+    public function discount()
+    {
+        return $this->hasOne(Discount::class,'disc_sku','sku');
+    }
 }

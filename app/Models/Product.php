@@ -120,7 +120,15 @@ class Product extends Model
     {
         return $this->belongsToMany(Care::class,'product_cares')->withTimestamps();
     }
-
+    public function product_camp()
+    {
+        return $this->hasManyThrough(CampaignProduct::class,Campaign::class,
+        'id', // Foreign key on the deployments table...
+            'campaign_id', // Foreign key on the environments table...
+            'id', // Local key on the projects table...
+            'id' // Local key on the environments table...
+    );
+    }
     public function campaign()
     {
         return $this->belongsToMany(Campaign::class,'campaign_products');

@@ -32,6 +32,7 @@ export default {
             addTocamp: {
                 campaign: '',
                 discount_type: 'flat',
+                type: 'campaign',
                 discount_amount: '',
                 max_amount: '',
                 product:[],
@@ -115,6 +116,7 @@ export default {
             this.addTocamp = {
                 campaign: '',
                 discount_type: 'flat',
+                type: 'campaign',
                 discount_amount: '',
                 max_amount: '',
                 product:[],
@@ -428,7 +430,7 @@ export default {
                                 </span>
                             </div>
 
-                               <!--  <div class="form-row">
+                               <!-- <div class="form-group">
                                     <label for="discount_amount">Discount Amount</label>
                                     <input type="number" v-model="addTocamp.discount_amount" class="form-control" id="discount_amount" placeholder="Discount Amount" >
                                     <span
@@ -439,7 +441,7 @@ export default {
                                     </span>
                                 </div>
 
-                                <div class="form-row mt-1">
+                                <div class="form-group mt-1">
                                     <label for="discount_type">Discount Type</label>
                                     <select class="form-control tagging" id="discount_type" v-model="addTocamp.discount_type">
                                         <option value="flat">FLAT</option>
@@ -452,7 +454,7 @@ export default {
                                         {{ validation_error.discount_type[0] }}
                                     </span>
                                 </div>
-                                <div class="form-row mt-1" v-if="addTocamp.discount_type == 'percentage'">
+                                <div class="form-group mt-1" v-if="addTocamp.discount_type == 'percentage'">
                                     <label for="max_amount">Maximum</label>
                                     <input type="number" class="form-control" id="max_amount" placeholder="Maximum amount" v-model="addTocamp.max_amount" >
                                 </div> -->
