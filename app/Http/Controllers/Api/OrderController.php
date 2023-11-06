@@ -94,7 +94,10 @@ class OrderController extends Controller
                 $details->charged_currency    = $request->selectedCurrency ?? 'BDT';
                 $details->exchange_rate       = (float)$request->currentConversionRate;
                 $details->unit_discount       = 0;
+                $details->unit_discount       = 0;
+                $details->charge_unit_discount  = 0;
                 $details->total_discount      = 0;
+                $details->charge_total_discount = 0;
                 $details->save();
 
                 //$decrese->stock -= $value['amount'];

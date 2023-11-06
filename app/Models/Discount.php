@@ -10,6 +10,7 @@ class Discount extends Model
 {
     use HasFactory;
     protected $table = 'discounts';
+    protected $fillable = ['product_id','discount_amount','discount_type','type','max_amount','disc_sku','status'];
     public function product()
     {
         return $this->belongsTo(Product::class);
@@ -17,7 +18,7 @@ class Discount extends Model
 
     public function inventory()
     {
-        return $this->belongsTo(Inventory::class,'disc_sku','sku');
+        return $this->belongsTo(Inventory::class);
     }
 }
 

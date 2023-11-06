@@ -31,9 +31,13 @@ class ProductController extends Controller
         'product_size','product_colour','inventory:product_id,colour_id,size_id,stock,mrp,sku']);
 
         if($camp_id != ''){
-            $product = $product->join('campaign_products','products.id','campaign_products.product_id')
-                ->select('products.*')
-                ->where('campaign_id',$camp_id);
+            $product = $product->with(['campaign','inventory.discount'])
+            ->whereHas('campaign', function($q) use ($camp_id) {
+                $q->where('campaign_id', $camp_id);
+            });
+            // $product = $product->join('campaign_products','products.id','campaign_products.product_id')
+            //     ->select('products.*')
+            //     ->where('campaign_id',$camp_id);
 
             if($noPagination != ''){
                 $product = $product->get();

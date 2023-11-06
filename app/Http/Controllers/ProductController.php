@@ -77,21 +77,7 @@ class ProductController extends Controller
         $subcategory   = $request->get('subcategory');
         $camp_id   = $request->get('camp_id');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
-        $product = Product::with(['vat', 'category:id,category_name', 'subcategory', 'inventory', 'product_size', 'product_colour', 'discount']);
-
-        if ($camp_id != '') {
-            $product = Product::with(['campaign','vat', 'category:id,category_name', 'subcategory', 'inventory.discount'])
-                ->whereHas('campaign');
-                // ->where('campaign.id', $camp_id);
-
-            if ($noPagination != '') {
-                $product = $product->get();
-            } else {
-                $product = $product->paginate($dataQty);
-            }
-            return $product;
-        }
-
+        $product = Product::with(['vat', 'category:id,category_name', 'subcategory', 'inventory.discount', 'product_size', 'product_colour']);
         if ($discount != '') {
             $product = $product->where('is_discount', 0);
         }
@@ -109,6 +95,18 @@ class ProductController extends Controller
             });
             $product = $product->orWhere('product_name', 'like', '%' . $keyword . '%');
             $product = $product->orWhere('design_code', 'like', '%' . $keyword . '%');
+        }
+        if ($camp_id != '') {
+            $product = $product->with('campaign')
+            ->whereHas('campaign', function($q) use ($camp_id) {
+                $q->where('campaign_id', $camp_id);
+            });
+            if ($noPagination != '') {
+                $product = $product->get();
+            } else {
+                $product = $product->paginate($dataQty);
+            }
+            return $product;
         }
         if ($noPagination != '') {
             $product = $product->latest()->get();

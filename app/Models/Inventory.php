@@ -11,7 +11,7 @@ class Inventory extends Model
     use HasFactory;
 
     protected $fillable = ['id', 'product_id', 'colour_id', 'size_id', 'stock','cpu','mrp','sku', 'warning_amount', 'warehouse'];
-
+    // protected $hidden = ['cpu'];
     public function product()
     {
         return $this->belongsTo(Product::class);

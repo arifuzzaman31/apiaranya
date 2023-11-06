@@ -18,7 +18,9 @@ class CreateDiscountsTable extends Migration
             $table->foreignId('product_id');
             $table->double('discount_amount');
             $table->enum('discount_type', ['percentage', 'flat']);
+            $table->enum('type', ['regular','campaign']);
             $table->double('max_amount')->nullable();
+            $table->string('disc_sku',50)->nullable();
             $table->tinyInteger('status')->default(1);
             $table->softDeletes();
             $table->timestamps();

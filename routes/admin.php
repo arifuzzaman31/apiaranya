@@ -142,6 +142,7 @@ Route::controller(CustomerController::class)
 Route::controller(CampaignController::class)
     ->group(function () {
     Route::get('get-campaign','getCampaing');
+    Route::post('store-discount','storeProductSkuDiscount');
     Route::post('add-to-campaign','storeAddtoCamp');
     Route::get('campaign-product/{id}','getCampProduct');
     Route::post('remove-product-camp','removeCampProduct');

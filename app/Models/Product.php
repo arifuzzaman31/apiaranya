@@ -15,7 +15,6 @@ class Product extends Model
      'image_one', 'image_two', 'image_three', 'image_four', 'image_five', 'flat_colour', 'length','height','width',
      'unit', 'country_of_origin', 'weight', 'design_code', 'description', 'status', 'is_discount','fragile','fragile_charge','has_variation'
     ];
-
     public function category()
     {
         return $this->belongsTo(Category::class)->withDefault([
@@ -131,7 +130,7 @@ class Product extends Model
     }
     public function campaign()
     {
-        return $this->belongsToMany(Campaign::class,'campaign_products');
+        return $this->belongsToMany(Campaign::class,'campaign_products','product_id', 'campaign_id');
     }
 
     public function order_details()

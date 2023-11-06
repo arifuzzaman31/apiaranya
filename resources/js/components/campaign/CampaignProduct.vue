@@ -35,6 +35,10 @@ export default {
                 product:[],
             },
             campProd: [],
+            product : {
+                id: '',
+                product_sku: [],
+            },
             allcampaign: [],
             campaign:{
                 campaign_name: '',
@@ -78,8 +82,37 @@ export default {
             this.allsubcategories = []
             this.getProduct()
         },
-        getProductSku(pid){
+         getProductSku(product){
+            this.product.id = product.id
+            this.product.product_sku = []
+            try{
+                let arr = []
+                product.inventory.forEach((item) => {
+                    arr.push({'cpu':item.cpu,'mrp':item.mrp,'type':'campaign',
+                        'discount_type':item.discount? item.discount.discount_type:'flat','sku':item.sku,
+                        'discount':item.discount?item.discount.discount_amount:0,'max_amount':item.discount?item.discount.max_amount:0
+                    })
+                })
+                this.product.product_sku.push(...arr)
+                $("#createDiscountModal").modal('show')
 
+            }catch(e){
+                console.log(e)
+            }
+        },
+        storeDiscount(){
+            try{
+                axios.post(baseUrl+`store-discount`,this.product)
+                .then(response => {
+                    this.successMessage(response.data)
+                    $("#createDiscountModal").modal('hide')
+                    window.location.href = window.location.href;
+                }).catch(error => {
+                    console.log(error)
+                })
+            }catch(e){
+                console.log(e)
+            }
         },
         singleRemove(id){
             Swal.fire({
@@ -135,11 +168,10 @@ export default {
         },
 
         selectAll(){
-
             this.isCheckAll = !this.isCheckAll;
             this.addTocamp.product = [];
             if(this.isCheckAll){ // Check all
-                const ids = this.allproduct.data.map(v => v.product_id)
+                const ids = this.allproduct.data.map(v => v.id)
                 this.addTocamp.product = ids
             }
         },
@@ -210,7 +242,7 @@ export default {
                         <tr>
                             <td class="checkbox-column">
                                 <label class="new-control new-checkbox checkbox-primary" style="height: 18px; margin: 0 auto;">
-                                    <input type="checkbox" multiple :name="product.product_name" v-model="addTocamp.product" :value="product.product_id" class="new-control-input todochkbox" id="todo-1">
+                                    <input type="checkbox" multiple :name="product.product_name" v-model="addTocamp.product" :value="product.id" class="new-control-input todochkbox" id="todo-1">
                                     <span class="new-control-indicator"></span>
                                 </label>
                             </td>
@@ -223,8 +255,8 @@ export default {
                                 <span class="badge shadow-none" :class="product.status == 1 ? 'outline-badge-info':'outline-badge-danger'">{{ product.status == 1 ? 'Active' : 'Deactive' }}</span>
                             </td>
                             <td class="d-flex justify-content-around" v-if="showPermission.includes('product-remove-campaign')" >
-                                <a type="button" title="Remove" @click="singleRemove(product.product_id)" ><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-danger"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a>
-                                <a type="button" title="Add Discount" @click="getProductSku(product.product_id)" >
+                                <a type="button" title="Remove" @click="singleRemove(product.id)" ><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-danger"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a>
+                                <a type="button" title="Add Discount" @click="getProductSku(product)" >
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-percent text-warning"><line x1="19" y1="5" x2="5" y2="19"></line><circle cx="6.5" cy="6.5" r="2.5"></circle><circle cx="17.5" cy="17.5" r="2.5"></circle></svg>
                                 </a>
                             </td>
@@ -240,5 +272,80 @@ export default {
         :data="allproduct"
         @pagination-change-page="getProduct"
     />
+
+    <div id="createDiscountModal" class="modal animated fadeInUp custo-fadeInUp" role="dialog">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Discount</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="widget-content widget-content-area">
+                            <form @submit.prevent="storeDiscount()">
+                                <div class="statbox widget box box-shadow">
+                                    <div class="widget-content ">
+
+                                        <div class="row text-center">
+                                            <div class="col-2 text-success">
+                                                <b>SKU</b>
+                                            </div>
+                                            <div class="col-2 text-success">
+                                                <b>CPU</b>
+                                            </div>
+                                            <div class="col-2 text-success">
+                                                <b>MRP</b>
+                                            </div>
+                                            <div class="col-2 text-success">
+                                                <b>Type</b>
+                                            </div>
+                                            <div class="col-2 text-success">
+                                                <b>Discount</b>
+                                            </div>
+                                            <div class="col-2 text-success">
+                                                <b>Max Amount</b>
+                                            </div>
+
+                                        </div>
+                                        <div class="row" v-for="(qt,index) in product.product_sku" :key="index">
+                                            <div class="form-group col-md-2">
+                                                <input type="text"  class="form-control" id="sku" v-model="qt.sku" placeholder="SKU" disabled>
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <input type="number" step=any class="form-control" id="cpue" v-model="qt.cpu" placeholder="CPU" disabled>
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <input type="number" step=any class="form-control" id="mrpe" v-model="qt.mrp" placeholder="MRP" disabled>
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <div class="form-group">
+                                                    <select id="campaign-id" class="form-control" v-model="qt.discount_type">
+                                                        <option value="flat">FLAT</option>
+                                                        <option value="percentage">%</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <input type="number"  class="form-control" id="qty" v-model="qt.discount" placeholder="amount">
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <input type="number"  class="form-control" id="qty" v-model="qt.max_amount" placeholder="Max Amount">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer md-button">
+                                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 </div>
 </template>

@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\AllStatic;
 use Illuminate\Http\Request;
 use App\Models\Campaign;
-use App\Models\CampaignProduct;
 use App\Models\Discount;
-use App\Models\Product;
+use App\Models\Inventory;
 use DB,Str;
 
 class CampaignController extends Controller
@@ -46,6 +45,30 @@ class CampaignController extends Controller
         return response()->json(['status' => 'error', 'message' => $th]);
     }
 
+    }
+
+    public function storeProductSkuDiscount(Request $request)
+    {
+        try {
+            // return response()->json($request->all());
+            foreach ($request->product_sku as $value) {
+                // return $value['sku'];
+                Discount::updateOrCreate([
+                     'product_id'=> $request->id,
+                     'disc_sku' =>  $value['sku']
+                 ],[
+                     'discount_amount' => $value['discount'],
+                     'discount_type'   => $value['discount_type'],
+                     'type'            => $value['type'],
+                     'max_amount'      => $value['discount_type'] == 'percentage' ? $value['max_amount'] : NULL,
+                     'status'          => AllStatic::$active
+                 ]);
+            }
+            return response()->json(['status' => 'success', 'message' => 'Discount affected Successfully!']);
+        } catch (\Throwable $th) {
+            return $th;
+            return response()->json(['status' => 'error', 'message' => $th]);
+        }
     }
 
     public function getCampProduct($id)
@@ -162,7 +185,10 @@ class CampaignController extends Controller
     {
         try {
             DB::beginTransaction();
+            Discount::where('type','campaign')
+            ->whereIn('product_id',$campaign->product()->pluck('product_id')->toArray())->delete();
             $campaign->product()->detach();
+            $campaign->product()->pluck('product_id')->toArray();
             $campaign->delete();
             //code...
             DB::commit();

@@ -216,7 +216,7 @@ code {
   display: flex;
   justify-content: space-around;
   background: #fff;
-  border-right: 1px solid #445ede;
+  border-right: 1px solid #3c5676;
   background-image: linear-gradient(to right, #3c5676 0%, #3c5676 100%); }
   .header-container .navbar-nav.theme-brand .theme-logo {
     align-self: center;
