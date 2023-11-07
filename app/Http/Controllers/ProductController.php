@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Exports\AddProduct;
 use App\Jobs\ProductCSVData;
+use App\Imports\DiscountImport;
 use App\Models\Campaign;
 use Illuminate\Support\Facades\Bus;
 use Excel;
@@ -512,8 +513,11 @@ class ProductController extends Controller
                 \Excel::import(new StockUpdateImport, $request->file);
 
                 $msg = 'Stock Updated Successfully';
+            } elseif($request->file_from == 'discountUpdate') {
+                \Excel::import(new DiscountImport, $request->file);
+                $msg = 'Discount Imported Successfully';
             } else {
-                // $data = Excel::load($path, function($reader) {})->get();
+                 // $data = Excel::load($path, function($reader) {})->get();
 
                 // if( $request->has('file') ) {
                 //     $csv    = file($request->file);

@@ -48,6 +48,7 @@ class OrderController extends Controller
             $order->coupon_discount        = $request->coupon_discount ? $request->coupon_discount : 0;
             $order->coupon                 = $request->coupon_code;
             $order->discount               = 0;
+            $order->charge_discount        = 0;
             $order->total_fragile_amount   = $request->totalFragileChargeOrg;
             $order->charge_fragile_amount  = $request->totalFragileCharge;
             $order->payment_status         = 0;
@@ -93,7 +94,6 @@ class OrderController extends Controller
                 $details->total_charge_selling_price = (float)$value['totalPrice'];
                 $details->charged_currency    = $request->selectedCurrency ?? 'BDT';
                 $details->exchange_rate       = (float)$request->currentConversionRate;
-                $details->unit_discount       = 0;
                 $details->unit_discount       = 0;
                 $details->charge_unit_discount  = 0;
                 $details->total_discount      = 0;

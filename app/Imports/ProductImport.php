@@ -22,8 +22,8 @@ class ProductImport implements ToCollection
         unset($rows[0]);
         // return count($rows);
         $data = array_filter($rows->toArray(),function ($number) {
-                 return $number[0] !== null;
-             });
+                return $number[0] !== null;
+            });
             //  dd($data[2]);
         foreach($data as $row)
         {

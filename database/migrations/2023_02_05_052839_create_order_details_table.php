@@ -36,7 +36,9 @@ class CreateOrderDetailsTable extends Migration
             $table->double('total_selling_price',8,4)->comment= "original BDT currency";
             $table->double('total_charge_selling_price',8,4)->comment= "converted currency";
             $table->double('unit_discount')->default(0);
+            $table->double('charge_unit_discount')->default(0);
             $table->double('total_discount')->default(0);
+            $table->double('charge_total_discount')->default(0);
             $table->tinyInteger('is_claim_refund')->default(0)->comment = "0 for No Claim, 1 for claimed";
             $table->date('refund_claim_date')->nullable();
             $table->tinyInteger('is_refunded')->default(0)->comment = "0 for refund not done, 1 for refund done, 2 for reject";

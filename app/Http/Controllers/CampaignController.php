@@ -53,16 +53,20 @@ class CampaignController extends Controller
             // return response()->json($request->all());
             foreach ($request->product_sku as $value) {
                 // return $value['sku'];
-                Discount::updateOrCreate([
-                     'product_id'=> $request->id,
-                     'disc_sku' =>  $value['sku']
-                 ],[
-                     'discount_amount' => $value['discount'],
-                     'discount_type'   => $value['discount_type'],
-                     'type'            => $value['type'],
-                     'max_amount'      => $value['discount_type'] == 'percentage' ? $value['max_amount'] : NULL,
-                     'status'          => AllStatic::$active
-                 ]);
+                if($value['discount_type'] == 'remove'){
+                    Discount::where('disc_sku',$value['sku'])->delete();
+                } else {
+                    Discount::updateOrCreate([
+                         'product_id'=> $request->id,
+                         'disc_sku' =>  $value['sku']
+                     ],[
+                         'discount_amount' => $value['discount'] ?? 0,
+                         'discount_type'   => $value['discount_type'],
+                         'type'            => $value['type'],
+                         'max_amount'      => $value['discount_type'] == 'percentage' ? $value['max_amount'] : NULL,
+                         'status'          => AllStatic::$active
+                     ]);
+                }
             }
             return response()->json(['status' => 'success', 'message' => 'Discount affected Successfully!']);
         } catch (\Throwable $th) {
@@ -115,12 +119,9 @@ class CampaignController extends Controller
 
             return response()->json(['status' => 'success', 'message' => $this->fieldname.' Created Successfully!']);
         }catch (\Throwable $th) {
-
             return response()->json(['status' => 'error', 'message' => $th]);
         }
     }
-
-
     public function storeAddtoCamp(Request $request)
     {
         $request->validate([
@@ -132,26 +133,6 @@ class CampaignController extends Controller
 
         try{
             DB::beginTransaction();
-
-            // if(!empty($request->product)){
-                // foreach($request->product as $value){
-                    Discount::updateOrCreate(
-                        ['product_id' => 'Oakland', 'type' => 'San Diego'],
-                        [
-                            'discount_amount' => $request->discount_amount,'discount_type' => $request->discount_type,
-                            'max_amount' => 'Oakland','status' => AllStatic::$active
-                        ]
-                    );
-                //     $disc = new Discount();
-                //     $disc->product_id  =  $value;
-                //     $disc->discount_amount  =  $request->discount_amount;
-                //     $disc->discount_type  =   $request->discount_type;
-                //     $disc->type  =   $request->type;
-                //     $disc->max_amount  =   $request->max_amount;
-                //     $disc->status = AllStatic::$active;
-                //     $disc->save();
-                // }
-            // }
 
             $camp = Campaign::find($request->campaign);
             $camp->product()->syncWithoutDetaching($request->product);
