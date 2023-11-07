@@ -28,10 +28,10 @@ class ProductController extends Controller
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
         $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric',
-        'product_size','product_colour','inventory:product_id,colour_id,size_id,stock,mrp,sku']);
+        'product_size','product_colour','inventory.discount']);
 
         if($camp_id != ''){
-            $product = $product->with(['campaign','inventory.discount'])
+            $product = $product->with(['campaign'])
             ->whereHas('campaign', function($q) use ($camp_id) {
                 $q->where('campaign_id', $camp_id);
             });
@@ -105,7 +105,7 @@ class ProductController extends Controller
             $tak_some   = $request->get('take_some');
 
             $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric',
-            'product_size','product_colour','inventory:product_id,colour_id,size_id,stock,mrp,sku'])
+            'product_size','product_colour','inventory.discount'])
                         ->where('category_id',$cat)
                         ->orderBy('id','desc');
                     if($subcat != '' && $subcat != null){
@@ -147,8 +147,8 @@ class ProductController extends Controller
     {
         try {
             //code...
-            $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric:id,fabric_name,fabric_code,slug','inventory:id,product_id,colour_id,size_id,stock,cpu,mrp,sku',
-                'product_size','product_colour','discount',
+            $product = Product::with(['category:id,category_name,slug','subcategory','product_fabric:id,fabric_name,fabric_code,slug','inventory.discount',
+                'product_size','product_colour',
                 'vat:id,tax_name,tax_percentage','product_vendor:id,vendor_name,slug','product_brand:id,brand_name,slug','product_designer:id,designer_name,slug','product_embellishment:id,embellishment_name,slug',
                 'product_making:id,making_name,slug','product_season:id,season_name,slug','product_variety','product_fit:id,fit_name,slug','product_artist','product_consignment',
                 'product_ingredient:id,ingredient_name,slug','product_care','tag:id,product_id,keyword_name'])->find($id);
