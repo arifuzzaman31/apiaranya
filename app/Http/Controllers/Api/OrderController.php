@@ -26,29 +26,28 @@ class OrderController extends Controller
     public function order(Request $request)
     {
         try {
-            //return response()->json($request->all());
+            //return response()->json($request->all()); Charge calculation is converted accr Currency
             DB::beginTransaction();
             $order_id   = str_shuffle(uniqueString().date('Ymd'));
-
             $order = new Order();
             $order->order_id    =   $order_id;
             $order->shipping_method   =  $request->shipping_method;
             $order->user_id           = $request->isGuestCheckout == false ? Auth::user()->id : 0;
             $order->vat_rate               = 0;
             $order->charge_vat_rate        = 0;
-            $order->vat_amount             = (float)($request->totalPriceWithTaxOrg - $request->totalPriceOrg);
-            $order->charge_vat_amount      = (float)($request->totalPriceWithTax - $request->totalPrice);
+            $order->vat_amount             = (float)($request->totalPriceWithTaxOrg_after_discount - $request->totalPriceOrg_after_discount);
+            $order->charge_vat_amount      = (float)($request->totalPriceWithTax_after_discount - $request->totalPrice_after_discount);
             $order->payment_method         = 0;
             $order->payment_via            = $request->data['paymentMethod'] == 'online' ? 1 : 0;
             $order->shipping_amount        = $request->shippingCost;
             $order->charge_shipping_amount = $request->shippingCost;
             $order->total_item             = $request->totalAmount ? $request->totalAmount : 1;
-            $order->total_price            = (float)$request->totalPriceOrg;
-            $order->charge_total_price     = (float)$request->totalPrice;
+            $order->total_price            = (float)$request->totalPriceOrg_after_discount;
+            $order->charge_total_price     = (float)$request->totalPrice_after_discount;
             $order->coupon_discount        = $request->coupon_discount ? $request->coupon_discount : 0;
             $order->coupon                 = $request->coupon_code;
-            $order->discount               = 0;
-            $order->charge_discount        = 0;
+            $order->discount               = (float)($request->totalPriceOrg - $request->totalPriceOrg_after_discount);
+            $order->charge_discount        = (float)($request->totalPrice - $request->totalPrice_after_discount);
             $order->total_fragile_amount   = $request->totalFragileChargeOrg;
             $order->charge_fragile_amount  = $request->totalFragileCharge;
             $order->payment_status         = 0;
@@ -80,24 +79,24 @@ class OrderController extends Controller
                 $details->user_id             = $request->isGuestCheckout == false ? Auth::user()->id : 0;
                 $details->item_sku            = $decrese->sku ?? 0;
                 $details->quantity            = $value['amount'];
-                $details->selling_price       = $value['priceOrg'];
-                $details->charge_selling_price = $value['price'];
+                $details->selling_price       = $value['priceOrg_after_discount'];
+                $details->charge_selling_price = $value['price_after_discount'];
                 $details->vat_rate            = $product->vat->tax_percentage;
                 $details->charge_vat_rate     = $value['taxAmount'];
-                $details->vat_amount          = (float)($value['vatAmountParticularProductOrg']);
-                $details->charge_vat_amount   = (float)($value['vatAmountParticularProduct']);
+                $details->vat_amount          = (float)($value['vatAmountParticularProductOrg_after_discount']);
+                $details->charge_vat_amount   = (float)($value['vatAmountParticularProduct_after_discount']);
                 $details->total_fragile_amount = (float) $value['totalFragileChargeOrg'];
                 $details->charge_fragile_amount = (float) $value['totalFragileCharge'];
                 $details->buying_price        = (float)$decrese->cpu;
                 $details->total_buying_price  = (float)($decrese->cpu * $value['amount']);
-                $details->total_selling_price = (float)$value['totalPriceOrg'];
-                $details->total_charge_selling_price = (float)$value['totalPrice'];
+                $details->total_selling_price = (float)$value['totalPriceOrg_after_discount'];
+                $details->total_charge_selling_price = (float)$value['totalPrice_after_discount'];
                 $details->charged_currency    = $request->selectedCurrency ?? 'BDT';
                 $details->exchange_rate       = (float)$request->currentConversionRate;
-                $details->unit_discount       = 0;
-                $details->charge_unit_discount  = 0;
-                $details->total_discount      = 0;
-                $details->charge_total_discount = 0;
+                $details->unit_discount       = (float)($value['priceOrg'] - $value['priceOrg_after_discount']);
+                $details->charge_unit_discount  = (float)($value['price_after_discount'] - $value['price_after_discount']);
+                $details->total_discount      = (float)($value['totalPriceOrg'] - $value['totalPriceOrg_after_discount']);
+                $details->charge_total_discount = (float)($value['totalPrice'] - $value['totalPrice_after_discount']);
                 $details->save();
 
                 //$decrese->stock -= $value['amount'];
@@ -154,7 +153,7 @@ class OrderController extends Controller
 
             DB::table('payments')->insert([
                 'order_id' => $order->id,
-                'amount' => (($order->total_price + $order->shipping_amount + $order->vat_amount+$order->total_fragile_amount) - ($order->discount + $order->coupon_discount)),
+                'amount' => (($order->total_price + $order->shipping_amount + $order->vat_amount+$order->total_fragile_amount) - ($order->coupon_discount)),
                 'charge_amount' => ($order->charge_total_price + $order->charge_shipping_amount + $order->charge_vat_amount+$order->charge_fragile_amount),
                 'charged_currency' => $request->selectedCurrency ?? 'BDT',
                 'exchange_rate' => (float)$request->currentConversionRate,
@@ -198,7 +197,7 @@ class OrderController extends Controller
             if($request->data['deliveryMethod'] == 'E-Courier'){
 
                 $courier = Courier::getInstance();
-                $courier->setProvider(ECourier::class, 'local'); /* local/production */
+                $courier->setProvider(ECourier::class, config('app.payment_mode')); /* local/production */
                 $courier->setConfig([
                     'API-KEY' => env('ECOURIER_API_KEY'),
                     'API-SECRET' => env('ECOURIER_API_SECRET'),
@@ -260,7 +259,7 @@ class OrderController extends Controller
         }
         $post_data['store_id'] = $storeid;
         $post_data['store_passwd'] = $storepass;
-        $post_data['total_amount'] = (($order->total_price + $order->shipping_amount + $order->vat_amount+$order->total_fragile_amount) - ($order->discount + $order->coupon_discount));
+        $post_data['total_amount'] = (($order->total_price + $order->shipping_amount + $order->vat_amount+$order->total_fragile_amount) - ($order->coupon_discount));
         $post_data['currency'] = "BDT";
         $post_data['tran_id'] = $order_id;
         $post_data['success_url'] = route('ssl.success');
@@ -317,7 +316,7 @@ class OrderController extends Controller
         $post_data['product_profile'] = "general";
         $post_data['product_amount'] = $order->total_price;
         $post_data['vat'] = $order->vat_rate;
-        $post_data['discount_amount'] = ($order->discount + $order->coupon_discount);
+        $post_data['discount_amount'] = $order->coupon_discount;
         $post_data['convenience_fee'] = ($order->shipping_amount+$order->total_fragile_amount);
 
         //$post_data['allowed_bin'] = "3,4";
@@ -562,7 +561,7 @@ class OrderController extends Controller
         if($response->response_code == 200){
 
         }
-        \Log::info($response);
+        // \Log::info($response);
         return true;
     }
 }

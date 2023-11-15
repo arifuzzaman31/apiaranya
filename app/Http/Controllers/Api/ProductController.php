@@ -31,12 +31,12 @@ class ProductController extends Controller
         'product_size','product_colour','inventory.discount']);
 
         if($camp_id != ''){
-            $product = $product->with(['campaign'])
+            $product =  $product->with('campaign')
             ->whereHas('campaign', function($q) use ($camp_id) {
                 $q->where('campaign_id', $camp_id);
             });
             // $product = $product->join('campaign_products','products.id','campaign_products.product_id')
-            //     ->select('products.*')
+            //     ->select('products.*','campaign_products.campaign_id','campaign_products.product_id')
             //     ->where('campaign_id',$camp_id);
 
             if($noPagination != ''){

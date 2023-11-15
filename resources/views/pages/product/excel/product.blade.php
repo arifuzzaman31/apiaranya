@@ -41,7 +41,7 @@
                     <td>{{ $value->image_one }}</td>
                     <td>{{ $value->product_brand[0]->brand_name }}</td>
                     <td>Apparel &amp; Accessories &gt; Clothing</td>
-                    <td>Apparel &amp; Accessories &gt; Clothing</td>
+                    <td>clothing &amp; accessories &gt; clothing accessories</td>
                     <td>{{ $value->inventory[0]->stock }}</td>
                     <td>{{ $value->inventory[0]->mrp }} BDT</td>
                     <td></td>

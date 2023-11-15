@@ -110,7 +110,7 @@ class OrderController extends Controller
         try{
             if($request->from == 'pdf'){
                $orderdata = Order::find($id);
-               // return view('invoice',['order_info' => $orderdata]);
+            //    return view('invoice',['order_info' => $orderdata]);
                 $pdf = \PDF::loadView('invoice',['order_info' => $orderdata]);
                 return $pdf->download('invoice-'.time().'-'.$orderdata->id.'.pdf');
             }

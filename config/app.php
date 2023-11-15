@@ -31,6 +31,7 @@ return [
     'clpreset' => 'webable',
     'front_url' => 'https://aranya.com.bd/',
     'payment_mode' => 'production',
+    'ecorier_mode' => 'production',
     'storeid' => 'aranyalive',
     'storepassw' => 'aranyalive35826',
 

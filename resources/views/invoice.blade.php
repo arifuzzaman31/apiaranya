@@ -120,13 +120,13 @@
                     <span style="width: 20%;text-wrap: balance;">
 
                         Address:
-                        <p>{{ $order_info->user_shipping_info->street_address }},</p>
+                        {{ $order_info->user_shipping_info->street_address }},
 			<p>{{ $order_info->user_shipping_info->city }},{{ $order_info->user_shipping_info->country }}</p>
                     </span>
                 </td>
                 <th style="border: none"></th>
 
-                <td style="border: none; color: #272627cc;text-align:right"></td>
+                <td style="border: none; color: #272627cc;text-align:right">Delivery Option:{{$order_info->delivery_platform}}</td>
             </tr>
         </table>
 
@@ -139,6 +139,7 @@
                 <th scope="col" style="border: none; color: #ffffff;text-align:center">VAT</th>
                 <th scope="col" style="border: none; color: #ffffff;text-align:center">VAT AMOUNT</th>
                 <th scope="col" style="border: none; color: #ffffff;text-align:center">QTY</th>
+                <th scope="col" style="border: none; color: #ffffff;text-align:center">DISCOUNT</th>
                 <th scope="col" style="border: none; color: #ffffff;text-align:center">PRICE</th>
                 <th scope="col" style="border: none; color: #ffffff ;text-align: right;">SUBTOTAL</th>
             </tr>
@@ -152,6 +153,7 @@
                 <td style="border: none;text-align:center">{{ $value->vat_rate}}%</td>
                 <td style="border: none;text-align:center">{{ $value->charge_vat_amount}}</td>
                 <td style="border: none;text-align:center">{{ $value->quantity }}</td>
+                <td style="border: none;text-align:center">{{ $value->charge_total_discount }}</td>
                 <td style="border: none;text-align:center">{{ $value->charge_selling_price }}</td>
                 <td style="border: none; text-align: right;">{{ $value->total_charge_selling_price }}</td>
             </tr>

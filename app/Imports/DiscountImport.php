@@ -24,7 +24,7 @@ class DiscountImport implements ToCollection
                 DB::table('campaign_products')->updateOrInsert(
                     [
                         'product_id' => $item->product_id,
-                        'campaign_id' => 4
+                        'campaign_id' => $value[5]
                     ],[
                         'status' => 1,
                         'created_at' => now(),
