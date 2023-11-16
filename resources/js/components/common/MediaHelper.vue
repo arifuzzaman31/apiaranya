@@ -22,11 +22,11 @@
                                                     <a href="#" type="button" @click="setImg(item.file_link)">
                                                         <v-lazy-image class="card-img-top" :src="item.file_link" :alt="item.product_name" :src-placeholder="url+'demo.png'" v-if="item.file_type != 'video'" />
                                                         <video :src="item.file_link" v-else autoplay muted controls class="controlss"></video>
+                                                        <div class="card-body">
+                                                            <h6 class="card-title">{{ item.product_name }}</h6>
+                                                            <p class="card-text">{{ item.extension }}</p>
+                                                        </div>
                                                     </a>
-                                                    <div class="card-body">
-                                                        <h6 class="card-title">{{ item.product_name }}</h6>
-                                                        <p class="card-text">{{ item.extension }}</p>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

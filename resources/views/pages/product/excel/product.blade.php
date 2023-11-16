@@ -10,10 +10,11 @@
             <th>link</th>
             <th>image_link</th>
             <th>brand</th>
-            <th>google_product_category</th>
-            <th>fb_product_category</th>
             <th>quantity_to_sell_on_facebook</th>
             <th>sale_price</th>
+            <th>custom_label_0</th>
+            <th>custom_label_1</th>
+            <th>custom_label_2</th>
             <th>sale_price_effective_date</th>
             <th>item_group_id</th>
             <th>gender</th>
@@ -36,14 +37,15 @@
                     <td>{{ strip_tags($value->description) }}</td>
                     <td>in stock</td>
                     <td>new</td>
-                    <td>{{ $value->inventory[0]->mrp}} BDT</td>
+                    <td>{{ $value->inventory[0]->mrp}}</td>
                     <td>{{ $value->image_one }}</td>
                     <td>{{ $value->image_one }}</td>
                     <td>{{ $value->product_brand[0]->brand_name }}</td>
-                    <td>Apparel &amp; Accessories &gt; Clothing</td>
-                    <td>clothing &amp; accessories &gt; clothing accessories</td>
                     <td>{{ $value->inventory[0]->stock }}</td>
-                    <td>{{ $value->inventory[0]->mrp }} BDT</td>
+                    <td>{{ $value->inventory[0]->mrp }}</td>
+                    <td>Apparel &amp; Accessories</td>
+                    <td>Clothing</td>
+                    <td>{{ $value->subcategory ? $value->subcategory->category_name : $value->category->category_name }}</td>
                     <td></td>
                     <td></td>
                     <td></td>
