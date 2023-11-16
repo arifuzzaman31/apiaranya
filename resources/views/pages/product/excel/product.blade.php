@@ -31,21 +31,38 @@
     <tbody>
         @foreach($products as $value)
             @if(isset($value))
+                @php
+                    $link = config('app.front_url').'products/'.($value->subcategory->slug ?? $value->category->slug).'/'.$value->id;
+                    $salePrice = 0;
+                    $orgPrice = 0;
+                    foreach ($value->inventory as $inv) {
+                        if($inv->discount){
+                            if($inv->discount->discount_type == 'percentage'){
+                                $salePrice = $inv->mrp - ($inv->mrp * ($inv->discount->discount_amount / 100));
+                            } else {
+                                $salePrice = $inv->mrp - $inv->discount->discount_amount;
+                            }
+                        } else {
+                            $salePrice = $inv->mrp;
+                        }
+                        $orgPrice = $inv->mrp;
+                    }
+                @endphp
                 <tr>
                     <td>{{ $value->id }}</td>
                     <td>{{ $value->product_name }}</td>
                     <td>{{ strip_tags($value->description) }}</td>
                     <td>in stock</td>
                     <td>new</td>
-                    <td>{{ $value->inventory[0]->mrp}}</td>
+                    <td>{{ $orgPrice }}</td>
+                    <td>{{ $link }}</td>
                     <td>{{ $value->image_one }}</td>
-                    <td>{{ $value->image_one }}</td>
-                    <td>{{ $value->product_brand[0]->brand_name }}</td>
-                    <td>{{ $value->inventory[0]->stock }}</td>
-                    <td>{{ $value->inventory[0]->mrp }}</td>
+                    <td>{{ $value->product_brand[0]->brand_name ?? 0 }}</td>
+                    <td>{{ $value->inventory[0]->stock ?? 0 }}</td>
+                    <td>{{ floor($salePrice) }}</td>
                     <td>Apparel &amp; Accessories</td>
                     <td>Clothing</td>
-                    <td>{{ $value->subcategory ? $value->subcategory->category_name : $value->category->category_name }}</td>
+                    <td>{{$value->subcategory->category_name ?? $value->category->category_name}}</td>
                     <td></td>
                     <td></td>
                     <td></td>

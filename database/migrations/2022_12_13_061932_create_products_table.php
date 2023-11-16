@@ -40,6 +40,7 @@ class CreateProductsTable extends Migration
             $table->longText('description')->nullable();
             $table->tinyInteger('status')->default(1)->comment("0 for down the product");
             $table->tinyInteger('is_discount')->default(0);
+            $table->tinyInteger('is_new')->default(0)->comment("show in whats new");
             $table->tinyInteger('has_variation')->default(0);
             $table->timestamps();
         });

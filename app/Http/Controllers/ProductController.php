@@ -497,15 +497,11 @@ class ProductController extends Controller
             //throw $th;
         }
     }
-
-
     public function bulkUpload(Request $request)
     {
         $this->validate($request, [
             'file'   => 'required|mimes:xls,xlsx'
         ]);
-
-
         try {
             //$path = $request->file('file')->getRealPath();
             // dd($path);
@@ -554,12 +550,6 @@ class ProductController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Product $product)
     {
         try {
