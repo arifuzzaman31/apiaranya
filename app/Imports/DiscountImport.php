@@ -21,6 +21,8 @@ class DiscountImport implements ToCollection
             DB::beginTransaction();
             foreach ($data as $value) {
                 $item = DB::table('inventories')->where('sku',$value[0])->first();
+                $item->disc_status = 1;
+                $item->update();
                 DB::table('campaign_products')->updateOrInsert(
                     [
                         'product_id' => $item->product_id,

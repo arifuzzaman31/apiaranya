@@ -37,7 +37,7 @@ class Product extends Model
 
     public function inventory()
     {
-        return $this->hasMany(Inventory::class);
+        return $this->hasMany(Inventory::class)->orderBy('disc_status','desc');
     }
 
     public function vat()

@@ -38,7 +38,6 @@ class ProductController extends Controller
             // $product = $product->join('campaign_products','products.id','campaign_products.product_id')
             //     ->select('products.*','campaign_products.campaign_id','campaign_products.product_id')
             //     ->where('campaign_id',$camp_id);
-
             if($noPagination != ''){
                 $product = $product->get();
             } else {

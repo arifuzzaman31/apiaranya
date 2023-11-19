@@ -23,6 +23,7 @@ class CreateInventoriesTable extends Migration
             $table->double('mrp',8,6)->default(0);
             $table->string('sku')->nullable();
             $table->integer('warning_amount')->default(10);
+            $table->tinyInteger('disc_status')->default(0);
             $table->string('warehouse')->nullable();
             $table->softDeletes();
             $table->timestamps();
