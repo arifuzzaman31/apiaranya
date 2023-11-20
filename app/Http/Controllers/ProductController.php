@@ -489,6 +489,12 @@ class ProductController extends Controller
                 unlink(public_path('product.csv'));
             }
             public_path(\Excel::store(new AddProduct, 'product.csv'));
+            // $product = Product::with(['category:id,category_name,slug',
+            // 'subcategory:id,category_name,slug','product_brand:id,brand_name','inventory.discount',
+            // 'inventory.colour','inventory.size'
+            // ])
+            // ->get();
+            // return $product;
             return $this->successMessage($this->fieldname . ' Successfully Updated!');
         } catch (\Throwable $th) {
             DB::rollback();

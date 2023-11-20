@@ -52,7 +52,7 @@ class CampaignController extends Controller
         try {
             // return response()->json($request->all());
             foreach ($request->product_sku as $value) {
-                // return $value['sku'];
+                $discStatus = $value['discount_type'] == 'remove' ? 0 : 1;
                 if($value['discount_type'] == 'remove'){
                     Discount::where('disc_sku',$value['sku'])->delete();
                 } else {
@@ -67,6 +67,9 @@ class CampaignController extends Controller
                          'status'          => AllStatic::$active
                      ]);
                 }
+                Inventory::where('sku',$value['sku'])->update([
+                    'disc_status' => $discStatus
+                ]);
             }
             return response()->json(['status' => 'success', 'message' => 'Discount affected Successfully!']);
         } catch (\Throwable $th) {

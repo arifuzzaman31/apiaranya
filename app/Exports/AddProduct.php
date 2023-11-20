@@ -13,8 +13,12 @@ class AddProduct implements FromView
     */
     public function view(): View
     {
-        $product = Product::with(['category:id,category_name,slug','subcategory:id,category_name,slug','product_brand:id,brand_name','inventory.discount'])->get();
-
+        $product = Product::with(['category:id,category_name,slug',
+        'subcategory:id,category_name,slug','product_brand:id,brand_name','inventory.discount',
+        'inventory.colour','inventory.size'
+        ])
+        ->get();
+        // return $product;
         return view('pages.product.excel.product',['products' => $product]);
     }
 }

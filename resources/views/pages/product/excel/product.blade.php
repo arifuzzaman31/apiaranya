@@ -10,6 +10,7 @@
             <th>link</th>
             <th>image_link</th>
             <th>brand</th>
+            <th>google_product_category</th>
             <th>quantity_to_sell_on_facebook</th>
             <th>sale_price</th>
             <th>custom_label_0</th>
@@ -26,6 +27,9 @@
             <th>shipping</th>
             <th>shipping_weight</th>
             <th>style</th>
+            <th>availability_circle_origin</th>
+            <th>availability_polygon_coordinates</th>
+            <th>address</th>
         </tr>
     </thead>
     <tbody>
@@ -33,47 +37,53 @@
             @if(isset($value))
                 @php
                     $link = config('app.front_url').'products/'.($value->subcategory->slug ?? $value->category->slug).'/'.$value->id;
-                    $salePrice = 0;
-                    $orgPrice = 0;
-                    foreach ($value->inventory as $inv) {
-                        if($inv->discount){
-                            if($inv->discount->discount_type == 'percentage'){
-                                $salePrice = $inv->mrp - ($inv->mrp * ($inv->discount->discount_amount / 100));
+                @endphp
+                @foreach ($value->inventory as $variant)
+                    @php
+                        $salePrice = 0;
+                        if($variant->discount){
+                            if($variant->discount->discount_type == 'percentage'){
+                                $salePrice = $variant->mrp - ($variant->mrp * ($variant->discount->discount_amount / 100));
                             } else {
-                                $salePrice = $inv->mrp - $inv->discount->discount_amount;
+                                $salePrice = $variant->mrp - $variant->discount->discount_amount;
                             }
                         } else {
-                            $salePrice = $inv->mrp;
+                            $salePrice = $variant->mrp;
                         }
-                        $orgPrice = $inv->mrp;
-                    }
-                @endphp
-                <tr>
-                    <td>{{ $value->id }}</td>
-                    <td>{{ $value->product_name }}</td>
-                    <td>{{ strip_tags($value->description) }}</td>
-                    <td>in stock</td>
-                    <td>new</td>
-                    <td>{{ $orgPrice }}</td>
-                    <td>{{ $link }}</td>
-                    <td>{{ $value->image_one }}</td>
-                    <td>{{ $value->product_brand[0]->brand_name ?? 0 }}</td>
-                    <td>{{ $value->inventory[0]->stock ?? 0 }}</td>
-                    <td>{{ floor($salePrice) }}</td>
-                    <td>Apparel &amp; Accessories</td>
-                    <td>Clothing</td>
-                    <td>{{$value->subcategory->category_name ?? $value->category->category_name}}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>{{ $value->flat_colour }}</td>
-                    <td></td>
-                    <td>all ages</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>{{ $value->weight }} g</td>
-                </tr>
+
+                    @endphp
+                    <tr>
+                        <td>{{ $variant->id }}</td>
+                        <td>{{ $value->product_name }}</td>
+                        <td>{{ strip_tags($value->description) }}</td>
+                        <td>in stock</td>
+                        <td>new</td>
+                        <td>{{ $variant->mrp }}</td>
+                        <td>{{ $link }}</td>
+                        <td>{{ $value->image_one }}</td>
+                        <td>{{ $value->product_brand[0]->brand_name ?? 0 }}</td>
+                        <td>Apparel &amp; Accessories &gt; Clothing Accessories</td>
+                        <td>{{ $variant->stock ?? 0 }}</td>
+                        <td>{{ $variant->mrp > $salePrice ? floor($salePrice) : '' }}</td>
+                        <td>Apparel &amp; Accessories</td>
+                        <td>Clothing</td>
+                        <td>{{$value->subcategory->category_name ?? $value->category->category_name}}</td>
+                        <td></td>
+                        <td>{{ $value->has_variation == 1 ? $value->design_code : ''}}</td>
+                        <td></td>
+                        <td>{{ $value->has_variation == 1 ? $variant->colour->color_name ?? '' : '' }}</td>
+                        <td>{{ $value->has_variation == 1 ? $variant->size->size_name ?? '' : ''}}</td>
+                        <td>all ages</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>{{ $value->weight }} g</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                @endforeach
             @endif
         @endforeach
     </tbody>
