@@ -15,7 +15,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $noPagination = $request->get('no_paginate');
-        $byProduct = $request->get('by_product');
+        // $byProduct = $request->get('by_product');
         $discount   = $request->get('discount');
         $keyword   = $request->get('keyword');
         $tak_some   = $request->get('take_some');
@@ -24,6 +24,7 @@ class ProductController extends Controller
         $camp_id   = $request->get('camp_id');
         $attrname   = $request->get('attrname');
         $attrid   = $request->get('attrid');
+        $whatsNew  = $request->get('whats_new');
         $pricerange   = $request->get('range');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
@@ -78,6 +79,10 @@ class ProductController extends Controller
 
         if($tak_some != ''){
             $product = $product->latest()->take($tak_some);
+        }
+
+        if($whatsNew != ''){
+            $product = $product->where('is_new',AllStatic::$active);
         }
 
         if($noPagination != ''){

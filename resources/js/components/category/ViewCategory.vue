@@ -18,6 +18,7 @@ export default {
                 category_name: '',
                 precedence: '',
                 parent_category: 0,
+                whats_new: 1,
                 status: 1
             },
             category_id: '',
@@ -25,6 +26,7 @@ export default {
                 cat_id: '',
                 composition: []
             },
+            keyword: '',
             url: baseUrl,
             validation_error: {}
         }
@@ -32,7 +34,7 @@ export default {
     methods: {
         getCategory(page = 1){
             try{
-                axios.get(baseUrl+`get-category?page=${page}&per_page=10`).then(
+                axios.get(baseUrl+`get-category?page=${page}&per_page=10&keyword=${this.keyword}`).then(
                     response => {
                         this.categories = response.data
                     }
@@ -101,7 +103,7 @@ export default {
         },
 
         addFabricToCat(item){
-            this.comp_form.id = item.id
+            this.comp_form.cat_id = item.id
             this.comp_form.composition = item.composition.map(itm => itm.id)
             $("#catFabricModal").modal('show');
         },
@@ -131,8 +133,14 @@ export default {
             this.form.id = item.id
             this.form.category_name = item.category_name
             this.form.parent_category = item.parent_category
+            this.form.whats_new = item.whats_new
             this.form.status = item.status == 1 ? true : false
             $("#cateModal").modal('show');
+        },
+
+        searchKeyword(){
+            if(this.keyword.length < 3) return false;
+            this.getCategory()
         },
 
         updateCategory(){
@@ -158,11 +166,13 @@ export default {
         formReset(){
             this.validation_error = {}
             this.category_id = '';
+            this.keyword = '';
             this.form = {
                 id:'',
                 category_name : '',
                 precedence : '',
                 parent_category: 0,
+                whats_new: 0,
                 status : 1
             }
             this.comp_form = {
@@ -196,6 +206,10 @@ export default {
         <div id="tableHover" class="col-lg-12 col-12 layout-spacing">
         <div class="statbox">
             <div class="widget-content widget-content-area">
+                <div class="col-4 mb-2 d-flex justify-content-between">
+                    <input id="search" placeholder="Search By Category Name" @keyup="searchKeyword()"  v-model="keyword" type="text" class="form-control form-control-sm" />
+                    <button class="btn btn-danger mx-2" @click="() => {this.keyword = ''; getCategory()}">Clear</button>
+                </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover mb-4">
                         <thead>
@@ -203,7 +217,8 @@ export default {
                                 <th>SL</th>
                                 <th>Category</th>
                                 <th>Parent Category</th>
-                                <th class="text-center">Priority</th>
+                                <th class="text-center">Precedence</th>
+                                <th class="text-center">Whats New</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center" v-if="showPermission.includes('menu-edit')">Action</th>
                             </tr>
@@ -214,7 +229,8 @@ export default {
                                 <td>{{ cat.category_name }}</td>
                                 <td>{{ cat.subcategory.category_name }}</td>
                                 <td>{{ cat.precedence }}</td>
-                                <td>{{ cat.status == 1 ? 'Active' : 'Deactive' }}</td>
+                                <td class="text-center">{{ cat.whats_new == 1 ? 'Enable' : 'Disable' }}</td>
+                                <td class="text-center">{{ cat.status == 1 ? 'Active' : 'Deactive' }}</td>
                                 <td class="text-center" v-if="showPermission.includes('menu-edit') || showPermission.includes('menu-delete')">
                                    <a v-if="showPermission.includes('menu-edit')" class="btn btn-warning btn-sm" target="_blank" :href="url+'category/'+cat.id+'/edit'">Add Image</a>
                                    <a v-if="showPermission.includes('menu-edit')" class="btn btn-info mx-1 btn-sm" @click="renameCate(cat)">Rename</a>
@@ -265,6 +281,14 @@ export default {
                                 <select id="product-category" class="form-control" v-model="form.parent_category">
                                     <option value="0">Choose Parent Category</option>
                                     <option v-for="(value,index) in parentcat" :value="value.id" :key="index">{{ value.category_name }}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="category_name">Whats New</label>
+                                <select id="product-category" class="form-control" v-model="form.whats_new">
+                                    <option value="0">Disable</option>
+                                    <option value="1">Enable</option>
                                 </select>
                             </div>
 

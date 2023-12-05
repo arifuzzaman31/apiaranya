@@ -38,8 +38,11 @@ class CategoryController extends Controller
         $perPage = $request->per_page ?? 20;
         $noPagination = $request->get('no_paginate');
         $parentCategory = $request->get('parent_category');
+        $keyword   = $request->get('keyword');
         $cate = Category::with('subcategory:id,category_name','composition')->orderBy('created_at','desc');
-
+        if($keyword != ''){
+            $cate = $cate->where('category_name','like','%'.$keyword.'%');
+        }
         if($noPagination != ''){
             if($parentCategory != ''){
                 $cate = $cate->where('parent_category',AllStatic::$inactive);
@@ -151,10 +154,13 @@ class CategoryController extends Controller
     {
         try {
             $category->category_image_one = $request->image_one;
+            $category->type_one = $request->type_one;
             $category->category_image_two = $request->image_two;
+            $category->type_two = $request->type_two;
             $category->category_image_three = $request->image_three;
+            $category->type_three = $request->type_three;
             $category->update();
-            return response()->json(['status' => 'success', 'message' => 'Home Page Updated Successfully!']);
+            return response()->json(['status' => 'success', 'message' => 'Category Media Updated Successfully!']);
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error', 'message' => 'Something went wrong!']);
         }
@@ -170,6 +176,7 @@ class CategoryController extends Controller
             $category->parent_category  = $request->parent_category ?? 0;
             $category->precedence       = $request->precedence ?? 0;
             $category->status           = $request->status ? 1 : 0;
+            $category->whats_new        = $request->whats_new;
             $category->update();
             return response()->json(['status' => 'success', 'message' => 'Category Updated Successfully!']);
         } catch (\Throwable $th) {
@@ -182,11 +189,11 @@ class CategoryController extends Controller
     public function updateCompCat(Request $request)
     {
         try {
-            $category = Category::find($request->cat_id);
+            $category = Category::find($request->id);
             $category->composition()->sync($request->composition);
             return response()->json(['status' => 'success', 'message' => 'Composition Updated Successfully!']);
         } catch (\Throwable $th) {
-            // return $th;
+            return $th;
             return response()->json(['status' => 'error', 'message' => 'Something went wrong!']);
         }
 

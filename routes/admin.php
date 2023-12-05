@@ -107,12 +107,14 @@ Route::get('refund-item-detail',[RefundController::class,'refundItemDetail']);
 Route::post('order-item-refund',[RefundController::class,'orderItemRefund']);
 
 // Company
-
-Route::get('get-product',[ProductController::class,'getProduct']);
-Route::get('get-product/search',[ProductController::class,'getProductBySearch']);
-Route::post('product-import',[ProductController::class,'bulkUpload']);
-Route::get('product-stock-download',[ProductController::class,'exportProductStock']);
-
+Route::controller(ProductController::class)
+    ->group(function () {
+    Route::get('product-whats-new/{id}','whatsNewStatus');
+    Route::get('get-product','getProduct');
+    Route::get('get-product/search','getProductBySearch');
+    Route::post('product-import','bulkUpload');
+    Route::get('product-stock-download','exportProductStock');
+});
 //Order
 Route::controller(OrderController::class)
     ->group(function () {

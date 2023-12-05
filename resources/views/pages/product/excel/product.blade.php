@@ -65,9 +65,9 @@
                         <td>Apparel &amp; Accessories &gt; Clothing Accessories</td>
                         <td>{{ $variant->stock ?? 0 }}</td>
                         <td>{{ $variant->mrp > $salePrice ? floor($salePrice) : '' }}</td>
-                        <td>Apparel &amp; Accessories</td>
-                        <td>Clothing</td>
-                        <td>{{$value->subcategory->category_name ?? $value->category->category_name}}</td>
+                        <td>{{$value->category->category_name}}</td>
+                        <td>{{$value->subcategory->category_name ?? ''}}</td>
+                        <td>{{$value->campaign[0]->campaign_name ?? ''}}</td>
                         <td></td>
                         <td>{{ $value->has_variation == 1 ? $value->design_code : ''}}</td>
                         <td></td>

@@ -15,7 +15,7 @@ class AddProduct implements FromView
     {
         $product = Product::with(['category:id,category_name,slug',
         'subcategory:id,category_name,slug','product_brand:id,brand_name','inventory.discount',
-        'inventory.colour','inventory.size'
+        'inventory.colour','inventory.size','campaign'
         ])
         ->get();
         // return $product;

@@ -593,4 +593,17 @@ class ProductController extends Controller
             return response()->json(['status' => 'error', 'message' =>  $th->getMessage()]);
         }
     }
+
+    public function whatsNewStatus($id)
+    {
+        try {
+            $whatsNew = Product::find($id);
+            $whatsNew->is_new = !$whatsNew->is_new;
+            $whatsNew->update();
+            return response()->json(['status' => 'success', 'message' => 'Whats New Modified Successfully!']);
+        } catch (\Throwable $th) {
+            //return $th;
+            return response()->json(['status' => 'error', 'message' => $th->getMessage()]);
+        }
+    }
 }

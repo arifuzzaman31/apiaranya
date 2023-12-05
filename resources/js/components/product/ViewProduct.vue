@@ -125,6 +125,28 @@ export default {
             this.allsubcategories = []
             this.getProduct()
         },
+        toggleWhatsNew(id){
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This Product Affected in Whats New!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Do it!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.get(baseUrl+`product-whats-new/${id}`).then(
+                        response => {
+                            this.getProduct()
+                            this.successMessage(response.data)
+                        }
+                    ). catch(error => {
+                        console.log(error)
+                    })
+                }
+            })
+        },
 
         deleteProduct(id) {
             Swal.fire({
@@ -361,6 +383,7 @@ export default {
                         <th>Category</th>
                         <th>Sub Category</th>
                         <th>Design Code</th>
+                        <th class="text-center">What's New</th>
                         <th class="text-center">Status</th>
                         <th class="text-center">Action</th>
                     </tr>
@@ -380,6 +403,9 @@ export default {
                             <td>{{ product.category.category_name }}</td>
                             <td>{{ product.subcategory.category_name }}</td>
                             <td>{{ product.design_code}}</td>
+                            <td class="text-center">
+                                <a href="javascript:void(0);" @click="toggleWhatsNew(product.id)" data-toggle="tooltip" data-placement="top" title="Make Change"><span class="badge shadow-none" :class="product.is_new == 1 ? 'outline-badge-info':'outline-badge-danger'">{{ product.is_new == 1 ? 'Enable' : 'Disable' }}</span></a>
+                            </td>
                             <td class="text-center">
                                 <span class="badge shadow-none" :class="product.status == 1 ? 'outline-badge-info':'outline-badge-danger'">{{ product.status ? 'Active' : 'Deactive' }}</span>
                             </td>

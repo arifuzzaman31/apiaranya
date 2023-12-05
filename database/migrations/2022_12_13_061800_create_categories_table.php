@@ -20,11 +20,15 @@ class CreateCategoriesTable extends Migration
             $table->string('description')->nullable();
             $table->string('parent_category')->nullable();
             $table->string('category_image_one')->nullable();
+            $table->string('type_one')->nullable();
             $table->string('category_image_two')->nullable();
+            $table->string('type_two')->nullable();
             $table->string('category_image_three')->nullable();
+            $table->string('type_three')->nullable();
             $table->string('category_video')->nullable();
             $table->tinyInteger('precedence')->default(0)->comment("Set precedency");
             $table->tinyInteger('status')->default(1)->comment("0 for down the category");
+            $table->tinyInteger('whats_new')->default(0)->comment("1 for enable, 0 for disable");
             $table->softDeletes();
             $table->timestamps();
         });

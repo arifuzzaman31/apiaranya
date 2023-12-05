@@ -11,9 +11,13 @@ export default {
         return {
             form: {
                 image_one: '',
+                type_one: '',
                 image_two: '',
+                type_two: '',
                 image_three: '',
-                imagenumb: ''
+                type_three: '',
+                imagenumb: '',
+                uritype: ''
             },
             url: baseUrl
         }
@@ -21,16 +25,19 @@ export default {
 
     methods: {
 
-        setImage(numb,uri){
+        setImage(numb,uri,frmt){
             switch (numb) {
                 case 'one':
                     this.form.image_one = uri
+                    this.form.type_one = frmt
                     break;
                 case 'two':
                     this.form.image_two = uri
+                    this.form.type_two = frmt
                     break;
                 case 'three':
                     this.form.image_three = uri
+                    this.form.type_three = frmt
                     break;
 
                 default:
@@ -47,8 +54,12 @@ export default {
         },
 
         selectImage(item){
+            const vExt = ['mp4','WebM','mov','avi','mkv','wmv','avchd','flv'];
+            let ext = item.split(".").pop();
+            var frmt = vExt.includes(ext) ? 'video' : 'image';
             this.form.imageuri = item
-            this.setImage(this.form.imagenumb,item)
+            this.form.uritype = frmt
+            this.setImage(this.form.imagenumb,item,frmt)
         },
 
         updateImage(){
@@ -64,8 +75,11 @@ export default {
         getCatData(){
             axios.get(baseUrl+'category/'+this.categorydata.id).then(response => {
                 this.form.image_one = response.data.category_image_one
+                this.form.type_one = response.data.type_one
                 this.form.image_two = response.data.category_image_two
+                this.form.type_two = response.data.type_two
                 this.form.image_three = response.data.category_image_three
+                this.form.type_three = response.data.type_three
             })
         }
 
@@ -74,8 +88,11 @@ export default {
 
     mounted(){
         this.form.image_one = this.categorydata.category_image_one
+        this.form.type_one = this.categorydata.type_one
         this.form.image_two = this.categorydata.category_image_two
+        this.form.type_two = this.categorydata.type_two
         this.form.image_three = this.categorydata.category_image_three
+        this.form.type_three = this.categorydata.type_three
     }
 }
 </script>
@@ -89,7 +106,8 @@ export default {
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Image Should be (1440 x 900) px, Ratio (16:9)</span>
                     </div>
                     <input type="submit" class="btn btn-info btn-block mb-4 mr-2" style="width: 50%;" @click="openCatMediaModal('one')" value="File Upload" />
-                    <v-lazy-image class="mr-3" width="600" :src="form.image_one" alt="cat image one" :src-placeholder="url+'demo.png'" />
+                    <v-lazy-image class="mr-3" width="600" v-if="form.type_one != 'video'" :src="form.image_one" alt="cat image one" :src-placeholder="url+'demo.png'" />
+                    <video :src="form.image_one" width="320" height="240" v-else autoplay muted controls class="controlss"></video>
                 </div>
             </div>
         </div>
@@ -100,7 +118,8 @@ export default {
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Image Should be (720 x 828) px, Ratio (16:24)</span>
                         </div>
                         <input type="submit" class="btn btn-info btn-block mb-4 mr-2" style="width: 50%;" @click="openCatMediaModal('two')" value="File Upload" />
-                        <v-lazy-image class="mr-3" width="600" :src="form.image_two" alt="cat image two" :src-placeholder="url+'demo.png'" />
+                        <v-lazy-image class="mr-3" v-if="form.type_two != 'video'" width="600" :src="form.image_two" alt="cat image two" :src-placeholder="url+'demo.png'" />
+                        <video :src="form.image_two" width="320" height="240" v-else autoplay muted controls class="controlss"></video>
                     </div>
                 </div>
             </div>
@@ -111,7 +130,8 @@ export default {
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Image Should be (720 x 828) px, Ratio (16:24)</span>
                     </div>
                     <input type="submit" class="btn btn-info btn-block mb-4 mr-2" style="width: 50%;" @click="openCatMediaModal('three')" value="File Upload" />
-                    <v-lazy-image class="mr-3" width="600" :src="form.image_three" alt="cat image three" :src-placeholder="url+'demo.png'" />
+                    <v-lazy-image class="mr-3" width="600" v-if="form.type_three != 'video'" :src="form.image_three" alt="cat image three" :src-placeholder="url+'demo.png'" />
+                    <video :src="form.image_three" width="320" height="240" v-else autoplay muted controls class="controlss"></video>
                 </div>
             </div>
         </div>
@@ -121,7 +141,8 @@ export default {
     <media-helper :setImg="selectImage">
         <template v-slot:viewimage>
             <div class="col-md-12 d-flex justify-content-center my-2">
-                <v-lazy-image :src="form.imageuri" class="card-img-top" :alt="form.imageuri" :src-placeholder="url+'demo.png'" />
+                <v-lazy-image :src="form.imageuri" class="card-img-top" v-if="form.uritype != 'video'" :alt="form.imageuri" :src-placeholder="url+'demo.png'" />
+                <video :src="form.imageuri" v-else autoplay muted controls class="controlss"></video>
             </div>
         </template>
     </media-helper>

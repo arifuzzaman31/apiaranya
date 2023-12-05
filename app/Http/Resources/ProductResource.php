@@ -44,6 +44,7 @@ class ProductResource extends JsonResource
             'fragile'           => $this->fragile,
             'fragile_charge'    => $this->fragile_charge,
             'p_care'            => $this->care,
+            'is_new'            => $this->is_new == 1 ? true : false,
             'p_design_code'     => $this->design_code,
             'has_variation'     => $this->has_variation,
             'p_sizes'           => $this->whenLoaded('product_size'),

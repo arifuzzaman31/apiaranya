@@ -274,8 +274,8 @@ export default {
                                         <p>
                                             {{
                                                 order.payment_via == 1
-                                                    ? "Cash On Delivery"
-                                                    : "Online"
+                                                    ? "Online"
+                                                    : "Cash On Delivery"
                                             }}
                                         </p>
                                     </div>

@@ -18,7 +18,7 @@ export default {
                 image_three: '',
                 image_four: ''
             },
-            url: baseUrl 
+            url: baseUrl
         }
     },
     methods: {
@@ -48,7 +48,7 @@ export default {
 <template>
 <div class="">
     <div class="statbox widget mt-2">
-        <div class="widget-header">             
+        <div class="widget-header">
             <div class="row">
                 <div class="col-12">
                     <div class="icon-container mb-2">
@@ -79,7 +79,7 @@ export default {
                 </div>
                 <input type="submit" class="btn btn-info btn-block mb-4 mr-2" @click="openUploadModal('three')" value="File Upload" />
                 <v-lazy-image width="600" :src="form.category_image_three" alt="cat image one" :src-placeholder="url+'demo.png'" />
-            </div> 
+            </div>
         </div>
     </div>
 </div>

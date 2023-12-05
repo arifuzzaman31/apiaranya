@@ -38,7 +38,7 @@ class OrderController extends Controller
             $order->vat_amount             = (float)($request->totalPriceWithTaxOrg_after_discount - $request->totalPriceOrg_after_discount);
             $order->charge_vat_amount      = (float)($request->totalPriceWithTax_after_discount - $request->totalPrice_after_discount);
             $order->payment_method         = 0;
-            $order->payment_via            = $request->data['paymentMethod'] == 'online' ? 1 : 0;
+            $order->payment_via            = 0;
             $order->shipping_amount        = $request->shippingCost;
             $order->charge_shipping_amount = $request->shippingCost;
             $order->total_item             = $request->totalAmount ? $request->totalAmount : 1;
@@ -165,6 +165,7 @@ class OrderController extends Controller
                 'order_id' => $order->id,
                 'created_at'    => date("Y-m-d H:i:s")
             ]);
+            DB::commit();
             $this->invoiceToMail($order->id);
             $courierData = [
                 'recipient_name' => $request->data['first_name_billing'],
@@ -195,35 +196,8 @@ class OrderController extends Controller
             ];
 
             if($request->data['deliveryMethod'] == 'E-Courier'){
-
-                $courier = Courier::getInstance();
-                $courier->setProvider(ECourier::class, config('app.payment_mode')); /* local/production */
-                $courier->setConfig([
-                    'API-KEY' => env('ECOURIER_API_KEY'),
-                    'API-SECRET' => env('ECOURIER_API_SECRET'),
-                    'USER-ID' => env('ECOURIER_USER_ID')
-                ]);
-
-                $courier->setParams($courierData);
-                $resp = $courier->placeOrder();
-                $result = json_decode(json_encode($resp),true);
-                $datas = json_decode($result['response']);
-                if ($datas !== null && isset($datas->ID)) {
-
-                if($result['statusCode'] == 200){
-                            DB::table('orders')->where('id', $order->id)->update([
-                                'tracking_id' => $datas->ID,
-                                'updated_at'    => date("Y-m-d H:i:s")
-                            ]);
-                            DB::table('deliveries')->where('order_id', $order->id)->update([
-                                'tracking_id' => $datas->ID
-                            ]);
-                        }
-                }
-
+                    $this->sendEcorier($courierData,$order->id);
             }
-
-            DB::commit();
             if($request->data['paymentMethod'] == 'online'){
                 $backUri = $request->backUri ? $request->backUri : 'https://aranya.com.bd';
                 return response()->json(['status' => 'success', 'type' => 'online', 'message' => 'Order Created', 'payment' => $this->sslCommerz($order->id,$backUri)], 200);
@@ -384,6 +358,7 @@ class OrderController extends Controller
                 $order->validation_id = $request->val_id;
                 $order->transaction_id = $request->bank_tran_id;
                 $order->payment_date = $request->tran_date;
+                $order->payment_via = 1;
                 $order->payment_info = json_encode($request->all());
                 $order->update();
 
@@ -450,12 +425,6 @@ class OrderController extends Controller
 
     public function sslCommerzCancel(Request $request)
     {
-        // return "Cancelled";
-        // // return $request->all();
-        // if(!Auth::check()){
-
-        //     Auth::loginUsingId($request->value_a);
-        // }
         DB::table('orders')->where('id',$request->tran_id)->update([
             'payment_status' => AllStatic::$cancel
         ]);
@@ -546,22 +515,38 @@ class OrderController extends Controller
         return view('email.order_invoice',['order_info' => $order]);
     }
 
-    public function sendEcorier($orderData)
+    public function sendEcorier($courierData,$orderId)
     {
-        $courier = Courier::getInstance();
-        $courier->setProvider(ECourier::class, 'local'); /* local/production */
-        $courier->setConfig([
-            'API-KEY' => env('ECOURIER_API_KEY'),
-            'API-SECRET' => env('ECOURIER_API_SECRET'),
-            'USER-ID' => env('ECOURIER_USER_ID')
-        ]);
+        try {
+            $courier = Courier::getInstance();
+            $courier->setProvider(ECourier::class, config('app.payment_mode')); /* local/production */
+            $courier->setConfig([
+                'API-KEY' => env('ECOURIER_API_KEY'),
+                'API-SECRET' => env('ECOURIER_API_SECRET'),
+                'USER-ID' => env('ECOURIER_USER_ID')
+            ]);
 
-        $courier->setParams($orderData);
-        $response = $courier->placeOrder();
-        if($response->response_code == 200){
+            $courier->setParams($courierData);
+            $resp = $courier->placeOrder();
+            $result = json_decode(json_encode($resp),true);
+            $datas = json_decode($result['response']);
+            if ($datas !== null && isset($datas->ID)) {
 
+                    if($result['statusCode'] == 200){
+                        DB::table('orders')->where('id', $orderId)->update([
+                            'tracking_id' => $datas->ID,
+                            'updated_at'    => date("Y-m-d H:i:s")
+                        ]);
+                        DB::table('deliveries')->where('order_id', $orderId)->update([
+                            'tracking_id' => $datas->ID
+                        ]);
+                    }
+            }
+            return false;
+        } catch (\Throwable $th) {
+            return false;
+            // return $th;
         }
-        // \Log::info($response);
-        return true;
+
     }
 }
