@@ -1,0 +1,20 @@
+1. migrations
+	- products
+	- categories
+2. controller
+	- CategoryController
+	- Api\ProductController
+	- Api\OrderController
+	- OrderController
+3. Resources
+	- ProductResource
+4.route
+	- admin.php
+5. components
+	- category
+	- product
+	- common
+	- order
+6. Views
+	- invoice
+	- structure.css

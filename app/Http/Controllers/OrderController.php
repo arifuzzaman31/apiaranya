@@ -166,16 +166,36 @@ class OrderController extends Controller
 
             $delivery = Delivery::where('order_id',$request->order_id)->first();
             if(!empty($delivery)){
+                if($request->order_position == AllStatic::$pending){
+                    $delivery->process_date = NULL;
+                    $delivery->process_state = NULL;
+                    $delivery->process_value = NULL;
+                    $delivery->on_delivery_date = NULL;
+                    $delivery->on_delivery_state = NULL;
+                    $delivery->on_delivery_value = NULL;
+                    $delivery->delivery_date = NULL;
+                    $delivery->delivery_state = NULL;
+                    $delivery->delivery_value = NULL;
+                }
                 if($request->order_position == AllStatic::$processing){
                     $delivery->process_date = $request->date ? $request->date : date('Y-m-d');
                     $delivery->process_state = AllStatic::$processing;
                     $delivery->process_value = deliveryPosition(AllStatic::$processing);
+                    $delivery->on_delivery_date = NULL;
+                    $delivery->on_delivery_state = NULL;
+                    $delivery->on_delivery_value = NULL;
+                    $delivery->delivery_date = NULL;
+                    $delivery->delivery_state = NULL;
+                    $delivery->delivery_value = NULL;
                 }
 
                 if($request->order_position == AllStatic::$on_delivery){
                     $delivery->on_delivery_date = $request->date ? $request->date : date('Y-m-d');
                     $delivery->on_delivery_state = AllStatic::$on_delivery;
                     $delivery->on_delivery_value = deliveryPosition(AllStatic::$on_delivery);
+                    $delivery->delivery_date = NULL;
+                    $delivery->delivery_state = NULL;
+                    $delivery->delivery_value = NULL;
                 }
 
                 if($request->order_position == AllStatic::$delivered){

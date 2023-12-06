@@ -102,7 +102,7 @@ class ReportController extends Controller
             }
             $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
 
-            $data = Inventory::with('product:id,design_code,category_id,sub_category_id,fragile,fragile_charge',
+            $data = Inventory::with('product:id,design_code,category_id,sub_category_id,fragile,fragile_charge,weight,lead_time',
                 'product.category:id,category_name','product.subcategory:id,category_name',
                 'product.product_brand:id,brand_name','product.product_fabric:id,fabric_name','colour:id,color_name',
                 'product.product_size:id,size_name','product.product_designer:id,designer_name','product.product_embellishment:id,embellishment_name',
@@ -110,8 +110,9 @@ class ReportController extends Controller
                 'product.product_fit:id,fit_name','product.product_artist:id,artist_name','product.product_consignment:id,consignment_name',
                 'product.product_ingredient:id,ingredient_name')
                 ->selectRaw('order_details.product_id, sum(quantity) as sales_quantity,sum(total_selling_price) as total_selling_amount,
-                    sum(vat_amount) as total_vat_amount,ROUND(sum(total_buying_price),3) as total_buying_amount,
-                    ROUND(sum(total_selling_price - total_buying_price),3) as profit,inventories.stock as current_stock,
+                    sum(vat_amount) as total_vat_amount,ROUND(sum(total_buying_price),2) as total_buying_amount,
+                    ROUND(sum(total_discount),2) as total_discount_amount,
+                    ROUND(sum(total_selling_price - total_buying_price),2) as profit,inventories.stock as current_stock,
                     inventories.sku as p_sku,inventories.colour_id,inventories.size_id')
                 ->leftJoin('order_details', 'inventories.product_id', '=', 'order_details.product_id')
                 ->whereColumn('inventories.product_id', 'order_details.product_id')
@@ -177,8 +178,9 @@ class ReportController extends Controller
                 'product.product_fit:id,fit_name','product.product_artist:id,artist_name','product.product_consignment:id,consignment_name',
                 'product.product_ingredient:id,ingredient_name','product.campaign:id,campaign_name,campaign_start_date,campaign_expire_date')
                 ->selectRaw('order_details.product_id, sum(quantity) as sales_quantity,sum(total_selling_price) as total_selling_amount,
-                sum(vat_amount) as total_vat_amount,ROUND(sum(total_buying_price),3) as total_buying_amount,
-                ROUND(sum(total_selling_price - total_buying_price),3) as profit,inventories.stock as current_stock,
+                sum(vat_amount) as total_vat_amount,ROUND(sum(total_buying_price),2) as total_buying_amount,
+                ROUND(sum(total_discount),2) as total_discount_amount,
+                ROUND(sum(total_selling_price - total_buying_price),2) as profit,inventories.stock as current_stock,
                 inventories.sku as p_sku,inventories.colour_id,inventories.size_id')
                 ->join('order_details', 'inventories.product_id', '=', 'order_details.product_id')
                 ->whereColumn('inventories.product_id', 'order_details.product_id')

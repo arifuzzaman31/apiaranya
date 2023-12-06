@@ -251,10 +251,10 @@ export default {
                                     </td>
                                     <td> {{ item.product.fragile }}</td>
                                     <td> {{ item.product.fragile_charge }}</td>
-                                    <td> {{ item.weight }}</td>
-                                    <td> {{ item.lead_time }}</td>
+                                    <td> {{ item.product.weight }}</td>
+                                    <td> {{ item.product.lead_time }}</td>
                                     <td> <p v-if="item.colour && item.colour.color_name">{{ item.colour.color_name }}</p></td>
-                                    <td> {{ item.design_code }}</td>
+                                    <td> {{ item.product.design_code }}</td>
                                     <td>
                                         <span v-if="item.product.product_fabric && item.product.product_fabric.length > 0">
                                             <p v-for="fabric in item.product.product_fabric" :key="fabric.id">
@@ -265,7 +265,7 @@ export default {
                                     <td> {{ item.sales_quantity }}</td>
                                     <td> {{ item.total_buying_amount }}</td>
                                     <td> {{ item.total_selling_amount }}</td>
-                                    <td> 0</td>
+                                    <td> {{ item.total_discount_amount }}</td>
                                     <td> {{ item.total_selling_amount }}</td>
                                     <td> {{ item.total_selling_amount+item.total_vat_amount }}</td>
                                     <td> {{ item.profit }}</td>

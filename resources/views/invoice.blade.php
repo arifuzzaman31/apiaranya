@@ -166,15 +166,16 @@
         <div style="float: right;width:34%">
             <table style="margin-top: .5rem;padding:2px 4px; float: right;background-color: #3b5576;color:#fff">
                 <tr style="border: none;">
-                    <td style="border: none;">SUB-TOTAL
-                    </td>
+                    <td style="border: none;">SUB-TOTAL</td>
                     <td style="border: none;text-align: right">{{ $order_info->charge_total_price }}</td>
                 </tr>
                 <tr style="border: none;">
-                    <td style="border: none;">VAT
-
-                    </td>
+                    <td style="border: none;">VAT</td>
                     <td style="border: none;text-align: right"> {{ $order_info->charge_vat_amount }}</td>
+                </tr>
+                <tr style="border: none;">
+                    <td style="border: none;">DISCOUNT</td>
+                    <td style="border: none;text-align: right"> {{ $order_info->charge_discount }}</td>
                 </tr>
 
                 <tr style="border: none;">

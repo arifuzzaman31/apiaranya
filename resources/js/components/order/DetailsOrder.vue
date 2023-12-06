@@ -38,7 +38,7 @@ export default {
                         .catch((error) => {
                             console.log(error);
                         });
-                        window.location.reload(true)
+                        window.location.href = window.location.href;
                 }
             });
         },
@@ -157,7 +157,7 @@ export default {
                                                     points="7 3 7 8 15 8"
                                                 ></polyline>
                                             </svg>
-                                            Download Invoice
+                                            Download
                                         </a>
                                     </div>
                                 </div>
@@ -247,10 +247,10 @@ export default {
                                     </thead>
                                     <tbody>
                                         <tr
-                                            v-for="detail in details"
+                                            v-for="(detail,index) in details"
                                             :key="detail.id"
                                         >
-                                            <td>{{ detail.id }}</td>
+                                            <td>{{ index+1 }}</td>
                                             <td>
                                                 {{
                                                     detail.product.product_name
@@ -267,10 +267,9 @@ export default {
                                 </table>
                             </div>
                             <hr />
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <h6>Payment Method</h6>
+                            <div class="container d-flex justify-content-between" style="font-size: small;font-weight: 500;">
+                                    <div>
+                                        <p>Payment Method</p>
                                         <p>
                                             {{
                                                 order.payment_via == 1
@@ -279,24 +278,24 @@ export default {
                                             }}
                                         </p>
                                     </div>
-                                    <div class="col-md-3">
-                                        <h6>Currency</h6>
+                                    <div>
+                                        <p>Currency</p>
                                         <p>{{ order.charged_currency }}</p>
                                     </div>
-                                    <div class="col-md-2">
-                                        <h6>Sub Total</h6>
+                                    <div>
+                                        <p>Sub Total</p>
                                         <p>{{ order.charge_total_price }}</p>
                                     </div>
-                                    <div class="col-md-1">
-                                        <h6>VAT</h6>
+                                    <div>
+                                        <p>VAT</p>
                                         <p>{{ order.charge_vat_amount }}</p>
                                     </div>
-                                    <div class="col-md-2">
-                                        <h6>Shipping Cost</h6>
+                                    <div>
+                                        <p>Shipping</p>
                                         <p>{{ order.shipping_amount }}</p>
                                     </div>
-                                    <div class="col-md-2">
-                                        <h6>Grand Total</h6>
+                                    <div>
+                                        <p>Grand Total</p>
                                         <p class="text-warning">
                                             {{
                                                 (order.charge_total_price +
@@ -305,7 +304,7 @@ export default {
                                             }}
                                         </p>
                                     </div>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -313,7 +312,7 @@ export default {
                         <div class="p-4 border shadow-sm bg-white rounded">
                             <h5>Order Logs</h5>
                             <div class="stepper d-flex flex-column mt-4 ">
-                                <div class="d-flex" v-if="order.delivery.process_state == 1">
+                                <div class="d-flex">
                                     <div
                                         class="d-flex flex-column pr-3 align-items-center"
                                     >
@@ -326,10 +325,31 @@ export default {
                                     </div>
                                     <div>
                                         <h6 class="text-dark">
+                                            Pending
+                                        </h6>
+                                        <p class="lead text-muted pb-3">
+                                            Pending status created from order date <br>
+                                            at {{ dateToString(order.order_date) }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="d-flex" v-if="order.delivery.process_state == 1">
+                                    <div
+                                        class="d-flex flex-column pr-3 align-items-center"
+                                    >
+                                        <div
+                                            class="rounded-circle px-2 bg-primary text-white mb-1"
+                                        >
+                                            2
+                                        </div>
+                                        <div class="line h-100"></div>
+                                    </div>
+                                    <div>
+                                        <h6 class="text-dark">
                                             Proccess
                                         </h6>
                                         <p class="lead text-muted pb-3">
-                                            Payment status updated to Paid <br>
+                                            Proccess status updated to On Proccess <br>
                                             at {{ dateToString(order.delivery.process_date) }}
                                         </p>
                                     </div>
@@ -341,7 +361,7 @@ export default {
                                         <div
                                             class="rounded-circle px-2 bg-primary text-white mb-1"
                                         >
-                                            2
+                                            3
                                         </div>
                                         <div class="line h-100"></div>
                                     </div>
@@ -362,7 +382,7 @@ export default {
                                         <div
                                             class="rounded-circle px-2 bg-primary text-white mb-1"
                                         >
-                                            3
+                                            4
                                         </div>
                                         <div class="line h-100 d-none"></div>
                                     </div>
