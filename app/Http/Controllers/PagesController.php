@@ -26,16 +26,20 @@ class PagesController extends Controller
 
     public function homeImageUpdate(Request $request)
     {
-        //return response()->json($request->all());
+        // return response()->json($request->all());
         try {
             $hp = Page::where('page_name','home')->first();
             switch ($request->imagenumb) {
                 case 'one':
                         if($request->imageuri) $hp->image_one = $request->imageuri;
                         if($request->subcategory != ''){
-                            $hp->back_url_one = $request->subcategory;
+                                $hp->back_url_one = $request->subcategory;
                         } else {
-                            $hp->back_url_one = $request->categoryname;
+                            if($request->selectLink == 'campaign'){
+                                $hp->back_url_one = 'campaign/cat='.$request->category['id'].'&cat_name='.$request->category['slug'];
+                            } else {
+                                $hp->back_url_one = $request->categoryname;
+                            }
                         }
                     break;
                 case 'two':
@@ -43,7 +47,11 @@ class PagesController extends Controller
                         if($request->subcategory != ''){
                             $hp->back_url_two = $request->subcategory;
                         } else {
+                            if($request->selectLink == 'campaign'){
+                                $hp->back_url_two = 'campaign/cat='.$request->category['id'].'&cat_name='.$request->category['slug'];
+                            } else {
                             $hp->back_url_two = $request->categoryname;
+                            }
                         }
                     break;
                 case 'three':
@@ -51,7 +59,11 @@ class PagesController extends Controller
                         if($request->subcategory != ''){
                             $hp->back_url_three = $request->subcategory;
                         } else {
+                            if($request->selectLink == 'campaign'){
+                                $hp->back_url_three = 'campaign/cat='.$request->category['id'].'&cat_name='.$request->category['slug'];
+                            } else {
                             $hp->back_url_three = $request->categoryname;
+                            }
                         }
                     break;
                 case 'four':
@@ -59,7 +71,11 @@ class PagesController extends Controller
                         if($request->subcategory != ''){
                             $hp->back_url_four = $request->subcategory;
                         } else {
+                            if($request->selectLink == 'campaign'){
+                                $hp->back_url_four = 'campaign/cat='.$request->category['id'].'&cat_name='.$request->category['slug'];
+                            } else {
                             $hp->back_url_four = $request->categoryname;
+                            }
                         }
                     break;
                 case 'five':
@@ -67,7 +83,11 @@ class PagesController extends Controller
                         if($request->subcategory != ''){
                             $hp->back_url_five = $request->subcategory;
                         } else {
+                            if($request->selectLink == 'campaign'){
+                                $hp->back_url_five = 'campaign/cat='.$request->category['id'].'&cat_name='.$request->category['slug'];
+                            } else {
                             $hp->back_url_five = $request->categoryname;
+                            }
                         }
                     break;
                 case 'six':
@@ -75,7 +95,11 @@ class PagesController extends Controller
                         if($request->subcategory != ''){
                             $hp->back_url_six = $request->subcategory;
                         } else {
+                            if($request->selectLink == 'campaign'){
+                                $hp->back_url_six = 'campaign/cat='.$request->category['id'].'&cat_name='.$request->category['slug'];
+                            } else {
                             $hp->back_url_six = $request->categoryname;
+                            }
                         }
                     break;
 

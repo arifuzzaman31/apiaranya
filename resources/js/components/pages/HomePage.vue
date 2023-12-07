@@ -25,11 +25,13 @@ export default {
                 imageuri: '',
                 imagenumb: '',
                 back_url: '',
-                state: 'home'
+                state: 'home',
+                selectLink: 'category',
             },
             url: baseUrl,
             allcategories: [],
             allsubcategories: [],
+            campaigns: [],
             target_state: '',
             allfiltersubcategories: [],
             validation_error: {},
@@ -114,10 +116,25 @@ export default {
                     })
             },
             getSubCategories() {
+                this.form.back_url = ''
+                this.updateFormdata.subcategory = ''
                 this.updateFormdata.categoryname = this.updateFormdata.category.slug
                 const updateFormData = (this.allfiltersubcategories).filter((data) => data.parent_category == this.updateFormdata.category.id)
                 this.allsubcategories = updateFormData
                 this.form.back_url = this.updateFormdata.category.slug+'/'+this.updateFormdata.subcategory
+            },
+
+            getCampaign(){
+                try{
+                    axios.get(baseUrl+`get-campaign?status=yes&no_paginate=yes`)
+                    .then(response => {
+                        this.campaigns = response.data
+                    }).catch(error => {
+                        console.log(error)
+                    })
+                }catch(e){
+                    console.log(e)
+                }
             },
 
             clearFilter(){
@@ -128,7 +145,8 @@ export default {
                     imageuri: '',
                     imagenumb: '',
                     back_url: '',
-                    state: 'home'
+                    state: 'home',
+                    selectLink: 'category'
                 }
                 this.allsubcategories = []
             },
@@ -146,6 +164,7 @@ export default {
     mounted(){
         this.getHomeData()
         this.getCategory()
+        this.getCampaign()
     },
     computed: {
         showPermission() {
@@ -170,11 +189,11 @@ export default {
                 <div class="row mb-4 mt-3">
                     <div class="col-sm-3 col-12">
                         <div class="nav flex-column nav-pills mb-sm-0 mb-3 text-center mx-auto" id="v-border-pills-tab" role="tablist" aria-orientation="vertical">
-                            <a @click="setStateNumb('one')" class="nav-link active" id="v-border-pills-home-tab" data-toggle="pill" href="#v-border-pills-home" role="tab" aria-controls="v-border-pills-home" aria-selected="false">Video</a>
-                            <a @click="setStateNumb('two')" class="nav-link text-center" id="v-border-pills-profile-tab" data-toggle="pill" href="#v-border-pills-profile" role="tab" aria-controls="v-border-pills-profile" aria-selected="false">Image 1</a>
-                            <a @click="setStateNumb('three')" class="nav-link text-center" id="v-border-pills-messages-tab" data-toggle="pill" href="#v-border-pills-messages" role="tab" aria-controls="v-border-pills-messages" aria-selected="false">Image 2</a>
-                            <a @click="setStateNumb('four')" class="nav-link text-center" id="v-border-pills-settings-tab" data-toggle="pill" href="#v-border-pills-settings" role="tab" aria-controls="v-border-pills-settings" aria-selected="true">Image 3</a>
-                            <a @click="setStateNumb('five')" class="nav-link text-center" id="v-border-pills-image5-tab" data-toggle="pill" href="#v-border-pills-image5" role="tab" aria-controls="v-border-pills-image5" aria-selected="true">Image 4</a>
+                            <a @click="setStateNumb('one')" class="nav-link active" id="v-border-pills-home-tab" data-toggle="pill" href="#v-border-pills-home" role="tab" aria-controls="v-border-pills-home" aria-selected="false">Media-1</a>
+                            <a @click="setStateNumb('two')" class="nav-link text-center" id="v-border-pills-profile-tab" data-toggle="pill" href="#v-border-pills-profile" role="tab" aria-controls="v-border-pills-profile" aria-selected="false">Media-2</a>
+                            <a @click="setStateNumb('three')" class="nav-link text-center" id="v-border-pills-messages-tab" data-toggle="pill" href="#v-border-pills-messages" role="tab" aria-controls="v-border-pills-messages" aria-selected="false">Media-3</a>
+                            <a @click="setStateNumb('four')" class="nav-link text-center" id="v-border-pills-settings-tab" data-toggle="pill" href="#v-border-pills-settings" role="tab" aria-controls="v-border-pills-settings" aria-selected="true">Media-4</a>
+                            <a @click="setStateNumb('five')" class="nav-link text-center" id="v-border-pills-image5-tab" data-toggle="pill" href="#v-border-pills-image5" role="tab" aria-controls="v-border-pills-image5" aria-selected="true">Media-5</a>
                         </div>
                     </div>
 
@@ -233,17 +252,33 @@ export default {
 
                     <div class="col-sm-3 col-12">
                         <p class="text-success" style="font-size:17px">Create Back Link</p>
-                        <div class="my-2">
-                            <select id="product-category" class="form-control" @change="getSubCategories()" v-model="updateFormdata.category">
-                                <option selected="" value="">Choose Category</option>
-                                <option v-for="(value,index) in allcategories" :value="value" :key="index">{{ value.category_name }}</option>
-                            </select>
+                            <div class="my-2">
+                                <select id="product-category" class="form-control" v-model="updateFormdata.selectLink">
+                                    <option selected="category" value="category">Category</option>
+                                    <option selected="campaign" value="campaign">Campaign</option>
+                                </select>
+                            </div>
+                        <div v-if="updateFormdata.selectLink == 'category'">
+                            <div class="my-2">
+                                <select id="product-category" class="form-control" @change="getSubCategories()" v-model="updateFormdata.category">
+                                    <option selected="" value="">Choose Category</option>
+                                    <option v-for="(value,index) in allcategories" :value="value" :key="index">{{ value.category_name }}</option>
+                                </select>
+                            </div>
+                            <div>
+                                <select id="product-updateFormdata" class="form-control" v-model="updateFormdata.subcategory">
+                                    <option value="">Choose...</option>
+                                    <option v-for="(value,index) in allsubcategories" :value="'products/'+value.slug+'?cat='+updateFormdata.category.id+'&sub_cat='+value.id" :key="index">{{ value.category_name }}</option>
+                                </select>
+                            </div>
                         </div>
-                        <div>
-                            <select id="product-updateFormdata" class="form-control" v-model="updateFormdata.subcategory">
-                                <option value="">Choose...</option>
-                                <option v-for="(value,index) in allsubcategories" :value="value.slug+'?cat='+updateFormdata.category.id+'&sub_cat='+value.id" :key="index">{{ value.category_name }}</option>
-                            </select>
+                        <div v-else>
+                            <div class="my-2">
+                                <select id="campaign" class="form-control" v-model="updateFormdata.category">
+                                    <option selected="" value="">Choose Campaign</option>
+                                    <option v-for="(value,index) in campaigns" :value="value" :key="index">{{ value.campaign_name }}</option>
+                                </select>
+                            </div>
                         </div>
                         <button type="submit" @click="updateImage()" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block my-2">Update</button>
 

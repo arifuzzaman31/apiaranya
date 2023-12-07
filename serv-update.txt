@@ -6,6 +6,9 @@
 	- Api\ProductController
 	- Api\OrderController
 	- OrderController
+    - PagesController
+    - CampaignController
+    - ReportController
 3. Resources
 	- ProductResource
 4.route
@@ -15,6 +18,7 @@
 	- product
 	- common
 	- order
+	- pages
 6. Views
 	- invoice
 	- structure.css
