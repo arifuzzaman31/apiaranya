@@ -754,7 +754,7 @@ code {
   position: fixed;
   z-index: 1030;
   transition: .550s;
-  top: 96px;
+  top: 80px;
   height: 100vh;
   touch-action: none;
   user-select: none;

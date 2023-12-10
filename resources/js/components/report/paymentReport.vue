@@ -31,7 +31,7 @@ export default {
             })
             .catch(errors => {
                 console.log(errors);
-            });  
+            });
         },
         filterClear(){
             this.filterdata = {
@@ -56,9 +56,9 @@ export default {
                 <div class="row">
                     <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
                         <h4>Payment Report</h4>
-                    </div>                          
+                    </div>
                 </div>
-            </div>       
+            </div>
             <div class="widget-content widget-content-area">
                 <div class="row mb-2">
                     <div class="col-md-2 col-lg-2 col-12">
@@ -98,7 +98,7 @@ export default {
                             <tbody v-if="paymentData.data && paymentData.data.length > 0">
                                 <template v-for="(item,index) in paymentData.data" :key="index">
                                     <tr>
-                                        <td>{{ item.id }}</td>
+                                        <td>{{ item.order_id }}</td>
                                         <td>{{ item.order_date }}</td>
                                         <td class="text-center">{{ item.user.name }}</td>
                                         <td class="text-center">{{ item.user.email }}</td>
@@ -109,14 +109,14 @@ export default {
                                         <td>{{ item.user.address }}</td>
                                         <td>{{ item.total_price }}</td>
                                         <td>{{ item.payment_method_name }}</td>
-                                    </tr>					
+                                    </tr>
                                 </template>
                             </tbody>
                             <tbody v-else class="text-center mt-3">
                                 <tr>
                                     <td colspan="13">No Order Found</td>
                                 </tr>
-                                    
+
                             </tbody>
                         </table>
                         <div class="d-flex justify-content-between">
@@ -130,7 +130,7 @@ export default {
                             <a target="_blank" :href="url+`get-payment-report?paymentexcel=yes&date_from=${filterdata.from}&date_to=${filterdata.to}`" type="button" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>  Excel</a>
                         </div>
                 </div>
-                
+
             </div>
         </div>
     </div>

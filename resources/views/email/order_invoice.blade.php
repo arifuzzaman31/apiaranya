@@ -52,13 +52,13 @@
         <table>
             <tr>
                 <td style="border: none; color: #8a858e">
-                    Invoice ID: <strong>#{{ $order_info->id }}</strong>
+                    Invoice ID: <strong>#{{ $order_info->order_id }}</strong>
                 </td>
                 <th style="border: none"></th>
 
                 <td style="border: none; text-align: right">
                     <a href="{{ config('app.front_url') }}"
-                        style="border: 1px solid #8a858e; padding: 5px; color: #8a858e">araya.com.bd</a>
+                        style="border: 1px solid #8a858e; padding: 5px; color: #8a858e">aranya.com.bd</a>
                 </td>
             </tr>
         </table>

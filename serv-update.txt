@@ -9,6 +9,7 @@
     - PagesController
     - CampaignController
     - ReportController
+    - DashboardController
 3. Resources
 	- ProductResource
 4.route

@@ -28,9 +28,9 @@ class OrderController extends Controller
         try {
             //return response()->json($request->all()); Charge calculation is converted accr Currency
             DB::beginTransaction();
-            $order_id   = str_shuffle(uniqueString().date('Ymd'));
+            // $order_id   = str_shuffle(uniqueString().date('Ymd'));
             $order = new Order();
-            $order->order_id    =   $order_id;
+            $order->order_id    =  'AO'.sprintf("%04d",$order->id);
             $order->shipping_method   =  $request->shipping_method;
             $order->user_id           = $request->isGuestCheckout == false ? Auth::user()->id : 0;
             $order->vat_rate               = 0;
@@ -183,13 +183,13 @@ class OrderController extends Controller
                 'delivery_hour' => 'any',
                 'recipient_zip' => $request->data['post_code_billing'] ?? 'N/A',
                 'pick_hub' => '18490',
-                'product_id' => $order_id,
+                'product_id' => $order->order_id,
                 'pick_address' => "dfgfhgfghfh",
                 'comments' => 'Please handle carefully',
                 'number_of_item' => $request->totalAmount,
                 'actual_product_price' => $order->total_price,
                 'pgwid' => '8888',
-                'pgwtxn_id' => $order_id,
+                'pgwtxn_id' => $order->order_id,
                 'is_fragile' => $request->totalFragileCharge > 0 ? 1 : 0,
                 'sending_type' => 1,
                 'is_ipay' => 0

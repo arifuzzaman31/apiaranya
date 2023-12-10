@@ -39,7 +39,7 @@ class CategoryController extends Controller
         $noPagination = $request->get('no_paginate');
         $parentCategory = $request->get('parent_category');
         $keyword   = $request->get('keyword');
-        $cate = Category::with('subcategory:id,category_name','composition')->orderBy('created_at','desc');
+        $cate = Category::with('subcategory:id,category_name','composition')->orderBy('parent_category','asc')->orderBy('precedence','asc');
         if($keyword != ''){
             $cate = $cate->where('category_name','like','%'.$keyword.'%');
         }
@@ -159,6 +159,7 @@ class CategoryController extends Controller
             $category->type_two = $request->type_two;
             $category->category_image_three = $request->image_three;
             $category->type_three = $request->type_three;
+            $category->category_feature_image = $request->category_feature_image;
             $category->update();
             return response()->json(['status' => 'success', 'message' => 'Category Media Updated Successfully!']);
         } catch (\Throwable $th) {

@@ -47,7 +47,7 @@ class DashboardController extends Controller
             ->orderBy('created_at')
             ->groupBy('dayname')
             ->get();
-        
+
         return response()->json(['customer' => $userData,'sale_by_cat' => $saleByCat,
                 'earning' => $earnings,'sales_of_month' => $sales_of_month]);
     }

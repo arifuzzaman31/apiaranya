@@ -25,7 +25,7 @@ class CreateCategoriesTable extends Migration
             $table->string('type_two')->nullable();
             $table->string('category_image_three')->nullable();
             $table->string('type_three')->nullable();
-            $table->string('category_video')->nullable();
+            $table->string('category_feature_image')->nullable();
             $table->tinyInteger('precedence')->default(0)->comment("Set precedency");
             $table->tinyInteger('status')->default(1)->comment("0 for down the category");
             $table->tinyInteger('whats_new')->default(0)->comment("1 for enable, 0 for disable");

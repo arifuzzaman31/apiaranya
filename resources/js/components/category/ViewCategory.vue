@@ -227,7 +227,7 @@ export default {
                             <tr v-for="(cat,ind) in categories.data" :key="ind">
                                 <td>{{ ++ind }}</td>
                                 <td>{{ cat.category_name }}</td>
-                                <td>{{ cat.subcategory.category_name }}</td>
+                                <td>{{ cat.parent_category == 0 ? 'Main Category' : cat.subcategory.category_name }}</td>
                                 <td>{{ cat.precedence }}</td>
                                 <td class="text-center">{{ cat.whats_new == 1 ? 'Enable' : 'Disable' }}</td>
                                 <td class="text-center">{{ cat.status == 1 ? 'Active' : 'Deactive' }}</td>

@@ -32,7 +32,7 @@
 	  </tr>
 	</thead>
 	<tbody>
-    
+
 	@foreach($salesdata as $item)
         <tr>
             <td>{{ $item->p_sku }}</td>
@@ -159,7 +159,7 @@
             <td> {{ $item->total_selling_amount }}</td>
             <td> {{ $item->total_selling_amount+$item->total_vat_amount }}</td>
             <td> {{ $item->profit }}</td>
-        </tr>		
+        </tr>
 	@endforeach
 	</tbody>
 </table>

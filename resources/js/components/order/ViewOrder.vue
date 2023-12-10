@@ -351,7 +351,7 @@ export default {
                                 <template v-for="(order,index) in orders.data" :key="order.id">
                                     <tr>
                                         <td>{{ index+1 }}</td>
-                                        <td>{{ order.id }}</td>
+                                        <td>{{ order.order_id }}</td>
                                         <td>{{
                                                 order.user_shipping_info.first_name
                                             }} {{ order.user_shipping_info.last_name }}</td>

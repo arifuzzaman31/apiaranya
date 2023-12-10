@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Invoice-{{$order_info->id}}</title>
+    <title>Invoice-{{$order_info->order_id}}</title>
     <style>
     body {
         width: 100%;
@@ -82,7 +82,7 @@
         <table>
             <tr>
                 <td style="border: none; color: #272627cc;font-size:12px;font-weight:bolder">
-                    INVOICE NO: #{{$order_info->id}}
+                    INVOICE NO: #{{$order_info->order_id}}
                 </td>
                 <th style="border: none"></th>
 

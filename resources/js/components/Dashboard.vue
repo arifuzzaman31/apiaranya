@@ -14,9 +14,8 @@
                                 <a class="nav-link mb-2 text-center" id="rounded-pills-icon-profile-tab" data-toggle="pill" href="#rounded-pills-icon-profile" role="tab" aria-controls="rounded-pills-icon-profile" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-package"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg> Order Pending <p class="text-success font-weight-bold">{{ order_info.pending }}</p></a>
                             </li>
                             <li class="nav-item ml-2 mr-2">
-                                <a class="nav-link mb-2 text-center" id="rounded-pills-icon-contact-tab" data-toggle="pill" href="#rounded-pills-icon-contact" role="tab" aria-controls="rounded-pills-icon-contact" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg> Order Processing <p class="text-success font-weight-bold">{{ order_info.processing }}</p></a>
+                                <a class="nav-link mb-2 text-center" id="rounded-pills-icon-contact-tab" data-toggle="pill" href="#rounded-pills-icon-contact" role="tab" aria-controls="rounded-pills-icon-contact" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg> On Delivery <p class="text-success font-weight-bold">{{ order_info.processing }}</p></a>
                             </li>
-
                             <li class="nav-item ml-2 mr-2">
                                 <a class="nav-link mb-2 text-center" id="rounded-pills-icon-settings-tab" data-toggle="pill" href="#rounded-pills-icon-settings" role="tab" aria-controls="rounded-pills-icon-settings" aria-selected="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg> Total Delivered <p class="text-success font-weight-bold">{{ order_info.delivered }}</p></a>
                             </li>
@@ -116,7 +115,7 @@
                     <tbody v-if="orders && orders.length > 0">
                         <template v-for="order in orders" :key="order.id">
                             <tr>
-                                <td>{{ order.id }}</td>
+                                <td>{{ order.order_id }}</td>
                                 <td>{{ order.user_shipping_info.first_name
                                     }} {{ order.user_shipping_info.last_name }}</td>
                                 <td>{{ order.total_price }}</td>
@@ -166,7 +165,7 @@ export default {
                 ttl: 0,
                 pending: 0,
                 processing: 0,
-                delivered: 0,
+                delivered: 0
             }
         }
     },
@@ -185,7 +184,6 @@ export default {
         getOrderInfo(){
             axios.get(baseUrl+`get-order-info`)
             .then(result => {
-                var dt = ['ttl','pending','processing','delivered']
                 result.data.map((item,i) => {
                     switch(item.order_position){
                         case 0:

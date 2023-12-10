@@ -16,6 +16,7 @@ export default {
                 type_two: '',
                 image_three: '',
                 type_three: '',
+                category_feature_image: '',
                 imagenumb: '',
                 uritype: ''
             },
@@ -38,6 +39,9 @@ export default {
                 case 'three':
                     this.form.image_three = uri
                     this.form.type_three = frmt
+                    break;
+                case 'four':
+                    this.form.category_feature_image = uri
                     break;
 
                 default:
@@ -80,6 +84,7 @@ export default {
                 this.form.type_two = response.data.type_two
                 this.form.image_three = response.data.category_image_three
                 this.form.type_three = response.data.type_three
+                this.form.category_feature_image = response.data.category_feature_image
             })
         }
 
@@ -93,6 +98,7 @@ export default {
         this.form.type_two = this.categorydata.type_two
         this.form.image_three = this.categorydata.category_image_three
         this.form.type_three = this.categorydata.type_three
+        this.form.category_feature_image = this.categorydata.category_feature_image
     }
 }
 </script>
@@ -132,6 +138,18 @@ export default {
                     <input type="submit" class="btn btn-info btn-block mb-4 mr-2" style="width: 50%;" @click="openCatMediaModal('three')" value="File Upload" />
                     <v-lazy-image class="mr-3" width="600" v-if="form.type_three != 'video'" :src="form.image_three" alt="cat image three" :src-placeholder="url+'demo.png'" />
                     <video :src="form.image_three" width="320" height="240" v-else autoplay muted controls class="controlss"></video>
+                </div>
+            </div>
+        </div>
+
+        <div class="statbox widget mt-2">
+            <div class="widget-header">
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <div class="icon-container mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Category Feature Image Should be (720 x 828) px, Ratio (16:24)</span>
+                    </div>
+                    <input type="submit" class="btn btn-info btn-block mb-4 mr-2" style="width: 50%;" @click="openCatMediaModal('four')" value="File Upload" />
+                    <v-lazy-image class="mr-3" width="600" :src="form.category_feature_image" alt="cat feature image" :src-placeholder="url+'demo.png'" />
                 </div>
             </div>
         </div>

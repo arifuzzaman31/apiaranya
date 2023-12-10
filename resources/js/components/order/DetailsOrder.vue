@@ -74,14 +74,14 @@ export default {
             <div class="overflow-hidden">
                 <div class="row gx-2">
                     <div class="col-md-9">
-                        <div class="p-3 border shadow-sm bg-white rounded">
+                        <div class="p-3 shadow-sm bg-white rounded">
                             <div class="container">
                                 <div class="row">
                                     <div class="col-md-3">
                                         <h5>
                                             Invoice
                                             <span class="text-warning"
-                                                >#AO-order:{{ order.id }}</span
+                                                >#{{ order.order_id }}</span
                                             >
                                         </h5>
                                         <p class="text-secondary">
@@ -309,7 +309,7 @@ export default {
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="p-4 border shadow-sm bg-white rounded">
+                        <div class="p-4 shadow-sm bg-white rounded">
                             <h5>Order Logs</h5>
                             <div class="stepper d-flex flex-column mt-4 ">
                                 <div class="d-flex">

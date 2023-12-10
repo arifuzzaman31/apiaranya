@@ -114,6 +114,7 @@ Route::controller(ProductController::class)
     Route::get('get-product/search','getProductBySearch');
     Route::post('product-import','bulkUpload');
     Route::get('product-stock-download','exportProductStock');
+    Route::get('product-bulk-download','exportProductDownload');
 });
 //Order
 Route::controller(OrderController::class)
