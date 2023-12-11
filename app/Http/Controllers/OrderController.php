@@ -11,7 +11,10 @@ use App\Models\UserBillingInfo;
 use App\Models\UserShippingInfo;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
-use DB,PDF;
+use Xenon\MultiCourier\Provider\ECourier;
+use Xenon\MultiCourier\Courier;
+use Illuminate\Support\Facades\DB;
+use PDF;
 
 class OrderController extends Controller
 {
@@ -22,7 +25,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return view('pages.order.order');
+        $pickup = DB::table('pickuphubs')->where('status',1)->get();
+        return view('pages.order.order',['pickups' => $pickup]);
     }
 
     /**
@@ -187,6 +191,11 @@ class OrderController extends Controller
                     $delivery->delivery_date = NULL;
                     $delivery->delivery_state = NULL;
                     $delivery->delivery_value = NULL;
+                    if(empty($delivery->tracking_id)){
+                        if($order->delivery_platform == 'E-Courier'){
+                                $this->sendEcorier($order);
+                        }
+                    }
                 }
 
                 if($request->order_position == AllStatic::$on_delivery){
@@ -218,6 +227,68 @@ class OrderController extends Controller
         return response()->json($request->id);
     }
 
+    public function sendEcorier($order)
+    {
+        try {
+            $courier = Courier::getInstance();
+            $courier->setProvider(ECourier::class, config('app.payment_mode')); /* local/production */
+            $courier->setConfig([
+                'API-KEY' => env('ECOURIER_API_KEY'),
+                'API-SECRET' => env('ECOURIER_API_SECRET'),
+                'USER-ID' => env('ECOURIER_USER_ID')
+            ]);
+            $userShipping = UserShippingInfo::find($order->id);
+            $courierData = [
+                'recipient_name' => $userShipping->first_name.' '.$userShipping->last_name,
+                'recipient_mobile' => $userShipping->phone,
+                'recipient_city' => $userShipping->city,
+                'recipient_area' => $userShipping->city,
+                'recipient_thana' => $userShipping->city,
+                'recipient_address' => $userShipping->street_address,
+                'package_code' => $order->ecourier_package_code,
+                'product_price' => ($order->total_price + $order->shipping_amount + $order->vat_amount),
+                'payment_method' => 'COD',
+                'recipient_landmark' => 'DBBL ATM',
+                'parcel_type' => 'BOX',
+                'requested_delivery_time' => $order->requested_delivery_date,
+                'delivery_hour' => 'any',
+                'recipient_zip' => $userShipping->post_code,
+                'pick_hub' => '18490',
+                'product_id' => $order->order_id,
+                'pick_address' => "dfgfhgfghfh",
+                'comments' => $order->user_note ?? 'Please handle carefully',
+                'number_of_item' => $order->total_item,
+                'actual_product_price' => $order->total_price,
+                'pgwid' => '8888',
+                'pgwtxn_id' => $order->order_id,
+                'is_fragile' => $order->total_fragile_amount > 0 ? 1 : 0,
+                'sending_type' => 1,
+                'is_ipay' => 0
+            ];
+
+            $courier->setParams($courierData);
+            $resp = $courier->placeOrder();
+            $result = json_decode(json_encode($resp),true);
+            $datas = json_decode($result['response']);
+            if ($datas !== null && isset($datas->ID)) {
+
+                    if($result['statusCode'] == 200){
+                        DB::table('orders')->where('id', $order->id)->update([
+                            'tracking_id' => $datas->ID,
+                            'updated_at'    => date("Y-m-d H:i:s")
+                        ]);
+                        DB::table('deliveries')->where('order_id', $order->id)->update([
+                            'tracking_id' => $datas->ID
+                        ]);
+                    }
+            }
+            return false;
+        } catch (\Throwable $th) {
+            return false;
+            // return $th;
+        }
+
+    }
     /**
      * Display the specified resource.
      *

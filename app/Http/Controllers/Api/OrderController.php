@@ -17,8 +17,6 @@ use App\Models\UserShippingInfo;
 use Auth,Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use Xenon\MultiCourier\Provider\ECourier;
-use Xenon\MultiCourier\Courier;
 
 class OrderController extends Controller
 {
@@ -51,6 +49,7 @@ class OrderController extends Controller
             $order->total_fragile_amount   = round($request->totalFragileChargeOrg);
             $order->charge_fragile_amount  = round($request->totalFragileCharge);
             $order->payment_status         = 0;
+            $order->order_position         = 0;
             $order->delivery_type          = $request->shippingCost == 0 ? 1 : 0;
             $order->delivery_platform      = $request->data['deliveryMethod'];
             $order->order_position         = 0;
@@ -59,6 +58,7 @@ class OrderController extends Controller
             $order->status                 = 1;
             $order->is_same_address        = $request->isSameAddress == false ? 0 : 1;
             $order->charged_currency       = $request->selectedCurrency ?? 'BDT';
+            $order->ecourier_package_code  = $request->eQuerierPackagesCode;
             $order->exchange_rate          = (float)$request->currentConversionRate;
             $order->user_note              = $request->data['orderNote'];
             $order->save();
@@ -167,37 +167,6 @@ class OrderController extends Controller
             ]);
             DB::commit();
             $this->invoiceToMail($order->id);
-            $courierData = [
-                'recipient_name' => $request->data['first_name_billing'],
-                'recipient_mobile' => $request->data['phone_billing'],
-                'recipient_city' => $request->data['city_billing'],
-                'recipient_area' => $request->data['city_billing'],
-                'recipient_thana' => $request->data['city_billing'],
-                'recipient_address' => $request->data['city_billing'],$request->data['country_billing'],
-                'package_code' => $request->eQuerierPackagesCode,
-                'product_price' => $order->total_price,
-                'payment_method' => 'COD',
-                'recipient_landmark' => 'DBBL ATM',
-                'parcel_type' => 'BOX',
-                'requested_delivery_time' => $order->requested_delivery_date,
-                'delivery_hour' => 'any',
-                'recipient_zip' => $request->data['post_code_billing'] ?? 'N/A',
-                'pick_hub' => '18490',
-                'product_id' => $order->order_id,
-                'pick_address' => "dfgfhgfghfh",
-                'comments' => 'Please handle carefully',
-                'number_of_item' => $request->totalAmount,
-                'actual_product_price' => $order->total_price,
-                'pgwid' => '8888',
-                'pgwtxn_id' => $order->order_id,
-                'is_fragile' => $request->totalFragileCharge > 0 ? 1 : 0,
-                'sending_type' => 1,
-                'is_ipay' => 0
-            ];
-
-            if($request->data['deliveryMethod'] == 'E-Courier'){
-                    $this->sendEcorier($courierData,$order->id);
-            }
             if($request->data['paymentMethod'] == 'online'){
                 $backUri = $request->backUri ? $request->backUri : 'https://aranya.com.bd';
                 return response()->json(['status' => 'success', 'type' => 'online', 'message' => 'Order Created', 'payment' => $this->sslCommerz($order->id,$backUri)], 200);
@@ -358,7 +327,6 @@ class OrderController extends Controller
                 $order->transaction_id = $request->bank_tran_id;
                 $order->payment_date = $request->tran_date;
                 $order->payment_via = 1;
-                $order->order_position = 1;
                 $order->payment_info = json_encode($request->all());
                 $order->update();
 
@@ -513,40 +481,5 @@ class OrderController extends Controller
         Mail::to('online@aranya.com.bd')->send(new InvoiceMail($order));
         return false;
         return view('email.order_invoice',['order_info' => $order]);
-    }
-
-    public function sendEcorier($courierData,$orderId)
-    {
-        try {
-            $courier = Courier::getInstance();
-            $courier->setProvider(ECourier::class, config('app.payment_mode')); /* local/production */
-            $courier->setConfig([
-                'API-KEY' => env('ECOURIER_API_KEY'),
-                'API-SECRET' => env('ECOURIER_API_SECRET'),
-                'USER-ID' => env('ECOURIER_USER_ID')
-            ]);
-
-            $courier->setParams($courierData);
-            $resp = $courier->placeOrder();
-            $result = json_decode(json_encode($resp),true);
-            $datas = json_decode($result['response']);
-            if ($datas !== null && isset($datas->ID)) {
-
-                    if($result['statusCode'] == 200){
-                        DB::table('orders')->where('id', $orderId)->update([
-                            'tracking_id' => $datas->ID,
-                            'updated_at'    => date("Y-m-d H:i:s")
-                        ]);
-                        DB::table('deliveries')->where('order_id', $orderId)->update([
-                            'tracking_id' => $datas->ID
-                        ]);
-                    }
-            }
-            return false;
-        } catch (\Throwable $th) {
-            return false;
-            // return $th;
-        }
-
     }
 }

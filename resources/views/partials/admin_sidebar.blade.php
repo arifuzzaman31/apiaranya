@@ -192,6 +192,9 @@
                     <li>
                         <a href="{{ route('category.index') }}"> Category </a>
                     </li>
+                    <li>
+                        <a href="{{ route('pickuphub.index') }}">Pickup Hub</a>
+                    </li>
                 </ul>
             </li>
             @endif

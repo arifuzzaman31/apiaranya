@@ -44,7 +44,6 @@
     <tbody>
         @foreach($products as $value)
             @if(isset($value))
-                @foreach ($value->inventory as $value)
                     <tr>
                         <td>{{ $value->sku }}</td>
                         <td>{{ $value->product->design_code }}</td>
@@ -189,7 +188,7 @@
                         <td>{{$value->product->flat_colour}}</td>
                         <td> {{ $value->product->fragile ? 'Yes' : 'No' }}</td>
                     </tr>
-                @endforeach
+
             @endif
         @endforeach
     </tbody>

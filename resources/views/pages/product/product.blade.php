@@ -2,6 +2,7 @@
 @section('title', 'Product | Aranya')
 @push('style')
 <link href="{{ asset('admin-assets/assets/css/users/user-profile.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('admin-assets/assets/css/components/tabs-accordian/custom-accordions.css')}}" rel="stylesheet" type="text/css" />
 @endpush
 @section('content')
 <div id="tableCheckbox" class="col-lg-12 col-12 layout-spacing" style="padding: 25px 0;">

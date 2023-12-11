@@ -305,70 +305,90 @@ export default {
 </style>
 <template>
     <div class="container-fluid mt-3">
-        <div class="statbox widget box box-shadow mb-4">
-            <div class="widget-header">
-                <div class="row d-flex align-items-center">
-                    <div class="col-md-2 col-lg-2 col-4 mb-3">
-                        <label for="search">Per-Page</label>
-                        <select id="product-perpage" class="form-control form-control-sm" @change="getProduct()" v-model="filterdata.per_page">
-                            <option value="10">10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select>
+        <div id="toggleAccordion">
+            <div class="card">
+                <div class="card-header" id="headingOne1">
+                    <section class="mb-0 mt-0">
+                    <div role="menu" class="collapsed" data-toggle="collapse" data-target="#defaultAccordionOne" aria-expanded="false" aria-controls="defaultAccordionOne">
+                        Collapsible Group Item  <div class="icons"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
                     </div>
-                    <div class="col-md-4 col-lg-4 col-12 mb-3">
-                        <label for="search">Search</label>
-                        <input type="text" @keyup="searchProduct()" v-model="keyword" class="form-control form-control-sm" id="search" placeholder="Search by Name & sku" >
-                    </div>
-                    <div class="col-md-4 col-lg-6 col-12 mb-3">
-                        <label for="max_amount">Campaign</label>
-                        <select id="product-camp" class="form-control form-control-sm" @change="getProduct()" v-model="filterdata.camp_id">
-                            <option selected="" value="">Choose...</option>
-                            <option v-for="(value,index) in allcampaign" :value="value.id" :key="index">{{ value.campaign_name }}</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4 col-lg-5 col-12 mb-3">
-                        <label for="max_amount"></label>
-                        <select id="product-category" class="form-control form-control-sm" @change="getSubCategories()" v-model="filterdata.category">
-                            <option selected="" value="">Category</option>
-                            <option v-for="(value,index) in allcategories" :value="value.id" :key="index">{{ value.category_name }}</option>
-                        </select>
-                    </div>
+                    </section>
+                </div>
 
-                    <div class="col-md-4 col-lg-5 col-12 mb-3">
-                        <label for="max_amount"></label>
-                        <select id="product-subcategory" class="form-control form-control-sm" @change="getProduct()" v-model="filterdata.subcategory">
-                            <option selected="" value="">Sub Category</option>
-                            <option v-for="(value,index) in allsubcategories" :value="value.id" :key="index">{{ value.category_name }}</option>
-                        </select>
-                    </div>
+                <div id="defaultAccordionOne" class="collapse" aria-labelledby="headingOne1" data-parent="#toggleAccordion" style="">
+                    <div class="card-body">
+                        <div class="statbox widget box box-shadow mb-4" style="font-size: small;">
+                            <div class="widget-header">
+                                <div class="row d-flex align-items-center">
+                                    <div class="col-md-2 col-lg-2 col-4 mb-3">
+                                        <label for="search">Per-Page</label>
+                                        <select id="product-perpage" class="form-control form-control-sm" @change="getProduct()" v-model="filterdata.per_page">
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 col-12 mb-3">
+                                        <label for="search">Search</label>
+                                        <input type="text" @keyup="searchProduct()" v-model="keyword" class="form-control form-control-sm" id="search" placeholder="Search by Name & sku" >
+                                    </div>
+                                    <div class="col-md-4 col-lg-6 col-12 mb-3">
+                                        <label for="max_amount">Campaign</label>
+                                        <select id="product-camp" class="form-control form-control-sm" @change="getProduct()" v-model="filterdata.camp_id">
+                                            <option selected="" value="">Choose...</option>
+                                            <option v-for="(value,index) in allcampaign" :value="value.id" :key="index">{{ value.campaign_name }}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 col-lg-5 col-12 mb-3">
+                                        <label for="max_amount"></label>
+                                        <select id="product-category" class="form-control form-control-sm" @change="getSubCategories()" v-model="filterdata.category">
+                                            <option selected="" value="">Category</option>
+                                            <option v-for="(value,index) in allcategories" :value="value.id" :key="index">{{ value.category_name }}</option>
+                                        </select>
+                                    </div>
 
-                    <div class="col-md-6 col-lg-2 col-12">
-                        <button type="button" class="btn btn-danger btn-md w-100" @click="filterClear()" style="height:90vh;max-height:42px;">CLEAR</button>
-                    </div>
+                                    <div class="col-md-4 col-lg-5 col-12 mb-3">
+                                        <label for="max_amount"></label>
+                                        <select id="product-subcategory" class="form-control form-control-sm" @change="getProduct()" v-model="filterdata.subcategory">
+                                            <option selected="" value="">Sub Category</option>
+                                            <option v-for="(value,index) in allsubcategories" :value="value.id" :key="index">{{ value.category_name }}</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-6 col-lg-2 col-12">
+                                        <button type="button" class="btn btn-danger btn-md w-100" @click="filterClear()" style="height:90vh;max-height:42px;">CLEAR</button>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                        <div class="col mx-1">
+                                            <button type="button" v-if="showPermission.includes('add-to-campaign')" class="btn btn-success btn-md w-100" @click="openCampModal()">Add To Campaign</button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button" v-if="showPermission.includes('bulk-upload')" class="btn btn-primary btn-md w-100 " data-toggle="modal" data-target="#bulkUpload">Bulk Upload</button>
+                                        </div>
+
+                                        <div class="col">
+                                            <a type="button" :href="url+'all-attr-download'" class="btn btn-info btn-md w-100">Attr Sheet</a>
+                                        </div>
+                                        <div class="col">
+                                            <a type="button" v-if="showPermission.includes('stock-sheet')" :href="url+'product-stock-download'" class="btn btn-secondary btn-md w-100">Stock Sheet</a>
+                                        </div>
+                                        <div class="col mr-1">
+                                            <a type="button" v-if="showPermission.includes('stock-sheet')"  data-toggle="modal" data-target="#stockUpdate" class="btn btn-dark btn-md w-100">Stock Update</a>
+                                        </div>
+                                        <div class="col mr-1">
+                                            <a type="button" :href="url+'product-bulk-download'" class="btn btn-warning btn-md w-100">Bulk Download</a>
+                                        </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-                <div class="row mt-2">
-                        <div class="col-md-3 w-100 mx-1">
-                            <button type="button" v-if="showPermission.includes('add-to-campaign')" class="btn btn-success btn-md w-100" @click="openCampModal()">Add To Campaign</button>
-                        </div>
-                        <div class="col">
-                            <button type="button" v-if="showPermission.includes('bulk-upload')" class="btn btn-primary btn-md w-100 " data-toggle="modal" data-target="#bulkUpload">Bulk Upload</button>
-                         </div>
-
-                        <div class="col">
-                            <a type="button" :href="url+'all-attr-download'" class="btn btn-primary btn-md w-100">Attr Sheet</a>
-                        </div>
-                        <div class="col">
-                            <a type="button" v-if="showPermission.includes('stock-sheet')" :href="url+'product-stock-download'" class="btn btn-secondary btn-md w-100">Stock Sheet</a>
-                        </div>
-                        <div class="col mr-1">
-                            <a type="button" v-if="showPermission.includes('stock-sheet')"  data-toggle="modal" data-target="#stockUpdate" class="btn btn-info btn-md w-100">Stock Update</a>
-                        </div>
             </div>
-
         </div>
+
         <div class="table-responsive">
             <table class="table table-bordered table-hover table-striped table-checkable table-highlight-head mb-4">
                 <thead>

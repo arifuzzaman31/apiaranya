@@ -31,6 +31,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MediaManagerController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\PickuphubController;
 
 Route::redirect('/', 'admin/dashboard');
 Route::get('/me', [AdminLoginController::class, 'getUser']);
@@ -80,7 +81,8 @@ Route::resources([
     'product' => ProductController::class,
     'campaign' => CampaignController::class,
     'consignment' => ConsignmentController::class,
-    'media-manager' => MediaManagerController::class
+    'media-manager' => MediaManagerController::class,
+    'pickuphub' => PickuphubController::class
 ]);
 // Route::get('get-cate-data/{id}',[CategoryController::class,'getCategoryImage'])->name('get-cate-data');
 // start Attributes

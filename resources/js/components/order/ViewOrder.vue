@@ -4,6 +4,7 @@ import Mixin from '../../mixer';
 import { Bootstrap4Pagination } from 'laravel-vue-pagination';
 export default {
     name: 'order',
+    props:["pickuppoint"],
     mixins: [Mixin],
     components:{
         Bootstrap4Pagination
@@ -27,7 +28,8 @@ export default {
                 order_position: '',
                 date: '',
                 order_modify: '',
-                payment_status: ''
+                payment_status: '',
+                hub_name: ''
             },
             search: '',
             filterdata : {
@@ -202,6 +204,14 @@ export default {
             this.form = {
                 progress_detail : [],
                 status : true
+            }
+            this.order_status = {
+                order_id: '',
+                order_position: '',
+                date: '',
+                order_modify: '',
+                payment_status: '',
+                hub_name: ''
             }
 
         },
@@ -525,6 +535,13 @@ export default {
                                             <option value="1">Processing</option>
                                             <option value="2">Ready To Delivery</option>
                                             <option value="3">Delivered</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group"  v-if="order_status.order_position == 1">
+                                        <label for="">Pickup Point</label>
+                                        <select class="form-control" v-model="order_status.hub_name">
+                                            <option value="">Choose One</option>
+                                            <option v-for="point in pickuppoint" :key="point.id" :value="point.id">{{ point.hub_name }}-{{ point.hub_code }}</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
