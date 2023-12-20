@@ -91,37 +91,6 @@ export default ({
                 console.log(errors);
             });
         },
-        // generateSignature(timestamp, publicId, apiKey, apiSecret) {
-        //     const message = `public_id=${publicId}&timestamp=${timestamp}${apiSecret}`;
-        //     return Sha1.hash(message);
-        // },
-        // async deleteFromCloud(cld_public_id){
-        //     const cloudName = clName;
-        //     const apiKey = clPreset;
-        //     const apiSecret = "q6yG70R-Aa8eI1PdHTeL-nAcVmY";
-        //     const publicId = cld_public_id;
-
-        //     const timestamp = Math.floor(Date.now() / 1000);
-        //     const signature = this.generateSignature(timestamp, publicId, apiKey, apiSecret);
-
-        //     try {
-        //         const response = await axios.delete(`https://api.cloudinary.com/v1_1/${cloudName}/resources/image/upload/${publicId}`, {
-        //         headers: {
-        //             'Authorization': `Basic ${btoa(`${apiKey}:${apiSecret}`)}`,
-        //             'Access-Control-Allow-Origin': '*',
-        //             'Origin': 'https://backend.aranya.com.bd',
-        //         },
-        //         params: {
-        //             timestamp,
-        //             signature,
-        //         },
-        //         });
-
-        //         console.log('File deleted successfully', response.data);
-        //     } catch (error) {
-        //         console.error('Error deleting file', error);
-        //     }
-        // },
         deleteMedia(item) {
 
             Swal.fire({

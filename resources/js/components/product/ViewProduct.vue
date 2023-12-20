@@ -39,6 +39,7 @@ export default {
             },
             campProd: [],
             allcampaign: [],
+            allsection: [],
             campaign:{
                 campaign_name: '',
                 campaign_title: '',
@@ -101,6 +102,14 @@ export default {
             axios.get(baseUrl+`get-campaign?no_paginate=yes&status=active`)
             .then(response => {
                 this.allcampaign = response.data
+            }).catch(error => {
+                console.log(error)
+            })
+        },
+        getHomeSection(){
+            axios.get(baseUrl+`get-page-section?no_paginate=yes&status=active`)
+            .then(response => {
+                this.allsection = response.data
             }).catch(error => {
                 console.log(error)
             })
@@ -284,6 +293,7 @@ export default {
         this.getProduct()
         this.getCategory()
         this.getCampaign()
+        this.getHomeSection()
     },
     computed: {
         showPermission() {
@@ -363,7 +373,7 @@ export default {
                                 </div>
                                 <div class="row mt-2">
                                         <div class="col mx-1">
-                                            <button type="button" v-if="showPermission.includes('add-to-campaign')" class="btn btn-success btn-md w-100" @click="openCampModal()">Add To Campaign</button>
+                                            <button type="button" v-if="showPermission.includes('add-to-campaign')" class="btn btn-success btn-md w-100" @click="openCampModal()">Product Add</button>
                                         </div>
                                         <div class="col">
                                             <button type="button" v-if="showPermission.includes('bulk-upload')" class="btn btn-primary btn-md w-100 " data-toggle="modal" data-target="#bulkUpload">Bulk Upload</button>
@@ -403,7 +413,7 @@ export default {
                         <th>Category</th>
                         <th>Sub Category</th>
                         <th>Design Code</th>
-                        <th class="text-center">What's New</th>
+                        <!-- <th class="text-center">What's New</th> -->
                         <th class="text-center">Status</th>
                         <th class="text-center">Action</th>
                     </tr>
@@ -423,9 +433,9 @@ export default {
                             <td>{{ product.category.category_name }}</td>
                             <td>{{ product.subcategory.category_name }}</td>
                             <td>{{ product.design_code}}</td>
-                            <td class="text-center">
+                            <!-- <td class="text-center">
                                 <a href="javascript:void(0);" @click="toggleWhatsNew(product.id)" data-toggle="tooltip" data-placement="top" title="Make Change"><span class="badge shadow-none" :class="product.is_new == 1 ? 'outline-badge-info':'outline-badge-danger'">{{ product.is_new == 1 ? 'Enable' : 'Disable' }}</span></a>
-                            </td>
+                            </td> -->
                             <td class="text-center">
                                 <span class="badge shadow-none" :class="product.status == 1 ? 'outline-badge-info':'outline-badge-danger'">{{ product.status ? 'Active' : 'Deactive' }}</span>
                             </td>
@@ -454,7 +464,7 @@ export default {
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add To Campaign</h5>
+                    <h5 class="modal-title">Product Add</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                     </button>
@@ -463,8 +473,15 @@ export default {
                     <div class="widget-content-area">
                         <form @submit.prevent="addToCampaign()">
                             <div class="form-group">
-                                <label for="size_name">Campaign Name</label>
-                                    <select id="product-camp" class="form-control" v-model="addTocamp.campaign">
+                                <label for="type">Type</label>
+                                <select class="form-control tagging" id="type" v-model="addTocamp.type">
+                                    <option value="campaign">Campaign</option>
+                                    <option value="section">Home Section</option>
+                                </select>
+                            </div>
+                            <div class="form-group" v-if="addTocamp.type == 'campaign'">
+                                <label for="camp_name">Campaign Name</label>
+                                    <select id="camp_name" class="form-control" v-model="addTocamp.campaign">
                                         <option value="">Choose...</option>
                                         <option v-for="(value,index) in allcampaign" :value="value.id" :key="index">{{ value.campaign_name }}</option>
                                     </select>
@@ -472,7 +489,20 @@ export default {
                                     v-if="validation_error.hasOwnProperty('campaign')"
                                     class="text-danger"
                                 >
-                                    {{ validation_error.campaign[0] }}
+                                    Campaign is required
+                                </span>
+                            </div>
+                            <div class="form-group" v-else>
+                                <label for="sectoin_name">Section Name</label>
+                                    <select id="sectoin_name" class="form-control" v-model="addTocamp.campaign">
+                                        <option value="">Choose...</option>
+                                        <option v-for="(sect,index) in allsection" :value="sect.id" :key="index">{{ sect.section_name }}</option>
+                                    </select>
+                                <span
+                                    v-if="validation_error.hasOwnProperty('campaign')"
+                                    class="text-danger"
+                                >
+                                Section Name is required
                                 </span>
                             </div>
 

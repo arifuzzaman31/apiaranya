@@ -2,7 +2,7 @@
 import Mixin from "../../mixer";
 export default {
     mixins: [Mixin],
-    props: ["order", "details"],
+    props: ["order", "details","pickuppoint"],
 
     data() {
         return {
@@ -11,14 +11,17 @@ export default {
                 order_position: "",
                 date: "",
                 payment_status: "",
+                hub_name: ''
             },
+            actionUri:'',
             url: baseUrl
         };
     },
 
     methods: {
-        paymentModify(uri, id) {
-            this.order_status.order_id = id;
+        actionToMeth(url,id){
+            // alert(url)
+            // return false;
             Swal.fire({
                 title: "Are you sure?",
                 text: "Order Status will be Update!",
@@ -33,6 +36,7 @@ export default {
                         .post(baseUrl + `${uri}/${id}`, this.order_status)
                         .then((response) => {
                             this.order_status.order_id = "";
+                            this.this.actionUri = "";
                             this.successMessage(response.data);
                         })
                         .catch((error) => {
@@ -42,6 +46,23 @@ export default {
                 }
             });
         },
+        paymentModify(uri, id) {
+            this.order_status.order_id = id;
+            this.actionUri = uri;
+            if(uri == 'update/order/status' && (this.order_status.order_position == 1) && !this.order.tracking_id){
+                $("#pickupModal").modal('show');
+            } else {
+                this.actionToMeth(uri, id)
+            }
+
+        },
+        hitActionUri(){
+            $("#pickupModal").modal('hide');
+            this.actionToMeth(this.actionUri,this.order_status.order_id)
+        },
+        resetForm(){
+            this.order_status.hub_name = ''
+        }
     },
     mounted() {
         this.order_status.order_id = this.order.id;
@@ -257,10 +278,10 @@ export default {
                                                 }}
                                             </td>
                                             <td>{{ detail.item_sku }}</td>
-                                            <td>{{ detail.charge_selling_price }}</td>
+                                            <td>{{ Number(detail.charge_selling_price).toFixed(2) }}</td>
                                             <td>{{ detail.quantity }}</td>
                                             <td class="text-right">
-                                                {{ detail.total_charge_selling_price }}
+                                                {{ Number(detail.total_charge_selling_price).toFixed(2) }}
                                             </td>
                                         </tr>
                                     </tbody>
@@ -284,23 +305,23 @@ export default {
                                     </div>
                                     <div>
                                         <p>Sub Total</p>
-                                        <p>{{ order.charge_total_price }}</p>
+                                        <p>{{ Number(order.charge_total_price).toFixed(2) }}</p>
                                     </div>
                                     <div>
                                         <p>VAT</p>
-                                        <p>{{ order.charge_vat_amount }}</p>
+                                        <p>{{ Number(order.charge_vat_amount).toFixed(2) }}</p>
                                     </div>
                                     <div>
                                         <p>Shipping</p>
-                                        <p>{{ order.shipping_amount }}</p>
+                                        <p>{{ Number(order.shipping_amount).toFixed(2) }}</p>
                                     </div>
                                     <div>
                                         <p>Grand Total</p>
                                         <p class="text-warning">
                                             {{
-                                                (order.charge_total_price +
-                                                order.shipping_amount +
-                                                order.charge_vat_amount).toFixed(2)
+                                                Number(Number(order.charge_total_price) +
+                                                Number(order.shipping_amount) +
+                                                Number(order.charge_vat_amount)).toFixed(2)
                                             }}
                                         </p>
                                     </div>
@@ -349,7 +370,7 @@ export default {
                                             Proccess
                                         </h6>
                                         <p class="lead text-muted pb-3">
-                                            Proccess status updated to On Proccess <br>
+                                            Proccess status updated to Proccess <br>
                                             at {{ dateToString(order.delivery.process_date) }}
                                         </p>
                                     </div>
@@ -370,7 +391,7 @@ export default {
                                             On Delivery
                                         </h6>
                                         <p class="lead text-muted pb-3">
-                                            On Delivery status updated to On Delivered <br>
+                                            On Delivery status updated to Delivered <br>
                                             at {{ dateToString(order.delivery.process_date) }}
                                         </p>
                                     </div>
@@ -397,6 +418,35 @@ export default {
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="pickupModal" class="modal animated fadeInUp custo-fadeInUp" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Pickup Point</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="resetForm()">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="widget-content">
+                                <div>
+                                    <div class="form-group">
+                                        <select class="form-control" v-model="order_status.hub_name">
+                                            <option value="">Choose One</option>
+                                            <option v-for="point in pickuppoint" :key="point.id" :value="point">{{ point.hub_name }}-{{ point.hub_code }}</option>
+                                        </select>
+                                    </div>
+                                    <div class="modal-footer md-button">
+                                        <button class="btn" data-dismiss="modal" @click="resetForm()"><i class="flaticon-cancel-12"></i>Discard</button>
+                                        <button type="button" @click="hitActionUri()" class="btn btn-primary">Add</button>
+                                    </div>
+                                </div>
                         </div>
                     </div>
                 </div>

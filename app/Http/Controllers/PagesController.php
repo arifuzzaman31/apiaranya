@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Exports\AttributeExport;
+use App\Http\AllStatic;
 use App\Models\AttributeValue;
 use App\Models\ShippingConfig;
 use App\Models\Page;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Traits\ProductTrait;
-use DB,Str;
+use Illuminate\Support\Facades\DB;
+use Str;
 
 class PagesController extends Controller
 {
@@ -24,104 +27,98 @@ class PagesController extends Controller
         return view('pages.page.homepage');
     }
 
-    public function homeImageUpdate(Request $request)
+    public function storeSection(Request $request)
     {
         // return response()->json($request->all());
         try {
-            $hp = Page::where('page_name','home')->first();
-            switch ($request->imagenumb) {
-                case 'one':
-                        if($request->imageuri) $hp->image_one = $request->imageuri;
-                        if($request->subcategory != ''){
-                                $hp->back_url_one = $request->subcategory;
-                        } else {
-                            if($request->selectLink == 'campaign'){
-                                $hp->back_url_one = 'campaign/cat='.$request->category['id'].'&cat_name='.$request->category['slug'];
-                            } else {
-                                $hp->back_url_one = $request->categoryname;
-                            }
-                        }
-                    break;
-                case 'two':
-                        if($request->imageuri) $hp->image_two = $request->imageuri;
-                        if($request->subcategory != ''){
-                            $hp->back_url_two = $request->subcategory;
-                        } else {
-                            if($request->selectLink == 'campaign'){
-                                $hp->back_url_two = 'campaign/cat='.$request->category['id'].'&cat_name='.$request->category['slug'];
-                            } else {
-                            $hp->back_url_two = $request->categoryname;
-                            }
-                        }
-                    break;
-                case 'three':
-                        if($request->imageuri) $hp->image_three = $request->imageuri;
-                        if($request->subcategory != ''){
-                            $hp->back_url_three = $request->subcategory;
-                        } else {
-                            if($request->selectLink == 'campaign'){
-                                $hp->back_url_three = 'campaign/cat='.$request->category['id'].'&cat_name='.$request->category['slug'];
-                            } else {
-                            $hp->back_url_three = $request->categoryname;
-                            }
-                        }
-                    break;
-                case 'four':
-                        if($request->imageuri) $hp->image_four = $request->imageuri;
-                        if($request->subcategory != ''){
-                            $hp->back_url_four = $request->subcategory;
-                        } else {
-                            if($request->selectLink == 'campaign'){
-                                $hp->back_url_four = 'campaign/cat='.$request->category['id'].'&cat_name='.$request->category['slug'];
-                            } else {
-                            $hp->back_url_four = $request->categoryname;
-                            }
-                        }
-                    break;
-                case 'five':
-                        if($request->imageuri) $hp->image_five = $request->imageuri;
-                        if($request->subcategory != ''){
-                            $hp->back_url_five = $request->subcategory;
-                        } else {
-                            if($request->selectLink == 'campaign'){
-                                $hp->back_url_five = 'campaign/cat='.$request->category['id'].'&cat_name='.$request->category['slug'];
-                            } else {
-                            $hp->back_url_five = $request->categoryname;
-                            }
-                        }
-                    break;
-                case 'six':
-                        if($request->imageuri) $hp->image_six = $request->imageuri;
-                        if($request->subcategory != ''){
-                            $hp->back_url_six = $request->subcategory;
-                        } else {
-                            if($request->selectLink == 'campaign'){
-                                $hp->back_url_six = 'campaign/cat='.$request->category['id'].'&cat_name='.$request->category['slug'];
-                            } else {
-                            $hp->back_url_six = $request->categoryname;
-                            }
-                        }
-                    break;
-
-                default:
-                    # code...
-                    return false;
-                    break;
-            }
-
-            $hp->update();
-            return response()->json(['status' => 'success', 'message' => 'Home Page Updated Successfully!']);
+            $hp = new Page();
+            $hp->section_name = $request->section_name;
+            $hp->banner = json_encode($request->banner);
+            $hp->pattern = $request->pattern;
+            $hp->use_for = $request->use_for;
+            $hp->precedence = $request->precedence;
+            $hp->status = $request->status ?? 0;
+            $hp->save();
+            return response()->json(['status' => 'success', 'message' => 'Home Section Created Successfully!']);
         } catch (\Throwable $th) {
-            //throw $th;
+            return $th;
         }
     }
 
-    public function homeImageData()
+    public function singleSection(Request $request,$id)
     {
-        $data = Page::where('page_name','home')->first();
-        return response()->json($data);
+        // return response()->json($request->all());
+        try {
+            $hp = Page::find($id);
+            // $product = Product::whereIn('id',json_decode($hp->product_id))->get();
+            return view('pages.page.edit_page',['sectionData' => $hp]);
+        } catch (\Throwable $th) {
+            return $th;
+        }
     }
 
+    public function update(Request $request,$id)
+    {
+        try {
+            DB::table('pages')->where('id',$id)->update([
+                'section_name'  => $request->section_name,
+                'status'    =>  $request->status == true ? 1 : 0
+            ]);
+            return response()->json(['status' => 'success', 'message' => 'Section Updated Successfully!']);
+        } catch (\Throwable $th) {
+            return $this->errorMessage();
+        }
+    }
+
+    public function homeImageUpdate(Request $request)
+    {
+        return response()->json($request->all());
+        try {
+            $hp = new Page();
+            $hp->section_name = $request->section_name;
+            $hp->banner = $request->banner;
+            $hp->pattern = $request->pattern;
+            $hp->use_for = $request->use_for;
+            $hp->precedence = $request->precedence;
+            $hp->status = $request->status ?? 0;
+            $hp->save();
+            return response()->json(['status' => 'success', 'message' => 'Home Page Updated Successfully!']);
+        } catch (\Throwable $th) {
+            return $this->errorMessage();
+        }
+    }
+
+    public function getPageSection(Request $request)
+    {
+        $noPagination = $request->get('no_paginate');
+        $status = $request->get('status');
+        $dataQty = $request->get('per_page') ? $request->get('per_page') : 10;
+        $pagesData = Page::orderBy('id','asc');
+        if($status != ''){
+            $pagesData = $pagesData->where('status',AllStatic::$active);
+        }
+        if($noPagination != ''){
+            $pagesData = $pagesData->get();
+        } else {
+            $pagesData = $pagesData->paginate($dataQty);
+        }
+        return response()->json($pagesData);
+    }
+
+    public function sectionProductRemove(Request $request)
+    {
+        try {
+            // return $request->product_id;[144,147,149,142,181,184]
+            $page = Page::find($request->section_id);
+            $prev = array_diff(json_decode($page->product_id),$request->product_id);
+            $page->product_id = json_encode(array_values($prev));
+            $page->update();
+            return $this->successMessage("Product Has been removed!");
+        } catch (\Throwable $th) {
+            // return $th;
+            return $this->errorMessage();
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *

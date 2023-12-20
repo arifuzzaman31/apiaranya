@@ -3,20 +3,25 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html;" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Invoice-{{$order_info->order_id}}</title>
     <style>
+        @font-face{
+                font-family: "solemn";
+                font-style: normal;
+                font-weight: normal;
+                src : url('{{ asset("fonts/kalpurush.ttf") }}');
+            }
     body {
         width: 100%;
+        line-height: 0.46rem;
+        font-family: 'solemn',sans-serif,arial;
     }
-
     table {
-        font-family: arial, sans-serif;
         border-collapse: collapse;
         width: 100%;
         margin: 0 auto;
-
     }
 
     td{
@@ -91,7 +96,7 @@
             </tr>
             <tr style="border: none; background-color: #fff">
                 <td style="border: none; color: #272627cc;">
-                    {{ $order_info->user_shipping_info->full_name }}
+                    {!! $order_info->user_shipping_info->full_name !!}
                 </td>
                 <th style="border: none"></th>
 
@@ -99,7 +104,7 @@
             </tr>
             <tr>
                 <td style="border: none; color: #272627cc;">
-                    Phone: {{ $order_info->user_shipping_info->phone }}
+                    Phone: {!! $order_info->user_shipping_info->phone !!}
                 </td>
                 <th style="border: none"></th>
 
@@ -120,8 +125,8 @@
                     <span style="width: 20%;text-wrap: balance;">
 
                         Address:
-                        {{ $order_info->user_shipping_info->street_address }},
-			<p>{{ $order_info->user_shipping_info->city }},{{ $order_info->user_shipping_info->country }}</p>
+                        {!! $order_info->user_shipping_info->street_address !!},
+			<p>{!! $order_info->user_shipping_info->city !!},{!! $order_info->user_shipping_info->country !!}</p>
                     </span>
                 </td>
                 <th style="border: none"></th>
@@ -197,7 +202,7 @@
         </div>
         @if($order_info->user_note)
         <p style="border: none;margin-left:4px; color: #272627cc;font-size:15px;font-weight:bolder">CUSTOMER NOTE</p>
-        <p style="margin-left:4px;font-size: 15px">{{ $order_info->user_note }}</p>
+        <p style="margin-left:4px;font-size: 15px">{!! $order_info->user_note !!}</p>
         @endif
     </div>
 </body>

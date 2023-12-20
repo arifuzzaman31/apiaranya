@@ -91,6 +91,8 @@ Route::get('get-colour',[ColorController::class,'getColour']);
 
 Route::controller(PagesController::class)
     ->group(function () {
+        Route::post('create-home-section','storeSection');
+        Route::get('get-page-section','getPageSection');
         Route::get('shipping','getShipping')->name('shipping');
         Route::post('add-shipping-charge','storeShippingCharge');
         Route::get('get-shipping-data','getShippingData');
@@ -98,6 +100,13 @@ Route::controller(PagesController::class)
         Route::get('information','getInformation')->name('information');
         Route::post('add-information','storeInformation');
         Route::delete('remove-information-data/{id}','deleteInformation');
+        Route::get('home-page','homePage')->name('home-page');
+        Route::get('section-product/{sectionid}','singleSection');
+        Route::patch('page-section/{sectionid}','update');
+        Route::post('remove-product-section','sectionProductRemove');
+        Route::view('page-create','pages.page.create_page')->name('page.create');
+        Route::post('update-home-image','homeImageUpdate');
+        Route::get('all-attr-download','exportAllAttr');
 });
 
 Route::view('refund','pages.refund.refund')->name('refund');
@@ -151,14 +160,6 @@ Route::controller(CampaignController::class)
     Route::post('add-to-campaign','storeAddtoCamp');
     Route::get('campaign-product/{id}','getCampProduct');
     Route::post('remove-product-camp','removeCampProduct');
-});
-//Pages
-Route::controller(PagesController::class)
-    ->group(function () {
-    Route::get('home-page','homePage')->name('home-page');
-    Route::post('update-home-image','homeImageUpdate');
-    Route::get('get-home-pagedata','homeImageData');
-    Route::get('all-attr-download','exportAllAttr');
 });
 
 Route::controller(DashboardController::class)

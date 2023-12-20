@@ -7,16 +7,12 @@ export default {
     data() {
         return {
             form: {
-                image_one: '',
-                back_url_one: '',
-                image_two: '',
-                back_url_two: '',
-                image_three: '',
-                back_url_three: '',
-                image_four: '',
-                back_url_four: '',
-                image_five: '',
-                back_url_five: ''
+                section_name: '',
+                banner: [{banner_uri: '',file_type: '',back_link: ''}],
+                pattern: 'single',
+                use_for: 'campaign',
+                precedence: 1,
+                status: 1
             },
             updateFormdata: {
                 category: '',
@@ -39,6 +35,24 @@ export default {
     },
 
     methods: {
+            createSection(){
+                this.form.banner.map((v,i) => {
+                    const vExt = ['mp4','WebM','mov','avi','mkv','wmv','avchd','flv'];
+                    let ext = v.banner_uri.split(".").pop();
+                    var frmt = vExt.includes(ext) ? 'video' : 'image';
+                    this.form.banner[i].file_type = frmt
+                })
+                axios.post(baseUrl+'create-home-section',this.form).then(response => {
+                    if(response.data.status == 'success'){
+                        // console.log(response.data)
+                    //     this.getHomeData()
+                        this.clearFilter()
+                        this.successMessage(response.data)
+                        window.location.href = 'home-page'
+                    }
+                })
+            },
+
             setImage(numb,uri){
                 switch (numb) {
                     case 'one':
@@ -116,12 +130,10 @@ export default {
                     })
             },
             getSubCategories() {
-                this.form.back_url = ''
-                this.updateFormdata.subcategory = ''
-                this.updateFormdata.categoryname = this.updateFormdata.category.slug
+                this.form.banner[this.updateFormdata.imagenumb].back_link = ''
                 const updateFormData = (this.allfiltersubcategories).filter((data) => data.parent_category == this.updateFormdata.category.id)
                 this.allsubcategories = updateFormData
-                this.form.back_url = this.updateFormdata.category.slug+'/'+this.updateFormdata.subcategory
+                this.form.banner[this.updateFormdata.imagenumb].back_link = this.updateFormdata.category.slug+'/'+this.updateFormdata.subcategory
             },
 
             getCampaign(){
@@ -138,6 +150,14 @@ export default {
             },
 
             clearFilter(){
+                this.form = {
+                    section_name: '',
+                    banner: [{banner_uri: '',file_type: '',back_link: ''}],
+                    pattern: 'single',
+                    use_for: 'campaign',
+                    precedence: 1,
+                    status: 1
+                }
                 this.updateFormdata = {
                     category: '',
                     categoryname: '',
@@ -158,13 +178,45 @@ export default {
 
         selectImage(item){
             this.updateFormdata.imageuri = item
-            this.setImage(this.updateFormdata.imagenumb,item)
+            this.form.banner[this.updateFormdata.imagenumb].banner_uri = item
+            const vExt = ['mp4','WebM','mov','avi','mkv','wmv','avchd','flv'];
+            let ext = item.split(".").pop();
+            var frmt = vExt.includes(ext) ? 'video' : 'image';
+            this.form.banner[this.updateFormdata.imagenumb].file_type = frmt
+            // this.setImage(this.updateFormdata.imagenumb,item)
+        },
+
+        setLink(){
+            if(this.form.use_for == 'campaign'){
+                this.form.banner[this.updateFormdata.imagenumb].back_link = 'campaign/cat='+this.updateFormdata.subcategory.id+'&cat_name='+this.updateFormdata.subcategory.slug
+            }
+            if(this.form.use_for == 'category'){
+                if(this.updateFormdata.subcategory != ''){
+                    this.form.banner[this.updateFormdata.imagenumb].back_link = this.updateFormdata.subcategory
+                } else {
+                    this.form.banner[this.updateFormdata.imagenumb].back_link = 'products?cat_id='+this.updateFormdata.category.id+'&cat_name='+this.updateFormdata.category.slug
+                }
+            }
+            this.updateFormdata.imageuri = ''
+            this.updateFormdata.imagenumb = ''
+            this.updateFormdata.subcategory = ''
+            this.updateFormdata.category = ''
+        },
+
+        makeDesign(){
+            if(this.form.use_for == 'category'){
+                this.getCategory()
+            }
+            if(this.form.use_for == 'campaign'){
+                this.getCampaign()
+            }
+            if(this.form.pattern == 'double'){
+                this.form.banner.push({banner_uri: '',file_type: '',back_link: ''})
+            }
         }
     },
     mounted(){
-        this.getHomeData()
-        this.getCategory()
-        this.getCampaign()
+        // this.getHomeData()
     },
     computed: {
         showPermission() {
@@ -185,103 +237,86 @@ export default {
                 </div>
             </div>
             <div class="widget-content widget-content-area vertical-border-pill">
-
                 <div class="row mb-4 mt-3">
                     <div class="col-sm-3 col-12">
-                        <div class="nav flex-column nav-pills mb-sm-0 mb-3 text-center mx-auto" id="v-border-pills-tab" role="tablist" aria-orientation="vertical">
-                            <a @click="setStateNumb('one')" class="nav-link active" id="v-border-pills-home-tab" data-toggle="pill" href="#v-border-pills-home" role="tab" aria-controls="v-border-pills-home" aria-selected="false">Media-1</a>
-                            <a @click="setStateNumb('two')" class="nav-link text-center" id="v-border-pills-profile-tab" data-toggle="pill" href="#v-border-pills-profile" role="tab" aria-controls="v-border-pills-profile" aria-selected="false">Media-2</a>
-                            <a @click="setStateNumb('three')" class="nav-link text-center" id="v-border-pills-messages-tab" data-toggle="pill" href="#v-border-pills-messages" role="tab" aria-controls="v-border-pills-messages" aria-selected="false">Media-3</a>
-                            <a @click="setStateNumb('four')" class="nav-link text-center" id="v-border-pills-settings-tab" data-toggle="pill" href="#v-border-pills-settings" role="tab" aria-controls="v-border-pills-settings" aria-selected="true">Media-4</a>
-                            <a @click="setStateNumb('five')" class="nav-link text-center" id="v-border-pills-image5-tab" data-toggle="pill" href="#v-border-pills-image5" role="tab" aria-controls="v-border-pills-image5" aria-selected="true">Media-5</a>
+                        <div>
+                            <p class="text-success" style="font-size:17px">Create Section</p>
+                                <div class="my-2">
+                                    <label for="set-name">Section Name</label>
+                                    <input type="text" id="set-name" class="form-control" placeholder="Enter Section name" v-model="form.section_name" />
+                                </div>
+                                <div class="my-2">
+                                    <label for="pattern">Select Pattern</label>
+                                    <select id="pattern" class="form-control" v-model="form.pattern">
+                                        <option selected="single" value="single">Single</option>
+                                        <option value="double">Double</option>
+                                    </select>
+                                </div>
+                                <div class="my-2">
+                                    <label for="use-for">Banner Use For</label>
+                                    <select id="use-for" class="form-control" v-model="form.use_for">
+                                        <option selected="category" value="category">Category</option>
+                                        <option value="campaign">Campaign</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="my-2">
+                                    <label for="set-precedence">Set Precedense</label>
+                                    <input type="number" id="set-precedence" class="form-control" v-model="form.precedence" />
+                                </div>
+
+                            <button type="button" @click="makeDesign()" class="btn btn-info btn-block my-2">Make</button>
+                        </div>
+                        <div style="margin-top: 30%;" v-if="allcategories.length > 0 || campaigns.length > 0">
+                            <p class="text-success" style="font-size:17px">Create Back Link</p>
+                            <div class="my-2">
+                                <select id="select-item" class="form-control" v-model="updateFormdata.imagenumb">
+                                    <option selected="" value="">Choose Link</option>
+                                    <option v-for="(value,index) in form.banner" :value="index" :key="index">Back Link No-{{ ++index }}</option>
+                                </select>
+                            </div>
+                            <div v-if="form.use_for == 'category'">
+                                <div class="my-2">
+                                    <select id="product-category" class="form-control" @change="getSubCategories()" v-model="updateFormdata.category">
+                                        <option selected="" value="">Choose Category</option>
+                                        <option v-for="(value,index) in allcategories" :value="value" :key="index">{{ value.category_name }}</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <select id="product-updateFormdata" class="form-control" v-model="updateFormdata.subcategory">
+                                        <option value="">Choose...</option>
+                                        <option v-for="(value,index) in allsubcategories" :value="'products/'+value.slug+'?cat='+updateFormdata.category.id+'&sub_cat='+value.id" :key="index">{{ value.category_name }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div v-if="form.use_for == 'campaign'">
+                                <div class="my-2">
+                                    <select id="campaign" class="form-control" v-model="updateFormdata.subcategory">
+                                        <option selected="" value="">Choose Campaign</option>
+                                        <option v-for="(value,index) in campaigns" :value="value" :key="index">{{ value.campaign_name }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <button type="submit" @click="setLink()" class="btn btn-info btn-block my-2">SET LINK</button>
+
                         </div>
                     </div>
 
-                    <div class="col-sm-6 col-12">
+
+                    <div class="col-sm-6 border-left col-12" v-if="allcategories.length > 0 || campaigns.length > 0 || form.use_for=='other'">
                         <div class="tab-content" id="v-border-pills-tabContent">
-                            <div class="tab-pane fade active show" id="v-border-pills-home" role="tabpanel" aria-labelledby="v-border-pills-home-tab">
-                                <div class="icon-container mb-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Video Should be (1440 x 900) px, Ratio (16:9)</span>
-                                </div>
-                                <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2 controlss" @click="openPageMediaModal('one')" value="File Upload" />
-                                <!-- <img class="mr-3" :src="form.image_one" alt="Home image one" />  -->
-                                <video :src="form.image_one" autoplay muted controls class="controlss"></video>
-
-                            </div>
-
-                            <div class="tab-pane fade" id="v-border-pills-profile" role="tabpanel" aria-labelledby="v-border-pills-profile-tab">
-                                <div class="icon-container mb-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Image Should be (1440 x 900) px, Ratio (16:9)</span>
-                                </div>
-                                <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2 controlss" @click="openPageMediaModal('two')" value="File Upload" />
-                                <v-lazy-image class="mr-3 controlss" :src="form.image_two" alt="Home image two" :src-placeholder="url+'demo.png'" />
-                                <p>Back Url: domain/{{ form.back_url_two }}</p>
-                            </div>
-
-                            <div class="tab-pane fade" id="v-border-pills-messages" role="tabpanel" aria-labelledby="v-border-pills-messages-tab">
-                                <div class="icon-container mb-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Image Should be (720 x 828) px, Ratio (16:24)</span>
-                                </div>
-                                <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2 controlss"  @click="openPageMediaModal('three')" value="File Upload" />
-                                <v-lazy-image width="600" class="mr-3 controlss" :src="form.image_three" alt="Home image three" :src-placeholder="url+'demo.png'" />
-                                <p>Back Url: domain/{{ form.back_url_three }}</p>
-                            </div>
-
-                            <div class="tab-pane fade" id="v-border-pills-settings" role="tabpanel" aria-labelledby="v-border-pills-settings-tab">
-                                <div class="icon-container mb-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Image Should be (720 x 828) px, Ratio (16:24)</span>
-                                </div>
-                                <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2 controlss"  @click="openPageMediaModal('four')" value="File Upload" />
-
-                                <v-lazy-image width="600" class="mr-3" :src="form.image_four" alt="Home image four" :src-placeholder="url+'demo.png'" />
-                                <p>Back Url: domain/{{ form.back_url_four }}</p>
-                            </div>
-
-                            <div class="tab-pane fade" id="v-border-pills-image5" role="tabpanel" aria-labelledby="v-border-pills-image5-tab">
-                                <div class="icon-container mb-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17a2b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span class="icon-name text-info"> Image Should be (1440 x 700) px, Ratio (16:9)</span>
-                                </div>
-                                <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2 controlss" @click="openPageMediaModal('five')" value="File Upload" />
-
-                                <v-lazy-image width="600" class="mr-3" :src="form.image_five" alt="Home image five" :src-placeholder="url+'demo.png'" />
-                                <p>Back Url: domain/{{ form.back_url_five}}</p>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-sm-3 col-12">
-                        <p class="text-success" style="font-size:17px">Create Back Link</p>
-                            <div class="my-2">
-                                <select id="product-category" class="form-control" v-model="updateFormdata.selectLink">
-                                    <option selected="category" value="category">Category</option>
-                                    <option selected="campaign" value="campaign">Campaign</option>
-                                </select>
-                            </div>
-                        <div v-if="updateFormdata.selectLink == 'category'">
-                            <div class="my-2">
-                                <select id="product-category" class="form-control" @change="getSubCategories()" v-model="updateFormdata.category">
-                                    <option selected="" value="">Choose Category</option>
-                                    <option v-for="(value,index) in allcategories" :value="value" :key="index">{{ value.category_name }}</option>
-                                </select>
-                            </div>
-                            <div>
-                                <select id="product-updateFormdata" class="form-control" v-model="updateFormdata.subcategory">
-                                    <option value="">Choose...</option>
-                                    <option v-for="(value,index) in allsubcategories" :value="'products/'+value.slug+'?cat='+updateFormdata.category.id+'&sub_cat='+value.id" :key="index">{{ value.category_name }}</option>
-                                </select>
+                            <div class="tab-pane fade active show bordered my-2" v-for="(bann,ind) in form.banner" :key="ind" id="v-border-pills-home" role="tabpanel" aria-labelledby="v-border-pills-home-tab">
+                                <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2 controlss" @click="openPageMediaModal(ind)" value="File Upload" />
+                                <video :src="bann.banner_uri" autoplay v-if="bann.file_type == 'video'" muted controls class="controlss"></video>
+                                <v-lazy-image class="mr-3 controlss" v-else :src="bann.banner_uri" alt="Home image two" :src-placeholder="url+'demo.png'" />
+                                <p>Back Url: domain/{{ bann.back_link }}</p>
+                                <hr />
                             </div>
                         </div>
-                        <div v-else>
-                            <div class="my-2">
-                                <select id="campaign" class="form-control" v-model="updateFormdata.category">
-                                    <option selected="" value="">Choose Campaign</option>
-                                    <option v-for="(value,index) in campaigns" :value="value" :key="index">{{ value.campaign_name }}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <button type="submit" @click="updateImage()" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block my-2">Update</button>
-
+                        <form @submit.prevent="createSection()" method="post">
+                            <button type="submit" class="btn btn-success btn-block my-2">Create</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -299,7 +334,7 @@ export default {
 
 <style scoped>
 .controlss{
-    width: 80% !important;
+    width: 100% !important;
 }
 .modal-dialog {
   min-width: 92%;

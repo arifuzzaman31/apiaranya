@@ -78,7 +78,9 @@ class ProductController extends Controller
         $category   = $request->get('category');
         $subcategory   = $request->get('subcategory');
         $camp_id   = $request->get('camp_id');
+        $sectionId   = $request->get('section_id');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
+
         $product = Product::with(['vat', 'category:id,category_name', 'subcategory', 'inventory.discount', 'product_size', 'product_colour']);
         if ($discount != '') {
             $product = $product->where('is_discount', 0);
@@ -103,6 +105,19 @@ class ProductController extends Controller
             ->whereHas('campaign', function($q) use ($camp_id) {
                 $q->where('campaign_id', $camp_id);
             });
+            if ($noPagination != '') {
+                $product = $product->get();
+            } else {
+                $product = $product->paginate($dataQty);
+            }
+            return $product;
+        }
+        if ($sectionId != '') {
+            $pids = DB::table('pages')->where('id', $sectionId)->pluck('product_id')->first();
+            $product->whereIn('id',json_decode($pids));
+            // ->whereIn('id', function($q) use ($sectionId) {
+            //     return DB::table('pages')->where('id', $sectionId)->pluck('product_id');
+            // });
             if ($noPagination != '') {
                 $product = $product->get();
             } else {
@@ -313,13 +328,6 @@ class ProductController extends Controller
 
     public function exportProductDownload()
     {
-        // return Inventory::with('product.category:id,category_name','product.subcategory:id,category_name',
-        // 'product.product_brand:id,brand_name','product.product_fabric:id,fabric_name','colour:id,color_name',
-        // 'size:id,size_name','product.product_designer:id,designer_name','product.product_embellishment:id,embellishment_name',
-        // 'product.product_making:id,making_name','product.product_season:id,season_name','product.product_variety:id,variety_name',
-        // 'product.product_fit:id,fit_name','product.product_artist:id,artist_name','product.product_consignment:id,consignment_name',
-        // 'product.product_ingredient:id,ingredient_name','product.vat:id,tax_percentage','product.product_care:id,care_name')->take(8)->get();
-
         return Excel::download(new ProductExport(), 'product_list.xlsx');
     }
 

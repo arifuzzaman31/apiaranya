@@ -129,24 +129,33 @@ class CampaignController extends Controller
     {
         $request->validate([
             'campaign' => 'required',
+            'type' => 'required',
             // 'discount_type' => 'required',
-            // 'discount_amount' => 'required',
+            // 'discount_amount' => 'required',[144,142,181,146,149,155,151,143,147]
             'product' => 'required|array|min:1'
         ]);
 
         try{
             DB::beginTransaction();
-
-            $camp = Campaign::find($request->campaign);
-            $camp->product()->syncWithoutDetaching($request->product);
+            if($request->type == 'campaign'){
+                $camp = Campaign::find($request->campaign);
+                $camp->product()->syncWithoutDetaching($request->product);
+            }else{
+                $sect = DB::table('pages')->where('id',$request->campaign);
+                $gt = $sect->get()->first();
+                $ids = $gt->product_id != NULL ? array_merge(json_decode($gt->product_id),$request->product) : $request->product;
+                $sect->update([
+                    'product_id' => json_encode(array_values(array_unique($ids)))
+                ]);
+            }
             // $camp->product()->sync($request->product);
             // $camp->save();
 
             DB::commit();
-            return response()->json(['status' => 'success', 'message' => 'Product Has Added to Campaign!']);
+            return response()->json(['status' => 'success', 'message' => 'Product Added to '.$request->type]);
         }catch (\Throwable $th) {
             DB::rollback();
-            // return $th;
+            return $th;
             return response()->json(['status' => 'error', 'message' => $th]);
         }
     }
@@ -158,7 +167,7 @@ class CampaignController extends Controller
             //code...
             $camp = Campaign::find($request->camp_id);
             $camp->product()->detach($request->product);
-            return $this->successMessage("Prodcut Has been removed!");
+            return $this->successMessage("Product Has been removed!");
         } catch (\Throwable $th) {
             //throw $th;
             return $this->errorMessage();

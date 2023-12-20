@@ -13,7 +13,7 @@ class CategoryController extends Controller
     public function categoryData($id)
     {
         try {
-            $category = Category::find($id);
+            $category = Category::with('children')->find($id);
             return new CategoryResource($category);
         } catch (\Throwable $th) {
             // return $th;

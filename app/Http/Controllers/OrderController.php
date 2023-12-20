@@ -14,7 +14,6 @@ use Illuminate\Http\Request;
 use Xenon\MultiCourier\Provider\ECourier;
 use Xenon\MultiCourier\Courier;
 use Illuminate\Support\Facades\DB;
-use PDF;
 
 class OrderController extends Controller
 {
@@ -120,7 +119,8 @@ class OrderController extends Controller
             }
             $order = Order::with('user','delivery','user_shipping_info','user_billing_info')->find($id);
             $details = OrderDetails::with(['product','colour','size','fabric'])->where('order_id',$id)->get();
-            return view('pages.order.order_details',['details' => $details,'order' => $order]);
+            $pickup = DB::table('pickuphubs')->where('status',1)->get();
+            return view('pages.order.order_details',['details' => $details,'order' => $order,'pickups' => $pickup]);
         } catch (\Throwable $th) {
                 return $th->getMessage();
         }
@@ -193,7 +193,7 @@ class OrderController extends Controller
                     $delivery->delivery_value = NULL;
                     if(empty($delivery->tracking_id)){
                         if($order->delivery_platform == 'E-Courier'){
-                                $this->sendEcorier($order);
+                               // $this->sendEcorier($order,$request->hub_name);
                         }
                     }
                 }
@@ -227,7 +227,7 @@ class OrderController extends Controller
         return response()->json($request->id);
     }
 
-    public function sendEcorier($order)
+    public function sendEcorier($order,$hubInfo)
     {
         try {
             $courier = Courier::getInstance();
@@ -245,7 +245,7 @@ class OrderController extends Controller
                 'recipient_area' => $userShipping->city,
                 'recipient_thana' => $userShipping->city,
                 'recipient_address' => $userShipping->street_address,
-                'package_code' => $order->ecourier_package_code,
+                'package_code' => $order->courier_details,
                 'product_price' => ($order->total_price + $order->shipping_amount + $order->vat_amount),
                 'payment_method' => 'COD',
                 'recipient_landmark' => 'DBBL ATM',
@@ -253,9 +253,9 @@ class OrderController extends Controller
                 'requested_delivery_time' => $order->requested_delivery_date,
                 'delivery_hour' => 'any',
                 'recipient_zip' => $userShipping->post_code,
-                'pick_hub' => '18490',
+                'pick_hub' => $hubInfo->hub_code ?? '18490',
                 'product_id' => $order->order_id,
-                'pick_address' => "dfgfhgfghfh",
+                'pick_address' => $hubInfo->hub_address,
                 'comments' => $order->user_note ?? 'Please handle carefully',
                 'number_of_item' => $order->total_item,
                 'actual_product_price' => $order->total_price,

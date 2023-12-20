@@ -87,7 +87,7 @@ export default {
     },
     methods: {
         getImageData(){
-            axios.get(baseUrl+`media-manager/create?page=${this.page}&per_page=10&keyword=${this.media_keyword}`)
+            axios.get(baseUrl+`media-manager/create?page=${this.page}&per_page=12&keyword=${this.media_keyword}`)
             .then(result => {
                 if(this.page == 1){
                     this.allImages = result.data;

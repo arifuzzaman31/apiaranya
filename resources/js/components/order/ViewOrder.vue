@@ -29,6 +29,7 @@ export default {
                 date: '',
                 order_modify: '',
                 payment_status: '',
+                hasTrackingId: false,
                 hub_name: ''
             },
             search: '',
@@ -147,6 +148,7 @@ export default {
         },
 
         orderStatus(data){
+            this.order_status.hasTrackingId = data.tracking_id ? true : false
             axios.get(baseUrl+`order-shipment/${data.id}`)
             .then(result => {
                 this.order_status.order_id = result.data.id
@@ -172,7 +174,7 @@ export default {
                     axios.get(baseUrl+`order-refund/${id}`).then(
                         response => {
                             // this.getOrder()
-                            console.log(response.data)
+                            // console.log(response.data)
                             this.successMessage(response.data)
                         }
                     ). catch(error => {
@@ -211,6 +213,7 @@ export default {
                 date: '',
                 order_modify: '',
                 payment_status: '',
+                hasTrackingId: false,
                 hub_name: ''
             }
 
@@ -502,12 +505,9 @@ export default {
                                     </tbody>
                                 </table>
                             </div>
-
-
                                 <div class="modal-footer md-button">
                                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"  @click="formReset"></i>Discard</button>
                                 </div>
-
                         </div>
                     </div>
                 </div>
@@ -537,11 +537,11 @@ export default {
                                             <option value="3">Delivered</option>
                                         </select>
                                     </div>
-                                    <div class="form-group"  v-if="order_status.order_position == 1">
+                                    <div class="form-group"  v-if="(order_status.order_position == 1) && (order_status.hasTrackingId == false)">
                                         <label for="">Pickup Point</label>
                                         <select class="form-control" v-model="order_status.hub_name">
                                             <option value="">Choose One</option>
-                                            <option v-for="point in pickuppoint" :key="point.id" :value="point.id">{{ point.hub_name }}-{{ point.hub_code }}</option>
+                                            <option v-for="point in pickuppoint" :key="point.id" :value="point">{{ point.hub_name }}-{{ point.hub_code }}</option>
                                         </select>
                                     </div>
                                     <div class="form-group">

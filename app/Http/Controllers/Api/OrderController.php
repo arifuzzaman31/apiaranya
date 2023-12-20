@@ -28,7 +28,7 @@ class OrderController extends Controller
             DB::beginTransaction();
             // $order_id   = str_shuffle(uniqueString().date('Ymd'));
             $order = new Order();
-            $order->order_id    =  'AO'.sprintf("%04d",$order->id);
+            $order->order_id    =  'AO';
             $order->shipping_method   =  $request->shipping_method;
             $order->user_id           = $request->isGuestCheckout == false ? Auth::user()->id : 0;
             $order->vat_rate               = 0;
@@ -52,17 +52,17 @@ class OrderController extends Controller
             $order->order_position         = 0;
             $order->delivery_type          = $request->shippingCost == 0 ? 1 : 0;
             $order->delivery_platform      = $request->data['deliveryMethod'];
-            $order->order_position         = 0;
             $order->order_date             = date('Y-m-d');
             $order->requested_delivery_date = date('Y-m-d', strtotime("+1 day"));
             $order->status                 = 1;
             $order->is_same_address        = $request->isSameAddress == false ? 0 : 1;
             $order->charged_currency       = $request->selectedCurrency ?? 'BDT';
-            $order->ecourier_package_code  = $request->eQuerierPackagesCode;
+            $order->courier_details        = $request->eQuerierPackagesCode;
             $order->exchange_rate          = (float)$request->currentConversionRate;
             $order->user_note              = $request->data['orderNote'];
             $order->save();
-
+            $order->order_id    =  'AO'.sprintf("%04d",$order->id);
+            $order->update();
             foreach ($request->cart as $value) {
 
                 $product = Product::find($value['id']);
@@ -171,12 +171,6 @@ class OrderController extends Controller
                 $backUri = $request->backUri ? $request->backUri : 'https://aranya.com.bd';
                 return response()->json(['status' => 'success', 'type' => 'online', 'message' => 'Order Created', 'payment' => $this->sslCommerz($order->id,$backUri)], 200);
             } else {
-                DB::table('deliveries')->where('order_id', $order->id)->update([
-                    'process_date' => date('Y-m-d'),
-                    'process_state' => AllStatic::$processing,
-                    'process_value' => deliveryPosition(AllStatic::$processing),
-                    'created_at'    => date("Y-m-d H:i:s")
-                ]);
                 return response()->json(['status' => 'success','type' => 'cash', 'order_id' => $order->id], 200);
             }
 
@@ -327,6 +321,7 @@ class OrderController extends Controller
                 $order->transaction_id = $request->bank_tran_id;
                 $order->payment_date = $request->tran_date;
                 $order->payment_via = 1;
+                $order->order_position = 1;
                 $order->payment_info = json_encode($request->all());
                 $order->update();
 
