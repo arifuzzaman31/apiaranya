@@ -33,7 +33,7 @@ export default {
             }).then((result) => {
                 if (result.isConfirmed) {
                     axios
-                        .post(baseUrl + `${uri}/${id}`, this.order_status)
+                        .post(baseUrl + `${url}/${id}`, this.order_status)
                         .then((response) => {
                             this.order_status.order_id = "";
                             this.this.actionUri = "";

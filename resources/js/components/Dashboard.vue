@@ -303,5 +303,7 @@ export default {
 </script>
 
 <style>
-
+.gdar {
+    background: linear-gradient(linear-gradient(140deg, #6e85b1 0 34%, #d9dce0 -40% 51%))!important;
+}
 </style>
