@@ -30,9 +30,9 @@ export default {
         }
     },
     methods: {
-        getProduct(page = 1) {
+        async getProduct(page = 1) {
             try{
-                axios.get(baseUrl+`get-product?page=${page}&per_page=${this.filterdata.per_page}&section_id=${this.section.id}&keyword=${this.keyword}`)
+                await axios.get(baseUrl+`get-product?page=${page}&per_page=${this.filterdata.per_page}&section_id=${this.section.id}&keyword=${this.keyword}`)
                 .then(response => {
                     this.allproduct = response.data
                 }).catch(error => {
@@ -208,43 +208,5 @@ export default {
         :limit="limit"
         :keep-length="keepLength"
     />
-
-    <div class="modal fade" id="discountUpdate" tabindex="-1" role="dialog" aria-labelledby="discountUpdateLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="discountUpdateLabel">Bulk Discount Upload</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">X</button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <form role="form">
-                                <div class="form-group">
-                                    <p>Upload Excel Format</p> <br>
-                                    <span class="btn btn-primary btn-file">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                                        <input type="file" id="bulkDiscfile" ref="bulkDiscfile" v-on:change="handleBulkDiscFileUpload()"/>
-                                    </span><br>
-                                    <span class="fileinput-new mt-2" id="excel-file-disc"></span>
-                                </div>
-                                <span
-                                    v-if="validation_error.hasOwnProperty('file')"
-                                    class="text-danger"
-                                >
-                                    {{ validation_error.file[0] }}
-                                </span>
-
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
-                    <button type="button" class="btn btn-primary" @click="uploadFile">Submit</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 </template>

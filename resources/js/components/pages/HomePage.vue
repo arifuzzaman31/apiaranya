@@ -8,7 +8,7 @@ export default {
         return {
             form: {
                 section_name: '',
-                banner: [{banner_uri: '',file_type: '',back_link: ''}],
+                banner: [{banner_uri: '',file_type: '',back_link: '',name:''}],
                 pattern: 'single',
                 use_for: 'campaign',
                 precedence: 1,
@@ -18,6 +18,7 @@ export default {
                 category: '',
                 categoryname: '',
                 subcategory: '',
+                subcategoryObj: '',
                 imageuri: '',
                 imagenumb: '',
                 back_url: '',
@@ -53,50 +54,50 @@ export default {
                 })
             },
 
-            setImage(numb,uri){
-                switch (numb) {
-                    case 'one':
-                        this.form.image_one = uri
-                        this.updateFormdata.imageuri = uri
-                        this.updateFormdata.imagenumb = 'one'
-                        break;
-                    case 'two':
-                        this.form.image_two = uri
-                        this.updateFormdata.imageuri = uri
-                        this.updateFormdata.imagenumb = 'two'
-                        break;
-                    case 'three':
-                        this.form.image_three = uri
-                        this.updateFormdata.imageuri = uri
-                        this.updateFormdata.imagenumb = 'three'
-                        break;
+            // setImage(numb,uri){
+            //     switch (numb) {
+            //         case 'one':
+            //             this.form.image_one = uri
+            //             this.updateFormdata.imageuri = uri
+            //             this.updateFormdata.imagenumb = 'one'
+            //             break;
+            //         case 'two':
+            //             this.form.image_two = uri
+            //             this.updateFormdata.imageuri = uri
+            //             this.updateFormdata.imagenumb = 'two'
+            //             break;
+            //         case 'three':
+            //             this.form.image_three = uri
+            //             this.updateFormdata.imageuri = uri
+            //             this.updateFormdata.imagenumb = 'three'
+            //             break;
 
-                    case 'four':
-                        this.form.image_four = uri
-                        this.updateFormdata.imageuri = uri
-                        this.updateFormdata.imagenumb = 'four'
-                        break;
+            //         case 'four':
+            //             this.form.image_four = uri
+            //             this.updateFormdata.imageuri = uri
+            //             this.updateFormdata.imagenumb = 'four'
+            //             break;
 
-                    case 'five':
-                        this.form.image_five = uri
-                        this.updateFormdata.imageuri = uri
-                        this.updateFormdata.imagenumb = 'five'
-                        break;
+            //         case 'five':
+            //             this.form.image_five = uri
+            //             this.updateFormdata.imageuri = uri
+            //             this.updateFormdata.imagenumb = 'five'
+            //             break;
 
-                    default:
-                        break;
-                }
-            },
+            //         default:
+            //             break;
+            //     }
+            // },
 
-            updateImage(){
-                axios.post(baseUrl+'update-home-image',this.updateFormdata).then(response => {
-                    if(response.data.status == 'success'){
-                        this.getHomeData()
-                        this.clearFilter()
-                        this.successMessage(response.data)
-                    }
-                })
-            },
+            // updateImage(){
+            //     axios.post(baseUrl+'update-home-image',this.updateFormdata).then(response => {
+            //         if(response.data.status == 'success'){
+            //             this.getHomeData()
+            //             this.clearFilter()
+            //             this.successMessage(response.data)
+            //         }
+            //     })
+            // },
 
             getHomeData(){
                 axios.get(baseUrl+'get-home-pagedata').then(response => {
@@ -113,7 +114,6 @@ export default {
                     this.form.back_url_six = response.data.back_url_six
                 })
             },
-
             setStateNumb(numb){
                 this.updateFormdata.category = ''
                 this.updateFormdata.categoryname = ''
@@ -131,9 +131,11 @@ export default {
             },
             getSubCategories() {
                 this.form.banner[this.updateFormdata.imagenumb].back_link = ''
+                this.form.banner[this.updateFormdata.imagenumb].name = ''
                 const updateFormData = (this.allfiltersubcategories).filter((data) => data.parent_category == this.updateFormdata.category.id)
                 this.allsubcategories = updateFormData
-                this.form.banner[this.updateFormdata.imagenumb].back_link = this.updateFormdata.category.slug+'/'+this.updateFormdata.subcategory
+                // this.form.banner[this.updateFormdata.imagenumb].back_link = this.updateFormdata.category.slug+'/'+this.updateFormdata.subcategory
+                // this.form.banner[this.updateFormdata.imagenumb].name = this.updateFormdata.category.category_name
             },
 
             getCampaign(){
@@ -152,7 +154,7 @@ export default {
             clearFilter(){
                 this.form = {
                     section_name: '',
-                    banner: [{banner_uri: '',file_type: '',back_link: ''}],
+                    banner: [{banner_uri: '',file_type: '',back_link: '',name:''}],
                     pattern: 'single',
                     use_for: 'campaign',
                     precedence: 1,
@@ -189,14 +191,20 @@ export default {
         setLink(){
             if(this.form.use_for == 'campaign'){
                 this.form.banner[this.updateFormdata.imagenumb].back_link = 'campaign/cat='+this.updateFormdata.subcategory.id+'&cat_name='+this.updateFormdata.subcategory.slug
+                this.form.banner[this.updateFormdata.imagenumb].name = this.updateFormdata.subcategory.campaign_name
             }
             if(this.form.use_for == 'category'){
-                if(this.updateFormdata.subcategory != ''){
-                    this.form.banner[this.updateFormdata.imagenumb].back_link = this.updateFormdata.subcategory
+                if(this.updateFormdata.subcategoryObj != ''){
+                    const catName = this.updateFormdata.subcategoryObj.category_name.replace(/[^a-zA-Z ]/g, "");
+                    this.form.banner[this.updateFormdata.imagenumb].name = catName
+                    this.form.banner[this.updateFormdata.imagenumb].back_link = 'products/'+this.updateFormdata.subcategoryObj.slug+'?cat='+this.updateFormdata.category.id+'&sub_cat='+this.updateFormdata.subcategoryObj.id
                 } else {
-                    this.form.banner[this.updateFormdata.imagenumb].back_link = 'products?cat_id='+this.updateFormdata.category.id+'&cat_name='+this.updateFormdata.category.slug
+                    const catName = this.updateFormdata.category.category_name.replace(/[^a-zA-Z ]/g, "");
+                    this.form.banner[this.updateFormdata.imagenumb].name = catName
+                    this.form.banner[this.updateFormdata.imagenumb].back_link = 'products?cat='+this.updateFormdata.category.id+'&cat_name='+this.updateFormdata.category.slug
                 }
             }
+            this.updateFormdata.subcategoryObj = ''
             this.updateFormdata.imageuri = ''
             this.updateFormdata.imagenumb = ''
             this.updateFormdata.subcategory = ''
@@ -211,7 +219,7 @@ export default {
                 this.getCampaign()
             }
             if(this.form.pattern == 'double'){
-                this.form.banner.push({banner_uri: '',file_type: '',back_link: ''})
+                this.form.banner.push({banner_uri: '',file_type: '',back_link: '',name:''})
             }
         }
     },
@@ -283,9 +291,9 @@ export default {
                                     </select>
                                 </div>
                                 <div>
-                                    <select id="product-updateFormdata" class="form-control" v-model="updateFormdata.subcategory">
+                                    <select id="product-updateFormdata" class="form-control" v-model="updateFormdata.subcategoryObj">
                                         <option value="">Choose...</option>
-                                        <option v-for="(value,index) in allsubcategories" :value="'products/'+value.slug+'?cat='+updateFormdata.category.id+'&sub_cat='+value.id" :key="index">{{ value.category_name }}</option>
+                                        <option v-for="(value,index) in allsubcategories" :value="value" :key="index">{{ value.category_name }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -297,9 +305,7 @@ export default {
                                     </select>
                                 </div>
                             </div>
-
                             <button type="submit" @click="setLink()" class="btn btn-info btn-block my-2">SET LINK</button>
-
                         </div>
                     </div>
 

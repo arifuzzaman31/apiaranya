@@ -185,7 +185,7 @@ export default {
                             </div>
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-md-6" v-if="order.user_id !==0">
+                                    <div class="col-md-6" v-if="order.user_id != 0">
                                         <h6>Customer Info</h6>
                                         <p>
                                             Name: {{ order.user.name }} <br />

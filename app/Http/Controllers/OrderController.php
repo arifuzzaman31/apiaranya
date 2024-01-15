@@ -193,7 +193,7 @@ class OrderController extends Controller
                     $delivery->delivery_value = NULL;
                     if(empty($delivery->tracking_id)){
                         if($order->delivery_platform == 'E-Courier'){
-                               // $this->sendEcorier($order,$request->hub_name);
+                               $this->sendEcorier($order,$request->hub_name);
                         }
                     }
                 }
@@ -238,21 +238,22 @@ class OrderController extends Controller
                 'USER-ID' => env('ECOURIER_USER_ID')
             ]);
             $userShipping = UserShippingInfo::find($order->id);
+            $ecorier = json_decode($userShipping->order->courier_details);
             $courierData = [
-                'recipient_name' => $userShipping->first_name.' '.$userShipping->last_name,
-                'recipient_mobile' => $userShipping->phone,
-                'recipient_city' => $userShipping->city,
-                'recipient_area' => $userShipping->city,
-                'recipient_thana' => $userShipping->city,
-                'recipient_address' => $userShipping->street_address,
-                'package_code' => $order->courier_details,
+                'recipient_name' => $ecorier->recipient_name,
+                'recipient_mobile' => $ecorier->recipient_mobile,
+                'recipient_city' => $ecorier->recipient_city,
+                'recipient_area' => $ecorier->recipient_area,
+                'recipient_thana' => $ecorier->recipient_thana,
+                'recipient_address' => $ecorier->recipient_address,
+                'package_code' => $ecorier->package_code,
                 'product_price' => ($order->total_price + $order->shipping_amount + $order->vat_amount),
                 'payment_method' => 'COD',
                 'recipient_landmark' => 'DBBL ATM',
                 'parcel_type' => 'BOX',
                 'requested_delivery_time' => $order->requested_delivery_date,
                 'delivery_hour' => 'any',
-                'recipient_zip' => $userShipping->post_code,
+                'recipient_zip' => $ecorier->recipient_zip,
                 'pick_hub' => $hubInfo->hub_code ?? '18490',
                 'product_id' => $order->order_id,
                 'pick_address' => $hubInfo->hub_address,

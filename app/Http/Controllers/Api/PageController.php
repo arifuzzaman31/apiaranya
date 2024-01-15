@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\AllStatic;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductResource;
 use Illuminate\Http\Request;
 use App\Models\Page;
 use App\Models\Product;
@@ -16,9 +17,9 @@ class PageController extends Controller
         $data = Page::where('status',AllStatic::$active)->get();
         $newarr = [];
         $names = $data->map(function($item) use($newarr){
-            if($item->product_id){
+            if(!empty($item->product_id)){
                 $prod = Product::with('inventory.discount')->whereIn('id',json_decode($item->product_id))->get();
-                $item['product'] = $prod;
+                $item['product'] = ProductResource::collection($prod);
             } else {
                 $item['product'] = [];
             }

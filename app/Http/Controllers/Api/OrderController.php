@@ -57,11 +57,24 @@ class OrderController extends Controller
             $order->status                 = 1;
             $order->is_same_address        = $request->isSameAddress == false ? 0 : 1;
             $order->charged_currency       = $request->selectedCurrency ?? 'BDT';
-            $order->courier_details        = $request->eQuerierPackagesCode;
+            $order->courier_details        = null;
             $order->exchange_rate          = (float)$request->currentConversionRate;
             $order->user_note              = $request->data['orderNote'];
             $order->save();
+            $corierInfo = [];
+            if($request->data['deliveryMethod'] == 'E-Courier'){
+                $corierInfo['recipient_name'] = $request->data['first_name_shipping'];
+                $corierInfo['recipient_mobile'] = $request->data['phone_shipping'];
+                $corierInfo['recipient_city'] = $request->data['city_shipping'];
+                $corierInfo['recipient_area'] = $request->data['area_shipping'];
+                $corierInfo['recipient_thana'] = $request->data['thana_shipping'];
+                $corierInfo['recipient_address'] = $request->data['apartment_address_shipping'].",".$request->data['street_address_shipping'];
+                $corierInfo['package_code'] = $request->eQuerierPackagesCode;
+                $corierInfo['recipient_zip'] = $request->data['post_code_shipping'];
+                $corierInfo['corier_platform'] = $request->data['deliveryMethod'];
+            }
             $order->order_id    =  'AO'.sprintf("%04d",$order->id);
+            $order->courier_details  = json_encode($corierInfo);
             $order->update();
             foreach ($request->cart as $value) {
 
@@ -148,6 +161,7 @@ class OrderController extends Controller
                 $shipping->post_code = $request->data['post_code_shipping'];
                 $shipping->street_address = $request->data['street_address_shipping'];
                 $shipping->apartment = $request->data['apartment_address_shipping'];
+                $shipping->corier_details = json_encode($corierInfo);
                 $shipping->save();
 
 

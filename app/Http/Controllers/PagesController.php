@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Traits\ProductTrait;
 use Illuminate\Support\Facades\DB;
-use Str;
+use Illuminate\Support\Str;
 
 class PagesController extends Controller
 {
@@ -32,7 +32,7 @@ class PagesController extends Controller
         // return response()->json($request->all());
         try {
             $hp = new Page();
-            $hp->section_name = $request->section_name;
+            $hp->section_name = Str::slug($request->section_name);
             $hp->banner = json_encode($request->banner);
             $hp->pattern = $request->pattern;
             $hp->use_for = $request->use_for;
@@ -61,7 +61,7 @@ class PagesController extends Controller
     {
         try {
             DB::table('pages')->where('id',$id)->update([
-                'section_name'  => $request->section_name,
+                'section_name'  => Str::slug($request->section_name),
                 'status'    =>  $request->status == true ? 1 : 0
             ]);
             return response()->json(['status' => 'success', 'message' => 'Section Updated Successfully!']);
@@ -72,7 +72,7 @@ class PagesController extends Controller
 
     public function homeImageUpdate(Request $request)
     {
-        return response()->json($request->all());
+        // return response()->json($request->all());
         try {
             $hp = new Page();
             $hp->section_name = $request->section_name;
