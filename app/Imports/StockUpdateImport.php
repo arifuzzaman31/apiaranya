@@ -24,7 +24,7 @@ class StockUpdateImport implements ToCollection
                 DB::beginTransaction();
                 DB::table('inventories')
                     ->where('sku', $row[0])
-                    ->update(['stock' => $row[1]]);
+                    ->update(['stock' => (int)$row[1]]);
                 DB::commit();
             } catch (\Throwable $th) {
                 //throw $th;

@@ -162,8 +162,8 @@ export default {
                                             <span v-if="order.order_position == 3">Delivered</span>
                                         </td>
                                         <td>{{ order.total_item }}</td>
-                                        <td>{{ order.total_price }}</td>
-                                        <td>{{ formatPrice(order.total_price - order.buying_sum)}}</td>
+                                        <td>{{ formatPrice(order.total_price) }}</td>
+                                        <td>{{ formatPrice(order.total_price - order.buying_sum) }}</td>
                                         <td class="text-center">
                                             {{ order.payment_via == 0 ? 'COD' : 'Online' }}
                                         </td>

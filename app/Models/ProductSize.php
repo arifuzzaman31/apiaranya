@@ -12,6 +12,11 @@ class ProductSize extends Model
     protected $table = 'product_sizes';
 
     protected $fillable = ['product_id', 'size_id'];
+    protected $casts = [
+        'id' => 'integer',
+        'product_id' => 'integer',
+        'size_id' => 'integer'
+    ];
 
     public function product(){
 

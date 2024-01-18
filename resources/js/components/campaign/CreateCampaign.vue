@@ -328,7 +328,7 @@ export default {
                             </div>
                             <div class="card-body">
                                 <b>{{prod.product_name}}</b>
-                                <p>{{prod.mrp_price}}</p>
+                                <p>{{ formatPrice(prod.mrp_price) }}</p>
                             </div>
                             <div class="card-footer text-center">
                                 <a href="javasript:void(0)" type="button" @click="addToCamp(prod)" class="btn-default">Add</a>
@@ -352,7 +352,7 @@ export default {
                             </div>
                             <div class="card-body">
                                 <b>{{prod.product_name}}</b>
-                                <p>{{prod.mrp_price}}</p>
+                                <p>{{ formatPrice(prod.mrp_price) }}</p>
                             </div>
                             <div class="card-footer text-center">
                                 <a href="javasript:void(0)" type="button" @click="remToCamp(prod)" class="btn-default">Remove</a>

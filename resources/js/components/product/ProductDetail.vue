@@ -1,3 +1,4 @@
+
 <template>
    <div id="ProductDetails" class="modal animated fadeInUp custo-fadeInUp" role="dialog">
         <div class="modal-dialog modal-xl cusotom-modal">
@@ -24,7 +25,7 @@
                                 <li  class="list-group-item"><b>Fragile : {{ product.fragile }}</b></li>
                                 <li  class="list-group-item"><b>Fragile Charge : {{ product.fragile_charge }}</b></li>
                             </ul>
-                            
+
                         </div>
                         <div class="d-flex justify-content-around col-md-7 col-12 w-100">
                             <v-lazy-image v-if="product.image_one" :src="product.image_one" class="img-fluid orderImage" alt="product-image" :src-placeholder="url+'demo.png'" />
@@ -79,8 +80,8 @@
                                                     <p class="mb-0">{{ attr.size && attr.size.size_name != '' ? attr.size.size_name : 'N/A' }}</p>
                                                 </td>
                                                 <td>{{ attr.sku }}</td>
-                                                <td>{{ attr.cpu }}</td>
-                                                <td>{{ attr.mrp }}</td>
+                                                <td>{{ formatPrice(attr.cpu) }}</td>
+                                                <td>{{ formatPrice(attr.mrp) }}</td>
                                                 <td>
                                                     {{ attr.stock }}
                                                 </td>
@@ -98,8 +99,10 @@
 </template>
 
 <script>
+import Mixin from '../../mixer'
 export default {
 props: ['product'],
+mixins: [Mixin],
 data(){
     return {
         url: baseUrl

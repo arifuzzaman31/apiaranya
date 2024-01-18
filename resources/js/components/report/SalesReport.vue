@@ -263,12 +263,12 @@ export default {
                                         </span>
                                     </td>
                                     <td> {{ item.sales_quantity }}</td>
-                                    <td> {{ item.total_buying_amount }}</td>
-                                    <td> {{ item.total_selling_amount }}</td>
-                                    <td> {{ item.total_discount_amount }}</td>
-                                    <td> {{ item.total_selling_amount }}</td>
-                                    <td> {{ item.total_selling_amount+item.total_vat_amount }}</td>
-                                    <td> {{ item.profit }}</td>
+                                    <td> {{ formatPrice(item.total_buying_amount) }}</td>
+                                    <td> {{ formatPrice(item.total_selling_amount) }}</td>
+                                    <td> {{ formatPrice(item.total_discount_amount) }}</td>
+                                    <td> {{ formatPrice(item.total_selling_amount) }}</td>
+                                    <td> {{ formatPrice(item.total_selling_amount+item.total_vat_amount) }}</td>
+                                    <td> {{ formatPrice(item.profit) }}</td>
                                 </tr>
                             </template>
                         </tbody>

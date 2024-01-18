@@ -11,6 +11,11 @@ class CategoryFabric extends Model
 
     protected $table="category_fabric";
     protected $fillable = ["category_id","fabric_id"];
+    protected $cast = [
+        'id'   => 'integer',
+        'fabric_id'   => 'integer',
+        'category_id'   => 'integer'
+    ];
 
     // public function category()
     // {

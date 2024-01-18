@@ -127,9 +127,9 @@ export default {
                                         <span v-if="item.order_position == 2">On Delivery</span>
                                         <span v-if="item.order_position == 3">Delivered</span>
                                     </td>
-                                    <td>{{ item.total_price }}</td>
-                                    <td>{{ item.refund_count }}</td>
-                                    <td>{{ item.refunded_amount }}</td>
+                                    <td>{{ formatPrice(item.total_price) }}</td>
+                                    <td>{{ formatPrice(item.refund_count) }}</td>
+                                    <td>{{ formatPrice(item.refunded_amount) }}</td>
                                     <td class="text-center">
                                         {{ item.payment_via == 0 ? 'COD' : 'Online' }}
                                     </td>

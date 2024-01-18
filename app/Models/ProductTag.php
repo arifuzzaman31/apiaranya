@@ -10,6 +10,10 @@ class ProductTag extends Model
     use HasFactory;
 
     protected $fillable = ['product_id','keyword_name','code','status'];
+    protected $casts = [
+        'id' => 'integer',
+        'product_id' => 'integer'
+    ];
 
     public function product()
     {

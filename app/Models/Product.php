@@ -15,6 +15,12 @@ class Product extends Model
      'image_one', 'image_two', 'image_three', 'image_four', 'image_five', 'flat_colour', 'length','height','width',
      'unit', 'country_of_origin', 'weight', 'design_code', 'description', 'status', 'is_discount','fragile','fragile_charge','has_variation'
     ];
+    protected $casts = [
+        'id' => 'integer',
+        'category_id' => 'integer',
+        'sub_category_id' => 'integer',
+        'vat_tax_id' => 'integer'
+    ];
     public function category()
     {
         return $this->belongsTo(Category::class)->withDefault([

@@ -12,6 +12,14 @@ class Inventory extends Model
 
     protected $fillable = ['id', 'product_id', 'colour_id', 'size_id', 'stock','cpu','mrp','sku', 'warning_amount', 'warehouse'];
     // protected $hidden = ['cpu'];
+    protected $casts = [
+        'id' => 'integer',
+        'stock' => 'integer',
+        'product_id' => 'integer',
+        'colour_id' => 'integer',
+        'size_id' => 'integer',
+    ];
+
     public function product()
     {
         return $this->belongsTo(Product::class);

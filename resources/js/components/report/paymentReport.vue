@@ -105,9 +105,9 @@ export default {
                                         <td class="text-center">
                                                 {{ item.user.phone }}
                                         </td>
-                                        <td>{{ item.total_price }}</td>
+                                        <td>{{ formatPrice(item.total_price) }}</td>
                                         <td>{{ item.user.address }}</td>
-                                        <td>{{ item.total_price }}</td>
+                                        <td>{{ formatPrice(item.total_price) }}</td>
                                         <td>{{ item.payment_method_name }}</td>
                                     </tr>
                                 </template>
