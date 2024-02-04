@@ -237,8 +237,7 @@ class OrderController extends Controller
                 'API-SECRET' => env('ECOURIER_API_SECRET'),
                 'USER-ID' => env('ECOURIER_USER_ID')
             ]);
-            $userShipping = UserShippingInfo::find($order->id);
-            $ecorier = json_decode($userShipping->order->courier_details);
+            $ecorier = json_decode($order->courier_details);
             $courierData = [
                 'recipient_name' => $ecorier->recipient_name,
                 'recipient_mobile' => $ecorier->recipient_mobile,
@@ -254,9 +253,9 @@ class OrderController extends Controller
                 'requested_delivery_time' => $order->requested_delivery_date,
                 'delivery_hour' => 'any',
                 'recipient_zip' => $ecorier->recipient_zip,
-                'pick_hub' => $hubInfo->hub_code ?? '18490',
+                'pick_hub' => $hubInfo['hub_code'] ?? '18490',
                 'product_id' => $order->order_id,
-                'pick_address' => $hubInfo->hub_address,
+                'pick_address' => $hubInfo['hub_address']?? "Banani",
                 'comments' => $order->user_note ?? 'Please handle carefully',
                 'number_of_item' => $order->total_item,
                 'actual_product_price' => $order->total_price,

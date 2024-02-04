@@ -19,6 +19,9 @@ class Product extends Model
         'id' => 'integer',
         'category_id' => 'integer',
         'sub_category_id' => 'integer',
+        'fragile' => 'integer',
+        'fragile_charge' => 'float',
+        'sub_category_id' => 'integer',
         'vat_tax_id' => 'integer'
     ];
     public function category()

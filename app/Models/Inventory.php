@@ -15,6 +15,8 @@ class Inventory extends Model
     protected $casts = [
         'id' => 'integer',
         'stock' => 'integer',
+        'cpu' => 'float',
+        'mrp' => 'float',
         'product_id' => 'integer',
         'colour_id' => 'integer',
         'size_id' => 'integer',

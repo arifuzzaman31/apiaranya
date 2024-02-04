@@ -11,9 +11,11 @@ class Discount extends Model
     use HasFactory;
     protected $table = 'discounts';
     protected $fillable = ['product_id','discount_amount','discount_type','type','max_amount','disc_sku','status'];
-    protected $cast = [
+    protected $casts = [
         'id'   => 'integer',
-        'product_id'   => 'integer'
+        'product_id'   => 'integer',
+        'discount_amount'   => 'float',
+        'max_amount'   => 'float'
     ];
     public function product()
     {

@@ -190,7 +190,7 @@ class CategoryController extends Controller
     public function updateCompCat(Request $request)
     {
         try {
-            $category = Category::find($request->id);
+            $category = Category::find($request->cat_id);
             $category->composition()->sync($request->composition);
             return response()->json(['status' => 'success', 'message' => 'Composition Updated Successfully!']);
         } catch (\Throwable $th) {
