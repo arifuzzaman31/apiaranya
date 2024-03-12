@@ -59,8 +59,9 @@ export default {
     methods: {
         getProduct(page = 1) {
             try{
-                axios.get(baseUrl+`get-product?page=${page}&per_page=${this.filterdata.per_page}&camp_id=${this.campaigndata.id}&keyword=${this.keyword}`)
+                axios.get(baseUrl+`product-by-campaign/${this.campaigndata.id}?page=${page}&per_page=${this.filterdata.per_page}&keyword=${this.keyword}`)
                 .then(response => {
+                    // const res = response.data.filter((i,item) => item.campaign_id == this.campaigndata.id)
                     this.allproduct = response.data
                 }).catch(error => {
                     console.log(error)

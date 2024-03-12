@@ -93,6 +93,7 @@ Route::controller(PagesController::class)
     ->group(function () {
         Route::post('create-home-section','storeSection');
         Route::get('get-page-section','getPageSection');
+        Route::delete('page-section/{id}','deletePageSection');
         Route::get('shipping','getShipping')->name('shipping');
         Route::post('add-shipping-charge','storeShippingCharge');
         Route::get('get-shipping-data','getShippingData');
@@ -159,6 +160,7 @@ Route::controller(CampaignController::class)
     Route::post('store-discount','storeProductSkuDiscount');
     Route::post('add-to-campaign','storeAddtoCamp');
     Route::get('campaign-product/{id}','getCampProduct');
+    Route::get('product-by-campaign/{id}','getProductByCampId');
     Route::post('remove-product-camp','removeCampProduct');
 });
 

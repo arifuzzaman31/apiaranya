@@ -54,7 +54,7 @@ export default {
               confirmButtonText: 'Yes, delete it!'
               }).then((result) => {
               if (result.isConfirmed) {
-                  axios.delete(baseUrl+`campaign/${id}`).then(
+                  axios.delete(baseUrl+`page-section/${id}`).then(
                       response => {
                           this.successMessage(response.data)
                         this.getPageData()

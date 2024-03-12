@@ -15,7 +15,7 @@ class StockUpdateImport implements ToCollection
     {
         unset($rows[0]);
         $data = array_filter($rows->toArray(),function ($number) {
-            return $number[0] !== null;
+            return $number[0] !== null && $number[1] !== '' && $number[1] !== null;
         });
 
         foreach($data as $row)

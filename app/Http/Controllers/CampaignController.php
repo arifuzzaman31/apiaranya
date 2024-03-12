@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Campaign;
 use App\Models\Discount;
 use App\Models\Inventory;
+use App\Models\Product;
 use DB,Str;
 
 class CampaignController extends Controller
@@ -82,6 +83,41 @@ class CampaignController extends Controller
     {
         $camp = Campaign::find($id);
         return view('pages.campaign.campaign_product',['campaigndata' => $camp]);
+    }
+
+    public function getProductByCampId(Request $request,$camp_id)
+    {
+        $noPagination = $request->get('no_paginate');
+        $keyword   = $request->get('keyword');
+        $category   = $request->get('category');
+        $subcategory   = $request->get('subcategory');
+        $dataQty = $request->get('per_page') ? $request->get('per_page') : 12;
+
+        $product = Product::join('campaign_products', 'products.id', '=', 'campaign_products.product_id')
+        ->where('campaign_products.campaign_id', $camp_id)
+        // ->where('products.id', 'campaign_products.product_id')
+        ->with(['campaign','vat', 'category:id,category_name',
+        'subcategory', 'inventory.discount', 'product_size', 'product_colour'])
+        ->select(['products.*','campaign_products.campaign_id']);
+
+
+        // $allCompanies = Products::with(['company' => function($q) {
+        //     $q->where('visible', 0);
+        // }])
+
+
+        // $product = $campaign->product;
+
+        if ($keyword != '') {
+            $product = $product->whereHas('inventory', function ($q) use ($keyword) {
+                $q->where('sku', 'like', '%' . $keyword . '%');
+            });
+            $product = $product->orWhere('product_name', 'like', '%' . $keyword . '%');
+            $product = $product->orWhere('design_code', 'like', '%' . $keyword . '%');
+        }
+
+        $product = $product->paginate($dataQty);
+        return $product;
     }
 
     public function getCampaing(Request $request)
@@ -163,13 +199,16 @@ class CampaignController extends Controller
     public function removeCampProduct(Request $request)
     {
         try {
-            // return $request->product;
-            //code...
+            DB::beginTransaction();
+            Discount::where('type','campaign')
+            ->whereIn('product_id',$request->product)->delete();
             $camp = Campaign::find($request->camp_id);
             $camp->product()->detach($request->product);
+            DB::commit();
             return $this->successMessage("Product Has been removed!");
         } catch (\Throwable $th) {
             //throw $th;
+            DB::rollback();
             return $this->errorMessage();
         }
     }

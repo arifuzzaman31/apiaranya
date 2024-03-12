@@ -119,6 +119,16 @@ class PagesController extends Controller
             return $this->errorMessage();
         }
     }
+
+    public function deletePageSection($id)
+    {
+        try {
+            Page::find($id)->delete();
+            return $this->successMessage("Page Section Deleted!");
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' =>  $th->getMessage()]);
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *
