@@ -11,7 +11,7 @@ class Page extends Model
     use HasFactory,SoftDeletes;
 
     protected $fillable = ['id','section_name','banner','pattern','product_id','use_for','precedence','status'];
-    // protected $casts = [
-    //     'product_id' => 'array'
-    // ];
+    protected $casts = [
+        'precedence' => 'integer'
+    ];
 }

@@ -14,7 +14,10 @@ class PageController extends Controller
 {
     public function homeImageData()
     {
-        $data = Page::where('status',AllStatic::$active)->get();
+        $data = Page::where('status',AllStatic::$active)
+                ->orderByRaw("CASE WHEN precedence REGEXP '^[0-9]' THEN LPAD(precedence, 20, '0') ELSE precedence END")
+                ->orderBy('precedence')
+                ->get();
         $newarr = [];
         $names = $data->map(function($item) use($newarr){
             if(!empty($item->product_id)){
