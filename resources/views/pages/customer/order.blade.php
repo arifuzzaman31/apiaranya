@@ -10,7 +10,9 @@
                     <h4>Order of {{ $orders[0] ? $orders[0]->user->name : 'Unknown'}}</h4>
                 </div>                 
             </div>
+            <div>
         </div>
+        
         <div class="widget-content widget-content-area">
             <table class="table table-bordered table-hover mb-4">
                 <thead>
@@ -33,9 +35,9 @@
                             <td>{{ $order->shipping_method }}</td>
                             <td>{{ $order->payment_method }}</td>
                             <td class="text-center">
-                                @if($order->order_position == 0)<span class="badge badge-info">Pending</span>@endif
-                                @if($order->order_position == 1)<span class="badge badge-primary">Process</span>@endif
-                                @if($order->order_position == 2)<span class="badge badge-warning">On Delivery</span>@endif
+                                @if($order->order_position == 0)<span class="badge rounded-pill alert-info">Pending</span>@endif
+                                @if($order->order_position == 1)<span class="badge rounded-pill alert-primary">Process</span>@endif
+                                @if($order->order_position == 2)<span class="badge rounded-pill alert-warning">On Delivery</span>@endif
                                 @if($order->order_position == 3)<span class="badge badge-success">Delivered</span>@endif
                             </td>
                             <td>

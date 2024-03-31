@@ -1,4 +1,3 @@
-
 <link href="{{ asset('admin-assets/assets/css/loader.css')}}" rel="stylesheet" type="text/css" />
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
 <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
@@ -14,6 +13,7 @@
 <link href="{{ asset('admin-assets/plugins/animate/animate.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('admin-assets/assets/css/scrollspyNav.css')}}" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="{{ asset('admin-assets/assets/css/forms/switches.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ asset('admin-assets/assets/css/multiselect.css')}}">
 
 <link rel="stylesheet" type="text/css" href="{{ asset('admin-assets/assets/css/forms/theme-checkbox-radio.css')}}">
 <link href="{{ asset('admin-assets/assets/css/tables/table-basic.css')}}" rel="stylesheet" type="text/css" />

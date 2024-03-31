@@ -150,7 +150,7 @@ export default {
                 <div class="row">
                     <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
                         <h4>Employee</h4>
-                        <button class="btn btn-primary mb-2 mr-3" v-if="showPermission.includes('employee-create')" data-toggle="modal" data-target="#emplModal" @click="formReset">Add New</button>
+                        <button class="btn btn-info-a mb-2 mr-3" v-if="showPermission.includes('employee-create')" data-toggle="modal" data-target="#emplModal" @click="formReset">Add New</button>
                     </div>                          
                 </div>
             </div>       

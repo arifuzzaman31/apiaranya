@@ -1,5 +1,5 @@
 <template>
-  <Line :data="totalEarning" :options="options" />
+  <Line :data="totalEarning"  :options="options" />
 </template>
 
 <script>

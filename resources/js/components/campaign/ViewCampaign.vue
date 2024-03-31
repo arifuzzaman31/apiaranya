@@ -161,7 +161,7 @@ export default {
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
                             <h4>Campaign</h4>
-                            <button class="btn btn-primary mb-2" v-if="showPermission.includes('campaign-create')" data-toggle="modal" data-target="#createCampModal" @click="formReset">Add New</button>
+                            <button class="btn btn-info-a mb-2" v-if="showPermission.includes('campaign-create')" data-toggle="modal" data-target="#createCampModal" @click="formReset">Add New</button>
                         </div>
                     </div>
                 </div>
@@ -191,6 +191,17 @@ export default {
                                         <span class="slider round"></span>
                                     </label>
                                 </td>
+
+
+
+
+
+
+
+
+
+
+                                
                                 <td>
                                 <ul class="table-controls d-flex justify-content-around">
                                     <li v-if="showPermission.includes('campaign-edit')"><a href="javascript:void(0);" @click="editCamp(campaign)" type="button" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 text-success"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a></li>
@@ -270,7 +281,7 @@ export default {
                                 <div class="modal-footer md-button">
                                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12" @click="formReset"></i> Discard</button>
 
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="submit" class="btn btn-info-a">Submit</button>
 
                                 </div>
                             </form>
@@ -354,5 +365,24 @@ export default {
 
 
 <style scoped>
+.btn-info-a, .btn-view{
+color:#fff;
+background-color: #3c5676!important;
+border-color: #3c5676!important;
+}
+.btn-info-a:hover, .btn-view:hover{
+background-color: #3c5676;
+border-color: #3c5676;
+}
+.btn-delete {
+    color: #000 !important;
+    background-color: #ffffff;
+    border-color: #3c5676;
+}
+.btn-delete:hover {
+    color: #fff !important;
+    background-color:#3c5676!important;
+    border-color: #3c5676!important;
+}
 
 </style>

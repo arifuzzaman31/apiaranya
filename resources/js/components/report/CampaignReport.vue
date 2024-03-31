@@ -25,7 +25,7 @@ export default {
 
     methods: {
         getCampaignReport(page = 1){
-            axios.get(baseUrl+`get-campaign-report?page=${page}&per_page=10&date_from=${this.filterdata.from}&date_to=${this.filterdata.to}`)
+            axios.get(baseUrl+`get-campaign-report?page=${page}&per_page=7&date_from=${this.filterdata.from}&date_to=${this.filterdata.to}`)
             .then(result => {
                 this.campaignData = result.data;
             })

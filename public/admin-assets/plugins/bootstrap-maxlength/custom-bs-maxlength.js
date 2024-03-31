@@ -6,7 +6,7 @@ $('input.few-options').maxlength({
     alwaysShow: true,
     threshold: 10,
     warningClass: "badge badge-success",
-    limitReachedClass: "badge badge-warning"
+    limitReachedClass: "badge rounded-pill alert-warning"
 });
 $('input.alloptions').maxlength({
   	alwaysShow: true,
