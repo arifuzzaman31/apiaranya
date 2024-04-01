@@ -1,50 +1,7 @@
 <template>
     <div class="layout-px-spacing" v-if="loaded">
-        <div class="row mt-3" style="display: flex; row-gap: 20px;">
+        <div class="row mt-3" style="display: flex; row-gap: 20px">
             <div class="col-md-3 rounded">
-                <div class="card" style="border-radius: 8px">
-                    <div
-                        class="card-body d-flex align-items-center"
-                        style="
-                            height: 100vh;
-                            max-height: 143px;
-                            column-gap: 20px;
-
-                        "
-                    >
-                        <div>
-                            <span
-                                class="rounded-circle"
-                                style="padding: 1rem 0.69rem!important; background-color: rgba(8, 129, 120, 0.2)"
-                            >
-                                <i
-                                    class="icons icon icon-sm rounded-circle"
-                                    style="
-                                        background-color: rgb(8 129 120 / 65%);
-                                        color: #fff;
-                                        padding: 4px;
-                                    "
-                                >
-                                <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
-</svg>
-
-                                </i>
-                            </span>
-                        </div>
-                        <div class="icons-content">
-                            <h6 class="mb-1 card-title">Total Order</h6>
-                            <span>{{ order_info.ttl }}</span> <br />
-                            <span class="text-sm">
-                                Shipping fees are not included
-                            </span>
-                        </div>
-
-                        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 rounded ">
                 <div class="card" style="border-radius: 8px">
                     <!-- <img class="card-img-top" src="" alt="Card image cap" /> -->
                     <div
@@ -58,26 +15,101 @@
                         <div>
                             <span
                                 class="rounded-circle"
-                                style="padding: 1rem 0.69rem!important; background-color: rgba(8, 129, 120, 0.2)"
+                                style="
+                                    padding: 1rem 0.69rem !important;
+                                    background-color: rgb(60 86 118 / 39%);
+                                "
                             >
                                 <i
                                     class="icons icon icon-sm rounded-circle"
                                     style="
-                                        background-color: rgb(8 129 120 / 65%);
+                                        background-color: rgb(60 86 118);
                                         color: #fff;
                                         padding: 4px;
                                     "
                                 >
-                                    <svg xmlns="http://www.w3.org/2000/svg"  width="20"
-                                        height="20" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-</svg>
-
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="20"
+                                        height="20"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke-width="1.5"
+                                        stroke="currentColor"
+                                        class="w-6 h-6"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M21 7.5V18M15 7.5V18M3 16.811V8.69c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061A1.125 1.125 0 0 1 3 16.811Z"
+                                        />
+                                    </svg>
                                 </i>
                             </span>
                         </div>
                         <div class="icons-content">
-                            <h6 class="mb-1 card-title">Pending Order</h6>
+                            <h6 class="mb-1 card-title text-bold">
+                                On-Hold Order
+                            </h6>
+                            <span>{{ order_info.pending }}</span> <br />
+                            <span class="text-sm">
+                                Shipping fees are not included
+                            </span>
+                        </div>
+
+                        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 rounded">
+                <div class="card" style="border-radius: 8px">
+                    <!-- <img class="card-img-top" src="" alt="Card image cap" /> -->
+                    <div
+                        class="card-body d-flex align-items-center"
+                        style="
+                            height: 100vh;
+                            max-height: 143px;
+                            column-gap: 20px;
+                        "
+                    >
+                        <div>
+                            <span
+                                class="rounded-circle"
+                                style="
+                                    padding: 1rem 0.69rem !important;
+                                    background-color: rgb(60 86 118 / 39%);
+                                "
+                            >
+                                <i
+                                    class="icons icon icon-sm rounded-circle"
+                                    style="
+                                        background-color: rgb(60 86 118);
+                                        color: #fff;
+                                        padding: 4px;
+                                    "
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="20"
+                                        height="20"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke-width="1.5"
+                                        stroke="currentColor"
+                                        class="w-6 h-6"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M8 12a4 4 0 1 1 1.354 3M8 12l2.5-1M8 12l-1.5-2M21 12a9 9 0 1 1-18 0a9 9 0 0 1 18 0"
+                                        />
+                                    </svg>
+                                </i>
+                            </span>
+                        </div>
+                        <div class="icons-content">
+                            <h6 class="mb-1 card-title text-bold">Revenue</h6>
                             <span>{{ order_info.pending }}</span> <br />
                             <span class="text-sm">
                                 Shipping fees are not included
@@ -90,60 +122,6 @@
             </div>
             <div class="col-md-3 rounded">
                 <div class="card" style="border-radius: 8px">
-                    <div
-                        class="card-body d-flex align-items-center"
-                        style="
-                            height: 100vh;
-                            max-height: 143px;
-                            column-gap: 20px;
-                        "
-                    >
-                        <div>
-                            <span
-                                class="rounded-circle"
-                                style="padding: 1rem 0.69rem!important; background-color: rgba(8, 129, 120, 0.2)"
-                            >
-                                <i
-                                    class="icons icon icon-sm rounded-circle"
-                                    style="
-                                        background-color: rgb(8 129 120 / 65%);
-                                        color: #fff;
-                                        padding: 4px;
-                                    "
-                                >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        width="20"
-                                        height="20"
-                                        stroke-width="1"
-                                        stroke="currentColor"
-                                        class="w-6 h-6"
-                                        viewBox="0 0 20 23"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.631 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 0 1-2.448-2.448 14.9 14.9 0 0 1 .06-.312m-2.24 2.39a4.493 4.493 0 0 0-1.757 4.306 4.493 4.493 0 0 0 4.306-1.758M16.5 9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"
-                                        />
-                                    </svg>
-                                </i>
-                            </span>
-                        </div>
-                        <div class="icons-content">
-                            <h6 class="mb-1 card-title">On Delivery</h6>
-                            <span>{{ order_info.processing }}</span> <br />
-                            <span class="text-sm">
-                                Shipping fees are not included
-                            </span>
-                        </div>
-
-                        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 rounded ">
-                <div class="card" style="border-radius: 8px">
                     <!-- <img class="card-img-top" src="" alt="Card image cap" /> -->
                     <div
                         class="card-body d-flex align-items-center"
@@ -156,133 +134,41 @@
                         <div>
                             <span
                                 class="rounded-circle"
-                                style="padding: 1rem 0.69rem!important; background-color: rgba(8, 129, 120, 0.2)"
+                                style="
+                                    padding: 1rem 0.69rem !important;
+                                    background-color: rgb(60 86 118 / 39%);
+                                "
                             >
                                 <i
                                     class="icons icon icon-sm rounded-circle"
                                     style="
-                                        background-color: rgb(8 129 120 / 65%);
+                                        background-color: rgb(60 86 118);
                                         color: #fff;
                                         padding: 4px;
                                     "
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
+                                        width="20"
+                                        height="20"
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         stroke-width="1.5"
                                         stroke="currentColor"
                                         class="w-6 h-6"
-                                        width="20"
-                                        height="20"
                                     >
                                         <path
                                             stroke-linecap="round"
                                             stroke-linejoin="round"
-                                            d="M6.429 9.75 2.25 12l4.179 2.25m0-4.5 5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0 4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0-5.571 3-5.571-3"
+                                            d="M4 8h16v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm4-4h8l4 4H4zm0 8h4"
                                         />
                                     </svg>
                                 </i>
                             </span>
                         </div>
                         <div class="icons-content">
-                            <h6 class="mb-1 card-title text-bold">
-                                Total Delivered
-                            </h6>
-                            <span>{{ order_info.delivered }}</span> <br />
-                            <span class="text-sm">
-                                Shipping fees are not included
-                            </span>
-                        </div>
-
-                        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 rounded ">
-                <div class="card" style="border-radius: 8px">
-                    <!-- <img class="card-img-top" src="" alt="Card image cap" /> -->
-                    <div
-                        class="card-body d-flex align-items-center"
-                        style="
-                            height: 100vh;
-                            max-height: 143px;
-                            column-gap: 20px;
-                        "
-                    >
-                        <div>
-                            <span
-                                class="rounded-circle"
-                                style="padding: 1rem 0.69rem!important; background-color: rgba(8, 129, 120, 0.2)"
-                            >
-                                <i
-                                    class="icons icon icon-sm rounded-circle"
-                                    style="
-                                        background-color: rgb(8 129 120 / 65%);
-                                        color: #fff;
-                                        padding: 4px;
-                                    "
-                                >
-                                <svg xmlns="http://www.w3.org/2000/svg"  width="20"
-                                        height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672Zm-7.518-.267A8.25 8.25 0 1 1 20.25 10.5M8.288 14.212A5.25 5.25 0 1 1 17.25 10.5" />
-</svg>
-
-                                </i>
-                            </span>
-                        </div>
-                        <div class="icons-content">
-                            <h6 class="mb-1 card-title text-bold">
-                                Active Order
-                            </h6>
-                            <span>{{ status_info.active }}</span> <br />
-                            <span class="text-sm">
-                                Shipping fees are not included
-                            </span>
-                        </div>
-
-                        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 rounded ">
-                <div class="card" style="border-radius: 8px">
-                    <!-- <img class="card-img-top" src="" alt="Card image cap" /> -->
-                    <div
-                        class="card-body d-flex align-items-center"
-                        style="
-                            height: 100vh;
-                            max-height: 143px;
-                            column-gap: 20px;
-
-                        "
-                    >
-                        <div>
-                            <span
-                                class="rounded-circle"
-                                style="padding: 1rem 0.69rem!important; background-color: rgba(8, 129, 120, 0.2)"
-                            >
-                                <i
-                                    class="icons icon icon-sm rounded-circle"
-                                    style="
-                                        background-color: rgb(8 129 120 / 65%);
-                                        color: #fff;
-                                        padding: 4px;
-                                    "
-                                >
-                                <svg xmlns="http://www.w3.org/2000/svg"  width="20"
-                                        height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
-</svg>
-
-                                </i>
-                            </span>
-                        </div>
-                        <div class="icons-content">
-                            <h6 class="mb-1 card-title text-bold">
-                                Cancel Order
-                            </h6>
-                            <span>{{ status_info.cancel }}</span> <br />
+                            <h6 class="mb-1 card-title text-bold">Products</h6>
+                            <span>{{ order_info.pending }}</span> <br />
                             <span class="text-sm">
                                 Shipping fees are not included
                             </span>
@@ -306,29 +192,43 @@
                         <div>
                             <span
                                 class="rounded-circle"
-                                style="padding: 1rem 0.69rem!important; background-color: rgba(8, 129, 120, 0.2)"
+                                style="
+                                    padding: 1rem 0.69rem !important;
+                                    background-color: rgb(60 86 118 / 39%);
+                                "
                             >
                                 <i
                                     class="icons icon icon-sm rounded-circle"
                                     style="
-                                        background-color: rgb(8 129 120 / 65%);
+                                        background-color: rgb(60 86 118);
                                         color: #fff;
                                         padding: 4px;
                                     "
                                 >
-                                <svg xmlns="http://www.w3.org/2000/svg"  width="20"
-                                        height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5V18M15 7.5V18M3 16.811V8.69c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061A1.125 1.125 0 0 1 3 16.811Z" />
-</svg>
-
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="20"
+                                        height="20"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke-width="1.5"
+                                        stroke="currentColor"
+                                        class="w-6 h-6"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M8 8H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-2M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M8 8h8m-4 4v2m0 0v2m0-2h-2m2 0h2"
+                                        />
+                                    </svg>
                                 </i>
                             </span>
                         </div>
                         <div class="icons-content">
                             <h6 class="mb-1 card-title text-bold">
-                                On-Hold Order
+                                Monthly Earning
                             </h6>
-                            <span>{{ status_info.onhold }}</span> <br />
+                            <span>{{ order_info.pending }}</span> <br />
                             <span class="text-sm">
                                 Shipping fees are not included
                             </span>
@@ -439,6 +339,312 @@
                     </div>
                 </div>
             </div>
+
+            <div
+                class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing"
+            >
+                <div class="widget widget-chart-one">
+                    <div class="widget-heading">
+                        <ul class="tabs tab-pills">
+                            <li>
+                                <a
+                                    href="javascript:void(0);"
+                                    id="tb_1"
+                                    class="tabmenu"
+                                    >New Members</a
+                                >
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="new-member-list">
+                        <div
+                            class="d-flex align-items-center justify-content-between mb-4"
+                        >
+                            <div class="d-flex align-items-center">
+                                <img
+                                    src="../../../public/admin-assets/assets/img/avatar.jpg"
+                                    alt=""
+                                    class="avatar"
+                                />
+                                <div>
+                                    <h6>Patric Adams</h6>
+                                    <p class="text-muted font-xs">
+                                        Sanfrancisco
+                                    </p>
+                                </div>
+                            </div>
+                            <a href="#" class="btn btn-primary">Add</a>
+                        </div>
+                        <div
+                            class="d-flex align-items-center justify-content-between mb-4"
+                        >
+                            <div class="d-flex align-items-center">
+                                <img
+                                    src="../../../public/admin-assets/assets/img/avatar.jpg"
+                                    alt=""
+                                    class="avatar"
+                                />
+                                <div>
+                                    <h6>Dilan Specter</h6>
+                                    <p class="text-muted font-xs">
+                                        Sanfrancisco
+                                    </p>
+                                </div>
+                            </div>
+                            <a href="#" class="btn btn-primary">Add</a>
+                        </div>
+                        <div
+                            class="d-flex align-items-center justify-content-between mb-4"
+                        >
+                            <div class="d-flex align-items-center">
+                                <img
+                                    src="../../../public/admin-assets/assets/img/avatar.jpg"
+                                    alt=""
+                                    class="avatar"
+                                />
+                                <div>
+                                    <h6>Tomas Baker</h6>
+                                    <p class="text-muted font-xs">
+                                        Sanfrancisco
+                                    </p>
+                                </div>
+                            </div>
+                            <a href="#" class="btn btn-primary">Add</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing"
+            >
+                <div class="widget widget-chart-one">
+                    <div class="widget-heading">
+                        <ul class="tabs tab-pills">
+                            <li>
+                                <a
+                                    href="javascript:void(0);"
+                                    id="tb_1"
+                                    class="tabmenu"
+                                    >Recent activities</a
+                                >
+                            </li>
+                        </ul>
+                    </div>
+                    <ul class="verti-timeline list-unstyled font-sm">
+                        <li class="event-list">
+                            <div class="event-timeline-dot">
+                                <i
+                                    class="material-icons md-play_circle_outline font-xxl"
+                                    ><svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        height="20"
+                                        viewBox="0 -960 960 960"
+                                        width="20"
+                                    >
+                                        <path
+                                            d="m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
+                                            fill="#7b7d8a"
+                                        /></svg
+                                ></i>
+                            </div>
+                            <div class="media">
+                                <div class="me-3">
+                                    <h6>
+                                        <span>Today</span>
+                                        <i>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                viewBox="0 -960 960 960"
+                                                width="24"
+                                            >
+                                                <path
+                                                    d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z"
+                                                    fill="#7b7d8a"
+                                                />
+                                            </svg>
+                                        </i>
+                                    </h6>
+                                </div>
+                                <div class="media-body">
+                                    <div>
+                                        Lorem ipsum dolor sit amet consectetur
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="event-list active">
+                            <div class="event-timeline-dot">
+                                <i
+                                    class="material-icons"
+                                    ><svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        height="20"
+                                        viewBox="0 -960 960 960"
+                                        width="20"
+                                    >
+                                        <path
+                                            d="m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
+                                            fill="#7b7d8a"
+                                        /></svg
+                                ></i>
+                            </div>
+                            <div class="media">
+                                <div class="me-3">
+                                    <h6>
+                                        <span>17 May</span>
+                                        <i>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                viewBox="0 -960 960 960"
+                                                width="24"
+                                            >
+                                                <path
+                                                    d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z"
+                                                    fill="#7b7d8a"
+                                                />
+                                            </svg>
+                                        </i>
+                                    </h6>
+                                </div>
+                                <div class="media-body">
+                                    <div>
+                                        Debitis nesciunt voluptatum dicta
+                                        reprehenderit
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="event-list">
+                            <div class="event-timeline-dot">
+                                 <i
+                                    class="material-icons"
+                                    ><svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        height="20"
+                                        viewBox="0 -960 960 960"
+                                        width="20"
+                                    >
+                                        <path
+                                            d="m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
+                                            fill="#7b7d8a"
+                                        /></svg
+                                ></i>
+                            </div>
+                            <div class="media">
+                                <div class="me-3">
+                                    <h6>
+                                        <span>13 May</span>
+                                        <i  >
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                viewBox="0 -960 960 960"
+                                                width="24"
+                                            >
+                                                <path
+                                                    d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z"
+                                                    fill="#7b7d8a"
+                                                />
+                                            </svg>
+                                      </i>
+                                    </h6>
+                                </div>
+                                <div class="media-body">
+                                    <div>Accusamus voluptatibus voluptas.</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="event-list">
+                            <div class="event-timeline-dot">
+                                 <i
+                                    class="material-icons"
+                                    ><svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        height="20"
+                                        viewBox="0 -960 960 960"
+                                        width="20"
+                                    >
+                                        <path
+                                            d="m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
+                                            fill="#7b7d8a"
+                                        /></svg
+                                ></i>
+                            </div>
+                            <div class="media">
+                                <div class="me-3">
+                                    <h6>
+                                        <span>05 April</span>
+                                        <i>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                viewBox="0 -960 960 960"
+                                                width="24"
+                                            >
+                                                <path
+                                                    d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z"
+                                                    fill="#7b7d8a"
+                                                />
+                                            </svg>
+                                        </i>
+                                    </h6>
+                                </div>
+                                <div class="media-body">
+                                    <div>
+                                        At vero eos et accusamus et iusto odio
+                                        dignissi
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="event-list">
+                            <div class="event-timeline-dot">
+                                <i
+                                    class="material-icons"
+                                    ><svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        height="20"
+                                        viewBox="0 -960 960 960"
+                                        width="20"
+                                    >
+                                        <path
+                                            d="m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
+                                            fill="#7b7d8a"
+                                        /></svg
+                                ></i>
+                            </div>
+                            <div class="media">
+                                <div class="me-3">
+                                    <h6>
+                                        <span>26 Mar</span>
+                                        <i>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="24"
+                                                viewBox="0 -960 960 960"
+                                                width="24"
+                                            >
+                                                <path
+                                                    d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z"
+                                                    fill="#7b7d8a"
+                                                />
+                                            </svg>
+                                        </i>
+                                    </h6>
+                                </div>
+                                <div class="media-body">
+                                    <div>
+                                        Responded to need “Volunteer Activities
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -476,7 +682,7 @@
                                     <td class="text-center">
                                         <span
                                             v-if="order.payment_status == 0"
-                                            class="badge badge-primary"
+                                            class="badge rounded-pill alert-primary"
                                             >COD</span
                                         >
                                         <span v-else class="badge badge-light"
@@ -486,12 +692,12 @@
                                     <td>
                                         <span
                                             v-if="order.payment_status == 0"
-                                            class="badge badge-warning"
+                                            class="badge rounded-pill alert-warning"
                                             >Unpaid</span
                                         >
                                         <span
                                             v-if="order.payment_status == 1"
-                                            class="badge badge-primary"
+                                            class="badge rounded-pill alert-primary"
                                             >Paid</span
                                         >
                                         <span
@@ -501,7 +707,7 @@
                                         >
                                         <span
                                             v-if="order.payment_status == 3"
-                                            class="badge badge-danger"
+                                            class="badge rounded-pill alert-danger"
                                             >Cancel</span
                                         >
                                     </td>
@@ -719,10 +925,48 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .gdar {
     background: linear-gradient(
         linear-gradient(140deg, #6e85b1 0 34%, #d9dce0 -40% 51%)
     ) !important;
 }
+.new-member-list img.avatar {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+.verti-timeline {
+    border-left: 2px dashed #e1e1e1;
+    margin: 0 10px;
+}
+
+.verti-timeline .event-list {
+    position: relative;
+    padding: 0 0 18px 30px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.verti-timeline .event-list .event-timeline-dot {
+    position: absolute;
+    left: -9px;
+    top: 0;
+    z-index: 9;
+    font-size: 16px;
+    color: #6c757d;
+}
+.me-3 {
+    margin-right: 1rem !important;
+}
+.media h6 span {
+    display: inline-block;
+    min-width: 50px;
+}
+
+
 </style>

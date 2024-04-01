@@ -28,7 +28,7 @@ export default {
 
     methods: {
         getOrder(page = 1){
-            axios.get(baseUrl+`get-order?page=${page}&per_page=10&keyword=${this.search}&byposition=${this.filterdata.order_state}&payment_status=${this.filterdata.payment_status}&status=${this.filterdata.status}&from=${this.filterdata.from}&to=${this.filterdata.to}`)
+            axios.get(baseUrl+`get-order?page=${page}&per_page=8&keyword=${this.search}&byposition=${this.filterdata.order_state}&payment_status=${this.filterdata.payment_status}&status=${this.filterdata.status}&from=${this.filterdata.from}&to=${this.filterdata.to}`)
             .then(result => {
                 this.orders = result.data;
             })

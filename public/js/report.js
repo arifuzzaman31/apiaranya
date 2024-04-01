@@ -19743,7 +19743,7 @@ __webpack_require__.r(__webpack_exports__);
     getCampaignReport: function getCampaignReport() {
       var _this = this;
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get(baseUrl + "get-campaign-report?page=".concat(page, "&per_page=10&date_from=").concat(this.filterdata.from, "&date_to=").concat(this.filterdata.to)).then(function (result) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get(baseUrl + "get-campaign-report?page=".concat(page, "&per_page=7&date_from=").concat(this.filterdata.from, "&date_to=").concat(this.filterdata.to)).then(function (result) {
         _this.campaignData = result.data;
       })["catch"](function (errors) {
         console.log(errors);
@@ -20016,7 +20016,7 @@ __webpack_require__.r(__webpack_exports__);
     getOrder: function getOrder() {
       var _this = this;
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get(baseUrl + "get-order?page=".concat(page, "&per_page=10&keyword=").concat(this.search, "&byposition=").concat(this.filterdata.order_state, "&payment_status=").concat(this.filterdata.payment_status, "&status=").concat(this.filterdata.status, "&from=").concat(this.filterdata.from, "&to=").concat(this.filterdata.to)).then(function (result) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get(baseUrl + "get-order?page=".concat(page, "&per_page=8&keyword=").concat(this.search, "&byposition=").concat(this.filterdata.order_state, "&payment_status=").concat(this.filterdata.payment_status, "&status=").concat(this.filterdata.status, "&from=").concat(this.filterdata.from, "&to=").concat(this.filterdata.to)).then(function (result) {
         _this.orders = result.data;
       })["catch"](function (errors) {
         console.log(errors);
@@ -20194,7 +20194,7 @@ __webpack_require__.r(__webpack_exports__);
         subcategory: 0,
         brand: ''
       },
-      limit: 3,
+      limit: 2,
       keepLength: false,
       url: baseUrl
     };
@@ -20203,7 +20203,7 @@ __webpack_require__.r(__webpack_exports__);
     getSalesReport: function getSalesReport() {
       var _this = this;
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get(baseUrl + "get-sales-report?page=".concat(page, "&per_page=10&keyword=").concat(this.search, "&category=").concat(this.filterdata.category, "&subcategory=").concat(this.filterdata.subcategory, "&brand=").concat(this.filterdata.brand, "&date_from=").concat(this.filterdata.from, "&date_to=").concat(this.filterdata.to)).then(function (result) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get(baseUrl + "get-sales-report?page=".concat(page, "&per_page=7&keyword=").concat(this.search, "&category=").concat(this.filterdata.category, "&subcategory=").concat(this.filterdata.subcategory, "&brand=").concat(this.filterdata.brand, "&date_from=").concat(this.filterdata.from, "&date_to=").concat(this.filterdata.to)).then(function (result) {
         _this.salesData = result.data;
       })["catch"](function (errors) {
         console.log(errors);
@@ -20221,7 +20221,7 @@ __webpack_require__.r(__webpack_exports__);
       this.getSalesReport();
     },
     getSearch: function getSearch() {
-      if (this.search.length < 3) return;
+      if (this.search.length < 2) return;
       this.getSalesReport();
     },
     getCategory: function getCategory() {

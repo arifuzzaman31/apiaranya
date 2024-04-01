@@ -25,7 +25,7 @@
           showOnReady: false, // true to always show when indicator is ready
           alwaysShow: false, // if true the indicator it's always shown.
           threshold: 10, // Represents how many chars left are needed to show up the counter
-          warningClass: 'badge badge-warning',
+          warningClass: 'badge rounded-pill alert-warning',
           limitReachedClass: 'badge badge-important badge-danger',
           separator: ' / ',
           preText: '',

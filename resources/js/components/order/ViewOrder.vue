@@ -294,7 +294,7 @@ export default {
 </style>
 <template>
     <div class="row">
-        <div id="tableHover" class="col-lg-12 col-12 layout-spacing">
+        <div id="tableHover  " class="col-lg-12 col-12 layout-spacing">
             <div class="statbox">
                 <div class="widget-header">
                     <div class="row">
@@ -339,7 +339,7 @@ export default {
                         </div>
 
                         <div class="col-md-2 col-lg-2 col-12">
-                            <button type="button" class="btn btn-danger" @click="filterClear()">CLEAR</button>
+                            <button type="button" class="btn btn-info-a" @click="filterClear()">CLEAR</button>
                         </div>
                     </div>
                     <div class="table-responsive" style="min-height: 60vh;">
@@ -371,26 +371,26 @@ export default {
                                         <td>{{ order.total_price }}</td>
                                         <td>{{ order.shipping_amount }}</td>
                                         <td>
-                                            <span v-if="order.payment_status == 0" class="badge badge-primary">COD</span>
+                                            <span v-if="order.payment_status == 0" class="badge rounded-pill alert-primary">COD</span>
                                             <span v-else class="badge badge-light">Others</span>
                                         </td>
                                         <td>
-                                            <span v-if="order.payment_status == 0" class="badge badge-warning">Unpaid</span>
-                                            <span v-if="order.payment_status == 1" class="badge badge-primary">Paid</span>
+                                            <span v-if="order.payment_status == 0" class="badge rounded-pill alert-warning">Unpaid</span>
+                                            <span v-if="order.payment_status == 1" class="badge rounded-pill alert-primary">Paid</span>
                                             <span v-if="order.payment_status == 2" class="badge badge-light">Failed</span>
-                                            <span v-if="order.payment_status == 3" class="badge badge-danger">Cancel</span>
+                                            <span v-if="order.payment_status == 3" class="badge rounded-pill alert-danger">Cancel</span>
                                         </td>
                                         <td>{{ order.payment_method_name }}</td>
                                         <!-- <td>{{ order.refund_claim_date }}</td> -->
                                         <td>
-                                            <span v-if="order.status == 0" class="badge badge-danger">Cancel</span>
-                                            <span v-if="order.status == 1" class="badge badge-primary">Active</span>
-                                            <span v-if="order.status == 2" class="badge badge-warning">On-Hold</span>
+                                            <span v-if="order.status == 0" class="badge rounded-pill alert-danger">Cancel</span>
+                                            <span v-if="order.status == 1" class="badge rounded-pill alert-primary">Active</span>
+                                            <span v-if="order.status == 2" class="badge rounded-pill alert-warning">On-Hold</span>
                                         </td>
                                         <td class="text-center">
-                                            <span v-if="order.order_position == 0" class="badge badge-info">Pending</span>
-                                            <span v-if="order.order_position == 1" class="badge badge-primary">Processing</span>
-                                            <span v-if="order.order_position == 2" class="badge badge-warning">On Delivery</span>
+                                            <span v-if="order.order_position == 0" class="badge rounded-pill alert-info">Pending</span>
+                                            <span v-if="order.order_position == 1" class="badge rounded-pill alert-primary">Processing</span>
+                                            <span v-if="order.order_position == 2" class="badge rounded-pill alert-warning">On Delivery</span>
                                             <span v-if="order.order_position == 3" class="badge badge-success">Delivered</span>
                                         </td>
                                         <td class="text-center">
@@ -428,7 +428,7 @@ export default {
                             />
                     </div>
                     <div class="float-right">
-                        <a target="_blank" :href="url+`get-order?excel=yes&keyword=${search}&byposition=${filterdata.order_state}&status=${filterdata.status}`" type="button" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>  Excel</a>
+                        <a target="_blank" :href="url+`get-order?excel=yes&keyword=${search}&byposition=${filterdata.order_state}&status=${filterdata.status}`" type="button" class="btn btn-info-a"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>  Excel</a>
                     </div>
                 </div>
             </div>
@@ -628,3 +628,14 @@ export default {
         </div>
     </div>
 </template>
+<style scoped>
+.btn-info-a{
+color:#fff;
+background-color: #3c5676!important;
+border-color: #3c5676!important;
+}
+.btn-info-a:hover{
+background-color: #3c5676;
+border-color: #3c5676;
+}
+</style>

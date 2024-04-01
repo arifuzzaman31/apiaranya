@@ -176,12 +176,12 @@ export default {
                                             <td>{{ order.payment_method }}</td>
                                             <td class="text-center">
                                                 <span v-if="order.status !=0">
-                                                    <span v-if="order.order_position == 0" class="badge badge-info">Pending</span>
-                                                    <span v-if="order.order_position == 1" class="badge badge-primary">On Process</span>
-                                                    <span v-if="order.order_position == 2" class="badge badge-warning">On Delivery</span>
+                                                    <span v-if="order.order_position == 0" class="badge rounded-pill alert-info">Pending</span>
+                                                    <span v-if="order.order_position == 1" class="badge rounded-pill alert-primary">On Process</span>
+                                                    <span v-if="order.order_position == 2" class="badge rounded-pill alert-warning">On Delivery</span>
                                                     <span v-if="order.order_position == 3" class="badge badge-success">Delivered</span>
                                                 </span>
-                                                <span v-else class="badge badge-danger">Cancel</span>
+                                                <span v-else class="badge rounded-pill alert-danger">Cancel</span>
                                             </td>
                                             <td>
                                                 <div class="dropdown custom-dropdown">

@@ -358,7 +358,7 @@
                             <a href="{{ route('invoice.report') }}">Invoice Report </a>
                         </li>
                     @endif
-                    @if(checkPermission('product-report'))
+                    @if(checkPermission('invoice-report'))
                         <li>
                             <a href="{{ route('product.report') }}">Product Report </a>
                         </li>

@@ -136,7 +136,7 @@ export default {
                         </div>
                         
                         <div class="col-md-2 col-lg-2 col-12">
-                            <button type="button" class="btn btn-danger" @click="filterClear()">CLEAR</button>
+                            <button type="button" class="btn btn-info-a" @click="filterClear()">CLEAR</button>
                         </div>
                     </div>
                     <div class="table-responsive" style="min-height: 60vh;">
@@ -233,3 +233,14 @@ export default {
         </div>
     </div>
 </template>
+<style scoped>
+.btn-info-a{
+color:#fff;
+background-color: #3c5676!important;
+border-color: #3c5676!important;
+}
+.btn-info-a:hover{
+background-color: #3c5676;
+border-color: #3c5676;
+}
+</style>

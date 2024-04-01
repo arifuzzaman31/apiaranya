@@ -158,7 +158,7 @@ export default {
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
                             <h4>Fabric</h4>
-                            <button class="btn btn-primary mb-2 mr-3" v-if="showPermission.includes('attribute-create')" data-toggle="modal" data-target="#fabricModal" @click="formReset">Add New</button>
+                            <button class="btn btn-info-a mb-2 mr-3" v-if="showPermission.includes('attribute-create')" data-toggle="modal" data-target="#fabricModal" @click="formReset">Add New</button>
                         </div>                          
                     </div>
                 </div>       
@@ -188,8 +188,8 @@ export default {
                                             </label>
                                         </td>
                                         <td v-if="showPermission.includes('attribute-edit') || showPermission.includes('attribute-delete')">
-                                            <button type="button" v-if="showPermission.includes('attribute-edit')" class="btn btn-sm btn-info" data-toggle="modal" data-target="#fabricModal" @click="editFabric(fabric)">Edit</button>
-                                            <button type="button" v-if="showPermission.includes('attribute-delete')" class="btn btn-sm btn-danger ml-2" @click="deleteFabric(fabric.id)">Delete</button>
+                                            <button type="button" v-if="showPermission.includes('attribute-edit')" class="btn btn-sm btn-info-a" data-toggle="modal" data-target="#fabricModal" @click="editFabric(fabric)">Edit</button>
+                                            <button type="button" v-if="showPermission.includes('attribute-delete')" class="btn btn-sm btn-delete ml-2" @click="deleteFabric(fabric.id)">Delete</button>
                                         </td>
                                     </tr>					
                                 </template>
@@ -250,7 +250,7 @@ export default {
                                 <div class="modal-footer md-button">
                                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12" @click="formReset"></i> Discard</button>
             
-                                    <button v-if="fabric_id == ''" type="button" class="btn btn-primary" @click="storeFabric">Submit</button>
+                                    <button v-if="fabric_id == ''" type="button" class="btn btn-info-a" @click="storeFabric">Submit</button>
 
                                     <button v-else type="button" class="btn btn-primary" @click="updateFabric">Update</button>
                                 </div>
@@ -262,3 +262,25 @@ export default {
         </div>
     </div>
 </template>
+<style scoped>
+.btn-info-a{
+color:#fff;
+background-color: #3c5676!important;
+border-color: #3c5676!important;
+}
+.btn-info-a:hover{
+background-color: #3c5676;
+border-color: #3c5676;
+}
+.btn-delete {
+    color: #000 !important;
+    background-color: #ffffff;
+    border-color: #3c5676;
+}
+.btn-delete:hover {
+    color: #fff !important;
+    background-color:#3c5676!important;
+    border-color: #3c5676!important;
+}
+
+</style>

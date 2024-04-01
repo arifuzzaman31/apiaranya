@@ -24,7 +24,7 @@ export default {
                 subcategory: 0,
                 brand: ''
             },
-            limit: 3,
+            limit: 2,
             keepLength: false,
             url : baseUrl
         }
@@ -32,7 +32,7 @@ export default {
 
     methods: {
         getSalesReport(page = 1){
-            axios.get(baseUrl+`get-sales-report?page=${page}&per_page=10&keyword=${this.search}&category=${this.filterdata.category}&subcategory=${this.filterdata.subcategory}&brand=${this.filterdata.brand}&date_from=${this.filterdata.from}&date_to=${this.filterdata.to}`)
+            axios.get(baseUrl+`get-sales-report?page=${page}&per_page=7&keyword=${this.search}&category=${this.filterdata.category}&subcategory=${this.filterdata.subcategory}&brand=${this.filterdata.brand}&date_from=${this.filterdata.from}&date_to=${this.filterdata.to}`)
             .then(result => {
                 this.salesData = result.data;
             })
@@ -52,7 +52,7 @@ export default {
             this.getSalesReport()
         },
         getSearch(){
-            if(this.search.length < 3) return ;
+            if(this.search.length <2) return ;
             this.getSalesReport()
         },
         getCategory() {

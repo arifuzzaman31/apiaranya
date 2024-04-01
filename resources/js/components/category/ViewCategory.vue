@@ -199,7 +199,7 @@ export default {
             <div class="row" style="width:99%">
                 <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between mx-3">
                     <h4>Category</h4>
-                    <button class="btn btn-primary mb-2 mr-3" v-if="showPermission.includes('menu-create')" data-toggle="modal" data-target="#cateModal" @click="formReset">Add New</button>
+                    <button class="btn btn-info-a mb-2 mr-3" v-if="showPermission.includes('menu-create')" data-toggle="modal" data-target="#cateModal" @click="formReset">Add New</button>
                 </div>
             </div>
         </div>
@@ -208,7 +208,7 @@ export default {
             <div class="widget-content widget-content-area">
                 <div class="col-4 mb-2 d-flex justify-content-between">
                     <input id="search" placeholder="Search By Category Name" @keyup="searchKeyword()"  v-model="keyword" type="text" class="form-control form-control-sm" />
-                    <button class="btn btn-danger mx-2" @click="() => {this.keyword = ''; getCategory()}">Clear</button>
+                    <button class="btn btn-info-a mx-2" @click="() => {this.keyword = ''; getCategory()}">Clear</button>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover mb-4">
@@ -228,14 +228,41 @@ export default {
                                 <td>{{ ++ind }}</td>
                                 <td>{{ cat.category_name }}</td>
                                 <td>{{ cat.parent_category == 0 ? 'Main Category' : cat.subcategory.category_name }}</td>
-                                <td>{{ cat.precedence }}</td>
-                                <td class="text-center">{{ cat.whats_new == 1 ? 'Enable' : 'Disable' }}</td>
-                                <td class="text-center">{{ cat.status == 1 ? 'Active' : 'Deactive' }}</td>
+                                <td class="text-center">{{ cat.precedence }}</td>
+                                    <td class="text-center">
+                                <span
+                                    class="badge rounded-pill"
+                                    :class="
+                                     cat.whats_new == 1
+                                            ? 'alert-primary'
+                                            : 'alert-danger'
+                                    "
+                                    >{{
+                                        cat.whats_new ? "Enable" : "Disable"
+                                    }}</span
+                                >
+                            </td>
+                                   <td class="text-center">
+                                <span
+                                    class="badge rounded-pill"
+                                    :class="
+                                      cat.status == 1
+                                            ? 'alert-primary'
+                                            : 'alert-danger'
+                                    "
+                                    >{{
+                                        cat.status ? "Active" : "Deactive"
+                                    }}</span
+                                >
+                            </td>
+
+
+                                
                                 <td class="text-center" v-if="showPermission.includes('menu-edit') || showPermission.includes('menu-delete')">
-                                   <a v-if="showPermission.includes('menu-edit')" class="btn btn-warning btn-sm" target="_blank" :href="url+'category/'+cat.id+'/edit'">Add Image</a>
-                                   <a v-if="showPermission.includes('menu-edit')" class="btn btn-info mx-1 btn-sm" @click="renameCate(cat)">Rename</a>
-                                   <a v-if="showPermission.includes('menu-delete')" class="btn btn-danger btn-sm mx-1" @click="deleteMenu(cat.id)">Delete</a>
-                                   <a class="btn btn-success btn-sm" @click="addFabricToCat(cat)">Composition</a>
+                                   <a v-if="showPermission.includes('menu-edit')" class="btn btn-info-a btn-sm" target="_blank" :href="url+'category/'+cat.id+'/edit'">Add Image</a>
+                                   <a v-if="showPermission.includes('menu-edit')" class="btn btn-delete mx-1 btn-sm" @click="renameCate(cat)">Rename</a>
+                                   <a v-if="showPermission.includes('menu-delete')" class="btn btn-delete btn-sm mx-1" @click="deleteMenu(cat.id)">Delete</a>
+                                   <a class="btn btn-delete btn-sm" @click="addFabricToCat(cat)">Composition</a>
                                 </td>
                             </tr>
 
@@ -308,7 +335,7 @@ export default {
                             <div class="modal-footer md-button">
                                 <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12" @click.prevent="formReset()"></i> Discard</button>
 
-                                <button v-if="category_id == ''" type="button" class="btn btn-primary" @click.prevent="storeCategory()">Submit</button>
+                                <button v-if="category_id == ''" type="button" class="btn btn-info-a" @click.prevent="storeCategory()">Submit</button>
 
                                 <button v-else type="button" class="btn btn-primary" @click.prevent="updateCategory()">Update</button>
                             </div>
@@ -385,5 +412,24 @@ export default {
 <style src="@vueform/multiselect/themes/default.css"></style>
 
 <style scoped>
+.btn-info-a, .btn-view{
+color:#fff;
+background-color: #3c5676!important;
+border-color: #3c5676!important;
+}
+.btn-info-a:hover, .btn-view:hover{
+background-color: #3c5676;
+border-color: #3c5676;
+}
+.btn-delete {
+    color: #000 !important;
+    background-color: #ffffff;
+    border-color: #3c5676;
+}
+.btn-delete:hover {
+    color: #fff !important;
+    background-color:#3c5676!important;
+    border-color: #3c5676!important;
+}
 
 </style>
