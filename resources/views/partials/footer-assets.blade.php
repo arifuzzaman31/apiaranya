@@ -8,11 +8,12 @@
 <!-- <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script> -->
 <script src="https://media-library.cloudinary.com/global/all.js"></script>
 <script>
-    var baseUrl = "{{ url('/') }}"+'/admin/';
+    var rootUrl = "{{ url('/') }}";
+    var baseUrl = rootUrl+'/admin/';
     var clName = "diyc1dizi";
     var clPreset = "467722864351132";
     $(document).ready(function() {
-        App.init(); 
+        App.init();
     });
 </script>
 <script src="{{ asset('admin-assets/assets/js/custom.js')}}"></script>

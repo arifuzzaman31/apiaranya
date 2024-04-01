@@ -19746,7 +19746,8 @@ __webpack_require__.r(__webpack_exports__);
         active: 0,
         cancel: 0,
         onhold: 0
-      }
+      },
+      url: rootUrl
     };
   },
   methods: {
@@ -20327,8 +20328,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "render": () => (/* binding */ render)
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var _public_admin_assets_assets_img_avatar_jpg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../public/admin-assets/assets/img/avatar.jpg */ "./public/admin-assets/assets/img/avatar.jpg");
-
 
 var _withScopeId = function _withScopeId(n) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.pushScopeId)("data-v-040e2ab9"), n = n(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)(), n;
@@ -20692,30 +20691,104 @@ var _hoisted_57 = {
   id: "content_1",
   "class": "tabcontent"
 };
-var _hoisted_58 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing\" data-v-040e2ab9><div class=\"widget widget-chart-one\" data-v-040e2ab9><div class=\"widget-heading\" data-v-040e2ab9><ul class=\"tabs tab-pills\" data-v-040e2ab9><li data-v-040e2ab9><a href=\"javascript:void(0);\" id=\"tb_1\" class=\"tabmenu\" data-v-040e2ab9>New Members</a></li></ul></div><div class=\"new-member-list\" data-v-040e2ab9><div class=\"d-flex align-items-center justify-content-between mb-4\" data-v-040e2ab9><div class=\"d-flex align-items-center\" data-v-040e2ab9><img src=\"" + _public_admin_assets_assets_img_avatar_jpg__WEBPACK_IMPORTED_MODULE_1__["default"] + "\" alt=\"\" class=\"avatar\" data-v-040e2ab9><div data-v-040e2ab9><h6 data-v-040e2ab9>Patric Adams</h6><p class=\"text-muted font-xs\" data-v-040e2ab9> Sanfrancisco </p></div></div><a href=\"#\" class=\"btn btn-primary\" data-v-040e2ab9>Add</a></div><div class=\"d-flex align-items-center justify-content-between mb-4\" data-v-040e2ab9><div class=\"d-flex align-items-center\" data-v-040e2ab9><img src=\"" + _public_admin_assets_assets_img_avatar_jpg__WEBPACK_IMPORTED_MODULE_1__["default"] + "\" alt=\"\" class=\"avatar\" data-v-040e2ab9><div data-v-040e2ab9><h6 data-v-040e2ab9>Dilan Specter</h6><p class=\"text-muted font-xs\" data-v-040e2ab9> Sanfrancisco </p></div></div><a href=\"#\" class=\"btn btn-primary\" data-v-040e2ab9>Add</a></div><div class=\"d-flex align-items-center justify-content-between mb-4\" data-v-040e2ab9><div class=\"d-flex align-items-center\" data-v-040e2ab9><img src=\"" + _public_admin_assets_assets_img_avatar_jpg__WEBPACK_IMPORTED_MODULE_1__["default"] + "\" alt=\"\" class=\"avatar\" data-v-040e2ab9><div data-v-040e2ab9><h6 data-v-040e2ab9>Tomas Baker</h6><p class=\"text-muted font-xs\" data-v-040e2ab9> Sanfrancisco </p></div></div><a href=\"#\" class=\"btn btn-primary\" data-v-040e2ab9>Add</a></div></div></div></div><div class=\"col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing\" data-v-040e2ab9><div class=\"widget widget-chart-one\" data-v-040e2ab9><div class=\"widget-heading\" data-v-040e2ab9><ul class=\"tabs tab-pills\" data-v-040e2ab9><li data-v-040e2ab9><a href=\"javascript:void(0);\" id=\"tb_1\" class=\"tabmenu\" data-v-040e2ab9>Recent activities</a></li></ul></div><ul class=\"verti-timeline list-unstyled font-sm\" data-v-040e2ab9><li class=\"event-list\" data-v-040e2ab9><div class=\"event-timeline-dot\" data-v-040e2ab9><i class=\"material-icons md-play_circle_outline font-xxl\" data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"20\" viewBox=\"0 -960 960 960\" width=\"20\" data-v-040e2ab9><path d=\"m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></div><div class=\"media\" data-v-040e2ab9><div class=\"me-3\" data-v-040e2ab9><h6 data-v-040e2ab9><span data-v-040e2ab9>Today</span><i data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 -960 960 960\" width=\"24\" data-v-040e2ab9><path d=\"m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></h6></div><div class=\"media-body\" data-v-040e2ab9><div data-v-040e2ab9> Lorem ipsum dolor sit amet consectetur </div></div></div></li><li class=\"event-list active\" data-v-040e2ab9><div class=\"event-timeline-dot\" data-v-040e2ab9><i class=\"material-icons\" data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"20\" viewBox=\"0 -960 960 960\" width=\"20\" data-v-040e2ab9><path d=\"m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></div><div class=\"media\" data-v-040e2ab9><div class=\"me-3\" data-v-040e2ab9><h6 data-v-040e2ab9><span data-v-040e2ab9>17 May</span><i data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 -960 960 960\" width=\"24\" data-v-040e2ab9><path d=\"m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></h6></div><div class=\"media-body\" data-v-040e2ab9><div data-v-040e2ab9> Debitis nesciunt voluptatum dicta reprehenderit </div></div></div></li><li class=\"event-list\" data-v-040e2ab9><div class=\"event-timeline-dot\" data-v-040e2ab9><i class=\"material-icons\" data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"20\" viewBox=\"0 -960 960 960\" width=\"20\" data-v-040e2ab9><path d=\"m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></div><div class=\"media\" data-v-040e2ab9><div class=\"me-3\" data-v-040e2ab9><h6 data-v-040e2ab9><span data-v-040e2ab9>13 May</span><i data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 -960 960 960\" width=\"24\" data-v-040e2ab9><path d=\"m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></h6></div><div class=\"media-body\" data-v-040e2ab9><div data-v-040e2ab9>Accusamus voluptatibus voluptas.</div></div></div></li><li class=\"event-list\" data-v-040e2ab9><div class=\"event-timeline-dot\" data-v-040e2ab9><i class=\"material-icons\" data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"20\" viewBox=\"0 -960 960 960\" width=\"20\" data-v-040e2ab9><path d=\"m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></div><div class=\"media\" data-v-040e2ab9><div class=\"me-3\" data-v-040e2ab9><h6 data-v-040e2ab9><span data-v-040e2ab9>05 April</span><i data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 -960 960 960\" width=\"24\" data-v-040e2ab9><path d=\"m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></h6></div><div class=\"media-body\" data-v-040e2ab9><div data-v-040e2ab9> At vero eos et accusamus et iusto odio dignissi </div></div></div></li><li class=\"event-list\" data-v-040e2ab9><div class=\"event-timeline-dot\" data-v-040e2ab9><i class=\"material-icons\" data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"20\" viewBox=\"0 -960 960 960\" width=\"20\" data-v-040e2ab9><path d=\"m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></div><div class=\"media\" data-v-040e2ab9><div class=\"me-3\" data-v-040e2ab9><h6 data-v-040e2ab9><span data-v-040e2ab9>26 Mar</span><i data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 -960 960 960\" width=\"24\" data-v-040e2ab9><path d=\"m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></h6></div><div class=\"media-body\" data-v-040e2ab9><div data-v-040e2ab9> Responded to need “Volunteer Activities </div></div></div></li></ul></div></div>", 2);
-var _hoisted_60 = {
+var _hoisted_58 = {
+  "class": "col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing"
+};
+var _hoisted_59 = {
+  "class": "widget widget-chart-one"
+};
+var _hoisted_60 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "widget-heading"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", {
+    "class": "tabs tab-pills"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    href: "javascript:void(0);",
+    id: "tb_1",
+    "class": "tabmenu"
+  }, "New Members")])])], -1 /* HOISTED */);
+});
+var _hoisted_61 = {
+  "class": "new-member-list"
+};
+var _hoisted_62 = {
+  "class": "d-flex align-items-center justify-content-between mb-4"
+};
+var _hoisted_63 = {
+  "class": "d-flex align-items-center"
+};
+var _hoisted_64 = ["src"];
+var _hoisted_65 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", null, "Patric Adams"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+    "class": "text-muted font-xs"
+  }, " Sanfrancisco ")], -1 /* HOISTED */);
+});
+var _hoisted_66 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    href: "#",
+    "class": "btn btn-primary"
+  }, "Add", -1 /* HOISTED */);
+});
+var _hoisted_67 = {
+  "class": "d-flex align-items-center justify-content-between mb-4"
+};
+var _hoisted_68 = {
+  "class": "d-flex align-items-center"
+};
+var _hoisted_69 = ["src"];
+var _hoisted_70 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", null, "Dilan Specter"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+    "class": "text-muted font-xs"
+  }, " Sanfrancisco ")], -1 /* HOISTED */);
+});
+var _hoisted_71 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    href: "#",
+    "class": "btn btn-primary"
+  }, "Add", -1 /* HOISTED */);
+});
+var _hoisted_72 = {
+  "class": "d-flex align-items-center justify-content-between mb-4"
+};
+var _hoisted_73 = {
+  "class": "d-flex align-items-center"
+};
+var _hoisted_74 = ["src"];
+var _hoisted_75 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", null, "Tomas Baker"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+    "class": "text-muted font-xs"
+  }, " Sanfrancisco ")], -1 /* HOISTED */);
+});
+var _hoisted_76 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    href: "#",
+    "class": "btn btn-primary"
+  }, "Add", -1 /* HOISTED */);
+});
+var _hoisted_77 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing\" data-v-040e2ab9><div class=\"widget widget-chart-one\" data-v-040e2ab9><div class=\"widget-heading\" data-v-040e2ab9><ul class=\"tabs tab-pills\" data-v-040e2ab9><li data-v-040e2ab9><a href=\"javascript:void(0);\" id=\"tb_1\" class=\"tabmenu\" data-v-040e2ab9>Recent activities</a></li></ul></div><ul class=\"verti-timeline list-unstyled font-sm\" data-v-040e2ab9><li class=\"event-list\" data-v-040e2ab9><div class=\"event-timeline-dot\" data-v-040e2ab9><i class=\"material-icons md-play_circle_outline font-xxl\" data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"20\" viewBox=\"0 -960 960 960\" width=\"20\" data-v-040e2ab9><path d=\"m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></div><div class=\"media\" data-v-040e2ab9><div class=\"me-3\" data-v-040e2ab9><h6 data-v-040e2ab9><span data-v-040e2ab9>Today</span><i data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 -960 960 960\" width=\"24\" data-v-040e2ab9><path d=\"m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></h6></div><div class=\"media-body\" data-v-040e2ab9><div data-v-040e2ab9> Lorem ipsum dolor sit amet consectetur </div></div></div></li><li class=\"event-list active\" data-v-040e2ab9><div class=\"event-timeline-dot\" data-v-040e2ab9><i class=\"material-icons\" data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"20\" viewBox=\"0 -960 960 960\" width=\"20\" data-v-040e2ab9><path d=\"m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></div><div class=\"media\" data-v-040e2ab9><div class=\"me-3\" data-v-040e2ab9><h6 data-v-040e2ab9><span data-v-040e2ab9>17 May</span><i data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 -960 960 960\" width=\"24\" data-v-040e2ab9><path d=\"m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></h6></div><div class=\"media-body\" data-v-040e2ab9><div data-v-040e2ab9> Debitis nesciunt voluptatum dicta reprehenderit </div></div></div></li><li class=\"event-list\" data-v-040e2ab9><div class=\"event-timeline-dot\" data-v-040e2ab9><i class=\"material-icons\" data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"20\" viewBox=\"0 -960 960 960\" width=\"20\" data-v-040e2ab9><path d=\"m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></div><div class=\"media\" data-v-040e2ab9><div class=\"me-3\" data-v-040e2ab9><h6 data-v-040e2ab9><span data-v-040e2ab9>13 May</span><i data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 -960 960 960\" width=\"24\" data-v-040e2ab9><path d=\"m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></h6></div><div class=\"media-body\" data-v-040e2ab9><div data-v-040e2ab9>Accusamus voluptatibus voluptas.</div></div></div></li><li class=\"event-list\" data-v-040e2ab9><div class=\"event-timeline-dot\" data-v-040e2ab9><i class=\"material-icons\" data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"20\" viewBox=\"0 -960 960 960\" width=\"20\" data-v-040e2ab9><path d=\"m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></div><div class=\"media\" data-v-040e2ab9><div class=\"me-3\" data-v-040e2ab9><h6 data-v-040e2ab9><span data-v-040e2ab9>05 April</span><i data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 -960 960 960\" width=\"24\" data-v-040e2ab9><path d=\"m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></h6></div><div class=\"media-body\" data-v-040e2ab9><div data-v-040e2ab9> At vero eos et accusamus et iusto odio dignissi </div></div></div></li><li class=\"event-list\" data-v-040e2ab9><div class=\"event-timeline-dot\" data-v-040e2ab9><i class=\"material-icons\" data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"20\" viewBox=\"0 -960 960 960\" width=\"20\" data-v-040e2ab9><path d=\"m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></div><div class=\"media\" data-v-040e2ab9><div class=\"me-3\" data-v-040e2ab9><h6 data-v-040e2ab9><span data-v-040e2ab9>26 Mar</span><i data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 -960 960 960\" width=\"24\" data-v-040e2ab9><path d=\"m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></h6></div><div class=\"media-body\" data-v-040e2ab9><div data-v-040e2ab9> Responded to need “Volunteer Activities </div></div></div></li></ul></div></div>", 1);
+var _hoisted_78 = {
   "class": "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing"
 };
-var _hoisted_61 = {
+var _hoisted_79 = {
   "class": "widget widget-table-two"
 };
-var _hoisted_62 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_80 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "widget-heading"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", {
     "class": ""
   }, "Recent Orders")], -1 /* HOISTED */);
 });
-var _hoisted_63 = {
+var _hoisted_81 = {
   "class": "widget-content"
 };
-var _hoisted_64 = {
+var _hoisted_82 = {
   "class": "table-responsive"
 };
-var _hoisted_65 = {
+var _hoisted_83 = {
   "class": "table"
 };
-var _hoisted_66 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_84 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "th-content"
   }, "OrderID")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -20728,33 +20801,33 @@ var _hoisted_66 = /*#__PURE__*/_withScopeId(function () {
     "class": "th-content"
   }, "Payment")])])], -1 /* HOISTED */);
 });
-var _hoisted_67 = {
+var _hoisted_85 = {
   key: 0
 };
-var _hoisted_68 = {
+var _hoisted_86 = {
   "class": "text-center"
 };
-var _hoisted_69 = {
+var _hoisted_87 = {
   key: 0,
   "class": "badge rounded-pill alert-primary"
 };
-var _hoisted_70 = {
+var _hoisted_88 = {
   key: 1,
   "class": "badge badge-light"
 };
-var _hoisted_71 = {
+var _hoisted_89 = {
   key: 0,
   "class": "badge rounded-pill alert-warning"
 };
-var _hoisted_72 = {
+var _hoisted_90 = {
   key: 1,
   "class": "badge rounded-pill alert-primary"
 };
-var _hoisted_73 = {
+var _hoisted_91 = {
   key: 2,
   "class": "badge badge-light"
 };
-var _hoisted_74 = {
+var _hoisted_92 = {
   key: 3,
   "class": "badge rounded-pill alert-danger"
 };
@@ -20773,10 +20846,22 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 8 /* PROPS */, ["chartData"])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_52, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_53, [_hoisted_54, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_55, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_56, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_57, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_sales_of_month, {
     totalEarning: $data.totalSaleMonth,
     height: "358"
-  }, null, 8 /* PROPS */, ["totalEarning"])])])])])]), _hoisted_58])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_60, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_61, [_hoisted_62, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_64, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_65, [_hoisted_66, $data.orders && $data.orders.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tbody", _hoisted_67, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.orders, function (order) {
+  }, null, 8 /* PROPS */, ["totalEarning"])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_58, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_59, [_hoisted_60, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_61, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_62, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    src: $data.url + '/admin-assets/assets/img/avatar.jpg',
+    alt: "",
+    "class": "avatar"
+  }, null, 8 /* PROPS */, _hoisted_64), _hoisted_65]), _hoisted_66]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_67, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_68, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    src: $data.url + '/admin-assets/assets/img/avatar.jpg',
+    alt: "",
+    "class": "avatar"
+  }, null, 8 /* PROPS */, _hoisted_69), _hoisted_70]), _hoisted_71]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_72, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_73, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    src: $data.url + '/admin-assets/assets/img/avatar.jpg',
+    alt: "",
+    "class": "avatar"
+  }, null, 8 /* PROPS */, _hoisted_74), _hoisted_75]), _hoisted_76])])])]), _hoisted_77])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_78, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_79, [_hoisted_80, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_81, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_82, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_83, [_hoisted_84, $data.orders && $data.orders.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tbody", _hoisted_85, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.orders, function (order) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
       key: order.id
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(order.order_id), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(order.user_shipping_info.first_name) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(order.user_shipping_info.last_name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(order.total_price), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_68, [order.payment_status == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_69, "COD")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_70, "Others"))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [order.payment_status == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_71, "Unpaid")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), order.payment_status == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_72, "Paid")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), order.payment_status == 2 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_73, "Failed")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), order.payment_status == 3 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_74, "Cancel")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]);
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(order.order_id), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(order.user_shipping_info.first_name) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(order.user_shipping_info.last_name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(order.total_price), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_86, [order.payment_status == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_87, "COD")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_88, "Others"))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [order.payment_status == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_89, "Unpaid")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), order.payment_status == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_90, "Paid")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), order.payment_status == 2 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_91, "Failed")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), order.payment_status == 3 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_92, "Cancel")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]);
   }), 128 /* KEYED_FRAGMENT */))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])])])], 64 /* STABLE_FRAGMENT */);
 }
 
@@ -21675,7 +21760,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.gdar[data-v-040e2ab9] {\r\n    background: linear-gradient(\r\n        linear-gradient(140deg, #6e85b1 0 34%, #d9dce0 -40% 51%)\r\n    ) !important;\n}\n.new-member-list img.avatar[data-v-040e2ab9] {\r\n    width: 40px;\r\n    height: 40px;\r\n    margin-right: 10px;\r\n    border-radius: 50%;\n}\n.verti-timeline[data-v-040e2ab9] {\r\n    border-left: 2px dashed #e1e1e1;\r\n    margin: 0 10px;\n}\n.verti-timeline .event-list[data-v-040e2ab9] {\r\n    position: relative;\r\n    padding: 0 0 18px 30px;\r\n    display: flex;\r\n    align-items: center;\n}\n.verti-timeline .event-list .event-timeline-dot[data-v-040e2ab9] {\r\n    position: absolute;\r\n    left: -9px;\r\n    top: 0;\r\n    z-index: 9;\r\n    font-size: 16px;\r\n    color: #6c757d;\n}\n.me-3[data-v-040e2ab9] {\r\n    margin-right: 1rem !important;\n}\n.media h6 span[data-v-040e2ab9] {\r\n    display: inline-block;\r\n    min-width: 50px;\n}\r\n\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.gdar[data-v-040e2ab9] {\n    background: linear-gradient(\n        linear-gradient(140deg, #6e85b1 0 34%, #d9dce0 -40% 51%)\n    ) !important;\n}\n.new-member-list img.avatar[data-v-040e2ab9] {\n    width: 40px;\n    height: 40px;\n    margin-right: 10px;\n    border-radius: 50%;\n}\n.verti-timeline[data-v-040e2ab9] {\n    border-left: 2px dashed #e1e1e1;\n    margin: 0 10px;\n}\n.verti-timeline .event-list[data-v-040e2ab9] {\n    position: relative;\n    padding: 0 0 18px 30px;\n    display: flex;\n    align-items: center;\n}\n.verti-timeline .event-list .event-timeline-dot[data-v-040e2ab9] {\n    position: absolute;\n    left: -9px;\n    top: 0;\n    z-index: 9;\n    font-size: 16px;\n    color: #6c757d;\n}\n.me-3[data-v-040e2ab9] {\n    margin-right: 1rem !important;\n}\n.media h6 span[data-v-040e2ab9] {\n    display: inline-block;\n    min-width: 50px;\n}\n\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -21779,21 +21864,6 @@ module.exports = function (cssWithMappingToString) {
 
   return list;
 };
-
-/***/ }),
-
-/***/ "./public/admin-assets/assets/img/avatar.jpg":
-/*!***************************************************!*\
-  !*** ./public/admin-assets/assets/img/avatar.jpg ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/avatar.jpg?b53538480bcc2b3a76a7f070c2415063");
 
 /***/ }),
 
