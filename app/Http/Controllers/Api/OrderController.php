@@ -123,6 +123,8 @@ class OrderController extends Controller
             $billing->last_name = $request->data['last_name_billing'];
             $billing->country = $request->data['country_billing'];
             $billing->city = $request->data['city_billing'];
+            $billing->thana = $request->data['thana_billing'];
+            $billing->area = $request->data['area_billing'];
             $billing->email = $request->data['email_billing'];
             $billing->phone = $request->data['phone_billing'];
             $billing->post_code = $request->data['post_code_billing'];
@@ -139,6 +141,8 @@ class OrderController extends Controller
                         'last_name'     => $request->data['last_name_billing'],
                         'country'       => $request->data['country_billing'],
                         'city'          => $request->data['city_billing'],
+                        'thana'          => $request->data['thana_billing'],
+                        'area'          => $request->data['area_billing'],
                         'email'         => $request->data['email_billing'],
                         'phone'         => $request->data['phone_billing'],
                         'post_code'     => $request->data['post_code_billing'],
@@ -156,6 +160,8 @@ class OrderController extends Controller
                 $shipping->last_name = $request->data['last_name_shipping'];
                 $shipping->country = $request->data['country_shipping'];
                 $shipping->city = $request->data['city_shipping'];
+                $shipping->thana = $request->data['thana_shipping'];
+                $shipping->area = $request->data['area_shipping'];
                 $shipping->email = $request->data['email_shipping'];
                 $shipping->phone = $request->data['phone_shipping'];
                 $shipping->post_code = $request->data['post_code_shipping'];
@@ -221,8 +227,8 @@ class OrderController extends Controller
         $post_data['cus_name'] = $order->user_billing_info->first_name;
         $post_data['cus_email'] = $order->user_billing_info->email;
         $post_data['cus_add1'] = $order->user_billing_info->city;
-        $post_data['cus_add2'] = $order->user_billing_info->city;
-        $post_data['cus_city'] = $order->user_billing_info->city;
+        $post_data['cus_add2'] = $order->user_billing_info->thana;
+        $post_data['cus_city'] = $order->user_billing_info->area;
         $post_data['cus_state'] = $order->user_billing_info->city;
         $post_data['cus_postcode'] = $order->user_billing_info->post_code;
         $post_data['cus_country'] = "Bangladesh";
@@ -484,7 +490,6 @@ class OrderController extends Controller
         // return $orders;
         $order = Order::with('order_details.product','user_billing_info')->find($order_id);
         if($order->user_billing_info->email != ''){
-
             Mail::to($order->user_billing_info->email)->send(new InvoiceMail($order));
         }
         Mail::to('online@aranya.com.bd')->send(new InvoiceMail($order));

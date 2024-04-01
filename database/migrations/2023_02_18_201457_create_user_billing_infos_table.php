@@ -20,12 +20,13 @@ class CreateUserBillingInfosTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('country');
-            $table->string('city');
+            $table->string('city')->nullable();
+            $table->string('thana')->nullable();
+            $table->string('area')->nullable();
             $table->string('email');
             $table->string('phone');
             $table->text('apartment')->nullable();
             $table->string('post_code')->nullable();
-            $table->string('apartment')->nullable();
             $table->string('street_address');
             $table->timestamps();
         });

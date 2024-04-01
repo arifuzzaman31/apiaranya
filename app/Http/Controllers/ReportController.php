@@ -14,6 +14,7 @@ use App\Models\Order;
 use App\Http\AllStatic;
 use App\Models\Inventory;
 use App\Models\OrderDetails;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -27,7 +28,7 @@ class ReportController extends Controller
             $to = date('Y-m-d', strtotime("+1 day", strtotime($to)));
             $category   = $request->get('category');
             $subcategory   = $request->get('subcategory');
-            $brand   = $request->get('brand');
+            $fabric   = $request->get('fabric');
             $keyword   = $request->get('keyword');
             if($request->excel == 'yes'){
                 return \Excel::download(new StockReportExport($from,$to),'stock_report.xlsx');
@@ -60,10 +61,10 @@ class ReportController extends Controller
 
                     });
                 }
-                if($brand != ''){
-                    $data = $data->whereHas('product', function ($q) use ($brand) {
-                        $q->whereHas('product_brand', function ($q) use ($brand){
-                            $q->where('brand_id',$brand);
+                if($fabric != ''){
+                    $data = $data->whereHas('product', function ($q) use ($fabric) {
+                        $q->whereHas('product_fabric', function ($q) use ($fabric){
+                            $q->where('fabric_id',$fabric);
                         });
                     });
                 }
@@ -111,8 +112,7 @@ class ReportController extends Controller
                 'product.product_ingredient:id,ingredient_name')
                 ->selectRaw('order_details.product_id, sum(quantity) as sales_quantity,sum(total_selling_price) as total_selling_amount,
                     sum(vat_amount) as total_vat_amount,ROUND(sum(total_buying_price),2) as total_buying_amount,
-                    ROUND(sum(total_discount),2) as total_discount_amount,
-                    ROUND(sum(total_selling_price - total_buying_price),2) as profit,inventories.stock as current_stock,
+                    ROUND(sum(total_discount),2) as total_discount_amount,inventories.stock as current_stock,
                     inventories.sku as p_sku,inventories.colour_id,inventories.size_id')
                 ->leftJoin('order_details', 'inventories.product_id', '=', 'order_details.product_id')
                 ->whereColumn('inventories.product_id', 'order_details.product_id')
@@ -346,6 +346,22 @@ class ReportController extends Controller
 
         $user = $user->paginate($dataQty);
         return response()->json($user);
+    }
+
+    public function productReport(Request $request)
+    {
+        $dataQty = $request->get('per_page') ? $request->get('per_page') : 10;
+        $data = Product::withCount(['order_details'  => function($q){
+            $q->where('is_refunded',0);
+        }])
+        ->with(['category:id,category_name','subcategory:id,category_name','order_details' => function($q){
+            $q->with('user')->where('is_refunded',0);
+        }])
+        // ->get();
+        // ->where('order_details_count', '>', 0);
+        ->paginate($dataQty);
+        return $data;
+
     }
 
     public function makePdf()

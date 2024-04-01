@@ -57,6 +57,7 @@ class CreateOrdersTable extends Migration
             $table->tinyInteger('delivery_type')->default(0)->comment = "0 for home, 1 for pickup point";
             $table->tinyInteger('percel_type')->default(0)->comment = "0 for Box, 1 for DOC";
             $table->integer('pickup_point_no')->nullable()->comment = "pickup point id";
+            $table->longText('corier_details')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

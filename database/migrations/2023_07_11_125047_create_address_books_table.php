@@ -20,6 +20,8 @@ class CreateAddressBooksTable extends Migration
             $table->string('last_name');
             $table->string('country');
             $table->string('city');
+            $table->string('thana');
+            $table->string('area');
             $table->string('email');
             $table->string('phone');
             $table->string('post_code')->nullable();

@@ -163,7 +163,6 @@ export default {
                                 <th>Discount</th>
                                 <th>Amount without VAT</th>
                                 <th>Amount with VAT</th>
-                                <th>Profit</th>
                             </tr>
                         </thead>
                         <tbody v-if="salesData.data && salesData.data.length > 0">
@@ -268,7 +267,6 @@ export default {
                                     <td> {{ formatPrice(item.total_discount_amount) }}</td>
                                     <td> {{ formatPrice(item.total_selling_amount) }}</td>
                                     <td> {{ formatPrice(item.total_selling_amount+item.total_vat_amount) }}</td>
-                                    <td> {{ formatPrice(item.profit) }}</td>
                                 </tr>
                             </template>
                         </tbody>

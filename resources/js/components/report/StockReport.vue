@@ -17,9 +17,9 @@ export default {
                 to: '',
                 category: '',
                 subcategory: 0,
-                brand: ''
+                fabric: ''
             },
-            allbrands: [],
+            allfabrics: [],
             allcategories: [],
             allsubcategories: [],
             allfiltersubcategories: [],
@@ -32,7 +32,7 @@ export default {
 
     methods: {
         getStockReport(page = 1){
-            axios.get(baseUrl+`get-stock-report?page=${page}&per_page=7&keyword=${this.search}&category=${this.filterdata.category}&subcategory=${this.filterdata.subcategory}&brand=${this.filterdata.brand}&date_from=${this.filterdata.from}&date_to=${this.filterdata.to}`)
+            axios.get(baseUrl+`get-stock-report?page=${page}&per_page=7&keyword=${this.search}&category=${this.filterdata.category}&subcategory=${this.filterdata.subcategory}&fabric=${this.filterdata.fabric}&date_from=${this.filterdata.from}&date_to=${this.filterdata.to}`)
             .then(result => {
                 this.stockData = result.data;
             })
@@ -47,7 +47,7 @@ export default {
                 to: '',
                 category: '',
                 subcategory: 0,
-                brand: ''
+                fabric: ''
             }
             this.getStockReport()
         },
@@ -69,15 +69,15 @@ export default {
             this.filterdata.subcategory=0;
             if(filterData.length == 0) this.getStockReport()
         },
-        getBrand(){
-            axios.get(baseUrl+'brands/create?no_paginate=yes').then(response => {
-                this.allbrands = response.data;
+        getFabric(){
+            axios.get(baseUrl+'fabrics/create?no_paginate=yes').then(response => {
+                this.allfabrics = response.data;
             })
         }
     },
     mounted(){
         this.getCategory()
-        this.getBrand()
+        this.getFabric()
         this.getStockReport()
     }
 }
@@ -115,9 +115,9 @@ export default {
                     </div>
 
                     <div class="col-md-3 col-lg-3 my-1 col-12">
-                        <select id="product-brand" class="form-control form-control-sm" @change="getStockReport()" v-model="filterdata.brand">
-                            <option selected="" value="">Brand</option>
-                            <option v-for="(value,index) in allbrands" :value="value.id" :key="index">{{ value.brand_name }}</option>
+                        <select id="product-composition" class="form-control form-control-sm" @change="getStockReport()" v-model="filterdata.fabric">
+                            <option selected="" value="">Composition</option>
+                            <option v-for="(value,index) in allfabrics" :value="value.id" :key="index">{{ value.fabric_name }}</option>
                         </select>
                     </div>
                     <div class="col-md-2 col-lg-2 col-12">
@@ -127,7 +127,7 @@ export default {
                         <input type="text" onfocus="(this.type='date')" v-model="filterdata.to" @change="getStockReport()" class="form-control form-control-sm" placeholder="End Date">
                     </div>
 
-                    <div class="col-md-2 col-lg-2 col-12">
+                    <div class="col-md-2 col-lg-2 col-12 mt-1">
                         <button type="button" class="btn btn-danger" @click="filterClear()">CLEAR</button>
                     </div>
                 </div>

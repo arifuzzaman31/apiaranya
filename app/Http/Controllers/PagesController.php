@@ -45,6 +45,18 @@ class PagesController extends Controller
         }
     }
 
+    public function editPageSection($id)
+    {
+        // return response()->json($request->all());
+        try {
+            $hp = Page::find($id);
+            // $product = Product::whereIn('id',json_decode($hp->product_id))->get();
+            return view('pages.page.update_page',['sectionData' => $hp]);
+        } catch (\Throwable $th) {
+            return $th;
+        }
+    }
+
     public function singleSection(Request $request,$id)
     {
         // return response()->json($request->all());
@@ -70,19 +82,18 @@ class PagesController extends Controller
         }
     }
 
-    public function homeImageUpdate(Request $request)
+    public function homeSectionUpdate(Request $request)
     {
         // return response()->json($request->all());
         try {
-            $hp = new Page();
-            $hp->section_name = $request->section_name;
-            $hp->banner = $request->banner;
-            $hp->pattern = $request->pattern;
-            $hp->use_for = $request->use_for;
-            $hp->precedence = $request->precedence;
-            $hp->status = $request->status ?? 0;
-            $hp->save();
-            return response()->json(['status' => 'success', 'message' => 'Home Page Updated Successfully!']);
+            DB::table('pages')->where('id',$request->id)->update([
+                'section_name'  => Str::slug($request->section_name),
+                'banner'   => json_encode($request->banner),
+                'pattern'  => $request->pattern,
+                'use_for'  => $request->use_for,
+                'precedence'  => $request->precedence
+            ]);
+            return response()->json(['status' => 'success', 'message' => 'Home Section Updated Successfully!']);
         } catch (\Throwable $th) {
             return $this->errorMessage();
         }

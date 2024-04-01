@@ -94,6 +94,8 @@ Route::controller(PagesController::class)
         Route::post('create-home-section','storeSection');
         Route::get('get-page-section','getPageSection');
         Route::delete('page-section/{id}','deletePageSection');
+        Route::get('section-page/{id}/edit','editPageSection');
+        Route::put('update-home-section','homeSectionUpdate');
         Route::get('shipping','getShipping')->name('shipping');
         Route::post('add-shipping-charge','storeShippingCharge');
         Route::get('get-shipping-data','getShippingData');
@@ -106,7 +108,6 @@ Route::controller(PagesController::class)
         Route::patch('page-section/{sectionid}','update');
         Route::post('remove-product-section','sectionProductRemove');
         Route::view('page-create','pages.page.create_page')->name('page.create');
-        Route::post('update-home-image','homeImageUpdate');
         Route::get('all-attr-download','exportAllAttr');
 });
 
@@ -184,6 +185,8 @@ Route::controller(ReportController::class)->group(function(){
     Route::view('customer-refund-report', 'pages.report.customer_refund_report')->name('customer-refund.report');
     Route::get('get-customer-refund-report', 'customerRefundReport');
     Route::view('invoice-report', 'pages.report.invoice_report')->name('invoice.report');
+    Route::view('product-report', 'pages.report.product_report')->name('product.report');
+    Route::get('get-product-report', 'productReport');
     Route::view('customer-lifetime-report', 'pages.report.customer_lifetime_report')->name('customer-lifetime.report');
     Route::get('get-customer-lifetime-report', 'customerLifetimeReport');
     Route::view('sales-report', 'pages.report.sales_report')->name('sales.report');

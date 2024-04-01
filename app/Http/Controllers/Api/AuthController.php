@@ -17,7 +17,7 @@ class AuthController extends Controller
     /**
      * Create User
      * @param Request $request
-     * @return User 
+     * @return User
      */
     public function createUser(Request $request)
     {
@@ -160,7 +160,7 @@ class AuthController extends Controller
         $validated = $this->validateProvider($provider);
 
         if (!is_null($validated)) return $validated;
-        
+
         $user = User::firstOrCreate(
             [
                 'email' => $userapp->getEmail()
@@ -212,13 +212,13 @@ class AuthController extends Controller
         try {
             DB::beginTransaction();
             $token                  = \Hash::make(uniqueString());
-    
+
             $details = [
                 'token' => $token,
                 'email' => $request->email,
                 'backUri' => $request->backUri
             ];
-    
+
             \DB::table('password_resets')->insert(
                 [
                     'token' => $token,
@@ -228,7 +228,7 @@ class AuthController extends Controller
             \Mail::to($request->email)->send(new \App\Mail\ResetPasswordMail($details));
             DB::commit();
             return response()->json(['status' => 'success','massage' => 'Token send to Email','reset_token' => $token]);
-            
+
         } catch (\Throwable $th) {
             DB::rollBack();
             //  return $th;
@@ -240,17 +240,17 @@ class AuthController extends Controller
     {
         try {
             $userToken = DB::table('password_resets')->where('token', $request->token)->first();
-    
+
             if (!$userToken) {
                 return response()->json(['status' => 'error','massage' => 'Invalid Token']);
             }
-    
+
             $user           = User::where('email',$userToken->email)->first();
             $user->password = Hash::make($request->password);
             $user->update();
-    
+
             DB::table('password_resets')->where('token', $request->token)->delete();
- 
+
             return $this->successMessage('Password Changed Successfully!');
 
         } catch (\Throwable $th) {
@@ -283,7 +283,7 @@ class AuthController extends Controller
 		    return $th;
             return $this->errorMessage();
         }
-        
+
     }
 
     public function getUserAddress()
@@ -308,6 +308,7 @@ class AuthController extends Controller
                 'last_name'     => $request->last_name,
                 'country'       => $request->country,
                 'city'          => $request->city,
+                'area'          => $request->area,
                 'email'         => $request->email,
                 'phone'         => $request->phone,
                 'post_code'     => $request->post_code,
@@ -325,6 +326,6 @@ class AuthController extends Controller
             return $th;
             return $this->errorMessage();
         }
-        
+
     }
 }

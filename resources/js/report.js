@@ -9,6 +9,7 @@ import InvoiceReport from './components/report/InvoiceReport.vue';
 import CustomerRefundReport from './components/report/CustomerRefundReport.vue';
 import CustomerLifetimeReport from './components/report/CustomerLifetimeReport.vue';
 import salesReport from './components/report/SalesReport.vue';
+import productReport from './components/report/ProductReport.vue';
 import CampaignReport from './components/report/CampaignReport.vue';
 
 const app = createApp({})
@@ -21,5 +22,6 @@ app.component('invoice-report', InvoiceReport)
 app.component('customer-refund-report', CustomerRefundReport)
 app.component('customer-lifetime-report', CustomerLifetimeReport)
 app.component('sales-report', salesReport)
+app.component('product-report', productReport)
 app.component('campaign-report', CampaignReport)
 app.mount('#app')

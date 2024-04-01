@@ -2,13 +2,16 @@
 import Mixin from '../../mixer'
 import MediaHelper from '../common/MediaHelper.vue'
 export default {
+    name:'EditSection',
+    props: ['section_info'],
     components: { MediaHelper },
     mixins: [Mixin],
     data() {
         return {
             form: {
+                id: '',
                 section_name: '',
-                banner: [{banner_uri: '',file_type: '',back_link: '',name:''}],
+                banner: [],
                 pattern: 'single',
                 use_for: 'campaign',
                 precedence: 1,
@@ -36,20 +39,20 @@ export default {
     },
 
     methods: {
-            createSection(){
+            updateSection(){
                 this.form.banner.map((v,i) => {
                     const vExt = ['mp4','WebM','mov','avi','mkv','wmv','avchd','flv'];
                     let ext = v.banner_uri.split(".").pop();
                     var frmt = vExt.includes(ext) ? 'video' : 'image';
                     this.form.banner[i].file_type = frmt
                 })
-                axios.post(baseUrl+'create-home-section',this.form).then(response => {
+                axios.put(baseUrl+'update-home-section',this.form).then(response => {
                     if(response.data.status == 'success'){
-                        // console.log(response.data)
-                    //     this.getHomeData()
                         this.clearFilter()
                         this.successMessage(response.data)
-                        window.location.href = 'home-page'
+                        setTimeout(()=>{
+                            window.location = baseUrl+'home-page'
+                        },1500)
                     }
                 })
             },
@@ -109,8 +112,9 @@ export default {
 
             clearFilter(){
                 this.form = {
+                    id: '',
                     section_name: '',
-                    banner: [{banner_uri: '',file_type: '',back_link: '',name:''}],
+                    banner: [],
                     pattern: 'single',
                     use_for: 'campaign',
                     precedence: 1,
@@ -175,12 +179,35 @@ export default {
                 this.getCampaign()
             }
             if(this.form.pattern == 'double'){
+                if (this.form.banner.length < 2) {
+                    this.form.banner.push({banner_uri: '', file_type: '', back_link: '', name: ''});
+                }
+            }
+            if(this.form.pattern == 'single'){
+                this.form.banner = []
                 this.form.banner.push({banner_uri: '',file_type: '',back_link: '',name:''})
             }
         }
     },
+
     mounted(){
-        // this.getHomeData()
+        this.form.id = this.section_info.id;
+        this.form.section_name = this.section_info.section_name;
+        this.form.pattern = this.section_info.pattern
+        this.form.use_for = this.section_info.use_for
+        this.form.precedence = this.section_info.precedence
+        this.form.status = this.section_info.status
+        const dt = JSON.parse(this.section_info.banner)
+        dt.map((v,i) => {
+            this.form.banner.push(v)
+        })
+        if(this.section_info.use_for == 'category'){
+            this.getCategory()
+        }
+        if(this.section_info.use_for == 'campaign'){
+            this.getCampaign()
+        }
+
     },
     computed: {
         showPermission() {
@@ -196,7 +223,7 @@ export default {
             <div class="widget-header">
                 <div class="row">
                     <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                        <h4>Home Page</h4>
+                        <h4>Edit Page</h4>
                     </div>
                 </div>
             </div>
@@ -204,7 +231,6 @@ export default {
                 <div class="row mb-4 mt-3">
                     <div class="col-sm-3 col-12">
                         <div>
-                            <p class="text-success" style="font-size:17px">Create Section</p>
                                 <div class="my-2">
                                     <label for="set-name">Section Name</label>
                                     <input type="text" id="set-name" class="form-control" placeholder="Enter Section name" v-model="form.section_name" />
@@ -276,8 +302,8 @@ export default {
                                 <hr />
                             </div>
                         </div>
-                        <form @submit.prevent="createSection()" method="post">
-                            <button type="submit" class="btn btn-success btn-block my-2">Create</button>
+                        <form @submit.prevent="updateSection()" method="post">
+                            <button type="submit" class="btn btn-success btn-block my-2">Update</button>
                         </form>
                     </div>
                 </div>
