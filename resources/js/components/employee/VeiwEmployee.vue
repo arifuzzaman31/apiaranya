@@ -158,7 +158,7 @@ export default {
                 <div class="row"> 
                     <div class="col-4 d-flex justify-content-between mb-2">
                         <input id="search" placeholder="Search By Name" type="text" @keyup="searchKeyword()" class="form-control form-control-sm" v-model="keyword" />
-                        <button class="btn btn-danger mx-2" @click="formReset()">Clear</button>
+                        <button class="btn btn-info-a mx-2" @click="formReset()">Clear</button>
                     </div>
                 </div>
                 <div class="table-responsive">
@@ -180,8 +180,8 @@ export default {
                                     <td>{{ empl.email }} </td>
                                     <td>{{ empl.role_id ? empl.role.role_name : 'No Role'}} </td>
                                     <td v-if="showPermission.includes('employee-edit') || showPermission.includes('employee-delete')">
-                                        <button v-if="showPermission.includes('employee-edit')" type="button" class="btn btn-sm btn-info" @click="editEmp(empl)">Edit</button>
-                                        <button type="button" v-if="showPermission.includes('employee-delete')" class="btn btn-sm btn-danger ml-2" @click="deleteEmp(empl.id)">Delete</button>
+                                        <button v-if="showPermission.includes('employee-edit')" type="button" class="btn btn-sm btn-info-a" @click="editEmp(empl)">Edit</button>
+                                        <button type="button" v-if="showPermission.includes('employee-delete')" class="btn btn-sm btn-delete ml-2" @click="deleteEmp(empl.id)">Delete</button>
                                     </td>
                                 </tr>					
                             </template>
@@ -260,9 +260,9 @@ export default {
                             <div class="modal-footer md-button">
                                 <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12" @click="formReset"></i> Discard</button>
         
-                                <button v-if="employee_id == ''" type="button" class="btn btn-primary" @click="storeEmp">Submit</button>
+                                <button v-if="employee_id == ''" type="button" class="btn btn-info-a" @click="storeEmp">Submit</button>
 
-                                <button v-else type="button" class="btn btn-primary" @click="updateEmp">Update</button>
+                                <button v-else type="button" class="btn btn-info-a" @click="updateEmp">Update</button>
                             </div>
                         </form>
                     </div>
@@ -273,5 +273,24 @@ export default {
 </div>
 </template>
 <style scoped>
+.btn-info-a, .btn-view{
+color:#fff;
+background-color: #3c5676!important;
+border-color: #3c5676!important;
+}
+.btn-info-a:hover, .btn-view:hover{
+background-color: #3c5676;
+border-color: #3c5676;
+}
+.btn-delete {
+    color: #000 !important;
+    background-color: #ffffff;
+    border-color: #3c5676;
+}
+.btn-delete:hover {
+    color: #fff !important;
+    background-color:#3c5676!important;
+    border-color: #3c5676!important;
+}
 
 </style>
