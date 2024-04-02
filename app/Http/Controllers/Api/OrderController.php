@@ -219,9 +219,12 @@ class OrderController extends Controller
         $post_data['total_amount'] = (($order->total_price + $order->shipping_amount + $order->vat_amount+$order->total_fragile_amount) - ($order->coupon_discount));
         $post_data['currency'] = "BDT";
         $post_data['tran_id'] = $order_id;
+        $post_data['product_category'] = "clothing";
+        $post_data['product_profile'] = "physical-goods";
         $post_data['success_url'] = route('ssl.success');
         $post_data['fail_url']     = config('app.front_url');
         $post_data['cancel_url']   = config('app.front_url');
+        // $post_data['ipn_url']   = route('ssl.ipn');
 
         # CUSTOMER INFORMATION
         $post_data['cus_name'] = $order->user_billing_info->first_name;
@@ -329,51 +332,20 @@ class OrderController extends Controller
 
     public function sslCommerzSuccess(Request $request)
     {
-        if ($request->status == "VALID") {
-            try
+        try
             {
-                DB::beginTransaction();
                 $order = Order::where('id',$request->tran_id)->first();
-                $order->payment_status = AllStatic::$paid;
-                $order->payment_method_name = 'sslCommerz';
-                $order->card_type = $request->card_type;
-                $order->validation_id = $request->val_id;
-                $order->transaction_id = $request->bank_tran_id;
-                $order->payment_date = $request->tran_date;
-                $order->payment_via = 1;
-                $order->order_position = 1;
-                $order->payment_info = json_encode($request->all());
-                $order->update();
-
-                DB::table('payments')->where('order_id', $order->id)->update([
-                    'payment_type' => 'sslCommerz-'.$request->card_type,
-                    'transaction_id' => $request->bank_tran_id,
-                    'payment_status' => AllStatic::$paid,
-                    'updated_at'    => date("Y-m-d H:i:s")
-                ]);
-
-                DB::table('deliveries')->where('order_id', $order->id)->update([
-                    'process_date' => date('Y-m-d'),
-                    'process_state' => AllStatic::$processing,
-                    'process_value' => deliveryPosition(AllStatic::$processing),
-                    'updated_at'    => date("Y-m-d H:i:s")
-                ]);
-
-                if ($order->payment_status == 1) {
-                    DB::commit();
-                    return redirect($request->value_a.'/payment?payment=success&orderid='.$order->id.'&transid='.$order->transaction_id);
+                if ($order->payment_status == AllStatic::$not_paid) {
+                    $validation = $this->orderValidate($request->all(), $request->tran_id,$request->amount, $request->currency);
+                    if ($validation || $order->payment_status == AllStatic::$paid) {
+                        return redirect($request->value_a.'/payment?payment=success&orderid='.$order->id.'&transid='.$order->transaction_id);
+                    }
+                } else {
+                    return redirect($request->value_a.'/payment?payment=fail');
                 }
-
-                DB::rollBack();
-                return redirect($request->value_a.'/payment?payment=fail');
-
             } catch (\Throwable $th) {
-                DB::rollBack();
                 return response()->json(['status' => 'error', 'message' => 'something went wrong'], 400);
             }
-
-        }
-
     }
 
     public function sslCommerzFailed(Request $request)
@@ -420,6 +392,131 @@ class OrderController extends Controller
 
     }
 
+    public function orderValidate($post_data, $trx_id = '', $amount = 0, $currency = "BDT")
+    {
+        if ($post_data == '' && $trx_id == '' && !is_array($post_data)) {
+            return false;
+        }
+        return $this->validateTrx($trx_id, $amount, $currency, $post_data);
+    }
+
+    public function validateTrx($merchant_trans_id, $merchant_trans_amount, $merchant_trans_currency, $post_data)
+    {
+        # MERCHANT SYSTEM INFO
+        if (!empty($merchant_trans_id) && !empty($merchant_trans_amount)) {
+            # CALL THE FUNCTION TO CHECK THE RESULT
+            if(config('app.payment_mode') == 'sandbox'){
+                $storeid = "limme601b86f8e6dd4";
+                $storepass = "limme601b86f8e6dd4@ssl";
+            } else {
+                $storeid = config('app.storeid');
+                $storepass = config('app.storepassw');
+            }
+            $post_data['store_id'] = $storeid;
+            $post_data['store_pass'] = $storepass;
+
+            $val_id = urlencode($post_data['val_id']);
+            $store_id = urlencode($storeid);
+            $store_passwd = urlencode($storepass);
+            if (config('app.payment_mode') == 'sandbox') {
+                $direct_api_url = "https://sandbox.sslcommerz.com/validator/api/validationserverAPI.php";
+            } else {
+                $direct_api_url = "https://securepay.sslcommerz.com/validator/api/validationserverAPI.php";
+            }
+            $requested_url = $direct_api_url."?val_id=" . $val_id . "&store_id=" . $store_id . "&store_passwd=" . $store_passwd . "&v=1&format=json";
+
+            $handle = curl_init();
+            curl_setopt($handle, CURLOPT_URL, $requested_url);
+            curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
+
+            if (config('app.payment_mode') == 'sandbox') {
+                curl_setopt($handle, CURLOPT_SSL_VERIFYHOST, 0);
+                curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, 0);
+            } else {
+                curl_setopt($handle, CURLOPT_SSL_VERIFYHOST, 2);
+                curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, 2);
+            }
+            $result = curl_exec($handle);
+            $code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+            if ($code == 200 && !(curl_errno($handle))) {
+                # TO CONVERT AS ARRAY
+                # $result = json_decode($result, true);
+                # $status = $result['status'];
+
+                # TO CONVERT AS OBJECT
+                $result = json_decode($result);
+
+                # TRANSACTION INFO
+                $status = $result->status;
+                $tran_date = $result->tran_date;
+                $tran_id = $result->tran_id;
+                $val_id = $result->val_id;
+                $amount = $result->amount;
+                $store_amount = $result->store_amount;
+                $bank_tran_id = $result->bank_tran_id;
+                $card_type = $result->card_type;
+                $currency_type = $result->currency_type;
+                $currency_amount = $result->currency_amount;
+
+                # ISSUER INFO
+                $card_no = $result->card_no;
+                $card_issuer = $result->card_issuer;
+                $card_brand = $result->card_brand;
+                $card_issuer_country = $result->card_issuer_country;
+                $card_issuer_country_code = $result->card_issuer_country_code;
+
+                # API AUTHENTICATION
+                $APIConnect = $result->APIConnect;
+                $validated_on = $result->validated_on;
+                $gw_version = $result->gw_version;
+                # GIVE SERVICE
+                if ($status == "VALID" || $status == "VALIDATED") {
+                    DB::beginTransaction();
+                    $order = Order::where('id',$tran_id)->first();
+                    $order->payment_status = AllStatic::$paid;
+                    $order->payment_method_name = 'sslCommerz';
+                    $order->card_type = $card_type;
+                    $order->validation_id = $val_id;
+                    $order->transaction_id = $bank_tran_id;
+                    $order->payment_date = $tran_date;
+                    $order->payment_via = 1;
+                    $order->order_position = 1;
+                    $order->payment_info = json_encode($result);
+                    $order->update();
+
+                    DB::table('payments')->where('order_id', $order->id)->update([
+                        'payment_type' => 'sslCommerz-'.$card_type,
+                        'transaction_id' => $bank_tran_id,
+                        'payment_status' => AllStatic::$paid,
+                        'updated_at'    => date("Y-m-d H:i:s")
+                    ]);
+                    DB::rollBack();
+                    return true;
+                }
+                return false;
+            } else {
+                # Failed to connect with SSLCOMMERZ
+                return false;
+            }
+        } else {
+            # INVALID DATA
+            return false;
+        }
+    }
+
+    public function sslCommerzIpn(Request $request)
+    {
+        try {
+                DB::table('orders')->where([
+                    'id' => $request->tran_id,
+                    'validation_id' => $request->val_id
+                ])->update([
+                    'payment_status' => AllStatic::$failed
+                ]);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
     public function orderCancel(Request $request)
     {
         $configure = DB::table('refund_configure')->first();
