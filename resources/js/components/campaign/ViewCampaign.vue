@@ -367,7 +367,7 @@ export default {
                                 <div class="modal-footer md-button">
                                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12" @click="formReset"></i> Discard</button>
 
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="submit" class="btn btn-info-a">Submit</button>
 
                                 </div>
                             </form>

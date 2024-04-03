@@ -293,7 +293,7 @@ export default {
 
                                     <button
                                         type="submit"
-                                        class="btn btn-primary"
+                                        class="btn btn-info-a"
                                     >
                                         Submit
                                     </button>

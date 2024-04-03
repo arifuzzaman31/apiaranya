@@ -151,8 +151,8 @@ export default {
                     </div>
 
                     <div class="col-md-4 col-lg-3 col-12 mt-4">
-                        <button type="button" class="btn btn-danger btn-sm" @click="filterClear()">CLEAR</button>
-                        <button type="button" class="btn btn-success btn-sm ml-2" @click="removeFromSection()">Remove From Section</button>
+                        <button type="button" class="btn btn-info-a btn-sm" @click="filterClear()">CLEAR</button>
+                        <button type="button" class="btn btn-delete btn-sm ml-2" @click="removeFromSection()">Remove From Section</button>
                     </div>
                 </div>
 
@@ -210,3 +210,25 @@ export default {
     />
 </div>
 </template>
+<style scoped>
+.btn-info-a, .btn-view{
+color:#fff;
+background-color: #3c5676!important;
+border-color: #3c5676!important;
+}
+.btn-info-a:hover, .btn-view:hover{
+background-color: #3c5676;
+border-color: #3c5676;
+}
+.btn-delete {
+    color: #000 !important;
+    background-color: #ffffff;
+    border-color: #3c5676;
+}
+.btn-delete:hover {
+    color: #fff !important;
+    background-color:#3c5676!important;
+    border-color: #3c5676!important;
+}
+
+</style>
