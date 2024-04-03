@@ -339,7 +339,7 @@ class OrderController extends Controller
                 if ($order->payment_status == AllStatic::$not_paid) {
                     $validation = $this->orderValidate($request->all(), $request->tran_id,$request->amount, $request->currency);
                     if ($validation || $order->payment_status == AllStatic::$paid) {
-                        $this->invoiceToMail($order->id);
+
                         return redirect($request->value_a.'/payment?payment=success&orderid='.$order->id.'&transid='.$order->transaction_id);
                     }
                 } else {
@@ -493,6 +493,7 @@ class OrderController extends Controller
                         'updated_at'    => date("Y-m-d H:i:s")
                     ]);
                     DB::rollBack();
+                    $this->invoiceToMail($order->id);
                     return true;
                 }
                 return false;

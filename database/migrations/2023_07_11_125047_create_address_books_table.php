@@ -19,9 +19,9 @@ class CreateAddressBooksTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('country');
-            $table->string('city');
-            $table->string('thana');
-            $table->string('area');
+            $table->string('city')->nullable();
+            $table->string('thana')->nullable();
+            $table->string('area')->nullable();
             $table->string('email');
             $table->string('phone');
             $table->string('post_code')->nullable();
