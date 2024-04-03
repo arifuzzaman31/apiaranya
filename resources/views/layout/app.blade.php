@@ -11,7 +11,7 @@
 
     @include('partials.header-assets')
         <style>
-            .active_url   a  .menu_heading{
+            .active_url a .menu_heading{
                 color: #ffffff !important;
             }
             .v-lazy-image {

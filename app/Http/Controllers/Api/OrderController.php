@@ -186,11 +186,12 @@ class OrderController extends Controller
                 'created_at'    => date("Y-m-d H:i:s")
             ]);
             DB::commit();
-            $this->invoiceToMail($order->id);
+
             if($request->data['paymentMethod'] == 'online'){
                 $backUri = $request->backUri ? $request->backUri : 'https://aranya.com.bd';
                 return response()->json(['status' => 'success', 'type' => 'online', 'message' => 'Order Created', 'payment' => $this->sslCommerz($order->id,$backUri)], 200);
             } else {
+                $this->invoiceToMail($order->id);
                 return response()->json(['status' => 'success','type' => 'cash', 'order_id' => $order->id], 200);
             }
 
@@ -338,6 +339,7 @@ class OrderController extends Controller
                 if ($order->payment_status == AllStatic::$not_paid) {
                     $validation = $this->orderValidate($request->all(), $request->tran_id,$request->amount, $request->currency);
                     if ($validation || $order->payment_status == AllStatic::$paid) {
+                        $this->invoiceToMail($order->id);
                         return redirect($request->value_a.'/payment?payment=success&orderid='.$order->id.'&transid='.$order->transaction_id);
                     }
                 } else {

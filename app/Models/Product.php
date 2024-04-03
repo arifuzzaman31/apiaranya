@@ -144,6 +144,6 @@ class Product extends Model
 
     public function order_details()
     {
-        return $this->hasOne(OrderDetails::class,'product_id');
+        return $this->hasMany(OrderDetails::class,'product_id');
     }
 }

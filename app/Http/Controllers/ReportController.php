@@ -351,15 +351,28 @@ class ReportController extends Controller
     public function productReport(Request $request)
     {
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 10;
+        $category   = $request->get('category');
+        $subcategory   = $request->get('subcategory');
+        $keyword   = $request->get('keyword');
+
         $data = Product::withCount(['order_details'  => function($q){
             $q->where('is_refunded',0);
         }])
-        ->with(['category:id,category_name','subcategory:id,category_name','order_details' => function($q){
+        ->with(['category:id,category_name','order_details.order:id,order_id','subcategory:id,category_name','order_details' => function($q){
             $q->with('user')->where('is_refunded',0);
-        }])
-        // ->get();
-        // ->where('order_details_count', '>', 0);
-        ->paginate($dataQty);
+        }]);
+        if($category != '' ){
+            $data = $data->where(function ($q) use ($category,$subcategory) {
+                $q->where('category_id',$category)
+                ->where('sub_category_id',$subcategory);
+
+            });
+        }
+        if($keyword != ''){
+            $data = $data->where('product_name','like','%'.$keyword.'%')
+            ->orWhere('design_code','like','%'.$keyword.'%');
+        }
+        $data = $data->paginate($dataQty);
         return $data;
 
     }

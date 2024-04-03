@@ -11,37 +11,23 @@
             </div>
             <div class="widget-content widget-content-area">
                 <div class="row mb-2">
-                    <div class="col-md-2 col-lg-2 my-1 col-12">
+                    <div class="col-md-3 col-lg-3 my-1 col-12">
                         <input type="text" v-model="search" @keyup="getSearch()" class="form-control form-control-sm" placeholder="Name, Design Code">
                     </div>
 
-                    <div class="col-md-2 col-lg-2 my-1 col-12">
+                    <div class="col-md-3 col-lg-3 my-1 col-12">
                         <select id="product-category" class="form-control form-control-sm" @change="getSubCategories()" v-model="filterdata.category">
                             <option selected="" value="">Category</option>
                             <option v-for="(value,index) in allcategories" :value="value.id" :key="index">{{ value.category_name }}</option>
                         </select>
                     </div>
 
-                    <div class="col-md-2 col-lg-2 my-1 col-12">
+                    <div class="col-md-3 col-lg-3 my-1 col-12">
                         <select id="product-subcategory" class="form-control form-control-sm" @change="getProductReport()" v-model="filterdata.subcategory">
                             <option selected="" value="0">Sub Category</option>
                             <option v-for="(value,index) in allsubcategories" :value="value.id" :key="index">{{ value.category_name }}</option>
                         </select>
                     </div>
-
-                    <div class="col-md-2 col-lg-2 my-1 col-12">
-                        <select id="product-brand" class="form-control form-control-sm" @change="getProductReport()" v-model="filterdata.brand">
-                            <option selected="" value="">Brand</option>
-                            <option v-for="(value,index) in allbrands" :value="value.id" :key="index">{{ value.brand_name }}</option>
-                        </select>
-                    </div>
-<!--
-                    <div class="col-md-3 col-lg-3 my-1 col-12">
-                        <input type="text" onfocus="(this.type='date')" v-model="filterdata.from" class="form-control form-control-sm" placeholder="Start Date">
-                    </div>
-                    <div class="col-md-3 col-lg-3 my-1 col-12">
-                        <input type="text" onfocus="(this.type='date')" v-model="filterdata.to" @change="getProductReport()" class="form-control form-control-sm" placeholder="End Date">
-                    </div> -->
 
                     <div class="col-md-2 col-lg-2 col-12">
                         <button type="button" class="btn btn-info-a mt-1" @click="filterClear()">CLEAR</button>
@@ -57,6 +43,7 @@
                                 <th>Sub Category</th>
                                 <th>Design code</th>
                                 <th>Total Sale</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody v-if="productData.data && productData.data.length > 0">
@@ -68,11 +55,14 @@
                                     <td>{{ item.subcategory.category_name }}</td>
                                     <td>{{ item.design_code }}</td>
                                     <td>{{ item.order_details_count }}</td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-sm btn-info-a" @click="showCustomer(item)">View</button>
+                                    </td>
                                 </tr>
                             </template>
                         </tbody>
                         <tbody v-else class="mt-3">
-                            <tr>
+                            <tr class="text-center">
                                 <td colspan="24">No Data Found</td>
                             </tr>
                         </tbody>
@@ -87,9 +77,10 @@
                         <a target="_blank" :href="url+`get-sales-report?excel=yes&date_from=${filterdata.from}&date_to=${filterdata.to}`" type="button" class="btn btn-info-a"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>  Excel</a>
                     </div>
                 </div>
-
+                <ProductCustomer :order_info="customerInfo" />
             </div>
         </div>
+
     </div>
 </div>
 </template>
@@ -97,16 +88,19 @@
 <script>
 import axios from 'axios';
 import Mixin from '../../mixer';
+import ProductCustomer from "../common/ProductCustomer.vue"
 import { Bootstrap4Pagination } from 'laravel-vue-pagination';
 
 export default {
     name: 'productreport',
     mixins: [Mixin],
     components:{
+        ProductCustomer,
         Bootstrap4Pagination
     },
     data(){
         return {
+            customerInfo: [],
             productData: [],
             allbrands: [],
             allcategories: [],
@@ -126,7 +120,7 @@ export default {
 
     methods: {
         getProductReport(page = 1){
-            axios.get(baseUrl+`get-product-report?page=${page}&per_page=10&keyword=${this.search}&category=${this.filterdata.category}&subcategory=${this.filterdata.subcategory}&brand=${this.filterdata.brand}`)
+            axios.get(baseUrl+`get-product-report?page=${page}&per_page=10&keyword=${this.search}&category=${this.filterdata.category}&subcategory=${this.filterdata.subcategory}`)
             .then(result => {
                 this.productData = result.data;
             })
@@ -135,6 +129,7 @@ export default {
             });
         },
         filterClear(){
+            this.customerInfo = []
             this.search = ''
             this.filterdata = {
                 category: '',
@@ -161,14 +156,16 @@ export default {
             this.filterdata.subcategory=0;
             if(filterData.length == 0) this.getProductReport()
         },
-        getBrand(){
-            axios.get(baseUrl+'brands/create?no_paginate=yes').then(response => {
-                this.allbrands = response.data;
-            })
+        async showCustomer(data){
+            this.customerInfo = []
+            const dt = await data.order_details
+            this.customerInfo = dt
+            console.log(this.customerInfo)
+            $("#customerViewModal").modal('show');
         }
     },
     mounted(){
-        // this.getCategory()
+         this.getCategory()
         // this.getBrand()
         this.getProductReport()
     }
