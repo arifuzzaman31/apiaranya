@@ -51,7 +51,7 @@
                             <h6 class="mb-1 card-title text-bold">
                                 Total Order
                             </h6>
-                            <span>{{ order_info.ttl }}</span> <br />
+                            <span>{{ Number(order_info.pending)+Number(order_info.processing)+Number(order_info.delivered) }}</span> <br />
                             <span class="text-sm">
                                 Count Total Order
                             </span>
