@@ -163,6 +163,15 @@ export default {
                                                         type="button"
                                                         :href="
                                                             url +
+                                                            'section-page/' +
+                                                            section.id + '/edit'
+                                                        "
+                                                        class="btn btn-sm btn-warning mx-2"
+                                                        >Update</a>
+                                                    <a
+                                                        type="button"
+                                                        :href="
+                                                            url +
                                                             'section-product/' +
                                                             section.id
                                                         "

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\Report\CampaignReportExport;
 use App\Exports\Report\LifetimeReportExport;
 use App\Exports\Report\SalesReportExport;
+use App\Exports\Report\ProductReportExport;
 use App\Exports\Report\StockReportExport;
 use App\Exports\Report\RefundReportExport;
 use App\Exports\Report\IndividualReportExport;
@@ -354,7 +355,9 @@ class ReportController extends Controller
         $category   = $request->get('category');
         $subcategory   = $request->get('subcategory');
         $keyword   = $request->get('keyword');
-
+        if($request->excel == 'yes'){
+            return \Excel::download(new ProductReportExport($category,$subcategory),'product_report_list.xlsx');
+        }
         $data = Product::withCount(['order_details'  => function($q){
             $q->where('is_refunded',0);
         }])

@@ -26,7 +26,7 @@ export default {
                                         <th>Email</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody v-if="order_info && order_info.length > 0">
                                     <template v-for="(customer,index) in order_info" :key="index">
                                         <tr>
                                             <td>{{ ++index }}</td>
@@ -37,6 +37,11 @@ export default {
                                             <td>{{ customer.user.address }}</td>
                                         </tr>
                                     </template>
+                                </tbody>
+                                <tbody v-else>
+                                    <tr class="text-center">
+                                        <td colspan="5">No Data Found</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
