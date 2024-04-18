@@ -49,11 +49,11 @@
                         </div>
                         <div class="icons-content">
                             <h6 class="mb-1 card-title text-bold">
-                                On-Hold Order
+                                Total Order
                             </h6>
-                            <span>{{ order_info.pending }}</span> <br />
+                            <span>{{ order_info.ttl }}</span> <br />
                             <span class="text-sm">
-                                Shipping fees are not included
+                                Count Total Order
                             </span>
                         </div>
 
@@ -109,10 +109,10 @@
                             </span>
                         </div>
                         <div class="icons-content">
-                            <h6 class="mb-1 card-title text-bold">Revenue</h6>
+                            <h6 class="mb-1 card-title text-bold">Pending Order</h6>
                             <span>{{ order_info.pending }}</span> <br />
                             <span class="text-sm">
-                                Shipping fees are not included
+                                Count Total Pending order
                             </span>
                         </div>
 
@@ -167,10 +167,10 @@
                             </span>
                         </div>
                         <div class="icons-content">
-                            <h6 class="mb-1 card-title text-bold">Products</h6>
-                            <span>{{ order_info.pending }}</span> <br />
+                            <h6 class="mb-1 card-title text-bold">Processing</h6>
+                            <span>{{ order_info.processing }}</span> <br />
                             <span class="text-sm">
-                                Shipping fees are not included
+                                Count Order Under Processing
                             </span>
                         </div>
 
@@ -226,11 +226,11 @@
                         </div>
                         <div class="icons-content">
                             <h6 class="mb-1 card-title text-bold">
-                                Monthly Earning
+                               Total Delivered
                             </h6>
-                            <span>{{ order_info.pending }}</span> <br />
+                            <span>{{ order_info.delivered }}</span> <br />
                             <span class="text-sm">
-                                Shipping fees are not included
+                                Counting of Total Delivered Order
                             </span>
                         </div>
 
@@ -765,29 +765,29 @@ export default {
                 .then((result) => {
                     result.data.countdata.map((item, i) => {
                         switch (item.order_position) {
-                            case "0":
+                            case 0:
                                 this.order_info.ttl = item.total;
                                 break;
-                            case "1":
+                            case 1:
                                 this.order_info.pending = item.total;
                                 break;
-                            case "2":
+                            case 2:
                                 this.order_info.processing = item.total;
                                 break;
-                            case "3":
+                            case 3:
                                 this.order_info.delivered = item.total;
                                 break;
                         }
                     });
                     result.data.orStatus.map((item, i) => {
                         switch (item.status) {
-                            case "0":
+                            case 0:
                                 this.status_info.cancel = item.order_status;
                                 break;
-                            case "1":
+                            case 1:
                                 this.status_info.active = item.order_status;
                                 break;
-                            case "2":
+                            case 2:
                                 this.status_info.onhold = item.order_status;
                                 break;
                         }
