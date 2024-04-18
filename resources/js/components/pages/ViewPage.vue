@@ -167,7 +167,7 @@ export default {
                                                             section.id + '/edit'
                                                         "
                                                         class="btn btn-sm btn-warning mx-2"
-                                                        >Update</a>
+                                                        >Edit</a>
                                                     <a
                                                         type="button"
                                                         :href="
@@ -176,7 +176,7 @@ export default {
                                                             section.id
                                                         "
                                                         class="btn btn-sm btn-view mx-2"
-                                                        >view</a
+                                                        >View</a
                                                     >
 
                                                     <button
@@ -186,7 +186,7 @@ export default {
                                                             editSect(section)
                                                         "
                                                     >
-                                                        Edit
+                                                        Status
                                                     </button>
 
                                                     <button
