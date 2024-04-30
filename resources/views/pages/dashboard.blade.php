@@ -1,7 +1,5 @@
 @extends('layout.app')
-@push('style')
-<link href="{{ asset('admin-assets/assets/css/components/tabs-accordian/custom-tabs.css')}}" rel="stylesheet" type="text/css" />
-@endpush
+
 @section('content')
 <div class="row layout-top-spacing">
     <div class="col-12 layout-spacing">
