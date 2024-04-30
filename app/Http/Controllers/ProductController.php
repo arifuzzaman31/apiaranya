@@ -114,6 +114,9 @@ class ProductController extends Controller
         }
         if ($sectionId != '') {
             $pids = DB::table('pages')->where('id', $sectionId)->pluck('product_id')->first();
+            if(!$pids){
+                return [];
+            }
             $product->whereIn('id',json_decode($pids));
             // ->whereIn('id', function($q) use ($sectionId) {
             //     return DB::table('pages')->where('id', $sectionId)->pluck('product_id');

@@ -106,7 +106,7 @@ class PagesController extends Controller
         $noPagination = $request->get('no_paginate');
         $status = $request->get('status');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 10;
-        $pagesData = Page::orderBy('id','asc');
+        $pagesData = Page::orderByRaw("CAST(precedence as UNSIGNED) ASC");
         if($status != ''){
             $pagesData = $pagesData->where('status',AllStatic::$active);
         }

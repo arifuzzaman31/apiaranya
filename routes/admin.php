@@ -32,6 +32,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MediaManagerController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\PickuphubController;
+use App\Http\Controllers\StoryController;
 
 Route::redirect('/', 'admin/dashboard');
 Route::get('/me', [AdminLoginController::class, 'getUser']);
@@ -194,5 +195,8 @@ Route::controller(ReportController::class)->group(function(){
     Route::view('campaign-report', 'pages.report.campaign_report')->name('campaign.report');
     Route::get('get-campaign-report', 'campaignReport');
 });
+
+Route::view('home-story','pages.story.home')->name('story.home');
+Route::get('get-story-info',[StoryController::class,'getStoryData']);
 
 ?>

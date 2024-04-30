@@ -366,6 +366,51 @@
                 </ul>
             </li>
             @endif
+            @if(checkPermission('report-view'))
+            <li class="menu @if(request()->is('admin/order-report')) active @endif">
+                <a href="#story" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <div class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-command"><path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"></path></svg>
+                        <span>Story</span>
+                    </div>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </div>
+                </a>
+                <ul class="collapse submenu list-unstyled" id="story" data-parent="#accordionExample">
+                    @if(checkPermission('sales-report'))
+                        <li>
+                            <a href="{{ route('story.home') }}">Home </a>
+                        </li>
+                    @endif
+                    @if(checkPermission('campaign-report'))
+                        <li>
+                            <a href="{{ route('campaign.report') }}">About Aranya </a>
+                        </li>
+                    @endif
+                    @if(checkPermission('stock-report'))
+                        <li>
+                            <a href="{{ route('stock.report') }}">Community </a>
+                        </li>
+                    @endif
+                    @if(checkPermission('payment-report'))
+                        <li>
+                            <a href="{{ route('payment.report') }}">Color Stories </a>
+                        </li>
+                    @endif
+                    @if(checkPermission('customer-lifetime-value-report'))
+                        <li>
+                            <a href="{{ route('customer-lifetime.report') }}">Sustainability</a>
+                        </li>
+                    @endif
+                    @if(checkPermission('customer-refund-report'))
+                        <li>
+                            <a href="{{ route('customer-refund.report') }}">Blogs </a>
+                        </li>
+                    @endif
+                </ul>
+            </li>
+            @endif
         </ul>
 
     </nav>
