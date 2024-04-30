@@ -122,6 +122,7 @@ export default {
                                 <tr>
                                     <th>SL</th>
                                     <th>Section Name</th>
+                                    <th>Title</th>
                                     <th>Pattern</th>
                                     <th>Use For</th>
                                     <th>Precedense</th>
@@ -139,6 +140,7 @@ export default {
                                     <tr>
                                         <td>{{ index + 1 }}</td>
                                         <td>{{ section.section_name }}</td>
+                                        <td>{{ section.section_title }}</td>
                                         <td>{{ section.pattern }}</td>
                                         <td>{{ section.use_for }}</td>
                                         <td>{{ section.precedence }}</td>

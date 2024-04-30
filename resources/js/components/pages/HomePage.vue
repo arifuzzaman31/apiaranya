@@ -8,8 +8,9 @@ export default {
         return {
             form: {
                 section_name: "",
+                section_title:"",
                 banner: [
-                    { banner_uri: "", file_type: "", back_link: "", name: "" },
+                    { banner_uri: "", file_type: "", back_link: "", name: ""},
                 ],
                 pattern: "single",
                 use_for: "campaign",
@@ -107,6 +108,7 @@ export default {
             clearFilter(){
                 this.form = {
                     section_name: '',
+                    section_title: '',
                     banner: [{banner_uri: '',file_type: '',back_link: '',name:''}],
                     pattern: 'single',
                     use_for: 'campaign',
@@ -232,7 +234,7 @@ export default {
                     banner_uri: "",
                     file_type: "",
                     back_link: "",
-                    name: "",
+                    name: ""
                 });
             }
         },
@@ -275,6 +277,16 @@ export default {
                                     class="form-control"
                                     placeholder="Enter Section name"
                                     v-model="form.section_name"
+                                />
+                            </div>
+                            <div class="my-2">
+                                <label for="set-name">Section Title</label>
+                                <input
+                                    type="text"
+                                    id="set-title"
+                                    class="form-control"
+                                    placeholder="Section Title"
+                                    v-model="form.section_title"
                                 />
                             </div>
                             <div class="my-2">

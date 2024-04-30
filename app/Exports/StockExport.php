@@ -22,7 +22,7 @@ class StockExport implements FromCollection,WithHeadings,WithEvents
     {
         return [
             'SKU',
-            'Stock',
+            'Stock'
         ];
     }
 
@@ -35,7 +35,7 @@ class StockExport implements FromCollection,WithHeadings,WithEvents
                         ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                         ->getStartColor()
                         ->setARGB('ffa4ffa4');
-  
+
             },
         ];
     }

@@ -11,6 +11,7 @@ export default {
             form: {
                 id: '',
                 section_name: '',
+                section_title: '',
                 banner: [],
                 pattern: 'single',
                 use_for: 'campaign',
@@ -114,6 +115,7 @@ export default {
                 this.form = {
                     id: '',
                     section_name: '',
+                    section_title: '',
                     banner: [],
                     pattern: 'single',
                     use_for: 'campaign',
@@ -193,6 +195,7 @@ export default {
     mounted(){
         this.form.id = this.section_info.id;
         this.form.section_name = this.section_info.section_name;
+        this.form.section_title = this.section_info.section_title;
         this.form.pattern = this.section_info.pattern
         this.form.use_for = this.section_info.use_for
         this.form.precedence = this.section_info.precedence
@@ -234,6 +237,10 @@ export default {
                                 <div class="my-2">
                                     <label for="set-name">Section Name</label>
                                     <input type="text" id="set-name" class="form-control" placeholder="Enter Section name" v-model="form.section_name" />
+                                </div>
+                                <div class="my-2">
+                                    <label for="set-name">Section Title</label>
+                                    <input type="text" id="set-title" class="form-control" placeholder="Section Title" v-model="form.section_title" />
                                 </div>
                                 <div class="my-2">
                                     <label for="pattern">Select Pattern</label>
