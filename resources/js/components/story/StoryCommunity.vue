@@ -1,24 +1,23 @@
 <script>
 import Mixin from "../../mixer";
+import ViewCommunity from './ViewCommunity.vue';
 import MediaHelper from "../common/MediaHelper.vue";
 export default {
     mixins: [Mixin],
-    components: { MediaHelper },
+    components: {MediaHelper,ViewCommunity },
     data(){
         return {
             form:{
                 banner_link: ''
             },
-            story:{},
             url:baseUrl
         }
     },
     methods: {
-        getStoryData(){
+        getCommunityData(){
                 try{
-                    axios.get(baseUrl+`get-story-info`)
+                    axios.get(baseUrl+`get-community-info`)
                     .then(response => {
-                        this.story = response.data
                         this.form.banner_link = response.data.banner_link
                     }).catch(error => {
                         console.log(error)
@@ -30,18 +29,18 @@ export default {
         mediaModalOpen() {
             $("#pageMediaModal").modal("show");
         },
-        selectImage(item) {
-            this.form.banner_link = item;
+        selectImages(item) {
+            this.form.banner_link = item
         },
-        updateHomeData(){
+        updateCommunityData(){
             axios
-                .post(baseUrl + "update-home-section", this.form)
+                .post(baseUrl + "update-community-section", this.form)
                 .then((response) => {
                     if (response.data.status == "success") {
                         this.form.banner_link = ''
                         this.successMessage(response.data);
                         setTimeout(()=>{
-                            window.location.href = "home-story";
+                            window.location.href = "story-community";
                         },1200)
                     }
                 })
@@ -49,7 +48,7 @@ export default {
         }
     },
     mounted(){
-        this.getStoryData()
+        this.getCommunityData()
     }
 }
 </script>
@@ -58,10 +57,10 @@ export default {
     <div id="tableHover" class="col-lg-12 col-12">
         <div class="statbox widget box box-shadow">
             <div>
-                <h4 class="mx-2">Story Page</h4>
+                <h4 class="mx-2">Community Page</h4>
             </div>
             <div class="widget-content widget-content-area">
-                <label>Story Banner Image</label>
+                <label>Community Feature Image</label>
                 <div class="container">
                     <v-lazy-image
                         :src="form.banner_link"
@@ -79,7 +78,7 @@ export default {
                         >
                             Change
                         </button>
-                    <form @submit.prevent="updateHomeData()" method="post">
+                    <form @submit.prevent="updateCommunityData()" method="post">
                         <button
                             type="submit"
                             title="Update The Image"
@@ -90,9 +89,10 @@ export default {
                     </form>
                 </div>
             </div>
+            <ViewCommunity />
         </div>
     </div>
-        <media-helper :setImg="selectImage">
+        <media-helper :setImg="selectImages">
             <template v-slot:viewimage>
                 <div class="col-md-12 d-flex justify-content-center my-2">
                     <v-lazy-image

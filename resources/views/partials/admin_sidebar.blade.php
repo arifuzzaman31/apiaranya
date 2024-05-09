@@ -385,27 +385,27 @@
                     @endif
                     @if(checkPermission('campaign-report'))
                         <li>
-                            <a href="{{ route('campaign.report') }}">About Aranya </a>
+                            <a href="{{ route('about.aranya') }}">About Aranya </a>
                         </li>
                     @endif
                     @if(checkPermission('stock-report'))
                         <li>
-                            <a href="{{ route('stock.report') }}">Community </a>
+                            <a href="{{ route('story.community') }}">Community </a>
                         </li>
                     @endif
                     @if(checkPermission('payment-report'))
                         <li>
-                            <a href="{{ route('payment.report') }}">Color Stories </a>
+                            <a href="{{ route('story.color-story') }}">Color Stories </a>
                         </li>
                     @endif
                     @if(checkPermission('customer-lifetime-value-report'))
                         <li>
-                            <a href="{{ route('customer-lifetime.report') }}">Sustainability</a>
+                            <a href="{{ route('story.sustainability') }}">Sustainability</a>
                         </li>
                     @endif
                     @if(checkPermission('customer-refund-report'))
                         <li>
-                            <a href="{{ route('customer-refund.report') }}">Blogs </a>
+                            <a href="{{ route('story.blog') }}">Blogs </a>
                         </li>
                     @endif
                 </ul>

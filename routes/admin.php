@@ -33,6 +33,7 @@ use App\Http\Controllers\MediaManagerController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\PickuphubController;
 use App\Http\Controllers\StoryController;
+use App\Http\Controllers\CommunityController;
 
 Route::redirect('/', 'admin/dashboard');
 Route::get('/me', [AdminLoginController::class, 'getUser']);
@@ -198,5 +199,19 @@ Route::controller(ReportController::class)->group(function(){
 
 Route::view('home-story','pages.story.home')->name('story.home');
 Route::get('get-story-info',[StoryController::class,'getStoryData']);
+Route::post('update-home-section',[StoryController::class,'updateHomeData']);
+Route::view('about-aranya','pages.story.about')->name('about.aranya');
+Route::get('get-about-info',[StoryController::class,'getAboutData']);
+Route::post('update-about-section',[StoryController::class,'updateAboutData']);
+Route::view('story-community','pages.story.community')->name('story.community');
+Route::get('get-community/{id?}',[CommunityController::class,'getCommunity']);
+Route::get('get-community-info',[CommunityController::class,'getCommunityData']);
+Route::post('update-community-section',[CommunityController::class,'updateCommunityData']);
+Route::put('update-community-data',[CommunityController::class,'updateCommunity']);
+Route::get('community-product/{id}',[CommunityController::class,'editCommunityPage']);
+
+Route::view('story-blog','pages.story.blog')->name('story.blog');
+Route::view('story-sustainability','pages.story.sustainability')->name('story.sustainability');
+Route::view('story-color-story','pages.story.color_story')->name('story.color-story');
 
 ?>

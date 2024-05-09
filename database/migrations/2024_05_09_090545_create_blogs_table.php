@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStoriesTable extends Migration
+class CreateBlogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateStoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('stories', function (Blueprint $table) {
+        Schema::create('blogs', function (Blueprint $table) {
             $table->id();
-            $table->string('banner_name')->nullable();
+            $table->string('title');
             $table->string('slug')->nullable();
-            $table->string('banner_link');
-            $table->string('type')->nullable()->comment("image or video");
-            $table->string('use_for')->nullable()->comment("home or certificate");
-            $table->text('description')->nullable();
+            $table->string('banner_image')->nullable();
+            $table->text('short_description')->nullable();
+            $table->longText('description')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
@@ -33,6 +32,6 @@ class CreateStoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stories');
+        Schema::dropIfExists('blogs');
     }
 }

@@ -17,8 +17,14 @@ class CreatePickuphubsTable extends Migration
             $table->id();
             $table->string('hub_name');
             $table->string('hub_code')->nullable();
-            $table->string('slug');
-            $table->string('type');
+            $table->string('slug')->nullable();
+            $table->string('contact_person');
+            $table->string('pick_division');
+            $table->string('pick_district');
+            $table->string('pick_thana');
+            $table->string('pick_union');
+            $table->string('pick_mobile');
+            $table->string('type')->comment("store or warehouse");
             $table->text('hub_address');
             $table->tinyInteger('status')->default(1);
             $table->timestamps();

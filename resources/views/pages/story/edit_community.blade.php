@@ -1,10 +1,10 @@
 @extends('layout.app')
-@section('title', 'Story Home | Aranya')
+@section('title', 'Edit Community | Aranya')
 @section('content')
 <div id="tableHover" class="layout-spacing" style="padding: 15px 0;">
     <div class="statbox">
         <div class="widget-header">
-            <story-home />
+            <edit-community :commun="{{ json_encode($community) }}" />
         </div>
     </div>
 </div>
