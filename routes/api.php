@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\FrontController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\EcorierController;
+use App\Http\Controllers\CommunityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,8 +29,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('user', function (Request $request) {
         return $request->user();
     });
-    
-    Route::post('logout', [AuthController::class, 'logout']); 
+
+    Route::post('logout', [AuthController::class, 'logout']);
     Route::post('order', [OrderController::class, 'order']);
     Route::get('order', [OrderController::class, 'orderList']);
     Route::post('order/cancel',[OrderController::class,'orderCancel']);
@@ -73,3 +74,7 @@ Route::post('user-reset-password', [AuthController::class, 'storeResetPassword']
 Route::get('information/{slug?}',[PageController::class, 'getInfo']);
 
 Route::get('e-courier-package',[EcorierController::class, 'getEcoPackage']);
+
+Route::get('get-community-info/{id?}',[CommunityController::class, 'getCommunityData']);
+Route::get('get-community-data',[CommunityController::class, 'getCommunity']);
+Route::get('get-community-product/{id}',[CommunityController::class, 'getProductByCommunity']);

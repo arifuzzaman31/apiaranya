@@ -18,7 +18,7 @@ export default {
                 category_name: '',
                 precedence: '',
                 parent_category: 0,
-                whats_new: 1,
+                whats_new: 0,
                 status: 1
             },
             category_id: '',
@@ -218,7 +218,6 @@ export default {
                                 <th>Category</th>
                                 <th>Parent Category</th>
                                 <th class="text-center">Precedence</th>
-                                <th class="text-center">Whats New</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center" v-if="showPermission.includes('menu-edit')">Action</th>
                             </tr>
@@ -229,19 +228,6 @@ export default {
                                 <td>{{ cat.category_name }}</td>
                                 <td>{{ cat.parent_category == 0 ? 'Main Category' : cat.subcategory.category_name }}</td>
                                 <td class="text-center">{{ cat.precedence }}</td>
-                                    <td class="text-center">
-                                <span
-                                    class="badge rounded-pill"
-                                    :class="
-                                     cat.whats_new == 1
-                                            ? 'alert-primary'
-                                            : 'alert-danger'
-                                    "
-                                    >{{
-                                        cat.whats_new ? "Enable" : "Disable"
-                                    }}</span
-                                >
-                            </td>
                                    <td class="text-center">
                                 <span
                                     class="badge rounded-pill"
@@ -257,7 +243,7 @@ export default {
                             </td>
 
 
-                                
+
                                 <td class="text-center" v-if="showPermission.includes('menu-edit') || showPermission.includes('menu-delete')">
                                    <a v-if="showPermission.includes('menu-edit')" class="btn btn-info-a btn-sm" target="_blank" :href="url+'category/'+cat.id+'/edit'">Add Image</a>
                                    <a v-if="showPermission.includes('menu-edit')" class="btn btn-delete mx-1 btn-sm" @click="renameCate(cat)">Rename</a>
@@ -311,13 +297,13 @@ export default {
                                 </select>
                             </div>
 
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="category_name">Whats New</label>
                                 <select id="product-category" class="form-control" v-model="form.whats_new">
                                     <option value="0">Disable</option>
                                     <option value="1">Enable</option>
                                 </select>
-                            </div>
+                            </div> -->
 
                             <div class="form-group">
                                 <label for="precedence">Precedence</label>

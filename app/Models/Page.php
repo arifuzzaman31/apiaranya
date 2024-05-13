@@ -10,7 +10,7 @@ class Page extends Model
 {
     use HasFactory,SoftDeletes;
 
-    protected $fillable = ['id','section_name','banner','pattern','product_id','use_for','precedence','status'];
+    protected $fillable = ['id','section_name','section_title','banner','pattern','product_id','use_for','precedence','status'];
     protected $casts = [
         'precedence' => 'integer'
     ];

@@ -114,6 +114,9 @@ class ProductController extends Controller
         }
         if ($sectionId != '') {
             $pids = DB::table('pages')->where('id', $sectionId)->pluck('product_id')->first();
+            if(!$pids){
+                return [];
+            }
             $product->whereIn('id',json_decode($pids));
             // ->whereIn('id', function($q) use ($sectionId) {
             //     return DB::table('pages')->where('id', $sectionId)->pluck('product_id');
@@ -414,7 +417,7 @@ class ProductController extends Controller
             if ($request->attrqty && !empty($request->attrqty)) {
                 DB::table('inventories')->where('product_id', $product->id)->delete();
                 foreach ($request->attrqty as $value) {
-                    if ($value['qty'] != '' && $value['sku'] != '' && $value['cpu'] != '' && $value['mrp'] != '') {
+                    if ($value['sku'] != '' && $value['cpu'] != '' && $value['mrp'] != '') {
                         if (!empty($value['colour_id'])) {
                             foreach ($value['colour_id'] as $sizestock) {
                                 DB::table('inventories')
@@ -423,7 +426,7 @@ class ProductController extends Controller
                                         'size_id' => $value['size_id'] ? $value['size_id'] : 0,
                                         'colour_id' => $sizestock ? $sizestock : 0,
                                         'sku' => $value['sku'],
-                                        'stock' => $value['qty'],
+                                        'stock' => $value['qty'] != '' ? $value['qty']:0,
                                         'cpu' => $value['cpu'],
                                         'mrp' => $value['mrp'],
                                         'warning_amount' => 10

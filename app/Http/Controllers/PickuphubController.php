@@ -61,9 +61,15 @@ class PickuphubController extends Controller
             $hub->hub_name = $request->hub_name;
             $hub->slug = Str::slug($request->hub_name);
             $hub->hub_code = $request->hub_code;
+            $hub->contact_person = $request->contact_person;
+            $hub->pick_division = $request->pick_division;
+            $hub->pick_district = $request->pick_district;
+            $hub->pick_thana = $request->pick_thana;
+            $hub->pick_union = $request->pick_union;
+            $hub->pick_mobile = $request->pick_mobile;
             $hub->type = $request->type;
             $hub->hub_address = $request->hub_address;
-            $hub->status = $request->status == true ? 1 : 0;
+            $hub->status = $request->status;
             $hub->save();
 
             return response()->json(['status' => 'success', 'message' => $this->fieldname.' Added Successfully !']);
@@ -115,9 +121,15 @@ class PickuphubController extends Controller
             $updata->hub_name = $request->hub_name;
             $updata->slug = Str::slug($request->hub_name);
             $updata->hub_code = $request->hub_code;
+            $updata->contact_person = $request->contact_person;
+            $updata->pick_division = $request->pick_division;
+            $updata->pick_district = $request->pick_district;
+            $updata->pick_thana = $request->pick_thana;
+            $updata->pick_union = $request->pick_union;
+            $updata->pick_mobile = $request->pick_mobile;
             $updata->type = $request->type;
             $updata->hub_address = $request->hub_address;
-            $updata->status = $request->status == true ? 1 : 0;
+            $updata->status = $request->status;
             $updata->update();
 
             return response()->json(['status' => 'success', 'message' => $this->fieldname.' Updated Successfull!']);

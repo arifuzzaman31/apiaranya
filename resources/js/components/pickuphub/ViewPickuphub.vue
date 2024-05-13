@@ -14,9 +14,15 @@ export default {
         const form = reactive({
             hub_name: '',
             hub_code: '',
+            contact_person: '',
+            pick_division: '',
+            pick_district: '',
+            pick_thana: '',
+            pick_union: '',
+            pick_mobile: '',
             type: 'warehouse',
             hub_address: '',
-            status: true
+            status: 1
         });
         const toastMixin = Swal.mixin({
             toast: true,
@@ -121,6 +127,12 @@ export default {
             pickup_id.value = pickup.id;
             form.hub_name = pickup.hub_name;
             form.hub_code = pickup.hub_code;
+            form.contact_person = pickup.contact_person;
+            form.pick_division = pickup.pick_division;
+            form.pick_district = pickup.pick_district;
+            form.pick_thana = pickup.pick_thana;
+            form.pick_union = pickup.pick_union;
+            form.pick_mobile = pickup.pick_mobile;
             form.type = pickup.type;
             form.hub_address = pickup.hub_address;
             form.status = pickup.status;
@@ -131,9 +143,15 @@ export default {
             pickup_id.value = '';
             form.hub_name = '';
             form.hub_code = '';
+            form.contact_person = '';
+            form.pick_division = '';
+            form.pick_district = '';
+            form.pick_thana = '';
+            form.pick_union = '';
+            form.pick_mobile = '';
             form.type = 'warehouse';
             form.hub_address = '';
-            form.status = true;
+            form.status = 1;
         }
 
         onMounted(getPickupHub());
@@ -175,7 +193,11 @@ export default {
                                 <tr>
                                     <th>SL</th>
                                     <th>Hub Name</th>
-                                    <th>Code</th>
+                                    <th>Hub Code</th>
+                                    <th>contact person</th>
+                                    <th>district</th>
+                                    <th>ZIP code</th>
+                                    <th>mobile</th>
                                     <th>Type</th>
                                     <th>Address</th>
                                     <th class="text-center">Status</th>
@@ -188,6 +210,10 @@ export default {
                                         <td>{{ index+1 }}</td>
                                         <td>{{ pickup.hub_name }}</td>
                                         <td>{{ pickup.hub_code }}</td>
+                                        <td>{{ pickup.contact_person }}</td>
+                                        <td>{{ pickup.pick_district }}</td>
+                                        <td>{{ pickup.pick_union }}</td>
+                                        <td>{{ pickup.pick_mobile }}</td>
                                         <td>{{ pickup.type }}</td>
                                         <td>{{ pickup.hub_address }}</td>
                                            <td class="text-center">
@@ -203,7 +229,7 @@ export default {
                                     }}</span
                                 >
                             </td>
-                                        
+
                                         <td v-if="showPermission.includes('attribute-edit') || showPermission.includes('attribute-delete')">
                                             <button type="button" v-if="showPermission.includes('attribute-edit')" class="btn btn-sm btn-info-a" data-toggle="modal" data-target="#PickuphubModal" @click="editPickupHub(pickup)">Edit</button>
                                             <button type="button" v-if="showPermission.includes('attribute-delete')" class="btn btn-sm btn-delete ml-2" @click="deleteHub(pickup.id)">Delete</button>
@@ -222,7 +248,7 @@ export default {
             </div>
         </div>
         <div id="PickuphubModal" class="modal animated fadeInUp custo-fadeInUp" role="dialog">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-xl">
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
@@ -235,7 +261,8 @@ export default {
 
                         <div class="widget-content widget-content-area">
                             <form>
-                                <div class="form-group">
+                                <div class="form-row">
+                                <div class="col-md-4 col-12 form-group">
                                     <label for="hub_name">Hub Name</label>
                                     <input type="text" class="form-control" v-model="form.hub_name" id="hub_name" placeholder="Hub Name">
                                     <span
@@ -245,7 +272,7 @@ export default {
                                         {{ errors.hub_name[0] }}
                                     </span>
                                 </div>
-                                <div class="form-group">
+                                <div class="col-md-4 col-12 form-group">
                                     <label for="hub_code">Hub Code</label>
                                     <input type="text" class="form-control" v-model="form.hub_code" id="hub_code" placeholder="Hub Name">
                                     <span
@@ -255,7 +282,67 @@ export default {
                                         {{ errors.hub_code[0] }}
                                     </span>
                                 </div>
-                                <div class="form-group">
+                                <div class="col-md-4 col-12 form-group">
+                                    <label for="personname">Contact Person Name</label>
+                                    <input type="text" class="form-control" v-model="form.contact_person" id="personname" placeholder="Person Name">
+                                    <span
+                                        v-if="errors.hasOwnProperty('contact_person')"
+                                        class="text-danger"
+                                    >
+                                        {{ errors.contact_person[0] }}
+                                    </span>
+                                </div>
+                                <div class="col-md-4 col-12 form-group">
+                                    <label for="pick_mobile">Person Phone</label>
+                                    <input type="text" class="form-control" v-model="form.pick_mobile" id="pick_mobile" placeholder="Person Phone">
+                                    <span
+                                        v-if="errors.hasOwnProperty('pick_mobile')"
+                                        class="text-danger"
+                                    >
+                                        {{ errors.pick_mobile[0] }}
+                                    </span>
+                                </div>
+                                <div class="col-md-4 col-12 form-group">
+                                    <label for="division-pick">Division</label>
+                                    <input type="text" class="form-control" v-model="form.pick_division" id="division-pick" placeholder="Pick Division">
+                                    <span
+                                        v-if="errors.hasOwnProperty('pick_division')"
+                                        class="text-danger"
+                                    >
+                                        {{ errors.pick_division[0] }}
+                                    </span>
+                                </div>
+                                <div class="col-md-4 col-12 form-group">
+                                    <label for="pick_district">Pick District</label>
+                                    <input type="text" class="form-control" v-model="form.pick_district" id="pick_district" placeholder="Pick District">
+                                    <span
+                                        v-if="errors.hasOwnProperty('pick_district')"
+                                        class="text-danger"
+                                    >
+                                        {{ errors.pick_district[0] }}
+                                    </span>
+                                </div>
+                                <div class="col-md-4 col-12 form-group">
+                                    <label for="pick_thana">Pick Thana</label>
+                                    <input type="text" class="form-control" v-model="form.pick_thana" id="pick_thana" placeholder="Pick Thana">
+                                    <span
+                                        v-if="errors.hasOwnProperty('pick_thana')"
+                                        class="text-danger"
+                                    >
+                                        {{ errors.pick_thana[0] }}
+                                    </span>
+                                </div>
+                                <div class="col-md-4 col-12 form-group">
+                                    <label for="pick_union">ZIP Code</label>
+                                    <input type="text" class="form-control" v-model="form.pick_union" id="pick_union" placeholder="ZIP Code">
+                                    <span
+                                        v-if="errors.hasOwnProperty('pick_union')"
+                                        class="text-danger"
+                                    >
+                                        {{ errors.pick_union[0] }}
+                                    </span>
+                                </div>
+                                <div class="col-md-4 col-12 form-group">
                                     <label for="type_hub">Hub Type</label>
                                     <select class="form-control" v-model="form.type">
                                         <option value="store">Store</option>
@@ -268,7 +355,20 @@ export default {
                                         {{ errors.type[0] }}
                                     </span>
                                 </div>
-                                <div class="form-group">
+                                <div class="col-md-4 col-12 form-group">
+                                    <label for="Status">Status</label>
+                                    <select class="form-control" v-model="form.status">
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
+                                    </select>
+                                    <span
+                                        v-if="errors.hasOwnProperty('type')"
+                                        class="text-danger"
+                                    >
+                                        {{ errors.type[0] }}
+                                    </span>
+                                </div>
+                                <div class="col-md-12 col-12 form-group">
                                     <label for="hub_address">Hub Address</label>
                                     <input type="text" class="form-control" v-model="form.hub_address" id="hub_address" placeholder="Hub Address">
                                     <span
@@ -279,21 +379,14 @@ export default {
                                     </span>
                                 </div>
 
-                                <div class="col-lg-3 col-md-3 col-sm-4 col-6">
-                                <label for="siz-status">Status</label>
-                                        <label class="switch s-icons s-outline  s-outline-success  mb-4 mr-2">
-                                            <input v-model="form.status" type="checkbox" :checked="form.status" id="siz-status">
-                                            <span class="slider round"></span>
-                                        </label>
-                                </div>
+                            </div>
+                            <div class="modal-footer md-button">
+                                <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12" @click="formReset"></i> Discard</button>
 
-                                <div class="modal-footer md-button">
-                                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12" @click="formReset"></i> Discard</button>
+                                <button v-if="pickup_id == ''" type="button" class="btn btn-info-a" @click="storePickupHub">Submit</button>
 
-                                    <button v-if="pickup_id == ''" type="button" class="btn btn-info-a" @click="storePickupHub">Submit</button>
-
-                                    <button v-else type="button" class="btn btn-primary" @click="updatePickupHub">Update</button>
-                                </div>
+                                <button v-else type="button" class="btn btn-primary" @click="updatePickupHub">Update</button>
+                            </div>
                             </form>
                         </div>
                     </div>

@@ -33,6 +33,7 @@ class PagesController extends Controller
         try {
             $hp = new Page();
             $hp->section_name = Str::slug($request->section_name);
+            $hp->section_title = Str::slug($request->section_title);
             $hp->banner = json_encode($request->banner);
             $hp->pattern = $request->pattern;
             $hp->use_for = $request->use_for;
@@ -88,6 +89,7 @@ class PagesController extends Controller
         try {
             DB::table('pages')->where('id',$request->id)->update([
                 'section_name'  => Str::slug($request->section_name),
+                'section_title'  => Str::slug($request->section_title),
                 'banner'   => json_encode($request->banner),
                 'pattern'  => $request->pattern,
                 'use_for'  => $request->use_for,
@@ -104,7 +106,7 @@ class PagesController extends Controller
         $noPagination = $request->get('no_paginate');
         $status = $request->get('status');
         $dataQty = $request->get('per_page') ? $request->get('per_page') : 10;
-        $pagesData = Page::orderBy('id','asc');
+        $pagesData = Page::orderByRaw("CAST(precedence as UNSIGNED) ASC");
         if($status != ''){
             $pagesData = $pagesData->where('status',AllStatic::$active);
         }

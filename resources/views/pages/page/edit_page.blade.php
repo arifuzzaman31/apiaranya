@@ -11,9 +11,11 @@
                 </div>
             </div>
         </div>
+        {{-- {{ dd($sectionData) }} --}}
+        @if($sectionData)
+        <section-product :section="$sectionData" />
 
-        <section-product :section=@json($sectionData) />
-
+        @endif
     </div>
 </div>
 

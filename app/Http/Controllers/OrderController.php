@@ -230,58 +230,106 @@ class OrderController extends Controller
     public function sendEcorier($order,$hubInfo)
     {
         try {
-            $courier = Courier::getInstance();
-            $courier->setProvider(ECourier::class, config('app.payment_mode')); /* local/production */
-            $courier->setConfig([
-                'API-KEY' => env('ECOURIER_API_KEY'),
-                'API-SECRET' => env('ECOURIER_API_SECRET'),
-                'USER-ID' => env('ECOURIER_USER_ID')
-            ]);
+            // $courier = Courier::getInstance();
+            // $courier->setProvider(ECourier::class, config('app.payment_mode')); /* local/production */
+            // $courier->setConfig([
+            //     'API-KEY' => env('ECOURIER_API_KEY'),
+            //     'API-SECRET' => env('ECOURIER_API_SECRET'),
+            //     'USER-ID' => env('ECOURIER_USER_ID')
+            // ]);
             $ecorier = json_decode($order->courier_details);
             $courierData = [
+                'product_id' => $order->order_id,
+                'ep_name' => 'Aranya',
+                'pick_contact_person' => $hubInfo['contact_person'],
+                'pick_division' => $hubInfo['pick_division'],
+                'pick_district' => $hubInfo['pick_district'],
+                'pick_thana' => $hubInfo['pick_thana'],
+                'pick_hub' => $hubInfo['hub_code'] ?? '18490',
+                'pick_union' => $hubInfo['pick_union'],
+                'pick_address' => $hubInfo['hub_address'],
+                'pick_mobile' => $hubInfo['pick_mobile'],
                 'recipient_name' => $ecorier->recipient_name,
                 'recipient_mobile' => $ecorier->recipient_mobile,
+                'recipient_division' => '',
+                'recipient_district' => '',
                 'recipient_city' => $ecorier->recipient_city,
                 'recipient_area' => $ecorier->recipient_area,
                 'recipient_thana' => $ecorier->recipient_thana,
-                'recipient_address' => $ecorier->recipient_address,
+                'recipient_union' => $ecorier->recipient_zip,
                 'package_code' => $ecorier->package_code,
+                'recipient_address' => $ecorier->recipient_address,
+                'parcel_detail' => '',
+                'number_of_item' => $order->total_item,
                 'product_price' => ($order->total_price + $order->shipping_amount + $order->vat_amount),
                 'payment_method' => 'COD',
-                'recipient_landmark' => 'DBBL ATM',
+                'ep_id' => '233232212',
+                'actual_product_price' => ($order->total_price + $order->shipping_amount + $order->vat_amount),
+                'pgwid' => 8888,
+                'pgwtxn_id' =>'asdasdsad',
                 'parcel_type' => 'BOX',
-                'requested_delivery_time' => $order->requested_delivery_date,
-                'delivery_hour' => 'any',
-                'recipient_zip' => $ecorier->recipient_zip,
-                'pick_hub' => $hubInfo['hub_code'] ?? '18490',
-                'product_id' => $order->order_id,
-                'pick_address' => $hubInfo['hub_address']?? "Banani",
-                'comments' => $order->user_note ?? 'Please handle carefully',
-                'number_of_item' => $order->total_item,
-                'actual_product_price' => $order->total_price,
-                'pgwid' => '8888',
-                'pgwtxn_id' => $order->order_id,
                 'is_fragile' => $order->total_fragile_amount > 0 ? 1 : 0,
                 'sending_type' => 1,
                 'is_ipay' => 0
+
             ];
+            if(config('app.payment_mode') == 'production'){
+                $api_url = 'https://backoffice.ecourier.com.bd/api/order-place-reseller';
 
-            $courier->setParams($courierData);
-            $resp = $courier->placeOrder();
-            $result = json_decode(json_encode($resp),true);
-            $datas = json_decode($result['response']);
-            if ($datas !== null && isset($datas->ID)) {
-
-                    if($result['statusCode'] == 200){
-                        DB::table('orders')->where('id', $order->id)->update([
-                            'tracking_id' => $datas->ID,
-                            'updated_at'    => date("Y-m-d H:i:s")
-                        ]);
-                        DB::table('deliveries')->where('order_id', $order->id)->update([
-                            'tracking_id' => $datas->ID
-                        ]);
-                    }
+            }else {
+                $api_url = 'https://staging.ecourier.com.bd/api/order-place-reseller';
             }
+            $headers = [
+                    'Content-Type:application/json',
+                    'API-KEY' => env('ECOURIER_API_KEY'),
+                    'API-SECRET' => env('ECOURIER_API_SECRET'),
+                    'USER-ID' => env('ECOURIER_USER_ID')
+                ];
+                $handle = curl_init();
+                curl_setopt($handle, CURLOPT_URL, $api_url);
+                curl_setopt($handle, CURLOPT_TIMEOUT, 30);
+                curl_setopt($handle, CURLOPT_HTTPHEADER, $headers);
+                curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, 30);
+                curl_setopt($handle, CURLOPT_POST, 1 );
+                curl_setopt($handle, CURLOPT_POSTFIELDS,$courierData);
+                curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, FALSE); # KEEP IT FALSE IF YOU RUN FROM LOCAL PC
+
+            $content = curl_exec($handle);
+            $code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+
+            if($code == 200 && !( curl_errno($handle))) {
+                curl_close($handle);
+                $corier_order = json_decode($content, true );
+                DB::table('orders')->where('id', $corier_order->id)->update([
+                    'tracking_id' => $corier_order->ID,
+                    'updated_at'    => date("Y-m-d H:i:s")
+                ]);
+                DB::table('deliveries')->where('order_id', $order->id)->update([
+                    'tracking_id' => $corier_order->ID
+                ]);
+            } else {
+                curl_close( $handle);
+                echo "FAILED TO CONNECT WITH SSLCOMMERZ API";
+                exit;
+            }
+
+            // $courier->setParams($courierData);
+            // $resp = $courier->placeOrder();
+            // $result = json_decode(json_encode($resp),true);
+            // $datas = json_decode($result['response']);
+            // if ($datas !== null && isset($datas->ID)) {
+
+            //         if($result['statusCode'] == 200){
+            //             DB::table('orders')->where('id', $order->id)->update([
+            //                 'tracking_id' => $datas->ID,
+            //                 'updated_at'    => date("Y-m-d H:i:s")
+            //             ]);
+            //             DB::table('deliveries')->where('order_id', $order->id)->update([
+            //                 'tracking_id' => $datas->ID
+            //             ]);
+            //         }
+            // }
             return false;
         } catch (\Throwable $th) {
             return false;
