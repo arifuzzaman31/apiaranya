@@ -20364,7 +20364,7 @@ var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "rounded-circle",
     style: {
-      "padding": "1rem 0.90rem !important",
+      "padding": "1rem 0.9rem !important",
       "background-color": "rgb(60 86 118 / 39%)"
     }
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i\r\n                                    class=\"icons icon icon-sm rounded-circle\"\r\n                                    style=\"\r\n                                        background-color: rgb(60 86 118);\r\n                                        color: #fff;\r\n                                        padding: 4px;\r\n                                    \"\r\n                                >\r\n                                  <svg\r\n                                        xmlns=\"http://www.w3.org/2000/svg\"\r\n                                        width=\"20\"\r\n                                        height=\"20\"\r\n                                        fill=\"none\"\r\n                                        viewBox=\"0 0 24 24\"\r\n                                        stroke-width=\"1.5\"\r\n                                        stroke=\"currentColor\"\r\n                                        class=\"w-6 h-6\"\r\n                                    >\r\n                                        <path\r\n                                            stroke-linecap=\"round\"\r\n                                            stroke-linejoin=\"round\"\r\n                                            d=\"M21 7.5V18M15 7.5V18M3 16.811V8.69c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061A1.125 1.125 0 0 1 3 16.811Z\"\r\n                                        />\r\n                                    </svg>\r\n                                       </i>"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
@@ -20391,7 +20391,7 @@ var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
 });
 var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-    "class": "text-sm"
+    "class": "text-sm countitem"
   }, " Count Total Order ", -1 /* HOISTED */);
 });
 var _hoisted_11 = {
@@ -21776,7 +21776,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.gdar[data-v-040e2ab9] {\r\n    background: linear-gradient(\r\n        linear-gradient(140deg, #6e85b1 0 34%, #d9dce0 -40% 51%)\r\n    ) !important;\n}\n.new-member-list img.avatar[data-v-040e2ab9] {\r\n    width: 40px;\r\n    height: 40px;\r\n    margin-right: 10px;\r\n    border-radius: 50%;\n}\n.verti-timeline[data-v-040e2ab9] {\r\n    border-left: 2px dashed #e1e1e1;\r\n    margin: 0 10px;\n}\n.verti-timeline .event-list[data-v-040e2ab9] {\r\n    position: relative;\r\n    padding: 0 0 18px 30px;\r\n    display: flex;\r\n    align-items: center;\n}\n.verti-timeline .event-list .event-timeline-dot[data-v-040e2ab9] {\r\n    position: absolute;\r\n    left: -9px;\r\n    top: 0;\r\n    z-index: 9;\r\n    font-size: 16px;\r\n    color: #6c757d;\n}\n.me-3[data-v-040e2ab9] {\r\n    margin-right: 1rem !important;\n}\n.media h6 span[data-v-040e2ab9] {\r\n    display: inline-block;\r\n    min-width: 50px;\n}\n.h6[data-v-040e2ab9]{\r\nfont-family:Quicksand;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.gdar[data-v-040e2ab9] {\r\n    background: linear-gradient(\r\n        linear-gradient(140deg, #6e85b1 0 34%, #d9dce0 -40% 51%)\r\n    ) !important;\n}\n.new-member-list img.avatar[data-v-040e2ab9] {\r\n    width: 40px;\r\n    height: 40px;\r\n    margin-right: 10px;\r\n    border-radius: 50%;\n}\n.verti-timeline[data-v-040e2ab9] {\r\n    border-left: 2px dashed #e1e1e1;\r\n    margin: 0 10px;\n}\n.verti-timeline .event-list[data-v-040e2ab9] {\r\n    position: relative;\r\n    padding: 0 0 18px 30px;\r\n    display: flex;\r\n    align-items: center;\n}\n.verti-timeline .event-list .event-timeline-dot[data-v-040e2ab9] {\r\n    position: absolute;\r\n    left: -9px;\r\n    top: 0;\r\n    z-index: 9;\r\n    font-size: 16px;\r\n    color: #6c757d;\n}\n.me-3[data-v-040e2ab9] {\r\n    margin-right: 1rem !important;\n}\n.media h6 span[data-v-040e2ab9] {\r\n    display: inline-block;\r\n    min-width: 50px;\n}\n.card-title[data-v-040e2ab9] {\r\n    size: 14px !important;\r\n    line-height: 21px !important;\n}\n.text-sm[data-v-040e2ab9] {\r\n    font-family: \"Lato\", sans-serif;\r\n    font-weight: 400;\r\n    size: 12px !important;\r\n    line-height: 18px;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

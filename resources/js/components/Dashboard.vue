@@ -16,7 +16,7 @@
                             <span
                                 class="rounded-circle"
                                 style="
-                                    padding: 1rem 0.90rem !important;
+                                    padding: 1rem 0.9rem !important;
                                     background-color: rgb(60 86 118 / 39%);
                                 "
                             >
@@ -70,7 +70,9 @@
                                 Number(order_info.delivered)
                             }}</span>
                             <br />
-                            <span class="text-sm"> Count Total Order </span>
+                            <span class="text-sm countitem">
+                                Count Total Order
+                            </span>
                         </div>
 
                         <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
@@ -185,7 +187,7 @@
                             </span>
                         </div>
                         <div class="icons-content">
-                            <h6 class="mb-1 card-title text-bold" >
+                            <h6 class="mb-1 card-title text-bold">
                                 Processing
                             </h6>
                             <span>{{ order_info.processing }}</span> <br />
@@ -993,7 +995,14 @@ export default {
     display: inline-block;
     min-width: 50px;
 }
-.h6{
-font-family:Quicksand;
+.card-title {
+    size: 14px !important;
+    line-height: 21px !important;
+}
+.text-sm {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    size: 12px !important;
+    line-height: 18px;
 }
 </style>

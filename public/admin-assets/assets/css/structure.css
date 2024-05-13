@@ -22,6 +22,7 @@ body {
     letter-spacing: 0.0312rem;
     /* font-family: 'Quicksand', sans-serif; } */
     font-family: "Lato", sans-serif;
+    font-weight: 500;
 }
 
 h1,
@@ -33,6 +34,7 @@ h6 {
     color: #3b3f5c;
     font-family: "spartan", sans-serif;
     font-weight: 600;
+  
 }
 
 :focus {
@@ -1436,7 +1438,7 @@ code {
     ul.menu-categories
     li.menu:not(.active)
     > .dropdown-toggle[aria-expanded="true"] {
-    background: #b3bdca;
+    background: #445d7cc2;
 }
 #sidebar
     ul.menu-categories
@@ -1508,7 +1510,7 @@ code {
 }
 
 #sidebar ul.menu-categories li.menu.active > .dropdown-toggle {
-    background: #b3bdca;
+    background: #e9ecef;
 }
 #sidebar
     ul.menu-categories
@@ -1530,8 +1532,8 @@ code {
     li.menu.active
     > .dropdown-toggle[aria-expanded="false"]
     span {
-    color: #fff;
-    font-weight: 600;
+    color:rgb(41, 47, 70);
+    font-weight: 500;
 }
 
 #sidebar ul.menu-categories ul.submenu > li a:hover {
