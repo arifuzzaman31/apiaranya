@@ -1,5 +1,15 @@
 <template>
     <div class="layout-px-spacing" v-if="loaded">
+        <div class="dashboard-title">
+            <a href="javascript:void(0);" id="tb_1" class="tabmenu"
+                >Dashboard</a
+            >
+        </div>
+        <div class="dashboard-sub-title">
+            <a href="javascript:void(0);" id="tb_1" class="tabmenu"
+                >Whole data about your business here</a
+            >
+        </div>
         <div class="row mt-3" style="display: flex; row-gap: 20px">
             <div class="col-md-3 rounded">
                 <div class="card" style="border-radius: 8px">
@@ -96,10 +106,34 @@
                                 class="rounded-circle"
                                 style="
                                     padding: 1rem 0.69rem !important;
-                                    background-color: rgb(60 86 118 / 39%);
+                                    background-color: #ccf0d1;
                                 "
                             >
-                                <i
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <g clip-path="url(#clip0_29_2)">
+                                        <path
+                                            d="M20 8H17V4H3C1.9 4 1 4.9 1 6V17H3C3 18.66 4.34 20 6 20C7.66 20 9 18.66 9 17H15C15 18.66 16.34 20 18 20C19.66 20 21 18.66 21 17H23V12L20 8ZM6 18.5C5.17 18.5 4.5 17.83 4.5 17C4.5 16.17 5.17 15.5 6 15.5C6.83 15.5 7.5 16.17 7.5 17C7.5 17.83 6.83 18.5 6 18.5ZM19.5 9.5L21.46 12H17V9.5H19.5ZM18 18.5C17.17 18.5 16.5 17.83 16.5 17C16.5 16.17 17.17 15.5 18 15.5C18.83 15.5 19.5 16.17 19.5 17C19.5 17.83 18.83 18.5 18 18.5Z"
+                                            fill="#00B517"
+                                        />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_29_2">
+                                            <rect
+                                                width="24"
+                                                height="24"
+                                                fill="white"
+                                            />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+
+                                <!--  <i
                                     class="icons icon icon-sm rounded-circle"
                                     style="
                                         background-color: rgb(60 86 118);
@@ -107,7 +141,8 @@
                                         padding: 4px;
                                     "
                                 >
-                                    <svg
+                                
+                                   <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="20"
                                         height="20"
@@ -122,8 +157,8 @@
                                             stroke-linejoin="round"
                                             d="M8 12a4 4 0 1 1 1.354 3M8 12l2.5-1M8 12l-1.5-2M21 12a9 9 0 1 1-18 0a9 9 0 0 1 18 0"
                                         />
-                                    </svg>
-                                </i>
+                                    </svg> 
+                                </i>-->
                             </span>
                         </div>
                         <div class="icons-content">
@@ -156,34 +191,72 @@
                                 class="rounded-circle"
                                 style="
                                     padding: 1rem 0.69rem !important;
-                                    background-color: rgb(60 86 118 / 39%);
+                                    background-color: #ffe8d0;
                                 "
                             >
-                                <i
-                                    class="icons icon icon-sm rounded-circle"
-                                    style="
-                                        background-color: rgb(60 86 118);
-                                        color: #fff;
-                                        padding: 4px;
-                                    "
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
                                 >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="20"
-                                        height="20"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="currentColor"
-                                        class="w-6 h-6"
-                                    >
+                                    <g clip-path="url(#clip0_31_5)">
                                         <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M4 8h16v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm4-4h8l4 4H4zm0 8h4"
+                                            d="M3 11H11V3H3V11ZM5 5H9V9H5V5Z"
+                                            fill="#FD8A14"
                                         />
-                                    </svg>
-                                </i>
+                                        <path
+                                            d="M3 21H11V13H3V21ZM5 15H9V19H5V15Z"
+                                            fill="#FD8A14"
+                                        />
+                                        <path
+                                            d="M13 3V11H21V3H13ZM19 9H15V5H19V9Z"
+                                            fill="#FD8A14"
+                                        />
+                                        <path
+                                            d="M21 19H19V21H21V19Z"
+                                            fill="#FD8A14"
+                                        />
+                                        <path
+                                            d="M15 13H13V15H15V13Z"
+                                            fill="#FD8A14"
+                                        />
+                                        <path
+                                            d="M17 15H15V17H17V15Z"
+                                            fill="#FD8A14"
+                                        />
+                                        <path
+                                            d="M15 17H13V19H15V17Z"
+                                            fill="#FD8A14"
+                                        />
+                                        <path
+                                            d="M17 19H15V21H17V19Z"
+                                            fill="#FD8A14"
+                                        />
+                                        <path
+                                            d="M19 17H17V19H19V17Z"
+                                            fill="#FD8A14"
+                                        />
+                                        <path
+                                            d="M19 13H17V15H19V13Z"
+                                            fill="#FD8A14"
+                                        />
+                                        <path
+                                            d="M21 15H19V17H21V15Z"
+                                            fill="#FD8A14"
+                                        />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_31_5">
+                                            <rect
+                                                width="24"
+                                                height="24"
+                                                fill="white"
+                                            />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
                             </span>
                         </div>
                         <div class="icons-content">
@@ -216,34 +289,21 @@
                                 class="rounded-circle"
                                 style="
                                     padding: 1rem 0.69rem !important;
-                                    background-color: rgb(60 86 118 / 39%);
+                                    background-color: #cff4e8;
                                 "
                             >
-                                <i
-                                    class="icons icon icon-sm rounded-circle"
-                                    style="
-                                        background-color: rgb(60 86 118);
-                                        color: #fff;
-                                        padding: 4px;
-                                    "
+                                <svg
+                                    width="22"
+                                    height="19"
+                                    viewBox="0 0 22 19"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
                                 >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="20"
-                                        height="20"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="currentColor"
-                                        class="w-6 h-6"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M8 8H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-2M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M8 8h8m-4 4v2m0 0v2m0-2h-2m2 0h2"
-                                        />
-                                    </svg>
-                                </i>
+                                    <path
+                                        d="M16.21 7.00002L11.83 0.44002C11.64 0.16002 11.32 0.0200195 11 0.0200195C10.68 0.0200195 10.36 0.16002 10.17 0.45002L5.79 7.00002H1C0.45 7.00002 0 7.45002 0 8.00002C0 8.09002 0.00999996 8.18002 0.04 8.27002L2.58 17.54C2.81 18.38 3.58 19 4.5 19H17.5C18.42 19 19.19 18.38 19.43 17.54L21.97 8.27002L22 8.00002C22 7.45002 21.55 7.00002 21 7.00002H16.21ZM8 7.00002L11 2.60002L14 7.00002H8ZM11 15C9.9 15 9 14.1 9 13C9 11.9 9.9 11 11 11C12.1 11 13 11.9 13 13C13 14.1 12.1 15 11 15Z"
+                                        fill="#0DCAF0"
+                                    />
+                                </svg>
                             </span>
                         </div>
                         <div class="icons-content">
@@ -265,8 +325,8 @@
             <div
                 class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing"
             >
-                <div class="widget widget-chart-one">
-                    <div class="widget-heading">
+                <div class="widget widget-chart-one-dashboard">
+                    <div class="widget-heading-dashboard">
                         <ul class="tabs tab-pills">
                             <li>
                                 <a
@@ -295,9 +355,18 @@
             <div
                 class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing"
             >
-                <div class="widget widget-chart-two">
-                    <div class="widget-heading">
-                        <h5 class="">Sales by Category</h5>
+                <div class="widget widget-chart-one-dashboard">
+                    <div class="widget-heading-dashboard">
+                        <ul class="tabs tab-pills">
+                            <li>
+                                <a
+                                    href="javascript:void(0);"
+                                    id="tb_2"
+                                    class="tabmenu"
+                                    >Sales by Category</a
+                                >
+                            </li>
+                        </ul>
                     </div>
                     <div class="widget-content">
                         <top-product :doughtData="doughtData" />
@@ -308,8 +377,8 @@
             <div
                 class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing"
             >
-                <div class="widget widget-chart-one">
-                    <div class="widget-heading">
+                <div class="widget widget-chart-one-dashboard">
+                    <div class="widget-heading-dashboard">
                         <ul class="tabs tab-pills">
                             <li>
                                 <a
@@ -335,8 +404,8 @@
             <div
                 class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing"
             >
-                <div class="widget widget-chart-one">
-                    <div class="widget-heading">
+                <div class="widget widget-chart-one-dashboard">
+                    <div class="widget-heading-dashboard">
                         <ul class="tabs tab-pills">
                             <li>
                                 <a
@@ -365,8 +434,8 @@
             <div
                 class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing"
             >
-                <div class="widget widget-chart-one">
-                    <div class="widget-heading">
+                <div class="widget widget-chart-one-dashboard">
+                    <div class="widget-heading-dashboard">
                         <ul class="tabs tab-pills">
                             <li>
                                 <a
@@ -449,8 +518,8 @@
             <div
                 class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing"
             >
-                <div class="widget widget-chart-one">
-                    <div class="widget-heading">
+                <div class="widget widget-chart-one-dashboard">
+                    <div class="widget-heading-dashboard">
                         <ul class="tabs tab-pills">
                             <li>
                                 <a
@@ -676,10 +745,44 @@
     </div>
 
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
-        <div class="widget widget-table-two">
-            <div class="widget-heading">
-                <h5 class="">Recent Orders</h5>
+        <div class="widget widget-chart-one-dashboard">
+            <div class="widget-heading-dashboard">
+                <ul class="tabs tab-pills">
+                    <li>
+                        <a href="javascript:void(0);" id="tb_1" class="tabmenu"
+                            >Recent Orders</a
+                        >
+                    </li>
+                </ul>
             </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <select class="w-100" name="pets" id="pet-select">
+                        <option value="">All Categories</option>
+                        <option value="women">Women's Clothing</option>
+                        <option value="men">Men's Clothing</option>
+                    </select>
+                </div>
+                <div class="col-md-9">
+                    <div class="row justify-content-end">
+                        <div class="col-md-4">
+                            <select class="w-100" name="pets" id="pet-select">
+                                <option value="">All Categories</option>
+                                <option value="women">Women's Clothing</option>
+                                <option value="men">Men's Clothing</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="w-100" name="pets" id="pet-select">
+                                <option value="">All Categories</option>
+                                <option value="women">Women's Clothing</option>
+                                <option value="men">Men's Clothing</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr />
 
             <div class="widget-content">
                 <div class="table-responsive">
@@ -688,11 +791,21 @@
                             <tr>
                                 <th><div class="th-content">OrderID</div></th>
                                 <th><div class="th-content">Customer</div></th>
+                                <th><div class="th-content">Date</div></th>
                                 <th><div class="th-content">Price</div></th>
                                 <th>
                                     <div class="th-content">Payment Type</div>
                                 </th>
-                                <th><div class="th-content">Payment</div></th>
+                                <th>
+                                    <div class="th-content text-left">
+                                        Payment Status
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th-content text-left">
+                                        View Details
+                                    </div>
+                                </th>
                             </tr>
                         </thead>
                         <tbody v-if="orders && orders.length > 0">
@@ -705,8 +818,10 @@
                                         }}
                                         {{ order.user_shipping_info.last_name }}
                                     </td>
+                                    <td>14.5.2024</td>
+
                                     <td>{{ order.total_price }}</td>
-                                    <td class="text-center">
+                                    <td class="text-left">
                                         <span
                                             v-if="order.payment_status == 0"
                                             class="badge rounded-pill alert-primary"
@@ -716,7 +831,7 @@
                                             >Others</span
                                         >
                                     </td>
-                                    <td>
+                                    <td cclass="text-left">
                                         <span
                                             v-if="order.payment_status == 0"
                                             class="badge rounded-pill alert-warning"
@@ -736,6 +851,11 @@
                                             v-if="order.payment_status == 3"
                                             class="badge rounded-pill alert-danger"
                                             >Cancel</span
+                                        >
+                                    </td>
+                                    <td class="text-left">
+                                        <a href="#" class="btn btn-xs"
+                                            >View details</a
                                         >
                                     </td>
                                 </tr>
@@ -1004,5 +1124,8 @@ export default {
     font-weight: 400;
     size: 12px !important;
     line-height: 18px;
+}
+.table td {
+    border-top: none;
 }
 </style>

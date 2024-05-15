@@ -264,12 +264,12 @@
     padding: 0 0;
 }
 .widget-chart-one .widget-heading .tabs a {
-    font-size: 14px;
+    font-size: 15px;
     letter-spacing: 1px;
     font-weight: 600;
     padding: 5px 7px;
-    background: #3c5676;
-    color: #ffffff;
+    /* background: #3c5676; */
+    color: rgb(56, 62, 80);
     border-radius: 4px;
 }
 
