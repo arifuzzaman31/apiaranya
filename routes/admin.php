@@ -34,6 +34,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\PickuphubController;
 use App\Http\Controllers\StoryController;
 use App\Http\Controllers\CommunityController;
+use App\Http\Controllers\BlogController;
 
 Route::redirect('/', 'admin/dashboard');
 Route::get('/me', [AdminLoginController::class, 'getUser']);
@@ -213,5 +214,12 @@ Route::get('community-product/{id}',[CommunityController::class,'editCommunityPa
 Route::view('story-blog','pages.story.blog')->name('story.blog');
 Route::view('story-sustainability','pages.story.sustainability')->name('story.sustainability');
 Route::view('story-color-story','pages.story.color_story')->name('story.color-story');
+
+Route::get('get-blog-data',[BlogController::class,'getBlogs']);
+Route::view('create-blog','pages.story.create_blog')->name('create-blog');
+Route::post('create-blog',[BlogController::class,'store']);
+Route::get('blog/{id}/edit',[BlogController::class,'edit']);
+Route::put('update-blog',[BlogController::class,'update']);
+Route::delete('blog/{id}',[BlogController::class,'destroy']);
 
 ?>
