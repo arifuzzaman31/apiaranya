@@ -10,7 +10,7 @@ export default {
 
     data() {
         return {
-            page_sections: [],
+            blogData: [],
             sect_id: "",
             form: {
                 section_name: "",
@@ -23,12 +23,12 @@ export default {
         };
     },
     methods: {
-        getPageData(page = 1) {
+        getBlogData(page = 1) {
             try {
                 axios
-                    .get(baseUrl + `get-page-section?page=${page}`)
+                    .get(baseUrl + `get-blog-data?page=${page}`)
                     .then((response) => {
-                        this.page_sections = response.data;
+                        this.blogData = response.data;
                     })
                     .catch((error) => {
                         console.log(error);
@@ -38,14 +38,7 @@ export default {
             }
         },
 
-        editSect(camp) {
-            this.sect_id = camp.id;
-            this.form.section_name = camp.section_name;
-            this.form.status = camp.status == 1 ? true : false;
-            $("#updateSectionModal").modal("show");
-        },
-
-        deletePageSection(id) {
+        deleteBlog(id) {
             Swal.fire({
                 title: "Are you sure?",
                 text: "You won't be able to revert this!",
@@ -57,48 +50,17 @@ export default {
             }).then((result) => {
                 if (result.isConfirmed) {
                     axios
-                        .delete(baseUrl + `page-section/${id}`)
+                        .delete(baseUrl + `blog/${id}`)
                         .then((response) => {
                             this.successMessage(response.data);
-                            this.getPageData();
-                            //   console.log(response.data)
+                            this.getBlogData();
                         })
                         .catch((error) => {
                             console.log(error);
                         });
                 }
             });
-        },
-
-        updateSection() {
-            try {
-                axios
-                    .patch("page-section/" + this.sect_id, this.form)
-                    .then((response) => {
-                        $("#updateSectionModal").modal("hide");
-                        this.successMessage(response.data);
-                        this.formReset();
-                        this.getPageData();
-                    })
-                    .catch((e) => {
-                        if (e.response.status == 422) {
-                            this.validation_error = e.response.data.errors;
-                            this.validationError();
-                        }
-                    });
-            } catch (e) {
-                if (e.response.status == 422) {
-                }
-            }
-        },
-        formReset() {
-            this.sect_id = "";
-            this.form = {
-                section_name: "",
-                status: false,
-            };
-            this.validation_error = {};
-        },
+        }
     },
     computed: {
         showPermission() {
@@ -106,13 +68,18 @@ export default {
         },
     },
     mounted() {
-        this.getPageData();
+        this.getBlogData();
     },
 };
 </script>
 
 <template>
     <div class="row">
+
+        <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
+            <h4 class="pt-2">Blog</h4>
+            <a :href="url+'create-blog'" class="btn btn-info-a mb-2 mr-3">Add New</a>
+        </div>
         <div id="tableHover" class="col-lg-12 col-12 layout-spacing">
             <div class="statbox widget box box-shadow">
                 <div class="widget-content widget-content-area">
@@ -121,11 +88,8 @@ export default {
                             <thead>
                                 <tr>
                                     <th>SL</th>
-                                    <th>Section Name</th>
                                     <th>Title</th>
-                                    <th>Pattern</th>
-                                    <th>Use For</th>
-                                    <th>Precedense</th>
+                                    <th>short description</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -133,27 +97,24 @@ export default {
                             <tbody>
                                 <template
                                     v-for="(
-                                        section, index
-                                    ) in page_sections.data"
-                                    :key="section.id"
+                                        blog, index
+                                    ) in blogData.data"
+                                    :key="blog.id"
                                 >
                                     <tr>
                                         <td>{{ index + 1 }}</td>
-                                        <td>{{ section.section_name }}</td>
-                                        <td>{{ section.section_title }}</td>
-                                        <td>{{ section.pattern }}</td>
-                                        <td>{{ section.use_for }}</td>
-                                        <td>{{ section.precedence }}</td>
+                                        <td style="width: 20%;">{{ blog.title }}</td>
+                                        <td style="width: 45%;">{{ blog.short_description }}</td>
                                         <td class="text-center">
                                             <span
                                                 class="badge rounded-pill"
                                                 :class="
-                                                    section.status == 1
+                                                    blog.status == 1
                                                         ? 'alert-primary'
                                                         : 'alert-danger'
                                                 "
                                                 >{{
-                                                    section.status
+                                                    blog.status
                                                         ? "Active"
                                                         : "Deactive"
                                                 }}</span
@@ -165,38 +126,17 @@ export default {
                                                         type="button"
                                                         :href="
                                                             url +
-                                                            'section-page/' +
-                                                            section.id + '/edit'
+                                                            'blog/' +
+                                                            blog.id + '/edit'
                                                         "
                                                         class="btn btn-sm btn-warning mx-2"
                                                         >Edit</a>
-                                                    <a
-                                                        type="button"
-                                                        :href="
-                                                            url +
-                                                            'section-product/' +
-                                                            section.id
-                                                        "
-                                                        class="btn btn-sm btn-view mx-2"
-                                                        >View</a
-                                                    >
-
-                                                    <button
-                                                        type="button"
-                                                        class="btn btn-sm btn-delete"
-                                                        @click="
-                                                            editSect(section)
-                                                        "
-                                                    >
-                                                        Status
-                                                    </button>
-
                                                     <button
                                                         type="button"
                                                         class="btn btn-sm btn-delete ml-2"
                                                         @click="
-                                                            deletePageSection(
-                                                                section.id
+                                                            deleteBlog(
+                                                                blog.id
                                                             )
                                                         "
                                                     >
@@ -209,10 +149,10 @@ export default {
                             </tbody>
                         </table>
                         <Bootstrap4Pagination
-                            :data="page_sections"
+                            :data="blogData"
                             :limit="limit"
                             :keep-length="keepLength"
-                            @pagination-change-page="getPageData"
+                            @pagination-change-page="getBlogData"
                         />
                     </div>
                 </div>

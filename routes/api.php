@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\FrontController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\EcorierController;
+use App\Http\Controllers\Api\MailchimpController;
 use App\Http\Controllers\CommunityController;
 
 /*
@@ -78,3 +79,4 @@ Route::get('e-courier-package',[EcorierController::class, 'getEcoPackage']);
 Route::get('get-community-info/{id?}',[CommunityController::class, 'getCommunityData']);
 Route::get('get-community-data',[CommunityController::class, 'getCommunity']);
 Route::get('get-community-product/{id}',[CommunityController::class, 'getProductByCommunity']);
+Route::post('subscribes',[MailchimpController::class, 'subscribe']);
