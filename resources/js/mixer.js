@@ -43,7 +43,6 @@ export default {
             });
         },
         dateToString(datePassed) {
-
             const newYears = new Date(datePassed);
             const formattedDate = newYears.toDateString().slice(3);
             const valuedate = formattedDate.split(' ');
@@ -60,9 +59,6 @@ export default {
         strippedContent: function (string) {
             return string.replace(/<\/?[^>]+>/ig, " ");
         },
-
-
-
         monthToString(month) {
 
             // pass  2020

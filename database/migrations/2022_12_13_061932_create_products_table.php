@@ -27,14 +27,14 @@ class CreateProductsTable extends Migration
             $table->string('image_three')->nullable();
             $table->string('image_four')->nullable();
             $table->string('image_five')->nullable();
-            $table->string('length')->nullable();
-            $table->string('height')->nullable();
-            $table->string('width')->nullable();
+            $table->string('length')->default(0);
+            $table->string('height')->default(0);
+            $table->string('width')->default(0);
             $table->string('unit')->nullable();
             $table->string('fragile')->nullable();
             $table->double('fragile_charge',8,4)->default(0);
             $table->string('country_of_origin')->nullable();
-            $table->string('weight')->nullable();
+            $table->string('weight')->default(0);
             $table->string('design_code')->nullable();
             $table->string('flat_colour')->nullable();
             $table->longText('description')->nullable();

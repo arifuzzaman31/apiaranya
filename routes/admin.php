@@ -35,6 +35,8 @@ use App\Http\Controllers\PickuphubController;
 use App\Http\Controllers\StoryController;
 use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\ColorStoryController;
+use App\Http\Controllers\SustainabilityController;
 
 Route::redirect('/', 'admin/dashboard');
 Route::get('/me', [AdminLoginController::class, 'getUser']);
@@ -212,8 +214,11 @@ Route::put('update-community-data',[CommunityController::class,'updateCommunity'
 Route::get('community-product/{id}',[CommunityController::class,'editCommunityPage']);
 
 Route::view('story-blog','pages.story.blog')->name('story.blog');
-Route::view('story-sustainability','pages.story.sustainability')->name('story.sustainability');
 Route::view('story-color-story','pages.story.color_story')->name('story.color-story');
+Route::get('get-color-story-data',[ColorStoryController::class,'getColorStories']);
+Route::get('create-color-story',[ColorStoryController::class,'getColorStoryPage']);
+Route::post('color-story',[ColorStoryController::class,'store']);
+Route::get('color-story/{id}/edit',[ColorStoryController::class,'edit']);
 
 Route::get('get-blog-data',[BlogController::class,'getBlogs']);
 Route::view('create-blog','pages.story.create_blog')->name('create-blog');
@@ -222,4 +227,11 @@ Route::get('blog/{id}/edit',[BlogController::class,'edit']);
 Route::put('update-blog',[BlogController::class,'update']);
 Route::delete('blog/{id}',[BlogController::class,'destroy']);
 
+Route::view('story-sustainability','pages.story.sustainability')->name('story.sustainability');
+Route::get('get-sustainability-data',[SustainabilityController::class,'getSustainData']);
+Route::view('create-sustainability','pages.story.create_sustainability')->name('create-sustainability');
+Route::post('create-sustainability',[SustainabilityController::class,'store']);
+Route::get('sustainability/{id}/edit',[SustainabilityController::class,'edit']);
+Route::put('update-sustainability',[SustainabilityController::class,'update']);
+Route::delete('sustainability/{id}',[SustainabilityController::class,'destroy']);
 ?>

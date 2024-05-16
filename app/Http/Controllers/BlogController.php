@@ -21,7 +21,7 @@ class BlogController extends Controller
         try {
             $blog = new Blog();
             $blog->title = $request->title;
-            $blog->slug = \Str::slug($request->brand_name);
+            $blog->slug = \Str::slug($request->title);
             $blog->banner_image = $request->banner_image;
             $blog->short_description = $request->short_description;
             $blog->description = $request->description;
@@ -44,7 +44,7 @@ class BlogController extends Controller
         try {
             $blog = Blog::find($request->id);
             $blog->title = $request->title;
-            $blog->slug = \Str::slug($request->brand_name);
+            $blog->slug = \Str::slug($request->title);
             $blog->banner_image = $request->banner_image;
             $blog->short_description = $request->short_description;
             $blog->description = $request->description;

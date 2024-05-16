@@ -10,7 +10,7 @@ export default {
 
     data() {
         return {
-            blogData: [],
+            sustainabilityData: [],
             url: baseUrl,
             limit: 3,
             keepLength: false,
@@ -18,12 +18,12 @@ export default {
         };
     },
     methods: {
-        getBlogData(page = 1) {
+        getSustainData(page = 1) {
             try {
                 axios
-                    .get(baseUrl + `get-blog-data?page=${page}`)
+                    .get(baseUrl + `get-sustainability-data?page=${page}`)
                     .then((response) => {
-                        this.blogData = response.data;
+                        this.sustainabilityData = response.data;
                     })
                     .catch((error) => {
                         console.log(error);
@@ -33,7 +33,7 @@ export default {
             }
         },
 
-        deleteBlog(id) {
+        deleteSustain(id) {
             Swal.fire({
                 title: "Are you sure?",
                 text: "You won't be able to revert this!",
@@ -45,10 +45,10 @@ export default {
             }).then((result) => {
                 if (result.isConfirmed) {
                     axios
-                        .delete(baseUrl + `blog/${id}`)
+                        .delete(baseUrl + `sustainability/${id}`)
                         .then((response) => {
                             this.successMessage(response.data);
-                            this.getBlogData();
+                            this.getSustainData();
                         })
                         .catch((error) => {
                             console.log(error);
@@ -63,7 +63,7 @@ export default {
         },
     },
     mounted() {
-        this.getBlogData();
+        this.getSustainData();
     },
 };
 </script>
@@ -72,8 +72,8 @@ export default {
     <div class="row">
 
         <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
-            <h4 class="pt-2">Blog</h4>
-            <a :href="url+'create-blog'" class="btn btn-info-a mb-2 mr-3">Add New</a>
+            <h4 class="pt-2">Sustainability</h4>
+            <a :href="url+'create-sustainability'" class="btn btn-info-a mb-2 mr-3">Add New</a>
         </div>
         <div id="tableHover" class="col-lg-12 col-12 layout-spacing">
             <div class="statbox widget box box-shadow">
@@ -84,7 +84,7 @@ export default {
                                 <tr>
                                     <th>SL</th>
                                     <th>Title</th>
-                                    <th>short description</th>
+                                    <th>description</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -92,24 +92,24 @@ export default {
                             <tbody>
                                 <template
                                     v-for="(
-                                        blog, index
-                                    ) in blogData.data"
-                                    :key="blog.id"
+                                        sustaina, index
+                                    ) in sustainabilityData.data"
+                                    :key="sustaina.id"
                                 >
                                     <tr>
                                         <td>{{ index + 1 }}</td>
-                                        <td style="width: 20%;">{{ blog.title }}</td>
-                                        <td style="width: 45%;">{{ blog.short_description }}</td>
+                                        <td style="width: 20%;">{{ sustaina.title }}</td>
+                                        <td style="width: 45%;">{{ strippedContent(sustaina.description) }}</td>
                                         <td class="text-center">
                                             <span
                                                 class="badge rounded-pill"
                                                 :class="
-                                                    blog.status == 1
+                                                    sustaina.status == 1
                                                         ? 'alert-primary'
                                                         : 'alert-danger'
                                                 "
                                                 >{{
-                                                    blog.status
+                                                    sustaina.status
                                                         ? "Active"
                                                         : "Deactive"
                                                 }}</span
@@ -120,8 +120,8 @@ export default {
                                                         type="button"
                                                         :href="
                                                             url +
-                                                            'blog/' +
-                                                            blog.id + '/edit'
+                                                            'sustainability/' +
+                                                            sustaina.id + '/edit'
                                                         "
                                                         class="btn btn-sm btn-warning mx-2"
                                                         >Edit</a>
@@ -129,8 +129,8 @@ export default {
                                                         type="button"
                                                         class="btn btn-sm btn-delete ml-2"
                                                         @click="
-                                                            deleteBlog(
-                                                                blog.id
+                                                            deleteSustain(
+                                                                sustaina.id
                                                             )
                                                         "
                                                     >
@@ -143,10 +143,10 @@ export default {
                             </tbody>
                         </table>
                         <Bootstrap4Pagination
-                            :data="blogData"
+                            :data="sustainabilityData"
                             :limit="limit"
                             :keep-length="keepLength"
-                            @pagination-change-page="getBlogData"
+                            @pagination-change-page="getSustainData"
                         />
                     </div>
                 </div>
@@ -177,4 +177,3 @@ border-color: #3c5676;
 }
 
 </style>
-

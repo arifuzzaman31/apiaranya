@@ -4,7 +4,7 @@
 <div id="tableHover" class="layout-spacing" style="padding: 15px 0;">
     <div class="statbox">
         <div class="widget-header">
-            <h3>Under Development</h3>
+            <view-sustainability />
         </div>
     </div>
 </div>
