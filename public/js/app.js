@@ -20402,7 +20402,7 @@ var _hoisted_9 = {
 var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", {
     "class": "mb-1 card-title text-bold"
-  }, " Total Order ", -1 /* HOISTED */);
+  }, " Revenue ", -1 /* HOISTED */);
 });
 var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1 /* HOISTED */);
@@ -20410,7 +20410,7 @@ var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_12 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "text-sm countitem"
-  }, " Count Total Order ", -1 /* HOISTED */);
+  }, " Shipping fees are not included ", -1 /* HOISTED */);
 });
 var _hoisted_13 = {
   "class": "col-md-3 rounded"
@@ -20436,7 +20436,7 @@ var _hoisted_17 = {
 var _hoisted_18 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", {
     "class": "mb-1 card-title text-bold"
-  }, " Pending Order ", -1 /* HOISTED */);
+  }, " Orders ", -1 /* HOISTED */);
 });
 var _hoisted_19 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1 /* HOISTED */);
@@ -20444,7 +20444,7 @@ var _hoisted_19 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_20 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "text-sm"
-  }, " Count Total Pending order ", -1 /* HOISTED */);
+  }, " Excluding orders in transit ", -1 /* HOISTED */);
 });
 var _hoisted_21 = {
   "class": "col-md-3 rounded"
@@ -20470,7 +20470,7 @@ var _hoisted_25 = {
 var _hoisted_26 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", {
     "class": "mb-1 card-title text-bold"
-  }, " Processing ", -1 /* HOISTED */);
+  }, " Products ", -1 /* HOISTED */);
 });
 var _hoisted_27 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1 /* HOISTED */);
@@ -20478,7 +20478,7 @@ var _hoisted_27 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_28 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "text-sm"
-  }, " Count Order Under Processing ", -1 /* HOISTED */);
+  }, " In 19 Categories ", -1 /* HOISTED */);
 });
 var _hoisted_29 = {
   "class": "col-md-3 rounded"
@@ -20521,7 +20521,7 @@ var _hoisted_33 = {
 var _hoisted_34 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", {
     "class": "mb-1 card-title text-bold"
-  }, " Total Delivered ", -1 /* HOISTED */);
+  }, " Monthly Earning ", -1 /* HOISTED */);
 });
 var _hoisted_35 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1 /* HOISTED */);
@@ -20529,7 +20529,7 @@ var _hoisted_35 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_36 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "text-sm"
-  }, " Counting of Total Delivered Order ", -1 /* HOISTED */);
+  }, " Based in your local time. ", -1 /* HOISTED */);
 });
 var _hoisted_37 = {
   "class": "row sales layout-top-spacing"
@@ -20670,7 +20670,7 @@ var _hoisted_67 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_68 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     href: "#",
-    "class": "btn btn-primary"
+    "class": "btn btn-primary-dashboard"
   }, "Add", -1 /* HOISTED */);
 });
 var _hoisted_69 = {
@@ -20688,7 +20688,7 @@ var _hoisted_72 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_73 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     href: "#",
-    "class": "btn btn-primary"
+    "class": "btn btn-primary-dashboard"
   }, "Add", -1 /* HOISTED */);
 });
 var _hoisted_74 = {
@@ -20706,7 +20706,7 @@ var _hoisted_77 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_78 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     href: "#",
-    "class": "btn btn-primary"
+    "class": "btn btn-primary-dashboard"
   }, "Add", -1 /* HOISTED */);
 });
 var _hoisted_79 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing\" data-v-040e2ab9><div class=\"widget widget-chart-one-dashboard\" data-v-040e2ab9><div class=\"widget-heading-dashboard\" data-v-040e2ab9><ul class=\"tabs tab-pills\" data-v-040e2ab9><li data-v-040e2ab9><a href=\"javascript:void(0);\" id=\"tb_1\" class=\"tabmenu\" data-v-040e2ab9>Recent activities</a></li></ul></div><ul class=\"verti-timeline list-unstyled font-sm\" data-v-040e2ab9><li class=\"event-list\" data-v-040e2ab9><div class=\"event-timeline-dot\" data-v-040e2ab9><i class=\"material-icons md-play_circle_outline font-xxl\" data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"20\" viewBox=\"0 -960 960 960\" width=\"20\" data-v-040e2ab9><path d=\"m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></div><div class=\"media\" data-v-040e2ab9><div class=\"me-3\" data-v-040e2ab9><h6 data-v-040e2ab9><span data-v-040e2ab9>Today</span><i data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 -960 960 960\" width=\"24\" data-v-040e2ab9><path d=\"m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></h6></div><div class=\"media-body\" data-v-040e2ab9><div data-v-040e2ab9> Lorem ipsum dolor sit amet consectetur </div></div></div></li><li class=\"event-list active\" data-v-040e2ab9><div class=\"event-timeline-dot\" data-v-040e2ab9><i class=\"material-icons\" data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"20\" viewBox=\"0 -960 960 960\" width=\"20\" data-v-040e2ab9><path d=\"m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></div><div class=\"media\" data-v-040e2ab9><div class=\"me-3\" data-v-040e2ab9><h6 data-v-040e2ab9><span data-v-040e2ab9>17 May</span><i data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 -960 960 960\" width=\"24\" data-v-040e2ab9><path d=\"m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></h6></div><div class=\"media-body\" data-v-040e2ab9><div data-v-040e2ab9> Debitis nesciunt voluptatum dicta reprehenderit </div></div></div></li><li class=\"event-list\" data-v-040e2ab9><div class=\"event-timeline-dot\" data-v-040e2ab9><i class=\"material-icons\" data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"20\" viewBox=\"0 -960 960 960\" width=\"20\" data-v-040e2ab9><path d=\"m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></div><div class=\"media\" data-v-040e2ab9><div class=\"me-3\" data-v-040e2ab9><h6 data-v-040e2ab9><span data-v-040e2ab9>13 May</span><i data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 -960 960 960\" width=\"24\" data-v-040e2ab9><path d=\"m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></h6></div><div class=\"media-body\" data-v-040e2ab9><div data-v-040e2ab9>Accusamus voluptatibus voluptas.</div></div></div></li><li class=\"event-list\" data-v-040e2ab9><div class=\"event-timeline-dot\" data-v-040e2ab9><i class=\"material-icons\" data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"20\" viewBox=\"0 -960 960 960\" width=\"20\" data-v-040e2ab9><path d=\"m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></div><div class=\"media\" data-v-040e2ab9><div class=\"me-3\" data-v-040e2ab9><h6 data-v-040e2ab9><span data-v-040e2ab9>05 April</span><i data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 -960 960 960\" width=\"24\" data-v-040e2ab9><path d=\"m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></h6></div><div class=\"media-body\" data-v-040e2ab9><div data-v-040e2ab9> At vero eos et accusamus et iusto odio dignissi </div></div></div></li><li class=\"event-list\" data-v-040e2ab9><div class=\"event-timeline-dot\" data-v-040e2ab9><i class=\"material-icons\" data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"20\" viewBox=\"0 -960 960 960\" width=\"20\" data-v-040e2ab9><path d=\"m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></div><div class=\"media\" data-v-040e2ab9><div class=\"me-3\" data-v-040e2ab9><h6 data-v-040e2ab9><span data-v-040e2ab9>26 Mar</span><i data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 -960 960 960\" width=\"24\" data-v-040e2ab9><path d=\"m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></h6></div><div class=\"media-body\" data-v-040e2ab9><div data-v-040e2ab9> Responded to need “Volunteer Activities </div></div></div></li></ul></div></div>", 1);
@@ -20716,7 +20716,7 @@ var _hoisted_80 = {
 var _hoisted_81 = {
   "class": "widget widget-chart-one-dashboard"
 };
-var _hoisted_82 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"widget-heading-dashboard\" data-v-040e2ab9><ul class=\"tabs tab-pills\" data-v-040e2ab9><li data-v-040e2ab9><a href=\"javascript:void(0);\" id=\"tb_1\" class=\"tabmenu\" data-v-040e2ab9>Recent Orders</a></li></ul></div><div class=\"row\" data-v-040e2ab9><div class=\"col-md-3\" data-v-040e2ab9><select class=\"w-100\" name=\"pets\" id=\"pet-select\" data-v-040e2ab9><option value=\"\" data-v-040e2ab9>All Categories</option><option value=\"women\" data-v-040e2ab9>Women&#39;s Clothing</option><option value=\"men\" data-v-040e2ab9>Men&#39;s Clothing</option></select></div><div class=\"col-md-9\" data-v-040e2ab9><div class=\"row justify-content-end\" data-v-040e2ab9><div class=\"col-md-4\" data-v-040e2ab9><select class=\"w-100\" name=\"pets\" id=\"pet-select\" data-v-040e2ab9><option value=\"\" data-v-040e2ab9>All Categories</option><option value=\"women\" data-v-040e2ab9>Women&#39;s Clothing</option><option value=\"men\" data-v-040e2ab9>Men&#39;s Clothing</option></select></div><div class=\"col-md-4\" data-v-040e2ab9><select class=\"w-100\" name=\"pets\" id=\"pet-select\" data-v-040e2ab9><option value=\"\" data-v-040e2ab9>All Categories</option><option value=\"women\" data-v-040e2ab9>Women&#39;s Clothing</option><option value=\"men\" data-v-040e2ab9>Men&#39;s Clothing</option></select></div></div></div></div><hr data-v-040e2ab9>", 3);
+var _hoisted_82 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"widget-heading-dashboard\" data-v-040e2ab9><ul class=\"tabs tab-pills\" data-v-040e2ab9><li data-v-040e2ab9><a href=\"javascript:void(0);\" id=\"tb_1latest\" class=\"tabmenu\" data-v-040e2ab9>Latest orders</a></li></ul></div><div class=\"row\" data-v-040e2ab9><div class=\"col-md-3\" data-v-040e2ab9><select class=\"w-75\" name=\"pets\" id=\"pet-select\" data-v-040e2ab9><option value=\"\" data-v-040e2ab9>All Categories</option><option value=\"women\" data-v-040e2ab9>Women&#39;s Clothing</option><option value=\"men\" data-v-040e2ab9>Men&#39;s Clothing</option></select></div><div class=\"col-md-9\" data-v-040e2ab9><div class=\"row justify-content-end\" data-v-040e2ab9><div class=\"col-md-3\" data-v-040e2ab9><input type=\"date\" class=\"w-100\" id=\"start\" name=\"trip-start\" value=\"mm/dd/yy\" min=\"01-01-2024\" max=\"01-01-2028\" data-v-040e2ab9></div><div class=\"col-md-3\" data-v-040e2ab9><select class=\"w-100\" name=\"pets\" id=\"pet-select\" data-v-040e2ab9><option value=\"\" data-v-040e2ab9>Status</option><option value=\"women\" data-v-040e2ab9>Paid</option><option value=\"men\" data-v-040e2ab9>Unpaid</option></select></div></div></div></div><hr data-v-040e2ab9>", 3);
 var _hoisted_85 = {
   "class": "widget-content"
 };
@@ -20729,7 +20729,7 @@ var _hoisted_87 = {
 var _hoisted_88 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "th-content"
-  }, "OrderID")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  }, "Order ID")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "th-content"
   }, "Customer")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "th-content"
@@ -20754,7 +20754,7 @@ var _hoisted_91 = {
 };
 var _hoisted_92 = {
   key: 0,
-  "class": "badge rounded-pill alert-primary"
+  "class": "badge alert-primary"
 };
 var _hoisted_93 = {
   key: 1,
@@ -20765,11 +20765,11 @@ var _hoisted_94 = {
 };
 var _hoisted_95 = {
   key: 0,
-  "class": "badge rounded-pill alert-warning"
+  "class": "badge alert-warning"
 };
 var _hoisted_96 = {
   key: 1,
-  "class": "badge rounded-pill alert-primary"
+  "class": "badge alert-primary"
 };
 var _hoisted_97 = {
   key: 2,
@@ -20777,7 +20777,7 @@ var _hoisted_97 = {
 };
 var _hoisted_98 = {
   key: 3,
-  "class": "badge rounded-pill alert-danger"
+  "class": "badge alert-danger"
 };
 var _hoisted_99 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {

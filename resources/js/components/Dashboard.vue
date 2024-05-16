@@ -72,7 +72,7 @@
                         </div>
                         <div class="icons-content">
                             <h6 class="mb-1 card-title text-bold">
-                                Total Order
+                                Revenue
                             </h6>
                             <span>{{
                                 Number(order_info.pending) +
@@ -81,7 +81,7 @@
                             }}</span>
                             <br />
                             <span class="text-sm countitem">
-                                Count Total Order
+                                Shipping fees are not included
                             </span>
                         </div>
 
@@ -163,11 +163,11 @@
                         </div>
                         <div class="icons-content">
                             <h6 class="mb-1 card-title text-bold">
-                                Pending Order
+                                Orders
                             </h6>
                             <span>{{ order_info.pending }}</span> <br />
                             <span class="text-sm">
-                                Count Total Pending order
+                                Excluding orders in transit
                             </span>
                         </div>
 
@@ -261,11 +261,11 @@
                         </div>
                         <div class="icons-content">
                             <h6 class="mb-1 card-title text-bold">
-                                Processing
+                                Products
                             </h6>
                             <span>{{ order_info.processing }}</span> <br />
                             <span class="text-sm">
-                                Count Order Under Processing
+                                In 19 Categories
                             </span>
                         </div>
 
@@ -308,11 +308,11 @@
                         </div>
                         <div class="icons-content">
                             <h6 class="mb-1 card-title text-bold">
-                                Total Delivered
+                               Monthly Earning
                             </h6>
                             <span>{{ order_info.delivered }}</span> <br />
                             <span class="text-sm">
-                                Counting of Total Delivered Order
+                               Based in your local time.
                             </span>
                         </div>
 
@@ -468,7 +468,7 @@
                                     </p>
                                 </div>
                             </div>
-                            <a href="#" class="btn btn-primary">Add</a>
+                            <a href="#" class="btn btn-primary-dashboard">Add</a>
                         </div>
                         <div
                             class="d-flex align-items-center justify-content-between mb-4"
@@ -489,7 +489,7 @@
                                     </p>
                                 </div>
                             </div>
-                            <a href="#" class="btn btn-primary">Add</a>
+                            <a href="#" class="btn btn-primary-dashboard">Add</a>
                         </div>
                         <div
                             class="d-flex align-items-center justify-content-between mb-4"
@@ -510,7 +510,7 @@
                                     </p>
                                 </div>
                             </div>
-                            <a href="#" class="btn btn-primary">Add</a>
+                            <a href="#" class="btn btn-primary-dashboard">Add</a>
                         </div>
                     </div>
                 </div>
@@ -749,15 +749,15 @@
             <div class="widget-heading-dashboard">
                 <ul class="tabs tab-pills">
                     <li>
-                        <a href="javascript:void(0);" id="tb_1" class="tabmenu"
-                            >Recent Orders</a
+                        <a href="javascript:void(0);" id="tb_1latest" class="tabmenu"
+                            >Latest orders</a
                         >
                     </li>
                 </ul>
             </div>
             <div class="row">
                 <div class="col-md-3">
-                    <select class="w-100" name="pets" id="pet-select">
+                    <select class="w-75" name="pets" id="pet-select">
                         <option value="">All Categories</option>
                         <option value="women">Women's Clothing</option>
                         <option value="men">Men's Clothing</option>
@@ -765,18 +765,15 @@
                 </div>
                 <div class="col-md-9">
                     <div class="row justify-content-end">
-                        <div class="col-md-4">
-                            <select class="w-100" name="pets" id="pet-select">
-                                <option value="">All Categories</option>
-                                <option value="women">Women's Clothing</option>
-                                <option value="men">Men's Clothing</option>
-                            </select>
+                        <div class="col-md-3">
+                    <input type="date" class="w-100" id="start" name="trip-start" value="mm/dd/yy" min="01-01-2024" max="01-01-2028" />
+
                         </div>
-                        <div class="col-md-4">
-                            <select class="w-100" name="pets" id="pet-select">
-                                <option value="">All Categories</option>
-                                <option value="women">Women's Clothing</option>
-                                <option value="men">Men's Clothing</option>
+                        <div class="col-md-3">
+                            <select class="w-100" name="pets" id="pet-select" >
+                              <option value="">Status</option>
+                                <option value="women">Paid</option>
+                                <option value="men">Unpaid</option>
                             </select>
                         </div>
                     </div>
@@ -784,12 +781,13 @@
             </div>
             <hr />
 
+
             <div class="widget-content">
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th><div class="th-content">OrderID</div></th>
+                                <th><div class="th-content">Order ID</div></th>
                                 <th><div class="th-content">Customer</div></th>
                                 <th><div class="th-content">Date</div></th>
                                 <th><div class="th-content">Price</div></th>
@@ -824,7 +822,7 @@
                                     <td class="text-left">
                                         <span
                                             v-if="order.payment_status == 0"
-                                            class="badge rounded-pill alert-primary"
+                                            class="badge alert-primary"
                                             >COD</span
                                         >
                                         <span v-else class="badge badge-light"
@@ -834,12 +832,12 @@
                                     <td cclass="text-left">
                                         <span
                                             v-if="order.payment_status == 0"
-                                            class="badge rounded-pill alert-warning"
+                                            class="badge alert-warning"
                                             >Unpaid</span
                                         >
                                         <span
                                             v-if="order.payment_status == 1"
-                                            class="badge rounded-pill alert-primary"
+                                            class="badge alert-primary"
                                             >Paid</span
                                         >
                                         <span
@@ -849,7 +847,7 @@
                                         >
                                         <span
                                             v-if="order.payment_status == 3"
-                                            class="badge rounded-pill alert-danger"
+                                            class="badge alert-danger"
                                             >Cancel</span
                                         >
                                     </td>
