@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSustainabilitiesTable extends Migration
+class CreateColorStoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,16 @@ class CreateSustainabilitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('sustainabilities', function (Blueprint $table) {
+        Schema::create('color_stories', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->string('slug')->nullable();
             $table->string('feature_image')->nullable();
+            $table->string('bg_image')->nullable();
+            $table->foreignId('color_id');
+            $table->text('short_description')->nullable();
             $table->longText('description')->nullable();
+            $table->string('pr_imgs')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
@@ -31,6 +35,6 @@ class CreateSustainabilitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sustainabilities');
+        Schema::dropIfExists('color_stories');
     }
 }

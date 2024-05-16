@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\DB;
         return DB::table('fabrics')->selectRaw('id as value,fabric_name as name,status')->where('status',AllStatic::$active)->orderBy('id','desc')->get();
     }
 
+    function getColors(){
+        return DB::table('colours')->selectRaw('id as value,color_name as name,status')->where('status',AllStatic::$active)->orderBy('id','desc')->get();
+    }
+
     function uniqueString() {
         $letter = 'abcdefghijklmnopqrstuvwxyz0987654321';
         return substr(str_shuffle(strtoupper($letter)), 0, 6);

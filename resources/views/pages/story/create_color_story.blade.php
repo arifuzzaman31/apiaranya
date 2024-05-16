@@ -4,7 +4,7 @@
 <div id="tableHover" class="layout-spacing" style="padding: 15px 0;">
     <div class="statbox">
         <div class="widget-header">
-            <color-story />
+            <create-colorstory :colors="{{ $allColors }}" />
         </div>
     </div>
 </div>
