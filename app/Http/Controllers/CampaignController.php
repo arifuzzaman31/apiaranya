@@ -8,6 +8,7 @@ use App\Models\Campaign;
 use App\Models\Discount;
 use App\Models\Inventory;
 use App\Models\Product;
+use App\Services\MailchimpService;
 use DB,Str;
 
 class CampaignController extends Controller
@@ -166,12 +167,22 @@ class CampaignController extends Controller
         $request->validate([
             'campaign' => 'required',
             'type' => 'required',
-            // 'discount_type' => 'required',
-            // 'discount_amount' => 'required',[144,142,181,146,149,155,151,143,147]
             'product' => 'required|array|min:1'
         ]);
 
         try{
+            // if($request->type == 'campaign'){
+            //     $productData = Product::with(['category:id,category_name,slug','subcategory','inventory'])
+            //         ->whereIn('id',$request->product)->get();
+            //     $mailchimpService = new MailchimpService();
+                // return $productData;
+                // $response = $mailchimpService->createProducts($productData);
+                // dd($response);
+                // if (isset($response)) {
+                //     return response()->json(['status' => 'success','message' => 'Product added to Mailchimp successfully']);
+                // }
+            // }
+            exit();
             DB::beginTransaction();
             if($request->type == 'campaign'){
                 $camp = Campaign::find($request->campaign);
@@ -186,7 +197,6 @@ class CampaignController extends Controller
             }
             // $camp->product()->sync($request->product);
             // $camp->save();
-
             DB::commit();
             return response()->json(['status' => 'success', 'message' => 'Product Added to '.$request->type]);
         }catch (\Throwable $th) {
@@ -230,5 +240,17 @@ class CampaignController extends Controller
             return $this->errorMessage();
             //throw $th;
         }
+    }
+
+    public function sendToMailChimp($campId = '')
+    {
+        $productData = Product::with(['category:id,category_name,slug','subcategory:id,category_name,slug','inventory','campaign'])
+            ->whereHas('campaign', function($q) use ($campId) {
+                $q->where('campaign_id', $campId);
+            })->get();
+        $mailchimpService = new MailchimpService();
+        // return $productData;
+        $response = $mailchimpService->createProducts($productData);
+        dd($response);
     }
 }

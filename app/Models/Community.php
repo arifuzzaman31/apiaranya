@@ -11,10 +11,6 @@ class Community extends Model
 
     public function product()
     {
-        return $this->hasManyThrough(Product::class, ProductFabric::class, 'fabric_id', 'id', 'id', 'product_id');
-        // return $this->belongsToMany(Product::class,'product_fabrics','fabric_id','product_id');
-        // return $this->belongsToMany(Product::class,'product_fabrics','fabric_id');
-        // return $this->belongsToMany(Product::class,'product_fabrics','fabric_id','product_id');
-        // return $this->belongsToMany(Product::class,'product_fabrics','fabric_id','fabric_id');
+        return $this->hasManyThrough(Product::class, ProductFabric::class, 'fabric_id', 'id', 'fabric_id', 'product_id');
     }
 }

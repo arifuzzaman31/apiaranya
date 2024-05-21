@@ -5,11 +5,12 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import MediaHelper from "../common/MediaHelper.vue";
 export default {
     mixins: [Mixin],
-    props:["storydata"],
+    props:["storydata","colors"],
     components: { MediaHelper,QuillEditor},
     data(){
         return {
             form: {
+                id: '',
                 title: '',
                 short_description: '',
                 description: '',
@@ -26,9 +27,9 @@ export default {
         }
     },
     methods: {
-        storeColorStory(){
+        updateColorStory(){
             try{
-                axios.post('color-story',this.form).then(
+                axios.put(baseUrl+'color-story',this.form).then(
                     response => {
                         if (response.data.status == "success") {
                                 this.clearForm()
@@ -83,8 +84,20 @@ export default {
                     break;
             }
         },
+        prepareData(){
+            this.form.id = this.storydata.id
+            this.form.title = this.storydata.title
+            this.form.feature_image = this.storydata.feature_image
+            this.form.bg_image = this.storydata.bg_image
+            this.form.pr_imgs = JSON.parse(this.storydata.pr_imgs)
+            this.form.color_id = this.storydata.color_id
+            this.form.short_description = this.storydata.short_description
+            this.form.description = this.storydata.description
+            this.form.status = this.storydata.status
+        },
         clearForm(){
             this.form = {
+                id:'',
                 title:'',
                 short_description:'',
                 description:'',
@@ -97,6 +110,7 @@ export default {
         }
     },
     mounted(){
+        this.prepareData()
     }
 }
 </script>
@@ -106,10 +120,10 @@ export default {
         <div id="tableHover" class="col-lg-12 col-12">
             <div class="statbox widget box box-shadow">
                 <div>
-                    <h4 class="mx-2">Add Color-Story</h4>
+                    <h4 class="mx-2">Update Color-Story</h4>
                 </div>
                 <div class="widget-content widget-content-area">
-                    <form @submit.prevent="storeColorStory()">
+                    <form @submit.prevent="updateColorStory()">
                         <div class="form-row mb-4">
                                 <div class="col-md-4 col-12 mb-2">
                                     <label for="title-color">Title</label>
@@ -122,10 +136,10 @@ export default {
                                     </span>
                                 </div>
                                 <div class="col-md-4 col-12 mb-2">
-                                    <label for="fabric">Add Color</label>
+                                    <label for="color_id">Add Color</label>
 
                                     <select
-                                        id="fabric"
+                                        id="color_id"
                                         class="form-control"
                                         v-model="form.color_id" required
                                     >
@@ -142,6 +156,15 @@ export default {
                                     </select>
 
                                 </div>
+                                <div class="form-group col-md-4">
+                                    <label for="Publish">Publish</label>
+                                    <div class="form-group">
+                                        <select id="Publish" class="form-control  form-control-sm" v-model="form.status">
+                                            <option value="0">Deactive</option>
+                                            <option value="1">Active</option>
+                                        </select>
+                                    </div>
+                                </div>
 
                                 <div class="col-12 mb-2">
                                     <label for="campdate">Short Description</label>
@@ -154,7 +177,7 @@ export default {
                                     </span>
                                 </div>
                                 <div class="col-12 mb-2">
-                                <div id="tooltips" class="col-lg-12 layout-spacing col-md-12">
+                                <div id="tooltips">
                                         <div class="widget-content ">
                                             <label for="editor-container">Description</label>
                                             <QuillEditor theme="snow" v-model:content="form.description" contentType="html" required />
@@ -209,17 +232,10 @@ export default {
                                         />
                                     </div>
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <div class="form-group">
-                                        <select id="status-id" class="form-control  form-control-sm" v-model="form.status">
-                                            <option value="0">Deactive</option>
-                                            <option value="1">Active</option>
-                                        </select>
-                                    </div>
-                                </div>
+
                             </div>
                             <div class="modal-footer md-button">
-                              <button type="submit" class="btn btn-info-a">Submit</button>
+                              <button type="submit" class="btn btn-info-a">Update</button>
 
                             </div>
 

@@ -10,5 +10,9 @@ class ProductColour extends Pivot
     use HasFactory;
 
     protected $table = 'product_colours';
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 
 }

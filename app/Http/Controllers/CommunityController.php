@@ -21,7 +21,9 @@ class CommunityController extends Controller
     }
     public function getProductByCommunity($id)
     {
-        $data = Community::with('product.product_fabric')
+        $data = Community::with(['product.inventory' => function($q){
+           return $q->take(1);
+        }])
                 ->where('id',$id)->first();
         return $data;
 
