@@ -144,9 +144,13 @@ class Product extends Model
 
     public function community()
     {
-        return $this->belongsToMany(Community::class,'product_fabrics','product_id', 'fabric_id');
-        // return $this->belongsToMany(Community::class,'product_fabrics','product_id','fabric_id');
-        // return $this->belongsToMany(Community::class,'product_fabrics','product_id');
+        return $this->hasMany(ProductFabric::class);
+        // return $this->belongsToMany(Community::class,'product_fabrics','product_id', 'fabric_id');
+    }
+    public function color_story()
+    {
+        return $this->hasMany(ProductColour::class);
+        // return $this->belongsToMany(ColorStory::class,'product_colours','color_id','colour_id');
     }
 
     public function order_details()

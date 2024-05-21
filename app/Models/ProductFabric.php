@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class ProductFabric extends Model
 {
     use HasFactory;
-    
+
     protected $table = 'product_fabrics';
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

@@ -230,13 +230,6 @@ class OrderController extends Controller
     public function sendEcorier($order,$hubInfo)
     {
         try {
-            // $courier = Courier::getInstance();
-            // $courier->setProvider(ECourier::class, config('app.payment_mode')); /* local/production */
-            // $courier->setConfig([
-            //     'API-KEY' => env('ECOURIER_API_KEY'),
-            //     'API-SECRET' => env('ECOURIER_API_SECRET'),
-            //     'USER-ID' => env('ECOURIER_USER_ID')
-            // ]);
             $ecorier = json_decode($order->courier_details);
             $courierData = [
                 'product_id' => $order->order_id,
@@ -251,8 +244,8 @@ class OrderController extends Controller
                 'pick_mobile' => $hubInfo['pick_mobile'],
                 'recipient_name' => $ecorier->recipient_name,
                 'recipient_mobile' => $ecorier->recipient_mobile,
-                'recipient_division' => '',
-                'recipient_district' => '',
+                'recipient_division' => $ecorier->recipient_division,
+                'recipient_district' => $ecorier->recipient_district,
                 'recipient_city' => $ecorier->recipient_city,
                 'recipient_area' => $ecorier->recipient_area,
                 'recipient_thana' => $ecorier->recipient_thana,
@@ -273,34 +266,36 @@ class OrderController extends Controller
                 'is_ipay' => 0
 
             ];
-            if(config('app.payment_mode') == 'production'){
+            // return $courierData;
+            if(config('app.ecorier_mode') == 'production'){
                 $api_url = 'https://backoffice.ecourier.com.bd/api/order-place-reseller';
 
             }else {
                 $api_url = 'https://staging.ecourier.com.bd/api/order-place-reseller';
             }
             $headers = [
-                    'Content-Type:application/json',
-                    'API-KEY' => env('ECOURIER_API_KEY'),
-                    'API-SECRET' => env('ECOURIER_API_SECRET'),
-                    'USER-ID' => env('ECOURIER_USER_ID')
+                    'Content-Type: application/json',
+                    'API-KEY: frz3', // Replace with env('ECOURIER_API_KEY')
+                    'API-SECRET: 4vqsZ', // Replace with env('ECOURIER_API_SECRET')
+                    'USER-ID: H7546' // Replace with env('ECOURIER_USER_ID')
                 ];
                 $handle = curl_init();
                 curl_setopt($handle, CURLOPT_URL, $api_url);
                 curl_setopt($handle, CURLOPT_TIMEOUT, 30);
                 curl_setopt($handle, CURLOPT_HTTPHEADER, $headers);
                 curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, 30);
-                curl_setopt($handle, CURLOPT_POST, 1 );
-                curl_setopt($handle, CURLOPT_POSTFIELDS,$courierData);
+                curl_setopt($handle, CURLOPT_POST, true);
+                curl_setopt($handle, CURLOPT_POSTFIELDS, json_encode($courierData));
                 curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, FALSE); # KEEP IT FALSE IF YOU RUN FROM LOCAL PC
+                curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, true); // Set to false if testing on local PC
+                curl_setopt($handle, CURLOPT_FOLLOWLOCATION, true); // Follow redirects
 
             $content = curl_exec($handle);
             $code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
 
-            if($code == 200 && !( curl_errno($handle))) {
+            if($code == 200) {
+                $corier_order = json_decode($content,true );
                 curl_close($handle);
-                $corier_order = json_decode($content, true );
                 DB::table('orders')->where('id', $corier_order->id)->update([
                     'tracking_id' => $corier_order->ID,
                     'updated_at'    => date("Y-m-d H:i:s")
@@ -309,28 +304,12 @@ class OrderController extends Controller
                     'tracking_id' => $corier_order->ID
                 ]);
             } else {
-                curl_close( $handle);
-                echo "FAILED TO CONNECT WITH SSLCOMMERZ API";
+                curl_close($handle);
+                echo "FAILED TO CONNECT WITH RESELLER API";
                 exit;
             }
 
-            // $courier->setParams($courierData);
-            // $resp = $courier->placeOrder();
-            // $result = json_decode(json_encode($resp),true);
-            // $datas = json_decode($result['response']);
-            // if ($datas !== null && isset($datas->ID)) {
-
-            //         if($result['statusCode'] == 200){
-            //             DB::table('orders')->where('id', $order->id)->update([
-            //                 'tracking_id' => $datas->ID,
-            //                 'updated_at'    => date("Y-m-d H:i:s")
-            //             ]);
-            //             DB::table('deliveries')->where('order_id', $order->id)->update([
-            //                 'tracking_id' => $datas->ID
-            //             ]);
-            //         }
-            // }
-            return false;
+            return true;
         } catch (\Throwable $th) {
             return false;
             // return $th;

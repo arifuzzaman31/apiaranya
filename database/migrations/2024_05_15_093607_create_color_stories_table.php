@@ -22,7 +22,7 @@ class CreateColorStoriesTable extends Migration
             $table->foreignId('color_id');
             $table->text('short_description')->nullable();
             $table->longText('description')->nullable();
-            $table->string('pr_imgs')->nullable();
+            $table->longText('pr_imgs')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });

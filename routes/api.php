@@ -10,6 +10,8 @@ use App\Http\Controllers\Api\FrontController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\EcorierController;
 use App\Http\Controllers\Api\MailchimpController;
+use App\Http\Controllers\CampaignController;
+use App\Http\Controllers\ColorStoryController;
 use App\Http\Controllers\CommunityController;
 
 /*
@@ -58,25 +60,20 @@ Route::get('home-pagedata',[PageController::class,'homeImageData']);
 
 //Category data
 Route::get('category/{id}',[CategoryController::class,'categoryData']);
-
 Route::get('category-list',[CategoryController::class,'allCategoryList']);
-
 // get Campain data
 Route::get('all-campaign',[FrontController::class,'getCampaing']);
-
-
 Route::get('category-fabric/{cat_id}',[FrontController::class,'getCategoryFabric']);
-
 // user reset password
 Route::post('user-password-email-reset-link', [AuthController::class, 'sendEmailLink'])->name('user-password-email-reset-link');
-
 Route::post('user-reset-password', [AuthController::class, 'storeResetPassword']);
-
 Route::get('information/{slug?}',[PageController::class, 'getInfo']);
-
 Route::get('e-courier-package',[EcorierController::class, 'getEcoPackage']);
-
 Route::get('get-community-info/{id?}',[CommunityController::class, 'getCommunityData']);
 Route::get('get-community-data',[CommunityController::class, 'getCommunity']);
 Route::get('get-community-product/{id}',[CommunityController::class, 'getProductByCommunity']);
+Route::get('get-color-story-data',[ColorStoryController::class, 'getColorStories']);
+Route::get('get-color-story/{id}',[ColorStoryController::class, 'getSingleColorStory']);
+
 Route::post('subscribes',[MailchimpController::class, 'subscribe']);
+Route::get('product-to-mailchimp/{id}',[CampaignController::class, 'sendToMailChimp']);

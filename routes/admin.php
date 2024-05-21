@@ -219,6 +219,8 @@ Route::get('get-color-story-data',[ColorStoryController::class,'getColorStories'
 Route::get('create-color-story',[ColorStoryController::class,'getColorStoryPage']);
 Route::post('color-story',[ColorStoryController::class,'store']);
 Route::get('color-story/{id}/edit',[ColorStoryController::class,'edit']);
+Route::put('color-story',[ColorStoryController::class,'update']);
+Route::delete('color-story/{id}',[ColorStoryController::class,'destroy']);
 
 Route::get('get-blog-data',[BlogController::class,'getBlogs']);
 Route::view('create-blog','pages.story.create_blog')->name('create-blog');

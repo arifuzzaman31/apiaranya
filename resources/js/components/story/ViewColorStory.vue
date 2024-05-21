@@ -105,16 +105,26 @@ export default {
                         <template v-for="(colorst,index) in color_stories.data" :key="colorst.id">
                             <tr>
                                 <td>{{ index+1 }}</td>
-                                <td>{{ colorst.title }}</td>
-                                <td>{{ colorst.short_description }}</td>
+                                <td style="width: 20%;">{{ colorst.title }}</td>
+                                <td style="width: 45%;">{{ colorst.short_description }}</td>
                                 <td>{{ colorst.status == '1' ? 'Active' : 'Inactive' }}</td>
                                 <td class="text-center">
-
                                         <a
                                             type="button"
                                             :href="url+'color-story/'+colorst.id+'/edit'"
                                             class="btn btn-sm btn-delete "
                                             >Edit</a>
+                                            <button
+                                                        type="button"
+                                                        class="btn btn-sm btn-delete ml-2"
+                                                        @click="
+                                                            deleteColorStory(
+                                                                colorst.id
+                                                            )
+                                                        "
+                                                    >
+                                                        Delete
+                                                    </button>
                                 </td>
                             </tr>
                         </template>

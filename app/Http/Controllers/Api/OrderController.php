@@ -65,6 +65,8 @@ class OrderController extends Controller
             if($request->data['deliveryMethod'] == 'E-Courier'){
                 $corierInfo['recipient_name'] = $request->data['first_name_shipping'];
                 $corierInfo['recipient_mobile'] = $request->data['phone_shipping'];
+                $corierInfo['recipient_division'] = $request->data['division_shipping'];
+                $corierInfo['recipient_district'] = $request->data['district_shipping'];
                 $corierInfo['recipient_city'] = $request->data['city_shipping'];
                 $corierInfo['recipient_area'] = $request->data['area_shipping'];
                 $corierInfo['recipient_thana'] = $request->data['thana_shipping'];
@@ -140,6 +142,8 @@ class OrderController extends Controller
                         'first_name'    => $request->data['first_name_billing'],
                         'last_name'     => $request->data['last_name_billing'],
                         'country'       => $request->data['country_billing'],
+                        'division'       => $request->data['division_billing'],
+                        'district'       => $request->data['district_billing'],
                         'city'          => $request->data['city_billing'],
                         'thana'          => $request->data['thana_billing'],
                         'area'          => $request->data['area_billing'],
@@ -159,6 +163,8 @@ class OrderController extends Controller
                 $shipping->first_name = $request->data['first_name_shipping'];
                 $shipping->last_name = $request->data['last_name_shipping'];
                 $shipping->country = $request->data['country_shipping'];
+                $shipping->division = $request->data['division_shipping'];
+                $shipping->district = $request->data['district_shipping'];
                 $shipping->city = $request->data['city_shipping'];
                 $shipping->thana = $request->data['thana_shipping'];
                 $shipping->area = $request->data['area_shipping'];
