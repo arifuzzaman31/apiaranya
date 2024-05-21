@@ -275,6 +275,15 @@ export default {
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-12 my-2 text-center">
+                            <button type="button" class="btn btn-sm btn-info" @click="mediaModalOpen()">Upload files</button>
+                        </div>
+                        <div class="col-md-3 d-flex justify-content-center" v-for="(itm,index) in this.form.selectedImages" :key="index">
+                            <img :src="itm" style="width:80px;height:100px" class="img-fluid rounded" />
+                            <button type="button" @click="() => this.form.selectedImages.splice(index, 1)" class="close text-danger image-close" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
                             <div class="form-row">
                             <div class="col-md-12 mb-3">
                             <label for="product-Vendor">Vendor</label>

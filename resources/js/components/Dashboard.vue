@@ -11,7 +11,8 @@
             >
         </div>
         <div class="row mt-3" style="display: flex; row-gap: 20px">
-            <div class="col-md-3 rounded">
+        <div class="col-md-3 rounded">
+               <a href= #>
                 <div class="card" style="border-radius: 8px">
                     <!-- <img class="card-img-top" src="" alt="Card image cap" /> -->
                     <div
@@ -26,11 +27,17 @@
                             <span
                                 class="rounded-circle"
                                 style="
-                                    padding: 1rem 0.9rem !important;
-                                    background-color: rgb(60 86 118 / 39%);
+                                    padding: 1rem 0.8rem !important;
+                                    background-color: #08155670;
                                 "
                             >
-                                <!-- <i
+                               
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM11.41 16.09V18H8.74V16.07C7.03 15.71 5.58 14.61 5.47 12.67H7.43C7.53 13.72 8.25 14.54 10.08 14.54C12.04 14.54 12.48 13.56 12.48 12.95C12.48 12.12 12.04 11.34 9.81 10.81C7.33 10.21 5.63 9.19 5.63 7.14C5.63 5.42 7.02 4.3 8.74 3.93V2H11.41V3.95C13.27 4.4 14.2 5.81 14.26 7.34H12.3C12.25 6.23 11.66 5.47 10.08 5.47C8.58 5.47 7.68 6.15 7.68 7.11C7.68 7.95 8.33 8.5 10.35 9.02C12.37 9.54 14.53 10.41 14.53 12.93C14.52 14.76 13.15 15.76 11.41 16.09Z" fill="#081556"/>
+</svg>
+
+
+                                <!--  <i
                                     class="icons icon icon-sm rounded-circle"
                                     style="
                                         background-color: rgb(60 86 118);
@@ -38,7 +45,8 @@
                                         padding: 4px;
                                     "
                                 >
-                                  <svg
+                                
+                                   <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="20"
                                         height="20"
@@ -51,46 +59,30 @@
                                         <path
                                             stroke-linecap="round"
                                             stroke-linejoin="round"
-                                            d="M21 7.5V18M15 7.5V18M3 16.811V8.69c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061A1.125 1.125 0 0 1 3 16.811Z"
+                                            d="M8 12a4 4 0 1 1 1.354 3M8 12l2.5-1M8 12l-1.5-2M21 12a9 9 0 1 1-18 0a9 9 0 0 1 18 0"
                                         />
-                                    </svg>
-                                       </i>-->
-
-                                <svg
-                                    width="20"
-                                    height="20"
-                                    viewBox="0 0 20 20"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        d="M9.1 17H10.85V15.75C11.6833 15.6 12.4 15.275 13 14.775C13.6 14.275 13.9 13.5333 13.9 12.55C13.9 11.85 13.7 11.2083 13.3 10.625C12.9 10.0417 12.1 9.53333 10.9 9.1C9.9 8.76667 9.20833 8.475 8.825 8.225C8.44167 7.975 8.25 7.63333 8.25 7.2C8.25 6.76667 8.40417 6.425 8.7125 6.175C9.02083 5.925 9.46667 5.8 10.05 5.8C10.5833 5.8 11 5.92917 11.3 6.1875C11.6 6.44583 11.8167 6.76667 11.95 7.15L13.55 6.5C13.3667 5.91667 13.0292 5.40833 12.5375 4.975C12.0458 4.54167 11.5 4.3 10.9 4.25V3H9.15V4.25C8.31667 4.43333 7.66667 4.8 7.2 5.35C6.73333 5.9 6.5 6.51667 6.5 7.2C6.5 7.98333 6.72917 8.61667 7.1875 9.1C7.64583 9.58333 8.36667 10 9.35 10.35C10.4 10.7333 11.1292 11.075 11.5375 11.375C11.9458 11.675 12.15 12.0667 12.15 12.55C12.15 13.1 11.9542 13.5042 11.5625 13.7625C11.1708 14.0208 10.7 14.15 10.15 14.15C9.6 14.15 9.1125 13.9792 8.6875 13.6375C8.2625 13.2958 7.95 12.7833 7.75 12.1L6.1 12.75C6.33333 13.55 6.69583 14.1958 7.1875 14.6875C7.67917 15.1792 8.31667 15.5167 9.1 15.7V17ZM10 20C8.61667 20 7.31667 19.7375 6.1 19.2125C4.88333 18.6875 3.825 17.975 2.925 17.075C2.025 16.175 1.3125 15.1167 0.7875 13.9C0.2625 12.6833 0 11.3833 0 10C0 8.61667 0.2625 7.31667 0.7875 6.1C1.3125 4.88333 2.025 3.825 2.925 2.925C3.825 2.025 4.88333 1.3125 6.1 0.7875C7.31667 0.2625 8.61667 0 10 0C11.3833 0 12.6833 0.2625 13.9 0.7875C15.1167 1.3125 16.175 2.025 17.075 2.925C17.975 3.825 18.6875 4.88333 19.2125 6.1C19.7375 7.31667 20 8.61667 20 10C20 11.3833 19.7375 12.6833 19.2125 13.9C18.6875 15.1167 17.975 16.175 17.075 17.075C16.175 17.975 15.1167 18.6875 13.9 19.2125C12.6833 19.7375 11.3833 20 10 20Z"
-                                        fill="#3C5676"
-                                    />
-                                </svg>
+                                    </svg> 
+                                </i>-->
                             </span>
                         </div>
                         <div class="icons-content">
                             <h6 class="mb-1 card-title text-bold">
-                                Revenue
+                              Total Sales Value
                             </h6>
-                            <span>{{
-                                Number(order_info.pending) +
-                                Number(order_info.processing) +
-                                Number(order_info.delivered)
-                            }}</span>
-                            <br />
-                            <span class="text-sm countitem">
-                                Shipping fees are not included
+                            <span>{{ order_info.pending }}</span> <br />
+                            <span class="text-sm">
+                                Count total pending order
                             </span>
                         </div>
 
                         <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                     </div>
                 </div>
+                </a>
             </div>
-
+           
             <div class="col-md-3 rounded">
+               <a href= #>
                 <div class="card" style="border-radius: 8px">
                     <!-- <img class="card-img-top" src="" alt="Card image cap" /> -->
                     <div
@@ -163,19 +155,21 @@
                         </div>
                         <div class="icons-content">
                             <h6 class="mb-1 card-title text-bold">
-                                Orders
+                               Pending Order 
                             </h6>
                             <span>{{ order_info.pending }}</span> <br />
                             <span class="text-sm">
-                                Excluding orders in transit
+                                Count total pending order
                             </span>
                         </div>
 
                         <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                     </div>
                 </div>
+                </a>
             </div>
             <div class="col-md-3 rounded">
+               <a href= #>
                 <div class="card" style="border-radius: 8px">
                     <!-- <img class="card-img-top" src="" alt="Card image cap" /> -->
                     <div
@@ -272,8 +266,11 @@
                         <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                     </div>
                 </div>
+                </a>
             </div>
             <div class="col-md-3 rounded">
+              <a href= #>
+
                 <div class="card" style="border-radius: 8px">
                     <!-- <img class="card-img-top" src="" alt="Card image cap" /> -->
                     <div
@@ -308,17 +305,18 @@
                         </div>
                         <div class="icons-content">
                             <h6 class="mb-1 card-title text-bold">
-                               Monthly Earning
+                              Pending Order 
                             </h6>
                             <span>{{ order_info.delivered }}</span> <br />
                             <span class="text-sm">
-                               Based in your local time.
+                                 Counting of Total Delivered Order
                             </span>
                         </div>
 
                         <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                     </div>
                 </div>
+                </a>
             </div>
         </div>
         <div class="row sales layout-top-spacing">
@@ -515,9 +513,9 @@
                     </div>
                 </div>
             </div>
-            <div
+           <!-- <div
                 class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing"
-            >
+             >
                 <div class="widget widget-chart-one-dashboard">
                     <div class="widget-heading-dashboard">
                         <ul class="tabs tab-pills">
@@ -740,7 +738,7 @@
                         </li>
                     </ul>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -804,6 +802,11 @@
                                         View Details
                                     </div>
                                 </th>
+                                    <th>
+                                    <div class="th-content text-left">
+                                       Download PDF
+                                    </div>
+                                </th>
                             </tr>
                         </thead>
                         <tbody v-if="orders && orders.length > 0">
@@ -854,6 +857,11 @@
                                     <td class="text-left">
                                         <a href="#" class="btn btn-xs"
                                             >View details</a
+                                        >
+                                    </td>
+                                      <td class="text-left">
+                                        <a href="#" download class="btn btn-xs"
+                                            >Download PDF</a
                                         >
                                     </td>
                                 </tr>

@@ -5,12 +5,11 @@
 <link href="{{ asset('admin-assets/assets/css/components/tabs-accordian/custom-accordions.css')}}" rel="stylesheet" type="text/css" />
 @endpush
 @section('content')
+
 <div id="tableCheckbox" class="col-lg-12 col-12 layout-spacing" style="padding: 25px 0;">
-    <div class="statbox widget box box-shadow">
-        <div class="widget-header">
-            <div class="row">
-                <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
-                    <h4 class="mx-2">Product</h4>
+    <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
+                    <h4 class="mx-2 ">Products List</h4>
+                    
                     <div class="text-center mr-2">
                         @if(checkPermission('product-create'))
                         <a type="button" href="{{ route('product.create') }}" class="btn btn-primary" >
@@ -19,13 +18,19 @@
                         @endif
                     </div>
                 </div>
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+            
             </div>
         </div>
 
         <view-product />
-
+      
     </div>
+   
 </div>
+
 
 @endsection
 

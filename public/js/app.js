@@ -20365,12 +20365,15 @@ var _hoisted_5 = {
   "class": "col-md-3 rounded"
 };
 var _hoisted_6 = {
+  href: "#"
+};
+var _hoisted_7 = {
   "class": "card",
   style: {
     "border-radius": "8px"
   }
 };
-var _hoisted_7 = {
+var _hoisted_8 = {
   "class": "card-body d-flex align-items-center",
   style: {
     "height": "100vh",
@@ -20378,84 +20381,53 @@ var _hoisted_7 = {
     "column-gap": "20px"
   }
 };
-var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "rounded-circle",
     style: {
-      "padding": "1rem 0.9rem !important",
-      "background-color": "rgb(60 86 118 / 39%)"
+      "padding": "1rem 0.8rem !important",
+      "background-color": "#08155670"
     }
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i\r\n                                    class=\"icons icon icon-sm rounded-circle\"\r\n                                    style=\"\r\n                                        background-color: rgb(60 86 118);\r\n                                        color: #fff;\r\n                                        padding: 4px;\r\n                                    \"\r\n                                >\r\n                                  <svg\r\n                                        xmlns=\"http://www.w3.org/2000/svg\"\r\n                                        width=\"20\"\r\n                                        height=\"20\"\r\n                                        fill=\"none\"\r\n                                        viewBox=\"0 0 24 24\"\r\n                                        stroke-width=\"1.5\"\r\n                                        stroke=\"currentColor\"\r\n                                        class=\"w-6 h-6\"\r\n                                    >\r\n                                        <path\r\n                                            stroke-linecap=\"round\"\r\n                                            stroke-linejoin=\"round\"\r\n                                            d=\"M21 7.5V18M15 7.5V18M3 16.811V8.69c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061A1.125 1.125 0 0 1 3 16.811Z\"\r\n                                        />\r\n                                    </svg>\r\n                                       </i>"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
     width: "20",
     height: "20",
     viewBox: "0 0 20 20",
     fill: "none",
     xmlns: "http://www.w3.org/2000/svg"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
-    d: "M9.1 17H10.85V15.75C11.6833 15.6 12.4 15.275 13 14.775C13.6 14.275 13.9 13.5333 13.9 12.55C13.9 11.85 13.7 11.2083 13.3 10.625C12.9 10.0417 12.1 9.53333 10.9 9.1C9.9 8.76667 9.20833 8.475 8.825 8.225C8.44167 7.975 8.25 7.63333 8.25 7.2C8.25 6.76667 8.40417 6.425 8.7125 6.175C9.02083 5.925 9.46667 5.8 10.05 5.8C10.5833 5.8 11 5.92917 11.3 6.1875C11.6 6.44583 11.8167 6.76667 11.95 7.15L13.55 6.5C13.3667 5.91667 13.0292 5.40833 12.5375 4.975C12.0458 4.54167 11.5 4.3 10.9 4.25V3H9.15V4.25C8.31667 4.43333 7.66667 4.8 7.2 5.35C6.73333 5.9 6.5 6.51667 6.5 7.2C6.5 7.98333 6.72917 8.61667 7.1875 9.1C7.64583 9.58333 8.36667 10 9.35 10.35C10.4 10.7333 11.1292 11.075 11.5375 11.375C11.9458 11.675 12.15 12.0667 12.15 12.55C12.15 13.1 11.9542 13.5042 11.5625 13.7625C11.1708 14.0208 10.7 14.15 10.15 14.15C9.6 14.15 9.1125 13.9792 8.6875 13.6375C8.2625 13.2958 7.95 12.7833 7.75 12.1L6.1 12.75C6.33333 13.55 6.69583 14.1958 7.1875 14.6875C7.67917 15.1792 8.31667 15.5167 9.1 15.7V17ZM10 20C8.61667 20 7.31667 19.7375 6.1 19.2125C4.88333 18.6875 3.825 17.975 2.925 17.075C2.025 16.175 1.3125 15.1167 0.7875 13.9C0.2625 12.6833 0 11.3833 0 10C0 8.61667 0.2625 7.31667 0.7875 6.1C1.3125 4.88333 2.025 3.825 2.925 2.925C3.825 2.025 4.88333 1.3125 6.1 0.7875C7.31667 0.2625 8.61667 0 10 0C11.3833 0 12.6833 0.2625 13.9 0.7875C15.1167 1.3125 16.175 2.025 17.075 2.925C17.975 3.825 18.6875 4.88333 19.2125 6.1C19.7375 7.31667 20 8.61667 20 10C20 11.3833 19.7375 12.6833 19.2125 13.9C18.6875 15.1167 17.975 16.175 17.075 17.075C16.175 17.975 15.1167 18.6875 13.9 19.2125C12.6833 19.7375 11.3833 20 10 20Z",
-    fill: "#3C5676"
-  })])])], -1 /* HOISTED */);
+    d: "M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM11.41 16.09V18H8.74V16.07C7.03 15.71 5.58 14.61 5.47 12.67H7.43C7.53 13.72 8.25 14.54 10.08 14.54C12.04 14.54 12.48 13.56 12.48 12.95C12.48 12.12 12.04 11.34 9.81 10.81C7.33 10.21 5.63 9.19 5.63 7.14C5.63 5.42 7.02 4.3 8.74 3.93V2H11.41V3.95C13.27 4.4 14.2 5.81 14.26 7.34H12.3C12.25 6.23 11.66 5.47 10.08 5.47C8.58 5.47 7.68 6.15 7.68 7.11C7.68 7.95 8.33 8.5 10.35 9.02C12.37 9.54 14.53 10.41 14.53 12.93C14.52 14.76 13.15 15.76 11.41 16.09Z",
+    fill: "#081556"
+  })]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("  <i\r\n                                    class=\"icons icon icon-sm rounded-circle\"\r\n                                    style=\"\r\n                                        background-color: rgb(60 86 118);\r\n                                        color: #fff;\r\n                                        padding: 4px;\r\n                                    \"\r\n                                >\r\n                                \r\n                                   <svg\r\n                                        xmlns=\"http://www.w3.org/2000/svg\"\r\n                                        width=\"20\"\r\n                                        height=\"20\"\r\n                                        fill=\"none\"\r\n                                        viewBox=\"0 0 24 24\"\r\n                                        stroke-width=\"1.5\"\r\n                                        stroke=\"currentColor\"\r\n                                        class=\"w-6 h-6\"\r\n                                    >\r\n                                        <path\r\n                                            stroke-linecap=\"round\"\r\n                                            stroke-linejoin=\"round\"\r\n                                            d=\"M8 12a4 4 0 1 1 1.354 3M8 12l2.5-1M8 12l-1.5-2M21 12a9 9 0 1 1-18 0a9 9 0 0 1 18 0\"\r\n                                        />\r\n                                    </svg> \r\n                                </i>")])], -1 /* HOISTED */);
 });
-var _hoisted_9 = {
+var _hoisted_10 = {
   "class": "icons-content"
 };
-var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", {
     "class": "mb-1 card-title text-bold"
-  }, " Revenue ", -1 /* HOISTED */);
-});
-var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1 /* HOISTED */);
+  }, " Total Sales Value ", -1 /* HOISTED */);
 });
 var _hoisted_12 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-    "class": "text-sm countitem"
-  }, " Shipping fees are not included ", -1 /* HOISTED */);
-});
-var _hoisted_13 = {
-  "class": "col-md-3 rounded"
-};
-var _hoisted_14 = {
-  "class": "card",
-  style: {
-    "border-radius": "8px"
-  }
-};
-var _hoisted_15 = {
-  "class": "card-body d-flex align-items-center",
-  style: {
-    "height": "100vh",
-    "max-height": "143px",
-    "column-gap": "20px"
-  }
-};
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div data-v-040e2ab9><span class=\"rounded-circle\" style=\"padding:1rem 0.69rem !important;background-color:#ccf0d1;\" data-v-040e2ab9><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" data-v-040e2ab9><g clip-path=\"url(#clip0_29_2)\" data-v-040e2ab9><path d=\"M20 8H17V4H3C1.9 4 1 4.9 1 6V17H3C3 18.66 4.34 20 6 20C7.66 20 9 18.66 9 17H15C15 18.66 16.34 20 18 20C19.66 20 21 18.66 21 17H23V12L20 8ZM6 18.5C5.17 18.5 4.5 17.83 4.5 17C4.5 16.17 5.17 15.5 6 15.5C6.83 15.5 7.5 16.17 7.5 17C7.5 17.83 6.83 18.5 6 18.5ZM19.5 9.5L21.46 12H17V9.5H19.5ZM18 18.5C17.17 18.5 16.5 17.83 16.5 17C16.5 16.17 17.17 15.5 18 15.5C18.83 15.5 19.5 16.17 19.5 17C19.5 17.83 18.83 18.5 18 18.5Z\" fill=\"#00B517\" data-v-040e2ab9></path></g><defs data-v-040e2ab9><clipPath id=\"clip0_29_2\" data-v-040e2ab9><rect width=\"24\" height=\"24\" fill=\"white\" data-v-040e2ab9></rect></clipPath></defs></svg><!--  &lt;i\r\n                                    class=&quot;icons icon icon-sm rounded-circle&quot;\r\n                                    style=&quot;\r\n                                        background-color: rgb(60 86 118);\r\n                                        color: #fff;\r\n                                        padding: 4px;\r\n                                    &quot;\r\n                                &gt;\r\n                                \r\n                                   &lt;svg\r\n                                        xmlns=&quot;http://www.w3.org/2000/svg&quot;\r\n                                        width=&quot;20&quot;\r\n                                        height=&quot;20&quot;\r\n                                        fill=&quot;none&quot;\r\n                                        viewBox=&quot;0 0 24 24&quot;\r\n                                        stroke-width=&quot;1.5&quot;\r\n                                        stroke=&quot;currentColor&quot;\r\n                                        class=&quot;w-6 h-6&quot;\r\n                                    &gt;\r\n                                        &lt;path\r\n                                            stroke-linecap=&quot;round&quot;\r\n                                            stroke-linejoin=&quot;round&quot;\r\n                                            d=&quot;M8 12a4 4 0 1 1 1.354 3M8 12l2.5-1M8 12l-1.5-2M21 12a9 9 0 1 1-18 0a9 9 0 0 1 18 0&quot;\r\n                                        /&gt;\r\n                                    &lt;/svg&gt; \r\n                                &lt;/i&gt;--></span></div>", 1);
-var _hoisted_17 = {
-  "class": "icons-content"
-};
-var _hoisted_18 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", {
-    "class": "mb-1 card-title text-bold"
-  }, " Orders ", -1 /* HOISTED */);
-});
-var _hoisted_19 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1 /* HOISTED */);
 });
-var _hoisted_20 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_13 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "text-sm"
-  }, " Excluding orders in transit ", -1 /* HOISTED */);
+  }, " Count total pending order ", -1 /* HOISTED */);
 });
-var _hoisted_21 = {
+var _hoisted_14 = {
   "class": "col-md-3 rounded"
 };
-var _hoisted_22 = {
+var _hoisted_15 = {
+  href: "#"
+};
+var _hoisted_16 = {
   "class": "card",
   style: {
     "border-radius": "8px"
   }
 };
-var _hoisted_23 = {
+var _hoisted_17 = {
   "class": "card-body d-flex align-items-center",
   style: {
     "height": "100vh",
@@ -20463,33 +20435,73 @@ var _hoisted_23 = {
     "column-gap": "20px"
   }
 };
-var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div data-v-040e2ab9><span class=\"rounded-circle\" style=\"padding:1rem 0.69rem !important;background-color:#ffe8d0;\" data-v-040e2ab9><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" data-v-040e2ab9><g clip-path=\"url(#clip0_31_5)\" data-v-040e2ab9><path d=\"M3 11H11V3H3V11ZM5 5H9V9H5V5Z\" fill=\"#FD8A14\" data-v-040e2ab9></path><path d=\"M3 21H11V13H3V21ZM5 15H9V19H5V15Z\" fill=\"#FD8A14\" data-v-040e2ab9></path><path d=\"M13 3V11H21V3H13ZM19 9H15V5H19V9Z\" fill=\"#FD8A14\" data-v-040e2ab9></path><path d=\"M21 19H19V21H21V19Z\" fill=\"#FD8A14\" data-v-040e2ab9></path><path d=\"M15 13H13V15H15V13Z\" fill=\"#FD8A14\" data-v-040e2ab9></path><path d=\"M17 15H15V17H17V15Z\" fill=\"#FD8A14\" data-v-040e2ab9></path><path d=\"M15 17H13V19H15V17Z\" fill=\"#FD8A14\" data-v-040e2ab9></path><path d=\"M17 19H15V21H17V19Z\" fill=\"#FD8A14\" data-v-040e2ab9></path><path d=\"M19 17H17V19H19V17Z\" fill=\"#FD8A14\" data-v-040e2ab9></path><path d=\"M19 13H17V15H19V13Z\" fill=\"#FD8A14\" data-v-040e2ab9></path><path d=\"M21 15H19V17H21V15Z\" fill=\"#FD8A14\" data-v-040e2ab9></path></g><defs data-v-040e2ab9><clipPath id=\"clip0_31_5\" data-v-040e2ab9><rect width=\"24\" height=\"24\" fill=\"white\" data-v-040e2ab9></rect></clipPath></defs></svg></span></div>", 1);
-var _hoisted_25 = {
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div data-v-040e2ab9><span class=\"rounded-circle\" style=\"padding:1rem 0.69rem !important;background-color:#ccf0d1;\" data-v-040e2ab9><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" data-v-040e2ab9><g clip-path=\"url(#clip0_29_2)\" data-v-040e2ab9><path d=\"M20 8H17V4H3C1.9 4 1 4.9 1 6V17H3C3 18.66 4.34 20 6 20C7.66 20 9 18.66 9 17H15C15 18.66 16.34 20 18 20C19.66 20 21 18.66 21 17H23V12L20 8ZM6 18.5C5.17 18.5 4.5 17.83 4.5 17C4.5 16.17 5.17 15.5 6 15.5C6.83 15.5 7.5 16.17 7.5 17C7.5 17.83 6.83 18.5 6 18.5ZM19.5 9.5L21.46 12H17V9.5H19.5ZM18 18.5C17.17 18.5 16.5 17.83 16.5 17C16.5 16.17 17.17 15.5 18 15.5C18.83 15.5 19.5 16.17 19.5 17C19.5 17.83 18.83 18.5 18 18.5Z\" fill=\"#00B517\" data-v-040e2ab9></path></g><defs data-v-040e2ab9><clipPath id=\"clip0_29_2\" data-v-040e2ab9><rect width=\"24\" height=\"24\" fill=\"white\" data-v-040e2ab9></rect></clipPath></defs></svg><!--  &lt;i\r\n                                    class=&quot;icons icon icon-sm rounded-circle&quot;\r\n                                    style=&quot;\r\n                                        background-color: rgb(60 86 118);\r\n                                        color: #fff;\r\n                                        padding: 4px;\r\n                                    &quot;\r\n                                &gt;\r\n                                \r\n                                   &lt;svg\r\n                                        xmlns=&quot;http://www.w3.org/2000/svg&quot;\r\n                                        width=&quot;20&quot;\r\n                                        height=&quot;20&quot;\r\n                                        fill=&quot;none&quot;\r\n                                        viewBox=&quot;0 0 24 24&quot;\r\n                                        stroke-width=&quot;1.5&quot;\r\n                                        stroke=&quot;currentColor&quot;\r\n                                        class=&quot;w-6 h-6&quot;\r\n                                    &gt;\r\n                                        &lt;path\r\n                                            stroke-linecap=&quot;round&quot;\r\n                                            stroke-linejoin=&quot;round&quot;\r\n                                            d=&quot;M8 12a4 4 0 1 1 1.354 3M8 12l2.5-1M8 12l-1.5-2M21 12a9 9 0 1 1-18 0a9 9 0 0 1 18 0&quot;\r\n                                        /&gt;\r\n                                    &lt;/svg&gt; \r\n                                &lt;/i&gt;--></span></div>", 1);
+var _hoisted_19 = {
   "class": "icons-content"
 };
-var _hoisted_26 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_20 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", {
+    "class": "mb-1 card-title text-bold"
+  }, " Pending Order ", -1 /* HOISTED */);
+});
+var _hoisted_21 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1 /* HOISTED */);
+});
+var _hoisted_22 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "text-sm"
+  }, " Count total pending order ", -1 /* HOISTED */);
+});
+var _hoisted_23 = {
+  "class": "col-md-3 rounded"
+};
+var _hoisted_24 = {
+  href: "#"
+};
+var _hoisted_25 = {
+  "class": "card",
+  style: {
+    "border-radius": "8px"
+  }
+};
+var _hoisted_26 = {
+  "class": "card-body d-flex align-items-center",
+  style: {
+    "height": "100vh",
+    "max-height": "143px",
+    "column-gap": "20px"
+  }
+};
+var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div data-v-040e2ab9><span class=\"rounded-circle\" style=\"padding:1rem 0.69rem !important;background-color:#ffe8d0;\" data-v-040e2ab9><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" data-v-040e2ab9><g clip-path=\"url(#clip0_31_5)\" data-v-040e2ab9><path d=\"M3 11H11V3H3V11ZM5 5H9V9H5V5Z\" fill=\"#FD8A14\" data-v-040e2ab9></path><path d=\"M3 21H11V13H3V21ZM5 15H9V19H5V15Z\" fill=\"#FD8A14\" data-v-040e2ab9></path><path d=\"M13 3V11H21V3H13ZM19 9H15V5H19V9Z\" fill=\"#FD8A14\" data-v-040e2ab9></path><path d=\"M21 19H19V21H21V19Z\" fill=\"#FD8A14\" data-v-040e2ab9></path><path d=\"M15 13H13V15H15V13Z\" fill=\"#FD8A14\" data-v-040e2ab9></path><path d=\"M17 15H15V17H17V15Z\" fill=\"#FD8A14\" data-v-040e2ab9></path><path d=\"M15 17H13V19H15V17Z\" fill=\"#FD8A14\" data-v-040e2ab9></path><path d=\"M17 19H15V21H17V19Z\" fill=\"#FD8A14\" data-v-040e2ab9></path><path d=\"M19 17H17V19H19V17Z\" fill=\"#FD8A14\" data-v-040e2ab9></path><path d=\"M19 13H17V15H19V13Z\" fill=\"#FD8A14\" data-v-040e2ab9></path><path d=\"M21 15H19V17H21V15Z\" fill=\"#FD8A14\" data-v-040e2ab9></path></g><defs data-v-040e2ab9><clipPath id=\"clip0_31_5\" data-v-040e2ab9><rect width=\"24\" height=\"24\" fill=\"white\" data-v-040e2ab9></rect></clipPath></defs></svg></span></div>", 1);
+var _hoisted_28 = {
+  "class": "icons-content"
+};
+var _hoisted_29 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", {
     "class": "mb-1 card-title text-bold"
   }, " Products ", -1 /* HOISTED */);
 });
-var _hoisted_27 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_30 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1 /* HOISTED */);
 });
-var _hoisted_28 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_31 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "text-sm"
   }, " In 19 Categories ", -1 /* HOISTED */);
 });
-var _hoisted_29 = {
+var _hoisted_32 = {
   "class": "col-md-3 rounded"
 };
-var _hoisted_30 = {
+var _hoisted_33 = {
+  href: "#"
+};
+var _hoisted_34 = {
   "class": "card",
   style: {
     "border-radius": "8px"
   }
 };
-var _hoisted_31 = {
+var _hoisted_35 = {
   "class": "card-body d-flex align-items-center",
   style: {
     "height": "100vh",
@@ -20497,7 +20509,7 @@ var _hoisted_31 = {
     "column-gap": "20px"
   }
 };
-var _hoisted_32 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_36 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "rounded-circle",
     style: {
@@ -20515,32 +20527,32 @@ var _hoisted_32 = /*#__PURE__*/_withScopeId(function () {
     fill: "#0DCAF0"
   })])])], -1 /* HOISTED */);
 });
-var _hoisted_33 = {
+var _hoisted_37 = {
   "class": "icons-content"
 };
-var _hoisted_34 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_38 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", {
     "class": "mb-1 card-title text-bold"
-  }, " Monthly Earning ", -1 /* HOISTED */);
+  }, " Pending Order ", -1 /* HOISTED */);
 });
-var _hoisted_35 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_39 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1 /* HOISTED */);
 });
-var _hoisted_36 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_40 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "text-sm"
-  }, " Based in your local time. ", -1 /* HOISTED */);
+  }, " Counting of Total Delivered Order ", -1 /* HOISTED */);
 });
-var _hoisted_37 = {
+var _hoisted_41 = {
   "class": "row sales layout-top-spacing"
 };
-var _hoisted_38 = {
+var _hoisted_42 = {
   "class": "col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing"
 };
-var _hoisted_39 = {
+var _hoisted_43 = {
   "class": "widget widget-chart-one-dashboard"
 };
-var _hoisted_40 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_44 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "widget-heading-dashboard"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", {
@@ -20551,35 +20563,15 @@ var _hoisted_40 = /*#__PURE__*/_withScopeId(function () {
     "class": "tabmenu"
   }, "Total Earning")])])], -1 /* HOISTED */);
 });
-var _hoisted_41 = {
+var _hoisted_45 = {
   "class": "widget-content"
 };
-var _hoisted_42 = {
+var _hoisted_46 = {
   "class": "tabs tab-content"
 };
-var _hoisted_43 = {
+var _hoisted_47 = {
   id: "content_1",
   "class": "tabcontent"
-};
-var _hoisted_44 = {
-  "class": "col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing"
-};
-var _hoisted_45 = {
-  "class": "widget widget-chart-one-dashboard"
-};
-var _hoisted_46 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    "class": "widget-heading-dashboard"
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", {
-    "class": "tabs tab-pills"
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-    href: "javascript:void(0);",
-    id: "tb_2",
-    "class": "tabmenu"
-  }, "Sales by Category")])])], -1 /* HOISTED */);
-});
-var _hoisted_47 = {
-  "class": "widget-content"
 };
 var _hoisted_48 = {
   "class": "col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing"
@@ -20594,27 +20586,47 @@ var _hoisted_50 = /*#__PURE__*/_withScopeId(function () {
     "class": "tabs tab-pills"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     href: "javascript:void(0);",
-    id: "tb_1",
+    id: "tb_2",
     "class": "tabmenu"
-  }, "Current Year Customer")])])], -1 /* HOISTED */);
+  }, "Sales by Category")])])], -1 /* HOISTED */);
 });
 var _hoisted_51 = {
   "class": "widget-content"
 };
 var _hoisted_52 = {
-  "class": "tabs tab-content"
+  "class": "col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing"
 };
 var _hoisted_53 = {
+  "class": "widget widget-chart-one-dashboard"
+};
+var _hoisted_54 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "widget-heading-dashboard"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", {
+    "class": "tabs tab-pills"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    href: "javascript:void(0);",
+    id: "tb_1",
+    "class": "tabmenu"
+  }, "Current Year Customer")])])], -1 /* HOISTED */);
+});
+var _hoisted_55 = {
+  "class": "widget-content"
+};
+var _hoisted_56 = {
+  "class": "tabs tab-content"
+};
+var _hoisted_57 = {
   id: "content_1",
   "class": "tabcontent"
 };
-var _hoisted_54 = {
+var _hoisted_58 = {
   "class": "col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing"
 };
-var _hoisted_55 = {
+var _hoisted_59 = {
   "class": "widget widget-chart-one-dashboard"
 };
-var _hoisted_56 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_60 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "widget-heading-dashboard"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", {
@@ -20625,23 +20637,23 @@ var _hoisted_56 = /*#__PURE__*/_withScopeId(function () {
     "class": "tabmenu"
   }, "Sales Of Month")])])], -1 /* HOISTED */);
 });
-var _hoisted_57 = {
+var _hoisted_61 = {
   "class": "widget-content"
 };
-var _hoisted_58 = {
+var _hoisted_62 = {
   "class": "tabs tab-content"
 };
-var _hoisted_59 = {
+var _hoisted_63 = {
   id: "content_1",
   "class": "tabcontent"
 };
-var _hoisted_60 = {
+var _hoisted_64 = {
   "class": "col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing"
 };
-var _hoisted_61 = {
+var _hoisted_65 = {
   "class": "widget widget-chart-one-dashboard"
 };
-var _hoisted_62 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_66 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "widget-heading-dashboard"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", {
@@ -20652,81 +20664,80 @@ var _hoisted_62 = /*#__PURE__*/_withScopeId(function () {
     "class": "tabmenu"
   }, "New Members")])])], -1 /* HOISTED */);
 });
-var _hoisted_63 = {
+var _hoisted_67 = {
   "class": "new-member-list"
 };
-var _hoisted_64 = {
+var _hoisted_68 = {
   "class": "d-flex align-items-center justify-content-between mb-4"
 };
-var _hoisted_65 = {
+var _hoisted_69 = {
   "class": "d-flex align-items-center"
 };
-var _hoisted_66 = ["src"];
-var _hoisted_67 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_70 = ["src"];
+var _hoisted_71 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", null, "Patric Adams"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
     "class": "text-muted font-xs"
   }, " Sanfrancisco ")], -1 /* HOISTED */);
 });
-var _hoisted_68 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_72 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     href: "#",
     "class": "btn btn-primary-dashboard"
   }, "Add", -1 /* HOISTED */);
 });
-var _hoisted_69 = {
+var _hoisted_73 = {
   "class": "d-flex align-items-center justify-content-between mb-4"
 };
-var _hoisted_70 = {
+var _hoisted_74 = {
   "class": "d-flex align-items-center"
 };
-var _hoisted_71 = ["src"];
-var _hoisted_72 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_75 = ["src"];
+var _hoisted_76 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", null, "Dilan Specter"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
     "class": "text-muted font-xs"
   }, " Sanfrancisco ")], -1 /* HOISTED */);
 });
-var _hoisted_73 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_77 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     href: "#",
     "class": "btn btn-primary-dashboard"
   }, "Add", -1 /* HOISTED */);
 });
-var _hoisted_74 = {
+var _hoisted_78 = {
   "class": "d-flex align-items-center justify-content-between mb-4"
 };
-var _hoisted_75 = {
+var _hoisted_79 = {
   "class": "d-flex align-items-center"
 };
-var _hoisted_76 = ["src"];
-var _hoisted_77 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_80 = ["src"];
+var _hoisted_81 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", null, "Tomas Baker"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
     "class": "text-muted font-xs"
   }, " Sanfrancisco ")], -1 /* HOISTED */);
 });
-var _hoisted_78 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_82 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     href: "#",
     "class": "btn btn-primary-dashboard"
   }, "Add", -1 /* HOISTED */);
 });
-var _hoisted_79 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing\" data-v-040e2ab9><div class=\"widget widget-chart-one-dashboard\" data-v-040e2ab9><div class=\"widget-heading-dashboard\" data-v-040e2ab9><ul class=\"tabs tab-pills\" data-v-040e2ab9><li data-v-040e2ab9><a href=\"javascript:void(0);\" id=\"tb_1\" class=\"tabmenu\" data-v-040e2ab9>Recent activities</a></li></ul></div><ul class=\"verti-timeline list-unstyled font-sm\" data-v-040e2ab9><li class=\"event-list\" data-v-040e2ab9><div class=\"event-timeline-dot\" data-v-040e2ab9><i class=\"material-icons md-play_circle_outline font-xxl\" data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"20\" viewBox=\"0 -960 960 960\" width=\"20\" data-v-040e2ab9><path d=\"m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></div><div class=\"media\" data-v-040e2ab9><div class=\"me-3\" data-v-040e2ab9><h6 data-v-040e2ab9><span data-v-040e2ab9>Today</span><i data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 -960 960 960\" width=\"24\" data-v-040e2ab9><path d=\"m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></h6></div><div class=\"media-body\" data-v-040e2ab9><div data-v-040e2ab9> Lorem ipsum dolor sit amet consectetur </div></div></div></li><li class=\"event-list active\" data-v-040e2ab9><div class=\"event-timeline-dot\" data-v-040e2ab9><i class=\"material-icons\" data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"20\" viewBox=\"0 -960 960 960\" width=\"20\" data-v-040e2ab9><path d=\"m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></div><div class=\"media\" data-v-040e2ab9><div class=\"me-3\" data-v-040e2ab9><h6 data-v-040e2ab9><span data-v-040e2ab9>17 May</span><i data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 -960 960 960\" width=\"24\" data-v-040e2ab9><path d=\"m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></h6></div><div class=\"media-body\" data-v-040e2ab9><div data-v-040e2ab9> Debitis nesciunt voluptatum dicta reprehenderit </div></div></div></li><li class=\"event-list\" data-v-040e2ab9><div class=\"event-timeline-dot\" data-v-040e2ab9><i class=\"material-icons\" data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"20\" viewBox=\"0 -960 960 960\" width=\"20\" data-v-040e2ab9><path d=\"m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></div><div class=\"media\" data-v-040e2ab9><div class=\"me-3\" data-v-040e2ab9><h6 data-v-040e2ab9><span data-v-040e2ab9>13 May</span><i data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 -960 960 960\" width=\"24\" data-v-040e2ab9><path d=\"m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></h6></div><div class=\"media-body\" data-v-040e2ab9><div data-v-040e2ab9>Accusamus voluptatibus voluptas.</div></div></div></li><li class=\"event-list\" data-v-040e2ab9><div class=\"event-timeline-dot\" data-v-040e2ab9><i class=\"material-icons\" data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"20\" viewBox=\"0 -960 960 960\" width=\"20\" data-v-040e2ab9><path d=\"m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></div><div class=\"media\" data-v-040e2ab9><div class=\"me-3\" data-v-040e2ab9><h6 data-v-040e2ab9><span data-v-040e2ab9>05 April</span><i data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 -960 960 960\" width=\"24\" data-v-040e2ab9><path d=\"m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></h6></div><div class=\"media-body\" data-v-040e2ab9><div data-v-040e2ab9> At vero eos et accusamus et iusto odio dignissi </div></div></div></li><li class=\"event-list\" data-v-040e2ab9><div class=\"event-timeline-dot\" data-v-040e2ab9><i class=\"material-icons\" data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"20\" viewBox=\"0 -960 960 960\" width=\"20\" data-v-040e2ab9><path d=\"m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></div><div class=\"media\" data-v-040e2ab9><div class=\"me-3\" data-v-040e2ab9><h6 data-v-040e2ab9><span data-v-040e2ab9>26 Mar</span><i data-v-040e2ab9><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24\" viewBox=\"0 -960 960 960\" width=\"24\" data-v-040e2ab9><path d=\"m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z\" fill=\"#7b7d8a\" data-v-040e2ab9></path></svg></i></h6></div><div class=\"media-body\" data-v-040e2ab9><div data-v-040e2ab9> Responded to need “Volunteer Activities </div></div></div></li></ul></div></div>", 1);
-var _hoisted_80 = {
+var _hoisted_83 = {
   "class": "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing"
 };
-var _hoisted_81 = {
+var _hoisted_84 = {
   "class": "widget widget-chart-one-dashboard"
 };
-var _hoisted_82 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"widget-heading-dashboard\" data-v-040e2ab9><ul class=\"tabs tab-pills\" data-v-040e2ab9><li data-v-040e2ab9><a href=\"javascript:void(0);\" id=\"tb_1latest\" class=\"tabmenu\" data-v-040e2ab9>Latest orders</a></li></ul></div><div class=\"row\" data-v-040e2ab9><div class=\"col-md-3\" data-v-040e2ab9><select class=\"w-75\" name=\"pets\" id=\"pet-select\" data-v-040e2ab9><option value=\"\" data-v-040e2ab9>All Categories</option><option value=\"women\" data-v-040e2ab9>Women&#39;s Clothing</option><option value=\"men\" data-v-040e2ab9>Men&#39;s Clothing</option></select></div><div class=\"col-md-9\" data-v-040e2ab9><div class=\"row justify-content-end\" data-v-040e2ab9><div class=\"col-md-3\" data-v-040e2ab9><input type=\"date\" class=\"w-100\" id=\"start\" name=\"trip-start\" value=\"mm/dd/yy\" min=\"01-01-2024\" max=\"01-01-2028\" data-v-040e2ab9></div><div class=\"col-md-3\" data-v-040e2ab9><select class=\"w-100\" name=\"pets\" id=\"pet-select\" data-v-040e2ab9><option value=\"\" data-v-040e2ab9>Status</option><option value=\"women\" data-v-040e2ab9>Paid</option><option value=\"men\" data-v-040e2ab9>Unpaid</option></select></div></div></div></div><hr data-v-040e2ab9>", 3);
-var _hoisted_85 = {
+var _hoisted_85 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"widget-heading-dashboard\" data-v-040e2ab9><ul class=\"tabs tab-pills\" data-v-040e2ab9><li data-v-040e2ab9><a href=\"javascript:void(0);\" id=\"tb_1latest\" class=\"tabmenu\" data-v-040e2ab9>Latest orders</a></li></ul></div><div class=\"row\" data-v-040e2ab9><div class=\"col-md-3\" data-v-040e2ab9><select class=\"w-75\" name=\"pets\" id=\"pet-select\" data-v-040e2ab9><option value=\"\" data-v-040e2ab9>All Categories</option><option value=\"women\" data-v-040e2ab9>Women&#39;s Clothing</option><option value=\"men\" data-v-040e2ab9>Men&#39;s Clothing</option></select></div><div class=\"col-md-9\" data-v-040e2ab9><div class=\"row justify-content-end\" data-v-040e2ab9><div class=\"col-md-3\" data-v-040e2ab9><input type=\"date\" class=\"w-100\" id=\"start\" name=\"trip-start\" value=\"mm/dd/yy\" min=\"01-01-2024\" max=\"01-01-2028\" data-v-040e2ab9></div><div class=\"col-md-3\" data-v-040e2ab9><select class=\"w-100\" name=\"pets\" id=\"pet-select\" data-v-040e2ab9><option value=\"\" data-v-040e2ab9>Status</option><option value=\"women\" data-v-040e2ab9>Paid</option><option value=\"men\" data-v-040e2ab9>Unpaid</option></select></div></div></div></div><hr data-v-040e2ab9>", 3);
+var _hoisted_88 = {
   "class": "widget-content"
 };
-var _hoisted_86 = {
+var _hoisted_89 = {
   "class": "table-responsive"
 };
-var _hoisted_87 = {
+var _hoisted_90 = {
   "class": "table"
 };
-var _hoisted_88 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_91 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "th-content"
   }, "Order ID")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -20741,45 +20752,47 @@ var _hoisted_88 = /*#__PURE__*/_withScopeId(function () {
     "class": "th-content text-left"
   }, " Payment Status ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "th-content text-left"
-  }, " View Details ")])])], -1 /* HOISTED */);
+  }, " View Details ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "th-content text-left"
+  }, " Download PDF ")])])], -1 /* HOISTED */);
 });
-var _hoisted_89 = {
+var _hoisted_92 = {
   key: 0
 };
-var _hoisted_90 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_93 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, "14.5.2024", -1 /* HOISTED */);
 });
-var _hoisted_91 = {
-  "class": "text-left"
-};
-var _hoisted_92 = {
-  key: 0,
-  "class": "badge alert-primary"
-};
-var _hoisted_93 = {
-  key: 1,
-  "class": "badge badge-light"
-};
 var _hoisted_94 = {
-  cclass: "text-left"
+  "class": "text-left"
 };
 var _hoisted_95 = {
   key: 0,
-  "class": "badge alert-warning"
+  "class": "badge alert-primary"
 };
 var _hoisted_96 = {
   key: 1,
-  "class": "badge alert-primary"
+  "class": "badge badge-light"
 };
 var _hoisted_97 = {
+  cclass: "text-left"
+};
+var _hoisted_98 = {
+  key: 0,
+  "class": "badge alert-warning"
+};
+var _hoisted_99 = {
+  key: 1,
+  "class": "badge alert-primary"
+};
+var _hoisted_100 = {
   key: 2,
   "class": "badge badge-light"
 };
-var _hoisted_98 = {
+var _hoisted_101 = {
   key: 3,
   "class": "badge alert-danger"
 };
-var _hoisted_99 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_102 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
     "class": "text-left"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
@@ -20787,38 +20800,47 @@ var _hoisted_99 = /*#__PURE__*/_withScopeId(function () {
     "class": "btn btn-xs"
   }, "View details")], -1 /* HOISTED */);
 });
+var _hoisted_103 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
+    "class": "text-left"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    href: "#",
+    download: "",
+    "class": "btn btn-xs"
+  }, "Download PDF")], -1 /* HOISTED */);
+});
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_total_earning = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("total-earning");
   var _component_top_product = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("top-product");
   var _component_customer_of_month = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("customer-of-month");
   var _component_sales_of_month = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("sales-of-month");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [$data.loaded ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_hoisted_2, _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <img class=\"card-img-top\" src=\"\" alt=\"Card image cap\" /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Number($data.order_info.pending) + Number($data.order_info.processing) + Number($data.order_info.delivered)), 1 /* TEXT */), _hoisted_11, _hoisted_12]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <a href=\"#\" class=\"btn btn-primary\">Go somewhere</a> ")])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <img class=\"card-img-top\" src=\"\" alt=\"Card image cap\" /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [_hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.order_info.pending), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(), _hoisted_19, _hoisted_20]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <a href=\"#\" class=\"btn btn-primary\">Go somewhere</a> ")])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <img class=\"card-img-top\" src=\"\" alt=\"Card image cap\" /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [_hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.order_info.processing), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(), _hoisted_27, _hoisted_28]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <a href=\"#\" class=\"btn btn-primary\">Go somewhere</a> ")])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <img class=\"card-img-top\" src=\"\" alt=\"Card image cap\" /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [_hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [_hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.order_info.delivered), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(), _hoisted_35, _hoisted_36]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <a href=\"#\" class=\"btn btn-primary\">Go somewhere</a> ")])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [_hoisted_40, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_total_earning, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [$data.loaded ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_hoisted_2, _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <img class=\"card-img-top\" src=\"\" alt=\"Card image cap\" /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.order_info.pending), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(), _hoisted_12, _hoisted_13]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <a href=\"#\" class=\"btn btn-primary\">Go somewhere</a> ")])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <img class=\"card-img-top\" src=\"\" alt=\"Card image cap\" /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [_hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.order_info.pending), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(), _hoisted_21, _hoisted_22]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <a href=\"#\" class=\"btn btn-primary\">Go somewhere</a> ")])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <img class=\"card-img-top\" src=\"\" alt=\"Card image cap\" /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [_hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [_hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.order_info.processing), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(), _hoisted_30, _hoisted_31]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <a href=\"#\" class=\"btn btn-primary\">Go somewhere</a> ")])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <img class=\"card-img-top\" src=\"\" alt=\"Card image cap\" /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [_hoisted_36, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [_hoisted_38, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.order_info.delivered), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(), _hoisted_39, _hoisted_40]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <a href=\"#\" class=\"btn btn-primary\">Go somewhere</a> ")])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_43, [_hoisted_44, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_46, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_total_earning, {
     totalEarning: $data.totalEarning,
     height: "303"
-  }, null, 8 /* PROPS */, ["totalEarning"])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, [_hoisted_46, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_top_product, {
+  }, null, 8 /* PROPS */, ["totalEarning"])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_48, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_49, [_hoisted_50, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_51, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_top_product, {
     doughtData: $data.doughtData
-  }, null, 8 /* PROPS */, ["doughtData"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_48, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_49, [_hoisted_50, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_51, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_52, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_53, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_customer_of_month, {
+  }, null, 8 /* PROPS */, ["doughtData"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_52, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_53, [_hoisted_54, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_55, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_56, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_57, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_customer_of_month, {
     chartData: $data.chartData
-  }, null, 8 /* PROPS */, ["chartData"])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_54, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_55, [_hoisted_56, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_57, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_58, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_59, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_sales_of_month, {
+  }, null, 8 /* PROPS */, ["chartData"])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_58, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_59, [_hoisted_60, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_61, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_62, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_sales_of_month, {
     totalEarning: $data.totalSaleMonth,
     height: "358"
-  }, null, 8 /* PROPS */, ["totalEarning"])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_60, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_61, [_hoisted_62, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_64, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_65, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  }, null, 8 /* PROPS */, ["totalEarning"])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_64, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_65, [_hoisted_66, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_67, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_68, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_69, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     src: $data.url + '/admin-assets/assets/img/avatar.jpg',
     alt: "",
     "class": "avatar"
-  }, null, 8 /* PROPS */, _hoisted_66), _hoisted_67]), _hoisted_68]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_69, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_70, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  }, null, 8 /* PROPS */, _hoisted_70), _hoisted_71]), _hoisted_72]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_73, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_74, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     src: $data.url + '/admin-assets/assets/img/avatar.jpg',
     alt: "",
     "class": "avatar"
-  }, null, 8 /* PROPS */, _hoisted_71), _hoisted_72]), _hoisted_73]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_74, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_75, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  }, null, 8 /* PROPS */, _hoisted_75), _hoisted_76]), _hoisted_77]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_78, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_79, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     src: $data.url + '/admin-assets/assets/img/avatar.jpg',
     alt: "",
     "class": "avatar"
-  }, null, 8 /* PROPS */, _hoisted_76), _hoisted_77]), _hoisted_78])])])]), _hoisted_79])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_80, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_81, [_hoisted_82, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_85, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_86, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_87, [_hoisted_88, $data.orders && $data.orders.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tbody", _hoisted_89, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.orders, function (order) {
+  }, null, 8 /* PROPS */, _hoisted_80), _hoisted_81]), _hoisted_82])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div\r\n                class=\"col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing\"\r\n             >\r\n                <div class=\"widget widget-chart-one-dashboard\">\r\n                    <div class=\"widget-heading-dashboard\">\r\n                        <ul class=\"tabs tab-pills\">\r\n                            <li>\r\n                                <a\r\n                                    href=\"javascript:void(0);\"\r\n                                    id=\"tb_1\"\r\n                                    class=\"tabmenu\"\r\n                                    >Recent activities</a\r\n                                >\r\n                            </li>\r\n                        </ul>\r\n                    </div>\r\n                    <ul class=\"verti-timeline list-unstyled font-sm\">\r\n                        <li class=\"event-list\">\r\n                            <div class=\"event-timeline-dot\">\r\n                                <i\r\n                                    class=\"material-icons md-play_circle_outline font-xxl\"\r\n                                    ><svg\r\n                                        xmlns=\"http://www.w3.org/2000/svg\"\r\n                                        height=\"20\"\r\n                                        viewBox=\"0 -960 960 960\"\r\n                                        width=\"20\"\r\n                                    >\r\n                                        <path\r\n                                            d=\"m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\"\r\n                                            fill=\"#7b7d8a\"\r\n                                        /></svg\r\n                                ></i>\r\n                            </div>\r\n                            <div class=\"media\">\r\n                                <div class=\"me-3\">\r\n                                    <h6>\r\n                                        <span>Today</span>\r\n                                        <i>\r\n                                            <svg\r\n                                                xmlns=\"http://www.w3.org/2000/svg\"\r\n                                                height=\"24\"\r\n                                                viewBox=\"0 -960 960 960\"\r\n                                                width=\"24\"\r\n                                            >\r\n                                                <path\r\n                                                    d=\"m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z\"\r\n                                                    fill=\"#7b7d8a\"\r\n                                                />\r\n                                            </svg>\r\n                                        </i>\r\n                                    </h6>\r\n                                </div>\r\n                                <div class=\"media-body\">\r\n                                    <div>\r\n                                        Lorem ipsum dolor sit amet consectetur\r\n                                    </div>\r\n                                </div>\r\n                            </div>\r\n                        </li>\r\n                        <li class=\"event-list active\">\r\n                            <div class=\"event-timeline-dot\">\r\n                                <i class=\"material-icons\"\r\n                                    ><svg\r\n                                        xmlns=\"http://www.w3.org/2000/svg\"\r\n                                        height=\"20\"\r\n                                        viewBox=\"0 -960 960 960\"\r\n                                        width=\"20\"\r\n                                    >\r\n                                        <path\r\n                                            d=\"m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\"\r\n                                            fill=\"#7b7d8a\"\r\n                                        /></svg\r\n                                ></i>\r\n                            </div>\r\n                            <div class=\"media\">\r\n                                <div class=\"me-3\">\r\n                                    <h6>\r\n                                        <span>17 May</span>\r\n                                        <i>\r\n                                            <svg\r\n                                                xmlns=\"http://www.w3.org/2000/svg\"\r\n                                                height=\"24\"\r\n                                                viewBox=\"0 -960 960 960\"\r\n                                                width=\"24\"\r\n                                            >\r\n                                                <path\r\n                                                    d=\"m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z\"\r\n                                                    fill=\"#7b7d8a\"\r\n                                                />\r\n                                            </svg>\r\n                                        </i>\r\n                                    </h6>\r\n                                </div>\r\n                                <div class=\"media-body\">\r\n                                    <div>\r\n                                        Debitis nesciunt voluptatum dicta\r\n                                        reprehenderit\r\n                                    </div>\r\n                                </div>\r\n                            </div>\r\n                        </li>\r\n                        <li class=\"event-list\">\r\n                            <div class=\"event-timeline-dot\">\r\n                                <i class=\"material-icons\"\r\n                                    ><svg\r\n                                        xmlns=\"http://www.w3.org/2000/svg\"\r\n                                        height=\"20\"\r\n                                        viewBox=\"0 -960 960 960\"\r\n                                        width=\"20\"\r\n                                    >\r\n                                        <path\r\n                                            d=\"m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\"\r\n                                            fill=\"#7b7d8a\"\r\n                                        /></svg\r\n                                ></i>\r\n                            </div>\r\n                            <div class=\"media\">\r\n                                <div class=\"me-3\">\r\n                                    <h6>\r\n                                        <span>13 May</span>\r\n                                        <i>\r\n                                            <svg\r\n                                                xmlns=\"http://www.w3.org/2000/svg\"\r\n                                                height=\"24\"\r\n                                                viewBox=\"0 -960 960 960\"\r\n                                                width=\"24\"\r\n                                            >\r\n                                                <path\r\n                                                    d=\"m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z\"\r\n                                                    fill=\"#7b7d8a\"\r\n                                                />\r\n                                            </svg>\r\n                                        </i>\r\n                                    </h6>\r\n                                </div>\r\n                                <div class=\"media-body\">\r\n                                    <div>Accusamus voluptatibus voluptas.</div>\r\n                                </div>\r\n                            </div>\r\n                        </li>\r\n                        <li class=\"event-list\">\r\n                            <div class=\"event-timeline-dot\">\r\n                                <i class=\"material-icons\"\r\n                                    ><svg\r\n                                        xmlns=\"http://www.w3.org/2000/svg\"\r\n                                        height=\"20\"\r\n                                        viewBox=\"0 -960 960 960\"\r\n                                        width=\"20\"\r\n                                    >\r\n                                        <path\r\n                                            d=\"m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\"\r\n                                            fill=\"#7b7d8a\"\r\n                                        /></svg\r\n                                ></i>\r\n                            </div>\r\n                            <div class=\"media\">\r\n                                <div class=\"me-3\">\r\n                                    <h6>\r\n                                        <span>05 April</span>\r\n                                        <i>\r\n                                            <svg\r\n                                                xmlns=\"http://www.w3.org/2000/svg\"\r\n                                                height=\"24\"\r\n                                                viewBox=\"0 -960 960 960\"\r\n                                                width=\"24\"\r\n                                            >\r\n                                                <path\r\n                                                    d=\"m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z\"\r\n                                                    fill=\"#7b7d8a\"\r\n                                                />\r\n                                            </svg>\r\n                                        </i>\r\n                                    </h6>\r\n                                </div>\r\n                                <div class=\"media-body\">\r\n                                    <div>\r\n                                        At vero eos et accusamus et iusto odio\r\n                                        dignissi\r\n                                    </div>\r\n                                </div>\r\n                            </div>\r\n                        </li>\r\n                        <li class=\"event-list\">\r\n                            <div class=\"event-timeline-dot\">\r\n                                <i class=\"material-icons\"\r\n                                    ><svg\r\n                                        xmlns=\"http://www.w3.org/2000/svg\"\r\n                                        height=\"20\"\r\n                                        viewBox=\"0 -960 960 960\"\r\n                                        width=\"20\"\r\n                                    >\r\n                                        <path\r\n                                            d=\"m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\"\r\n                                            fill=\"#7b7d8a\"\r\n                                        /></svg\r\n                                ></i>\r\n                            </div>\r\n                            <div class=\"media\">\r\n                                <div class=\"me-3\">\r\n                                    <h6>\r\n                                        <span>26 Mar</span>\r\n                                        <i>\r\n                                            <svg\r\n                                                xmlns=\"http://www.w3.org/2000/svg\"\r\n                                                height=\"24\"\r\n                                                viewBox=\"0 -960 960 960\"\r\n                                                width=\"24\"\r\n                                            >\r\n                                                <path\r\n                                                    d=\"m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z\"\r\n                                                    fill=\"#7b7d8a\"\r\n                                                />\r\n                                            </svg>\r\n                                        </i>\r\n                                    </h6>\r\n                                </div>\r\n                                <div class=\"media-body\">\r\n                                    <div>\r\n                                        Responded to need “Volunteer Activities\r\n                                    </div>\r\n                                </div>\r\n                            </div>\r\n                        </li>\r\n                    </ul>\r\n                </div>\r\n            </div> ")])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_83, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_84, [_hoisted_85, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_88, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_89, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_90, [_hoisted_91, $data.orders && $data.orders.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tbody", _hoisted_92, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.orders, function (order) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
       key: order.id
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(order.order_id), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(order.user_shipping_info.first_name) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(order.user_shipping_info.last_name), 1 /* TEXT */), _hoisted_90, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(order.total_price), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_91, [order.payment_status == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_92, "COD")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_93, "Others"))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_94, [order.payment_status == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_95, "Unpaid")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), order.payment_status == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_96, "Paid")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), order.payment_status == 2 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_97, "Failed")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), order.payment_status == 3 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_98, "Cancel")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), _hoisted_99]);
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(order.order_id), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(order.user_shipping_info.first_name) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(order.user_shipping_info.last_name), 1 /* TEXT */), _hoisted_93, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(order.total_price), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_94, [order.payment_status == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_95, "COD")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_96, "Others"))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_97, [order.payment_status == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_98, "Unpaid")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), order.payment_status == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_99, "Paid")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), order.payment_status == 2 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_100, "Failed")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), order.payment_status == 3 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_101, "Cancel")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), _hoisted_102, _hoisted_103]);
   }), 128 /* KEYED_FRAGMENT */))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])])])], 64 /* STABLE_FRAGMENT */);
 }
 

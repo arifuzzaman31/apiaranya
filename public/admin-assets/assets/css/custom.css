@@ -79,4 +79,21 @@ a.btn.btn-primary-dashboard {
     color: #fff;
     border-color: #3d5677;
 }
-
+.form-control {
+    font-size: 13px;
+}
+.table > thead > tr > th {
+    text-transform: capitalize;
+}
+.page-item.active .page-link {
+    background-color: #3c5676;
+    border-color: #3c5676;
+}
+.page-link:hover {
+    color: #3c5676;
+}
+.btn-primary-log{
+    color: #fff !important;
+    background-color: #3c5676 !important;
+    border-color: #3c5676;
+}
