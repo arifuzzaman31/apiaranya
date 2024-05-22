@@ -168,7 +168,7 @@ export default {
                                                             'section-page/' +
                                                             section.id + '/edit'
                                                         "
-                                                        class="btn btn-sm btn-warning mx-2"
+                                                        class="btn btn-sm btn-primary-log mx-2"
                                                         >Edit</a>
                                                     <a
                                                         type="button"

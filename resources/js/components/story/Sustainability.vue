@@ -123,7 +123,7 @@ export default {
                                                             'sustainability/' +
                                                             sustaina.id + '/edit'
                                                         "
-                                                        class="btn btn-sm btn-warning mx-2"
+                                                        class="btn btn-sm btn-primary-log mx-2"
                                                         >Edit</a>
                                                     <button
                                                         type="button"

@@ -97,3 +97,13 @@ a.btn.btn-primary-dashboard {
     background-color: #3c5676 !important;
     border-color: #3c5676;
 }
+.btn-delete {
+    color: #000 !important;
+    background-color: #ffffff;
+    border-color: #3c5676;
+}
+.btn-delete:hover {
+    color: #fff !important;
+    background-color:#3c5676!important;
+    border-color: #3c5676!important;
+}

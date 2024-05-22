@@ -546,7 +546,7 @@ export default {
                                                 <div
                                                     class="dropdown-menu"
                                                     aria-labelledby="dropdownMenuLink2"
-                                                >
+                                                   >
                                                     <!-- <a class="dropdown-item" @click="orderDetailModal(order)" href="javascript:void(0);">Order Details</a> -->
                                                     <a
                                                         class="dropdown-item"

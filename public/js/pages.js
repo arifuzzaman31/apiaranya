@@ -23411,7 +23411,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(section.status ? "Active" : "Deactive"), 3 /* TEXT, CLASS */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       type: "button",
       href: $data.url + 'section-page/' + section.id + '/edit',
-      "class": "btn btn-sm btn-warning mx-2"
+      "class": "btn btn-sm btn-primary-log mx-2"
     }, "Edit", 8 /* PROPS */, _hoisted_10), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       type: "button",
       href: $data.url + 'section-product/' + section.id,

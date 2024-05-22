@@ -855,12 +855,17 @@
                                         >
                                     </td>
                                     <td class="text-left">
-                                        <a href="#" class="btn btn-xs"
+                                        <a  class="btn btn-xs"
+                                        :href="
+                                                            baseUri+
+                                                            'order-details/' +
+                                                            order.id
+                                                        "
                                             >View details</a
                                         >
                                     </td>
                                       <td class="text-left">
-                                        <a href="#" download class="btn btn-xs"
+                                        <a  :href="baseUri+'order-details/'+order.id+'?from=pdf'" download class="btn btn-xs"
                                             >Download PDF</a
                                         >
                                     </td>
@@ -908,6 +913,7 @@ export default {
                 onhold: 0,
             },
             url: rootUrl,
+            baseUri: baseUrl,
         };
     },
 

@@ -183,7 +183,14 @@ export default {
                                 <td>{{ index+1 }}</td>
                                 <td>{{ community.title }}</td>
                                 <td>{{ community.district_name }}</td>
-                                <td>{{ community.status == '1' ? 'Active' : 'Inactive' }}</td>
+                                <td><span   class="badge rounded-pill"
+                                   :class="
+                                       community.status == 1
+                                            ? 'alert-primary'
+                                            : 'alert-danger'
+                                    ">
+                               
+                                {{ community.status == '1' ? 'Active' : 'Inactive' }}  </span> </td>
                                 <td class="text-center">
                                     <!-- <button
                                             type="button"
@@ -195,7 +202,7 @@ export default {
                                         <a
                                             type="button"
                                             :href="url+'community-product/'+community.id"
-                                            class="btn btn-sm btn-delete "
+                                            class="btn btn-sm btn-primary-log "
                                             >Edit</a>
                                 </td>
                             </tr>
