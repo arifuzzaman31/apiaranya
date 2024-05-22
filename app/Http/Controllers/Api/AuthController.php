@@ -308,8 +308,6 @@ class AuthController extends Controller
                 'last_name'     => $request->last_name,
                 'country'       => $request->country,
                 'city'          => $request->city,
-                'division'      => $request->division,
-                'district'      => $request->district,
                 'area'          => $request->area,
                 'email'         => $request->email,
                 'phone'         => $request->phone,
