@@ -155,7 +155,7 @@
                         </div>
                         <div class="icons-content">
                             <h6 class="mb-1 card-title text-bold">
-                               Pending Order 
+                               Completed Order 
                             </h6>
                             <span>{{ order_info.pending }}</span> <br />
                             <span class="text-sm">
