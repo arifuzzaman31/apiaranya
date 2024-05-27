@@ -167,30 +167,32 @@ class CampaignController extends Controller
         $request->validate([
             'campaign' => 'required',
             'type' => 'required',
-            'product' => 'required|array|min:1'
+            // 'product' => 'required|array|min:1'
         ]);
 
         try{
-            // if($request->type == 'campaign'){
-            //     $productData = Product::with(['category:id,category_name,slug','subcategory','inventory'])
-            //         ->whereIn('id',$request->product)->get();
-            //     $mailchimpService = new MailchimpService();
-                // return $productData;
-                // $response = $mailchimpService->createProducts($productData);
-                // dd($response);
-                // if (isset($response)) {
-                //     return response()->json(['status' => 'success','message' => 'Product added to Mailchimp successfully']);
-                // }
-            // }
-            exit();
             DB::beginTransaction();
             if($request->type == 'campaign'){
                 $camp = Campaign::find($request->campaign);
                 $camp->product()->syncWithoutDetaching($request->product);
             }else{
                 $sect = DB::table('pages')->where('id',$request->campaign);
-                $gt = $sect->get()->first();
+                $gt = $sect->first();
                 $ids = $gt->product_id != NULL ? array_merge(json_decode($gt->product_id),$request->product) : $request->product;
+                // return $ids;
+                $categoryIds = array_unique(array_column($request->categories, 'categoryId'));
+                $subcategoryIds = array_unique(array_column($request->categories, 'subcategoryId'));
+                if(!empty($categoryIds)){
+                    $product = Product::orderBy('id');
+                    $product =  $product->whereIn('category_id',$categoryIds);
+                    if($request->subcategoryIds != ''){
+                        $product =  $product->whereIn('sub_category_id',$subcategoryIds);
+                    }
+                    $productIds =  $product->pluck('id')->toArray();
+                    // return gettype($productIds);
+                    $ids = array_merge($ids,$productIds);
+                }
+                // return $ids;
                 $sect->update([
                     'product_id' => json_encode(array_values(array_unique($ids)))
                 ]);

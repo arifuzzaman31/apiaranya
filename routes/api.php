@@ -12,7 +12,10 @@ use App\Http\Controllers\Api\EcorierController;
 use App\Http\Controllers\Api\MailchimpController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\ColorStoryController;
+use App\Http\Controllers\SustainabilityController;
 use App\Http\Controllers\CommunityController;
+use App\Http\Controllers\StoryController;
+use App\Http\Controllers\BlogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,11 +72,15 @@ Route::post('user-password-email-reset-link', [AuthController::class, 'sendEmail
 Route::post('user-reset-password', [AuthController::class, 'storeResetPassword']);
 Route::get('information/{slug?}',[PageController::class, 'getInfo']);
 Route::get('e-courier-package',[EcorierController::class, 'getEcoPackage']);
-Route::get('get-community-info/{id?}',[CommunityController::class, 'getCommunityData']);
+
+Route::get('get-about-story',[StoryController::class, 'getAboutData']);
+Route::get('get-home-story/{type}',[StoryController::class, 'getStoryData']);
 Route::get('get-community-data',[CommunityController::class, 'getCommunity']);
 Route::get('get-community-product/{id}',[CommunityController::class, 'getProductByCommunity']);
 Route::get('get-color-story-data',[ColorStoryController::class, 'getColorStories']);
 Route::get('get-color-story/{id}',[ColorStoryController::class, 'getSingleColorStory']);
+Route::get('sustainability',[SustainabilityController::class, 'getSustainData']);
+Route::get('blogs',[BlogController::class, 'getBlogs']);
 
 Route::post('subscribes',[MailchimpController::class, 'subscribe']);
 Route::get('product-to-mailchimp/{id}',[CampaignController::class, 'sendToMailChimp']);

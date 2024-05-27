@@ -275,7 +275,7 @@ export default {
                                 </div>
                             </div>
                             <div class="modal-footer md-button">
-                              <button type="submit" class="btn btn-primary-log">Submit</button>
+                              <button type="submit" class="btn btn-primary-log">Update</button>
 
                             </div>
 

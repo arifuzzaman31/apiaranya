@@ -201,15 +201,13 @@ Route::controller(ReportController::class)->group(function(){
 });
 
 Route::view('home-story','pages.story.home')->name('story.home');
-Route::get('get-story-info',[StoryController::class,'getStoryData']);
-Route::post('update-home-section',[StoryController::class,'updateHomeData']);
+Route::get('get-story-info/{type}',[StoryController::class,'getStoryData']);
+Route::put('update-home-story',[StoryController::class,'updateHomeData']);
 Route::view('about-aranya','pages.story.about')->name('about.aranya');
 Route::get('get-about-info',[StoryController::class,'getAboutData']);
 Route::post('update-about-section',[StoryController::class,'updateAboutData']);
 Route::view('story-community','pages.story.community')->name('story.community');
-Route::get('get-community/{id?}',[CommunityController::class,'getCommunity']);
-Route::get('get-community-info',[CommunityController::class,'getCommunityData']);
-Route::post('update-community-section',[CommunityController::class,'updateCommunityData']);
+Route::get('get-community',[CommunityController::class,'getCommunity']);
 Route::put('update-community-data',[CommunityController::class,'updateCommunity']);
 Route::get('community-product/{id}',[CommunityController::class,'editCommunityPage']);
 
@@ -235,5 +233,8 @@ Route::view('create-sustainability','pages.story.create_sustainability')->name('
 Route::post('create-sustainability',[SustainabilityController::class,'store']);
 Route::get('sustainability/{id}/edit',[SustainabilityController::class,'edit']);
 Route::put('update-sustainability',[SustainabilityController::class,'update']);
+// Route::get('get-certificate','pages.story.certificate')->name('get-certificate');
+Route::get('get-certificate',[SustainabilityController::class,'getCertificate']);
+Route::post('add-certificate',[SustainabilityController::class,'addCertificate']);
 Route::delete('sustainability/{id}',[SustainabilityController::class,'destroy']);
 ?>

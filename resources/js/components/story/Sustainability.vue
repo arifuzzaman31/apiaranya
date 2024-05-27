@@ -73,7 +73,10 @@ export default {
 
         <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
             <h4 class="pt-2">Sustainability</h4>
-            <a :href="url+'create-sustainability'" class="btn btn-info-a mb-2 mr-3">Add New</a>
+            <span>
+                <a :href="url+'create-sustainability'" class="btn btn-info-a mb-2 mr-3">Add New</a>
+                <a :href="url+'get-certificate'" class="btn btn-info-a mb-2 mr-3">Add Certificate</a>
+            </span>
         </div>
         <div id="tableHover" class="col-lg-12 col-12 layout-spacing">
             <div class="statbox widget box box-shadow">

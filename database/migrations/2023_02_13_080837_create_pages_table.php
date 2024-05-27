@@ -19,7 +19,7 @@ class CreatePagesTable extends Migration
             $table->string('section_title')->nullable();
             $table->string('banner')->nullable();
             $table->string('pattern')->nullable();
-            $table->string('product_id')->nullable();
+            $table->longText('product_id')->nullable();
             $table->string('use_for')->nullable();
             $table->string('precedence')->nullable();
             $table->tinyInteger('status')->default(1);

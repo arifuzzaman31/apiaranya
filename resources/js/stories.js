@@ -11,6 +11,7 @@ import EditBlog from './components/story/EditBlog.vue';
 import Sustainability from './components/story/Sustainability.vue';
 import CreateSustainability from './components/story/CreateSustainability.vue';
 import EditSustainability from './components/story/EditSustainability.vue';
+import Certificate from './components/story/Certificate.vue';
 import ViewColorStory from './components/story/ViewColorStory.vue';
 import CreateColorStory from './components/story/CreateColorStory.vue';
 import EditColorStory from './components/story/EditColorStory.vue';
@@ -27,6 +28,7 @@ app.component('edit-blog', EditBlog)
 app.component('view-sustainability', Sustainability)
 app.component('create-sustainability', CreateSustainability)
 app.component('edit-sustainability', EditSustainability)
+app.component('sustainability-certificate', Certificate)
 app.component('color-story', ViewColorStory)
 app.component('create-colorstory', CreateColorStory)
 app.component('edit-colorstory', EditColorStory)

@@ -35,6 +35,7 @@ export default {
                 type: "campaign",
                 discount_amount: "",
                 max_amount: "",
+                categories: [{categoryId: "",subcategoryId: "",allsubcategories:[]},{categoryId: "",subcategoryId: "",allsubcategories:[]}],
                 product: [],
             },
             campProd: [],
@@ -111,6 +112,14 @@ export default {
             if (filterData.length == 0) this.getProduct();
         },
 
+        getSectionSubCategories(ind) {
+            const filterData = this.allfiltersubcategories.filter(
+                (data) => data.parent_category == this.addTocamp.categories[ind].categoryId
+            );
+            this.addTocamp.categories[ind].allsubcategories = filterData;
+            this.addTocamp.categories[ind].subcategoryId = ''
+        },
+
         getCampaign() {
             axios
                 .get(baseUrl + `get-campaign?no_paginate=yes&status=active`)
@@ -133,20 +142,21 @@ export default {
         },
 
         filterClear() {
-            (this.filterdata = {
+            this.filterdata = {
                 category: "",
                 subcategory: "",
                 camp_id: "",
                 per_page: 10,
-            }),
-                (this.addTocamp = {
-                    campaign: "",
-                    discount_type: "flat",
-                    type: "campaign",
-                    discount_amount: "",
-                    max_amount: "",
-                    product: [],
-                });
+            };
+            this.addTocamp = {
+                campaign: "",
+                discount_type: "flat",
+                type: "campaign",
+                discount_amount: "",
+                categories: [{categoryId: "",subcategoryId: "",allsubcategories:[]},{categoryId: "",subcategoryId: "",allsubcategories:[]}],
+                max_amount: "",
+                product: [],
+            };
             this.keyword = "";
             this.allsubcategories = [];
             this.getProduct();
@@ -199,10 +209,6 @@ export default {
             });
         },
         openCampModal() {
-            if (this.addTocamp.product.length < 1) {
-                alert("Please, Select Product");
-                return;
-            }
             this.validation_error = {};
             $("#addToCampModal").modal("show");
         },
@@ -224,6 +230,15 @@ export default {
         },
 
         addToCampaign() {
+            if (this.addTocamp.product.length < 1 && this.addTocamp.type == 'campaign') {
+                alert("Please, Select Some Product");
+                return;
+            }
+            if (this.addTocamp.product.length < 1 && this.addTocamp.categoryId == '') {
+                alert("Please, Select Some Product Or Category");
+                return;
+            }
+            this.addTocamp.categories = this.addTocamp.categories.filter(item => delete(item.allsubcategories))
             axios
                 .post(baseUrl + "add-to-campaign", this.addTocamp)
                 .then((response) => {
@@ -664,7 +679,7 @@ export default {
                             </label>
                         </th>
                         <th>Image</th>
-                        <th>Name</th>                
+                        <th>Name</th>
                         <th>Category</th>
                         <th>Sub Category</th>
                         <th>Design Code</th>
@@ -708,7 +723,7 @@ export default {
                             <td>
                                 <p class="mb-0">{{ product.product_name }}</p>
                             </td>
-                          
+
                             <td>{{ product.category.category_name }}</td>
                             <td>{{ product.subcategory.category_name }}</td>
                             <td>{{ product.design_code }}</td>
@@ -716,7 +731,7 @@ export default {
                             <!-- <td class="text-center">
                                 <a href="javascript:void(0);" @click="toggleWhatsNew(product.id)" data-toggle="tooltip" data-placement="top" title="Make Change"><span class="badge rounded-pill" :class="product.is_new == 1 ? 'alert-primary':'alert-danger'">{{ product.is_new == 1 ? 'Enable' : 'Disable' }}</span></a>
                             </td> -->
-                            
+
                             <td class="text-center">
                                 <span
                                     class="badge rounded-pill"
@@ -786,7 +801,7 @@ export default {
             class="modal animated fadeInUp custo-fadeInUp"
             role="dialog"
         >
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
@@ -865,64 +880,85 @@ export default {
                                         Campaign is required
                                     </span>
                                 </div>
-                                <div class="form-group" v-else>
-                                    <label for="sectoin_name"
-                                        >Section Name</label
-                                    >
-                                    <select
-                                        id="sectoin_name"
-                                        class="form-control"
-                                        v-model="addTocamp.campaign"
-                                    >
-                                        <option value="">Choose...</option>
-                                        <option
-                                            v-for="(sect, index) in allsection"
-                                            :value="sect.id"
-                                            :key="index"
+                                <div v-else>
+                                    <div class="form-group">
+                                        <label for="sectoin_name"
+                                            >Section Name</label
                                         >
-                                            {{ sect.section_name }}
-                                        </option>
-                                    </select>
-                                    <span
-                                        v-if="
-                                            validation_error.hasOwnProperty(
-                                                'campaign'
-                                            )
-                                        "
-                                        class="text-danger"
-                                    >
-                                        Section Name is required
-                                    </span>
-                                </div>
+                                        <select
+                                            id="sectoin_name"
+                                            class="form-control"
+                                            v-model="addTocamp.campaign"
+                                        >
+                                            <option value="">Choose...</option>
+                                            <option
+                                                v-for="(sect, index) in allsection"
+                                                :value="sect.id"
+                                                :key="index"
+                                            >
+                                                {{ sect.section_name }}
+                                            </option>
+                                        </select>
+                                        <span
+                                            v-if="
+                                                validation_error.hasOwnProperty(
+                                                    'campaign'
+                                                )
+                                            "
+                                            class="text-danger"
+                                        >
+                                            Section is required
+                                        </span>
+                                    </div>
+                                    <div v-for="(cate,index) in addTocamp.categories">
+                                        <div class="form-row">
+                                            <div class="form-group col-6">
+                                                <label for="category">Select Category</label>
+                                                <select
+                                                    id="product-category"
+                                                    class="form-control form-control-sm"
+                                                    @change="getSectionSubCategories(index)"
+                                                    v-model="cate.categoryId"
+                                                >
+                                                    <option selected="" value="">
+                                                        Category
+                                                    </option>
+                                                    <option
+                                                        v-for="(
+                                                            value, index
+                                                        ) in allcategories"
+                                                        :value="value.id"
+                                                        :key="index"
+                                                    >
+                                                        {{ value.category_name }}
+                                                    </option>
+                                                </select>
+                                            </div>
 
-                                <!-- <div class="form-group">
-                                    <label for="discount_amount">Discount Amount</label>
-                                    <input type="number" v-model="addTocamp.discount_amount" class="form-control" id="discount_amount" placeholder="Discount Amount" >
-                                    <span
-                                        v-if="validation_error.hasOwnProperty('discount_amount')"
-                                        class="text-danger"
-                                    >
-                                        {{ validation_error.discount_amount[0] }}
-                                    </span>
+                                            <div class="form-group col-6">
+                                                <label for="subcate">Select SubCategory</label>
+                                                <select
+                                                    id="product-subcategory"
+                                                    class="form-control form-control-sm"
+                                                    v-model="cate.subcategoryId"
+                                                >
+                                                    <option selected="" value="">
+                                                        Sub Category
+                                                    </option>
+                                                    <option
+                                                        v-for="(
+                                                            value, index
+                                                        ) in cate.allsubcategories"
+                                                        :value="value.id"
+                                                        :key="index"
+                                                    >
+                                                        {{ value.category_name }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <div class="form-group mt-1">
-                                    <label for="discount_type">Discount Type</label>
-                                    <select class="form-control tagging" id="discount_type" v-model="addTocamp.discount_type">
-                                        <option value="flat">FLAT</option>
-                                        <option value="percentage">%</option>
-                                    </select>
-                                    <span
-                                        v-if="validation_error.hasOwnProperty('discount_type')"
-                                        class="text-danger"
-                                    >
-                                        {{ validation_error.discount_type[0] }}
-                                    </span>
-                                </div>
-                                <div class="form-group mt-1" v-if="addTocamp.discount_type == 'percentage'">
-                                    <label for="max_amount">Maximum</label>
-                                    <input type="number" class="form-control" id="max_amount" placeholder="Maximum amount" v-model="addTocamp.max_amount" >
-                                </div> -->
 
                                 <div class="modal-footer md-button">
                                     <button class="btn" data-dismiss="modal">

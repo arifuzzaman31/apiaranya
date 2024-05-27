@@ -13,9 +13,13 @@ class StoryController extends Controller
         return view('pages.story.home',['story' => $story]);
     }
 
-    public function getStoryData()
+    public function getStoryData($type)
     {
-        return DB::table('stories')->where('use_for','home')->first();
+        $data = DB::table('stories')->where('use_for',$type);
+        if($type == 'certificate'){
+           return $data->get();
+        }
+        return $data->first();
     }
 
     public function getAboutData()
@@ -25,10 +29,10 @@ class StoryController extends Controller
     public function updateHomeData(Request $request)
     {
         try {
-            DB::table('stories')->where('use_for','home')->update([
+            DB::table('stories')->where('use_for',$request->type)->update([
                 'banner_link' => $request->banner_link
             ]);
-            return response()->json(['status' => 'success', 'message' => 'Story Home Updated Successfully!']);
+            return response()->json(['status' => 'success', 'message' => 'Banner Updated Successfully!']);
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error', 'message' =>  $th->getMessage()]);
         }

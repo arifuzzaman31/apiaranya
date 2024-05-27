@@ -12,13 +12,6 @@ class CommunityController extends Controller
         $data = DB::table('communities')->where('id',$id)->first();
         return view('pages.story.edit_community',['community' => $data]);
     }
-    public function getCommunityData($id = 0)
-    {
-        if($id != 0){
-            return DB::table('communities')->where('id',$id)->first();
-        }
-        return DB::table('stories')->where('use_for','community')->first();
-    }
     public function getProductByCommunity($id)
     {
         $data = Community::with(['product.inventory' => function($q){
@@ -31,27 +24,13 @@ class CommunityController extends Controller
     public function getCommunity(Request $request)
     {
         $noPagination = $request->get('no_paginate');
-        $data = Community::with('product.product_fabric')->latest();
-        if($request->get('id')){
-            return $data->where('id',$request->get('id'))->first();
-        }
+        $data = Community::latest();
         if($noPagination != ''){
             $data = $data->get();
         } else {
             $data = $data->paginate(20);
         }
         return $data;
-    }
-    public function updateCommunityData(Request $request)
-    {
-        try {
-            DB::table('stories')->where('use_for','community')->update([
-                'banner_link' => $request->banner_link
-            ]);
-            return response()->json(['status' => 'success', 'message' => 'Community Updated Successfully!']);
-        } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'message' =>  $th->getMessage()]);
-        }
     }
     public function updateCommunity(Request $request)
     {
