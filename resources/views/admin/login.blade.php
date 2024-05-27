@@ -14,8 +14,9 @@
             <div class="form-form-wrap">
                 <div class="form-container">
                     <div class="form-content">
+                    <img src="http://127.0.0.1:8000/admin-assets/assets/img/aranya-logo-dark.png" height="60px" width="110px" bottom="10px"class="navbar-logo" alt="logo">
 
-                        <h1 class="">Sign In</h1>
+                        <!-- <h1 class="">Sign In</h1> -->
                         <p class="">Log in to your account to continue.</p>
                         @if(session()->has('error'))
                         <h5 class="text-danger text-center">{!! session()->get('error') !!}</h5>
@@ -58,7 +59,7 @@
                                 </div>
                                 <div class="d-sm-flex justify-content-between">
                                     <div class="field-wrapper">
-                                        <button type="submit" class="btn btn-primary">Log In</button>
+                                        <button type="submit" class="btn btn-primary-log">Log In</button>
                                     </div>
                                 </div>
                             </div>

@@ -19,7 +19,7 @@ class CreateStoriesTable extends Migration
             $table->string('slug')->nullable();
             $table->string('banner_link');
             $table->string('type')->nullable()->comment("image or video");
-            $table->string('use_for')->nullable()->comment("home or certificate");
+            $table->string('use_for')->nullable()->comment("home,community or certificate");
             $table->text('description')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();

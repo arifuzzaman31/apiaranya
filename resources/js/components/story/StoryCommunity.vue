@@ -8,7 +8,8 @@ export default {
     data(){
         return {
             form:{
-                banner_link: ''
+                banner_link: '',
+                type:'community'
             },
             url:baseUrl
         }
@@ -16,7 +17,7 @@ export default {
     methods: {
         getCommunityData(){
                 try{
-                    axios.get(baseUrl+`get-community-info`)
+                    axios.get(baseUrl+`get-story-info/community`)
                     .then(response => {
                         this.form.banner_link = response.data.banner_link
                     }).catch(error => {
@@ -34,10 +35,11 @@ export default {
         },
         updateCommunityData(){
             axios
-                .post(baseUrl + "update-community-section", this.form)
+                .put(baseUrl + "update-home-story", this.form)
                 .then((response) => {
                     if (response.data.status == "success") {
                         this.form.banner_link = ''
+                        this.form.type = 'community'
                         this.successMessage(response.data);
                         setTimeout(()=>{
                             window.location.href = "story-community";
@@ -74,7 +76,7 @@ export default {
                             type="button"
                             @click="mediaModalOpen()"
                             title="Change The Image"
-                            class="btn btn-success my-2"
+                            class="btn btn-primary-log  my-2"
                         >
                             Change
                         </button>
@@ -82,7 +84,7 @@ export default {
                         <button
                             type="submit"
                             title="Update The Image"
-                            class="btn btn-info my-2"
+                            class="btn btn-primary-log  my-2"
                         >
                             Update
                         </button>

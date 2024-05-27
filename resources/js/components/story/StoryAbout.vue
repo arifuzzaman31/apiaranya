@@ -73,7 +73,7 @@ export default {
                                 type="button"
                                 @click="mediaModalOpen()"
                                 title="Change The Image"
-                                class="btn btn-success my-2"
+                                class="btn btn-primary-log  my-2"
                             >
                             About Feature Image
                             </button>
@@ -103,7 +103,7 @@ export default {
                         <button
                             type="submit"
                             title="Update The Image"
-                            class="btn btn-info my-2"
+                            class="btn btn-primary-log my-2"
                         >
                             Update
                         </button>

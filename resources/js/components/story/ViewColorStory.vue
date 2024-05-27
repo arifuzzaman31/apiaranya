@@ -85,7 +85,7 @@ export default {
                     <div class="row">
                         <div class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between">
                             <h4>Color Story</h4>
-                            <a :href="url+'create-color-story'" class="btn btn-info-a mb-2 mr-3">Add New</a>
+                            <a :href="url+'create-color-story'" class="btn btn-primary-log mb-2 mr-3">Add New</a>
                         </div>
                     </div>
                 </div>
@@ -107,12 +107,17 @@ export default {
                                 <td>{{ index+1 }}</td>
                                 <td style="width: 20%;">{{ colorst.title }}</td>
                                 <td style="width: 45%;">{{ colorst.short_description }}</td>
-                                <td>{{ colorst.status == '1' ? 'Active' : 'Inactive' }}</td>
+                                <td><span   class="badge rounded-pill"
+                                   :class="
+                                       colorst.status == 1
+                                            ? 'alert-primary'
+                                            : 'alert-danger'
+                                    ">{{ colorst.status == '1' ? 'Active' : 'Inactive' }}</span></td>
                                 <td class="text-center">
                                         <a
                                             type="button"
                                             :href="url+'color-story/'+colorst.id+'/edit'"
-                                            class="btn btn-sm btn-delete "
+                                            class="btn btn-sm btn-primary-log "
                                             >Edit</a>
                                             <button
                                                         type="button"

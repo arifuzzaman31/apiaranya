@@ -9,7 +9,18 @@ class BlogController extends Controller
 {
     public function getBlogs(Request $request)
     {
-        return Blog::latest()->paginate(12);
+        $noPagination = $request->get('no_paginate');
+        $limit = $request->get('taken');
+        $data = Blog::latest();
+        if($noPagination != ''){
+            if($limit != ''){
+                $data = $data->take($limit);
+            }
+            $data = $data->get();
+        } else {
+            $data = $data->paginate(12);
+        }
+        return $data;
     }
 
     public function store(Request $request)

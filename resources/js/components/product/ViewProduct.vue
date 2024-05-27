@@ -678,11 +678,13 @@ export default {
                                 <span class="new-control-indicator"></span>
                             </label>
                         </th>
+                        <th>Image</th>
                         <th>Name</th>
                         <th>Category</th>
                         <th>Sub Category</th>
                         <th>Design Code</th>
                         <!-- <th class="text-center">What's New</th> -->
+                         <th>Date</th>
                         <th class="text-center">Status</th>
                         <th class="text-center">Action</th>
                     </tr>
@@ -710,15 +712,26 @@ export default {
                                     <span class="new-control-indicator"></span>
                                 </label>
                             </td>
+                              <td>
+                                <img
+                                    :src="product.product_image"
+                                    :alt="product.product_name"
+                                    width="70"
+                                    height="90"
+                                />
+                            </td>
                             <td>
                                 <p class="mb-0">{{ product.product_name }}</p>
                             </td>
+
                             <td>{{ product.category.category_name }}</td>
                             <td>{{ product.subcategory.category_name }}</td>
                             <td>{{ product.design_code }}</td>
+                               <td>{{ product.updated_at}}</td>
                             <!-- <td class="text-center">
                                 <a href="javascript:void(0);" @click="toggleWhatsNew(product.id)" data-toggle="tooltip" data-placement="top" title="Make Change"><span class="badge rounded-pill" :class="product.is_new == 1 ? 'alert-primary':'alert-danger'">{{ product.is_new == 1 ? 'Enable' : 'Disable' }}</span></a>
                             </td> -->
+
                             <td class="text-center">
                                 <span
                                     class="badge rounded-pill"
@@ -732,48 +745,40 @@ export default {
                                     }}</span
                                 >
                             </td>
+
                             <td class="text-center">
+                                <button
+                                    type="button"
+                                    class="btn btn-sm btn-info-a mx-2"
+                                    @click="showProdDetail(product)"
+                                >
+                                    View
+                                </button>
 
+                                <a
+                                    type="button"
+                                    :href="
+                                        url + 'product/' + product.id + '/edit'
+                                    "
+                                    v-if="
+                                        showPermission.includes('product-edit')
+                                    "
+                                    class="btn btn-sm btn-delete"
+                                    >Edit</a
+                                >
 
-                                        <button
-                                            type="button"
-                                            class="btn btn-sm btn-info-a mx-2"
-                                            @click="showProdDetail(product)"
-                                        >
-                                            View
-                                        </button>
-
-                                        <a
-                                            type="button"
-                                            :href="
-                                                url +
-                                                'product/' +
-                                                product.id +
-                                                '/edit'
-                                            "
-                                            v-if="
-                                                showPermission.includes(
-                                                    'product-edit'
-                                                )
-                                            "
-                                            class="btn btn-sm btn-delete"
-                                            >Edit</a
-                                        >
-
-
-                                        <button
-                                            type="button"
-                                            v-if="
-                                                showPermission.includes(
-                                                    'product-delete'
-                                                )
-                                            "
-                                            class="btn btn-sm btn-delete ml-2"
-                                            @click="deleteProduct(product.id)"
-                                        >
-                                            Delete
-                                        </button>
-
+                                <button
+                                    type="button"
+                                    v-if="
+                                        showPermission.includes(
+                                            'product-delete'
+                                        )
+                                    "
+                                    class="btn btn-sm btn-delete ml-2"
+                                    @click="deleteProduct(product.id)"
+                                >
+                                    Delete
+                                </button>
                             </td>
                         </tr>
                     </template>
@@ -1180,14 +1185,14 @@ export default {
     </div>
 </template>
 <style scoped>
-.btn-info-a{
-color:#fff;
-background-color: #3c5676!important;
-border-color: #3c5676!important;
+.btn-info-a {
+    color: #fff;
+    background-color: #3c5676 !important;
+    border-color: #3c5676 !important;
 }
-.btn-info-a:hover{
-background-color: #3c5676;
-border-color: #3c5676;
+.btn-info-a:hover {
+    background-color: #3c5676;
+    border-color: #3c5676;
 }
 .btn-delete {
     color: #000 !important;
@@ -1196,8 +1201,7 @@ border-color: #3c5676;
 }
 .btn-delete:hover {
     color: #fff !important;
-    background-color:#3c5676!important;
-    border-color: #3c5676!important;
+    background-color: #3c5676 !important;
+    border-color: #3c5676 !important;
 }
-
 </style>

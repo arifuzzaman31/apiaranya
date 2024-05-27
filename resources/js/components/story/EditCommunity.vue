@@ -220,7 +220,7 @@ export default {
 
 
                                 <div class="col-12 my-2 text-center">
-                                    <button type="button" class="btn btn-sm btn-info" @click="mediaModalOpen()">Upload files</button>
+                                    <button type="button" class="btn btn-sm btn-primary-log" @click="mediaModalOpen()">Upload files</button>
                                 </div>
                                 <div class="col-md-3 d-flex justify-content-center" v-for="(itm,index) in this.form.pr_imgs" :key="index">
                                     <img :src="itm" class="img-fluid img-top rounded" />
@@ -234,7 +234,7 @@ export default {
                                         type="button"
                                         @click="mediaModalCall('feature')"
                                         title="Change The Image"
-                                        class="btn btn-success my-2"
+                                        class="btn btn-primary-log my-2"
                                     >
                                     Add Feature Image
                                     </button>
@@ -252,7 +252,7 @@ export default {
                                         type="button"
                                         @click="mediaModalCall('detail')"
                                         title="Change The Image"
-                                        class="btn btn-info my-2"
+                                        class="btn btn-primary-log my-2"
                                     >
                                     Add Details Image
                                     </button>
@@ -275,7 +275,7 @@ export default {
                                 </div>
                             </div>
                             <div class="modal-footer md-button">
-                              <button type="submit" class="btn btn-info-a">Submit</button>
+                              <button type="submit" class="btn btn-primary-log">Update</button>
 
                             </div>
 
