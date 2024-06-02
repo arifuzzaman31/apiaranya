@@ -30,8 +30,8 @@ return [
     'clname' => 'diyc1dizi',
     'clpreset' => 'webable',
     'front_url' => 'https://aranya.com.bd/',
-    'payment_mode' => 'production',
-    'ecorier_mode' => 'production', /* local/production */
+    'payment_mode' => 'sandbox',
+    'ecorier_mode' => 'local', /* local/production */
     'storeid' => 'aranyalive',
     'storepassw' => 'aranyalive35826',
 

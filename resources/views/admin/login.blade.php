@@ -2,19 +2,17 @@
 <html lang="en">
 
 <head>
-    <link href="{{('admin-assets/assets/css/authentication/form-2.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('admin-assets/assets/css/authentication/form-2.css')}}" rel="stylesheet" type="text/css" />
     @include('partials.header-assets')
 </head>
 
 <body class="form">
-
-
     <div class="form-container outer">
         <div class="form-form">
             <div class="form-form-wrap">
                 <div class="form-container">
                     <div class="form-content">
-                    <img src="http://127.0.0.1:8000/admin-assets/assets/img/aranya-logo-dark.png" height="60px" width="110px" bottom="10px"class="navbar-logo" alt="logo">
+                    <img src="{{asset('admin-assets/assets/img/aranya-logo-dark.png')}}" height="60px" width="110px" bottom="10px"class="navbar-logo" alt="logo">
 
                         <!-- <h1 class="">Sign In</h1> -->
                         <p class="">Log in to your account to continue.</p>

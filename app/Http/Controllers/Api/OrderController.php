@@ -73,6 +73,21 @@ class OrderController extends Controller
                 $corierInfo['recipient_zip'] = $request->data['post_code_shipping'];
                 $corierInfo['corier_platform'] = $request->data['deliveryMethod'];
             }
+            if($request->data['deliveryMethod'] == 'DHL'){
+                $corierInfo['postalCode'] = $request->data['post_code_shipping'];
+                $corierInfo['cityName'] = $request->data['city_shipping'];
+                $corierInfo['countryCode'] = $request->data['countryShippingCode'];
+                $corierInfo['phone'] = $request->data['phone_shipping'];
+                $corierInfo['countryName'] = $request->data['country_shipping'];
+                $corierInfo['email'] = $request->data['email_shipping'];
+                $corierInfo['addressLine1'] = $request->data['apartment_address_shipping'].",".$request->data['street_address_shipping'];
+                $corierInfo['fullName'] = $request->data['first_name_shipping'].' '.$request->data['last_name_shipping'];
+                $corierInfo['quantity'] = $request->totalAmount;
+                $corierInfo['currency'] = $request->selectedCurrency;
+                $corierInfo['shippingCost'] = ceil($request->shippingCost);
+                $corierInfo['totalOrderWeight'] = ceil($request->totalOrderWeight);
+                $corierInfo['corier_platform'] = $request->data['deliveryMethod'];
+            }
             $order->order_id    =  'AO'.sprintf("%04d",$order->id);
             $order->courier_details  = json_encode($corierInfo);
             $order->update();
@@ -191,7 +206,7 @@ class OrderController extends Controller
                 $backUri = $request->backUri ? $request->backUri : 'https://aranya.com.bd';
                 return response()->json(['status' => 'success', 'type' => 'online', 'message' => 'Order Created', 'payment' => $this->sslCommerz($order->id,$backUri)], 200);
             } else {
-                $this->invoiceToMail($order->id);
+                 $this->invoiceToMail($order->id);
                 return response()->json(['status' => 'success','type' => 'cash', 'order_id' => $order->id], 200);
             }
 
@@ -354,22 +369,14 @@ class OrderController extends Controller
     {
         $status  = 'error';
         $message = '';
-
-        // if(!Auth::check()){
-
-        //     Auth::loginUsingId($request->value_a);
-        // }
         DB::table('orders')->where('id',$request->tran_id)->update([
             'payment_status' => AllStatic::$failed
         ]);
 
         if ($request->status == 'FAILED') {
-
             $message = 'Payment failed for order #'.$request->tran_id.' due to ' . $request->error. '.';
-
         }
         else {
-
             $message = 'Something went wrong and your payment failed  for order #'.$request->tran_id.'.';
         }
 
@@ -581,6 +588,7 @@ class OrderController extends Controller
 
     public function invoiceToMail($order_id = '')
     {
+        return false;
         $orders = DB::table('order_details')
                 ->join('orders', 'order_details.order_id', '=', 'orders.id')
                 ->join('users', 'order_details.user_id', '=', 'users.id')

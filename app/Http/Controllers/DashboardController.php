@@ -108,7 +108,9 @@ class DashboardController extends Controller
             ->groupBy('status')
             ->select('status', DB::raw('count(*) as order_status'))
             ->get();
-        return response()->json(['countdata' => $countdata,'orStatus' => $orStatus]);
+        $countproduct = DB::table('products')
+            ->count();
+        return response()->json(['countdata' => $countdata,'orStatus' => $orStatus,'countProduct' => $countproduct]);
     }
 
     /**

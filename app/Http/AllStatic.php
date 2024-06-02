@@ -18,6 +18,8 @@ class AllStatic
     public static $processing  = 1;
     public static $on_delivery = 2;
     public static $delivered   = 3;
+    public static $pr_cancel   = 4;
+    public static $onhold   = 5;
 
     // payment method  status
     //0 for COD/1 for MPAY/ 2 for POS/ 3 for CCRD/4 for BOD if not set default COD

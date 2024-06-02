@@ -683,7 +683,6 @@ export default {
                         <th>Category</th>
                         <th>Sub Category</th>
                         <th>Design Code</th>
-                        <!-- <th class="text-center">What's New</th> -->
                          <th>Date</th>
                         <th class="text-center">Status</th>
                         <th class="text-center">Action</th>
@@ -727,11 +726,7 @@ export default {
                             <td>{{ product.category.category_name }}</td>
                             <td>{{ product.subcategory.category_name }}</td>
                             <td>{{ product.design_code }}</td>
-                               <td>{{ product.updated_at}}</td>
-                            <!-- <td class="text-center">
-                                <a href="javascript:void(0);" @click="toggleWhatsNew(product.id)" data-toggle="tooltip" data-placement="top" title="Make Change"><span class="badge rounded-pill" :class="product.is_new == 1 ? 'alert-primary':'alert-danger'">{{ product.is_new == 1 ? 'Enable' : 'Disable' }}</span></a>
-                            </td> -->
-
+                            <td>{{ dateToString(product.updated_at)}}</td>
                             <td class="text-center">
                                 <span
                                     class="badge rounded-pill"

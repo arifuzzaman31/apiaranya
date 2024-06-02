@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use Xenon\MultiCourier\Provider\ECourier;
 use Xenon\MultiCourier\Courier;
 use Illuminate\Support\Facades\DB;
+use DateTime;
+use DateTimeZone;
 
 class OrderController extends Controller
 {
@@ -191,11 +193,7 @@ class OrderController extends Controller
                     $delivery->delivery_date = NULL;
                     $delivery->delivery_state = NULL;
                     $delivery->delivery_value = NULL;
-                    if(empty($delivery->tracking_id)){
-                        if($order->delivery_platform == 'E-Courier'){
-                               $this->sendEcorier($order,$request->hub_name);
-                        }
-                    }
+
                 }
 
                 if($request->order_position == AllStatic::$on_delivery){
@@ -205,8 +203,26 @@ class OrderController extends Controller
                     $delivery->delivery_date = NULL;
                     $delivery->delivery_state = NULL;
                     $delivery->delivery_value = NULL;
+                    if(empty($delivery->tracking_id)){
+                        if($order->delivery_platform == 'E-Courier'){
+                               $this->sendEcorier($order,$request->hub_name);
+                        }
+                        if($order->delivery_platform == 'DHL'){
+                               $this->sendToDhl($order,$request->hub_name);
+                        }
+                    }
                 }
 
+                if($request->order_position == AllStatic::$onhold){
+                    $delivery->on_hold_date = $request->date ? $request->date : date('Y-m-d');
+                    $delivery->on_hold_state = AllStatic::$delivered;
+                    $delivery->on_hold_value = deliveryPosition(AllStatic::$onhold);
+                }
+                if($request->order_position == AllStatic::$pr_cancel){
+                    $delivery->cancel_date = $request->date ? $request->date : date('Y-m-d');
+                    $delivery->cancel_state = AllStatic::$delivered;
+                    $delivery->cancel_value = deliveryPosition(AllStatic::$pr_cancel);
+                }
                 if($request->order_position == AllStatic::$delivered){
                     $delivery->delivery_date = $request->date ? $request->date : date('Y-m-d');
                     $delivery->delivery_state = AllStatic::$delivered;
@@ -275,6 +291,7 @@ class OrderController extends Controller
                     if($result['statusCode'] == 200){
                         DB::table('orders')->where('id', $order->id)->update([
                             'tracking_id' => $datas->ID,
+                            'shippment_info' => $result['response'],
                             'updated_at'    => date("Y-m-d H:i:s")
                         ]);
                         DB::table('deliveries')->where('order_id', $order->id)->update([
@@ -288,6 +305,182 @@ class OrderController extends Controller
             // return $th;
         }
 
+    }
+
+    public function sendToDhl($order,$hubInfo)
+    {
+        $dateTime = new DateTime(date('Y-m-d H:i:s'), new DateTimeZone('GMT'));
+        $dateTime->modify('+8 days');
+        $targetTimezone = new DateTimeZone('GMT+1');
+        $dateTime->setTimezone($targetTimezone);
+        $plannedShippingDateAndTime = $dateTime->format('Y-m-d\TH:i:s \G\M\T+01:00'); //"2024-06-02T17:10:09 GMT+01:00";
+        $courier = json_decode($order->courier_details);
+        $requestBody = [
+            "plannedShippingDateAndTime" => $plannedShippingDateAndTime,
+            "pickup" => [
+                "isRequested" => false,
+                "location" => "office",
+                "specialInstructions" => [
+                    [
+                        "value" => "No pickup required.",
+                        "typeCode" => "INS"
+                    ]
+                ]
+            ],
+            "productCode" => "P",
+            "localProductCode" => "P",
+            "customerDetails" => [
+                "shipperDetails" => [
+                    "postalAddress" => [
+                        "postalCode" => $hubInfo['pick_union'],
+                        "cityName" => $hubInfo['pick_division'],
+                        "countryCode" => "BD",
+                        "addressLine1" => $hubInfo['hub_address'],
+                        "countryName" => "Bangladesh"
+                    ],
+                    "contactInformation" => [
+                        "email" => "online@aranya.com.bd",
+                        "phone" => "+8801764414949",
+                        "companyName" => "ARANYA CRAFTS LTD",
+                        "fullName" => "Md Al-Amin"
+                    ]
+                ],
+                "receiverDetails" => [
+                    "postalAddress" => [
+                        "postalCode" => "$courier->postalCode",
+                        "cityName" => "$courier->cityName",
+                        "countryCode" => "$courier->countryCode",
+                        "addressLine1" => "$courier->addressLine1",
+                        "countryName" => "$courier->countryName"
+                    ],
+                    "contactInformation" => [
+                        "email" => "$courier->email",
+                        "phone" => "$courier->phone",
+                        "companyName" => "Real State Ltd",
+                        "fullName" => "$courier->fullName"
+                    ]
+                ]
+            ],
+            "accounts" => [
+                [
+                    "typeCode" => "shipper",
+                    "number" => "525040187"
+                ]
+            ],
+            "content" => [
+                "isCustomsDeclarable" => true,
+                "description" => "Clothing goods",
+                "unitOfMeasurement" => "metric",
+                "declaredValue" => ceil($order->total_price + $order->shipping_amount + $order->vat_amount),
+                "declaredValueCurrency" => "USD",
+                "incoterm" => "DAP",
+                "exportDeclaration" => [
+                    "lineItems" => [
+                        [
+                            "number" => 1,
+                            "description" => "Clothing",
+                            "quantity" => [
+                                "value" => $courier->quantity,
+                                "unitOfMeasurement" => "PCS"
+                            ],
+                            "weight" => [
+                                "grossValue" => $courier->totalOrderWeight,
+                                "netValue" => $courier->totalOrderWeight
+                            ],
+                            "manufacturerCountry" => "BD",
+                            "price" => ceil($order->total_price + $order->shipping_amount + $order->vat_amount),
+                            "commodityCodes" => [
+                                [
+                                    "typeCode" => "outbound",
+                                    "value" => "84713000"
+                                ]
+                            ]
+                        ]
+                    ],
+                    "invoice" => [
+                        "number" => $order->order_id,
+                        "date" =>  date('Y-m-d') //"2024-06-01"
+                    ]
+                ],
+                "packages" => [
+                    [
+                        "weight" => $courier->totalOrderWeight,
+                        "dimensions" => [
+                            "length" => 60,
+                            "width" => 30,
+                            "height" => 15
+                        ]
+                    ]
+                ]
+            ],
+            "valueAddedServices" => [
+                [
+                    "serviceCode" => "II",
+                    "value" => round($courier->shippingCost),
+                    "currency" => "$courier->currency"
+                ]
+            ]
+        ];
+
+        $jsonPayload = json_encode($requestBody);
+        return $jsonPayload;
+
+        $curl = curl_init();
+        $messageReference = substr(md5(uniqid()), 0, 36);
+        $header = [
+            "Authorization: Basic YXBCMXhIOWhYNnhGNWk6SCQ3ZEQkNHRRITZyWCE0Zg==",
+            "Message-Reference: $messageReference",
+            "Message-Reference-Date: " . gmdate('D, d M Y H:i:s \G\M\T'),
+            "Plugin-Name: MyShippingPlugin",
+            "Plugin-Version: 1.0",
+            "Shipping-System-Platform-Name: MyShippingSystem",
+            "Shipping-System-Platform-Version: 2.5",
+            "Webstore-Platform-Name: MyWebstore",
+            "Webstore-Platform-Version: 3.0",
+            "content-type: application/json"
+        ];
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "https://express.api.dhl.com/mydhlapi/test/shipments",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => $jsonPayload,
+            CURLOPT_HTTPHEADER => $header
+        ]);
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            // Decode JSON response
+            $responseDecoded = json_decode($response, true);
+
+            // Check if there is any response error
+            if (isset($responseDecoded['error'])) {
+                echo "Error: " . $responseDecoded['error']['message'];
+            } else {
+                // Handle success
+                DB::table('orders')->where('id', $order->id)->update([
+                    'tracking_id' => $responseDecoded['shipmentTrackingNumber'],
+                    'shippment_info' => $response,
+                    'updated_at'    => date("Y-m-d H:i:s")
+                ]);
+                DB::table('deliveries')->where('order_id', $order->id)->update([
+                    'tracking_id' => $responseDecoded['shipmentTrackingNumber']
+                ]);
+                return true;
+                // echo "<pre>";
+                // print_r($responseDecoded);
+                // echo "Shipment created successfully, tracking number: " . $responseDecoded['shipmentTrackingNumber'];
+            }
+        }
     }
     /**
      * Display the specified resource.

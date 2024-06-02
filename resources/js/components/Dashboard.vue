@@ -31,38 +31,10 @@
                                     background-color: #08155670;
                                 "
                             >
-                               
+
 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM11.41 16.09V18H8.74V16.07C7.03 15.71 5.58 14.61 5.47 12.67H7.43C7.53 13.72 8.25 14.54 10.08 14.54C12.04 14.54 12.48 13.56 12.48 12.95C12.48 12.12 12.04 11.34 9.81 10.81C7.33 10.21 5.63 9.19 5.63 7.14C5.63 5.42 7.02 4.3 8.74 3.93V2H11.41V3.95C13.27 4.4 14.2 5.81 14.26 7.34H12.3C12.25 6.23 11.66 5.47 10.08 5.47C8.58 5.47 7.68 6.15 7.68 7.11C7.68 7.95 8.33 8.5 10.35 9.02C12.37 9.54 14.53 10.41 14.53 12.93C14.52 14.76 13.15 15.76 11.41 16.09Z" fill="#081556"/>
 </svg>
-
-
-                                <!--  <i
-                                    class="icons icon icon-sm rounded-circle"
-                                    style="
-                                        background-color: rgb(60 86 118);
-                                        color: #fff;
-                                        padding: 4px;
-                                    "
-                                >
-                                
-                                   <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="20"
-                                        height="20"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="currentColor"
-                                        class="w-6 h-6"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M8 12a4 4 0 1 1 1.354 3M8 12l2.5-1M8 12l-1.5-2M21 12a9 9 0 1 1-18 0a9 9 0 0 1 18 0"
-                                        />
-                                    </svg> 
-                                </i>-->
                             </span>
                         </div>
                         <div class="icons-content">
@@ -74,17 +46,14 @@
                                 Count total pending order
                             </span>
                         </div>
-
-                        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                     </div>
                 </div>
                 </a>
             </div>
-           
+
             <div class="col-md-3 rounded">
                <a href= #>
                 <div class="card" style="border-radius: 8px">
-                    <!-- <img class="card-img-top" src="" alt="Card image cap" /> -->
                     <div
                         class="card-body d-flex align-items-center"
                         style="
@@ -124,46 +93,17 @@
                                         </clipPath>
                                     </defs>
                                 </svg>
-
-                                <!--  <i
-                                    class="icons icon icon-sm rounded-circle"
-                                    style="
-                                        background-color: rgb(60 86 118);
-                                        color: #fff;
-                                        padding: 4px;
-                                    "
-                                >
-                                
-                                   <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="20"
-                                        height="20"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="currentColor"
-                                        class="w-6 h-6"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M8 12a4 4 0 1 1 1.354 3M8 12l2.5-1M8 12l-1.5-2M21 12a9 9 0 1 1-18 0a9 9 0 0 1 18 0"
-                                        />
-                                    </svg> 
-                                </i>-->
                             </span>
                         </div>
                         <div class="icons-content">
                             <h6 class="mb-1 card-title text-bold">
-                               Pending Order 
+                               Pending Order
                             </h6>
                             <span>{{ order_info.pending }}</span> <br />
                             <span class="text-sm">
                                 Count total pending order
                             </span>
                         </div>
-
-                        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                     </div>
                 </div>
                 </a>
@@ -171,7 +111,6 @@
             <div class="col-md-3 rounded">
                <a href= #>
                 <div class="card" style="border-radius: 8px">
-                    <!-- <img class="card-img-top" src="" alt="Card image cap" /> -->
                     <div
                         class="card-body d-flex align-items-center"
                         style="
@@ -257,13 +196,11 @@
                             <h6 class="mb-1 card-title text-bold">
                                 Products
                             </h6>
-                            <span>{{ order_info.processing }}</span> <br />
+                            <span>{{ order_info.productQty }}</span> <br />
                             <span class="text-sm">
-                                In 19 Categories
+                                In 26 Categories
                             </span>
                         </div>
-
-                        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                     </div>
                 </div>
                 </a>
@@ -272,7 +209,6 @@
               <a href= #>
 
                 <div class="card" style="border-radius: 8px">
-                    <!-- <img class="card-img-top" src="" alt="Card image cap" /> -->
                     <div
                         class="card-body d-flex align-items-center"
                         style="
@@ -305,15 +241,13 @@
                         </div>
                         <div class="icons-content">
                             <h6 class="mb-1 card-title text-bold">
-                              Pending Order 
+                              Pending Order
                             </h6>
                             <span>{{ order_info.delivered }}</span> <br />
                             <span class="text-sm">
                                  Counting of Total Delivered Order
                             </span>
                         </div>
-
-                        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                     </div>
                 </div>
                 </a>
@@ -513,232 +447,6 @@
                     </div>
                 </div>
             </div>
-           <!-- <div
-                class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing"
-             >
-                <div class="widget widget-chart-one-dashboard">
-                    <div class="widget-heading-dashboard">
-                        <ul class="tabs tab-pills">
-                            <li>
-                                <a
-                                    href="javascript:void(0);"
-                                    id="tb_1"
-                                    class="tabmenu"
-                                    >Recent activities</a
-                                >
-                            </li>
-                        </ul>
-                    </div>
-                    <ul class="verti-timeline list-unstyled font-sm">
-                        <li class="event-list">
-                            <div class="event-timeline-dot">
-                                <i
-                                    class="material-icons md-play_circle_outline font-xxl"
-                                    ><svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        height="20"
-                                        viewBox="0 -960 960 960"
-                                        width="20"
-                                    >
-                                        <path
-                                            d="m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
-                                            fill="#7b7d8a"
-                                        /></svg
-                                ></i>
-                            </div>
-                            <div class="media">
-                                <div class="me-3">
-                                    <h6>
-                                        <span>Today</span>
-                                        <i>
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                height="24"
-                                                viewBox="0 -960 960 960"
-                                                width="24"
-                                            >
-                                                <path
-                                                    d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z"
-                                                    fill="#7b7d8a"
-                                                />
-                                            </svg>
-                                        </i>
-                                    </h6>
-                                </div>
-                                <div class="media-body">
-                                    <div>
-                                        Lorem ipsum dolor sit amet consectetur
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="event-list active">
-                            <div class="event-timeline-dot">
-                                <i class="material-icons"
-                                    ><svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        height="20"
-                                        viewBox="0 -960 960 960"
-                                        width="20"
-                                    >
-                                        <path
-                                            d="m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
-                                            fill="#7b7d8a"
-                                        /></svg
-                                ></i>
-                            </div>
-                            <div class="media">
-                                <div class="me-3">
-                                    <h6>
-                                        <span>17 May</span>
-                                        <i>
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                height="24"
-                                                viewBox="0 -960 960 960"
-                                                width="24"
-                                            >
-                                                <path
-                                                    d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z"
-                                                    fill="#7b7d8a"
-                                                />
-                                            </svg>
-                                        </i>
-                                    </h6>
-                                </div>
-                                <div class="media-body">
-                                    <div>
-                                        Debitis nesciunt voluptatum dicta
-                                        reprehenderit
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="event-list">
-                            <div class="event-timeline-dot">
-                                <i class="material-icons"
-                                    ><svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        height="20"
-                                        viewBox="0 -960 960 960"
-                                        width="20"
-                                    >
-                                        <path
-                                            d="m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
-                                            fill="#7b7d8a"
-                                        /></svg
-                                ></i>
-                            </div>
-                            <div class="media">
-                                <div class="me-3">
-                                    <h6>
-                                        <span>13 May</span>
-                                        <i>
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                height="24"
-                                                viewBox="0 -960 960 960"
-                                                width="24"
-                                            >
-                                                <path
-                                                    d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z"
-                                                    fill="#7b7d8a"
-                                                />
-                                            </svg>
-                                        </i>
-                                    </h6>
-                                </div>
-                                <div class="media-body">
-                                    <div>Accusamus voluptatibus voluptas.</div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="event-list">
-                            <div class="event-timeline-dot">
-                                <i class="material-icons"
-                                    ><svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        height="20"
-                                        viewBox="0 -960 960 960"
-                                        width="20"
-                                    >
-                                        <path
-                                            d="m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
-                                            fill="#7b7d8a"
-                                        /></svg
-                                ></i>
-                            </div>
-                            <div class="media">
-                                <div class="me-3">
-                                    <h6>
-                                        <span>05 April</span>
-                                        <i>
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                height="24"
-                                                viewBox="0 -960 960 960"
-                                                width="24"
-                                            >
-                                                <path
-                                                    d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z"
-                                                    fill="#7b7d8a"
-                                                />
-                                            </svg>
-                                        </i>
-                                    </h6>
-                                </div>
-                                <div class="media-body">
-                                    <div>
-                                        At vero eos et accusamus et iusto odio
-                                        dignissi
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="event-list">
-                            <div class="event-timeline-dot">
-                                <i class="material-icons"
-                                    ><svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        height="20"
-                                        viewBox="0 -960 960 960"
-                                        width="20"
-                                    >
-                                        <path
-                                            d="m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
-                                            fill="#7b7d8a"
-                                        /></svg
-                                ></i>
-                            </div>
-                            <div class="media">
-                                <div class="me-3">
-                                    <h6>
-                                        <span>26 Mar</span>
-                                        <i>
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                height="24"
-                                                viewBox="0 -960 960 960"
-                                                width="24"
-                                            >
-                                                <path
-                                                    d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z"
-                                                    fill="#7b7d8a"
-                                                />
-                                            </svg>
-                                        </i>
-                                    </h6>
-                                </div>
-                                <div class="media-body">
-                                    <div>
-                                        Responded to need “Volunteer Activities
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div> -->
         </div>
     </div>
 
@@ -819,7 +527,7 @@
                                         }}
                                         {{ order.user_shipping_info.last_name }}
                                     </td>
-                                    <td>14.5.2024</td>
+                                    <td>{{ dateToString(order.order_date)}}</td>
 
                                     <td>{{ order.total_price }}</td>
                                     <td class="text-left">
@@ -884,8 +592,10 @@ import CustomerOfMonth from "./chart/CustomerOfMonth.vue";
 import SalesOfMonth from "./chart/SalesOfMonth.vue";
 import TopProductSale from "./chart/TopProductSale.vue";
 import TotalEarning from "./chart/TotalEarning.vue";
+import Mixin from "../mixer";
 
 export default {
+    mixins:[Mixin],
     components: {
         "total-earning": TotalEarning,
         "top-product": TopProductSale,
@@ -904,7 +614,7 @@ export default {
             order_info: {
                 ttl: 0,
                 pending: 0,
-                processing: 0,
+                productQty: 0,
                 delivered: 0,
             },
             status_info: {
@@ -933,6 +643,7 @@ export default {
             axios
                 .get(baseUrl + `get-order-info`)
                 .then((result) => {
+                    this.order_info.productQty = result.data.countProduct
                     result.data.countdata.map((item, i) => {
                         switch (item.order_position) {
                             case 0:
@@ -942,7 +653,7 @@ export default {
                                 this.order_info.pending = item.total;
                                 break;
                             case 2:
-                                this.order_info.processing = item.total;
+                                // this.order_info.processing = item.total;
                                 break;
                             case 3:
                                 this.order_info.delivered = item.total;

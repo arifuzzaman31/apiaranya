@@ -25,7 +25,7 @@ export default {
                                 this.clearForm()
                             this.successMessage(response.data);
                             setTimeout(()=>{
-                                window.location.href = this.url+"get-certificate";
+                                window.location.href = this.url+"story-sustainability";
                             },1200)
                         }
                     }

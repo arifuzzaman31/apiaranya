@@ -143,6 +143,14 @@ export default {
 
                                 </div>
 
+                                <div class="col-md-4 col-12 mb-2">
+                                    <label for="status-color">Publish</label>
+                                    <select id="status-color" class="form-control  form-control-sm" v-model="form.status">
+                                        <option value="0">Deactive</option>
+                                        <option value="1">Active</option>
+                                    </select>
+                                </div>
+
                                 <div class="col-12 mb-2">
                                     <label for="campdate">Short Description</label>
                                     <textarea required v-model="form.short_description" class="form-control"  placeholder="Short Description"></textarea>
@@ -154,12 +162,10 @@ export default {
                                     </span>
                                 </div>
                                 <div class="col-12 mb-2">
-                                <div id="tooltips" class="col-lg-12 layout-spacing col-md-12">
-                                        <div class="widget-content ">
+                                        <div class="">
                                             <label for="editor-container">Description</label>
                                             <QuillEditor theme="snow" v-model:content="form.description" contentType="html" required />
                                         </div>
-                                    </div>
                                 </div>
 
 
@@ -207,14 +213,6 @@ export default {
                                             alt="banner-link"
                                             :src-placeholder="url + 'demo.png'"
                                         />
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <div class="form-group">
-                                        <select id="status-id" class="form-control  form-control-sm" v-model="form.status">
-                                            <option value="0">Deactive</option>
-                                            <option value="1">Active</option>
-                                        </select>
                                     </div>
                                 </div>
                             </div>

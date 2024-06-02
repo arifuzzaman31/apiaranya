@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <link href="{{('admin-assets/assets/css/authentication/form-2.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('admin-assets/assets/css/authentication/form-2.css')}}" rel="stylesheet" type="text/css" />
     @include('partials.header-assets')
 </head>
 

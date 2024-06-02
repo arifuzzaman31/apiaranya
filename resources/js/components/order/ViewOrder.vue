@@ -317,7 +317,7 @@ export default {
         <div class="dashboard-sub-title">
             <a href="javascript:void(0);" id="tb_1" class="tabmenu"
                 >Lorem ipsum dolor sit amet.</a>
-          
+
         </div>
                 <div class="widget-content widget-content-area">
                     <div class="row mb-2">
@@ -344,20 +344,8 @@ export default {
                                 <option value="1">Processing</option>
                                 <option value="2">On Delivery</option>
                                 <option value="3">Delivered</option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-2 col-lg-2 col-12">
-                            <select
-                                id="product-camp"
-                                class="form-control"
-                                @change="getOrder()"
-                                v-model="filterdata.status"
-                            >
-                                <option selected="" value="">Choose...</option>
-                                <option value="1">Active</option>
-                                <option value="0">Cancel</option>
-                                <option value="2">On-Hold</option>
+                                <option value="4">Cancel</option>
+                                <option value="5">On-Hold</option>
                             </select>
                         </div>
 
@@ -399,8 +387,6 @@ export default {
                                     <th>P-Type</th>
                                     <th>Payment</th>
                                     <th>PaymentBy</th>
-                                    <!-- <th>Refund Claim Date</th> -->
-                                    <th>Order Status</th>
                                     <th class="text-center">Progress</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -427,14 +413,14 @@ export default {
                                         <td>{{ order.shipping_amount }}</td>
                                         <td>
                                             <span
-                                                v-if="order.payment_status == 0"
+                                                v-if="order.payment_via == 0"
                                                 class="badge rounded-pill alert-primary"
                                                 >COD</span
                                             >
                                             <span
                                                 v-else
                                                 class="badge badge-light"
-                                                >Others</span
+                                                >Online</span
                                             >
                                         </td>
                                         <td>
@@ -443,7 +429,7 @@ export default {
                                                 class="badge rounded-pill alert-warning"
                                                 >Unpaid</span
                                             >
-                                            <span 
+                                            <span
                                                 v-if="order.payment_status == 1"
                                                 class="badge rounded-pill alert-primary"
                                                 >Paid</span
@@ -460,24 +446,7 @@ export default {
                                             >
                                         </td>
                                         <td>{{ order.payment_method_name }}</td>
-                                        <!-- <td>{{ order.refund_claim_date }}</td> -->
-                                        <td>
-                                            <span
-                                                v-if="order.status == 0"
-                                                class="badge rounded-pill alert-danger"
-                                                >Cancel</span
-                                            >
-                                            <span
-                                                v-if="order.status == 1"
-                                                class="badge rounded-pill alert-primary"
-                                                >Active</span
-                                            >
-                                            <span
-                                                v-if="order.status == 2"
-                                                class="badge rounded-pill alert-warning"
-                                                >On-Hold</span
-                                            >
-                                        </td>
+
                                         <td class="text-center">
                                             <span
                                                 v-if="order.order_position == 0"
@@ -491,13 +460,23 @@ export default {
                                             >
                                             <span
                                                 v-if="order.order_position == 2"
-                                                class="badge rounded-pill alert-warning"
+                                                class="badge rounded-pill alert-secondary"
                                                 >On Delivery</span
                                             >
                                             <span
                                                 v-if="order.order_position == 3"
-                                                class="badge badge-success"
+                                                class="badge rounded-pill alert-success"
                                                 >Delivered</span
+                                            >
+                                            <span
+                                                v-if="order.order_position == 4"
+                                                class="badge rounded-pill alert-danger"
+                                                >Cancelled</span
+                                            >
+                                            <span
+                                                v-if="order.order_position == 5"
+                                                class="badge rounded-pill alert-warning"
+                                                >On Hold</span
                                             >
                                         </td>
                                         <td class="text-center">
@@ -557,7 +536,7 @@ export default {
                                                         "
                                                         >Order Details</a
                                                     >
-                                                    <a
+                                                    <!-- <a
                                                         class="dropdown-item"
                                                         v-if="
                                                             showPermission.includes(
@@ -568,21 +547,8 @@ export default {
                                                             orderStatus(order)
                                                         "
                                                         href="javascript:void(0);"
-                                                        >Progress</a
-                                                    >
-                                                    <a
-                                                        class="dropdown-item"
-                                                        v-if="
-                                                            showPermission.includes(
-                                                                'order-update'
-                                                            )
-                                                        "
-                                                        @click="
-                                                            cancelOrder(order)
-                                                        "
-                                                        href="javascript:void(0);"
                                                         >Status</a
-                                                    >
+                                                    > -->
                                                     <a
                                                         class="dropdown-item"
                                                         v-if="
@@ -972,13 +938,15 @@ export default {
                                             <option value="2">
                                                 Ready To Delivery
                                             </option>
+                                            <option value="5">On-Hold</option>
+                                            <option value="4">Cancel</option>
                                             <option value="3">Delivered</option>
                                         </select>
                                     </div>
                                     <div
                                         class="form-group"
                                         v-if="
-                                            order_status.order_position == 1 &&
+                                            order_status.order_position == 2 &&
                                             order_status.hasTrackingId == false
                                         "
                                     >
@@ -1024,87 +992,6 @@ export default {
                                             type="button"
                                             @click="
                                                 updateStatus(
-                                                    order_status.order_id
-                                                )
-                                            "
-                                            class="btn btn-primary"
-                                        >
-                                            Update
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div
-            id="orderModifyModal"
-            class="modal animated fadeInUp custo-fadeInUp"
-            role="dialog"
-        >
-            <div class="modal-dialog modal-dialog-centered">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Order</h5>
-                        <button
-                            type="button"
-                            class="close"
-                            data-dismiss="modal"
-                            aria-label="Close"
-                            @click="formReset"
-                        >
-                            <svg
-                                aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                class="feather feather-x"
-                            >
-                                <line x1="18" y1="6" x2="6" y2="18"></line>
-                                <line x1="6" y1="6" x2="18" y2="18"></line>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="widget-content">
-                            <form method="post">
-                                <div>
-                                    <div class="form-group">
-                                        <label for="">Order</label>
-                                        <select
-                                            class="form-control"
-                                            v-model="order_status.order_modify"
-                                        >
-                                            <option value="0">Cancel</option>
-                                            <option value="1">Active</option>
-                                            <option value="2">On-Hold</option>
-                                        </select>
-                                    </div>
-                                    <div class="modal-footer md-button">
-                                        <button
-                                            class="btn"
-                                            data-dismiss="modal"
-                                        >
-                                            <i
-                                                class="flaticon-cancel-12"
-                                                @click="formReset"
-                                            ></i
-                                            >Discard
-                                        </button>
-                                        <button
-                                            type="button"
-                                            @click="
-                                                orderModify(
                                                     order_status.order_id
                                                 )
                                             "
