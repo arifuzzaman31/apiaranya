@@ -314,11 +314,6 @@ export default {
                 >Order List</a
             >
         </div>
-        <div class="dashboard-sub-title">
-            <a href="javascript:void(0);" id="tb_1" class="tabmenu"
-                >Lorem ipsum dolor sit amet.</a>
-
-        </div>
                 <div class="widget-content widget-content-area">
                     <div class="row mb-2">
                         <div class="col-md-3 col-lg-4 col-12">

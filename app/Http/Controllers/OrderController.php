@@ -62,6 +62,7 @@ class OrderController extends Controller
 
         if($keyword != ''){
             $order = $order->where('id','like','%'.$keyword.'%')
+                ->orWhere('order_id','like','%'.$keyword.'%')
             ->orWhereHas('user_shipping_info', function ($q) use ($keyword) {
                 $q->where('last_name','like','%'.$keyword.'%')
                     ->orWhere('phone','like','%'.$keyword.'%')

@@ -183,8 +183,7 @@ class CampaignController extends Controller
                 $categoryIds = array_unique(array_column($request->categories, 'categoryId'));
                 $subcategoryIds = array_unique(array_column($request->categories, 'subcategoryId'));
                 if(!empty($categoryIds)){
-                    $product = Product::orderBy('id');
-                    $product =  $product->whereIn('category_id',$categoryIds);
+                    $product = Product::whereIn('category_id',$categoryIds);
                     if($request->subcategoryIds != ''){
                         $product =  $product->whereIn('sub_category_id',$subcategoryIds);
                     }

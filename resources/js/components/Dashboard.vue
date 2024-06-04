@@ -12,7 +12,7 @@
         </div>
         <div class="row mt-3" style="display: flex; row-gap: 20px">
         <div class="col-md-3 rounded">
-               <a href= #>
+               <a :href="baseUri+'invoice-report'">
                 <div class="card" style="border-radius: 8px">
                     <!-- <img class="card-img-top" src="" alt="Card image cap" /> -->
                     <div
@@ -41,9 +41,9 @@
                             <h6 class="mb-1 card-title text-bold">
                               Total Sales Value
                             </h6>
-                            <span>{{ order_info.pending }}</span> <br />
+                            <span>{{ order_info.ttl }}</span> <br />
                             <span class="text-sm">
-                                Count total pending order
+                                Count total Sales Amount
                             </span>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
             </div>
 
             <div class="col-md-3 rounded">
-               <a href= #>
+               <a :href="baseUri+'order'">
                 <div class="card" style="border-radius: 8px">
                     <div
                         class="card-body d-flex align-items-center"
@@ -97,11 +97,11 @@
                         </div>
                         <div class="icons-content">
                             <h6 class="mb-1 card-title text-bold">
-                               Pending Order
+                               Complete Order
                             </h6>
-                            <span>{{ order_info.pending }}</span> <br />
+                            <span>{{ order_info.delivered }}</span> <br />
                             <span class="text-sm">
-                                Count total pending order
+                                Count total Complete order
                             </span>
                         </div>
                     </div>
@@ -109,7 +109,7 @@
                 </a>
             </div>
             <div class="col-md-3 rounded">
-               <a href= #>
+               <a :href="baseUri+'product'">
                 <div class="card" style="border-radius: 8px">
                     <div
                         class="card-body d-flex align-items-center"
@@ -206,7 +206,7 @@
                 </a>
             </div>
             <div class="col-md-3 rounded">
-              <a href= #>
+              <a :href="baseUri+'order'">
 
                 <div class="card" style="border-radius: 8px">
                     <div
@@ -243,7 +243,7 @@
                             <h6 class="mb-1 card-title text-bold">
                               Pending Order
                             </h6>
-                            <span>{{ order_info.delivered }}</span> <br />
+                            <span>{{ order_info.pending }}</span> <br />
                             <span class="text-sm">
                                  Counting of Total Delivered Order
                             </span>
@@ -450,141 +450,7 @@
         </div>
     </div>
 
-    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
-        <div class="widget widget-chart-one-dashboard">
-            <div class="widget-heading-dashboard">
-                <ul class="tabs tab-pills">
-                    <li>
-                        <a href="javascript:void(0);" id="tb_1latest" class="tabmenu"
-                            >Latest orders</a
-                        >
-                    </li>
-                </ul>
-            </div>
-            <div class="row">
-                <div class="col-md-3">
-                    <select class="w-75" name="pets" id="pet-select">
-                        <option value="">All Categories</option>
-                        <option value="women">Women's Clothing</option>
-                        <option value="men">Men's Clothing</option>
-                    </select>
-                </div>
-                <div class="col-md-9">
-                    <div class="row justify-content-end">
-                        <div class="col-md-3">
-                    <input type="date" class="w-100" id="start" name="trip-start" value="mm/dd/yy" min="01-01-2024" max="01-01-2028" />
-
-                        </div>
-                        <div class="col-md-3">
-                            <select class="w-100" name="pets" id="pet-select" >
-                              <option value="">Status</option>
-                                <option value="women">Paid</option>
-                                <option value="men">Unpaid</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <hr />
-
-
-            <div class="widget-content">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th><div class="th-content">Order ID</div></th>
-                                <th><div class="th-content">Customer</div></th>
-                                <th><div class="th-content">Date</div></th>
-                                <th><div class="th-content">Price</div></th>
-                                <th>
-                                    <div class="th-content">Payment Type</div>
-                                </th>
-                                <th>
-                                    <div class="th-content text-left">
-                                        Payment Status
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="th-content text-left">
-                                        View Details
-                                    </div>
-                                </th>
-                                    <th>
-                                    <div class="th-content text-left">
-                                       Download PDF
-                                    </div>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody v-if="orders && orders.length > 0">
-                            <template v-for="order in orders" :key="order.id">
-                                <tr>
-                                    <td>{{ order.order_id }}</td>
-                                    <td>
-                                        {{
-                                            order.user_shipping_info.first_name
-                                        }}
-                                        {{ order.user_shipping_info.last_name }}
-                                    </td>
-                                    <td>{{ dateToString(order.order_date)}}</td>
-
-                                    <td>{{ order.total_price }}</td>
-                                    <td class="text-left">
-                                        <span
-                                            v-if="order.payment_status == 0"
-                                            class="badge alert-primary"
-                                            >COD</span
-                                        >
-                                        <span v-else class="badge badge-light"
-                                            >Others</span
-                                        >
-                                    </td>
-                                    <td cclass="text-left">
-                                        <span
-                                            v-if="order.payment_status == 0"
-                                            class="badge alert-warning"
-                                            >Unpaid</span
-                                        >
-                                        <span
-                                            v-if="order.payment_status == 1"
-                                            class="badge alert-primary"
-                                            >Paid</span
-                                        >
-                                        <span
-                                            v-if="order.payment_status == 2"
-                                            class="badge badge-light"
-                                            >Failed</span
-                                        >
-                                        <span
-                                            v-if="order.payment_status == 3"
-                                            class="badge alert-danger"
-                                            >Cancel</span
-                                        >
-                                    </td>
-                                    <td class="text-left">
-                                        <a  class="btn btn-xs"
-                                        :href="
-                                                            baseUri+
-                                                            'order-details/' +
-                                                            order.id
-                                                        "
-                                            >View details</a
-                                        >
-                                    </td>
-                                      <td class="text-left">
-                                        <a  :href="baseUri+'order-details/'+order.id+'?from=pdf'" download class="btn btn-xs"
-                                            >Download PDF</a
-                                        >
-                                    </td>
-                                </tr>
-                            </template>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+    <order-list />
 </template>
 
 <script>
@@ -592,6 +458,7 @@ import CustomerOfMonth from "./chart/CustomerOfMonth.vue";
 import SalesOfMonth from "./chart/SalesOfMonth.vue";
 import TopProductSale from "./chart/TopProductSale.vue";
 import TotalEarning from "./chart/TotalEarning.vue";
+import OrderList from './dashboard/OrderList.vue'
 import Mixin from "../mixer";
 
 export default {
@@ -601,6 +468,7 @@ export default {
         "top-product": TopProductSale,
         "customer-of-month": CustomerOfMonth,
         "sales-of-month": SalesOfMonth,
+        OrderList
     },
 
     data() {
@@ -610,7 +478,6 @@ export default {
             doughtData: null,
             totalEarning: null,
             totalSaleMonth: null,
-            orders: [],
             order_info: {
                 ttl: 0,
                 pending: 0,
@@ -628,32 +495,17 @@ export default {
     },
 
     methods: {
-        getOrder() {
-            axios
-                .get(baseUrl + `get-order?no_paginate=yes&take_some=10`)
-                .then((result) => {
-                    this.orders = result.data;
-                })
-                .catch((errors) => {
-                    console.log(errors);
-                });
-        },
 
         getOrderInfo() {
             axios
                 .get(baseUrl + `get-order-info`)
                 .then((result) => {
                     this.order_info.productQty = result.data.countProduct
+                    this.order_info.ttl = result.data.revenue.total_sale
                     result.data.countdata.map((item, i) => {
-                        switch (item.order_position) {
+                        switch (Number(item.order_position)) {
                             case 0:
-                                this.order_info.ttl = item.total;
-                                break;
-                            case 1:
                                 this.order_info.pending = item.total;
-                                break;
-                            case 2:
-                                // this.order_info.processing = item.total;
                                 break;
                             case 3:
                                 this.order_info.delivered = item.total;
@@ -790,7 +642,6 @@ export default {
 
     mounted() {
         this.getDataMonth();
-        this.getOrder();
         this.getOrderInfo();
     },
 };
