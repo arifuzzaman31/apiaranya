@@ -77,7 +77,7 @@ export default {
         </div>
         <div id="tableHover" class="col-lg-12 col-12 layout-spacing">
             <div class="statbox widget box box-shadow">
-                <div class="widget-content widget-content-area">
+                <div class="widget-content">
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover mb-4">
                             <thead>

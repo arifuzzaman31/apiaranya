@@ -186,7 +186,7 @@ export default {
                         </div>
                     </div>
                 </div>
-                <div class="widget-content widget-content-area">
+                <div class="widget-content">
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover mb-4">
                             <thead>
@@ -259,7 +259,7 @@ export default {
                     </div>
                     <div class="modal-body">
 
-                        <div class="widget-content widget-content-area">
+                        <div class="widget-content">
                             <form>
                                 <div class="form-row">
                                 <div class="col-md-4 col-12 form-group">

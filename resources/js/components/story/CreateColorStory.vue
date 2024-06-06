@@ -108,7 +108,7 @@ export default {
                 <div>
                     <h4 class="mx-2">Add Color-Story</h4>
                 </div>
-                <div class="widget-content widget-content-area">
+                <div class="widget-content">
                     <form @submit.prevent="storeColorStory()">
                         <div class="form-row mb-4">
                                 <div class="col-md-4 col-12 mb-2">

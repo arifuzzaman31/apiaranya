@@ -62,7 +62,7 @@ export default {
             <div>
                 <h4 class="mx-2">Story Page</h4>
             </div>
-            <div class="widget-content widget-content-area">
+            <div class="widget-content">
                 <label>Story Banner Image</label>
                 <div class="container">
                     <v-lazy-image

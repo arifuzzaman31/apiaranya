@@ -122,7 +122,7 @@ export default {
                 <div>
                     <h4 class="mx-2">Update Color-Story</h4>
                 </div>
-                <div class="widget-content widget-content-area">
+                <div class="widget-content">
                     <form @submit.prevent="updateColorStory()">
                         <div class="form-row mb-4">
                                 <div class="col-md-4 col-12 mb-2">

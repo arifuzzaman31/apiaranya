@@ -165,7 +165,7 @@ export default {
                         </div>
                     </div>
                 </div>
-                <div class="widget-content widget-content-area">
+                <div class="widget-content ">
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover mb-4">
                     <thead>
@@ -189,7 +189,7 @@ export default {
                                             ? 'alert-primary'
                                             : 'alert-danger'
                                     ">
-                               
+
                                 {{ community.status == '1' ? 'Active' : 'Inactive' }}  </span> </td>
                                 <td class="text-center">
                                     <!-- <button

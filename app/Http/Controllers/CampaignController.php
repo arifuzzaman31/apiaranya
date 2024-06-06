@@ -178,22 +178,27 @@ class CampaignController extends Controller
             }else{
                 $sect = DB::table('pages')->where('id',$request->campaign);
                 $gt = $sect->first();
-                $ids = $gt->product_id != NULL ? array_merge(json_decode($gt->product_id),$request->product) : $request->product;
+                // $ids = $gt->product_id != NULL ? array_merge(json_decode($gt->product_id),$request->product) : $request->product;
                 // return $ids;
+                $ids = [];
                 $categoryIds = array_unique(array_column($request->categories, 'categoryId'));
                 $subcategoryIds = array_unique(array_column($request->categories, 'subcategoryId'));
                 if(!empty($categoryIds)){
-                    $product = Product::whereIn('category_id',$categoryIds);
-                    if($request->subcategoryIds != ''){
-                        $product =  $product->whereIn('sub_category_id',$subcategoryIds);
+                    foreach ($categoryIds as $key => $categoryId) {
+                        $query = Product::where('category_id', $categoryId);
+                        if (!empty($subcategoryIds)) {
+                            if(!empty($subcategoryIds[$key])){
+                                $query = $query->where('sub_category_id', $subcategoryIds[$key]);
+                            }
+                        }
+                        $productIds = $query->latest()->take(10)->pluck('id')->toArray();
+                        $ids = array_merge($ids, $productIds);
                     }
-                    $productIds =  $product->pluck('id')->toArray();
-                    // return gettype($productIds);
-                    $ids = array_merge($ids,$productIds);
+                    $sorted = collect($ids)->shuffle()->toArray();
                 }
-                // return $ids;
+                // return $sorted;
                 $sect->update([
-                    'product_id' => json_encode(array_values(array_unique($ids)))
+                    'product_id' => json_encode(array_values(array_unique($sorted)))
                 ]);
             }
             // $camp->product()->sync($request->product);

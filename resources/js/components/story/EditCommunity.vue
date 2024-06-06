@@ -141,7 +141,7 @@ export default {
                 <div>
                     <h4 class="mx-2">Edit Community</h4>
                 </div>
-                <div class="widget-content widget-content-area">
+                <div class="widget-content">
                     <form @submit.prevent="updateCommunity()">
                         <div class="form-row mb-4">
                                 <div class="col-md-6 col-12 mb-2">

@@ -8,7 +8,7 @@ export default {
         return {
             form: {
                 section_name: "",
-                section_title:"",
+                section_title:"no-more",
                 banner: [
                     { banner_uri: "", file_type: "", back_link: "", name: ""},
                 ],
@@ -59,8 +59,6 @@ export default {
                 .post(baseUrl + "create-home-section", this.form)
                 .then((response) => {
                     if (response.data.status == "success") {
-                        // console.log(response.data)
-                        //     this.getHomeData()
                         this.clearFilter();
                         this.successMessage(response.data);
                         window.location.href = "home-page";
@@ -85,7 +83,7 @@ export default {
             },
             getSubCategories() {
                 this.form.banner[this.updateFormdata.imagenumb].back_link = ''
-                this.form.banner[this.updateFormdata.imagenumb].name = ''
+                // this.form.banner[this.updateFormdata.imagenumb].name = ''
                 const updateFormData = (this.allfiltersubcategories).filter((data) => data.parent_category == this.updateFormdata.category.id)
                 this.allsubcategories = updateFormData
                 // this.form.banner[this.updateFormdata.imagenumb].back_link = this.updateFormdata.category.slug+'/'+this.updateFormdata.subcategory
@@ -181,18 +179,18 @@ export default {
                     this.updateFormdata.subcategory.id +
                     "&cat_name=" +
                     this.updateFormdata.subcategory.slug;
-                this.form.banner[this.updateFormdata.imagenumb].name =
-                    this.updateFormdata.subcategory.campaign_name;
+                // this.form.banner[this.updateFormdata.imagenumb].name =
+                //     this.updateFormdata.subcategory.campaign_name;
             }
             if (this.form.use_for == "category") {
                 if (this.updateFormdata.subcategoryObj != "") {
-                    const catName =
-                        this.updateFormdata.subcategoryObj.category_name.replace(
-                            /[^a-zA-Z ]/g,
-                            ""
-                        );
-                    this.form.banner[this.updateFormdata.imagenumb].name =
-                        catName;
+                    // const catName =
+                    //     this.updateFormdata.subcategoryObj.category_name.replace(
+                    //         /[^a-zA-Z ]/g,
+                    //         ""
+                    //     );
+                    // this.form.banner[this.updateFormdata.imagenumb].name =
+                    //     catName;
                     this.form.banner[this.updateFormdata.imagenumb].back_link =
                         "products/" +
                         this.updateFormdata.subcategoryObj.slug +
@@ -201,13 +199,13 @@ export default {
                         "&sub_cat=" +
                         this.updateFormdata.subcategoryObj.id;
                 } else {
-                    const catName =
-                        this.updateFormdata.category.category_name.replace(
-                            /[^a-zA-Z ]/g,
-                            ""
-                        );
-                    this.form.banner[this.updateFormdata.imagenumb].name =
-                        catName;
+                    // const catName =
+                    //     this.updateFormdata.category.category_name.replace(
+                    //         /[^a-zA-Z ]/g,
+                    //         ""
+                    //     );
+                    // this.form.banner[this.updateFormdata.imagenumb].name =
+                    //     catName;
                     this.form.banner[this.updateFormdata.imagenumb].back_link =
                         "products?cat=" +
                         this.updateFormdata.category.id +
@@ -224,12 +222,13 @@ export default {
 
         makeDesign() {
             if (this.form.use_for == "category") {
-                this.getCategory();
+                if(this.allcategories.length == 0) this.getCategory();
             }
             if (this.form.use_for == "campaign") {
-                this.getCampaign();
+                if(this.campaigns.length == 0) this.getCampaign();
             }
             if (this.form.pattern == "double") {
+                if(this.form.banner.length == 2) return ;
                 this.form.banner.push({
                     banner_uri: "",
                     file_type: "",
@@ -261,7 +260,7 @@ export default {
                 </div>
             </div>
             <div
-                class="widget-content widget-content-area vertical-border-pill"
+                class="widget-content vertical-border-pill"
             >
                 <div class="row mb-4 mt-3">
                     <div class="col-sm-3 col-12">
@@ -279,7 +278,7 @@ export default {
                                     v-model="form.section_name"
                                 />
                             </div>
-                            <div class="my-2">
+                            <!-- <div class="my-2">
                                 <label for="set-name">Section Title</label>
                                 <input
                                     type="text"
@@ -288,7 +287,7 @@ export default {
                                     placeholder="Section Title"
                                     v-model="form.section_title"
                                 />
-                            </div>
+                            </div> -->
                             <div class="my-2">
                                 <label for="pattern">Select Pattern</label>
                                 <select
@@ -333,7 +332,7 @@ export default {
 
                             <button
                                 type="button"
-                                @click="makeDesign()"
+                                @click.prevent="makeDesign()"
                                 class="btn btn-info btn-block my-2"
                             >
                                 Make
@@ -462,6 +461,12 @@ export default {
                                     class="btn btn-info btn-block mb-4 mr-2 controlss"
                                     @click="openPageMediaModal(ind)"
                                     value="File Upload"
+                                />
+                                <input
+                                    type="text"
+                                    class="form-control mb-4 mr-2 controlss"
+                                    placeholder="Write Banner Title"
+                                    v-model="bann.name"
                                 />
                                 <video
                                     :src="bann.banner_uri"

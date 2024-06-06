@@ -826,7 +826,7 @@ export default {
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="widget-content-area">
+                        <div class="">
                             <form @submit.prevent="addToCampaign()">
                                 <div class="form-group">
                                     <label for="type">Type</label>
