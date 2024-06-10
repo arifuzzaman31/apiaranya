@@ -429,7 +429,7 @@ class OrderController extends Controller
         $curl = curl_init();
         $messageReference = substr(md5(uniqid()), 0, 36);
         $header = [
-            "Authorization: Basic YXBCMXhIOWhYNnhGNWk6SCQ3ZEQkNHRRITZyWCE0Zg==",
+            "Authorization: Basic YXBONmxVN21OMmlYOXM6U145elEhM2FGXjBtSUAzdg==",
             "Message-Reference: $messageReference",
             "Message-Reference-Date: " . gmdate('D, d M Y H:i:s \G\M\T'),
             "Plugin-Name: MyShippingPlugin",
@@ -441,7 +441,7 @@ class OrderController extends Controller
             "content-type: application/json"
         ];
         curl_setopt_array($curl, [
-            CURLOPT_URL => "https://express.api.dhl.com/mydhlapi/test/shipments",
+            CURLOPT_URL => "https://express.api.dhl.com/mydhlapi/shipments",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
