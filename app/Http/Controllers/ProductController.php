@@ -533,7 +533,7 @@ class ProductController extends Controller
             'file'   => 'required|mimes:xls,xlsx'
         ]);
         try {
-            //$path = $request->file('file')->getRealPath();
+            // $path = $request->file('file')->getRealPath();
             // dd($path);
             if ($request->file_from == 'stockUpdate') {
                 \Excel::import(new StockUpdateImport, $request->file);

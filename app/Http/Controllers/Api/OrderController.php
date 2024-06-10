@@ -588,7 +588,7 @@ class OrderController extends Controller
 
     public function invoiceToMail($order_id = '')
     {
-        return false;
+        // return false;
         $orders = DB::table('order_details')
                 ->join('orders', 'order_details.order_id', '=', 'orders.id')
                 ->join('users', 'order_details.user_id', '=', 'users.id')

@@ -206,16 +206,16 @@ export default {
                                                         class="btn btn-sm btn-delete "
                                                         >Edit</a
                                                     >
-                                                
-                                                
+
+
                                                     <button
                                                         type="button"
                                                         class="btn btn-sm btn-delete ml-2"
-                                                    @click="deleteCampaign(campaign.id)" 
+                                                    @click="deleteCampaign(campaign.id)"
                                                     >
                                                         Delete
                                                     </button>
-                                                
+
                                         </td>
 
 
@@ -225,8 +225,8 @@ export default {
 
 
 
-                                
-                            
+
+
                             </tr>
                         </template>
                     </tbody>
@@ -252,7 +252,7 @@ export default {
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="widget-content widget-content-area">
+                        <div class="">
                             <form @submit.prevent="storeCampaign()">
                                 <div class="form-group">
                                     <label for="size_name">Campaign Name</label>
@@ -321,7 +321,7 @@ export default {
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="widget-content widget-content-area">
+                        <div class="widget-content">
                             <form @submit.prevent="updateCampaign()">
                                 <div class="form-group">
                                     <label for="size_name">Campaign Name</label>
