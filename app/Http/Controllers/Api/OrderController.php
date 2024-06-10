@@ -304,7 +304,6 @@ class OrderController extends Controller
         if (config('app.payment_mode') == 'sandbox') {
             $direct_api_url = "https://sandbox.sslcommerz.com/gwprocess/v4/api.php";
         } else {
-            // $direct_api_url = "https://sandbox.sslcommerz.com/gwprocess/v4/api.php";
             $direct_api_url = "https://securepay.sslcommerz.com/gwprocess/v4/api.php";
         }
 
