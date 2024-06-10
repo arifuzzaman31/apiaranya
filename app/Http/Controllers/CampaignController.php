@@ -250,13 +250,69 @@ class CampaignController extends Controller
 
     public function sendToMailChimp($campId = '')
     {
-        $productData = Product::with(['category:id,category_name,slug','subcategory:id,category_name,slug','inventory','campaign'])
-            ->whereHas('campaign', function($q) use ($campId) {
-                $q->where('campaign_id', $campId);
-            })->get();
-        $mailchimpService = new MailchimpService();
-        // return $productData;
-        $response = $mailchimpService->createProducts($productData);
-        dd($response);
+        $inv = Inventory::all()->toArray();
+        $chunks = array_chunk($inv, 100);
+        foreach($chunks as $chunk)
+        {
+            foreach($chunk as $v)
+            {
+                Discount::insert([
+                    'product_id'       => $v['product_id'],
+                    'disc_sku'         => $v['sku'],
+                    'discount_amount'  => 15,
+                    'discount_type'    => 'percentage',
+                    'type'             => 'campaign',
+                    'max_amount'       => NULL,
+                    'status'           => 1
+                ]);
+            }
+            // Update the inventory items in the current chunk
+            $product_ids = array_column($chunk, 'product_id');
+            Inventory::whereIn('product_id', $product_ids)->update([
+                'disc_status' => 1
+            ]);
+        }
+        return $this->successMessage("Discount added to Prodcut!");
+        $productsData = Product::with(['category:id,category_name,slug','subcategory:id,category_name,slug','inventory','campaign'])
+    		->whereDoesntHave('campaign')
+    		->orWhereHas('campaign', function($q) use ($campId) {
+        	$q->where('campaign_id', '!=', $campId);
+    	})
+	->skip(350)->take(50)
+	->get();
+        //return $productsData;
+        //$response = $this->createProductsData($productsData);
+	$responses = [];
+	foreach ($productsData as $productData) {
+            $link = config('app.front_url').'products/'.($productData->subcategory->slug ?? $productData->category->slug).'/'.$productData->id;
+            $data = [
+                    'id' => $productData->id.uniqueString(),
+                    'title' => $productData->product_name,
+                    'description' => strip_tags($productData->description),
+                    'vendor' => 'Aranya',
+                    'image_url' => $productData->product_image,
+                    'variants' => [
+                        [
+                            'id' => optional($productData->inventory->first())->id.uniqueString(),
+                            'title' => $productData->product_name,
+                            'price' => (int)optional($productData->inventory->first())->mrp,
+                            'inventory_quantity' => optional($productData->inventory->first())->stock,
+                            "url" => $link,
+                            'sku' => optional($productData->inventory->first())->sku,
+                            "image_url" => $productData->product_image
+                        ],
+                    ],
+                    'url' => $link,
+                    'type' =>  $productData->category->category_name,
+                    'published_at_foreign' =>  date('Y-m-d H:i:s'),
+            ];
+            //$responses[] = $data;
+            $responses[] = $this->createProduct($data);
+		//$url = "https://us6.api.mailchimp.com/3.0/ecommerce/stores/e8c8bcc5-6471-4db7-af94-b120000384c5/products";
+        	//$resp = Http::withBasicAuth('anystring', "93fbcecc0f8502731ac2c8f62c5a4b96-us6")->post($url, $data);
+		//$responses[] = $resp;
+        }
+	return response()->json($responses);
+
     }
 }
