@@ -467,9 +467,19 @@ class OrderController extends Controller
             if (isset($responseDecoded['error'])) {
                 echo "Error: " . $responseDecoded['error']['message'];
             } else {
-                echo "<pre>";
-                print_r($responseDecoded);
-                //echo "Shipment created successfully, tracking number: " . $responseDecoded['shipmentTrackingNumber'];
+                // Handle success
+                DB::table('orders')->where('id', $order->id)->update([
+                    'tracking_id' => $responseDecoded['shipmentTrackingNumber'],
+                    'shippment_info' => $response,
+                    'updated_at'    => date("Y-m-d H:i:s")
+                ]);
+                DB::table('deliveries')->where('order_id', $order->id)->update([
+                    'tracking_id' => $responseDecoded['shipmentTrackingNumber']
+                ]);
+                return true;
+                // echo "<pre>";
+                // print_r($responseDecoded);
+                // echo "Shipment created successfully, tracking number: " . $responseDecoded['shipmentTrackingNumber'];
             }
         }
     }
@@ -628,23 +638,13 @@ class OrderController extends Controller
         } else {
             // Decode JSON response
             $responseDecoded = json_decode($response, true);
-
             // Check if there is any response error
             if (isset($responseDecoded['error'])) {
                 echo "Error: " . $responseDecoded['error']['message'];
             } else {
-                // Handle success
-                DB::table('orders')->where('id', $order->id)->update([
-                    'tracking_id' => $responseDecoded['shipmentTrackingNumber'],
-                    'shippment_info' => $response,
-                    'updated_at'    => date("Y-m-d H:i:s")
-                ]);
-                DB::table('deliveries')->where('order_id', $order->id)->update([
-                    'tracking_id' => $responseDecoded['shipmentTrackingNumber']
-                ]);
-                return true;
-                // echo "<pre>";
-                // print_r($responseDecoded);
+
+                echo "<pre>";
+                print_r($responseDecoded);
                 // echo "Shipment created successfully, tracking number: " . $responseDecoded['shipmentTrackingNumber'];
             }
         }
