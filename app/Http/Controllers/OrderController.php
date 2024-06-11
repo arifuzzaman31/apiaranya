@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Xenon\MultiCourier\Provider\ECourier;
 use Xenon\MultiCourier\Courier;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use DateTime;
 use DateTimeZone;
 
@@ -206,7 +207,8 @@ class OrderController extends Controller
                     $delivery->delivery_value = NULL;
                     if(empty($delivery->tracking_id)){
                         if($order->delivery_platform == 'E-Courier'){
-                               $this->sendEcorier($order,$request->hub_name);
+                              // $this->sendEcorier($order,$request->hub_name);
+                               $this->resellerEcorier($order,$request->hub_name);
                         }
                         if($order->delivery_platform == 'DHL'){
                                $this->sendToDhl($order,$request->hub_name);
@@ -308,6 +310,96 @@ class OrderController extends Controller
 
     }
 
+    public function resellerEcorier($order,$hubInfo)
+    {
+        try {
+            $ecorier = json_decode($order->courier_details);
+            $courierData = [
+                'product_id' => $order->order_id,
+                'ep_name' => 'Aranya Craft Ltd',
+                'pick_contact_person' => $hubInfo['contact_person'],
+                'pick_division' => $hubInfo['pick_division'],
+                'pick_district' => $hubInfo['pick_district'],
+                'pick_thana' => $hubInfo['pick_thana'],
+                'pick_hub' => $hubInfo['hub_code'] ?? '18490',
+                'pick_union' => $hubInfo['pick_union'],
+                'pick_address' => $hubInfo['hub_address'],
+                'pick_mobile' => $hubInfo['pick_mobile'],
+                'recipient_name' => $ecorier->recipient_name,
+                'recipient_mobile' => $ecorier->recipient_mobile,
+                'recipient_division' => $ecorier->recipient_division,
+                'recipient_district' => $ecorier->recipient_district,
+                'recipient_city' => $ecorier->recipient_city,
+                'recipient_area' => $ecorier->recipient_area,
+                'recipient_thana' => $ecorier->recipient_thana,
+                'recipient_union' => $ecorier->recipient_zip,
+                'package_code' => $ecorier->package_code,
+                'recipient_address' => $ecorier->recipient_address,
+                'parcel_detail' => '',
+                'number_of_item' => $order->total_item,
+                'product_price' => ($order->total_price + $order->shipping_amount + $order->vat_amount),
+                'payment_method' => 'COD',
+                'ep_id' => '233232212',
+                'actual_product_price' => ($order->total_price + $order->shipping_amount + $order->vat_amount),
+                'pgwid' => 8888,
+                'pgwtxn_id' =>'asdasdsad',
+                'parcel_type' => 'BOX',
+                'is_fragile' => $order->total_fragile_amount > 0 ? 1 : 0,
+                'sending_type' => 1,
+                'is_ipay' => 0
+
+            ];
+            // return $courierData;
+            if(config('app.ecorier_mode') == 'production'){
+                $api_url = 'https://backoffice.ecourier.com.bd/api/order-place-reseller';
+
+            }else {
+                $api_url = 'https://staging.ecourier.com.bd/api/order-place-reseller';
+            }
+            $headers = [
+                    'Content-Type: application/json',
+                    'API-KEY: frz3', // Replace with env('ECOURIER_API_KEY')
+                    'API-SECRET: 4vqsZ', // Replace with env('ECOURIER_API_SECRET')
+                    'USER-ID: H7546' // Replace with env('ECOURIER_USER_ID')
+                ];
+                $handle = curl_init();
+                curl_setopt($handle, CURLOPT_URL, $api_url);
+                curl_setopt($handle, CURLOPT_TIMEOUT, 30);
+                curl_setopt($handle, CURLOPT_HTTPHEADER, $headers);
+                curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, 30);
+                curl_setopt($handle, CURLOPT_POST, true);
+                curl_setopt($handle, CURLOPT_POSTFIELDS, json_encode($courierData));
+                curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, true); // Set to false if testing on local PC
+                curl_setopt($handle, CURLOPT_FOLLOWLOCATION, true); // Follow redirects
+
+            $content = curl_exec($handle);
+            $code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+
+            if($code == 200) {
+                $corier_order = json_decode($content,true );
+                curl_close($handle);
+                DB::table('orders')->where('id', $corier_order->id)->update([
+                    'tracking_id' => $corier_order->ID,
+                    'updated_at'    => date("Y-m-d H:i:s")
+                ]);
+                DB::table('deliveries')->where('order_id', $order->id)->update([
+                    'tracking_id' => $corier_order->ID
+                ]);
+            } else {
+                curl_close($handle);
+                echo "FAILED TO CONNECT WITH RESELLER API";
+                exit;
+            }
+
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+            // return $th;
+        }
+
+    }
+
     public function sendToDhl($order,$hubInfo)
     {
         $dateTime = new DateTime(date('Y-m-d H:i:s'), new DateTimeZone('GMT'));
@@ -351,7 +443,7 @@ class OrderController extends Controller
                         "postalCode" => "$courier->postalCode",
                         "cityName" => "$courier->cityName",
                         "countryCode" => "$courier->countryCode",
-                        "addressLine1" => "$courier->addressLine1",
+                        "addressLine1" => Str::limit($courier->addressLine1, 44),
                         "countryName" => "$courier->countryName"
                     ],
                     "contactInformation" => [
@@ -513,7 +605,7 @@ class OrderController extends Controller
                         "postalCode" => '1213',
                         "cityName" => 'Dhaka',
                         "countryCode" => "BD",
-                        "addressLine1" => 'Block K, House no: 28, Road No. 20, Banani, Dhaka 1213',
+                        "addressLine1" => 'Block K, House no: 28',
                         "countryName" => "Bangladesh"
                     ],
                     "contactInformation" => [
