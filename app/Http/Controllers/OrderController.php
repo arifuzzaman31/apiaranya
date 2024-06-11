@@ -468,18 +468,18 @@ class OrderController extends Controller
                 echo "Error: " . $responseDecoded['error']['message'];
             } else {
                 // Handle success
-                DB::table('orders')->where('id', $order->id)->update([
-                    'tracking_id' => $responseDecoded['shipmentTrackingNumber'],
-                    'shippment_info' => $response,
-                    'updated_at'    => date("Y-m-d H:i:s")
-                ]);
-                DB::table('deliveries')->where('order_id', $order->id)->update([
-                    'tracking_id' => $responseDecoded['shipmentTrackingNumber']
-                ]);
-                return true;
-                // echo "<pre>";
-                // print_r($responseDecoded);
-                // echo "Shipment created successfully, tracking number: " . $responseDecoded['shipmentTrackingNumber'];
+                // DB::table('orders')->where('id', $order->id)->update([
+                //     'tracking_id' => $responseDecoded['shipmentTrackingNumber'],
+                //     'shippment_info' => $response,
+                //     'updated_at'    => date("Y-m-d H:i:s")
+                // ]);
+                // DB::table('deliveries')->where('order_id', $order->id)->update([
+                //     'tracking_id' => $responseDecoded['shipmentTrackingNumber']
+                // ]);
+                // return true;
+                echo "<pre>";
+                print_r($responseDecoded);
+                //echo "Shipment created successfully, tracking number: " . $responseDecoded['shipmentTrackingNumber'];
             }
         }
     }
