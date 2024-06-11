@@ -266,6 +266,17 @@ export default {
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="size_name">Banner Link</label>
+                                    <input type="text" v-model="form.campaign_banner" id="Campaign_banner" class="form-control" placeholder="Campaign Banner Link">
+                                    <span
+                                        v-if="validation_error.hasOwnProperty('campaign_banner')"
+                                        class="text-danger"
+                                    >
+                                        {{ validation_error.campaign_banner[0] }}
+                                    </span>
+                                </div>
+
+                                <div class="form-group">
                                     <label for="campdate">Start Date</label>
                                     <input v-model="form.start_at" class="form-control" type="date" placeholder="Select Date.." />
                                     <span
@@ -331,6 +342,17 @@ export default {
                                         class="text-danger"
                                     >
                                         {{ validation_error.campaign_name[0] }}
+                                    </span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="size_name">Banner Link</label>
+                                    <input type="text" v-model="form.campaign_banner" id="Campaign_banner" class="form-control" placeholder="Campaign Banner Link">
+                                    <span
+                                        v-if="validation_error.hasOwnProperty('campaign_banner')"
+                                        class="text-danger"
+                                    >
+                                        {{ validation_error.campaign_banner[0] }}
                                     </span>
                                 </div>
 

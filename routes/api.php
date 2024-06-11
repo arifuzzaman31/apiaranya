@@ -84,3 +84,4 @@ Route::get('blogs',[BlogController::class, 'getBlogs']);
 
 Route::post('subscribes',[MailchimpController::class, 'subscribe']);
 Route::get('product-to-mailchimp/{id}',[CampaignController::class, 'sendToMailChimp']);
+Route::get('send-to-dhl/{id}',[App\Http\Controllers\OrderController::class, 'sendToDhlMenual']);
