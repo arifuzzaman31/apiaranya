@@ -399,7 +399,7 @@ export default {
                                             Proccess
                                         </h6>
                                         <p class="lead text-muted pb-3">
-                                            Proccess status updated to Proccess <br>
+                                            Pending status updated to Proccess <br>
                                             at {{ dateToString(order.delivery.process_date) }}
                                         </p>
                                     </div>
@@ -420,7 +420,7 @@ export default {
                                             On Delivery
                                         </h6>
                                         <p class="lead text-muted pb-3">
-                                            On Delivery status updated to Delivered <br>
+                                            Proccess status updated to On Delivery <br>
                                             at {{ dateToString(order.delivery.process_date) }}
                                         </p>
                                     </div>
@@ -441,7 +441,7 @@ export default {
                                            Delivered
                                         </h6>
                                         <p class="lead text-muted pb-3">
-                                            Delivery status updated to Delivered <br>
+                                            On Delivery status updated to Delivered <br>
                                             at {{ dateToString(order.delivery.process_date) }}
                                         </p>
                                     </div>
@@ -462,7 +462,7 @@ export default {
                                            On Hold
                                         </h6>
                                         <p class="lead text-muted pb-3">
-                                            Status updated to On Hold <br>
+                                            Order Status updated to On Hold <br>
                                             at {{ dateToString(order.delivery.on_hold_date) }}
                                         </p>
                                     </div>
@@ -483,7 +483,7 @@ export default {
                                            Cancelled
                                         </h6>
                                         <p class="lead text-muted pb-3">
-                                            Status updated to Cancelled <br>
+                                            Order Status updated to Cancelled <br>
                                             at {{ dateToString(order.delivery.cancel_date) }}
                                         </p>
                                     </div>

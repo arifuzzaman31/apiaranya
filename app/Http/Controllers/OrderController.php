@@ -407,9 +407,9 @@ class OrderController extends Controller
                     [
                         "weight" => $courier->totalOrderWeight,
                         "dimensions" => [
-                            "length" => 60,
-                            "width" => 30,
-                            "height" => 15
+                            "length" => 20,
+                            "width" => 15,
+                            "height" => 10
                         ]
                     ]
                 ]
