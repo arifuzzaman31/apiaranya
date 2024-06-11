@@ -41,11 +41,11 @@ use Illuminate\Support\Facades\DB;
                 break;
             case 4:
                 # code...
-                $text = "Cancelled";
+                $text = "On Hold";
                 break;
             case 5:
                 # code...
-                $text = "On Hold";
+                $text = "Cancelled";
                 break;
 
             default:

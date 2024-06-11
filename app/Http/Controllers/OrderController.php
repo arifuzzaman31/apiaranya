@@ -185,7 +185,7 @@ class OrderController extends Controller
                     $delivery->delivery_value = NULL;
                 }
                 if($request->order_position == AllStatic::$processing){
-                    $delivery->process_date = $request->date ? $request->date : date('Y-m-d');
+                    $delivery->process_date = date('Y-m-d');
                     $delivery->process_state = AllStatic::$processing;
                     $delivery->process_value = deliveryPosition(AllStatic::$processing);
                     $delivery->on_delivery_date = NULL;
@@ -198,7 +198,7 @@ class OrderController extends Controller
                 }
 
                 if($request->order_position == AllStatic::$on_delivery){
-                    $delivery->on_delivery_date = $request->date ? $request->date : date('Y-m-d');
+                    $delivery->on_delivery_date = date('Y-m-d');
                     $delivery->on_delivery_state = AllStatic::$on_delivery;
                     $delivery->on_delivery_value = deliveryPosition(AllStatic::$on_delivery);
                     $delivery->delivery_date = NULL;
@@ -215,17 +215,17 @@ class OrderController extends Controller
                 }
 
                 if($request->order_position == AllStatic::$onhold){
-                    $delivery->on_hold_date = $request->date ? $request->date : date('Y-m-d');
+                    $delivery->on_hold_date = date('Y-m-d');
                     $delivery->on_hold_state = AllStatic::$delivered;
                     $delivery->on_hold_value = deliveryPosition(AllStatic::$onhold);
                 }
                 if($request->order_position == AllStatic::$pr_cancel){
-                    $delivery->cancel_date = $request->date ? $request->date : date('Y-m-d');
+                    $delivery->cancel_date = date('Y-m-d');
                     $delivery->cancel_state = AllStatic::$delivered;
                     $delivery->cancel_value = deliveryPosition(AllStatic::$pr_cancel);
                 }
                 if($request->order_position == AllStatic::$delivered){
-                    $delivery->delivery_date = $request->date ? $request->date : date('Y-m-d');
+                    $delivery->delivery_date = date('Y-m-d');
                     $delivery->delivery_state = AllStatic::$delivered;
                     $delivery->delivery_value = deliveryPosition(AllStatic::$delivered);
                 }

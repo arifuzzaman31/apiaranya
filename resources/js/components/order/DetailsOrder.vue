@@ -169,8 +169,8 @@ export default {
                                             <option value="2">
                                                 Ready To Delivery
                                             </option>
-                                            <option value="5">On-Hold</option>
-                                            <option value="4">Cancel</option>
+                                            <option value="4">On-Hold</option>
+                                            <option value="5">Cancel</option>
                                             <option value="3">Delivered</option>
                                         </select>
                                     </div>
@@ -434,7 +434,7 @@ export default {
                                         >
                                         *
                                         </div>
-                                        <div class="line h-100 d-none"></div>
+                                        <div class="line h-100"></div>
                                     </div>
                                     <div>
                                         <h6 class="text-dark">
@@ -446,7 +446,28 @@ export default {
                                         </p>
                                     </div>
                                 </div>
-                                <div class="d-flex" v-if="order.delivery.cancel_state == 4">
+                                <div class="d-flex" v-if="order.delivery.on_hold_state == 4">
+                                    <div
+                                        class="d-flex flex-column pr-3 align-items-center"
+                                    >
+                                        <div
+                                            class="rounded-circle px-2 bg-primary text-white mb-1"
+                                        >
+                                        *
+                                        </div>
+                                        <div class="line h-100"></div>
+                                    </div>
+                                    <div>
+                                        <h6 class="text-dark">
+                                           On Hold
+                                        </h6>
+                                        <p class="lead text-muted pb-3">
+                                            Status updated to On Hold <br>
+                                            at {{ dateToString(order.delivery.on_hold_date) }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="d-flex" v-if="order.delivery.cancel_state == 5">
                                     <div
                                         class="d-flex flex-column pr-3 align-items-center"
                                     >
@@ -467,27 +488,7 @@ export default {
                                         </p>
                                     </div>
                                 </div>
-                                <div class="d-flex" v-if="order.delivery.on_hold_state == 5">
-                                    <div
-                                        class="d-flex flex-column pr-3 align-items-center"
-                                    >
-                                        <div
-                                            class="rounded-circle px-2 bg-primary text-white mb-1"
-                                        >
-                                        *
-                                        </div>
-                                        <div class="line h-100 d-none"></div>
-                                    </div>
-                                    <div>
-                                        <h6 class="text-dark">
-                                           On Hold
-                                        </h6>
-                                        <p class="lead text-muted pb-3">
-                                            Status updated to On Hold <br>
-                                            at {{ dateToString(order.delivery.on_hold_date) }}
-                                        </p>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                     </div>

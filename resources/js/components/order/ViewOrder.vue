@@ -339,8 +339,8 @@ export default {
                                 <option value="1">Processing</option>
                                 <option value="2">On Delivery</option>
                                 <option value="3">Delivered</option>
-                                <option value="4">Cancel</option>
-                                <option value="5">On-Hold</option>
+                                <option value="4">On-Hold</option>
+                                <option value="5">Cancel</option>
                             </select>
                         </div>
 
@@ -465,14 +465,15 @@ export default {
                                             >
                                             <span
                                                 v-if="order.order_position == 4"
-                                                class="badge rounded-pill alert-danger"
-                                                >Cancelled</span
-                                            >
-                                            <span
-                                                v-if="order.order_position == 5"
                                                 class="badge rounded-pill alert-warning"
                                                 >On Hold</span
                                             >
+                                            <span
+                                                v-if="order.order_position == 5"
+                                                class="badge rounded-pill alert-danger"
+                                                >Cancelled</span
+                                            >
+
                                         </td>
                                         <td class="text-center">
                                             <div

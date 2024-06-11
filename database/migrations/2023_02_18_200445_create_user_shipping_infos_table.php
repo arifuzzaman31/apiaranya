@@ -27,8 +27,8 @@ class CreateUserShippingInfosTable extends Migration
             $table->string('phone');
             $table->string('post_code')->nullable();
             $table->text('apartment')->nullable();
-            $table->string('street_address');
-            $table->string('corier_details')->nullable();
+            $table->longText('street_address');
+            $table->longText('corier_details')->nullable();
             $table->timestamps();
         });
     }
