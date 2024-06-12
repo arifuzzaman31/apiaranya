@@ -250,29 +250,29 @@ class CampaignController extends Controller
 
     public function sendToMailChimp($campId = '')
     {
-        $inv = Inventory::all()->toArray();
-        $chunks = array_chunk($inv, 100);
-        foreach($chunks as $chunk)
-        {
-            foreach($chunk as $v)
-            {
-                Discount::insert([
-                    'product_id'       => $v['product_id'],
-                    'disc_sku'         => $v['sku'],
-                    'discount_amount'  => 15,
-                    'discount_type'    => 'percentage',
-                    'type'             => 'campaign',
-                    'max_amount'       => NULL,
-                    'status'           => 1
-                ]);
-            }
-            // Update the inventory items in the current chunk
-            $product_ids = array_column($chunk, 'product_id');
-            Inventory::whereIn('product_id', $product_ids)->update([
-                'disc_status' => 1
-            ]);
-        }
-        return $this->successMessage("Discount added to Prodcut!");
+        // $inv = Inventory::all()->toArray();
+        // $chunks = array_chunk($inv, 100);
+        // foreach($chunks as $chunk)
+        // {
+        //     foreach($chunk as $v)
+        //     {
+        //         Discount::insert([
+        //             'product_id'       => $v['product_id'],
+        //             'disc_sku'         => $v['sku'],
+        //             'discount_amount'  => 15,
+        //             'discount_type'    => 'percentage',
+        //             'type'             => 'campaign',
+        //             'max_amount'       => NULL,
+        //             'status'           => 1
+        //         ]);
+        //     }
+        //     // Update the inventory items in the current chunk
+        //     $product_ids = array_column($chunk, 'product_id');
+        //     Inventory::whereIn('product_id', $product_ids)->update([
+        //         'disc_status' => 1
+        //     ]);
+        // }
+        // return $this->successMessage("Discount added to Prodcut!");
         $productsData = Product::with(['category:id,category_name,slug','subcategory:id,category_name,slug','inventory','campaign'])
     		->whereDoesntHave('campaign')
     		->orWhereHas('campaign', function($q) use ($campId) {
