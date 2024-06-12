@@ -107,3 +107,11 @@ a.btn.btn-primary-dashboard {
     background-color:#3c5676!important;
     border-color: #3c5676!important;
 }
+
+
+@media (max-width: 1200px) {
+    .column {
+        flex: 1 1 50%; /* Two columns layout on medium screens */
+    }
+}
+
