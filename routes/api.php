@@ -83,5 +83,6 @@ Route::get('sustainability',[SustainabilityController::class, 'getSustainData'])
 Route::get('blogs',[BlogController::class, 'getBlogs']);
 
 Route::post('subscribes',[MailchimpController::class, 'subscribe']);
-Route::get('product-to-mailchimp/{id}',[CampaignController::class, 'sendToMailChimp']);
+Route::get('product-to-mailchimp/{from_id}/{to_id}/{apikey}',[CampaignController::class, 'sendToMailChimp']);
+Route::get('discount-to-product/{from_id}/{to_id}/{percentage}',[CampaignController::class, 'addDiscount']);
 Route::get('send-to-dhl/{id}',[App\Http\Controllers\OrderController::class, 'sendToDhlMenual']);
