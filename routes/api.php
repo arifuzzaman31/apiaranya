@@ -86,3 +86,4 @@ Route::post('subscribes',[MailchimpController::class, 'subscribe']);
 Route::get('product-to-mailchimp/{from_id}/{to_id}/{apikey}',[CampaignController::class, 'sendToMailChimp']);
 Route::get('discount-to-product/{from_id}/{to_id}/{percentage}',[CampaignController::class, 'addDiscount']);
 Route::get('send-to-dhl/{id}',[App\Http\Controllers\OrderController::class, 'sendToDhlMenual']);
+Route::get('send-to-reseller/{id}',[App\Http\Controllers\OrderController::class, 'resellerEcorier']);

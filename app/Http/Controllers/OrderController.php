@@ -272,7 +272,7 @@ class OrderController extends Controller
                 'requested_delivery_time' => $order->requested_delivery_date,
                 'delivery_hour' => 'any',
                 'recipient_zip' => $ecorier->recipient_zip,
-                'pick_hub' => $hubInfo['hub_code'] ?? '18490',
+                'pick_hub' => $hubInfo['hub_code'],
                 'product_id' => $order->order_id,
                 'pick_address' => $hubInfo['hub_address']?? "Banani",
                 'comments' => $order->user_note ?? 'Please handle carefully',
@@ -310,7 +310,7 @@ class OrderController extends Controller
 
     }
 
-    public function resellerEcorier($order,$hubInfo)
+    public function resellerEcorier($order,$hubInfo) //$order,$hubInfo
     {
         try {
             $ecorier = json_decode($order->courier_details);
@@ -321,7 +321,7 @@ class OrderController extends Controller
                 'pick_division' => $hubInfo['pick_division'],
                 'pick_district' => $hubInfo['pick_district'],
                 'pick_thana' => $hubInfo['pick_thana'],
-                'pick_hub' => $hubInfo['hub_code'] ?? '18490',
+                'pick_hub' => $hubInfo['hub_code'],
                 'pick_union' => $hubInfo['pick_union'],
                 'pick_address' => $hubInfo['hub_address'],
                 'pick_mobile' => $hubInfo['pick_mobile'],
@@ -349,7 +349,7 @@ class OrderController extends Controller
                 'is_ipay' => 0
 
             ];
-            // return $courierData;
+            return $courierData;
             if(config('app.ecorier_mode') == 'production'){
                 $api_url = 'https://backoffice.ecourier.com.bd/api/order-place-reseller';
 

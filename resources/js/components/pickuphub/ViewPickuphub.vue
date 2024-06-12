@@ -6,9 +6,11 @@ export default {
     components:{
         Bootstrap4Pagination
     },
+    props:['districtlist'],
     setup(){
 
         const pickuphub  = ref([]);
+        const thanaList  = ref([]);
         const errors  = ref([]);
         const pickup_id  = ref('');
         const form = reactive({
@@ -20,6 +22,7 @@ export default {
             pick_thana: '',
             pick_union: '',
             pick_mobile: '',
+            email: '',
             type: 'warehouse',
             hub_address: '',
             status: 1
@@ -53,6 +56,10 @@ export default {
             // console.log(pickuphub.value)
         }
 
+        const setThana = async(e) =>{
+            console.log(e)
+        }
+
         const deleteHub = async(id)=>{
             Swal.fire({
                 title: 'Are you sure?',
@@ -75,6 +82,28 @@ export default {
                 }
             })
 
+        }
+        const getAreaByDist = async() =>{
+
+           try{
+                await axios.post('https://backoffice.ecourier.com.bd/api/area-by-district',{'district':form.pick_district},{
+                        headers: {
+                            'USER-ID': 'H7546',
+                            'API-KEY': 'frz3',
+                            'API-SECRET': '4vqsZ',
+                            'Content-Type': 'application/json'
+                        }
+                    }).then(
+                    response => {
+                        thanaList.value = response.data
+                    }
+                ). catch(e => {
+                    console.log(e.response)
+
+                })
+            }catch(e){
+                console.log(e.response)
+            }
         }
 
         const storePickupHub = async() =>{
@@ -130,12 +159,14 @@ export default {
             form.contact_person = pickup.contact_person;
             form.pick_division = pickup.pick_division;
             form.pick_district = pickup.pick_district;
-            form.pick_thana = pickup.pick_thana;
+            form.pick_thana = pickup.pick_thana+'-'+pickup.hub_code;
             form.pick_union = pickup.pick_union;
             form.pick_mobile = pickup.pick_mobile;
+            form.email = pickup.email;
             form.type = pickup.type;
             form.hub_address = pickup.hub_address;
             form.status = pickup.status;
+            getAreaByDist()
         }
 
         const formReset = () =>{
@@ -149,24 +180,30 @@ export default {
             form.pick_thana = '';
             form.pick_union = '';
             form.pick_mobile = '';
+            form.email = '';
             form.type = 'warehouse';
             form.hub_address = '';
             form.status = 1;
         }
 
-        onMounted(getPickupHub());
+        onMounted(() => {
+            getPickupHub();
+        });
         const showPermission = computed(() => window.userPermission)
 
         return {
             pickuphub,
             form,
             pickup_id,
+            thanaList,
             getPickupHub,
             editPickupHub,
             updatePickupHub,
             formReset,
             storePickupHub,
             deleteHub,
+            getAreaByDist,
+            setThana,
             errors,
             showPermission
         }
@@ -215,7 +252,7 @@ export default {
                                         <td>{{ pickup.pick_union }}</td>
                                         <td>{{ pickup.pick_mobile }}</td>
                                         <td>{{ pickup.type }}</td>
-                                        <td>{{ pickup.hub_address }}</td>
+                                        <td style="width: 20%;">{{ pickup.hub_address }}</td>
                                            <td class="text-center">
                                 <span
                                     class="badge rounded-pill"
@@ -263,7 +300,7 @@ export default {
                             <form>
                                 <div class="form-row">
                                 <div class="col-md-4 col-12 form-group">
-                                    <label for="hub_name">Hub Name</label>
+                                    <label for="hub_name">Hub Name *</label>
                                     <input type="text" class="form-control" v-model="form.hub_name" id="hub_name" placeholder="Hub Name">
                                     <span
                                         v-if="errors.hasOwnProperty('hub_name')"
@@ -272,18 +309,9 @@ export default {
                                         {{ errors.hub_name[0] }}
                                     </span>
                                 </div>
+
                                 <div class="col-md-4 col-12 form-group">
-                                    <label for="hub_code">Hub Code</label>
-                                    <input type="text" class="form-control" v-model="form.hub_code" id="hub_code" placeholder="Hub Name">
-                                    <span
-                                        v-if="errors.hasOwnProperty('hub_code')"
-                                        class="text-danger"
-                                    >
-                                        {{ errors.hub_code[0] }}
-                                    </span>
-                                </div>
-                                <div class="col-md-4 col-12 form-group">
-                                    <label for="personname">Contact Person Name</label>
+                                    <label for="personname">Contact Person Name *</label>
                                     <input type="text" class="form-control" v-model="form.contact_person" id="personname" placeholder="Person Name">
                                     <span
                                         v-if="errors.hasOwnProperty('contact_person')"
@@ -293,7 +321,7 @@ export default {
                                     </span>
                                 </div>
                                 <div class="col-md-4 col-12 form-group">
-                                    <label for="pick_mobile">Person Phone</label>
+                                    <label for="pick_mobile">Person Phone *</label>
                                     <input type="text" class="form-control" v-model="form.pick_mobile" id="pick_mobile" placeholder="Person Phone">
                                     <span
                                         v-if="errors.hasOwnProperty('pick_mobile')"
@@ -303,7 +331,7 @@ export default {
                                     </span>
                                 </div>
                                 <div class="col-md-4 col-12 form-group">
-                                    <label for="division-pick">Division</label>
+                                    <label for="division-pick">Division *</label>
                                     <input type="text" class="form-control" v-model="form.pick_division" id="division-pick" placeholder="Pick Division">
                                     <span
                                         v-if="errors.hasOwnProperty('pick_division')"
@@ -313,8 +341,12 @@ export default {
                                     </span>
                                 </div>
                                 <div class="col-md-4 col-12 form-group">
-                                    <label for="pick_district">Pick District</label>
-                                    <input type="text" class="form-control" v-model="form.pick_district" id="pick_district" placeholder="Pick District">
+                                    <label for="pick_district">Pick District *</label>
+                                    <select class="form-control" v-model="form.pick_district" @change="getAreaByDist()">
+                                        <option value="">Select District</option>
+                                        <option v-for="dist in districtlist" :value="dist.value">{{dist.name}}</option>
+                                    </select>
+
                                     <span
                                         v-if="errors.hasOwnProperty('pick_district')"
                                         class="text-danger"
@@ -323,8 +355,11 @@ export default {
                                     </span>
                                 </div>
                                 <div class="col-md-4 col-12 form-group">
-                                    <label for="pick_thana">Pick Thana</label>
-                                    <input type="text" class="form-control" v-model="form.pick_thana" id="pick_thana" placeholder="Pick Thana">
+                                    <label for="pick_thana">Pick Thana *</label>
+                                    <select class="form-control" v-model="form.pick_thana">
+                                        <option value="">Select Thana</option>
+                                        <option v-for="thana in thanaList.data" :value="thana.name+'-'+thana.hub_id">{{thana.name}} - ({{thana.hub_id}})</option>
+                                    </select>
                                     <span
                                         v-if="errors.hasOwnProperty('pick_thana')"
                                         class="text-danger"
@@ -332,8 +367,9 @@ export default {
                                         {{ errors.pick_thana[0] }}
                                     </span>
                                 </div>
+
                                 <div class="col-md-4 col-12 form-group">
-                                    <label for="pick_union">ZIP Code</label>
+                                    <label for="pick_union">ZIP Code *</label>
                                     <input type="text" class="form-control" v-model="form.pick_union" id="pick_union" placeholder="ZIP Code">
                                     <span
                                         v-if="errors.hasOwnProperty('pick_union')"
@@ -368,8 +404,18 @@ export default {
                                         {{ errors.type[0] }}
                                     </span>
                                 </div>
-                                <div class="col-md-12 col-12 form-group">
-                                    <label for="hub_address">Hub Address</label>
+                                <div class="col-md-4 col-12 form-group">
+                                    <label for="hub_Email">Email</label>
+                                    <input type="text" class="form-control" v-model="form.email" id="hub_Email" placeholder="Email">
+                                    <span
+                                        v-if="errors.hasOwnProperty('email')"
+                                        class="text-danger"
+                                    >
+                                        {{ errors.email[0] }}
+                                    </span>
+                                </div>
+                                <div class="col-md-8 col-12 form-group">
+                                    <label for="hub_address">Hub Address *</label>
                                     <input type="text" class="form-control" v-model="form.hub_address" id="hub_address" placeholder="Hub Address">
                                     <span
                                         v-if="errors.hasOwnProperty('hub_address')"
