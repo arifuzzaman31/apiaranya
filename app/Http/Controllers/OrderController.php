@@ -15,6 +15,8 @@ use Xenon\MultiCourier\Provider\ECourier;
 use Xenon\MultiCourier\Courier;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\InvoiceMail;
 use DateTime;
 use DateTimeZone;
 
@@ -290,7 +292,6 @@ class OrderController extends Controller
             $result = json_decode(json_encode($resp),true);
             $datas = json_decode($result['response']);
             if ($datas !== null && isset($datas->ID)) {
-
                     if($result['statusCode'] == 200){
                         DB::table('orders')->where('id', $order->id)->update([
                             'tracking_id' => $datas->ID,
@@ -300,6 +301,7 @@ class OrderController extends Controller
                         DB::table('deliveries')->where('order_id', $order->id)->update([
                             'tracking_id' => $datas->ID
                         ]);
+                     $this->invoiceToEcorier($order->id,$hubInfo['email']);
                     }
             }
             return false;
@@ -386,6 +388,7 @@ class OrderController extends Controller
                 DB::table('deliveries')->where('order_id', $order->id)->update([
                     'tracking_id' => $corier_order->ID
                 ]);
+                $this->invoiceToEcorier($order->id,$hubInfo['email']);
             } else {
                 curl_close($handle);
                 echo "FAILED TO CONNECT WITH RESELLER API";
@@ -741,26 +744,15 @@ class OrderController extends Controller
             }
         }
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Order $order,$id)
-    {
-        response()->json(Order::find(2));
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Order $order)
+    public function invoiceToEcorier($order_id = '',$email)
     {
-        response()->json(Order::find(2));
+        $order = Order::with('order_details.product','user_billing_info')->find($order_id);
+        if($email != ''){
+            Mail::to($email)->send(new InvoiceMail($order));
+        }
+        return false;
+        return view('email.order_invoice',['order_info' => $order]);
     }
 
     /**
