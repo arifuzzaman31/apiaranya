@@ -209,8 +209,8 @@ class OrderController extends Controller
                     $delivery->delivery_value = NULL;
                     if(empty($delivery->tracking_id)){
                         if($order->delivery_platform == 'E-Courier'){
-                              // $this->sendEcorier($order,$request->hub_name);
-                               $this->resellerEcorier($order,$request->hub_name);
+                              $this->sendEcorier($order,$request->hub_name);
+                              // $this->resellerEcorier($order,$request->hub_name);
                         }
                         if($order->delivery_platform == 'DHL'){
                                $this->sendToDhl($order,$request->hub_name);
@@ -351,7 +351,7 @@ class OrderController extends Controller
                 'is_ipay' => 0
 
             ];
-            return $courierData;
+            // return $courierData;
             if(config('app.ecorier_mode') == 'production'){
                 $api_url = 'https://backoffice.ecourier.com.bd/api/order-place-reseller';
 
