@@ -73,6 +73,10 @@ export default {
     },
     methods: {
         submitForm () {
+            if(this.form.attrqty[0]?.sku == '') {
+                this.validationError({status:'error',message:'Attribute are required'})
+                return false;
+            }
              axios.post(baseUrl+'product',this.form).then(response => {
                 console.log(response)
                 if(response.data.status == 'success'){
@@ -1063,7 +1067,12 @@ export default {
                     </div>
                 </div>
             </div>
-
+            <div
+                v-if="validation_error.hasOwnProperty('attrqty')"
+                class="text-danger font-weight-bold"
+            >
+                Attribute are required.
+            </div>
             <div class="statbox widget box box-shadow">
                 <div class="widget-content ">
                     <div class="form-row">

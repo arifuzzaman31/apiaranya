@@ -72,6 +72,10 @@ export default {
     },
     methods: {
         updateForm () {
+            if(this.form.attrqty[0]?.sku == '') {
+                this.validationError({status:'error',message:'Attribute are required'})
+                return false;
+            }
              axios.put(baseUrl+'product/'+this.form.id,this.form).then(response => {
                 console.log(response.data)
                 if(response.data.status == 'success'){
