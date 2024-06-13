@@ -123,6 +123,7 @@ Route::get('refund-configure',[RefundController::class,'configure'])->name('refu
 Route::post('refund/settings/update',[RefundController::class,'update']);
 Route::get('refund-item-detail',[RefundController::class,'refundItemDetail']);
 Route::post('order-item-refund',[RefundController::class,'orderItemRefund']);
+Route::post('claim-item-refund',[RefundController::class,'itemRefundClaim']);
 
 // Company
 Route::controller(ProductController::class)
@@ -137,6 +138,7 @@ Route::controller(ProductController::class)
 //Order
 Route::controller(OrderController::class)
     ->group(function () {
+        // Route::get('order','sendToDhl')->name('order');
         Route::get('order','index')->name('order');
         Route::get('get-order','getOrder')->name('get-order');
         Route::post('update/order/status/{id?}','updateOrderStatus');

@@ -39,6 +39,14 @@ use Illuminate\Support\Facades\DB;
                 # code...
                 $text = "Delivered";
                 break;
+            case 4:
+                # code...
+                $text = "On Hold";
+                break;
+            case 5:
+                # code...
+                $text = "Cancelled";
+                break;
 
             default:
                 $text = "Pending";

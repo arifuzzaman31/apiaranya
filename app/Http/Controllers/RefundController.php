@@ -90,8 +90,12 @@ class RefundController extends Controller
             $refund_remarks=urlencode('Out of Stock');
             $store_id=urlencode(config('app.storeid'));
             $store_passwd=urlencode(config('app.storepassw'));
-
-            $requested_url = ("https://sandbox.sslcommerz.com/validator/api/merchantTransIDvalidationAPI.php?refund_amount=$refund_amount&refund_remarks=$refund_remarks&bank_tran_id=$bank_tran_id&store_id=$store_id&store_passwd=$store_passwd&v=1&format=json");
+            if (config('app.payment_mode') == 'sandbox') {
+                $requested_url = "https://sandbox.sslcommerz.com/validator/api/merchantTransIDvalidationAPI.php";
+            } else {
+                $requested_url = "https://securepay.sslcommerz.com/validator/api/merchantTransIDvalidationAPI.php";
+            }
+            $requested_url = $requested_url."?refund_amount=$refund_amount&refund_remarks=$refund_remarks&bank_tran_id=$bank_tran_id&store_id=$store_id&store_passwd=$store_passwd&v=1&format=json";
 
             $handle = curl_init();
             curl_setopt($handle, CURLOPT_URL, $requested_url);
@@ -144,5 +148,19 @@ class RefundController extends Controller
             // return $th;
             return $this->errorMessage();
         }
+    }
+
+    public function itemRefundClaim(Request $request)
+    {
+        $order_detail = OrderDetails::find($request->item_id);
+        if($order_detail->is_claim_refund == AllStatic::$active){
+            return response()->json(['status' => 'error','message' => 'Already Claimed']);
+        }
+        // return $request->all();
+        $order_detail->is_claim_refund = AllStatic::$active;
+        $order_detail->refund_claim_date = date('Y-m-d');
+        $order_detail->refund_claim_reason = "Refund Claim by Admin";
+        $order_detail->update();
+        return $this->successMessage('Refund Claim Successful!');
     }
 }

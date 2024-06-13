@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <link href="{{('admin-assets/assets/css/authentication/form-2.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('admin-assets/assets/css/authentication/form-2.css')}}" rel="stylesheet" type="text/css" />
     @include('partials.header-assets')
 </head>
 
@@ -15,7 +15,7 @@
                 <div class="form-container">
                     <div class="form-content">
 
-                        <h1 class="">{{ env('APP_NAME')}}</h1>
+                        <img src="{{asset('admin-assets/assets/img/aranya-logo-dark.png')}}" height="60px" width="110px" bottom="10px"class="navbar-logo" alt="logo">
                         <p class="text-muted">Enter your Email and instructions will be sent to you! </p>
 
                         <form class="text-left" method="post" role="form" action="{{route('send-reset-mail')}}">

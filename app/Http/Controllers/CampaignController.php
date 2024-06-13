@@ -9,6 +9,7 @@ use App\Models\Discount;
 use App\Models\Inventory;
 use App\Models\Product;
 use App\Services\MailchimpService;
+use Illuminate\Support\Facades\Http;
 use DB,Str;
 
 class CampaignController extends Controller
@@ -178,23 +179,27 @@ class CampaignController extends Controller
             }else{
                 $sect = DB::table('pages')->where('id',$request->campaign);
                 $gt = $sect->first();
-                $ids = $gt->product_id != NULL ? array_merge(json_decode($gt->product_id),$request->product) : $request->product;
+                // $ids = $gt->product_id != NULL ? array_merge(json_decode($gt->product_id),$request->product) : $request->product;
                 // return $ids;
+                $ids = [];
                 $categoryIds = array_unique(array_column($request->categories, 'categoryId'));
                 $subcategoryIds = array_unique(array_column($request->categories, 'subcategoryId'));
                 if(!empty($categoryIds)){
-                    $product = Product::orderBy('id');
-                    $product =  $product->whereIn('category_id',$categoryIds);
-                    if($request->subcategoryIds != ''){
-                        $product =  $product->whereIn('sub_category_id',$subcategoryIds);
+                    foreach ($categoryIds as $key => $categoryId) {
+                        $query = Product::where('category_id', $categoryId);
+                        if (!empty($subcategoryIds)) {
+                            if(!empty($subcategoryIds[$key])){
+                                $query = $query->where('sub_category_id', $subcategoryIds[$key]);
+                            }
+                        }
+                        $productIds = $query->latest()->take(10)->pluck('id')->toArray();
+                        $ids = array_merge($ids, $productIds);
                     }
-                    $productIds =  $product->pluck('id')->toArray();
-                    // return gettype($productIds);
-                    $ids = array_merge($ids,$productIds);
+                    $sorted = collect($ids)->shuffle()->toArray();
                 }
-                // return $ids;
+                // return $sorted;
                 $sect->update([
-                    'product_id' => json_encode(array_values(array_unique($ids)))
+                    'product_id' => json_encode(array_values(array_unique($sorted)))
                 ]);
             }
             // $camp->product()->sync($request->product);
@@ -243,16 +248,77 @@ class CampaignController extends Controller
             //throw $th;
         }
     }
-
-    public function sendToMailChimp($campId = '')
+    public function addDiscount($from,$to,$discAmount=15)
     {
-        $productData = Product::with(['category:id,category_name,slug','subcategory:id,category_name,slug','inventory','campaign'])
-            ->whereHas('campaign', function($q) use ($campId) {
-                $q->where('campaign_id', $campId);
-            })->get();
-        $mailchimpService = new MailchimpService();
-        // return $productData;
-        $response = $mailchimpService->createProducts($productData);
-        dd($response);
+        $inv = Inventory::whereBetween('id',[$from,$to])->get()->toArray();
+        $chunks = array_chunk($inv, 100);
+        foreach($chunks as $chunk)
+        {
+            foreach($chunk as $v)
+            {
+                Discount::insert([
+                    'product_id'       => $v['product_id'],
+                    'disc_sku'         => $v['sku'],
+                    'discount_amount'  => $discAmount,
+                    'discount_type'    => 'percentage',
+                    'type'             => 'campaign',
+                    'max_amount'       => NULL,
+                    'status'           => 1
+                ]);
+            }
+            // Update the inventory items in the current chunk
+            $product_ids = array_column($chunk, 'product_id');
+            Inventory::whereIn('product_id', $product_ids)->update([
+                'disc_status' => 1
+            ]);
+        }
+        return $this->successMessage("Discount added to Prodcut!");
+    }
+    public function sendToMailChimp($from,$to,$apiKey)
+    {
+        $productsData = Product::with(['category:id,category_name,slug','subcategory:id,category_name,slug','inventory','campaign'])
+        ->whereBetween('id',[$from,$to])
+		->get();
+       $responses = $this->createProductsData($productsData,$apiKey);
+	    return response()->json($responses);
+
+    }
+    public function createProduct(array $productData,$apiKey)
+    {
+        $url = "https://us6.api.mailchimp.com/3.0/ecommerce/stores/e8c8bcc5-6471-4db7-af94-b120000384c5/products";
+        $response = Http::withBasicAuth('anystring',$apiKey)->post($url, $productData);
+        return $response->json();
+    }
+
+    public function createProductsData($productsData,$apiKey)
+    {
+        $responses = [];
+        foreach ($productsData as $productData) {
+            $link = config('app.front_url').'products/'.($productData->subcategory->slug ?? $productData->category->slug).'/'.$productData->id;
+            $data = [
+                    'id' => $productData->id.uniqueString(),
+                    'title' => $productData->product_name,
+                    'description' => strip_tags($productData->description),
+                    'vendor' => 'Aranya',
+                    'image_url' => $productData->product_image,
+                    'variants' => [
+                        [
+                            'id' => optional($productData->inventory->first())->id.uniqueString(),
+                            'title' => $productData->product_name,
+                            'price' => (int)optional($productData->inventory->first())->mrp,
+                            'inventory_quantity' => optional($productData->inventory->first())->stock,
+                            "url" => $link,
+                            'sku' => optional($productData->inventory->first())->sku,
+                            "image_url" => $productData->product_image
+                        ],
+                    ],
+                    'url' => $link,
+                    'type' =>  $productData->category->category_name,
+                    'published_at_foreign' =>  date('Y-m-d H:i:s'),
+            ];
+            //$responses[] = $data;
+            $responses[] = $this->createProduct($data,$apiKey);
+        }
+        return $responses;
     }
 }

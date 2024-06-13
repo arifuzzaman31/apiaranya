@@ -23,6 +23,12 @@ class CreateDeliveriesTable extends Migration
             $table->date('on_delivery_date')->nullable();
             $table->tinyInteger('on_delivery_state')->nullable();
             $table->string('on_delivery_value')->nullable();
+            $table->date('on_hold_date')->nullable();
+            $table->tinyInteger('on_hold_state')->nullable();
+            $table->string('on_hold_value')->nullable();
+            $table->date('cancel_date')->nullable();
+            $table->tinyInteger('cancel_state')->nullable();
+            $table->string('cancel_value')->nullable();
             $table->date('delivery_date')->nullable();
             $table->tinyInteger('delivery_state')->nullable();
             $table->string('delivery_value')->nullable();

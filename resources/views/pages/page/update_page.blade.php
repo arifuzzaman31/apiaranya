@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('title', 'Edit Product | Aranya')
+@section('title', 'Edit Section | Aranya')
 
 @section('content')
 <div id="tableCheckbox" class="col-lg-12 col-12 layout-spacing" style="padding: 25px 0;">

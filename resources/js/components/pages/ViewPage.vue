@@ -115,14 +115,14 @@ export default {
     <div class="row">
         <div id="tableHover" class="col-lg-12 col-12 layout-spacing">
             <div class="statbox widget box box-shadow">
-                <div class="widget-content widget-content-area">
+                <div class="widget-content">
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover mb-4">
                             <thead>
                                 <tr>
                                     <th>SL</th>
                                     <th>Section Name</th>
-                                    <th>Title</th>
+                                    <!-- <th>Title</th> -->
                                     <th>Pattern</th>
                                     <th>Use For</th>
                                     <th>Precedense</th>
@@ -140,7 +140,7 @@ export default {
                                     <tr>
                                         <td>{{ index + 1 }}</td>
                                         <td>{{ section.section_name }}</td>
-                                        <td>{{ section.section_title }}</td>
+                                        <!-- <td>{{ section.section_title }}</td> -->
                                         <td>{{ section.pattern }}</td>
                                         <td>{{ section.use_for }}</td>
                                         <td>{{ section.precedence }}</td>

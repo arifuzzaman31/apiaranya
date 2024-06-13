@@ -233,7 +233,43 @@
                 </ul>
             </li>
             @endif
+            <li class="menu">
+                <a href="#story" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <div class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-command"><path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"></path></svg>
+                        <span>Story</span>
+                    </div>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </div>
+                </a>
+                <ul class="collapse submenu list-unstyled" id="story" data-parent="#accordionExample">
 
+                        <li>
+                            <a href="{{ route('story.home') }}">Home </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('about.aranya') }}">About Aranya </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('story.community') }}">Community </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('story.color-story') }}">Color Stories </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('story.sustainability') }}">Sustainability</a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('story.blog') }}">Blogs </a>
+                        </li>
+                </ul>
+            </li>
             @if(checkPermission('menu-view'))
             <li class="menu @if(request()->is('admin/category')) active @endif">
                 <a href="#menus" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -466,55 +502,10 @@
                         <a href="{{ route('invoice.report') }}">Invoice Report </a>
                     </li>
                     @endif
-                    @if(checkPermission('invoice-report'))
+                    @if(checkPermission('product-report'))
                     <li>
                         <a href="{{ route('product.report') }}">Product Report </a>
                     </li>
-                    @endif
-                </ul>
-            </li>
-            @endif
-            @if(checkPermission('report-view'))
-            <li class="menu @if(request()->is('admin/order-report')) active @endif">
-                <a href="#story" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                    <div class="">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-command"><path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"></path></svg>
-                        <span>Story</span>
-                    </div>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </div>
-                </a>
-                <ul class="collapse submenu list-unstyled" id="story" data-parent="#accordionExample">
-                    @if(checkPermission('sales-report'))
-                        <li>
-                            <a href="{{ route('story.home') }}">Home </a>
-                        </li>
-                    @endif
-                    @if(checkPermission('campaign-report'))
-                        <li>
-                            <a href="{{ route('about.aranya') }}">About Aranya </a>
-                        </li>
-                    @endif
-                    @if(checkPermission('stock-report'))
-                        <li>
-                            <a href="{{ route('story.community') }}">Community </a>
-                        </li>
-                    @endif
-                    @if(checkPermission('payment-report'))
-                        <li>
-                            <a href="{{ route('story.color-story') }}">Color Stories </a>
-                        </li>
-                    @endif
-                    @if(checkPermission('customer-lifetime-value-report'))
-                        <li>
-                            <a href="{{ route('story.sustainability') }}">Sustainability</a>
-                        </li>
-                    @endif
-                    @if(checkPermission('customer-refund-report'))
-                        <li>
-                            <a href="{{ route('story.blog') }}">Blogs </a>
-                        </li>
                     @endif
                 </ul>
             </li>

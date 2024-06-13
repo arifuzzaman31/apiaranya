@@ -316,7 +316,7 @@ export default {
                             <td class="text-center">
                                 <span class="badge rounded-pill" :class="product.status == 1 ? 'alert-primary':'alert-danger'">{{ product.status == 1 ? 'Active' : 'Deactive' }}</span>
                             </td>
-                         
+
                                  <td class="text-center">
 
                                                <button
@@ -359,10 +359,10 @@ export default {
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="widget-content widget-content-area">
+                        <div class="widget-content">
                             <form @submit.prevent="storeDiscount()">
                                 <div class="statbox widget box box-shadow">
-                                    <div class="widget-content ">
+                                    <div class=" ">
 
                                         <div class="row text-center">
                                             <div class="col-2 text-success">

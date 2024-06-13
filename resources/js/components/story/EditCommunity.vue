@@ -141,10 +141,10 @@ export default {
                 <div>
                     <h4 class="mx-2">Edit Community</h4>
                 </div>
-                <div class="widget-content widget-content-area">
+                <div class="widget-content">
                     <form @submit.prevent="updateCommunity()">
                         <div class="form-row mb-4">
-                                <div class="col-md-4 col-12 mb-2">
+                                <div class="col-md-6 col-12 mb-2">
                                     <label for="title-comm">Title</label>
                                     <input type="text" v-model="form.title" id="title-comm" class="form-control" required placeholder="title">
                                     <span
@@ -154,7 +154,7 @@ export default {
                                         {{ validation_error.title[0] }}
                                     </span>
                                 </div>
-                                <div class="col-md-4 col-12 mb-2">
+                                <div class="col-md-6 col-12 mb-2">
                                     <label for="area-comm">Area Name</label>
                                     <select
                                         id="area"
@@ -177,7 +177,7 @@ export default {
                                         <option value="Bandarban"> Bandarban </option>
                                     </select>
                                 </div>
-                                <div class="col-md-4 col-12 mb-2">
+                                <div class="col-md-6 col-12 mb-2">
                                     <label for="fabric">Add Fabric</label>
 
                                     <select
@@ -198,7 +198,14 @@ export default {
                                     </select>
 
                                 </div>
+                                <div class="col-md-6 col-12 mb-2">
+                                    <label for="title-comm">Status</label>
+                                        <select id="status-id" class="form-control  form-control-sm" v-model="form.status">
+                                            <option value="0">Deactive</option>
+                                            <option value="1">Active</option>
+                                        </select>
 
+                                </div>
                                 <div class="col-12 mb-2">
                                     <label for="campdate">Short Description</label>
                                     <textarea required v-model="form.short_description" class="form-control"  placeholder="Short Description"></textarea>
@@ -210,12 +217,10 @@ export default {
                                     </span>
                                 </div>
                                 <div class="col-12 mb-2">
-                                <div id="tooltips" class="col-lg-12 layout-spacing col-md-12">
-                                        <div class="widget-content ">
+                                        <div class="">
                                             <label for="editor-container">Description</label>
                                             <QuillEditor theme="snow" v-model:content="form.description" contentType="html" required />
                                         </div>
-                                    </div>
                                 </div>
 
 
@@ -265,14 +270,7 @@ export default {
                                         />
                                     </div>
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <div class="form-group">
-                                        <select id="status-id" class="form-control  form-control-sm" v-model="form.status">
-                                            <option value="0">Deactive</option>
-                                            <option value="1">Active</option>
-                                        </select>
-                                    </div>
-                                </div>
+
                             </div>
                             <div class="modal-footer md-button">
                               <button type="submit" class="btn btn-primary-log">Update</button>

@@ -19,9 +19,30 @@ export default {
     },
 
     methods: {
+        claimRefund(id){
+            Swal.fire({
+                title: "Are you sure?",
+                text: "But you will still be able to retrieve this file.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, Do it!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios
+                        .post(baseUrl + `claim-item-refund`,{'item_id':id})
+                        .then((response) => {
+                            this.successMessage(response.data);
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
+                    window.location.href = window.location.href;
+                }
+            });
+        },
         actionToMeth(url,id){
-            // alert(url)
-            // return false;
             Swal.fire({
                 title: "Are you sure?",
                 text: "Order Status will be Update!",
@@ -42,14 +63,14 @@ export default {
                         .catch((error) => {
                             console.log(error);
                         });
-                        window.location.href = window.location.href;
+                     window.location.href = window.location.href;
                 }
             });
         },
         paymentModify(uri, id) {
             this.order_status.order_id = id;
             this.actionUri = uri;
-            if(uri == 'update/order/status' && (this.order_status.order_position == 1) && !this.order.tracking_id){
+            if(uri == 'update/order/status' && (this.order_status.order_position == 2) && !this.order.tracking_id){
                 $("#pickupModal").modal('show');
             } else {
                 this.actionToMeth(uri, id)
@@ -109,6 +130,7 @@ export default {
                                             Order Date:
                                             {{ dateToString(order.order_date) }}
                                         </p>
+                                        <p>Delivery Method: {{ order.delivery_platform }}</p>
                                     </div>
                                     <div class="col-md-3" v-if="showPermission.includes('order-update')">
                                         <select
@@ -145,8 +167,10 @@ export default {
                                                 Processing
                                             </option>
                                             <option value="2">
-                                                On Delivery
+                                                Ready To Delivery
                                             </option>
+                                            <option value="4">On-Hold</option>
+                                            <option value="5">Cancel</option>
                                             <option value="3">Delivered</option>
                                         </select>
                                     </div>
@@ -191,7 +215,6 @@ export default {
                                             Name: {{ order.user.name }} <br />
                                             Email: {{ order.user.email }} <br />
                                             Phone: {{ order.user.phone }} <br />
-                                            <!-- Delivery Type: Scheduled <br> -->
                                             Delivery Time:
                                             {{ order.delivery.delivery_date }}
                                         </p>
@@ -264,6 +287,9 @@ export default {
                                             <th class="text-right">
                                                 Total Price
                                             </th>
+                                            <th class="text-right">
+                                                Action
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -282,6 +308,9 @@ export default {
                                             <td>{{ detail.quantity }}</td>
                                             <td class="text-right">
                                                 {{ Number(detail.total_charge_selling_price).toFixed(2) }}
+                                            </td>
+                                            <td class="text-right">
+                                                <button class="btn btn-default btn-sm" @click.prevent="claimRefund(detail.id)" :disabled="detail.is_claim_refund == 1 ? true : false">{{ detail.is_claim_refund == 1 ? 'Claimed' : 'Refund'}}</button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -340,7 +369,7 @@ export default {
                                         <div
                                             class="rounded-circle px-2 bg-primary text-white mb-1"
                                         >
-                                            1
+                                            *
                                         </div>
                                         <div class="line h-100"></div>
                                     </div>
@@ -361,7 +390,7 @@ export default {
                                         <div
                                             class="rounded-circle px-2 bg-primary text-white mb-1"
                                         >
-                                            2
+                                            *
                                         </div>
                                         <div class="line h-100"></div>
                                     </div>
@@ -370,7 +399,7 @@ export default {
                                             Proccess
                                         </h6>
                                         <p class="lead text-muted pb-3">
-                                            Proccess status updated to Proccess <br>
+                                            Pending status updated to Proccess <br>
                                             at {{ dateToString(order.delivery.process_date) }}
                                         </p>
                                     </div>
@@ -382,7 +411,7 @@ export default {
                                         <div
                                             class="rounded-circle px-2 bg-primary text-white mb-1"
                                         >
-                                            3
+                                        *
                                         </div>
                                         <div class="line h-100"></div>
                                     </div>
@@ -391,7 +420,7 @@ export default {
                                             On Delivery
                                         </h6>
                                         <p class="lead text-muted pb-3">
-                                            On Delivery status updated to Delivered <br>
+                                            Proccess status updated to On Delivery <br>
                                             at {{ dateToString(order.delivery.process_date) }}
                                         </p>
                                     </div>
@@ -403,20 +432,63 @@ export default {
                                         <div
                                             class="rounded-circle px-2 bg-primary text-white mb-1"
                                         >
-                                            4
+                                        *
                                         </div>
-                                        <div class="line h-100 d-none"></div>
+                                        <div class="line h-100"></div>
                                     </div>
                                     <div>
                                         <h6 class="text-dark">
                                            Delivered
                                         </h6>
                                         <p class="lead text-muted pb-3">
-                                            Delivery status updated to Delivered <br>
+                                            On Delivery status updated to Delivered <br>
                                             at {{ dateToString(order.delivery.process_date) }}
                                         </p>
                                     </div>
                                 </div>
+                                <div class="d-flex" v-if="order.delivery.on_hold_state == 4">
+                                    <div
+                                        class="d-flex flex-column pr-3 align-items-center"
+                                    >
+                                        <div
+                                            class="rounded-circle px-2 bg-primary text-white mb-1"
+                                        >
+                                        *
+                                        </div>
+                                        <div class="line h-100"></div>
+                                    </div>
+                                    <div>
+                                        <h6 class="text-dark">
+                                           On Hold
+                                        </h6>
+                                        <p class="lead text-muted pb-3">
+                                            Order Status updated to On Hold <br>
+                                            at {{ dateToString(order.delivery.on_hold_date) }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="d-flex" v-if="order.delivery.cancel_state == 5">
+                                    <div
+                                        class="d-flex flex-column pr-3 align-items-center"
+                                    >
+                                        <div
+                                            class="rounded-circle px-2 bg-primary text-white mb-1"
+                                        >
+                                        *
+                                        </div>
+                                        <div class="line h-100 d-none"></div>
+                                    </div>
+                                    <div>
+                                        <h6 class="text-dark">
+                                           Cancelled
+                                        </h6>
+                                        <p class="lead text-muted pb-3">
+                                            Order Status updated to Cancelled <br>
+                                            at {{ dateToString(order.delivery.cancel_date) }}
+                                        </p>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>

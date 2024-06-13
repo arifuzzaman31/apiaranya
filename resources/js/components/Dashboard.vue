@@ -523,388 +523,10 @@
                     </div>
                 </div>
             </div>
-            <!-- <div
-                class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing"
-             >
-                <div class="widget widget-chart-one-dashboard">
-                    <div class="widget-heading-dashboard">
-                        <ul class="tabs tab-pills">
-                            <li>
-                                <a
-                                    href="javascript:void(0);"
-                                    id="tb_1"
-                                    class="tabmenu"
-                                    >Recent activities</a
-                                >
-                            </li>
-                        </ul>
-                    </div>
-                    <ul class="verti-timeline list-unstyled font-sm">
-                        <li class="event-list">
-                            <div class="event-timeline-dot">
-                                <i
-                                    class="material-icons md-play_circle_outline font-xxl"
-                                    ><svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        height="20"
-                                        viewBox="0 -960 960 960"
-                                        width="20"
-                                    >
-                                        <path
-                                            d="m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
-                                            fill="#7b7d8a"
-                                        /></svg
-                                ></i>
-                            </div>
-                            <div class="media">
-                                <div class="me-3">
-                                    <h6>
-                                        <span>Today</span>
-                                        <i>
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                height="24"
-                                                viewBox="0 -960 960 960"
-                                                width="24"
-                                            >
-                                                <path
-                                                    d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z"
-                                                    fill="#7b7d8a"
-                                                />
-                                            </svg>
-                                        </i>
-                                    </h6>
-                                </div>
-                                <div class="media-body">
-                                    <div>
-                                        Lorem ipsum dolor sit amet consectetur
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="event-list active">
-                            <div class="event-timeline-dot">
-                                <i class="material-icons"
-                                    ><svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        height="20"
-                                        viewBox="0 -960 960 960"
-                                        width="20"
-                                    >
-                                        <path
-                                            d="m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
-                                            fill="#7b7d8a"
-                                        /></svg
-                                ></i>
-                            </div>
-                            <div class="media">
-                                <div class="me-3">
-                                    <h6>
-                                        <span>17 May</span>
-                                        <i>
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                height="24"
-                                                viewBox="0 -960 960 960"
-                                                width="24"
-                                            >
-                                                <path
-                                                    d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z"
-                                                    fill="#7b7d8a"
-                                                />
-                                            </svg>
-                                        </i>
-                                    </h6>
-                                </div>
-                                <div class="media-body">
-                                    <div>
-                                        Debitis nesciunt voluptatum dicta
-                                        reprehenderit
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="event-list">
-                            <div class="event-timeline-dot">
-                                <i class="material-icons"
-                                    ><svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        height="20"
-                                        viewBox="0 -960 960 960"
-                                        width="20"
-                                    >
-                                        <path
-                                            d="m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
-                                            fill="#7b7d8a"
-                                        /></svg
-                                ></i>
-                            </div>
-                            <div class="media">
-                                <div class="me-3">
-                                    <h6>
-                                        <span>13 May</span>
-                                        <i>
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                height="24"
-                                                viewBox="0 -960 960 960"
-                                                width="24"
-                                            >
-                                                <path
-                                                    d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z"
-                                                    fill="#7b7d8a"
-                                                />
-                                            </svg>
-                                        </i>
-                                    </h6>
-                                </div>
-                                <div class="media-body">
-                                    <div>Accusamus voluptatibus voluptas.</div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="event-list">
-                            <div class="event-timeline-dot">
-                                <i class="material-icons"
-                                    ><svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        height="20"
-                                        viewBox="0 -960 960 960"
-                                        width="20"
-                                    >
-                                        <path
-                                            d="m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
-                                            fill="#7b7d8a"
-                                        /></svg
-                                ></i>
-                            </div>
-                            <div class="media">
-                                <div class="me-3">
-                                    <h6>
-                                        <span>05 April</span>
-                                        <i>
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                height="24"
-                                                viewBox="0 -960 960 960"
-                                                width="24"
-                                            >
-                                                <path
-                                                    d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z"
-                                                    fill="#7b7d8a"
-                                                />
-                                            </svg>
-                                        </i>
-                                    </h6>
-                                </div>
-                                <div class="media-body">
-                                    <div>
-                                        At vero eos et accusamus et iusto odio
-                                        dignissi
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="event-list">
-                            <div class="event-timeline-dot">
-                                <i class="material-icons"
-                                    ><svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        height="20"
-                                        viewBox="0 -960 960 960"
-                                        width="20"
-                                    >
-                                        <path
-                                            d="m380-300 280-180-280-180v360ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"
-                                            fill="#7b7d8a"
-                                        /></svg
-                                ></i>
-                            </div>
-                            <div class="media">
-                                <div class="me-3">
-                                    <h6>
-                                        <span>26 Mar</span>
-                                        <i>
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                height="24"
-                                                viewBox="0 -960 960 960"
-                                                width="24"
-                                            >
-                                                <path
-                                                    d="m700-300-57-56 84-84H120v-80h607l-83-84 57-56 179 180-180 180Z"
-                                                    fill="#7b7d8a"
-                                                />
-                                            </svg>
-                                        </i>
-                                    </h6>
-                                </div>
-                                <div class="media-body">
-                                    <div>
-                                        Responded to need “Volunteer Activities
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div> -->
-        </div>
+        </div> 
     </div>
 
-    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
-        <div class="widget widget-chart-one-dashboard">
-            <div class="widget-heading-dashboard">
-                <ul class="tabs tab-pills">
-                    <li>
-                        <a
-                            href="javascript:void(0);"
-                            id="tb_1latest"
-                            class="tabmenu"
-                            >Latest orders</a
-                        >
-                    </li>
-                </ul>
-            </div>
-            <div class="row">
-                <div class="col-md-3">
-                    <select class="w-75 w-100" name="pets" id="pet-select">
-                        <option value="">All Categories</option>
-                        <option value="women">Women's Clothing</option>
-                        <option value="men">Men's Clothing</option>
-                    </select>
-                </div>
-                <div class="col-md-9">
-                    <div class="row justify-content-end">
-                        <div class="col-md-3">
-                            <input
-                                type="date"
-                                class="w-100"
-                                id="start"
-                                name="trip-start"
-                                value="mm/dd/yy"
-                                min="01-01-2024"
-                                max="01-01-2028"
-                            />
-                        </div>
-                        <div class="col-md-3">
-                            <select class="w-100" name="pets" id="pet-select">
-                                <option value="">Status</option>
-                                <option value="women">Paid</option>
-                                <option value="men">Unpaid</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <hr />
-
-            <div class="widget-content">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th><div class="th-content">Order ID</div></th>
-                                <th><div class="th-content">Customer</div></th>
-                                <th><div class="th-content">Date</div></th>
-                                <th><div class="th-content">Price</div></th>
-                                <th>
-                                    <div class="th-content">Payment Type</div>
-                                </th>
-                                <th>
-                                    <div class="th-content text-left">
-                                        Payment Status
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="th-content text-left">
-                                        View Details
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="th-content text-left">
-                                        Download PDF
-                                    </div>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody v-if="orders && orders.length > 0">
-                            <template v-for="order in orders" :key="order.id">
-                                <tr>
-                                    <td>{{ order.order_id }}</td>
-                                    <td>
-                                        {{
-                                            order.user_shipping_info.first_name
-                                        }}
-                                        {{ order.user_shipping_info.last_name }}
-                                    </td>
-                                    <td>14.5.2024</td>
-
-                                    <td>{{ order.total_price }}</td>
-                                    <td class="text-left">
-                                        <span
-                                            v-if="order.payment_status == 0"
-                                            class="badge alert-primary"
-                                            >COD</span
-                                        >
-                                        <span v-else class="badge badge-light"
-                                            >Others</span
-                                        >
-                                    </td>
-                                    <td cclass="text-left">
-                                        <span
-                                            v-if="order.payment_status == 0"
-                                            class="badge alert-warning"
-                                            >Unpaid</span
-                                        >
-                                        <span
-                                            v-if="order.payment_status == 1"
-                                            class="badge alert-primary"
-                                            >Paid</span
-                                        >
-                                        <span
-                                            v-if="order.payment_status == 2"
-                                            class="badge badge-light"
-                                            >Failed</span
-                                        >
-                                        <span
-                                            v-if="order.payment_status == 3"
-                                            class="badge alert-danger"
-                                            >Cancel</span
-                                        >
-                                    </td>
-                                    <td class="text-left">
-                                        <a
-                                            class="btn btn-xs"
-                                            :href="
-                                                baseUri +
-                                                'order-details/' +
-                                                order.id
-                                            "
-                                            >View details</a
-                                        >
-                                    </td>
-                                    <td class="text-left">
-                                        <a
-                                            :href="
-                                                baseUri +
-                                                'order-details/' +
-                                                order.id +
-                                                '?from=pdf'
-                                            "
-                                            download
-                                            class="btn btn-xs"
-                                            >Download PDF</a
-                                        >
-                                    </td>
-                                </tr>
-                            </template>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+    <order-list />
 </template>
 
 <script>
@@ -912,13 +534,17 @@ import CustomerOfMonth from "./chart/CustomerOfMonth.vue";
 import SalesOfMonth from "./chart/SalesOfMonth.vue";
 import TopProductSale from "./chart/TopProductSale.vue";
 import TotalEarning from "./chart/TotalEarning.vue";
+import OrderList from './dashboard/OrderList.vue'
+import Mixin from "../mixer";
 
 export default {
+    mixins:[Mixin],
     components: {
         "total-earning": TotalEarning,
         "top-product": TopProductSale,
         "customer-of-month": CustomerOfMonth,
         "sales-of-month": SalesOfMonth,
+        OrderList
     },
 
     data() {
@@ -928,11 +554,10 @@ export default {
             doughtData: null,
             totalEarning: null,
             totalSaleMonth: null,
-            orders: [],
             order_info: {
                 ttl: 0,
                 pending: 0,
-                processing: 0,
+                productQty: 0,
                 delivered: 0,
             },
             status_info: {
@@ -946,31 +571,17 @@ export default {
     },
 
     methods: {
-        getOrder() {
-            axios
-                .get(baseUrl + `get-order?no_paginate=yes&take_some=10`)
-                .then((result) => {
-                    this.orders = result.data;
-                })
-                .catch((errors) => {
-                    console.log(errors);
-                });
-        },
 
         getOrderInfo() {
             axios
                 .get(baseUrl + `get-order-info`)
                 .then((result) => {
+                    this.order_info.productQty = result.data.countProduct
+                    this.order_info.ttl = result.data.revenue.total_sale
                     result.data.countdata.map((item, i) => {
-                        switch (item.order_position) {
+                        switch (Number(item.order_position)) {
                             case 0:
-                                this.order_info.ttl = item.total;
-                                break;
-                            case 1:
                                 this.order_info.pending = item.total;
-                                break;
-                            case 2:
-                                this.order_info.processing = item.total;
                                 break;
                             case 3:
                                 this.order_info.delivered = item.total;
@@ -1107,7 +718,6 @@ export default {
 
     mounted() {
         this.getDataMonth();
-        this.getOrder();
         this.getOrderInfo();
     },
 };

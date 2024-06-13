@@ -11,7 +11,7 @@ export default {
             form: {
                 id: '',
                 section_name: '',
-                section_title: '',
+                section_title: 'no-more',
                 banner: [],
                 pattern: 'single',
                 use_for: 'campaign',
@@ -91,7 +91,7 @@ export default {
             },
             getSubCategories() {
                 this.form.banner[this.updateFormdata.imagenumb].back_link = ''
-                this.form.banner[this.updateFormdata.imagenumb].name = ''
+                // this.form.banner[this.updateFormdata.imagenumb].name = ''
                 const updateFormData = (this.allfiltersubcategories).filter((data) => data.parent_category == this.updateFormdata.category.id)
                 this.allsubcategories = updateFormData
                 // this.form.banner[this.updateFormdata.imagenumb].back_link = this.updateFormdata.category.slug+'/'+this.updateFormdata.subcategory
@@ -153,16 +153,16 @@ export default {
         setLink(){
             if(this.form.use_for == 'campaign'){
                 this.form.banner[this.updateFormdata.imagenumb].back_link = 'campaign/cat='+this.updateFormdata.subcategory.id+'&cat_name='+this.updateFormdata.subcategory.slug
-                this.form.banner[this.updateFormdata.imagenumb].name = this.updateFormdata.subcategory.campaign_name
+                // this.form.banner[this.updateFormdata.imagenumb].name = this.updateFormdata.subcategory.campaign_name
             }
             if(this.form.use_for == 'category'){
                 if(this.updateFormdata.subcategoryObj != ''){
                     const catName = this.updateFormdata.subcategoryObj.category_name.replace(/[^a-zA-Z ]/g, "");
-                    this.form.banner[this.updateFormdata.imagenumb].name = catName
+                    // this.form.banner[this.updateFormdata.imagenumb].name = catName
                     this.form.banner[this.updateFormdata.imagenumb].back_link = 'products/'+this.updateFormdata.subcategoryObj.slug+'?cat='+this.updateFormdata.category.id+'&sub_cat='+this.updateFormdata.subcategoryObj.id
                 } else {
                     const catName = this.updateFormdata.category.category_name.replace(/[^a-zA-Z ]/g, "");
-                    this.form.banner[this.updateFormdata.imagenumb].name = catName
+                    // this.form.banner[this.updateFormdata.imagenumb].name = catName
                     this.form.banner[this.updateFormdata.imagenumb].back_link = 'products?cat='+this.updateFormdata.category.id+'&cat_name='+this.updateFormdata.category.slug
                 }
             }
@@ -195,20 +195,20 @@ export default {
     mounted(){
         this.form.id = this.section_info.id;
         this.form.section_name = this.section_info.section_name;
-        this.form.section_title = this.section_info.section_title;
+        // this.form.section_title = this.section_info.section_title;
         this.form.pattern = this.section_info.pattern
         this.form.use_for = this.section_info.use_for
         this.form.precedence = this.section_info.precedence
         this.form.status = this.section_info.status
         const dt = JSON.parse(this.section_info.banner)
-        dt.map((v,i) => {
+        dt?.map((v,i) => {
             this.form.banner.push(v)
         })
         if(this.section_info.use_for == 'category'){
-            this.getCategory()
+            if(this.allcategories.length == 0) this.getCategory()
         }
         if(this.section_info.use_for == 'campaign'){
-            this.getCampaign()
+            if(this.campaigns.length == 0) this.getCampaign()
         }
 
     },
@@ -238,10 +238,10 @@ export default {
                                     <label for="set-name">Section Name</label>
                                     <input type="text" id="set-name" class="form-control" placeholder="Enter Section name" v-model="form.section_name" />
                                 </div>
-                                <div class="my-2">
+                                <!-- <div class="my-2">
                                     <label for="set-name">Section Title</label>
                                     <input type="text" id="set-title" class="form-control" placeholder="Section Title" v-model="form.section_title" />
-                                </div>
+                                </div> -->
                                 <div class="my-2">
                                     <label for="pattern">Select Pattern</label>
                                     <select id="pattern" class="form-control" v-model="form.pattern">
@@ -303,6 +303,12 @@ export default {
                         <div class="tab-content" id="v-border-pills-tabContent">
                             <div class="tab-pane fade active show bordered my-2" v-for="(bann,ind) in form.banner" :key="ind" id="v-border-pills-home" role="tabpanel" aria-labelledby="v-border-pills-home-tab">
                                 <input type="submit" v-if="showPermission.includes('page-update')" class="btn btn-info btn-block mb-4 mr-2 controlss" @click="openPageMediaModal(ind)" value="File Upload" />
+                                <input
+                                    type="text"
+                                    class="form-control mb-4 mr-2 controlss"
+                                    placeholder="Write Banner Title"
+                                    v-model="bann.name"
+                                />
                                 <video :src="bann.banner_uri" autoplay v-if="bann.file_type == 'video'" muted controls class="controlss"></video>
                                 <v-lazy-image class="mr-3 controlss" v-else :src="bann.banner_uri" alt="Home image two" :src-placeholder="url+'demo.png'" />
                                 <p>Back Url: domain/{{ bann.back_link }}</p>

@@ -53,7 +53,7 @@ export default {
     
     <div class="row mb-4 g-4">
         <!--left sidebar-->
-        <div class="col-xl-9 col-2 col-md-2 col-lg-2 col-xl-1">
+        <div class="col-xl-9 col-2 col-md-2 col-lg-12 col-xl-1">
           
             <form class="pb-650">
                 <div class="card mb-4" id="section-1">

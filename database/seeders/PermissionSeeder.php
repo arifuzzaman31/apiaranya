@@ -435,10 +435,17 @@ class PermissionSeeder extends Seeder
                 'route_name' => null,
                 'slug' => 'sales-report',
                 'status' => 1
+            ],
+            [
+                'group_name' => 'Report',
+                'permission_name' => 'Product Report',
+                'route_name' => null,
+                'slug' => 'product-report',
+                'status' => 1
             ]
         ];
 
         collect($permission)->each(function ($perm) { Permission::create($perm); });
-        
+
     }
 }

@@ -61,7 +61,7 @@ export default {
             <div>
                 <h4 class="mx-2">Community Page</h4>
             </div>
-            <div class="widget-content widget-content-area">
+            <div class="widget-content">
                 <label>Community Feature Image</label>
                 <div class="container">
                     <v-lazy-image

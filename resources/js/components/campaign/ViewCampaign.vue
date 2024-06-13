@@ -206,16 +206,16 @@ export default {
                                                         class="btn btn-sm btn-delete "
                                                         >Edit</a
                                                     >
-                                                
-                                                
+
+
                                                     <button
                                                         type="button"
                                                         class="btn btn-sm btn-delete ml-2"
-                                                    @click="deleteCampaign(campaign.id)" 
+                                                    @click="deleteCampaign(campaign.id)"
                                                     >
                                                         Delete
                                                     </button>
-                                                
+
                                         </td>
 
 
@@ -225,8 +225,8 @@ export default {
 
 
 
-                                
-                            
+
+
                             </tr>
                         </template>
                     </tbody>
@@ -252,7 +252,7 @@ export default {
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="widget-content widget-content-area">
+                        <div class="">
                             <form @submit.prevent="storeCampaign()">
                                 <div class="form-group">
                                     <label for="size_name">Campaign Name</label>
@@ -262,6 +262,17 @@ export default {
                                         class="text-danger"
                                     >
                                         {{ validation_error.campaign_name[0] }}
+                                    </span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="size_name">Banner Link</label>
+                                    <input type="text" v-model="form.campaign_banner" id="Campaign_banner" class="form-control" placeholder="Campaign Banner Link">
+                                    <span
+                                        v-if="validation_error.hasOwnProperty('campaign_banner')"
+                                        class="text-danger"
+                                    >
+                                        {{ validation_error.campaign_banner[0] }}
                                     </span>
                                 </div>
 
@@ -321,7 +332,7 @@ export default {
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="widget-content widget-content-area">
+                        <div class="widget-content">
                             <form @submit.prevent="updateCampaign()">
                                 <div class="form-group">
                                     <label for="size_name">Campaign Name</label>
@@ -331,6 +342,17 @@ export default {
                                         class="text-danger"
                                     >
                                         {{ validation_error.campaign_name[0] }}
+                                    </span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="size_name">Banner Link</label>
+                                    <input type="text" v-model="form.campaign_banner" id="Campaign_banner" class="form-control" placeholder="Campaign Banner Link">
+                                    <span
+                                        v-if="validation_error.hasOwnProperty('campaign_banner')"
+                                        class="text-danger"
+                                    >
+                                        {{ validation_error.campaign_banner[0] }}
                                     </span>
                                 </div>
 

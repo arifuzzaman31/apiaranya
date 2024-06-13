@@ -100,15 +100,20 @@ class DashboardController extends Controller
 
     public function getOrderInfo()
     {
-        $countdata = DB::table('orders')
-            ->groupBy('order_position')
+        $tbl = DB::table('orders');
+        $countdata = $tbl->groupBy('order_position')
             ->select('order_position', DB::raw('count(*) as total'))
             ->get();
-        $orStatus = DB::table('orders')
-            ->groupBy('status')
+        $orStatus = $tbl->groupBy('status')
             ->select('status', DB::raw('count(*) as order_status'))
             ->get();
-        return response()->json(['countdata' => $countdata,'orStatus' => $orStatus]);
+        $revenue = DB::table('order_details')
+            ->select(DB::raw('ROUND(sum(total_selling_price)) as total_sale'))
+            ->where('is_refunded','!=',AllStatic::$paid)
+            ->first();
+        $countproduct = DB::table('products')
+            ->count();
+        return response()->json(['countdata' => $countdata,'orStatus' => $orStatus,'countProduct' => $countproduct,'revenue' => $revenue]);
     }
 
     /**

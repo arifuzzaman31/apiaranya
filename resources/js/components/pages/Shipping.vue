@@ -170,13 +170,13 @@ export default {
 <template>
     <div class="row">
         <div id="tableHover" class="col-lg-12 col-12 layout-spacing">
-            <div class="statbox">
+            <div class="statbox widget-content  widget-content-area">
                 <div class="widget-header">
                     <div class="row">
                         <div
                             class="col-xl-12 col-md-12 col-sm-12 col-12 d-flex justify-content-between"
                         >
-                            <h4>Shipping Charge</h4>
+                            <h4>Country</h4>
                             <button
                                 class="btn btn-info-a mb-2 mr-3"
                                 v-if="showPermission.includes('add-shipping')"
@@ -189,7 +189,7 @@ export default {
                         </div>
                     </div>
                 </div>
-                <div class="widget-content widget-content-area">
+                <div class="">
                     <div class="row mb-2">
                         <div class="col-md-3 col-lg-3 col-12">
                             <input
@@ -231,7 +231,7 @@ export default {
                                                 'edit-shipping'
                                             )
                                         "
-                                        
+
                                         class="text-center"
                                     >
                                         Action

@@ -89,7 +89,7 @@ export default {
                         </div>
                     </div>
                 </div>
-                <div class="widget-content widget-content-area">
+                <div class="widget-content">
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover mb-4">
                     <thead>

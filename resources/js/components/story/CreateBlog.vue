@@ -62,7 +62,7 @@ export default {
 <div class="row">
     <div id="tableHover" class="col-lg-12 col-12 layout-spacing">
         <div class="statbox">
-            <div class="widget-header">
+            <div class="widget-content widget-content-area">
                 <form @submit.prevent="createBlog()">
                     <div class="form-group">
                         <label for="title-blog">Title</label>

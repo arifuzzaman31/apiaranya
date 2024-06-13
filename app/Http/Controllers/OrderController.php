@@ -14,6 +14,9 @@ use Illuminate\Http\Request;
 use Xenon\MultiCourier\Provider\ECourier;
 use Xenon\MultiCourier\Courier;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use DateTime;
+use DateTimeZone;
 
 class OrderController extends Controller
 {
@@ -60,6 +63,7 @@ class OrderController extends Controller
 
         if($keyword != ''){
             $order = $order->where('id','like','%'.$keyword.'%')
+                ->orWhere('order_id','like','%'.$keyword.'%')
             ->orWhereHas('user_shipping_info', function ($q) use ($keyword) {
                 $q->where('last_name','like','%'.$keyword.'%')
                     ->orWhere('phone','like','%'.$keyword.'%')
@@ -182,7 +186,7 @@ class OrderController extends Controller
                     $delivery->delivery_value = NULL;
                 }
                 if($request->order_position == AllStatic::$processing){
-                    $delivery->process_date = $request->date ? $request->date : date('Y-m-d');
+                    $delivery->process_date = date('Y-m-d');
                     $delivery->process_state = AllStatic::$processing;
                     $delivery->process_value = deliveryPosition(AllStatic::$processing);
                     $delivery->on_delivery_date = NULL;
@@ -191,24 +195,39 @@ class OrderController extends Controller
                     $delivery->delivery_date = NULL;
                     $delivery->delivery_state = NULL;
                     $delivery->delivery_value = NULL;
-                    if(empty($delivery->tracking_id)){
-                        if($order->delivery_platform == 'E-Courier'){
-                               $this->sendEcorier($order,$request->hub_name);
-                        }
-                    }
+
                 }
 
                 if($request->order_position == AllStatic::$on_delivery){
-                    $delivery->on_delivery_date = $request->date ? $request->date : date('Y-m-d');
+                    $delivery->on_delivery_date = date('Y-m-d');
                     $delivery->on_delivery_state = AllStatic::$on_delivery;
                     $delivery->on_delivery_value = deliveryPosition(AllStatic::$on_delivery);
                     $delivery->delivery_date = NULL;
                     $delivery->delivery_state = NULL;
                     $delivery->delivery_value = NULL;
+                    if(empty($delivery->tracking_id)){
+                        if($order->delivery_platform == 'E-Courier'){
+                              // $this->sendEcorier($order,$request->hub_name);
+                               $this->resellerEcorier($order,$request->hub_name);
+                        }
+                        if($order->delivery_platform == 'DHL'){
+                               $this->sendToDhl($order,$request->hub_name);
+                        }
+                    }
                 }
 
+                if($request->order_position == AllStatic::$onhold){
+                    $delivery->on_hold_date = date('Y-m-d');
+                    $delivery->on_hold_state = AllStatic::$delivered;
+                    $delivery->on_hold_value = deliveryPosition(AllStatic::$onhold);
+                }
+                if($request->order_position == AllStatic::$pr_cancel){
+                    $delivery->cancel_date = date('Y-m-d');
+                    $delivery->cancel_state = AllStatic::$delivered;
+                    $delivery->cancel_value = deliveryPosition(AllStatic::$pr_cancel);
+                }
                 if($request->order_position == AllStatic::$delivered){
-                    $delivery->delivery_date = $request->date ? $request->date : date('Y-m-d');
+                    $delivery->delivery_date = date('Y-m-d');
                     $delivery->delivery_state = AllStatic::$delivered;
                     $delivery->delivery_value = deliveryPosition(AllStatic::$delivered);
                 }
@@ -275,6 +294,7 @@ class OrderController extends Controller
                     if($result['statusCode'] == 200){
                         DB::table('orders')->where('id', $order->id)->update([
                             'tracking_id' => $datas->ID,
+                            'shippment_info' => $result['response'],
                             'updated_at'    => date("Y-m-d H:i:s")
                         ]);
                         DB::table('deliveries')->where('order_id', $order->id)->update([
@@ -288,6 +308,438 @@ class OrderController extends Controller
             // return $th;
         }
 
+    }
+
+    public function resellerEcorier($order,$hubInfo)
+    {
+        try {
+            $ecorier = json_decode($order->courier_details);
+            $courierData = [
+                'product_id' => $order->order_id,
+                'ep_name' => 'Aranya Craft Ltd',
+                'pick_contact_person' => $hubInfo['contact_person'],
+                'pick_division' => $hubInfo['pick_division'],
+                'pick_district' => $hubInfo['pick_district'],
+                'pick_thana' => $hubInfo['pick_thana'],
+                'pick_hub' => $hubInfo['hub_code'] ?? '18490',
+                'pick_union' => $hubInfo['pick_union'],
+                'pick_address' => $hubInfo['hub_address'],
+                'pick_mobile' => $hubInfo['pick_mobile'],
+                'recipient_name' => $ecorier->recipient_name,
+                'recipient_mobile' => $ecorier->recipient_mobile,
+                'recipient_division' => $ecorier->recipient_division,
+                'recipient_district' => $ecorier->recipient_district,
+                'recipient_city' => $ecorier->recipient_city,
+                'recipient_area' => $ecorier->recipient_area,
+                'recipient_thana' => $ecorier->recipient_thana,
+                'recipient_union' => $ecorier->recipient_zip,
+                'package_code' => $ecorier->package_code,
+                'recipient_address' => $ecorier->recipient_address,
+                'parcel_detail' => '',
+                'number_of_item' => $order->total_item,
+                'product_price' => ($order->total_price + $order->shipping_amount + $order->vat_amount),
+                'payment_method' => 'COD',
+                'ep_id' => '233232212',
+                'actual_product_price' => ($order->total_price + $order->shipping_amount + $order->vat_amount),
+                'pgwid' => 8888,
+                'pgwtxn_id' =>'asdasdsad',
+                'parcel_type' => 'BOX',
+                'is_fragile' => $order->total_fragile_amount > 0 ? 1 : 0,
+                'sending_type' => 1,
+                'is_ipay' => 0
+
+            ];
+            // return $courierData;
+            if(config('app.ecorier_mode') == 'production'){
+                $api_url = 'https://backoffice.ecourier.com.bd/api/order-place-reseller';
+
+            }else {
+                $api_url = 'https://staging.ecourier.com.bd/api/order-place-reseller';
+            }
+            $headers = [
+                    'Content-Type: application/json',
+                    'API-KEY: frz3', // Replace with env('ECOURIER_API_KEY')
+                    'API-SECRET: 4vqsZ', // Replace with env('ECOURIER_API_SECRET')
+                    'USER-ID: H7546' // Replace with env('ECOURIER_USER_ID')
+                ];
+                $handle = curl_init();
+                curl_setopt($handle, CURLOPT_URL, $api_url);
+                curl_setopt($handle, CURLOPT_TIMEOUT, 30);
+                curl_setopt($handle, CURLOPT_HTTPHEADER, $headers);
+                curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, 30);
+                curl_setopt($handle, CURLOPT_POST, true);
+                curl_setopt($handle, CURLOPT_POSTFIELDS, json_encode($courierData));
+                curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, true); // Set to false if testing on local PC
+                curl_setopt($handle, CURLOPT_FOLLOWLOCATION, true); // Follow redirects
+
+            $content = curl_exec($handle);
+            $code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+
+            if($code == 200) {
+                $corier_order = json_decode($content,true );
+                curl_close($handle);
+                DB::table('orders')->where('id', $corier_order->id)->update([
+                    'tracking_id' => $corier_order->ID,
+                    'updated_at'    => date("Y-m-d H:i:s")
+                ]);
+                DB::table('deliveries')->where('order_id', $order->id)->update([
+                    'tracking_id' => $corier_order->ID
+                ]);
+            } else {
+                curl_close($handle);
+                echo "FAILED TO CONNECT WITH RESELLER API";
+                exit;
+            }
+
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+            // return $th;
+        }
+
+    }
+
+    public function sendToDhl($order,$hubInfo)
+    {
+        $dateTime = new DateTime(date('Y-m-d H:i:s'), new DateTimeZone('GMT'));
+        $dateTime->modify('+8 days');
+        $targetTimezone = new DateTimeZone('GMT+1');
+        $dateTime->setTimezone($targetTimezone);
+        $plannedShippingDateAndTime = $dateTime->format('Y-m-d\TH:i:s \G\M\T+01:00'); //"2024-06-02T17:10:09 GMT+01:00";
+        $courier = json_decode($order->courier_details);
+        $requestBody = [
+            "plannedShippingDateAndTime" => $plannedShippingDateAndTime,
+            "pickup" => [
+                "isRequested" => false,
+                "location" => "office",
+                "specialInstructions" => [
+                    [
+                        "value" => "No pickup required.",
+                        "typeCode" => "INS"
+                    ]
+                ]
+            ],
+            "productCode" => "P",
+            "localProductCode" => "P",
+            "customerDetails" => [
+                "shipperDetails" => [
+                    "postalAddress" => [
+                        "postalCode" => $hubInfo['pick_union'],
+                        "cityName" => $hubInfo['pick_division'],
+                        "countryCode" => "BD",
+                        "addressLine1" => $hubInfo['hub_address'],
+                        "countryName" => "Bangladesh"
+                    ],
+                    "contactInformation" => [
+                        "email" => "online@aranya.com.bd",
+                        "phone" => "+8801764414949",
+                        "companyName" => "ARANYA CRAFTS LTD",
+                        "fullName" => "Md Al-Amin"
+                    ]
+                ],
+                "receiverDetails" => [
+                    "postalAddress" => [
+                        "postalCode" => "$courier->postalCode",
+                        "cityName" => "$courier->cityName",
+                        "countryCode" => "$courier->countryCode",
+                        "addressLine1" => Str::limit($courier->addressLine1, 44),
+                        "countryName" => "$courier->countryName"
+                    ],
+                    "contactInformation" => [
+                        "email" => "$courier->email",
+                        "phone" => "$courier->phone",
+                        "companyName" => "Real State Ltd",
+                        "fullName" => "$courier->fullName"
+                    ]
+                ]
+            ],
+            "accounts" => [
+                [
+                    "typeCode" => "shipper",
+                    "number" => "525040187"
+                ]
+            ],
+            "content" => [
+                "isCustomsDeclarable" => true,
+                "description" => "Clothing goods",
+                "unitOfMeasurement" => "metric",
+                "declaredValue" => ceil($order->total_price + $order->shipping_amount + $order->vat_amount),
+                "declaredValueCurrency" => "USD",
+                "incoterm" => "DAP",
+                "exportDeclaration" => [
+                    "lineItems" => [
+                        [
+                            "number" => 1,
+                            "description" => "Clothing",
+                            "quantity" => [
+                                "value" => $courier->quantity,
+                                "unitOfMeasurement" => "PCS"
+                            ],
+                            "weight" => [
+                                "grossValue" => $courier->totalOrderWeight,
+                                "netValue" => $courier->totalOrderWeight
+                            ],
+                            "manufacturerCountry" => "BD",
+                            "price" => ceil($order->total_price + $order->shipping_amount + $order->vat_amount),
+                            "commodityCodes" => [
+                                [
+                                    "typeCode" => "outbound",
+                                    "value" => "84713000"
+                                ]
+                            ]
+                        ]
+                    ],
+                    "invoice" => [
+                        "number" => $order->order_id,
+                        "date" =>  date('Y-m-d') //"2024-06-01"
+                    ]
+                ],
+                "packages" => [
+                    [
+                        "weight" => $courier->totalOrderWeight,
+                        "dimensions" => [
+                            "length" => 20,
+                            "width" => 15,
+                            "height" => 10
+                        ]
+                    ]
+                ]
+            ],
+            "valueAddedServices" => [
+                [
+                    "serviceCode" => "II",
+                    "value" => round($courier->shippingCost),
+                    "currency" => "$courier->currency"
+                ]
+            ]
+        ];
+
+        $jsonPayload = json_encode($requestBody);
+       // return $jsonPayload;
+
+        $curl = curl_init();
+        $messageReference = substr(md5(uniqid()), 0, 36);
+        $header = [
+            "Authorization: Basic YXBONmxVN21OMmlYOXM6U145elEhM2FGXjBtSUAzdg==",
+            "Message-Reference: $messageReference",
+            "Message-Reference-Date: " . gmdate('D, d M Y H:i:s \G\M\T'),
+            "Plugin-Name: MyShippingPlugin",
+            "Plugin-Version: 1.0",
+            "Shipping-System-Platform-Name: MyShippingSystem",
+            "Shipping-System-Platform-Version: 2.5",
+            "Webstore-Platform-Name: MyWebstore",
+            "Webstore-Platform-Version: 3.0",
+            "content-type: application/json"
+        ];
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "https://express.api.dhl.com/mydhlapi/shipments",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => $jsonPayload,
+            CURLOPT_HTTPHEADER => $header
+        ]);
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            // Decode JSON response
+            $responseDecoded = json_decode($response, true);
+
+            // Check if there is any response error
+            if (isset($responseDecoded['error'])) {
+                echo "Error: " . $responseDecoded['error']['message'];
+            } else {
+                // Handle success
+                DB::table('orders')->where('id', $order->id)->update([
+                    'tracking_id' => $responseDecoded['shipmentTrackingNumber'],
+                    'shippment_info' => $response,
+                    'updated_at'    => date("Y-m-d H:i:s")
+                ]);
+                DB::table('deliveries')->where('order_id', $order->id)->update([
+                    'tracking_id' => $responseDecoded['shipmentTrackingNumber']
+                ]);
+                return true;
+                // echo "<pre>";
+                // print_r($responseDecoded);
+                // echo "Shipment created successfully, tracking number: " . $responseDecoded['shipmentTrackingNumber'];
+            }
+        }
+    }
+
+    public function sendToDhlMenual($order_id)
+    {
+        $dateTime = new DateTime(date('Y-m-d H:i:s'), new DateTimeZone('GMT'));
+        $dateTime->modify('+8 days');
+        $targetTimezone = new DateTimeZone('GMT+1');
+        $dateTime->setTimezone($targetTimezone);
+        $plannedShippingDateAndTime = $dateTime->format('Y-m-d\TH:i:s \G\M\T+01:00'); //"2024-06-02T17:10:09 GMT+01:00";
+	    $order = Order::find($order_id);
+        $courier = json_decode($order->courier_details);
+        $requestBody = [
+            "plannedShippingDateAndTime" => $plannedShippingDateAndTime,
+            "pickup" => [
+                "isRequested" => false,
+                "location" => "office",
+                "specialInstructions" => [
+                    [
+                        "value" => "No pickup required.",
+                        "typeCode" => "INS"
+                    ]
+                ]
+            ],
+            "productCode" => "P",
+            "localProductCode" => "P",
+            "customerDetails" => [
+                "shipperDetails" => [
+                    "postalAddress" => [
+                        "postalCode" => '1213',
+                        "cityName" => 'Dhaka',
+                        "countryCode" => "BD",
+                        "addressLine1" => 'Block K, House no: 28',
+                        "countryName" => "Bangladesh"
+                    ],
+                    "contactInformation" => [
+                        "email" => "online@aranya.com.bd",
+                        "phone" => "+8801764414949",
+                        "companyName" => "ARANYA CRAFTS LTD",
+                        "fullName" => "Md Al-Amin"
+                    ]
+                ],
+                "receiverDetails" => [
+                    "postalAddress" => [
+                        "postalCode" => "$courier->postalCode",
+                        "cityName" => "$courier->cityName",
+                        "countryCode" => "$courier->countryCode",
+                        "addressLine1" => "$courier->addressLine1",
+                        "countryName" => "$courier->countryName"
+                    ],
+                    "contactInformation" => [
+                        "email" => "$courier->email",
+                        "phone" => "$courier->phone",
+                        "companyName" => "Real State Ltd",
+                        "fullName" => "$courier->fullName"
+                    ]
+                ]
+            ],
+            "accounts" => [
+                [
+                    "typeCode" => "shipper",
+                    "number" => "525040187"
+                ]
+            ],
+            "content" => [
+                "isCustomsDeclarable" => true,
+                "description" => "Clothing goods",
+                "unitOfMeasurement" => "metric",
+                "declaredValue" => ceil($order->total_price + $order->shipping_amount + $order->vat_amount),
+                "declaredValueCurrency" => "USD",
+                "incoterm" => "DAP",
+                "exportDeclaration" => [
+                    "lineItems" => [
+                        [
+                            "number" => 1,
+                            "description" => "Clothing",
+                            "quantity" => [
+                                "value" => $courier->quantity,
+                                "unitOfMeasurement" => "PCS"
+                            ],
+                            "weight" => [
+                                "grossValue" => $courier->totalOrderWeight,
+                                "netValue" => $courier->totalOrderWeight
+                            ],
+                            "manufacturerCountry" => "BD",
+                            "price" => ceil($order->total_price + $order->shipping_amount + $order->vat_amount),
+                            "commodityCodes" => [
+                                [
+                                    "typeCode" => "outbound",
+                                    "value" => "84713000"
+                                ]
+                            ]
+                        ]
+                    ],
+                    "invoice" => [
+                        "number" => $order->order_id,
+                        "date" =>  date('Y-m-d') //"2024-06-01"
+                    ]
+                ],
+                "packages" => [
+                    [
+                        "weight" => $courier->totalOrderWeight,
+                        "dimensions" => [
+                            "length" => 60,
+                            "width" => 30,
+                            "height" => 15
+                        ]
+                    ]
+                ]
+            ],
+            "valueAddedServices" => [
+                [
+                    "serviceCode" => "II",
+                    "value" => round($courier->shippingCost),
+                    "currency" => "$courier->currency"
+                ]
+            ]
+        ];
+
+        $jsonPayload = json_encode($requestBody);
+
+        $curl = curl_init();
+        $messageReference = substr(md5(uniqid()), 0, 36);
+        $header = [
+            "Authorization: Basic YXBONmxVN21OMmlYOXM6U145elEhM2FGXjBtSUAzdg==",
+            "Message-Reference: $messageReference",
+            "Message-Reference-Date: " . gmdate('D, d M Y H:i:s \G\M\T'),
+            "Plugin-Name: MyShippingPlugin",
+            "Plugin-Version: 1.0",
+            "Shipping-System-Platform-Name: MyShippingSystem",
+            "Shipping-System-Platform-Version: 2.5",
+            "Webstore-Platform-Name: MyWebstore",
+            "Webstore-Platform-Version: 3.0",
+            "content-type: application/json"
+        ];
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "https://express.api.dhl.com/mydhlapi/shipments",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => $jsonPayload,
+            CURLOPT_HTTPHEADER => $header
+        ]);
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            // Decode JSON response
+            $responseDecoded = json_decode($response, true);
+            // Check if there is any response error
+            if (isset($responseDecoded['error'])) {
+                echo "Error: " . $responseDecoded['error']['message'];
+            } else {
+
+                echo "<pre>";
+                print_r($responseDecoded);
+                // echo "Shipment created successfully, tracking number: " . $responseDecoded['shipmentTrackingNumber'];
+            }
+        }
     }
     /**
      * Display the specified resource.

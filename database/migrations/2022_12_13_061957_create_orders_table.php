@@ -53,11 +53,12 @@ class CreateOrdersTable extends Migration
             $table->longText('payment_info')->nullable();
             $table->tinyInteger('status')->default(1)->comment = "0=cancel, 1=active, 2=On-hold";
             $table->tinyInteger('is_same_address')->default(0);
-            $table->tinyInteger('order_position')->default(0)->comment = "0=pending 1=process 2=OnProcess 3=Delivered";
+            $table->tinyInteger('order_position')->default(0)->comment = "0=pending 1=process 2=OnProcess 3=Delivered,4=cancel,5=On-hold";
             $table->tinyInteger('delivery_type')->default(0)->comment = "0 for home, 1 for pickup point";
             $table->tinyInteger('percel_type')->default(0)->comment = "0 for Box, 1 for DOC";
             $table->integer('pickup_point_no')->nullable()->comment = "pickup point id";
             $table->longText('corier_details')->nullable();
+            $table->longText('shippment_info')->nullable()->comment = "Shipping info here";
             $table->softDeletes();
             $table->timestamps();
         });

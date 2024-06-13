@@ -19897,7 +19897,7 @@ var _hoisted_3 = {
   "class": "row mb-4 g-4"
 };
 var _hoisted_4 = {
-  "class": "col-xl-9 col-2 col-md-2 col-lg-2 col-xl-1"
+  "class": "col-xl-9 col-2 col-md-2 col-lg-12 col-xl-1"
 };
 var _hoisted_5 = {
   "class": "pb-650"
