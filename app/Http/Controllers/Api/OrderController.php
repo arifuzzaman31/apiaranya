@@ -14,7 +14,8 @@ use App\Models\User;
 use App\Models\OrderDetails;
 use App\Models\UserBillingInfo;
 use App\Models\UserShippingInfo;
-use Auth,Str;
+use Illuminate\Support\Str;
+use Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 

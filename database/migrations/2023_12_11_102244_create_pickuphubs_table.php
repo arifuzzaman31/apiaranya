@@ -20,6 +20,7 @@ class CreatePickuphubsTable extends Migration
             $table->string('slug')->nullable();
             $table->string('contact_person')->nullable();
             $table->string('pick_division')->nullable();
+            $table->string('email')->nullable();
             $table->string('pick_district')->nullable();
             $table->string('pick_thana')->nullable();
             $table->string('pick_union')->nullable();
