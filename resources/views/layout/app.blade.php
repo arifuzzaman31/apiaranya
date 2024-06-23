@@ -67,13 +67,7 @@
     @include('partials.footer-assets')
 
     <script>
-        $(document).ready(function() {
-            $(".active").parents(".menu-categories").children("a").removeClass('collapse');
-            $(".active").parents(".menu-categories").children("a").removeAttr('aria-expanded');
-            $(".active").parents(".menu-categories").children("a").attr('aria-expanded',true);
-            $(".active").parents(".menu-categories").children("a").attr('data-active',true);
-            $(".active").parents().addClass('show');
-        });
+
         window.userPermission = "{{ getPermission() }}";
     </script>
 
