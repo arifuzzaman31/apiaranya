@@ -348,21 +348,48 @@ class OrderController extends Controller
 
     public function sslCommerzSuccess(Request $request)
     {
-        try
-            {
-                $order = Order::where('id',$request->tran_id)->first();
-                if ($order->payment_status == AllStatic::$not_paid) {
-                    $validation = $this->orderValidate($request->all(), $request->tran_id,$request->amount, $request->currency);
-                    if ($validation || $order->payment_status == AllStatic::$paid) {
+        try{
+            DB::beginTransaction();
+            if ($request->status == "VALID" || $request->status == "VALIDATED") {
+                    $order = Order::where('id',$request->tran_id)->first();
+                    $order->payment_status = AllStatic::$paid;
+                    $order->payment_method_name = 'sslCommerz';
+                    $order->card_type = $request->card_type;
+                    $order->validation_id = $request->val_id;
+                    $order->transaction_id = $request->bank_tran_id;
+                    $order->payment_date = $request->tran_date;
+                    $order->payment_via = 1;
+                    $order->order_position = 1;
+                    $order->payment_info = json_encode($request->all());
+                    $order->update();
 
-                        return redirect($request->value_a.'/payment?payment=success&orderid='.$order->id.'&transid='.$order->transaction_id);
-                    }
-                } else {
-                    return redirect($request->value_a.'/payment?payment=fail');
+                    DB::table('payments')->where('order_id', $order->id)->update([
+                        'payment_type' => 'sslCommerz-'.$request->card_type,
+                        'transaction_id' => $request->bank_tran_id,
+                        'payment_status' => AllStatic::$paid,
+                        'updated_at'    => date("Y-m-d H:i:s")
+                    ]);
+
+                    DB::table('deliveries')->where('order_id', $order->id)->update([
+                        'process_date' => date('Y-m-d'),
+                        'process_state' => AllStatic::$processing,
+                        'process_value' => deliveryPosition(AllStatic::$processing),
+                        'updated_at'    => date("Y-m-d H:i:s")
+                    ]);
+                    DB::commit();
+                    $this->invoiceToMail($order->id);
                 }
-            } catch (\Throwable $th) {
-                return response()->json(['status' => 'error', 'message' => 'something went wrong'], 400);
-            }
+
+                $validation = $this->orderValidate($request->all(), $request->tran_id,$request->amount, $request->currency);
+                if ($validation || $order->payment_status == AllStatic::$paid) {
+                    return redirect($request->value_a.'/payment?payment=success&orderid='.$order->id.'&transid='.$order->transaction_id);
+                }
+            return redirect($request->value_a.'/payment?payment=fail');
+
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return response()->json(['status' => 'error', 'message' => 'something went wrong'], 400);
+        }
     }
 
     public function sslCommerzFailed(Request $request)
@@ -479,30 +506,6 @@ class OrderController extends Controller
                 $validated_on = $result->validated_on;
                 $gw_version = $result->gw_version;
                 # GIVE SERVICE
-                if ($status == "VALID" || $status == "VALIDATED") {
-                    DB::beginTransaction();
-                    $order = Order::where('id',$tran_id)->first();
-                    $order->payment_status = AllStatic::$paid;
-                    $order->payment_method_name = 'sslCommerz';
-                    $order->card_type = $card_type;
-                    $order->validation_id = $val_id;
-                    $order->transaction_id = $bank_tran_id;
-                    $order->payment_date = $tran_date;
-                    $order->payment_via = 1;
-                    $order->order_position = 1;
-                    $order->payment_info = json_encode($result);
-                    $order->update();
-
-                    DB::table('payments')->where('order_id', $order->id)->update([
-                        'payment_type' => 'sslCommerz-'.$card_type,
-                        'transaction_id' => $bank_tran_id,
-                        'payment_status' => AllStatic::$paid,
-                        'updated_at'    => date("Y-m-d H:i:s")
-                    ]);
-                    DB::rollBack();
-                    $this->invoiceToMail($order->id);
-                    return true;
-                }
                 return false;
             } else {
                 # Failed to connect with SSLCOMMERZ
