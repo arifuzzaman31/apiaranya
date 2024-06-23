@@ -367,7 +367,7 @@ export default {
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="widget-content widget-content-area">
+                        <div class="widget-content">
                             <form>
                                 <div>
                                     <div class="form-group">
