@@ -1,8 +1,8 @@
 <div class="sidebar-wrapper sidebar-theme">
     <nav id="sidebar">
         <ul class="list-unstyled menu-categories" id="accordionExample">
-            <li class="menu @if (request()->is('admin/dashboard')) active @endif">
-                <a href="{{ url('admin/dashboard') }}" aria-expanded="false" class="dropdown-toggle">
+            <li class="menu active">
+                <a href="{{ url('admin/dashboard') }}" aria-expanded="true" class="dropdown-toggle">
                     <div class="">
 
                         <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -14,8 +14,8 @@
             </li>
 
 
-            <li class="menu  @if (request()->is('admin/colour') || request()->is('admin/sizes')) || request()->is('admin/fabrics')) active @endif">
-                <a href="#attrs" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
+            <li class="menu">
+                <a href="#attrs" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24"
                             width="24">
@@ -81,34 +81,16 @@
                         <a href="{{ route('care.index') }}"> Care </a>
                     </li>
                     <!-- <li>
-                    <a href="route('country.index')"> Country </a>
-                </li> -->
+                        <a href="route('country.index')"> Country </a>
+                    </li> -->
                     <li>
                         <a href="{{ route('vat-tax.index') }}"> VAT </a>
                     </li>
                 </ul>
             </li>
-            {{-- <li class="menu active">
-                <a href="#forms" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
-                    <div class="">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-                        <span>Dashboard</span>
-                    </div>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </div>
-                </a>
-                <ul class="collapse submenu recent-submenu list-unstyled show" id="forms" data-parent="#accordionExample">
-                    <li>
-                        <a href="form_bootstrap_basic.html"> Basic </a>
-                    </li>
-                </ul>
-            </li> --}}
-
-
 
         @if (checkPermission('page-view'))
-            <li class="menu @if (request()->is('admin/home-page')) active @endif">
+            <li class="menu">
                 <a href="#pages" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
@@ -188,7 +170,7 @@
             </ul>
         </li>
             @if (checkPermission('menu-view'))
-            <li class="menu @if (request()->is('admin/category')) active @endif">
+            <li class="menu">
                 <a href="#menus" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24"
@@ -220,7 +202,7 @@
         @endif
 
         @if (checkPermission('role-view'))
-            <li class="menu @if (request()->is('admin/role')) active @endif">
+            <li class="menu">
                 <a href="{{ route('role.index') }}" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -236,7 +218,7 @@
             </li>
         @endif
         @if (checkPermission('product-view'))
-            <li class="menu @if (request()->is('admin/product')) active @endif">
+            <li class="menu">
                 <a href="{{ route('product.index') }}" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
                         <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-box">
@@ -258,7 +240,7 @@
             </li>
         @endif
             @if (checkPermission('order-view'))
-            <li class="menu @if (request()->is('admin/order')) active @endif">
+            <li class="menu">
                 <a href="{{ route('order') }}" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24"
@@ -274,7 +256,7 @@
             </li>
         @endif
         @if (checkPermission('refund-view'))
-            <li class="menu @if (request()->is('admin/refund')) active @endif">
+            <li class="menu">
                 <a href="#refund" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -319,7 +301,7 @@
             </li>
         @endif
             @if (checkPermission('customer-view'))
-            <li class="menu @if (request()->is('admin/customers')) active @endif" id="productMenu">
+            <li class="menu">
                 <a href="{{ route('customers') }}" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -336,7 +318,7 @@
             </li>
         @endif
         @if (checkPermission('campaign-view'))
-            <li class="menu @if (request()->is('admin/campaign')) active @endif" id="productMenu">
+            <li class="menu">
                 <a href="{{ route('campaign.index') }}" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -353,7 +335,7 @@
         @endif
 
             @if (checkPermission('media-view'))
-            <li class="menu @if (request()->is('admin/media-manager')) active @endif" id="productMenu">
+            <li class="menu">
                 <a href="{{ route('media-manager.index') }}" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -376,7 +358,7 @@
         @endif
 
             @if (checkPermission('employee-view'))
-                <li class="menu @if (request()->is('admin/employee')) active @endif">
+                <li class="menu">
                     <a href="{{ route('employee.index') }}" aria-expanded="false" class="dropdown-toggle">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -392,7 +374,7 @@
             @endif
 
             @if (checkPermission('report-view'))
-                <li class="menu @if (request()->is('admin/order-report')) active @endif">
+                <li class="menu">
                     <a href="#report" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"

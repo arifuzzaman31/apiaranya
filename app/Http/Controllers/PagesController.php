@@ -7,7 +7,6 @@ use App\Http\AllStatic;
 use App\Models\AttributeValue;
 use App\Models\ShippingConfig;
 use App\Models\Page;
-use App\Models\Product;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Traits\ProductTrait;

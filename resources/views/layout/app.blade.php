@@ -68,6 +68,7 @@
 
     <script>
 
+
         window.userPermission = "{{ getPermission() }}";
     </script>
 
