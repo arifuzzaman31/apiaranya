@@ -2052,6 +2052,7 @@ code {
         width: 24px;
         height: 24px;
         transition: top 200ms;
+        display: none;
     }
     .navbar .navbar-item .nav-item.search-animated.show-search svg {
         margin: 0;

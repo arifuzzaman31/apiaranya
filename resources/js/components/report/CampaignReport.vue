@@ -66,14 +66,14 @@ export default {
             </div>
             <div class="widget-content widget-content-area">
                 <div class="row mb-2">
-                    <div class="col-md-2 col-lg-2 col-12">
+                    <div class="col-md-2 col-lg-2 col-12 my-1">
                         <input type="text" onfocus="(this.type='date')" v-model="filterdata.from" class="form-control form-control-sm" placeholder="Start Date">
                     </div>
-                    <div class="col-md-2 col-lg-2 col-12">
+                    <div class="col-md-2 col-lg-2 col-12 my-1">
                         <input type="text" onfocus="(this.type='date')" v-model="filterdata.to" @change="getCampaignReport()" class="form-control form-control-sm" placeholder="End Date">
                     </div>
 
-                    <div class="col-md-2 col-lg-2 col-12">
+                    <div class="col-md-2 col-lg-2 col-12 my-1">
                         <button type="button" class="btn btn-info-a mt-1" @click="filterClear()">CLEAR</button>
                     </div>
                 </div>

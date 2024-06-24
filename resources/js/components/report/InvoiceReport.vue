@@ -82,11 +82,11 @@ export default {
                 </div>
                 <div class="widget-content widget-content-area">
                     <div class="row mb-2">
-                        <div class="col-md-3 col-lg-3 col-12">
+                        <div class="col-md-3 col-lg-3 col-12  my-1">
                             <input type="text" v-model="search" @keyup="getSearch()" class="form-control form-control-sm" placeholder="OrderID,Name,Phone,Email">
                         </div>
 
-                        <div class="col-md-3 col-lg-3 col-12">
+                        <div class="col-md-3 col-lg-3 col-12  my-1">
                             <select id="product-camp" class="form-control  form-control-sm" @change="getOrder()" v-model="filterdata.order_state">
                                 <option selected="" value="">Choose...</option>
                                 <option value="0">Pending</option>
@@ -96,7 +96,7 @@ export default {
                             </select>
                         </div>
 
-                        <div class="col-md-3 col-lg-3 col-12">
+                        <div class="col-md-3 col-lg-3 col-12  my-1">
                             <select id="product-camp" class="form-control  form-control-sm" @change="getOrder()" v-model="filterdata.status">
                                 <option selected="" value="">Choose...</option>
                                 <option value="1">Active</option>
@@ -105,7 +105,7 @@ export default {
                             </select>
                         </div>
 
-                        <div class="col-md-3 col-lg-3 col-12">
+                        <div class="col-md-3 col-lg-3 col-12  my-1">
                             <select id="product-camp" class="form-control  form-control-sm" @change="getOrder()" v-model="filterdata.payment_status">
                                 <option selected="" value="">Choose...</option>
                                 <option value="1">Paid</option>
@@ -115,14 +115,14 @@ export default {
                             </select>
                         </div>
 
-                        <div class="col-md-3 col-lg-3 col-12 mt-1">
+                        <div class="col-md-3 col-lg-3 col-12  my-1 ">
                             <input type="text" onfocus="(this.type='date')" v-model="filterdata.from" class="form-control form-control-sm" placeholder="Start Date">
                         </div>
-                        <div class="col-md-3 col-lg-3 col-12 mt-1">
+                        <div class="col-md-3 col-lg-3 col-12 my-1">
                             <input type="text" onfocus="(this.type='date')" v-model="filterdata.to" @change="getOrder()" class="form-control form-control-sm" placeholder="End Date">
                         </div>
 
-                        <div class="col-md-2 col-lg-1 col-12 mt-1">
+                        <div class="col-md-2 col-lg-1 col-12  my-1">
                             <button type="button" class="btn btn-info-a" @click="filterClear()">CLEAR</button>
                         </div>
                     </div>
