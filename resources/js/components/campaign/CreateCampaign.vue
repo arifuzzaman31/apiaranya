@@ -161,7 +161,7 @@ export default {
     <div class="row">
         <div id="tooltips" class="col-lg-12 layout-spacing col-md-12">
             <div class="statbox widget box box-shadow">
-                <div class="widget-content widget-content-area">
+                <div class="widget-content">
                     <form @submit.prevent="saveCampData()">
                         <div class="form-row mb-4">
                             <div class="col-md-4 col-12 mb-2">
