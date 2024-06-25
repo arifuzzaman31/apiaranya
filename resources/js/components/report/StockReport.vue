@@ -114,16 +114,16 @@ export default {
                         </select>
                     </div>
 
-                    <div class="col-md-3 col-lg-3 my-1 col-12">
+                    <div class="col-md-3 col-lg-3 my-1 col-12 ">
                         <select id="product-composition" class="form-control form-control-sm" @change="getStockReport()" v-model="filterdata.fabric">
                             <option selected="" value="">Composition</option>
                             <option v-for="(value,index) in allfabrics" :value="value.id" :key="index">{{ value.fabric_name }}</option>
                         </select>
                     </div>
-                    <div class="col-md-2 col-lg-2 col-12">
+                    <div class="col-md-2 col-lg-2 col-12 my-1">
                         <input type="text" onfocus="(this.type='date')" v-model="filterdata.from" class="form-control form-control-sm" placeholder="Start Date">
                     </div>
-                    <div class="col-md-2 col-lg-2 col-12">
+                    <div class="col-md-2 col-lg-2 col-12 my-1">
                         <input type="text" onfocus="(this.type='date')" v-model="filterdata.to" @change="getStockReport()" class="form-control form-control-sm" placeholder="End Date">
                     </div>
 

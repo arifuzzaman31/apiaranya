@@ -316,7 +316,7 @@ export default {
         </div>
                 <div class="widget-content widget-content-area">
                     <div class="row mb-2">
-                        <div class="col-md-3 col-lg-4 col-12">
+                        <div class="col-md-3 col-lg-4 col-12  my-1">
                             <input
                                 id="search"
                                 @keyup="getSearch()"
@@ -327,7 +327,7 @@ export default {
                             />
                         </div>
 
-                        <div class="col-md-3 col-lg-2 col-12">
+                        <div class="col-md-3 col-lg-2 col-12  my-1">
                             <select
                                 id="product-camp"
                                 class="form-control"
@@ -344,7 +344,7 @@ export default {
                             </select>
                         </div>
 
-                        <div class="col-md-2 col-lg-2 col-12">
+                        <div class="col-md-2 col-lg-2 col-12  my-1">
                             <select
                                 id="product-camp"
                                 class="form-control"
@@ -359,7 +359,7 @@ export default {
                             </select>
                         </div>
 
-                        <div class="col-md-2 col-lg-2 col-12">
+                        <div class="col-md-2 col-lg-2 col-12  my-1">
                             <button
                                 type="button"
                                 class="btn btn-info-a"

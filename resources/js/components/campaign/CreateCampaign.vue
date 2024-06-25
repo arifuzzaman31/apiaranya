@@ -174,7 +174,7 @@ export default {
                                     {{ validation_error.campaign_name[0] }}
                                 </span>
                             </div>
-                            <div class="col-md-4 col-12 mb-2">
+                            <div class="col-md-4 col-12 mb-2 ">
                                 <label for="Campaign_name">Campaign Start Date</label>
                                 <input id="basicFlatpickr" v-model="form.start_at" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Select Date.." />
                                 <span

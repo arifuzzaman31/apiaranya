@@ -61,13 +61,13 @@ export default {
             </div>
             <div class="widget-content widget-content-area">
                 <div class="row mb-2">
-                    <div class="col-md-2 col-lg-2 col-12">
+                    <div class="col-md-2 col-lg-2 col-12  my-1">
                         <input type="text" onfocus="(this.type='date')" v-model="filterdata.from" class="form-control form-control-sm" placeholder="Start Date">
                     </div>
-                    <div class="col-md-2 col-lg-2 col-12">
+                    <div class="col-md-2 col-lg-2 col-12  my-1">
                         <input type="text" onfocus="(this.type='date')" v-model="filterdata.to" @change="getPaymentReport()" class="form-control form-control-sm" placeholder="End Date">
                     </div>
-                    <div class="col-md-2 col-lg-2 col-12">
+                    <div class="col-md-2 col-lg-2 col-12  my-1">
                         <select id="product-camp" class="form-control form-control-sm" @change="getPaymentReport()" v-model="filterdata.payment_status">
                             <option value="">Choose...</option>
                             <option value="1">Paid</option>
@@ -75,8 +75,8 @@ export default {
                             <option value="2">Failed</option>
                             <option value="3">Cancel</option>
                         </select>
-                    </div>
-                    <div class="col-md-2 col-lg-2 col-12">
+                    </div> 
+                    <div class="col-md-2 col-lg-2 col-12  my-1">
                         <button type="button" class="btn btn-info-a" @click="filterClear()">CLEAR</button>
                     </div>
                 </div>

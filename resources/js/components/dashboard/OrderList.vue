@@ -68,7 +68,7 @@ export default {
                 </ul>
             </div>
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-3 my-1">
                     <input
                         id="search"
                         @keyup="getSearch()"
@@ -80,10 +80,10 @@ export default {
                 </div>
                 <div class="col-md-9">
                     <div class="row justify-content-end">
-                        <div class="col-md-3">
+                        <div class="col-md-3 my-1">
                             <input type="date" class="w-100" id="start" @change="getOrder()" name="trip-start" v-model="filterdata.date" min="01-01-2023" />
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 my-1">
                             <select class="w-100" name="pets" id="pet-select" @change="getOrder()"
                                 v-model="filterdata.payment_status">
                                 <option selected="" value="">Status</option>
