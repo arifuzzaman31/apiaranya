@@ -744,7 +744,7 @@ export default {
                             <td class="text-center">
                                 <button
                                     type="button"
-                                    class="btn btn-sm btn-info-a mx-2"
+                                    class="btn btn-sm btn-info-a mx-2 my-1"
                                     @click="showProdDetail(product)"
                                 >
                                     View
@@ -758,7 +758,7 @@ export default {
                                     v-if="
                                         showPermission.includes('product-edit')
                                     "
-                                    class="btn btn-sm btn-delete"
+                                    class="btn btn-sm btn-delete my-1"
                                     >Edit</a
                                 >
 
@@ -769,7 +769,7 @@ export default {
                                             'product-delete'
                                         )
                                     "
-                                    class="btn btn-sm btn-delete ml-2"
+                                    class="btn btn-sm btn-delete mx-2 my-1"
                                     @click="deleteProduct(product.id)"
                                 >
                                     Delete

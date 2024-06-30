@@ -114,8 +114,15 @@ a.btn.btn-primary-dashboard {
 }
 
 @media (max-width: 575.98px) {
+    button.btn.btn-sm.btn-delete.mx-2,
+    a.btn.btn-sm.btn-delete,
+    button.btn.btn-sm.btn-info-a.mx-2,
     a.btn.btn-sm.btn-info-a {
         width: 81px;
     }
 }
- 
+@media (max-width: 425px) {
+    .form-form .form-form-wrap {
+        zoom: 2;
+    }
+}

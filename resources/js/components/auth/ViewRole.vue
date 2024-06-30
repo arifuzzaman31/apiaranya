@@ -118,7 +118,7 @@ export default {
                                 <td>{{ index+1 }}</td>
                                 <td>{{ role.role_name }}</td>
                                 <td class="text-center">
-                                    <a class="btn btn-sm btn-info-a" v-if="showPermission.includes('role-edit')" href="javascript:void(0);" @click="editRole(role)" type="button" title="Edit">Edit</a>
+                                    <a class="btn btn-sm btn-info-a my-1" v-if="showPermission.includes('role-edit')" href="javascript:void(0);" @click="editRole(role)" type="button" title="Edit">Edit</a>
                                     <a class="btn btn-sm mx-1 btn-delete" v-if="showPermission.includes('role-edit')" href="javascript:void(0);" @click="deleteRole(role.id)" type="button" title="Delete">Delete</a>
                                 </td>
                             </tr>	
