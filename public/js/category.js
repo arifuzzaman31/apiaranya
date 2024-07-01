@@ -20649,7 +20649,7 @@ var _hoisted_34 = {
   "class": "modal-body"
 };
 var _hoisted_35 = {
-  "class": "widget-content widget-content-area"
+  "class": "widget-content"
 };
 var _hoisted_36 = {
   "class": "form-group"
@@ -20758,7 +20758,7 @@ var _hoisted_59 = {
   "class": "modal-body"
 };
 var _hoisted_60 = {
-  "class": "widget-content widget-content-area"
+  "class": "widget-content"
 };
 var _hoisted_61 = {
   "class": "form-row"
@@ -20821,23 +20821,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["badge rounded-pill", cat.status == 1 ? 'alert-primary' : 'alert-danger'])
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(cat.status ? "Active" : "Deactive"), 3 /* TEXT, CLASS */)]), $options.showPermission.includes('menu-edit') || $options.showPermission.includes('menu-delete') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_21, [$options.showPermission.includes('menu-edit') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
       key: 0,
-      "class": "btn btn-info-a btn-sm",
+      "class": "btn btn-info-a btn-sm my-1",
       target: "_blank",
       href: $data.url + 'category/' + cat.id + '/edit'
     }, "Add Image", 8 /* PROPS */, _hoisted_22)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.showPermission.includes('menu-edit') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
       key: 1,
-      "class": "btn btn-delete mx-1 btn-sm",
+      "class": "btn btn-delete mx-2 btn-sm my-1",
       onClick: function onClick($event) {
         return $options.renameCate(cat);
       }
     }, "Rename", 8 /* PROPS */, _hoisted_23)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.showPermission.includes('menu-delete') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
       key: 2,
-      "class": "btn btn-delete btn-sm mx-1",
+      "class": "btn btn-delete btn-sm mx-2 my-1",
       onClick: function onClick($event) {
         return $options.deleteMenu(cat.id);
       }
     }, "Delete", 8 /* PROPS */, _hoisted_24)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-      "class": "btn btn-delete btn-sm",
+      "class": "btn btn-delete btn-sm my-1",
       onClick: function onClick($event) {
         return $options.addFabricToCat(cat);
       }

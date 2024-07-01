@@ -224,7 +224,7 @@ export default {
                         </thead>
                         <tbody v-if="categories.data && categories.data.length > 0">
                             <tr v-for="(cat,ind) in categories.data" :key="ind">
-                                <td>{{ ++ind }}</td>
+                                <td>{{ ++ind }}</td> 
                                 <td>{{ cat.category_name }}</td>
                                 <td>{{ cat.parent_category == 0 ? 'Main Category' : cat.subcategory.category_name }}</td>
                                 <td class="text-center">{{ cat.precedence }}</td>
@@ -237,7 +237,7 @@ export default {
                                             : 'alert-danger'
                                     "
                                     >{{
-                                        cat.status ? "Active" : "Deactive"
+                                        cat.status ? "Active" : "Deactive" 
                                     }}</span
                                 >
                             </td>
@@ -245,10 +245,10 @@ export default {
 
 
                                 <td class="text-center" v-if="showPermission.includes('menu-edit') || showPermission.includes('menu-delete')">
-                                   <a v-if="showPermission.includes('menu-edit')" class="btn btn-info-a btn-sm" target="_blank" :href="url+'category/'+cat.id+'/edit'">Add Image</a>
-                                   <a v-if="showPermission.includes('menu-edit')" class="btn btn-delete mx-1 btn-sm" @click="renameCate(cat)">Rename</a>
-                                   <a v-if="showPermission.includes('menu-delete')" class="btn btn-delete btn-sm mx-1" @click="deleteMenu(cat.id)">Delete</a>
-                                   <a class="btn btn-delete btn-sm" @click="addFabricToCat(cat)">Composition</a>
+                                   <a v-if="showPermission.includes('menu-edit')" class="btn btn-info-a btn-sm my-1" target="_blank" :href="url+'category/'+cat.id+'/edit'">Add Image</a>
+                                   <a v-if="showPermission.includes('menu-edit')" class="btn btn-delete  mx-2 btn-sm  my-1" @click="renameCate(cat)">Rename</a>
+                                   <a v-if="showPermission.includes('menu-delete')" class="btn btn-delete btn-sm  mx-2 my-1" @click="deleteMenu(cat.id)">Delete</a>
+                                   <a class="btn btn-delete btn-sm my-1" @click="addFabricToCat(cat)">Composition</a>
                                 </td>
                             </tr>
 
@@ -276,7 +276,7 @@ export default {
                 </div>
                 <div class="modal-body">
 
-                    <div class="widget-content widget-content-area">
+                    <div class="widget-content">
                         <form>
                             <div class="form-group">
                                 <label for="category_name">Category</label>
@@ -344,7 +344,7 @@ export default {
                 </div>
                 <div class="modal-body">
 
-                    <div class="widget-content widget-content-area">
+                    <div class="widget-content">
                         <form>
                             <div class="form-row">
                                 <div class="col-md-12">

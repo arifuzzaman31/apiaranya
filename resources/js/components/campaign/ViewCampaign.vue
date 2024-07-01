@@ -225,7 +225,7 @@ export default {
                                         <td class="text-center">
                                             <button
                                                 type="button"
-                                                class="btn btn-sm btn-info-a mx-2"
+                                                class="btn btn-sm btn-info-a mx-2 my-1"
                                                 @click="editCamp(campaign)"
                                             >
                                                 View
@@ -237,13 +237,13 @@ export default {
                                                     'campaign-product/' +
                                                     campaign.id
                                                 "
-                                                class="btn btn-sm btn-delete"
+                                                class="btn btn-sm btn-delete my-1"
                                                 >Edit</a
                                             >
 
                                             <button
                                                 type="button"
-                                                class="btn btn-sm btn-delete ml-2"
+                                                class="btn btn-sm btn-delete mx-2 my-1"
                                                 @click="
                                                     deleteCampaign(campaign.id)
                                                 "

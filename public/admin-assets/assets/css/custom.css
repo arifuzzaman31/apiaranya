@@ -121,8 +121,19 @@ a.btn.btn-primary-dashboard {
         width: 81px;
     }
 }
-@media (max-width: 425px) {
+/* @media (max-width: 425px) {
     .form-form .form-form-wrap {
-        zoom: 2;
+        zoom: 2!important;
+
     }
-}
+    a.btn.btn-info-a.btn-sm.cata.my-1,
+    a.btn.btn-delete.mx-2.btn-sm.cata.my-1,
+    a.btn.btn-delete.btn-sm.cata.mx-2.my-1,
+    a.btn.btn-delete.btn-sm.cata.my-1
+
+
+   {
+        width: 118px;
+    }
+
+} */

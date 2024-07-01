@@ -21764,17 +21764,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       disabled: ""
     }, null, 8 /* PROPS */, _hoisted_14), _hoisted_15])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
       type: "button",
-      "class": "btn btn-sm btn-info-a mx-2",
+      "class": "btn btn-sm btn-info-a mx-2 my-1",
       onClick: function onClick($event) {
         return $options.editCamp(campaign);
       }
     }, " View ", 8 /* PROPS */, _hoisted_17), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       type: "button",
       href: $data.url + 'campaign-product/' + campaign.id,
-      "class": "btn btn-sm btn-delete"
+      "class": "btn btn-sm btn-delete my-1"
     }, "Edit", 8 /* PROPS */, _hoisted_18), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
       type: "button",
-      "class": "btn btn-sm btn-delete ml-2",
+      "class": "btn btn-sm btn-delete mx-2 my-1",
       onClick: function onClick($event) {
         return $options.deleteCampaign(campaign.id);
       }
