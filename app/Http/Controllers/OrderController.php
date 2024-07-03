@@ -340,7 +340,7 @@ class OrderController extends Controller
                 'parcel_detail' => '',
                 'number_of_item' => $order->total_item,
                 'product_price' => ($order->total_price + $order->shipping_amount + $order->vat_amount),
-                'payment_method' => 'COD',
+                'payment_method' => $order->payment_via == 0 ? 'COD' : 'CCRD',
                 'ep_id' => '233232212',
                 'actual_product_price' => ($order->total_price + $order->shipping_amount + $order->vat_amount),
                 'pgwid' => 8888,
