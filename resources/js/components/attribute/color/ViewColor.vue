@@ -197,7 +197,7 @@ export default {
                         </div>
                     </div>
                 </div>
-                <div class="widget-content widget-content-area">
+                <!-- <div class="widget-content widget-content-area"> -->
                     <div class="d-flex flex-row col-4 mb-2">
                         <input
                             id="search"
@@ -279,7 +279,7 @@ export default {
                                                         'attribute-edit'
                                                     )
                                                 "
-                                                class="btn btn-sm btn-info-a"
+                                                class="btn btn-sm btn-info-a mx-2 my-2 "
                                                 data-toggle="modal"
                                                 data-target="#ColorModal"
                                                 @click="editColour(color)"
@@ -293,7 +293,7 @@ export default {
                                                         'attribute-delete'
                                                     )
                                                 "
-                                                class="btn btn-sm btn-delete ml-2"
+                                                class="btn btn-sm btn-delete mx-2"
                                                 @click="deleteColor(color.id)"
                                             >
                                                 Delete
@@ -308,7 +308,7 @@ export default {
                             @pagination-change-page="getColour"
                         />
                     </div>
-                </div>
+                <!-- </div> -->
             </div>
         </div>
         <div
@@ -346,7 +346,7 @@ export default {
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="widget-content widget-content-area">
+                        <!-- <div class="widget-content widget-content-area"> -->
                             <form>
                                 <div class="form-group">
                                     <label for="color_name">Colour Name</label>
@@ -426,7 +426,7 @@ export default {
                                     </button>
                                 </div>
                             </form>
-                        </div>
+                        <!-- </div> -->
                     </div>
                 </div>
             </div>

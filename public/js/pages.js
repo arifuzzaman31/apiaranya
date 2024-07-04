@@ -22909,7 +22909,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 544 /* HYDRATE_EVENTS, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.search]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
-    "class": "btn btn-info-a",
+    "class": "btn btn-info-a my-2",
     onClick: _cache[3] || (_cache[3] = function ($event) {
       return $options.filterClear();
     })
@@ -22921,14 +22921,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.status ? "Active" : "Deactive"), 3 /* TEXT, CLASS */)]), $options.showPermission.includes('delete-shipping') && $options.showPermission.includes('edit-shipping') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_20, [$options.showPermission.includes('edit-shipping') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
       key: 0,
       type: "button",
-      "class": "btn btn-sm btn-info-a",
+      "class": "btn btn-sm btn-info-a mx-2 my-2",
       onClick: function onClick($event) {
         return $options.editShipping(item);
       }
     }, " Edit ", 8 /* PROPS */, _hoisted_21)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.showPermission.includes('delete-shipping') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
       key: 1,
       type: "button",
-      "class": "btn btn-sm btn-delete ml-2",
+      "class": "btn btn-sm btn-delete mx-2",
       onClick: function onClick($event) {
         return $options.deleteShipping(item.id);
       }
@@ -23190,14 +23190,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.status ? "Active" : "Deactive"), 3 /* TEXT, CLASS */)]), $options.showPermission.includes('delete-info') && $options.showPermission.includes('edit-info') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_17, [$options.showPermission.includes('edit-info') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
       key: 0,
       type: "button",
-      "class": "btn btn-sm btn-info-a",
+      "class": "btn btn-sm btn-info-a mx-2 my-2",
       onClick: function onClick($event) {
         return $options.editInfo(item);
       }
     }, " Edit ", 8 /* PROPS */, _hoisted_18)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.showPermission.includes('delete-info') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
       key: 1,
       type: "button",
-      "class": "btn btn-sm btn-delete ml-2",
+      "class": "btn btn-sm btn-delete mx-2",
       onClick: function onClick($event) {
         return $options.deleteInfo(item.id);
       }
@@ -23407,20 +23407,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(section.status ? "Active" : "Deactive"), 3 /* TEXT, CLASS */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       type: "button",
       href: $data.url + 'section-page/' + section.id + '/edit',
-      "class": "btn btn-sm btn-primary-log mx-2"
+      "class": "btn btn-sm btn-info-a mx-2 my-2"
     }, "Edit", 8 /* PROPS */, _hoisted_10), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       type: "button",
       href: $data.url + 'section-product/' + section.id,
-      "class": "btn btn-sm btn-view mx-2"
+      "class": "btn btn-sm btn-info-a mx-2"
     }, "View", 8 /* PROPS */, _hoisted_11), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
       type: "button",
-      "class": "btn btn-sm btn-delete",
+      "class": "btn btn-sm btn-delete mx-2 my-2",
       onClick: function onClick($event) {
         return $options.editSect(section);
       }
     }, " Status ", 8 /* PROPS */, _hoisted_12), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
       type: "button",
-      "class": "btn btn-sm btn-delete ml-2",
+      "class": "btn btn-sm btn-delete mx-2",
       onClick: function onClick($event) {
         return $options.deletePageSection(section.id);
       }

@@ -159,7 +159,7 @@ export default {
                         </div>                          
                     </div>
                 </div>       
-                <div class="widget-content widget-content-area">
+                <!-- <div class="widget-content widget-content-area"> -->
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover mb-4">
                             <thead>
@@ -184,8 +184,8 @@ export default {
                                         </td>
                                         <td class="text-center"
                                         v-if="showPermission.includes('attribute-edit') || showPermission.includes('attribute-delete')">
-                                            <button type="button" v-if="showPermission.includes('attribute-edit')" class="btn btn-sm btn-info-a" data-toggle="modal" data-target="#sizeModal" @click="editSize(size)">Edit</button>
-                                            <button type="button" v-if="showPermission.includes('attribute-delete')" class="btn btn-sm btn-delete ml-2" @click="deleteSize(size.id)">Delete</button>
+                                            <button type="button" v-if="showPermission.includes('attribute-edit')" class="btn btn-sm btn-info-a mx-2 my-2" data-toggle="modal" data-target="#sizeModal" @click="editSize(size)">Edit</button>
+                                            <button type="button" v-if="showPermission.includes('attribute-delete')" class="btn btn-sm btn-delete mx-2" @click="deleteSize(size.id)">Delete</button>
                                         </td>
                                     </tr>					
                                 </template>
@@ -197,7 +197,7 @@ export default {
                             />
                     </div>
 
-                </div>
+               k  -->
             </div>
         </div>
         <div id="sizeModal" class="modal animated fadeInUp custo-fadeInUp" role="dialog">
@@ -212,7 +212,7 @@ export default {
                     </div>
                     <div class="modal-body">
                         
-                        <div class="widget-content widget-content-area">
+                        <!-- <div class="widget-content widget-content-area"> -->
                             <form>
                                 <div class="form-group">
                                     <label for="size_name">Size Name</label>
@@ -241,7 +241,7 @@ export default {
                                     <button v-else type="button" class="btn btn-primary" @click="updateSize">Update</button>
                                 </div>
                             </form>
-                        </div>
+                        <!-- </div> -->
                     </div>
                 </div>
             </div>

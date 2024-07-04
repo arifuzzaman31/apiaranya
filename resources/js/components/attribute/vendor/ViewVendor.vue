@@ -178,8 +178,8 @@ export default {
                                             </label>
                                         </td>
                                         <td v-if="showPermission.includes('attribute-edit') || showPermission.includes('attribute-delete')">
-                                            <button type="button" v-if="showPermission.includes('attribute-edit')" class="btn btn-sm btn-info-a" data-toggle="modal" data-target="#vendorModal" @click="editVendor(size)">Edit</button>
-                                            <button type="button" v-if="showPermission.includes('attribute-delete')" class="btn btn-sm btn-delete ml-2" @click="deleteVendor(size.id)">Delete</button>
+                                            <button type="button" v-if="showPermission.includes('attribute-edit')" class="btn btn-sm btn-info-a mx-2 my-2" data-toggle="modal" data-target="#vendorModal" @click="editVendor(size)">Edit</button>
+                                            <button type="button" v-if="showPermission.includes('attribute-delete')" class="btn btn-sm btn-delete mx-2" @click="deleteVendor(size.id)">Delete</button>
                                         </td>
                                     </tr>					
                                 </template>
@@ -206,7 +206,7 @@ export default {
                     </div>
                     <div class="modal-body">
                         
-                        <div class="widget-content widget-content-area">
+                        <!-- <div class="widget-content widget-content-area"> -->
                             <form>
                                 <div class="form-group">
                                     <label for="vendor_name">Vendor Name</label>
@@ -235,7 +235,7 @@ export default {
                                     <button v-else type="button" class="btn btn-primary" @click="updateVendor">Update</button>
                                 </div>
                             </form>
-                        </div>
+                        <!-- </div> -->
                     </div>
                 </div>
             </div>

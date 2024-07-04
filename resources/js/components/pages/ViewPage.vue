@@ -168,7 +168,7 @@ export default {
                                                             'section-page/' +
                                                             section.id + '/edit'
                                                         "
-                                                        class="btn btn-sm btn-primary-log mx-2"
+                                                        class="btn btn-sm btn-info-a mx-2 my-2"
                                                         >Edit</a>
                                                     <a
                                                         type="button"
@@ -177,13 +177,13 @@ export default {
                                                             'section-product/' +
                                                             section.id
                                                         "
-                                                        class="btn btn-sm btn-view mx-2"
+                                                        class="btn btn-sm btn-info-a mx-2"
                                                         >View</a
                                                     >
 
                                                     <button
                                                         type="button"
-                                                        class="btn btn-sm btn-delete"
+                                                        class="btn btn-sm btn-delete mx-2 my-2"
                                                         @click="
                                                             editSect(section)
                                                         "
@@ -193,7 +193,7 @@ export default {
 
                                                     <button
                                                         type="button"
-                                                        class="btn btn-sm btn-delete ml-2"
+                                                        class="btn btn-sm btn-delete mx-2 "
                                                         @click="
                                                             deletePageSection(
                                                                 section.id

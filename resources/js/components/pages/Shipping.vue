@@ -205,7 +205,7 @@ export default {
                         <div class="col-md-2 col-lg-2 col-12">
                             <button
                                 type="button"
-                                class="btn btn-info-a"
+                                class="btn btn-info-a my-2"
                                 @click="filterClear()"
                             >
                                 CLEAR
@@ -293,7 +293,7 @@ export default {
                                                         'edit-shipping'
                                                     )
                                                 "
-                                                class="btn btn-sm btn-info-a"
+                                                class="btn btn-sm btn-info-a mx-2 my-2"
                                                 @click="editShipping(item)"
                                             >
                                                 Edit
@@ -305,7 +305,7 @@ export default {
                                                         'delete-shipping'
                                                     )
                                                 "
-                                                class="btn btn-sm btn-delete ml-2"
+                                                class="btn btn-sm btn-delete mx-2"
                                                 @click="deleteShipping(item.id)"
                                             >
                                                 Delete

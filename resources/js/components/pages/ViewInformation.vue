@@ -179,7 +179,7 @@ export default {
                                                         'edit-info'
                                                     )
                                                 "
-                                                class="btn btn-sm btn-info-a"
+                                                class="btn btn-sm btn-info-a mx-2 my-2"
                                                 @click="editInfo(item)"
                                             >
                                                 Edit
@@ -191,7 +191,7 @@ export default {
                                                         'delete-info'
                                                     )
                                                 "
-                                                class="btn btn-sm btn-delete ml-2"
+                                                class="btn btn-sm btn-delete mx-2"
                                                 @click="deleteInfo(item.id)"
                                             >
                                                 Delete

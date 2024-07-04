@@ -180,8 +180,8 @@ export default {
                                     <td>{{ empl.email }} </td>
                                     <td>{{ empl.role_id ? empl.role.role_name : 'No Role'}} </td>
                                     <td v-if="showPermission.includes('employee-edit') || showPermission.includes('employee-delete')">
-                                        <button v-if="showPermission.includes('employee-edit')" type="button" class="btn btn-sm btn-info-a" @click="editEmp(empl)">Edit</button>
-                                        <button type="button" v-if="showPermission.includes('employee-delete')" class="btn btn-sm btn-delete ml-2" @click="deleteEmp(empl.id)">Delete</button>
+                                        <button v-if="showPermission.includes('employee-edit')" type="button" class="btn btn-sm btn-info-a mx-2 my-1" @click="editEmp(empl)">Edit</button>
+                                        <button type="button" v-if="showPermission.includes('employee-delete')" class="btn btn-sm btn-delete mx-2 " @click="deleteEmp(empl.id)">Delete</button>
                                     </td>
                                 </tr>					
                             </template>

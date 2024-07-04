@@ -185,8 +185,8 @@ export default {
                                             </label>
                                         </td>
                                         <td v-if="showPermission.includes('attribute-edit') || showPermission.includes('attribute-delete')">
-                                            <button type="button" v-if="showPermission.includes('attribute-edit')" class="btn btn-sm btn-info-a" data-toggle="modal" data-target="#ingredientModal" @click="editIngredient(ingred)">Edit</button>
-                                            <button type="button" v-if="showPermission.includes('attribute-delete')" class="btn btn-sm btn-delete ml-2" @click="deleteIngredient(ingred.id)">Delete</button>
+                                            <button type="button" v-if="showPermission.includes('attribute-edit')" class="btn btn-sm btn-info-a mx-2 my-2" data-toggle="modal" data-target="#ingredientModal" @click="editIngredient(ingred)">Edit</button>
+                                            <button type="button" v-if="showPermission.includes('attribute-delete')" class="btn btn-sm btn-delete mx-2" @click="deleteIngredient(ingred.id)">Delete</button>
                                         </td>
                                     </tr>					
                                 </template>

@@ -126,11 +126,11 @@ export default {
                                                             'sustainability/' +
                                                             sustaina.id + '/edit'
                                                         "
-                                                        class="btn btn-sm btn-primary-log mx-2"
+                                                        class="btn btn-sm btn-info-a mx-2 my-2"
                                                         >Edit</a>
                                                     <button
                                                         type="button"
-                                                        class="btn btn-sm btn-delete ml-2"
+                                                        class="btn btn-sm btn-delete mx-2 my-1"
                                                         @click="
                                                             deleteSustain(
                                                                 sustaina.id

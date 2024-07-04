@@ -21963,7 +21963,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, null, 8 /* PROPS */, _hoisted_18), _hoisted_19])]), $setup.showPermission.includes('attribute-edit') || $setup.showPermission.includes('attribute-delete') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_20, [$setup.showPermission.includes('attribute-edit') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
       key: 0,
       type: "button",
-      "class": "btn btn-sm btn-info-a",
+      "class": "btn btn-sm btn-info-a mx-2 my-2",
       "data-toggle": "modal",
       "data-target": "#taxModal",
       onClick: function onClick($event) {
@@ -21972,7 +21972,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, "Edit", 8 /* PROPS */, _hoisted_21)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.showPermission.includes('attribute-delete') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
       key: 1,
       type: "button",
-      "class": "btn btn-sm btn-delete ml-2",
+      "class": "btn btn-sm btn-delete mx-2",
       onClick: function onClick($event) {
         return $setup.deleteTax(tax.id);
       }

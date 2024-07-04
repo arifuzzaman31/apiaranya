@@ -244,7 +244,7 @@ export default {
                                                         'attribute-edit'
                                                     )
                                                 "
-                                                class="btn btn-sm btn-info-a"
+                                                class="btn btn-sm btn-info-a mx-2 my-2 "
                                                 data-toggle="modal"
                                                 data-target="#designerModal"
                                                 @click="editDesigner(designer)"
@@ -258,7 +258,7 @@ export default {
                                                         'attribute-delete'
                                                     )
                                                 "
-                                                class="btn btn-sm btn-delete ml-2"
+                                                class="btn btn-sm btn-delete mx-2"
                                                 @click="
                                                     deleteDesigner(designer.id)
                                                 "
