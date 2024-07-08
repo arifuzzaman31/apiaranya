@@ -158,7 +158,7 @@ export default {
                         </div>                          
                     </div>
                 </div>       
-                <div class="widget-content widget-content-area">
+                <!-- <div class="widget-content widget-content-area"> -->
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover mb-4">
                             <thead>
@@ -195,7 +195,7 @@ export default {
                             />
                     </div>
 
-                </div>
+                <!-- </div> -->
             </div>
         </div>
         <div id="embellishmentModal" class="modal animated fadeInUp custo-fadeInUp" role="dialog">
@@ -210,7 +210,7 @@ export default {
                     </div>
                     <div class="modal-body">
                         
-                        <div class="widget-content widget-content-area">
+                        <!-- <div class="widget-content widget-content-area"> -->
                             <form>
                                 <div class="form-group">
                                     <label for="embellishment_name">Embellishment Name</label>
@@ -239,7 +239,7 @@ export default {
                                     <button v-else type="button" class="btn btn-primary" @click="updateEmbellishment">Update</button>
                                 </div>
                             </form>
-                        </div>
+                        <!-- </div> -->
                     </div>
                 </div>
             </div>

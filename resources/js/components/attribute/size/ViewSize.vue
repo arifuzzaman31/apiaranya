@@ -197,7 +197,7 @@ export default {
                             />
                     </div>
 
-               k  -->
+             
             </div>
         </div>
         <div id="sizeModal" class="modal animated fadeInUp custo-fadeInUp" role="dialog">

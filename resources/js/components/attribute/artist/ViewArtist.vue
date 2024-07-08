@@ -172,7 +172,7 @@ export default {
                         </div>                          
                     </div>
                 </div>       
-                <div class="widget-content widget-content-area">
+                <!-- <div class="widget-content widget-content-area"> -->
                     <div class="row col-4 mb-2">
                         <input id="search" placeholder="Search By Name" type="text" class="form-control form-control-sm"  @keyup.prevent="onPress" v-model="keyword.key" />
                     </div>
@@ -212,7 +212,7 @@ export default {
                             />
                     </div>
 
-                </div>
+                <!-- </div> -->
             </div>
         </div>
         <div id="artistModal" class="modal animated fadeInUp custo-fadeInUp" role="dialog">
@@ -227,7 +227,7 @@ export default {
                     </div>
                     <div class="modal-body">
                         
-                        <div class="widget-content widget-content-area">
+                        <!-- <div class="widget-content widget-content-area"> -->
                             <form>
                                 <div class="form-group">
                                     <label for="artist_name">Artist Name</label>
@@ -256,7 +256,7 @@ export default {
                                     <button v-else type="button" class="btn btn-primary" @click="updateArtist">Update</button>
                                 </div>
                             </form>
-                        </div>
+                        <!-- </div> -->
                     </div>
                 </div>
             </div>

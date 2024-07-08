@@ -117,11 +117,11 @@ export default {
                                         <a
                                             type="button"
                                             :href="url+'color-story/'+colorst.id+'/edit'"
-                                            class="btn btn-sm btn-primary-log "
+                                            class="btn btn-sm btn-primary-log mx-2 my-2 "
                                             >Edit</a>
                                             <button
                                                         type="button"
-                                                        class="btn btn-sm btn-delete ml-2"
+                                                        class="btn btn-sm btn-delete mx-2"
                                                         @click="
                                                             deleteColorStory(
                                                                 colorst.id

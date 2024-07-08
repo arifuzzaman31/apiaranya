@@ -219,7 +219,7 @@ export default {
                                 <div class="col-12 mb-2">
                                         <div class="">
                                             <label for="editor-container">Description</label>
-                                            <QuillEditor theme="snow" v-model:content="form.description" contentType="html" required />
+                                             <QuillEditor theme="snow" v-model:content="form.description" contentType="html" required />
                                         </div>
                                 </div>
 

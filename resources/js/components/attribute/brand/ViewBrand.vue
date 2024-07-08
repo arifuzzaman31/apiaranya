@@ -159,7 +159,7 @@ export default {
                         </div>                          
                     </div>
                 </div>       
-                <div class="widget-content widget-content-area">
+                <!-- <div class="widget-content widget-content-area"> -->
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover mb-4">
                             <thead>
@@ -196,7 +196,7 @@ export default {
                             />
                     </div>
 
-                </div>
+                <!-- </div> -->
             </div>
         </div>
         <div id="BrandModal" class="modal animated fadeInUp custo-fadeInUp" role="dialog">

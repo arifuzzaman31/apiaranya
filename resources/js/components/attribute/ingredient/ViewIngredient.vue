@@ -161,7 +161,7 @@ export default {
                         </div>                          
                     </div>
                 </div>       
-                <div class="widget-content widget-content-area">
+                <!-- <div class="widget-content widget-content-area"> -->
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover mb-4">
                             <thead>
@@ -198,7 +198,7 @@ export default {
                             />
                     </div>
 
-                </div>
+                <!-- </div> -->
             </div>
         </div>
         <div id="ingredientModal" class="modal animated fadeInUp custo-fadeInUp" role="dialog">
@@ -213,7 +213,7 @@ export default {
                     </div>
                     <div class="modal-body">
                         
-                        <div class="widget-content widget-content-area">
+                        <!-- <div class="widget-content widget-content-area"> -->
                             <form>
                                 <div class="form-group">
                                     <label for="ingredient_name">Ingredient</label>
@@ -242,7 +242,7 @@ export default {
                                     <button v-else type="button" class="btn btn-primary" @click="updateIngredient">Update</button>
                                 </div>
                             </form>
-                        </div>
+                        <!-- </div> -->
                     </div>
                 </div>
             </div>

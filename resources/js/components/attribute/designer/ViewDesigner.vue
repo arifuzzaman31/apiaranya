@@ -175,7 +175,7 @@ export default {
                         </div>
                     </div>
                 </div>
-                <div class="widget-content widget-content-area">
+                <!-- <div class="widget-content widget-content-area"> -->
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover mb-4">
                             <thead>
@@ -275,7 +275,7 @@ export default {
                             @pagination-change-page="getDesigner"
                         />
                     </div>
-                </div>
+                <!-- </div> -->
             </div>
         </div>
         <div
@@ -314,7 +314,7 @@ export default {
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="widget-content widget-content-area">
+                        <!-- <div class="widget-content widget-content-area"> -->
                             <form>
                                 <div class="form-group">
                                     <label for="designer_name"
@@ -404,7 +404,7 @@ export default {
                                     </button>
                                 </div>
                             </form>
-                        </div>
+                        <!-- </div> -->
                     </div>
                 </div>
             </div>
