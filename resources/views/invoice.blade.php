@@ -7,36 +7,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Invoice-{{$order_info->order_id}}</title>
     <style>
-        @font-face{
-                font-family: "solemn";
-                font-style: normal;
-                font-weight: normal;
-                src : url('{{ asset("fonts/kalpurush.ttf") }}');
-            }
+    @font-face {
+        font-family: "solemn";
+        font-style: normal;
+        font-weight: normal;
+        src : url('{{ asset("fonts/kalpurush.ttf") }}');
+    }
+
     body {
         width: 100%;
         line-height: 0.46rem;
-        font-family: 'solemn',sans-serif,arial;
+        font-family: 'solemn', sans-serif, arial;
     }
+
     table {
         border-collapse: collapse;
         width: 100%;
         margin: 0 auto;
     }
 
-    td{
+    td {
         border: 1px solid #dddddd;
         text-align: left;
         padding: 8px 3px;
         font-size: 12px;
     }
+
     th {
         border: 1px solid #dddddd;
         text-align: left;
         padding: 8px 3px;
-	font-weight: 500;
+        font-weight: 500;
         font-size: 12px;
     }
+
     a {
         text-decoration: none;
     }
@@ -92,7 +96,8 @@
                 <th style="border: none"></th>
 
                 <td style="border: none; color: #272627cc;font-size:12px;font-weight:bolder;text-align:right">DATE:
-                    {{ date("j M,Y",strtotime($order_info->order_date)) }}</td>
+                    {{ date("j M,Y",strtotime($order_info->order_date)) }}
+                </td>
             </tr>
             <tr style="border: none; background-color: #fff">
                 <td style="border: none; color: #272627cc;">
@@ -118,7 +123,8 @@
                 <th style="border: none"></th>
 
                 <td style="border: none; color: #272627cc;text-align:right">
-                    {{ $order_info->payment_via == 1 ? 'Online Paid' : 'Cash on delivery'}}</td>
+                    {{ $order_info->payment_via == 1 ? 'Online Paid' : 'Cash on delivery'}}
+                </td>
             </tr>
             <tr style="border: none; background-color: #fff;width:25%;text-wrap: balance;">
                 <td style="border: none; color: #272627cc;">
@@ -126,12 +132,14 @@
 
                         Address:
                         {!! $order_info->user_shipping_info->street_address !!},
-			<p>{!! $order_info->user_shipping_info->city !!},{!! $order_info->user_shipping_info->country !!}</p>
+                        <p>{!! $order_info->user_shipping_info->city !!},{!! $order_info->user_shipping_info->country
+                            !!}</p>
                     </span>
                 </td>
                 <th style="border: none"></th>
 
-                <td style="border: none; color: #272627cc;text-align:right">Delivery Option:{{$order_info->delivery_platform}}</td>
+                <td style="border: none; color: #272627cc;text-align:right">Delivery
+                    Option:{{$order_info->delivery_platform}}</td>
             </tr>
         </table>
 
@@ -195,6 +203,14 @@
 
                     <td style="border: none;text-align: right">
                         {{ $order_info->charge_total_price + $order_info->charge_vat_amount + $order_info->charge_shipping_amount }}
+                    </td>
+                </tr>
+                <tr style="border: none;font-size:15px;font-weight:bolder">
+                    <td style="border: none;">CURRENCY
+                    </td>
+
+                    <td style="border: none;text-align: right">
+                        {{ $order_info->charged_currency }}
                     </td>
                 </tr>
             </table>

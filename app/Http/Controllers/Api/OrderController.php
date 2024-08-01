@@ -607,4 +607,15 @@ class OrderController extends Controller
         return false;
         return view('email.order_invoice',['order_info' => $order]);
     }
+
+    public function testOrderMailTemp($order_id = '')
+    {
+        $order = Order::with('order_details.product', 'user_billing_info')->find($order_id);
+        if ($order->user_billing_info->email != '') {
+            Mail::to($order->user_billing_info->email)->send(new InvoiceMail($order));
+        }
+        // Mail::to('online@aranya.com.bd')->send(new InvoiceMail($order));
+        // return false;
+        return view('email.order_invoice', ['order_info' => $order]);
+    }
 }
