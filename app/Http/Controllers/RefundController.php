@@ -163,4 +163,18 @@ class RefundController extends Controller
         $order_detail->update();
         return $this->successMessage('Refund Claim Successful!');
     }
+
+    public function fullOrderRefundClaim($id)
+    {
+        try {
+            OrderDetails::where('order_id', $id)->update([
+                'is_claim_refund' => AllStatic::$active,
+                'refund_claim_date' => date('Y-m-d'),
+                'refund_claim_reason' => "Refund Claim by Admin"
+            ]);
+            return $this->successMessage('Refund Claim Successful!');
+        } catch (\Throwable $th) {
+            return $this->errorMessage();
+        }
+    }
 }

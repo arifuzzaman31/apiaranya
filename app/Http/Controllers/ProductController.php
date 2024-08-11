@@ -102,9 +102,9 @@ class ProductController extends Controller
         }
         if ($camp_id != '') {
             $product = $product->with('campaign')
-            ->whereHas('campaign', function($q) use ($camp_id) {
-                $q->where('campaign_id', $camp_id);
-            });
+                ->whereHas('campaign', function ($q) use ($camp_id) {
+                    $q->where('campaign_id', $camp_id);
+                });
             if ($noPagination != '') {
                 $product = $product->get();
             } else {
@@ -114,10 +114,10 @@ class ProductController extends Controller
         }
         if ($sectionId != '') {
             $pids = DB::table('pages')->where('id', $sectionId)->pluck('product_id')->first();
-            if(!$pids){
+            if (!$pids) {
                 return [];
             }
-            $product->whereIn('id',json_decode($pids));
+            $product->whereIn('id', json_decode($pids));
             // ->whereIn('id', function($q) use ($sectionId) {
             //     return DB::table('pages')->where('id', $sectionId)->pluck('product_id');
             // });
@@ -216,7 +216,7 @@ class ProductController extends Controller
 
             if ($request->attrqty && !empty($request->attrqty)) {
                 foreach ($request->attrqty as $value) {
-                    if ($value['qty'] != '' && $value['sku'] != '' && $value['cpu'] != '' && $value['mrp'] != '') {
+                    if ($value['qty'] != '' && $value['sku'] != '' && $value['mrp'] != '') {
                         DB::table('inventories')
                             ->insert([
                                 'product_id' => $product->id,
@@ -291,8 +291,7 @@ class ProductController extends Controller
                 ]);
             }
             DB::commit();
-            if(is_file(public_path('product.csv')))
-            {
+            if (is_file(public_path('product.csv'))) {
                 unlink(public_path('product.csv'));
             }
             public_path(\Excel::store(new AddProduct, 'product.csv'));
@@ -417,7 +416,7 @@ class ProductController extends Controller
             if ($request->attrqty && !empty($request->attrqty)) {
                 DB::table('inventories')->where('product_id', $product->id)->delete();
                 foreach ($request->attrqty as $value) {
-                    if ($value['sku'] != '' && $value['cpu'] != '' && $value['mrp'] != '') {
+                    if ($value['sku'] != '' && $value['mrp'] != '') {
                         if (!empty($value['colour_id'])) {
                             foreach ($value['colour_id'] as $sizestock) {
                                 DB::table('inventories')
@@ -426,8 +425,8 @@ class ProductController extends Controller
                                         'size_id' => $value['size_id'] ? $value['size_id'] : 0,
                                         'colour_id' => $sizestock ? $sizestock : 0,
                                         'sku' => $value['sku'],
-                                        'stock' => $value['qty'] != '' ? $value['qty']:0,
-                                        'cpu' => $value['cpu'],
+                                    'stock' => $value['qty'] != '' ? $value['qty'] : 0,
+                                    'cpu' => $value['cpu'] ?? 0,
                                         'mrp' => $value['mrp'],
                                         'warning_amount' => 10
                                     ]);
@@ -508,8 +507,7 @@ class ProductController extends Controller
             }
             DB::commit();
 
-            if(is_file(public_path('product.csv')))
-            {
+            if (is_file(public_path('product.csv'))) {
                 unlink(public_path('product.csv'));
             }
             public_path(\Excel::store(new AddProduct, 'product.csv'));
@@ -539,11 +537,11 @@ class ProductController extends Controller
                 \Excel::import(new StockUpdateImport, $request->file);
 
                 $msg = 'Stock Updated Successfully';
-            } elseif($request->file_from == 'discountUpdate') {
+            } elseif ($request->file_from == 'discountUpdate') {
                 \Excel::import(new DiscountImport, $request->file);
                 $msg = 'Discount Imported Successfully';
             } else {
-                 // $data = Excel::load($path, function($reader) {})->get();
+                // $data = Excel::load($path, function($reader) {})->get();
 
                 // if( $request->has('file') ) {
                 //     $csv    = file($request->file);
@@ -606,8 +604,7 @@ class ProductController extends Controller
             $product->delete();
 
             DB::commit();
-            if(is_file(public_path('product.csv')))
-            {
+            if (is_file(public_path('product.csv'))) {
                 unlink(public_path('product.csv'));
             }
             public_path(\Excel::store(new AddProduct, 'product.csv'));

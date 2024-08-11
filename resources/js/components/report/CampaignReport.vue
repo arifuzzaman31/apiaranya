@@ -107,12 +107,11 @@ export default {
                                 <th>Design code</th>
                                 <th>Composition</th>
                                 <th>Sales Quantity</th>
-                                <th>Total Buying Amount</th>
+                                <!-- <th>Total Buying Amount</th> -->
                                 <th>Total Sales Amount</th>
                                 <th>Discount</th>
                                 <th>Amount without VAT</th>
                                 <th>Amount with VAT</th>
-                                <th>Profit</th>
                             </tr>
                         </thead>
                         <tbody v-if="campaignData.data && campaignData.data.length > 0">
@@ -216,12 +215,10 @@ export default {
                                         </span>
                                     </td>
                                     <td> {{ item.sales_quantity }}</td>
-                                    <td> {{ formatPrice(item.total_buying_amount) }}</td>
                                     <td> {{ formatPrice(item.total_selling_amount) }}</td>
                                     <td> 0</td>
                                     <td> {{ formatPrice(item.total_selling_amount) }}</td>
-                                    <td> {{ formatPrice(item.total_selling_amount+item.total_vat_amount) }}</td>
-                                    <td> {{ formatPrice(item.profit) }}</td>
+                                    <td> {{ formatPrice(Number(item.total_selling_amount)+Number(item.total_vat_amount)) }}</td>
                                 </tr>
                             </template>
                         </tbody>

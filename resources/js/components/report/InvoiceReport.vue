@@ -139,7 +139,7 @@ export default {
                                     <th>Delivery</th>
                                     <th>Item Qty</th>
                                     <th>Amount</th>
-                                    <th>Profit</th>
+                                    <!-- <th>Profit</th> -->
                                     <th class="text-center">Payment Method</th>
                                     <th class="text-center">Payment Gateway</th>
                                 </tr>
@@ -163,7 +163,7 @@ export default {
                                         </td>
                                         <td>{{ order.total_item }}</td>
                                         <td>{{ formatPrice(order.total_price) }}</td>
-                                        <td>{{ formatPrice(order.total_price - order.buying_sum) }}</td>
+                                        <!-- <td>{{ formatPrice(order.total_price - order.buying_sum) }}</td> -->
                                         <td class="text-center">
                                             {{ order.payment_via == 0 ? 'COD' : 'Online' }}
                                         </td>

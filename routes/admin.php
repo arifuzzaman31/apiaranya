@@ -124,6 +124,7 @@ Route::post('refund/settings/update',[RefundController::class,'update']);
 Route::get('refund-item-detail',[RefundController::class,'refundItemDetail']);
 Route::post('order-item-refund',[RefundController::class,'orderItemRefund']);
 Route::post('claim-item-refund',[RefundController::class,'itemRefundClaim']);
+Route::get('full-refund-claim/{id}', [RefundController::class, 'fullOrderRefundClaim']);
 
 // Company
 Route::controller(ProductController::class)

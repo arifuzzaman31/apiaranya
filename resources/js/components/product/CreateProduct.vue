@@ -58,7 +58,7 @@ export default {
                 max_amount: 0,
                 discount_type: 1,
                 description: '',
-                attrqty: [{colour_id:'',size_id:'',cpu:'',mrp:'',qty:'',sku:''}]
+                attrqty: [{colour_id:'',size_id:'',cpu:0,mrp:'',qty:'',sku:''}]
             },
             choose_colours: [],
             choose_sizes: [],
@@ -94,7 +94,7 @@ export default {
         },
 
         addMore(){
-            this.form.attrqty.push({colour_id:'',size_id:'',cpu:'',mrp:'',qty:'',sku:''})
+            this.form.attrqty.push({colour_id:'',size_id:'',cpu:0,mrp:'',qty:'',sku:''})
         },
         removeCatChild(index) {
             this.form.attrqty.splice(index, 1);
@@ -133,7 +133,7 @@ export default {
                 new Set([...this.choose_sizes])
                 this.choose_colours.map(item => {
                     this.choose_sizes.map(it => {
-                        this.form.attrqty.push({colour_id:item,size_id:it,cpu:'',mrp:'',qty:'',sku:''})
+                        this.form.attrqty.push({colour_id:item,size_id:it,cpu:0,mrp:'',qty:'',sku:''})
                     })
                 })
             } else {
@@ -141,13 +141,13 @@ export default {
                     new Set([...this.choose_colours])
                     this.choose_sizes = []
                     this.choose_colours.map(item => {
-                        this.form.attrqty.push({colour_id:item,size_id:'',cpu:'',mrp:'',qty:'',sku:''})
+                        this.form.attrqty.push({colour_id:item,size_id:'',cpu:0,mrp:'',qty:'',sku:''})
                     })
                 } else {
                     new Set([...this.choose_sizes])
                     this.choose_colours = []
                     this.choose_sizes.map(it => {
-                        this.form.attrqty.push({colour_id:'',size_id:it,cpu:'',mrp:'',qty:'',sku:''})
+                        this.form.attrqty.push({colour_id:'',size_id:it,cpu:0,mrp:'',qty:'',sku:''})
                     })
                 }
             }
@@ -197,7 +197,7 @@ export default {
                 max_amount: 0,
                 discount_type: 1,
                 description: '',
-                attrqty: [{colour_id:'',size_id:'',cpu:'',mrp:'',qty:'',sku:''}]
+                attrqty: [{colour_id:'',size_id:'',cpu:0,mrp:'',qty:'',sku:''}]
             },
             this.allsubcategories= []
             this.allfiltersubcategories = []
@@ -978,16 +978,16 @@ export default {
                         <div class="col-2  text-success">
                             <b>SKU</b>
                         </div>
-                        <div class="text-success" :class="(form.is_size && form.is_color) ? 'col-1' : 'col-2'">
+                        <!-- <div class="text-success" :class="(form.is_size && form.is_color) ? 'col-1' : 'col-2'">
                             <b>CPU</b>
-                        </div>
-                        <div class="col-1  text-success" :class="(form.is_size && form.is_color) ? 'col-2' : 'col-2'">
+                        </div> -->
+                        <div class="col-2  text-success" :class="(form.is_size && form.is_color) ? 'col-2' : 'col-2'">
                             <b>MRP</b>
                         </div>
                         <div class="col-2 text-success">
                             <b>Qty</b>
                         </div>
-                        <div class="col-1  text-danger">
+                        <div class="col-2  text-danger">
                             <b>Remove</b>
                         </div>
                     </div>
@@ -1007,16 +1007,16 @@ export default {
                         <div class="form-group col-md-2">
                             <input type="text"  class="form-control form-control-sm" id="sku" v-model="qt.sku" placeholder="SKU" required>
                         </div>
-                        <div class="form-group" :class="(form.is_size && form.is_color) ? 'col-md-1' : 'col-md-2'">
+                        <div class="form-group" :class="(form.is_size && form.is_color) ? 'col-md-2' : 'col-md-2'">
                             <input type="number"  class="form-control form-control-sm" id="sku" step=any v-model="qt.cpu" placeholder="CPU" required>
                         </div>
-                        <div class="form-group" :class="(form.is_size && form.is_color) ? 'col-md-2' : 'col-md-2'">
+                        <!-- <div class="form-group" :class="(form.is_size && form.is_color) ? 'col-md-2' : 'col-md-2'">
                             <input type="number"  class="form-control form-control-sm" id="mrp" step=any v-model="qt.mrp" placeholder="MRP" required>
-                        </div>
+                        </div> -->
                         <div class="form-group col-md-2">
                             <input type="number"  class="form-control form-control-sm" id="qty" v-model="qt.qty" placeholder="qty" required>
                         </div>
-                        <div class="form-group form-control-sm col-md-1 text-center" v-if="index != 0">
+                        <div class="form-group form-control-sm col-md-2 text-center" v-if="index != 0">
                             <a
                               href="javascript:void(0)"
                               @click.prevent="removeCatChild(index)"
@@ -1036,31 +1036,31 @@ export default {
             <div class="statbox widget box box-shadow" v-if="!form.has_variation">
                 <div class="widget-content ">
                     <div class="row text-center">
-                        <div class="col-3 text-success">
+                        <div class="col-4 text-success">
                             <b>SKU</b>
                         </div>
-                        <div class="col-3 text-success">
+                        <!-- <div class="col-3 text-success">
                             <b>CPU</b>
-                        </div>
-                        <div class="col-3 text-success">
+                        </div> -->
+                        <div class="col-4 text-success">
                             <b>MRP</b>
                         </div>
-                        <div class="col-3 text-success">
+                        <div class="col-4 text-success">
                             <b>Qty</b>
                         </div>
 
                     </div>
                     <div class="row" v-for="(qt,index) in form.attrqty" :key="index">
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-4">
                             <input type="text"  class="form-control" id="sku" v-model="qt.sku" placeholder="SKU" required>
                         </div>
-                        <div class="form-group col-md-3">
+                        <!-- <div class="form-group col-md-3">
                             <input type="number" step=any class="form-control" id="cpu" v-model="qt.cpu" placeholder="CPU" required>
-                        </div>
-                        <div class="form-group col-md-3">
+                        </div> -->
+                        <div class="form-group col-md-4">
                             <input type="number" step=any class="form-control" id="mrps" v-model="qt.mrp" placeholder="MRP" required>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-4">
                             <input type="number"  class="form-control" id="qty" v-model="qt.qty" placeholder="qty" required>
                         </div>
 

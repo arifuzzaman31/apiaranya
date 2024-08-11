@@ -30,8 +30,8 @@ class CampaignReportExport implements FromView,WithStyles
             'product.product_fit:id,fit_name','product.product_artist:id,artist_name','product.product_consignment:id,consignment_name',
             'product.product_ingredient:id,ingredient_name','product.campaign:id,campaign_name,campaign_start_date,campaign_expire_date')
             ->selectRaw('order_details.product_id, sum(quantity) as sales_quantity,sum(total_selling_price) as total_selling_amount,
-            sum(vat_amount) as total_vat_amount,ROUND(sum(total_buying_price),3) as total_buying_amount,
-            ROUND(sum(total_selling_price - total_buying_price),3) as profit,inventories.stock as current_stock,
+            sum(vat_amount) as total_vat_amount,
+            inventories.stock as current_stock,
             inventories.sku as p_sku,inventories.colour_id,inventories.size_id,inventories.created_at')
             ->join('order_details', 'inventories.product_id', '=', 'order_details.product_id')
             ->whereColumn('inventories.product_id', 'order_details.product_id')

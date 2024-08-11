@@ -65,7 +65,7 @@
                                             <th>Colour</th>
                                             <th>Size</th>
                                             <th>SKU</th>
-                                            <th>CPU</th>
+                                            <!-- <th>CPU</th> -->
                                             <th>MRP</th>
                                             <th>Stock</th>
                                         </tr>
@@ -80,7 +80,7 @@
                                                     <p class="mb-0">{{ attr.size && attr.size.size_name != '' ? attr.size.size_name : 'N/A' }}</p>
                                                 </td>
                                                 <td>{{ attr.sku }}</td>
-                                                <td>{{ formatPrice(attr.cpu) }}</td>
+                                                <!-- <td>{{ formatPrice(attr.cpu) }}</td> -->
                                                 <td>{{ formatPrice(attr.mrp) }}</td>
                                                 <td>
                                                     {{ attr.stock }}

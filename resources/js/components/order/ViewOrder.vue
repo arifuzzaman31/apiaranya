@@ -84,6 +84,30 @@ export default {
                     console.log(errors);
                 });
         },
+        claimRefund(order) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Order Refund will be Update!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, Do it!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios
+                        .get(baseUrl+`full-refund-claim/${order.id}`)
+                        .then((response) => {
+                            this.successMessage(response.data);
+                            this.getOrder();
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
+                }
+            });
+           
+        },
 
         paymentStatus(order) {
             this.order_status.order_id = order.id;
@@ -557,6 +581,19 @@ export default {
                                                         "
                                                         href="javascript:void(0);"
                                                         >Payment Status</a
+                                                    >
+                                                    <a
+                                                        class="dropdown-item"
+                                                        v-if="
+                                                            showPermission.includes(
+                                                                'refund-action'
+                                                            )
+                                                        "
+                                                        @click="
+                                                            claimRefund(order)
+                                                        "
+                                                        href="javascript:void(0);"
+                                                        >Refund Claim</a
                                                     >
                                                     <a
                                                         class="dropdown-item"
