@@ -19,7 +19,7 @@ class CustomerController extends Controller
     {
         $order = Order::with(['delivery','user:id,name'])->where('user_id',$id)->orderBy('id','desc')
         ->paginate(10);
-        
+
         return view('pages.customer.order',['orders' => $order]);
 
         // $query->withCount([
@@ -33,7 +33,7 @@ class CustomerController extends Controller
     {
         $order = Order::where('id',$id)->with(['delivery','user_shipping_info','user_billing_info'])->orderBy('id','desc')->first();
         $details = OrderDetails::with(['product','size','fabric','order'])->where(['order_id'=> $id])->get();
-        
+
         return view('pages.customer.order_details',['details' => $details,'orders' => $order]);
     }
 

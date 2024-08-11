@@ -36,7 +36,7 @@ class MediaManagerController extends Controller
             $imgdata = $imgdata->where('file_type',$type);
         }
         if($byTime != ''){
-            $imgdata = $imgdata->whereDate('created_at',$byTime);
+            $imgdata = $imgdata->whereDate('created_at','=',$byTime);
         }
         if($keyword != ''){
             $imgdata = $imgdata->where('product_name','like','%'.$keyword.'%');

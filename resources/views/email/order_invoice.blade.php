@@ -15,7 +15,7 @@
     }
 
     body {
-        width: 100%;
+        width: 70%;
         line-height: 0.46rem;
         font-family: 'solemn', sans-serif, arial;
     }

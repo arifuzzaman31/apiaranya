@@ -276,7 +276,15 @@
 
       <div class="col-12 layout-spacing">
         <div class="widget widget-chart-one-dashboard p-3">
-          <div class="widget-heading-dashboard">
+            <div class="widget-heading-dashboard">
+                <ul class="tabs tab-pills">
+                    <li>
+                        <a href="javascript:void(0);" id="tb_1latest" class="tabmenu"
+                            >Latest Customers</a
+                        >
+                    </li>
+                </ul>
+            </div>
             <table class="table table-bordered table-hover mb-4">
               <thead>
                 <tr>
@@ -310,7 +318,6 @@
               </tbody>
             </table>
           </div>
-        </div>
       </div>
     </div>
   </div>
