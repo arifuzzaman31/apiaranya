@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 class InvoiceMail extends Mailable
 {
     use Queueable, SerializesModels;
-    
+
     public $orders;
     /**
      * Create a new message instance.
@@ -29,7 +29,15 @@ class InvoiceMail extends Mailable
      */
     public function build()
     {
+        // Generate PDF from view
+        $pdf = \PDF::loadView('invoice', ['order_info' => $this->orders]);
+
         return $this->subject('Invoice from Aranya.com')
-                ->view('email.order_invoice',['order_info' => $this->orders]);
+                    ->view('email.order_invoice', ['order_info' => $this->orders])
+                    ->attachData($pdf->output(), 'invoice_' . $this->orders->id . '.pdf', [
+                        'mime' => 'application/pdf',
+                    ]);
+        // return $this->subject('Invoice from Aranya.com')
+        //         ->view('email.order_invoice',['order_info' => $this->orders]);
     }
 }

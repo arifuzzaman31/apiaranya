@@ -227,9 +227,8 @@ export default {
 </script>
 <template>
     <form class="needs-validation" method="post" @submit.prevent="submitForm" id="add-product-form">
-        <div class="row">
-            <div id="tooltips" class="col-lg-12 layout-spacing col-md-12">
-                <div class="statbox widget box ">
+        <div class="statbox widget box-shadow">
+            <div class="widget-content">
                     <div class="widget-content ">
                         <div class="form-row">
                             <div class="col-md-4">
@@ -272,7 +271,7 @@ export default {
                             </div>
 
                             <div class="row mt-1">
-                                <div id="tooltips" class="col-lg-12 layout-spacing col-md-12">
+                                <div id="tooltips" class="col-lg-12 layout-spacing col-md-12 px-3">
                                     <div class="widget-content ">
                                         <label for="editor-container">Description</label>
                                         <QuillEditor theme="snow" v-model:content="form.description" contentType="html" />
@@ -693,13 +692,13 @@ export default {
 
                         </div>
                     </div>
-                </div>
+
             </div>
         </div>
 
-        <div class="row">
-            <div id="tooltips" class="col-lg-12 layout-spacing col-md-12">
-                <div class="statbox widget box ">
+        <div class="statbox widget box-shadow">
+            <div class="widget-content">
+                <div class="form-row">
                     <div class="widget-content ">
                         <div class="form-row">
                             <div class="col-md-4 mb-3">

@@ -16,6 +16,7 @@
                             <div class="widget-header">
                                 <div class="row">
                                     <div class="col-md-9 border-right" style="height: 75vh;overflow-y: auto;">
+                                        <input type="date" v-model="by_time" class="form-control my-2" />
                                         <div class="row" v-if="allImages.data && allImages.data.length > 0">
                                             <div class="col-xl-2 col-md-3 col-sm-6 col-12" v-for="(item,ind) in allImages.data" :key="ind">
                                                 <div class="card component-card_2 mb-1">
@@ -81,13 +82,14 @@ export default {
             },
             allImages: [],
             media_keyword: '',
+            by_time: '',
             page: 1,
             url: baseUrl
         }
     },
     methods: {
         getImageData(){
-            axios.get(baseUrl+`media-manager/create?page=${this.page}&per_page=12&keyword=${this.media_keyword}`)
+            axios.get(baseUrl+`media-manager/create?page=${this.page}&per_page=12&keyword=${this.media_keyword}&by_date=${this.by_time}`)
             .then(result => {
                 if(this.page == 1){
                     this.allImages = result.data;
