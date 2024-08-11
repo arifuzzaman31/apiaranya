@@ -309,11 +309,13 @@ class AuthController extends Controller
                 'country'       => $request->country,
                 'city'          => $request->city,
                 'area'          => $request->area,
+                'thana'         => $request->thana,
                 'email'         => $request->email,
                 'phone'         => $request->phone,
                 'post_code'     => $request->post_code,
                 'apartment'     => $request->apartment,
-                'street_address' => $request->street_address
+                'street_address' => $request->street_address,
+                'updated_at' => now()
             ]);
 
             return response()->json([
