@@ -81,6 +81,7 @@ Route::get('get-color-story-data',[ColorStoryController::class, 'getColorStories
 Route::get('get-color-story/{id}',[ColorStoryController::class, 'getSingleColorStory']);
 Route::get('sustainability',[SustainabilityController::class, 'getSustainData']);
 Route::get('blogs',[BlogController::class, 'getBlogs']);
+Route::get('get-single-blog/{id}',[BlogController::class, 'getBlogs']);
 
 Route::post('subscribes',[MailchimpController::class, 'subscribe']);
 Route::get('product-to-mailchimp/{from_id}/{to_id}/{apikey}',[CampaignController::class, 'sendToMailChimp']);

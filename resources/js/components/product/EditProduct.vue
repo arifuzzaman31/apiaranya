@@ -507,8 +507,40 @@ export default {
                                 </template>
                             </Multiselect>
                         </div>
-
                         <div class="col-md-12 mb-3">
+                            <label for="product-Fabric">Composition</label>
+                            <Multiselect
+                                v-model="form.fabrics"
+                                placeholder="Select Fabric"
+                                track-by="name"
+                                label="name"
+                                mode="tags"
+                                :close-on-select="false"
+                                :search="true"
+                                :options="attrs.fabric"
+                                :searchable="true"
+                                >
+                                <template v-slot:tag="{ option, handleTagRemove, disabled }">
+                                <div
+                                    class="multiselect-tag is-user"
+                                    :class="{
+                                    'is-disabled': disabled
+                                    }"
+                                >
+                                    {{ option.name }}
+                                    <span
+                                    v-if="!disabled"
+                                    class="multiselect-tag-remove"
+                                    @mousedown.prevent="handleTagRemove(option, $event)"
+                                    >
+                                    <span class="multiselect-tag-remove-icon"></span>
+                                    </span>
+                                </div>
+                                </template>
+                            </Multiselect>
+                        </div>
+
+                        <!-- <div class="col-md-12 mb-3">
                             <label for="product-Making">Making</label>
                              <Multiselect
                                 v-model="form.making"
@@ -539,9 +571,9 @@ export default {
                                 </div>
                                 </template>
                             </Multiselect>
-                        </div>
+                        </div> -->
 
-                        <div class="col-md-12 mb-3">
+                        <!-- <div class="col-md-12 mb-3">
                             <label for="product-Season">Season</label>
                              <Multiselect
                                 v-model="form.season"
@@ -572,9 +604,9 @@ export default {
                                 </div>
                                 </template>
                             </Multiselect>
-                        </div>
+                        </div> -->
 
-                        <div class="col-md-12 mb-3">
+                        <!-- <div class="col-md-12 mb-3">
                             <label for="product-Variety">Variety</label>
                              <Multiselect
                                 v-model="form.variety"
@@ -605,9 +637,9 @@ export default {
                                 </div>
                                 </template>
                             </Multiselect>
-                        </div>
+                        </div> -->
 
-                        <div class="col-md-12 mb-3">
+                        <!-- <div class="col-md-12 mb-3">
                             <label for="product-Fit">Fit</label>
                              <Multiselect
                                 v-model="form.fit"
@@ -638,9 +670,9 @@ export default {
                                 </div>
                                 </template>
                             </Multiselect>
-                        </div>
+                        </div> -->
 
-                        <div class="col-md-12 mb-3">
+                        <!-- <div class="col-md-12 mb-3">
                             <label for="product-Artist">Artist</label>
                              <Multiselect
                                 v-model="form.artist"
@@ -671,7 +703,7 @@ export default {
                                 </div>
                                 </template>
                             </Multiselect>
-                        </div>
+                        </div> -->
                         <div class="col-md-12 mb-3">
                             <label for="product-Consignment">Consignment</label>
                              <Multiselect
@@ -1073,7 +1105,7 @@ export default {
                 </div>
             </div>
 
-            <div class="statbox widget box box-shadow">
+            <!-- <div class="statbox widget box box-shadow">
                 <div class="widget-content ">
                     <div class="form-row">
 
@@ -1112,7 +1144,7 @@ export default {
                     </div>
             </div>
 
-        </div>
+        </div> -->
         <div class="statbox widget box box-shadow">
             <div class="widget-content ">
                 <div class="form-row">

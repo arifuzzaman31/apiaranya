@@ -73,6 +73,11 @@ class BlogController extends Controller
         $blog = Blog::find($id);
         return view('pages.story.edit_blog',['blogs' => $blog]);
     }
+
+    public function getOneBlog($id)
+    {
+        return Blog::find($id);
+    }
     public function destroy($id)
     {
         try{
