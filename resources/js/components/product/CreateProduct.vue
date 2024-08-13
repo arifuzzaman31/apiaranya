@@ -592,7 +592,7 @@ export default {
                             </Multiselect>
                         </div> -->
 
-                        <div class="col-md-12 mb-3">
+                        <!-- <div class="col-md-12 mb-3">
                             <label for="product-Artist">Artist</label>
                              <Multiselect
                                 v-model="form.artist"
@@ -623,7 +623,7 @@ export default {
                                 </div>
                                 </template>
                             </Multiselect>
-                        </div>
+                        </div> -->
                         <div class="col-md-12 mb-3">
                             <label for="product-Consignment">Consignment</label>
                              <Multiselect
