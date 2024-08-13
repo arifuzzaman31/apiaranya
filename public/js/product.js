@@ -20520,7 +20520,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['prp_vendor', 'prp_artist', 'prp_colour', 'prp_brand', 'prp_care', 'flat_colour', 'prp_consignment', 'prp_designer', 'prp_embellish', 'prp_fabric', 'prp_fit', 'prp_ingredient', 'prp_making', 'prp_season', 'prp_size', 'prp_variety', 'prp_tax'],
+  props: ["prp_vendor", "prp_artist", "prp_colour", "prp_brand", "prp_care", "flat_colour", "prp_consignment", "prp_designer", "prp_embellish", "prp_fabric", "prp_fit", "prp_ingredient", "prp_making", "prp_season", "prp_size", "prp_variety", "prp_tax"],
   mixins: [_mixer__WEBPACK_IMPORTED_MODULE_3__["default"]],
   components: {
     QuillEditor: _vueup_vue_quill__WEBPACK_IMPORTED_MODULE_0__.QuillEditor,
@@ -20531,15 +20531,15 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     var _form;
     return {
       form: (_form = {
-        product_name: '',
-        category: '',
-        sub_category: '',
+        product_name: "",
+        category: "",
+        sub_category: "",
         vendor: [],
         brand: [],
         designer: [],
         embellishment: [],
         making: [],
-        lead_time: '',
+        lead_time: "",
         season: [],
         variety: [],
         tages: [],
@@ -20549,14 +20549,14 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         ingredients: [],
         flat_colour: [],
         selectedImages: [],
-        design_code: '',
-        unit: '',
-        height: '',
-        width: '',
-        length: '',
-        weight: '',
+        design_code: "",
+        unit: "",
+        height: "",
+        width: "",
+        length: "",
+        weight: "",
         care: [],
-        fragile: 'No',
+        fragile: "No",
         fragile_charge: 0,
         vat: 1,
         is_fabric: true,
@@ -20566,16 +20566,16 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         selectcolours: [],
         is_size: true,
         selectsize: [],
-        discount_amount: '',
+        discount_amount: "",
         discount_type: 1,
         max_amount: 0
-      }, _defineProperty(_form, "discount_type", 1), _defineProperty(_form, "description", ''), _defineProperty(_form, "attrqty", [{
-        colour_id: '',
-        size_id: '',
+      }, _defineProperty(_form, "discount_type", 1), _defineProperty(_form, "description", ""), _defineProperty(_form, "attrqty", [{
+        colour_id: "",
+        size_id: "",
         cpu: 0,
-        mrp: '',
-        qty: '',
-        sku: ''
+        mrp: "",
+        qty: "",
+        sku: ""
       }]), _form),
       choose_colours: [],
       choose_sizes: [],
@@ -20592,16 +20592,16 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     submitForm: function submitForm() {
       var _this$form$attrqty$,
         _this = this;
-      if (((_this$form$attrqty$ = this.form.attrqty[0]) === null || _this$form$attrqty$ === void 0 ? void 0 : _this$form$attrqty$.sku) == '') {
+      if (((_this$form$attrqty$ = this.form.attrqty[0]) === null || _this$form$attrqty$ === void 0 ? void 0 : _this$form$attrqty$.sku) == "") {
         this.validationError({
-          status: 'error',
-          message: 'Attribute are required'
+          status: "error",
+          message: "Attribute are required"
         });
         return false;
       }
-      axios__WEBPACK_IMPORTED_MODULE_2___default().post(baseUrl + 'product', this.form).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default().post(baseUrl + "product", this.form).then(function (response) {
         console.log(response);
-        if (response.data.status == 'success') {
+        if (response.data.status == "success") {
           _this.clearForm();
           _this.successMessage(response.data);
           window.location.href = baseUrl + "product";
@@ -20616,12 +20616,12 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     addMore: function addMore() {
       this.form.attrqty.push({
-        colour_id: '',
-        size_id: '',
+        colour_id: "",
+        size_id: "",
         cpu: 0,
-        mrp: '',
-        qty: '',
-        sku: ''
+        mrp: "",
+        qty: "",
+        sku: ""
       });
     },
     removeCatChild: function removeCatChild(index) {
@@ -20629,7 +20629,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     getCategory: function getCategory() {
       var _this2 = this;
-      axios__WEBPACK_IMPORTED_MODULE_2___default().get(baseUrl + 'get-category?no_paginate=yes').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default().get(baseUrl + "get-category?no_paginate=yes").then(function (response) {
         var _this2$allcategories, _this2$allfiltersubca;
         var cat = response.data;
         var res = cat.filter(function (data) {
@@ -20671,9 +20671,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
               colour_id: item,
               size_id: it,
               cpu: 0,
-              mrp: '',
-              qty: '',
-              sku: ''
+              mrp: "",
+              qty: "",
+              sku: ""
             });
           });
         });
@@ -20684,11 +20684,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
           this.choose_colours.map(function (item) {
             _this4.form.attrqty.push({
               colour_id: item,
-              size_id: '',
+              size_id: "",
               cpu: 0,
-              mrp: '',
-              qty: '',
-              sku: ''
+              mrp: "",
+              qty: "",
+              sku: ""
             });
           });
         } else {
@@ -20696,12 +20696,12 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
           this.choose_colours = [];
           this.choose_sizes.map(function (it) {
             _this4.form.attrqty.push({
-              colour_id: '',
+              colour_id: "",
               size_id: it,
               cpu: 0,
-              mrp: '',
-              qty: '',
-              sku: ''
+              mrp: "",
+              qty: "",
+              sku: ""
             });
           });
         }
@@ -20710,16 +20710,16 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     clearForm: function clearForm() {
       var _this$form;
       this.form = (_this$form = {
-        product_name: '',
-        category: '',
-        sub_category: '',
-        sku: '',
+        product_name: "",
+        category: "",
+        sub_category: "",
+        sku: "",
         vendor: [],
         brand: [],
         designer: [],
         embellishment: [],
         making: [],
-        lead_time: '',
+        lead_time: "",
         season: [],
         variety: [],
         tages: [],
@@ -20728,15 +20728,15 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         consignment: [],
         ingredients: [],
         selectedImages: [],
-        design_code: '',
-        unit: '',
-        height: '',
-        width: '',
-        length: '',
-        weight: '',
+        design_code: "",
+        unit: "",
+        height: "",
+        width: "",
+        length: "",
+        weight: "",
         care: [],
         vat: 1,
-        fragile: 'No',
+        fragile: "No",
         fragile_charge: 0,
         is_fabric: true,
         selectfabrics: [],
@@ -20745,22 +20745,22 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         selectcolours: [],
         is_size: true,
         selectsize: [],
-        discount_amount: '',
+        discount_amount: "",
         discount_type: 1,
         max_amount: 0
-      }, _defineProperty(_this$form, "discount_type", 1), _defineProperty(_this$form, "description", ''), _defineProperty(_this$form, "attrqty", [{
-        colour_id: '',
-        size_id: '',
+      }, _defineProperty(_this$form, "discount_type", 1), _defineProperty(_this$form, "description", ""), _defineProperty(_this$form, "attrqty", [{
+        colour_id: "",
+        size_id: "",
         cpu: 0,
-        mrp: '',
-        qty: '',
-        sku: ''
+        mrp: "",
+        qty: "",
+        sku: ""
       }]), _this$form), this.allsubcategories = [];
       this.allfiltersubcategories = [];
       this.validation_error = {};
     },
     mediaModalOpen: function mediaModalOpen() {
-      $("#pageMediaModal").modal('show');
+      $("#pageMediaModal").modal("show");
     },
     selectImage: function selectImage(item) {
       if (this.form.selectedImages && this.form.selectedImages.length < 4) {
@@ -20768,7 +20768,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         new Set(_toConsumableArray(this.form.selectedImages));
       } else {
         this.validationError({
-          "message": "Maximum 4 File Upload!"
+          message: "Maximum 4 File Upload!"
         });
       }
     }
@@ -20777,8 +20777,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     var _this5 = this;
     this.prp_colour.map(function (color) {
       _this5.list_colour.push({
-        'value': color.color_name,
-        'name': color.color_name
+        value: color.color_name,
+        name: color.color_name
       });
     });
     this.getCategory();
@@ -22174,7 +22174,7 @@ var _hoisted_31 = {
   "class": "form-row"
 };
 var _hoisted_32 = {
-  "class": "col-md-12 mb-3"
+  "class": "col-md-6"
 };
 var _hoisted_33 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
@@ -22189,7 +22189,7 @@ var _hoisted_35 = /*#__PURE__*/_withScopeId(function () {
 });
 var _hoisted_36 = [_hoisted_35];
 var _hoisted_37 = {
-  "class": "col-md-12 mb-3"
+  "class": "col-md-6"
 };
 var _hoisted_38 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
@@ -22204,7 +22204,7 @@ var _hoisted_40 = /*#__PURE__*/_withScopeId(function () {
 });
 var _hoisted_41 = [_hoisted_40];
 var _hoisted_42 = {
-  "class": "col-md-12 mb-3"
+  "class": "col-md-6"
 };
 var _hoisted_43 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
@@ -22219,7 +22219,7 @@ var _hoisted_45 = /*#__PURE__*/_withScopeId(function () {
 });
 var _hoisted_46 = [_hoisted_45];
 var _hoisted_47 = {
-  "class": "col-md-12 mb-3"
+  "class": "col-md-6"
 };
 var _hoisted_48 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
@@ -22234,7 +22234,7 @@ var _hoisted_50 = /*#__PURE__*/_withScopeId(function () {
 });
 var _hoisted_51 = [_hoisted_50];
 var _hoisted_52 = {
-  "class": "col-md-12 mb-3"
+  "class": "col-md-6"
 };
 var _hoisted_53 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
@@ -22249,7 +22249,7 @@ var _hoisted_55 = /*#__PURE__*/_withScopeId(function () {
 });
 var _hoisted_56 = [_hoisted_55];
 var _hoisted_57 = {
-  "class": "col-md-12 mb-3"
+  "class": "col-md-6"
 };
 var _hoisted_58 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
@@ -22264,7 +22264,7 @@ var _hoisted_60 = /*#__PURE__*/_withScopeId(function () {
 });
 var _hoisted_61 = [_hoisted_60];
 var _hoisted_62 = {
-  "class": "col-md-12 mb-3"
+  "class": "col-md-6"
 };
 var _hoisted_63 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
@@ -22279,7 +22279,7 @@ var _hoisted_65 = /*#__PURE__*/_withScopeId(function () {
 });
 var _hoisted_66 = [_hoisted_65];
 var _hoisted_67 = {
-  "class": "col-md-12 mb-3"
+  "class": "col-md-6"
 };
 var _hoisted_68 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
@@ -22650,7 +22650,7 @@ var _hoisted_185 = /*#__PURE__*/_withScopeId(function () {
     "class": "row text-center"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "col-4 text-success"
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "SKU")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-3 text-success\">\n                            <b>CPU</b>\n                        </div> "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "SKU")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-3 text-success\">\r\n                            <b>CPU</b>\r\n                        </div> "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "col-4 text-success"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "MRP")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "col-4 text-success"
@@ -22768,7 +22768,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[5] || (_cache[5] = function ($event) {
       return $options.mediaModalOpen();
     })
-  }, "Upload files")]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.form.selectedImages, function (itm, index) {
+  }, " Upload files ")]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.form.selectedImages, function (itm, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       "class": "col-md-3 d-flex justify-content-center",
       key: index
@@ -22947,7 +22947,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
 
     _: 1 /* STABLE */
-  }, 8 /* PROPS */, ["modelValue", "options"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-md-12 mb-3\">\n                            <label for=\"product-Making\">Making</label>\n                             <Multiselect\n                                v-model=\"form.making\"\n                                mode=\"tags\"\n                                placeholder=\"Select Making\"\n                                track-by=\"name\"\n                                label=\"name\"\n                                :close-on-select=\"false\"\n                                :search=\"true\"\n                                :options=\"prp_making\"\n                                :searchable=\"true\"\n                                >\n                                <template v-slot:tag=\"{ option, handleTagRemove, disabled }\">\n                                <div\n                                    class=\"multiselect-tag is-user\"\n                                    :class=\"{\n                                    'is-disabled': disabled\n                                    }\"\n                                >\n                                    {{ option.name }}\n                                    <span\n                                    v-if=\"!disabled\"\n                                    class=\"multiselect-tag-remove\"\n                                    @mousedown.prevent=\"handleTagRemove(option, $event)\"\n                                    >\n                                    <span class=\"multiselect-tag-remove-icon\"></span>\n                                    </span>\n                                </div>\n                                </template>\n                            </Multiselect>\n                        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-md-12 mb-3\">\n                            <label for=\"product-Season\">Season</label>\n                             <Multiselect\n                                v-model=\"form.season\"\n                                mode=\"tags\"\n                                placeholder=\"Select Season\"\n                                track-by=\"name\"\n                                label=\"name\"\n                                :close-on-select=\"false\"\n                                :search=\"true\"\n                                :options=\"prp_season\"\n                                :searchable=\"true\"\n                                >\n                                <template v-slot:tag=\"{ option, handleTagRemove, disabled }\">\n                                <div\n                                    class=\"multiselect-tag is-user\"\n                                    :class=\"{\n                                    'is-disabled': disabled\n                                    }\"\n                                >\n                                    {{ option.name }}\n                                    <span\n                                    v-if=\"!disabled\"\n                                    class=\"multiselect-tag-remove\"\n                                    @mousedown.prevent=\"handleTagRemove(option, $event)\"\n                                    >\n                                    <span class=\"multiselect-tag-remove-icon\"></span>\n                                    </span>\n                                </div>\n                                </template>\n                            </Multiselect>\n                        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-md-12 mb-3\">\n                            <label for=\"product-Variety\">Variety</label>\n                             <Multiselect\n                                v-model=\"form.variety\"\n                                mode=\"tags\"\n                                placeholder=\"Select Variety\"\n                                track-by=\"name\"\n                                label=\"name\"\n                                :close-on-select=\"false\"\n                                :search=\"true\"\n                                :options=\"prp_variety\"\n                                :searchable=\"true\"\n                                >\n                                <template v-slot:tag=\"{ option, handleTagRemove, disabled }\">\n                                <div\n                                    class=\"multiselect-tag is-user\"\n                                    :class=\"{\n                                    'is-disabled': disabled\n                                    }\"\n                                >\n                                    {{ option.name }}\n                                    <span\n                                    v-if=\"!disabled\"\n                                    class=\"multiselect-tag-remove\"\n                                    @mousedown.prevent=\"handleTagRemove(option, $event)\"\n                                    >\n                                    <span class=\"multiselect-tag-remove-icon\"></span>\n                                    </span>\n                                </div>\n                                </template>\n                            </Multiselect>\n                        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-md-12 mb-3\">\n                            <label for=\"product-Fit\">Fit</label>\n                             <Multiselect\n                                v-model=\"form.fit\"\n                                mode=\"tags\"\n                                placeholder=\"Select Fit\"\n                                track-by=\"name\"\n                                label=\"name\"\n                                :close-on-select=\"false\"\n                                :search=\"true\"\n                                :options=\"prp_fit\"\n                                :searchable=\"true\"\n                                >\n                                <template v-slot:tag=\"{ option, handleTagRemove, disabled }\">\n                                <div\n                                    class=\"multiselect-tag is-user\"\n                                    :class=\"{\n                                    'is-disabled': disabled\n                                    }\"\n                                >\n                                    {{ option.name }}\n                                    <span\n                                    v-if=\"!disabled\"\n                                    class=\"multiselect-tag-remove\"\n                                    @mousedown.prevent=\"handleTagRemove(option, $event)\"\n                                    >\n                                    <span class=\"multiselect-tag-remove-icon\"></span>\n                                    </span>\n                                </div>\n                                </template>\n                            </Multiselect>\n                        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-md-12 mb-3\">\n                            <label for=\"product-Artist\">Artist</label>\n                             <Multiselect\n                                v-model=\"form.artist\"\n                                mode=\"tags\"\n                                placeholder=\"Select Artist\"\n                                track-by=\"name\"\n                                label=\"name\"\n                                :close-on-select=\"false\"\n                                :search=\"true\"\n                                :options=\"prp_artist\"\n                                :searchable=\"true\"\n                                >\n                                <template v-slot:tag=\"{ option, handleTagRemove, disabled }\">\n                                <div\n                                    class=\"multiselect-tag is-user\"\n                                    :class=\"{\n                                    'is-disabled': disabled\n                                    }\"\n                                >\n                                    {{ option.name }}\n                                    <span\n                                    v-if=\"!disabled\"\n                                    class=\"multiselect-tag-remove\"\n                                    @mousedown.prevent=\"handleTagRemove(option, $event)\"\n                                    >\n                                    <span class=\"multiselect-tag-remove-icon\"></span>\n                                    </span>\n                                </div>\n                                </template>\n                            </Multiselect>\n                        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_57, [_hoisted_58, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Multiselect, {
+  }, 8 /* PROPS */, ["modelValue", "options"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-md-12 mb-3\">\r\n                            <label for=\"product-Making\">Making</label>\r\n                             <Multiselect\r\n                                v-model=\"form.making\"\r\n                                mode=\"tags\"\r\n                                placeholder=\"Select Making\"\r\n                                track-by=\"name\"\r\n                                label=\"name\"\r\n                                :close-on-select=\"false\"\r\n                                :search=\"true\"\r\n                                :options=\"prp_making\"\r\n                                :searchable=\"true\"\r\n                                >\r\n                                <template v-slot:tag=\"{ option, handleTagRemove, disabled }\">\r\n                                <div\r\n                                    class=\"multiselect-tag is-user\"\r\n                                    :class=\"{\r\n                                    'is-disabled': disabled\r\n                                    }\"\r\n                                >\r\n                                    {{ option.name }}\r\n                                    <span\r\n                                    v-if=\"!disabled\"\r\n                                    class=\"multiselect-tag-remove\"\r\n                                    @mousedown.prevent=\"handleTagRemove(option, $event)\"\r\n                                    >\r\n                                    <span class=\"multiselect-tag-remove-icon\"></span>\r\n                                    </span>\r\n                                </div>\r\n                                </template>\r\n                            </Multiselect>\r\n                        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-md-12 mb-3\">\r\n                            <label for=\"product-Season\">Season</label>\r\n                             <Multiselect\r\n                                v-model=\"form.season\"\r\n                                mode=\"tags\"\r\n                                placeholder=\"Select Season\"\r\n                                track-by=\"name\"\r\n                                label=\"name\"\r\n                                :close-on-select=\"false\"\r\n                                :search=\"true\"\r\n                                :options=\"prp_season\"\r\n                                :searchable=\"true\"\r\n                                >\r\n                                <template v-slot:tag=\"{ option, handleTagRemove, disabled }\">\r\n                                <div\r\n                                    class=\"multiselect-tag is-user\"\r\n                                    :class=\"{\r\n                                    'is-disabled': disabled\r\n                                    }\"\r\n                                >\r\n                                    {{ option.name }}\r\n                                    <span\r\n                                    v-if=\"!disabled\"\r\n                                    class=\"multiselect-tag-remove\"\r\n                                    @mousedown.prevent=\"handleTagRemove(option, $event)\"\r\n                                    >\r\n                                    <span class=\"multiselect-tag-remove-icon\"></span>\r\n                                    </span>\r\n                                </div>\r\n                                </template>\r\n                            </Multiselect>\r\n                        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-md-12 mb-3\">\r\n                            <label for=\"product-Variety\">Variety</label>\r\n                             <Multiselect\r\n                                v-model=\"form.variety\"\r\n                                mode=\"tags\"\r\n                                placeholder=\"Select Variety\"\r\n                                track-by=\"name\"\r\n                                label=\"name\"\r\n                                :close-on-select=\"false\"\r\n                                :search=\"true\"\r\n                                :options=\"prp_variety\"\r\n                                :searchable=\"true\"\r\n                                >\r\n                                <template v-slot:tag=\"{ option, handleTagRemove, disabled }\">\r\n                                <div\r\n                                    class=\"multiselect-tag is-user\"\r\n                                    :class=\"{\r\n                                    'is-disabled': disabled\r\n                                    }\"\r\n                                >\r\n                                    {{ option.name }}\r\n                                    <span\r\n                                    v-if=\"!disabled\"\r\n                                    class=\"multiselect-tag-remove\"\r\n                                    @mousedown.prevent=\"handleTagRemove(option, $event)\"\r\n                                    >\r\n                                    <span class=\"multiselect-tag-remove-icon\"></span>\r\n                                    </span>\r\n                                </div>\r\n                                </template>\r\n                            </Multiselect>\r\n                        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-md-12 mb-3\">\r\n                            <label for=\"product-Fit\">Fit</label>\r\n                             <Multiselect\r\n                                v-model=\"form.fit\"\r\n                                mode=\"tags\"\r\n                                placeholder=\"Select Fit\"\r\n                                track-by=\"name\"\r\n                                label=\"name\"\r\n                                :close-on-select=\"false\"\r\n                                :search=\"true\"\r\n                                :options=\"prp_fit\"\r\n                                :searchable=\"true\"\r\n                                >\r\n                                <template v-slot:tag=\"{ option, handleTagRemove, disabled }\">\r\n                                <div\r\n                                    class=\"multiselect-tag is-user\"\r\n                                    :class=\"{\r\n                                    'is-disabled': disabled\r\n                                    }\"\r\n                                >\r\n                                    {{ option.name }}\r\n                                    <span\r\n                                    v-if=\"!disabled\"\r\n                                    class=\"multiselect-tag-remove\"\r\n                                    @mousedown.prevent=\"handleTagRemove(option, $event)\"\r\n                                    >\r\n                                    <span class=\"multiselect-tag-remove-icon\"></span>\r\n                                    </span>\r\n                                </div>\r\n                                </template>\r\n                            </Multiselect>\r\n                        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-md-12 mb-3\">\r\n                            <label for=\"product-Artist\">Artist</label>\r\n                             <Multiselect\r\n                                v-model=\"form.artist\"\r\n                                mode=\"tags\"\r\n                                placeholder=\"Select Artist\"\r\n                                track-by=\"name\"\r\n                                label=\"name\"\r\n                                :close-on-select=\"false\"\r\n                                :search=\"true\"\r\n                                :options=\"prp_artist\"\r\n                                :searchable=\"true\"\r\n                                >\r\n                                <template v-slot:tag=\"{ option, handleTagRemove, disabled }\">\r\n                                <div\r\n                                    class=\"multiselect-tag is-user\"\r\n                                    :class=\"{\r\n                                    'is-disabled': disabled\r\n                                    }\"\r\n                                >\r\n                                    {{ option.name }}\r\n                                    <span\r\n                                    v-if=\"!disabled\"\r\n                                    class=\"multiselect-tag-remove\"\r\n                                    @mousedown.prevent=\"handleTagRemove(option, $event)\"\r\n                                    >\r\n                                    <span class=\"multiselect-tag-remove-icon\"></span>\r\n                                    </span>\r\n                                </div>\r\n                                </template>\r\n                            </Multiselect>\r\n                        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_57, [_hoisted_58, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Multiselect, {
     modelValue: $data.form.consignment,
     "onUpdate:modelValue": _cache[11] || (_cache[11] = function ($event) {
       return $data.form.consignment = $event;
@@ -23271,7 +23271,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[30] || (_cache[30] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
       return $options.makeAttrComb();
     }, ["prevent"]))
-  }, "Add")])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.form.has_variation && $data.combine ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_152, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_153, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_154, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_155, _hoisted_157, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.form.is_color]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_158, _hoisted_160, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.form.is_size]]), _hoisted_161, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"text-success\" :class=\"(form.is_size && form.is_color) ? 'col-1' : 'col-2'\">\n                            <b>CPU</b>\n                        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  }, " Add ")])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.form.has_variation && $data.combine ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_152, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_153, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_154, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_155, _hoisted_157, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.form.is_color]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_158, _hoisted_160, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.form.is_size]]), _hoisted_161, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"text-success\" :class=\"(form.is_size && form.is_color) ? 'col-1' : 'col-2'\">\r\n                            <b>CPU</b>\r\n                        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["col-2 text-success", $data.form.is_size && $data.form.is_color ? 'col-2' : 'col-2'])
   }, _hoisted_163, 2 /* CLASS */), _hoisted_164, _hoisted_165]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.form.attrqty, function (qt, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
@@ -23320,7 +23320,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       },
       placeholder: "CPU",
       required: ""
-    }, null, 8 /* PROPS */, _hoisted_176), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, qt.cpu]])], 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"form-group\" :class=\"(form.is_size && form.is_color) ? 'col-md-2' : 'col-md-2'\">\n                            <input type=\"number\"  class=\"form-control form-control-sm\" id=\"mrp\" step=any v-model=\"qt.mrp\" placeholder=\"MRP\" required>\n                        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_177, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    }, null, 8 /* PROPS */, _hoisted_176), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, qt.cpu]])], 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"form-group\" :class=\"(form.is_size && form.is_color) ? 'col-md-2' : 'col-md-2'\">\r\n                            <input type=\"number\"  class=\"form-control form-control-sm\" id=\"mrp\" step=any v-model=\"qt.mrp\" placeholder=\"MRP\" required>\r\n                        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_177, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
       type: "number",
       "class": "form-control form-control-sm",
       id: "qty",
@@ -23355,7 +23355,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       },
       placeholder: "SKU",
       required: ""
-    }, null, 8 /* PROPS */, _hoisted_187), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, qt.sku]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"form-group col-md-3\">\n                            <input type=\"number\" step=any class=\"form-control\" id=\"cpu\" v-model=\"qt.cpu\" placeholder=\"CPU\" required>\n                        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_188, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    }, null, 8 /* PROPS */, _hoisted_187), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, qt.sku]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"form-group col-md-3\">\r\n                            <input type=\"number\" step=any class=\"form-control\" id=\"cpu\" v-model=\"qt.cpu\" placeholder=\"CPU\" required>\r\n                        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_188, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
       type: "number",
       step: "any",
       "class": "form-control",
@@ -23375,7 +23375,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       placeholder: "qty",
       required: ""
     }, null, 8 /* PROPS */, _hoisted_191), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, qt.qty]])])]);
-  }), 128 /* KEYED_FRAGMENT */))])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.validation_error.hasOwnProperty('attrqty') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_192, " Attribute are required. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"statbox widget box box-shadow\">\n                <div class=\"widget-content \">\n                    <div class=\"form-row\">\n\n                        <div class=\"col-md-12 mb-3\">\n                            <label for=\"product-Fabric\">Composition</label>\n                            <Multiselect\n                                v-model=\"form.selectfabrics\"\n                                placeholder=\"Select Fabric\"\n                                track-by=\"name\"\n                                label=\"name\"\n                                mode=\"tags\"\n                                :close-on-select=\"false\"\n                                :search=\"true\"\n                                :options=\"prp_fabric\"\n                                :searchable=\"true\"\n                                >\n                                <template v-slot:tag=\"{ option, handleTagRemove, disabled }\">\n                                <div\n                                    class=\"multiselect-tag is-user\"\n                                    :class=\"{\n                                    'is-disabled': disabled\n                                    }\"\n                                >\n                                    {{ option.name }}\n                                    <span\n                                    v-if=\"!disabled\"\n                                    class=\"multiselect-tag-remove\"\n                                    @mousedown.prevent=\"handleTagRemove(option, $event)\"\n                                    >\n                                    <span class=\"multiselect-tag-remove-icon\"></span>\n                                    </span>\n                                </div>\n                                </template>\n                            </Multiselect>\n                        </div>\n                    </div>\n            </div>\n\n        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_193, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_194, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_195, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_196, [_hoisted_197, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Multiselect, {
+  }), 128 /* KEYED_FRAGMENT */))])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.validation_error.hasOwnProperty('attrqty') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_192, " Attribute are required. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"statbox widget box box-shadow\">\r\n                <div class=\"widget-content \">\r\n                    <div class=\"form-row\">\r\n\r\n                        <div class=\"col-md-12 mb-3\">\r\n                            <label for=\"product-Fabric\">Composition</label>\r\n                            <Multiselect\r\n                                v-model=\"form.selectfabrics\"\r\n                                placeholder=\"Select Fabric\"\r\n                                track-by=\"name\"\r\n                                label=\"name\"\r\n                                mode=\"tags\"\r\n                                :close-on-select=\"false\"\r\n                                :search=\"true\"\r\n                                :options=\"prp_fabric\"\r\n                                :searchable=\"true\"\r\n                                >\r\n                                <template v-slot:tag=\"{ option, handleTagRemove, disabled }\">\r\n                                <div\r\n                                    class=\"multiselect-tag is-user\"\r\n                                    :class=\"{\r\n                                    'is-disabled': disabled\r\n                                    }\"\r\n                                >\r\n                                    {{ option.name }}\r\n                                    <span\r\n                                    v-if=\"!disabled\"\r\n                                    class=\"multiselect-tag-remove\"\r\n                                    @mousedown.prevent=\"handleTagRemove(option, $event)\"\r\n                                    >\r\n                                    <span class=\"multiselect-tag-remove-icon\"></span>\r\n                                    </span>\r\n                                </div>\r\n                                </template>\r\n                            </Multiselect>\r\n                        </div>\r\n                    </div>\r\n            </div>\r\n\r\n        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_193, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_194, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_195, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_196, [_hoisted_197, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Multiselect, {
     modelValue: $data.form.tages,
     "onUpdate:modelValue": _cache[32] || (_cache[32] = function ($event) {
       return $data.form.tages = $event;
@@ -27927,7 +27927,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.col[data-v-46bbc058], .col-1[data-v-46bbc058], .col-10[data-v-46bbc058], .col-11[data-v-46bbc058], .col-12[data-v-46bbc058], .col-2[data-v-46bbc058], .col-3[data-v-46bbc058], .col-4[data-v-46bbc058], .col-5[data-v-46bbc058], .col-6[data-v-46bbc058], .col-7[data-v-46bbc058], .col-8[data-v-46bbc058], .col-9[data-v-46bbc058], .col-auto[data-v-46bbc058], .col-lg[data-v-46bbc058], .col-lg-1[data-v-46bbc058], .col-lg-10[data-v-46bbc058], .col-lg-11[data-v-46bbc058], .col-lg-12[data-v-46bbc058], .col-lg-2[data-v-46bbc058], .col-lg-3[data-v-46bbc058], .col-lg-4[data-v-46bbc058], .col-lg-5[data-v-46bbc058], .col-lg-6[data-v-46bbc058], .col-lg-7[data-v-46bbc058], .col-lg-8[data-v-46bbc058], .col-lg-9[data-v-46bbc058], .col-lg-auto[data-v-46bbc058], .col-md[data-v-46bbc058], .col-md-1[data-v-46bbc058], .col-md-10[data-v-46bbc058], .col-md-11[data-v-46bbc058], .col-md-12[data-v-46bbc058], .col-md-2[data-v-46bbc058], .col-md-3[data-v-46bbc058], .col-md-4[data-v-46bbc058], .col-md-5[data-v-46bbc058], .col-md-6[data-v-46bbc058], .col-md-7[data-v-46bbc058], .col-md-8[data-v-46bbc058], .col-md-9[data-v-46bbc058], .col-md-auto[data-v-46bbc058], .col-sm[data-v-46bbc058], .col-sm-1[data-v-46bbc058], .col-sm-10[data-v-46bbc058], .col-sm-11[data-v-46bbc058], .col-sm-12[data-v-46bbc058], .col-sm-2[data-v-46bbc058], .col-sm-3[data-v-46bbc058], .col-sm-4[data-v-46bbc058], .col-sm-5[data-v-46bbc058], .col-sm-6[data-v-46bbc058], .col-sm-7[data-v-46bbc058], .col-sm-8[data-v-46bbc058], .col-sm-9[data-v-46bbc058], .col-sm-auto[data-v-46bbc058], .col-xl[data-v-46bbc058], .col-xl-1[data-v-46bbc058], .col-xl-10[data-v-46bbc058], .col-xl-11[data-v-46bbc058], .col-xl-12[data-v-46bbc058], .col-xl-2[data-v-46bbc058], .col-xl-3[data-v-46bbc058], .col-xl-4[data-v-46bbc058], .col-xl-5[data-v-46bbc058], .col-xl-6[data-v-46bbc058], .col-xl-7[data-v-46bbc058], .col-xl-8[data-v-46bbc058], .col-xl-9[data-v-46bbc058], .col-xl-auto[data-v-46bbc058] {\n    position: relative;\n    width: 100%;\n    padding-right: 0px;\n    padding-left: 15px;\n}\n.image-close[data-v-46bbc058] {\n  position: absolute;\n  font-size: 1.9rem;\n  z-index: 2;\n}\n.image-close[data-v-46bbc058]:hover:before {\n  opacity: 1;\n  transition: all 200ms ease;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.col[data-v-46bbc058],\r\n.col-1[data-v-46bbc058],\r\n.col-10[data-v-46bbc058],\r\n.col-11[data-v-46bbc058],\r\n.col-12[data-v-46bbc058],\r\n.col-2[data-v-46bbc058],\r\n.col-3[data-v-46bbc058],\r\n.col-4[data-v-46bbc058],\r\n.col-5[data-v-46bbc058],\r\n.col-6[data-v-46bbc058],\r\n.col-7[data-v-46bbc058],\r\n.col-8[data-v-46bbc058],\r\n.col-9[data-v-46bbc058],\r\n.col-auto[data-v-46bbc058],\r\n.col-lg[data-v-46bbc058],\r\n.col-lg-1[data-v-46bbc058],\r\n.col-lg-10[data-v-46bbc058],\r\n.col-lg-11[data-v-46bbc058],\r\n.col-lg-12[data-v-46bbc058],\r\n.col-lg-2[data-v-46bbc058],\r\n.col-lg-3[data-v-46bbc058],\r\n.col-lg-4[data-v-46bbc058],\r\n.col-lg-5[data-v-46bbc058],\r\n.col-lg-6[data-v-46bbc058],\r\n.col-lg-7[data-v-46bbc058],\r\n.col-lg-8[data-v-46bbc058],\r\n.col-lg-9[data-v-46bbc058],\r\n.col-lg-auto[data-v-46bbc058],\r\n.col-md[data-v-46bbc058],\r\n.col-md-1[data-v-46bbc058],\r\n.col-md-10[data-v-46bbc058],\r\n.col-md-11[data-v-46bbc058],\r\n.col-md-12[data-v-46bbc058],\r\n.col-md-2[data-v-46bbc058],\r\n.col-md-3[data-v-46bbc058],\r\n.col-md-4[data-v-46bbc058],\r\n.col-md-5[data-v-46bbc058],\r\n.col-md-6[data-v-46bbc058],\r\n.col-md-7[data-v-46bbc058],\r\n.col-md-8[data-v-46bbc058],\r\n.col-md-9[data-v-46bbc058],\r\n.col-md-auto[data-v-46bbc058],\r\n.col-sm[data-v-46bbc058],\r\n.col-sm-1[data-v-46bbc058],\r\n.col-sm-10[data-v-46bbc058],\r\n.col-sm-11[data-v-46bbc058],\r\n.col-sm-12[data-v-46bbc058],\r\n.col-sm-2[data-v-46bbc058],\r\n.col-sm-3[data-v-46bbc058],\r\n.col-sm-4[data-v-46bbc058],\r\n.col-sm-5[data-v-46bbc058],\r\n.col-sm-6[data-v-46bbc058],\r\n.col-sm-7[data-v-46bbc058],\r\n.col-sm-8[data-v-46bbc058],\r\n.col-sm-9[data-v-46bbc058],\r\n.col-sm-auto[data-v-46bbc058],\r\n.col-xl[data-v-46bbc058],\r\n.col-xl-1[data-v-46bbc058],\r\n.col-xl-10[data-v-46bbc058],\r\n.col-xl-11[data-v-46bbc058],\r\n.col-xl-12[data-v-46bbc058],\r\n.col-xl-2[data-v-46bbc058],\r\n.col-xl-3[data-v-46bbc058],\r\n.col-xl-4[data-v-46bbc058],\r\n.col-xl-5[data-v-46bbc058],\r\n.col-xl-6[data-v-46bbc058],\r\n.col-xl-7[data-v-46bbc058],\r\n.col-xl-8[data-v-46bbc058],\r\n.col-xl-9[data-v-46bbc058],\r\n.col-xl-auto[data-v-46bbc058] {\r\n    position: relative;\r\n    width: 100%;\r\n    padding-right: 0px;\r\n    padding-left: 15px;\n}\n.image-close[data-v-46bbc058] {\r\n    position: absolute;\r\n    font-size: 1.9rem;\r\n    z-index: 2;\n}\n.image-close[data-v-46bbc058]:hover:before {\r\n    opacity: 1;\r\n    transition: all 200ms ease;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
