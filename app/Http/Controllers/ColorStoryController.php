@@ -92,7 +92,10 @@ class ColorStoryController extends Controller
     public function getSingleColorStory($id)
     {
         try{
-            return ColorStory::with('product')->find($id);
+            return ColorStory::with(['product.category:id,category_name,slug',
+            'product.subcategory:id,category_name,slug','product.inventory' => function($q){
+                return $q->take(1);
+             }])->find($id);
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error', 'message' =>  $th->getMessage()]);
         }
