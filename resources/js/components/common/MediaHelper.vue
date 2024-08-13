@@ -16,7 +16,10 @@
                             <div class="widget-header">
                                 <div class="row">
                                     <div class="col-md-9 border-right" style="height: 75vh;overflow-y: auto;">
-                                        <input type="date" v-model="by_time" class="form-control my-2" />
+                                        <div class="d-flex justify-content-around  my-2">
+                                            <input type="date" v-model="by_time" class="form-control" style="width: 90%;" />
+                                            <button type="button" class="btn btn-default" @click.prevent="getDataByDate()">Search</button>
+                                        </div>
                                         <div class="row" v-if="allImages.data && allImages.data.length > 0">
                                             <div class="col-xl-2 col-md-3 col-sm-6 col-12" v-for="(item,ind) in allImages.data" :key="ind">
                                                 <div class="card component-card_2 mb-1">
@@ -102,6 +105,12 @@ export default {
                 console.log(errors);
             });
         },
+        getDataByDate(){
+            if(this.by_time.length == '') return;
+            this.page = 1
+            this.allImages = []
+            this.getImageData()
+        },
         getCloudWidget(){
             this.formReset()
             $("#openCldWgt").modal('show');
@@ -168,7 +177,8 @@ export default {
             this.getImageData()
         },
         loadMore(){
-            this.getImageData(this.page++)
+            this.page++
+            this.getImageData()
         },
         formReset(){
             this.filterdata.imgs = []

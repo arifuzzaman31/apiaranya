@@ -30,27 +30,20 @@ class MediaManagerController extends Controller
         $keyword   = $request->get('keyword');
         $type   = $request->get('type');
         $byTime   = $request->get('by_date');
-        $imgdata = DB::table('media_managers');
-        // ->orderBy('created_at','desc');
+
+        $imgdata = DB::table('media_managers')
+        ->orderBy('created_at','desc');
 
         if($type != ''){
             $imgdata = $imgdata->where('file_type',$type);
         }
         if($byTime != ''){
-            // $imgdata =  DB::table('media_managers')->whereDate('created_at','=',$byTime);
-            // $imgdata = $imgdata->where('created_at','like','%2024-05-02%');
-            // $imgdata = $imgdata->whereDate('created_at', $byTime)->get();
-
-            $imgdata->whereRaw('DATE(created_at) = ?', [$byTime]);
-            // dd($imgdata->toSql());
+            $imgdata = $imgdata->whereDate('created_at','=', $byTime);
         }
         if($keyword != ''){
             $imgdata = $imgdata->where('product_name','like','%'.$keyword.'%');
             $imgdata = $imgdata->orWhere('extension','like','%'.$keyword.'%');
         }
-
-        // $byTime = "2023-09-05";
-        // $imgdata =  DB::table('media_managers')->whereDate('created_at','=' , $byTime);
         return response()->json($imgdata->paginate($dataQty));
     }
 
