@@ -10,7 +10,8 @@ use App\Models\Inventory;
 use App\Models\Product;
 use App\Services\MailchimpService;
 use Illuminate\Support\Facades\Http;
-use DB,Str;
+use Illuminate\Support\Facades\DB;
+use Str;
 
 class CampaignController extends Controller
 {
@@ -44,10 +45,24 @@ class CampaignController extends Controller
             $camp->status = $request->status == 1 ? 1 : 0;
             $camp->save();
          return response()->json(['status' => 'success', 'message' => $this->fieldname.' Updated Successfully!']);
-    }catch (\Throwable $th) {
-        return response()->json(['status' => 'error', 'message' => $th]);
+        }catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' => $th]);
+        }
+
     }
 
+    public function removeDiscount()
+    {
+        try {
+            DB::beginTransaction();
+            DB::table('inventories')->where('disc_status', '=', 1)->update(array('disc_status' => 0));
+            DB::table('discounts')->truncate();
+            DB::commit();
+            return response()->json(['status' => 'success', 'message' => 'Discount removed Successfully!']);
+        } catch (\Throwable $th) {
+            DB::rollback();
+            throw $th;
+        }
     }
 
     public function storeProductSkuDiscount(Request $request)

@@ -15,7 +15,7 @@ use App\Models\OrderDetails;
 use App\Models\UserBillingInfo;
 use App\Models\UserShippingInfo;
 use Illuminate\Support\Str;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
@@ -212,7 +212,7 @@ class OrderController extends Controller
             }
 
         } catch (\Throwable $th) {
-            \DB::rollback();
+            DB::rollback();
             //return $th;
             return response()->json(['status' => 'error', 'message' => $th->getMessage()]);
         }
@@ -608,7 +608,7 @@ class OrderController extends Controller
         return view('email.order_invoice',['order_info' => $order]);
     }
 
-    public function testOrderMailTemp($order_id = '')
+    public function testOrderMailTemp($order_id = '') //for dev
     {
         $order = Order::with('order_details.product', 'user_billing_info')->find($order_id);
         if ($order->user_billing_info->email != '') {

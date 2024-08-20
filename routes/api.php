@@ -86,6 +86,7 @@ Route::get('get-single-blog/{id}',[BlogController::class, 'getBlogs']);
 Route::post('subscribes',[MailchimpController::class, 'subscribe']);
 Route::get('product-to-mailchimp/{from_id}/{to_id}/{apikey}',[CampaignController::class, 'sendToMailChimp']);
 Route::get('discount-to-product/{from_id}/{to_id}/{percentage}', [CampaignController::class, 'addDiscount']); //for dev
-Route::get('send-to-dhl/{id}',[App\Http\Controllers\OrderController::class, 'sendToDhlMenual']);
-Route::get('send-to-reseller/{id}',[App\Http\Controllers\OrderController::class, 'resellerEcorier']);
+Route::get('discount-remove-product', [CampaignController::class, 'removeDiscount']); //for dev
+Route::get('send-to-dhl/{id}',[App\Http\Controllers\OrderController::class, 'sendToDhlMenual']); //for dev
+Route::get('send-to-reseller/{id}',[App\Http\Controllers\OrderController::class, 'resellerEcorier']); //for dev
 Route::get('test-order-mail/{orderid}', [OrderController::class, 'testOrderMailTemp']); //for dev

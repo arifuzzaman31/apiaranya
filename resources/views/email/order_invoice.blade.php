@@ -202,15 +202,7 @@
                     </td>
 
                     <td style="border: none;text-align: right">
-                        {{ $order_info->charge_total_price + $order_info->charge_vat_amount + $order_info->charge_shipping_amount }}
-                    </td>
-                </tr>
-                <tr style="border: none;font-size:15px;font-weight:bolder">
-                    <td style="border: none;">CURRENCY
-                    </td>
-
-                    <td style="border: none;text-align: right">
-                        {{ $order_info->charged_currency }}
+                        {{ $order_info->charged_currency }} {{ $order_info->charge_total_price + $order_info->charge_vat_amount + $order_info->charge_shipping_amount }}
                     </td>
                 </tr>
             </table>
