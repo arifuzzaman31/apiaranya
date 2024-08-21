@@ -383,7 +383,7 @@ export default {
                                         </p>
                                     </div>
                                 </div>
-                                <div class="d-flex" v-if="order.delivery.process_state == 1">
+                                <div class="d-flex" v-if="order?.delivery?.process_state === 1">
                                     <div
                                         class="d-flex flex-column pr-3 align-items-center"
                                     >
@@ -400,11 +400,11 @@ export default {
                                         </h6>
                                         <p class="lead text-muted pb-3">
                                             Pending status updated to Proccess <br>
-                                            at {{ dateToString(order.delivery.process_date) }}
+                                            at {{ dateToString(order?.delivery?.process_date) }}
                                         </p>
                                     </div>
                                 </div>
-                                <div class="d-flex" v-if="order.delivery.on_delivery_state == 2">
+                                <div class="d-flex" v-if="order?.delivery?.on_delivery_state === 2">
                                     <div
                                         class="d-flex flex-column pr-3 align-items-center"
                                     >
@@ -421,11 +421,11 @@ export default {
                                         </h6>
                                         <p class="lead text-muted pb-3">
                                             Proccess status updated to On Delivery <br>
-                                            at {{ dateToString(order.delivery.process_date) }}
+                                            at {{ dateToString(order?.delivery?.on_delivery_date) }}
                                         </p>
                                     </div>
                                 </div>
-                                <div class="d-flex" v-if="order.delivery.delivery_state == 3">
+                                <div class="d-flex" v-if="order.delivery.delivery_state === 3">
                                     <div
                                         class="d-flex flex-column pr-3 align-items-center"
                                     >
@@ -442,11 +442,11 @@ export default {
                                         </h6>
                                         <p class="lead text-muted pb-3">
                                             On Delivery status updated to Delivered <br>
-                                            at {{ dateToString(order.delivery.process_date) }}
+                                            at {{ dateToString(order?.delivery?.delivery_date) }}
                                         </p>
                                     </div>
                                 </div>
-                                <div class="d-flex" v-if="order.delivery.on_hold_state == 4">
+                                <div class="d-flex" v-if="order?.delivery?.on_hold_state === 4">
                                     <div
                                         class="d-flex flex-column pr-3 align-items-center"
                                     >
@@ -463,11 +463,11 @@ export default {
                                         </h6>
                                         <p class="lead text-muted pb-3">
                                             Order Status updated to On Hold <br>
-                                            at {{ dateToString(order.delivery.on_hold_date) }}
+                                            at {{ dateToString(order?.delivery?.on_hold_date) }}
                                         </p>
                                     </div>
                                 </div>
-                                <div class="d-flex" v-if="order.delivery.cancel_state == 5">
+                                <div class="d-flex" v-if="order?.delivery?.cancel_state === 5">
                                     <div
                                         class="d-flex flex-column pr-3 align-items-center"
                                     >
@@ -484,7 +484,7 @@ export default {
                                         </h6>
                                         <p class="lead text-muted pb-3">
                                             Order Status updated to Cancelled <br>
-                                            at {{ dateToString(order.delivery.cancel_date) }}
+                                            at {{ dateToString(order?.delivery?.cancel_date) }}
                                         </p>
                                     </div>
                                 </div>
