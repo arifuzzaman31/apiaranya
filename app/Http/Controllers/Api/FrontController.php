@@ -56,6 +56,8 @@ class FrontController extends Controller
             unlink(public_path('product.csv'));
         }
         public_path(\Excel::store(new \App\Exports\AddProduct, 'product.csv'));
+
+        return "done";
     }
 
 }
