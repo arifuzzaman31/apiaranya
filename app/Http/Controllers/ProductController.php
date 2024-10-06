@@ -163,7 +163,7 @@ class ProductController extends Controller
             // 'stock' => 'required_if:color_size,false',
             'weight' => 'required',
             'attrqty' => 'required',
-            'unit' => 'required',
+            // 'unit' => 'required',
             'vendor' => 'required',
             'brand' => 'required',
             'design_code' => 'required'
@@ -194,7 +194,7 @@ class ProductController extends Controller
             $product->length              = $request->length;
             $product->fragile_charge      = $request->fragile_charge;
             $product->fragile             = $request->fragile;
-            $product->unit                = $request->unit;
+            $product->unit                = $request->unit ?? 'gm';
             $product->weight              = $request->weight;
             $product->has_variation       = $request->has_variation == true ? 1 : 0;
             $product->design_code         = $request->design_code;
