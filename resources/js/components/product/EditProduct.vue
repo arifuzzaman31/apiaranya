@@ -93,7 +93,7 @@ export default {
         },
 
         addMore(){
-            this.form.attrqty.push({colour_id:[],size_id:'',cpu:'',mrp:'',qty:'',sku:''})
+            this.form.attrqty.push({colour_id:[],size_id:'',cpu:0,mrp:0,qty:0,sku:''})
         },
         removeCatChild(index) {
             this.form.attrqty.splice(index, 1);

@@ -160,10 +160,15 @@ class ProductController extends Controller
         $request->validate([
             'product_name' => 'required',
             'category' => 'required',
-            'stock' => 'required_if:color_size,false',
-            //'weight' => 'required',
+            // 'stock' => 'required_if:color_size,false',
+            'weight' => 'required',
+            'attrqty' => 'required',
+            'unit' => 'required',
+            'vendor' => 'required',
+            'brand' => 'required',
             'design_code' => 'required'
         ]);
+        // dd($request->all());
         DB::beginTransaction();
         try {
             $product = new Product();
@@ -223,8 +228,8 @@ class ProductController extends Controller
                                 'size_id' => $value['size_id'] != '' ? $value['size_id'] : 0,
                                 'colour_id' => $value['colour_id'] != '' ? $value['colour_id'] : 0,
                                 'sku' => $value['sku'],
-                                'stock' => $value['qty'],
-                                'cpu' => $value['cpu'],
+                                'stock' => $value['qty'] ?? 0,
+                                'cpu' => $value['cpu'] ?? 0,
                                 'mrp' => $value['mrp'],
                                 'warning_amount' => 10
                             ]);
@@ -237,11 +242,9 @@ class ProductController extends Controller
                 $product->product_vendor()->attach($request->vendor);
             }
             if (!empty($request->brand)) {
-
                 $product->product_brand()->attach($request->brand);
             }
             if (!empty($request->designer)) {
-
                 $product->product_designer()->attach($request->designer);
             }
             if (!empty($request->embellishment)) {

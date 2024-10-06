@@ -81,8 +81,8 @@ export default {
                         colour_id: "",
                         size_id: "",
                         cpu: 0,
-                        mrp: "",
-                        qty: "",
+                        mrp: 0,
+                        qty: 0,
                         sku: "",
                     },
                 ],
@@ -131,8 +131,8 @@ export default {
                 colour_id: "",
                 size_id: "",
                 cpu: 0,
-                mrp: "",
-                qty: "",
+                mrp: 0,
+                qty: 0,
                 sku: "",
             });
         },
@@ -190,8 +190,8 @@ export default {
                             colour_id: item,
                             size_id: it,
                             cpu: 0,
-                            mrp: "",
-                            qty: "",
+                            mrp: 0,
+                            qty: 0,
                             sku: "",
                         });
                     });
@@ -205,8 +205,8 @@ export default {
                             colour_id: item,
                             size_id: "",
                             cpu: 0,
-                            mrp: "",
-                            qty: "",
+                            mrp: 0,
+                            qty: 0,
                             sku: "",
                         });
                     });
@@ -218,8 +218,8 @@ export default {
                             colour_id: "",
                             size_id: it,
                             cpu: 0,
-                            mrp: "",
-                            qty: "",
+                            mrp: 0,
+                            qty: 0,
                             sku: "",
                         });
                     });
@@ -274,8 +274,8 @@ export default {
                         colour_id: "",
                         size_id: "",
                         cpu: 0,
-                        mrp: "",
-                        qty: "",
+                        mrp: 0,
+                        qty: 0,
                         sku: "",
                     },
                 ],
@@ -335,6 +335,7 @@ export default {
                                         : ''
                                 "
                                 id="product-name"
+                                required
                                 placeholder="Product name"
                                 v-model="form.product_name"
                             />
@@ -355,6 +356,7 @@ export default {
                             <select
                                 id="product-category"
                                 class="form-control"
+                                required
                                 @change="getSubCategories()"
                                 v-model="form.category"
                             >
@@ -383,6 +385,7 @@ export default {
                             <select
                                 id="product-subcategory"
                                 class="form-control"
+                                required
                                 v-model="form.sub_category"
                             >
                                 <option value="">Choose Sub Category...</option>
@@ -482,6 +485,7 @@ export default {
                                 :search="true"
                                 :options="prp_vendor"
                                 :searchable="true"
+                                :allow-empty="false"
                             >
                                 <template
                                     v-slot:tag="{
@@ -511,6 +515,16 @@ export default {
                                     </div>
                                 </template>
                             </Multiselect>
+                            <div
+                                    v-if="
+                                        validation_error.hasOwnProperty(
+                                            'vendor'
+                                        )
+                                    "
+                                    class="invalid-feedback"
+                                >
+                                    {{ validation_error.vendor[0] }}
+                                </div>
                         </div>
 
                         <div class="col-md-6">
@@ -554,6 +568,16 @@ export default {
                                     </div>
                                 </template>
                             </Multiselect>
+                            <div
+                                    v-if="
+                                        validation_error.hasOwnProperty(
+                                            'brand'
+                                        )
+                                    "
+                                    class="invalid-feedback"
+                                >
+                                    {{ validation_error.brand[0] }}
+                                </div>
                         </div>
 
                         <div class="col-md-6">
@@ -1002,6 +1026,7 @@ export default {
                                     id="design_code"
                                     placeholder="Design Code"
                                     v-model="form.design_code"
+                                    required
                                 />
                                 <div
                                     v-if="
@@ -1020,6 +1045,7 @@ export default {
                                 <select
                                     id="product-category"
                                     class="form-control form-control-sm"
+                                    required
                                     v-model="form.fragile"
                                 >
                                     <option value="Yes">Fragile</option>
@@ -1080,6 +1106,7 @@ export default {
                                     "
                                     id="weight"
                                     placeholder="Example: 100"
+                                    required
                                     v-model="form.weight"
                                 />
                                 <div
@@ -1101,6 +1128,7 @@ export default {
                                     class="form-control form-control-sm"
                                     id="width"
                                     placeholder="Enter Width"
+                                    required
                                     v-model="form.width"
                                 />
                             </div>
@@ -1111,6 +1139,7 @@ export default {
                                     step="any"
                                     class="form-control form-control-sm"
                                     id="height"
+                                    required
                                     placeholder="Enter Height"
                                     v-model="form.height"
                                 />
@@ -1123,6 +1152,7 @@ export default {
                                     class="form-control form-control-sm"
                                     id="length"
                                     placeholder="Enter Length"
+                                    required
                                     v-model="form.length"
                                 />
                             </div>
@@ -1141,6 +1171,7 @@ export default {
                                     id="LeadTime-name"
                                     placeholder="Lead Time"
                                     v-model="form.lead_time"
+                                    required
                                 />
                                 <div
                                     v-if="
@@ -1160,6 +1191,7 @@ export default {
                                     class="form-control form-control-sm"
                                     id="unit"
                                     placeholder="Enter Unit"
+                                    required
                                     v-model="form.unit"
                                 />
                             </div>
@@ -1307,6 +1339,7 @@ export default {
                                 v-model="form.is_color"
                                 :checked="form.is_color"
                                 class="custom-control-input"
+                                required
                                 id="hasColour"
                             />
                             <label class="custom-control-label" for="hasColour"
@@ -1510,7 +1543,7 @@ export default {
                             required
                         />
                     </div>
-                    <div
+                    <!-- <div
                         class="form-group"
                         :class="
                             form.is_size && form.is_color
@@ -1527,10 +1560,10 @@ export default {
                             placeholder="CPU"
                             required
                         />
-                    </div>
-                    <!-- <div class="form-group" :class="(form.is_size && form.is_color) ? 'col-md-2' : 'col-md-2'">
+                    </div> -->
+                    <div class="form-group" :class="(form.is_size && form.is_color) ? 'col-md-2' : 'col-md-2'">
                             <input type="number"  class="form-control form-control-sm" id="mrp" step=any v-model="qt.mrp" placeholder="MRP" required>
-                        </div> -->
+                        </div>
                     <div class="form-group col-md-2">
                         <input
                             type="number"

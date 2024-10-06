@@ -265,6 +265,18 @@ class CampaignController extends Controller
     }
     public function addDiscount($from,$to,$discAmount=15)
     {
+        // $value = Inventory::where('disc_status',1)->get();
+        // foreach($value as $data)
+        // Discount::insert([
+        //     'product_id'=> $data['product_id'],
+        //     'disc_sku' =>  $data['sku'],
+        //     'discount_amount' => 20,
+        //     'discount_type'   => 'percentage',
+        //     'type'            => 'campaign',
+        //     'max_amount'      => NULL,
+        //     'status'          => AllStatic::$active
+        // ]);
+        // return 'done';
         $inv = Inventory::whereBetween('id',[$from,$to])->get()->toArray();
         $chunks = array_chunk($inv, 100);
         foreach($chunks as $chunk)
