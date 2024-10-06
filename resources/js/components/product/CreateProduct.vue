@@ -1171,7 +1171,6 @@ export default {
                                     id="LeadTime-name"
                                     placeholder="Lead Time"
                                     v-model="form.lead_time"
-                                    required
                                 />
                                 <div
                                     v-if="
@@ -1191,7 +1190,6 @@ export default {
                                     class="form-control form-control-sm"
                                     id="unit"
                                     placeholder="Enter Unit"
-                                    required
                                     v-model="form.unit"
                                 />
                             </div>
