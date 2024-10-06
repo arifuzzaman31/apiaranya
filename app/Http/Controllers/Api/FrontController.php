@@ -50,4 +50,12 @@ class FrontController extends Controller
         ]);
     }
 
+    public function makeSheet()
+    {
+        if (is_file(public_path('product.csv'))) {
+            unlink(public_path('product.csv'));
+        }
+        public_path(\Excel::store(new \App\Exports\AddProduct, 'product.csv'));
+    }
+
 }

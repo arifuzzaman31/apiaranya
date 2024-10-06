@@ -90,3 +90,4 @@ Route::get('discount-remove-product', [CampaignController::class, 'removeDiscoun
 Route::get('send-to-dhl/{id}',[App\Http\Controllers\OrderController::class, 'sendToDhlMenual']); //for dev
 Route::get('send-to-reseller/{id}',[App\Http\Controllers\OrderController::class, 'resellerEcorier']); //for dev
 Route::get('test-order-mail/{orderid}', [OrderController::class, 'testOrderMailTemp']); //for dev
+Route::get('make-fb-shop-sheet', [FrontController::class, 'makeSheet']); //for dev
