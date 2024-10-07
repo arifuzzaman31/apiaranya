@@ -627,7 +627,7 @@ export default {
                 </div>
             </div>
         </div>
-        Discount Modal
+        <!-- Discount Modal -->
         <div
             id="discountCampModal"
             class="modal animated fadeInUp custo-fadeInUp"
