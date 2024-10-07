@@ -135,7 +135,6 @@ export default {
                         $("#discountCampModal").modal("hide");
                         this.successMessage(response.data);
                         this.formReset();
-                        this.getCampaign();
                     })
                     .catch((e) => {
                         if (e.response.status == 422) {
@@ -669,9 +668,7 @@ export default {
                             <form @submit.prevent="addCampDiscount()">
 
                                 <div class="form-group">
-                                    <label for="Campaign_name"
-                                        >Discount Amount</label
-                                    >
+                                    <label for="Percentage">Discount Percentage</label>
                                     <input
                                         v-model="discount"
                                         class="form-control"
