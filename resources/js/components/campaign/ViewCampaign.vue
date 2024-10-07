@@ -21,6 +21,7 @@ export default {
                 expire_at: "",
                 status: true,
             },
+            discount: 0,
             url: baseUrl,
             limit: 3,
             keepLength: false,
@@ -104,6 +105,7 @@ export default {
                 expire_at: "",
                 status: true,
             };
+            this.discount = 0
             this.validation_error = {};
         },
 
@@ -117,6 +119,34 @@ export default {
             this.form.expire_at = camp.campaign_expire_date;
             this.form.status = camp.status = 1 ? true : false;
             $("#updateCampModal").modal("show");
+        },
+        discountModal(camp) {
+            this.camp_id = camp;
+            this.discount  = 0;
+            $("#discountCampModal").modal("show");
+        },
+
+        addCampDiscount(){
+            try {
+                axios
+                    .post("add-discount-to-camp",{camp_id:this.camp_id,discount:this.discount})
+                    .then((response) => {
+                        this.camp_id = ''
+                        $("#discountCampModal").modal("hide");
+                        this.successMessage(response.data);
+                        this.formReset();
+                        this.getCampaign();
+                    })
+                    .catch((e) => {
+                        if (e.response.status == 422) {
+                            this.validation_error = e.response.data.errors;
+                            this.validationError();
+                        }
+                    });
+            } catch (e) {
+                if (e.response.status == 422) {
+                }
+            }
         },
 
         updateCampaign() {
@@ -249,6 +279,16 @@ export default {
                                                 "
                                             >
                                                 Delete
+                                            </button>
+
+                                            <button
+                                                type="button"
+                                                class="btn btn-sm btn-info-a mx-2 my-1"
+                                                @click="
+                                                    discountModal(campaign.id)
+                                                "
+                                            >
+                                                Discount
                                             </button>
                                         </td>
                                     </tr>
@@ -564,6 +604,79 @@ export default {
                                         />
                                         <span class="slider round"></span>
                                     </label>
+                                </div>
+
+                                <div class="modal-footer md-button">
+                                    <button class="btn" data-dismiss="modal">
+                                        <i
+                                            class="flaticon-cancel-12"
+                                            @click="formReset"
+                                        ></i>
+                                        Discard
+                                    </button>
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-info-a"
+                                    >
+                                        Submit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        Discount Modal
+        <div
+            id="discountCampModal"
+            class="modal animated fadeInUp custo-fadeInUp"
+            role="dialog"
+        >
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Discount Add To Campaign</h5>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                            @click="formReset"
+                        >
+                            <svg
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="feather feather-x"
+                            >
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="widget-content">
+                            <form @submit.prevent="addCampDiscount()">
+
+                                <div class="form-group">
+                                    <label for="Campaign_name"
+                                        >Discount Amount</label
+                                    >
+                                    <input
+                                        v-model="discount"
+                                        class="form-control"
+                                        type="number"
+                                    />
                                 </div>
 
                                 <div class="modal-footer md-button">

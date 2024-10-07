@@ -96,6 +96,37 @@ class CampaignController extends Controller
         }
     }
 
+    public function discountToCamp(Request $request)
+    {
+        try {
+            $data = DB::table('campaign_products')->where('campaign_id',$request->camp_id)
+                ->join('inventories','campaign_products.product_id','=','inventories.product_id')
+                ->select('campaign_products.product_id', 'inventories.sku')
+                ->get();
+
+                foreach ($data as $value) {
+                    Discount::updateOrCreate([
+                            'product_id'=> $value->product_id,
+                            'disc_sku' =>  $value->sku
+                        ],[
+                            'discount_amount' => $request->discount,
+                            'discount_type'   => 'percentage',
+                            'type'            => 'campaign',
+                            'max_amount'      =>  NULL,
+                            'status'          => AllStatic::$active
+                        ]);
+                }
+                Inventory::whereIn('sku',$data->pluck(['sku']))->update([
+                    'disc_status' => 1
+                ]);
+
+            return response()->json(['status' => 'success', 'message' => 'Discount Add Successfully!']);
+        } catch (\Throwable $th) {
+            return $th;
+            return response()->json(['status' => 'error', 'message' => $th]);
+        }
+    }
+
     public function getCampProduct($id)
     {
         $camp = Campaign::find($id);
@@ -116,14 +147,6 @@ class CampaignController extends Controller
         ->with(['campaign','vat', 'category:id,category_name',
         'subcategory', 'inventory.discount', 'product_size', 'product_colour'])
         ->select(['products.*','campaign_products.campaign_id']);
-
-
-        // $allCompanies = Products::with(['company' => function($q) {
-        //     $q->where('visible', 0);
-        // }])
-
-
-        // $product = $campaign->product;
 
         if ($keyword != '') {
             $product = $product->whereHas('inventory', function ($q) use ($keyword) {

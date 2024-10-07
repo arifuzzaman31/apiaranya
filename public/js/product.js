@@ -23125,14 +23125,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     placeholder: "Lead Time",
     "onUpdate:modelValue": _cache[21] || (_cache[21] = function ($event) {
       return $data.form.lead_time = $event;
-    }),
-    required: ""
+    })
   }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.lead_time]]), $data.validation_error.hasOwnProperty('lead_time') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_102, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.validation_error.lead_time[0]), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_103, [_hoisted_104, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     "class": "form-control form-control-sm",
     id: "unit",
     placeholder: "Enter Unit",
-    required: "",
     "onUpdate:modelValue": _cache[22] || (_cache[22] = function ($event) {
       return $data.form.unit = $event;
     })

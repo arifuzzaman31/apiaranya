@@ -167,6 +167,7 @@ Route::controller(CampaignController::class)
     ->group(function () {
     Route::get('get-campaign','getCampaing');
     Route::post('store-discount','storeProductSkuDiscount');
+    Route::post('add-discount-to-camp','discountToCamp');
     Route::post('add-to-campaign','storeAddtoCamp');
     Route::get('campaign-product/{id}','getCampProduct');
     Route::get('product-by-campaign/{id}','getProductByCampId');
