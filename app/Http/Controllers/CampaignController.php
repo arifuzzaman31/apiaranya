@@ -113,14 +113,13 @@ class CampaignController extends Controller
                             'discount_type'   => 'percentage',
                             'type'            => 'campaign',
                             'max_amount'      =>  NULL,
-                            'status'          => AllStatic::$active
+                            'status'          => $request->disc_remove
                         ]);
                 }
                 Inventory::whereIn('sku',$data->pluck(['sku']))->update([
-                    'disc_status' => 1
+                    'disc_status' => $request->disc_remove
                 ]);
-
-            return response()->json(['status' => 'success', 'message' => 'Discount Add Successfully!']);
+            return response()->json(['status' => 'success', 'message' => 'Discount Affected Successfully!']);
         } catch (\Throwable $th) {
             return $th;
             return response()->json(['status' => 'error', 'message' => $th]);

@@ -22,6 +22,7 @@ export default {
                 status: true,
             },
             discount: 0,
+            disc_remove: 1,
             url: baseUrl,
             limit: 3,
             keepLength: false,
@@ -106,6 +107,7 @@ export default {
                 status: true,
             };
             this.discount = 0
+            this.disc_remove = 1
             this.validation_error = {};
         },
 
@@ -123,15 +125,18 @@ export default {
         discountModal(camp) {
             this.camp_id = camp;
             this.discount  = 0;
+            this.disc_remove = 1
             $("#discountCampModal").modal("show");
         },
 
         addCampDiscount(){
             try {
                 axios
-                    .post("add-discount-to-camp",{camp_id:this.camp_id,discount:this.discount})
+                    .post("add-discount-to-camp",{camp_id:this.camp_id,discount:this.discount,disc_remove:this.disc_remove})
                     .then((response) => {
                         this.camp_id = ''
+                        this.discount = 0
+                        this.disc_remove = 1
                         $("#discountCampModal").modal("hide");
                         this.successMessage(response.data);
                         this.formReset();
@@ -666,7 +671,6 @@ export default {
                     <div class="modal-body">
                         <div class="widget-content">
                             <form @submit.prevent="addCampDiscount()">
-
                                 <div class="form-group">
                                     <label for="Percentage">Discount Percentage</label>
                                     <input
@@ -675,7 +679,13 @@ export default {
                                         type="number"
                                     />
                                 </div>
-
+                                <div class="form-group">
+                                    <label for="disc_remove">Add / Remove </label>
+                                    <select id="disc_remove" class="form-control" v-model="disc_remove">
+                                        <option value="1">Add</option>
+                                        <option value="0">Remove</option>
+                                    </select>
+                                </div>
                                 <div class="modal-footer md-button">
                                     <button class="btn" data-dismiss="modal">
                                         <i

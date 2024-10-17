@@ -43,6 +43,6 @@ class Inventory extends Model
     }
     public function discount()
     {
-        return $this->hasOne(Discount::class,'disc_sku','sku');
+        return $this->hasOne(Discount::class,'disc_sku','sku')->where(['status' => 1,'deleted_at' => NULL]);
     }
 }
