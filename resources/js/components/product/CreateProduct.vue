@@ -107,9 +107,6 @@ export default {
                 });
                 return false;
             }
-            console.log(this.form)
-            this.successMessage({message:"Submitted"});
-            return false;
             axios
                 .post(baseUrl + "product", this.form)
                 .then((response) => {
