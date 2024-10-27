@@ -107,6 +107,9 @@ export default {
                 });
                 return false;
             }
+            console.log(this.form)
+            this.successMessage({message:"Submitted"});
+            return false;
             axios
                 .post(baseUrl + "product", this.form)
                 .then((response) => {
@@ -210,7 +213,8 @@ export default {
                             sku: "",
                         });
                     });
-                } else {
+                }
+                if(this.choose_sizes.length > 0 && this.form.is_size) {
                     new Set([...this.choose_sizes]);
                     this.choose_colours = [];
                     this.choose_sizes.map((it) => {
@@ -1337,8 +1341,8 @@ export default {
                                 v-model="form.is_color"
                                 :checked="form.is_color"
                                 class="custom-control-input"
-                                required
                                 id="hasColour"
+                                :required="form.is_color"
                             />
                             <label class="custom-control-label" for="hasColour"
                                 >Has Colour ?</label
@@ -1396,6 +1400,7 @@ export default {
                                 :checked="form.is_size"
                                 class="custom-control-input"
                                 id="hasSize"
+                                :required="form.is_size"
                             />
                             <label class="custom-control-label" for="hasSize"
                                 >Has Size ?</label

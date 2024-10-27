@@ -204,12 +204,12 @@ class ProductController extends Controller
             $colorIds = array_filter(array_column($request->attrqty, 'colour_id'));
             $sizeIds = array_filter(array_column($request->attrqty, 'size_id'));
 
-            if ($request->is_color && !empty($colorIds)) {
+            if (!empty($colorIds)) {
                 $cid = array_unique($colorIds);
                 $product->product_colour()->attach($cid);
             }
 
-            if ($request->is_size && !empty($sizeIds)) {
+            if (!empty($sizeIds)) {
 
                 $product->product_size()->attach(array_unique($sizeIds));
             }
@@ -401,18 +401,16 @@ class ProductController extends Controller
             $colorIds = array_column($request->attrqty, 'colour_id');
             $sizeIds = array_filter(array_column($request->attrqty, 'size_id'));
 
-            if ($request->is_color && !empty($colorIds)) {
+            if (!empty($colorIds)) {
                 $cid = array_unique(array_merge(...$colorIds), SORT_REGULAR);
                 $product->product_colour()->sync($cid);
             }
 
-            if ($request->is_size && !empty($sizeIds)) {
-
+            if (!empty($sizeIds)) {
                 $product->product_size()->sync($sizeIds);
             }
 
-            if ($request->is_fabric && !empty($request->fabrics)) {
-
+            if (!empty($request->fabrics)) {
                 $product->product_fabric()->sync($request->fabrics);
             }
 

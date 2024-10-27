@@ -20599,6 +20599,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         });
         return false;
       }
+      console.log(this.form);
+      this.successMessage({
+        message: "Submitted"
+      });
+      return false;
       axios__WEBPACK_IMPORTED_MODULE_2___default().post(baseUrl + "product", this.form).then(function (response) {
         console.log(response);
         if (response.data.status == "success") {
@@ -20691,7 +20696,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
               sku: ""
             });
           });
-        } else {
+        }
+        if (this.choose_sizes.length > 0 && this.form.is_size) {
           new Set(_toConsumableArray(this.choose_sizes));
           this.choose_colours = [];
           this.choose_sizes.map(function (it) {
@@ -22524,7 +22530,7 @@ var _hoisted_137 = {
 var _hoisted_138 = {
   "class": "custom-control custom-checkbox mt-2"
 };
-var _hoisted_139 = ["checked"];
+var _hoisted_139 = ["checked", "required"];
 var _hoisted_140 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": "custom-control-label",
@@ -22550,7 +22556,7 @@ var _hoisted_146 = {
 var _hoisted_147 = {
   "class": "custom-control custom-checkbox mt-2"
 };
-var _hoisted_148 = ["checked"];
+var _hoisted_148 = ["checked", "required"];
 var _hoisted_149 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": "custom-control-label",
@@ -23210,8 +23216,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     checked: $data.form.is_color,
     "class": "custom-control-input",
-    required: "",
-    id: "hasColour"
+    id: "hasColour",
+    required: $data.form.is_color
   }, null, 8 /* PROPS */, _hoisted_139), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.form.is_color]]), _hoisted_140])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_141, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Multiselect, {
     modelValue: $data.choose_colours,
     "onUpdate:modelValue": _cache[27] || (_cache[27] = function ($event) {
@@ -23251,7 +23257,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     checked: $data.form.is_size,
     "class": "custom-control-input",
-    id: "hasSize"
+    id: "hasSize",
+    required: $data.form.is_size
   }, null, 8 /* PROPS */, _hoisted_148), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.form.is_size]]), _hoisted_149])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_150, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Multiselect, {
     modelValue: $data.choose_sizes,
     "onUpdate:modelValue": _cache[29] || (_cache[29] = function ($event) {
