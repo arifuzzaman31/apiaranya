@@ -221,7 +221,7 @@ class ProductController extends Controller
 
             if ($request->attrqty && !empty($request->attrqty)) {
                 foreach ($request->attrqty as $value) {
-                    if ($value['qty'] != '' && $value['sku'] != '' && $value['mrp'] != '') {
+                    if ($value['sku'] != '' && $value['mrp'] != '') {
                         DB::table('inventories')
                             ->insert([
                                 'product_id' => $product->id,
@@ -426,8 +426,8 @@ class ProductController extends Controller
                                         'size_id' => $value['size_id'] ? $value['size_id'] : 0,
                                         'colour_id' => $sizestock ? $sizestock : 0,
                                         'sku' => $value['sku'],
-                                    'stock' => $value['qty'] != '' ? $value['qty'] : 0,
-                                    'cpu' => $value['cpu'] ?? 0,
+                                        'stock' => $value['qty'] != '' ? $value['qty'] : 0,
+                                        'cpu' => $value['cpu'] ?? 0,
                                         'mrp' => $value['mrp'],
                                         'warning_amount' => 10
                                     ]);
@@ -435,7 +435,7 @@ class ProductController extends Controller
                         } else {
                             $stock  = new Inventory();
                             $stock->product_id  = $product->id;
-                            $stock->stock       = $value['qty'];
+                            $stock->stock       = $value['qty'] ?? 0;
                             $stock->size_id     = $value['size_id'] ? $value['size_id'] : 0;
                             $stock->colour_id   =  0;
                             $stock->sku       = $value['sku'];
