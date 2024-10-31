@@ -133,6 +133,7 @@ Route::controller(ProductController::class)
     Route::get('get-product','getProduct');
     Route::get('get-product/search','getProductBySearch');
     Route::post('product-import','bulkUpload');
+    Route::post('product-status','updateStatus');
     Route::get('product-stock-download','exportProductStock');
     Route::get('product-bulk-download','exportProductDownload');
 });

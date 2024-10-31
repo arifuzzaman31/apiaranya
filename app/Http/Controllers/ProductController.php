@@ -148,6 +148,15 @@ class ProductController extends Controller
         return response()->json($product);
     }
 
+    public function updateStatus(Request $request)
+    {
+        // return $request->all();
+        $product = Product::find($request->camp_id);
+        $product->status = $request->category == '0' ? 0 : 1;
+        $product->update();
+        return $this->successMessage('Product Status Updated!');
+    }
+
     /**
      * Store a newly created resource in storage.
      *

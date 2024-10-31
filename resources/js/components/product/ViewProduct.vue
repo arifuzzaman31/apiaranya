@@ -213,6 +213,27 @@ export default {
             $("#addToCampModal").modal("show");
         },
 
+        openProductStatusModal(product) {
+            this.filterdata.camp_id = product.id
+            this.filterdata.category = product.status
+            $("#productStatusUpdate").modal("show");
+        },
+
+        updateProductStatus(){
+            axios
+            .post(baseUrl + "product-status",this.filterdata)
+            .then((response) => {
+                this.getProduct();
+                this.successMessage(response.data);
+                $("#productStatusUpdate").modal("hide");
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+            this.filterdata.camp_id = ''
+            this.filterdata.category = ''
+        },
+
         getProductById(id) {
             axios
                 .get(baseUrl + "product/" + id)
@@ -774,6 +795,19 @@ export default {
                                 >
                                     Delete
                                 </button>
+
+                                <button
+                                    type="button"
+                                    v-if="
+                                        showPermission.includes(
+                                            'product-delete'
+                                        )
+                                    "
+                                    class="btn btn-sm btn-info-a my-1"
+                                    @click="openProductStatusModal(product)"
+                                >
+                                    Status
+                                </button>
                             </td>
                         </tr>
                     </template>
@@ -1172,6 +1206,67 @@ export default {
                             @click="uploadExcel"
                         >
                             {{ button_name }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div
+            class="modal fade"
+            id="productStatusUpdate"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="productUpdateLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="productUpdateLabel">
+                            Update Product Status
+                        </h5>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                        >
+                            X
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form role="form">
+                                    <div class="form-group">
+                                    <label for="type">Status</label>
+                                    <select
+                                        class="form-control tagging"
+                                        id="type"
+                                        v-model="filterdata.category"
+                                    >
+                                        <option value="1">
+                                            Active
+                                        </option>
+                                        <option value="0">
+                                            Deactive
+                                        </option>
+                                    </select>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal">
+                            <i class="flaticon-cancel-12"></i> Discard
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            @click="updateProductStatus()"
+                        >
+                            Update
                         </button>
                     </div>
                 </div>
