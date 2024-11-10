@@ -23,15 +23,15 @@ class DiscountImport implements ToCollection
                 $item = DB::table('inventories')->where('sku',$value[0])->first();
                 $item->disc_status = 1;
                 $item->update();
-                // DB::table('campaign_products')->updateOrInsert(
-                //     [
-                //         'product_id' => $item->product_id,
-                //         'campaign_id' => $value[5]
-                //     ],[
-                //         'status' => 1,
-                //         'created_at' => now(),
-                //         'updated_at' => now()
-                //     ]);
+                DB::table('campaign_products')->updateOrInsert(
+                    [
+                        'product_id' => $item->product_id,
+                        'campaign_id' => (int)$value[5]
+                    ],[
+                        'status' => 1,
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ]);
                 DB::table('discounts')->insert([
                     'product_id' => $item->product_id,
                     'discount_amount' => (int)$value[1],
