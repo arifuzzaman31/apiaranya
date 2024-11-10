@@ -17,6 +17,7 @@ class DiscountImport implements ToCollection
         $data = array_filter($collection->toArray(),function ($number) {
             return $number[0] !== null;
         });
+        // dd($data);
         try {
             DB::beginTransaction();
             foreach ($data as $value) {
@@ -35,8 +36,8 @@ class DiscountImport implements ToCollection
                 DB::table('discounts')->insert([
                     'product_id' => $item->product_id,
                     'discount_amount' => (int)$value[1],
-                    'discount_type' => $value[2],
-                    'type' => $value[3],
+                    'discount_type' => 'percentage',
+                    'type' => 'campaign',
                     'max_amount' => NULL,
                     'disc_sku' => $value[0],
                     'status' => 1,
