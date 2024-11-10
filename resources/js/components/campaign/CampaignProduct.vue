@@ -253,9 +253,6 @@ export default {
 <template>
     <div class="container-fluid mt-3">
         <div class="statbox widget box box-shadow mb-4">
-            <!-- <div class="col">
-                <button type="button" class="btn btn-primary btn-md w-100 " data-toggle="modal" data-target="#discountUpdate">Bulk Upload</button>
-            </div> -->
             <div class="widget-header">
                 <div class="row">
                     <div class="col-md-2 col-lg-1 col-4 mb-3">
@@ -277,7 +274,8 @@ export default {
                         <button type="button" v-if="showPermission.includes('product-remove-campaign')" class="btn btn-delete btn-sm ml-2" @click="removeFromCamp()">Remove From Campaign</button>
                     </div>
 
-                    <div class="col-md-4 col-lg-3 col-12">
+                    <div class="col-md-3 col-lg-3 col-12 mt-4">
+                        <button type="button" class="btn btn-primary btn-md w-100 " data-toggle="modal" data-target="#discountUpdate">Bulk Upload</button>
                     </div>
                 </div>
             </div>
